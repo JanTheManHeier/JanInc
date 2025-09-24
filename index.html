@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cravings Helper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Cravings Helper</h1>
+    </header>
+
+    <main>
+        <div class="controls">
+            <select id="categorySelect">
+                <option value="All">All</option>
+                <option value="Hydration">Hydration</option>
+                <option value="Distraction">Distraction</option>
+                <option value="Mindset">Mindset</option>
+            </select>
+            <button id="helpButton">Help Me Now</button>
+        </div>
+
+        <section id="tipSection">
+            <h2>Your Tip</h2>
+            <div id="tipDisplay">
+                <p>Click "Help Me Now" to get a helpful tip!</p>
+            </div>
+            <button id="saveFavoriteButton" style="display: none;">Save as Favorite</button>
+        </section>
+
+        <section id="favoritesSection">
+            <h2>Saved Favorites</h2>
+            <div id="favoritesList">
+                <p>No favorites saved yet.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
