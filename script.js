@@ -1,36 +1,36 @@
 // Language support
 const translations = {
     en: {
-        appTitle: "Cravings Helper",
+        appTitle: "My Choice",
         categoryAll: "All",
-        categoryHydration: "Hydration",
-        categoryDistraction: "Distraction", 
-        categoryMindset: "Mindset",
+        categoryHydration: "💧 Hydration",
+        categoryDistraction: "🔄 Distraction", 
+        categoryMindset: "🧠 Mindset",
         helpMeNow: "Help Me Now",
         saveAsFavorite: "Save as Favorite",
-        savedAsFavorite: "Saved as Favorite!",
+        savedAsFavorite: "Saved!",
         alreadySaved: "Already Saved!",
         yourTip: "Your Tip",
         savedFavorites: "Saved Favorites",
         noFavoritesYet: "No favorites saved yet.",
         clickHelpMe: "Click \"Help Me Now\" to get a helpful tip!",
-        remove: "Remove"
+        remove: "🗑️"
     },
     no: {
         appTitle: "Mitt Valg",
         categoryAll: "Alle",
-        categoryHydration: "Væske",
-        categoryDistraction: "Avledning",
-        categoryMindset: "Tankesett",
+        categoryHydration: "💧 Væske",
+        categoryDistraction: "🔄 Avledning",
+        categoryMindset: "🧠 Tankesett",
         helpMeNow: "Hjelp meg nå",
         saveAsFavorite: "Lagre som favoritt",
-        savedAsFavorite: "Lagret som favoritt!",
+        savedAsFavorite: "Lagret!",
         alreadySaved: "Allerede lagret!",
         yourTip: "Ditt tips",
         savedFavorites: "Lagrede favoritter",
         noFavoritesYet: "Ingen favoritter lagret ennå.",
         clickHelpMe: "Klikk \"Hjelp meg nå\" for å få et nyttig tips!",
-        remove: "Fjern"
+        remove: "🗑️"
     }
 };
 
@@ -377,7 +377,7 @@ function displayFavorites() {
         
         return `<div class="favorite-item" draggable="true" data-index="${actualIndex}">
             <p><strong>${categoryName}:</strong> ${translatedTip.text}</p>
-            <button onclick="removeFavorite(${actualIndex})" class="remove-btn" style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem; min-height: 44px; min-width: 60px;">${translations[currentLanguage].remove}</button>
+            <button onclick="removeFavorite(${actualIndex})" class="remove-btn" title="${translations[currentLanguage].remove}">🗑️</button>
         </div>`;
     }).join('');
     
@@ -405,6 +405,7 @@ saveFavoriteButton.addEventListener('click', saveFavorite);
 let draggedElement = null;
 let touchStartY = 0;
 let touchStartX = 0;
+let dragGhost = null;
 
 function addDragAndDropListeners() {
     const favoriteItems = document.querySelectorAll('.favorite-item');
@@ -425,14 +426,47 @@ function addDragAndDropListeners() {
 
 function handleDragStart(e) {
     draggedElement = this;
-    this.style.opacity = '0.5';
+    this.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.outerHTML);
+    
+    // Create drag ghost
+    createDragGhost(this, e.clientX, e.clientY);
+    
+    // Hide the default drag image
+    const dragImage = document.createElement('div');
+    dragImage.style.opacity = '0';
+    dragImage.style.position = 'absolute';
+    dragImage.style.top = '-1000px';
+    document.body.appendChild(dragImage);
+    e.dataTransfer.setDragImage(dragImage, 0, 0);
+    
+    // Add mouse move listener for desktop
+    document.addEventListener('dragover', updateGhostPosition);
 }
 
 function handleDragOver(e) {
     if (e.preventDefault) {
         e.preventDefault();
     }
+    
+    if (this !== draggedElement) {
+        // Clear previous indicators
+        document.querySelectorAll('.favorite-item').forEach(item => {
+            item.classList.remove('drag-over', 'drag-over-bottom');
+        });
+        
+        // Add drop indicator based on mouse position
+        const rect = this.getBoundingClientRect();
+        const midY = rect.top + rect.height / 2;
+        
+        if (e.clientY < midY) {
+            this.classList.add('drag-over');
+        } else {
+            this.classList.add('drag-over-bottom');
+        }
+    }
+    
     e.dataTransfer.dropEffect = 'move';
     return false;
 }
@@ -442,15 +476,28 @@ function handleDrop(e) {
         e.stopPropagation();
     }
     
+    // Clear all drag indicators
+    document.querySelectorAll('.favorite-item').forEach(item => {
+        item.classList.remove('drag-over', 'drag-over-bottom', 'dragging');
+    });
+    
     if (draggedElement !== this) {
         const favorites = getFavorites();
         const draggedIndex = parseInt(draggedElement.dataset.index);
         const targetIndex = parseInt(this.dataset.index);
         
-        // Swap items in array
+        // Determine insertion point based on drop position
+        const rect = this.getBoundingClientRect();
+        const midY = rect.top + rect.height / 2;
+        const insertIndex = e.clientY < midY ? targetIndex : targetIndex + 1;
+        
+        // Move item in array
         const draggedItem = favorites[draggedIndex];
         favorites.splice(draggedIndex, 1);
-        favorites.splice(targetIndex, 0, draggedItem);
+        
+        // Adjust insert index if we removed an item before it
+        const finalInsertIndex = draggedIndex < insertIndex ? insertIndex - 1 : insertIndex;
+        favorites.splice(finalInsertIndex, 0, draggedItem);
         
         // Save updated order
         setStorage('cravingsFavorites', JSON.stringify(favorites));
@@ -461,7 +508,14 @@ function handleDrop(e) {
 }
 
 function handleDragEnd(e) {
-    this.style.opacity = '1';
+    // Clear all drag states
+    document.querySelectorAll('.favorite-item').forEach(item => {
+        item.classList.remove('dragging', 'drag-over', 'drag-over-bottom');
+    });
+    
+    // Remove ghost and cleanup
+    removeDragGhost();
+    document.removeEventListener('dragover', updateGhostPosition);
     draggedElement = null;
 }
 
@@ -476,17 +530,25 @@ function handleTouchStart(e) {
     const touch = e.touches[0];
     touchStartX = touch.clientX;
     touchStartY = touch.clientY;
-    this.style.opacity = '0.5';
+    this.classList.add('dragging');
+    
+    // Create drag ghost for touch
+    createDragGhost(this, touch.clientX, touch.clientY);
+    
     e.preventDefault();
 }
 
 function handleTouchMove(e) {
     if (!draggedElement) return;
     
-    // Check if we've moved enough to consider this a drag (not a tap)
     const touch = e.touches[0];
     const deltaX = Math.abs(touch.clientX - touchStartX);
     const deltaY = Math.abs(touch.clientY - touchStartY);
+    
+    // Update ghost position
+    if (dragGhost) {
+        updateGhostPosition(e);
+    }
     
     // Only start drag behavior if moved more than 10px
     if (deltaX < 10 && deltaY < 10) {
@@ -497,19 +559,18 @@ function handleTouchMove(e) {
     const favoriteItem = elementBelow?.closest('.favorite-item');
     
     if (favoriteItem && favoriteItem !== draggedElement) {
-        // Add visual feedback
+        // Clear previous indicators
         document.querySelectorAll('.favorite-item').forEach(item => {
-            item.style.borderTop = '';
-            item.style.borderBottom = '';
+            item.classList.remove('drag-over', 'drag-over-bottom');
         });
         
         const rect = favoriteItem.getBoundingClientRect();
         const midY = rect.top + rect.height / 2;
         
         if (touch.clientY < midY) {
-            favoriteItem.style.borderTop = '3px solid #007bff';
+            favoriteItem.classList.add('drag-over');
         } else {
-            favoriteItem.style.borderBottom = '3px solid #007bff';
+            favoriteItem.classList.add('drag-over-bottom');
         }
     }
     
@@ -524,12 +585,13 @@ function handleTouchEnd(e) {
     const deltaX = Math.abs(touch.clientX - touchStartX);
     const deltaY = Math.abs(touch.clientY - touchStartY);
     
-    // Clear visual feedback
+    // Clear all drag states
     document.querySelectorAll('.favorite-item').forEach(item => {
-        item.style.borderTop = '';
-        item.style.borderBottom = '';
-        item.style.opacity = '1';
+        item.classList.remove('dragging', 'drag-over', 'drag-over-bottom');
     });
+    
+    // Remove ghost
+    removeDragGhost();
     
     // If it was a small movement, don't treat it as a drag (allow button clicks)
     if (deltaX < 10 && deltaY < 10) {
@@ -613,6 +675,52 @@ function updateUILanguage() {
 function detectBrowserLanguage() {
     const browserLang = navigator.language || navigator.languages[0];
     return browserLang.startsWith('no') ? 'no' : 'en';
+}
+
+// Drag ghost helper functions
+function createDragGhost(element, x, y) {
+    // Remove any existing ghost
+    removeDragGhost();
+    
+    // Create ghost element
+    dragGhost = element.cloneNode(true);
+    dragGhost.classList.remove('dragging', 'drag-over', 'drag-over-bottom');
+    dragGhost.classList.add('drag-ghost');
+    
+    // Remove any event listeners from the ghost
+    const ghostButtons = dragGhost.querySelectorAll('button');
+    ghostButtons.forEach(btn => btn.remove());
+    
+    // Position ghost at cursor/touch point
+    dragGhost.style.left = (x - 50) + 'px';
+    dragGhost.style.top = (y - 30) + 'px';
+    
+    document.body.appendChild(dragGhost);
+}
+
+function updateGhostPosition(e) {
+    if (!dragGhost) return;
+    
+    let x, y;
+    if (e.touches && e.touches[0]) {
+        // Touch event
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+    } else {
+        // Mouse event
+        x = e.clientX;
+        y = e.clientY;
+    }
+    
+    dragGhost.style.left = (x - 50) + 'px';
+    dragGhost.style.top = (y - 30) + 'px';
+}
+
+function removeDragGhost() {
+    if (dragGhost) {
+        dragGhost.remove();
+        dragGhost = null;
+    }
 }
 
 // Initialize app on page load

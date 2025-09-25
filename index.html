@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mitt Valg - Cravings Helper</title>
+    <title>My Choice - Cravings Helper</title>
     <meta name="description" content="Bilingual app to help manage cravings with practical tips in English and Norwegian">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -27,26 +32,30 @@
     <!-- Apple Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Mitt Valg">
+    <meta name="apple-mobile-web-app-title" content="My Choice">
     
     <!-- Theme Colors -->
-    <meta name="theme-color" content="#007bff">
-    <meta name="msapplication-TileColor" content="#007bff">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="msapplication-TileColor" content="#4CAF50">
     <meta name="msapplication-TileImage" content="logo.png">
     
     <!-- Additional PWA Meta Tags -->
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Mitt Valg">
+    <meta name="application-name" content="My Choice">
     
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="header-content">
-            <h1 id="appTitle">Cravings Helper</h1>
+            <h1 id="appTitle">My Choice</h1>
             <div class="language-switcher">
-                <button id="langEN" class="lang-btn active" onclick="switchLanguage('en')">EN</button>
-                <button id="langNO" class="lang-btn" onclick="switchLanguage('no')">NO</button>
+                <button id="langEN" class="lang-btn active" onclick="switchLanguage('en')" title="English">
+                    <img src="icons/us.svg" alt="US Flag" class="flag-icon">
+                </button>
+                <button id="langNO" class="lang-btn" onclick="switchLanguage('no')" title="Norwegian">
+                    <img src="icons/no.svg" alt="Norwegian Flag" class="flag-icon">
+                </button>
             </div>
         </div>
     </header>
@@ -55,22 +64,27 @@
         <div class="controls">
             <select id="categorySelect">
                 <option value="All" data-en="All" data-no="Alle">All</option>
-                <option value="Hydration" data-en="Hydration" data-no="Væske">Hydration</option>
-                <option value="Distraction" data-en="Distraction" data-no="Avledning">Distraction</option>
-                <option value="Mindset" data-en="Mindset" data-no="Tankesett">Mindset</option>
+                <option value="Hydration" data-en="Hydration" data-no="Væske">💧 Hydration</option>
+                <option value="Distraction" data-en="Distraction" data-no="Avledning">🔄 Distraction</option>
+                <option value="Mindset" data-en="Mindset" data-no="Tankesett">🧠 Mindset</option>
             </select>
-            <button id="helpButton">Help Me Now</button>
+            <button id="helpButton">
+                <span id="helpButtonText">Help Me Now</span>
+            </button>
         </div>
 
-        <section id="tipSection">
+        <section id="tipSection" class="card">
             <h2 id="yourTipTitle">Your Tip</h2>
             <div id="tipDisplay">
                 <p id="clickHelpText">Click "Help Me Now" to get a helpful tip!</p>
             </div>
-            <button id="saveFavoriteButton" style="display: none;">Save as Favorite</button>
+            <button id="saveFavoriteButton" style="display: none;">
+                <span>💾</span>
+                <span id="saveButtonText">Save as Favorite</span>
+            </button>
         </section>
 
-        <section id="favoritesSection">
+        <section id="favoritesSection" class="card">
             <h2 id="savedFavoritesTitle">Saved Favorites</h2>
             <div id="favoritesList">
                 <p id="noFavoritesText">No favorites saved yet.</p>
