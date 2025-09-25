@@ -2,27 +2,27 @@
   "name": "Mitt Valg - Cravings Helper",
   "short_name": "Mitt Valg",
   "description": "A bilingual app to help manage cravings with practical tips in English and Norwegian",
-  "start_url": "/",
+  "start_url": "/JanInc/",
   "display": "standalone",
   "background_color": "#f8f9fa",
   "theme_color": "#007bff",
   "orientation": "portrait",
-  "scope": "/",
+  "scope": "/JanInc/",
   "lang": "en",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "/JanInc/logo.png",
       "sizes": "any",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icons/icon-192.png",
+      "src": "/JanInc/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/icons/icon-512.png", 
+      "src": "/JanInc/icons/icon-512.png", 
       "sizes": "512x512",
       "type": "image/png"
     }
