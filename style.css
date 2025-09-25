@@ -318,6 +318,29 @@ section h2 {
     cursor: grabbing;
 }
 
+.remove-btn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.remove-btn:hover {
+    background-color: #c82333 !important;
+}
+
+.remove-btn:active {
+    background-color: #bd2130 !important;
+    transform: scale(0.95);
+}
+
+@media (max-width: 480px) {
+    .remove-btn {
+        min-height: 48px !important;
+        min-width: 70px !important;
+        padding: 0.75rem 1rem !important;
+        font-size: 0.95rem !important;
+    }
+}
+
 /* Mobile-first responsive design */
 @media (min-width: 768px) {
     main {

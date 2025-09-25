@@ -377,7 +377,7 @@ function displayFavorites() {
         
         return `<div class="favorite-item" draggable="true" data-index="${actualIndex}">
             <p><strong>${categoryName}:</strong> ${translatedTip.text}</p>
-            <button onclick="removeFavorite(${actualIndex})" style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem;">${translations[currentLanguage].remove}</button>
+            <button onclick="removeFavorite(${actualIndex})" class="remove-btn" style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem; min-height: 44px; min-width: 60px;">${translations[currentLanguage].remove}</button>
         </div>`;
     }).join('');
     
@@ -467,6 +467,11 @@ function handleDragEnd(e) {
 
 // Mobile touch handlers
 function handleTouchStart(e) {
+    // Don't start drag if touch is on a button
+    if (e.target.tagName === 'BUTTON') {
+        return;
+    }
+    
     draggedElement = this;
     const touch = e.touches[0];
     touchStartX = touch.clientX;
@@ -478,7 +483,16 @@ function handleTouchStart(e) {
 function handleTouchMove(e) {
     if (!draggedElement) return;
     
+    // Check if we've moved enough to consider this a drag (not a tap)
     const touch = e.touches[0];
+    const deltaX = Math.abs(touch.clientX - touchStartX);
+    const deltaY = Math.abs(touch.clientY - touchStartY);
+    
+    // Only start drag behavior if moved more than 10px
+    if (deltaX < 10 && deltaY < 10) {
+        return;
+    }
+    
     const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
     const favoriteItem = elementBelow?.closest('.favorite-item');
     
@@ -505,6 +519,11 @@ function handleTouchMove(e) {
 function handleTouchEnd(e) {
     if (!draggedElement) return;
     
+    // Check if this was actually a drag or just a tap
+    const touch = e.changedTouches[0];
+    const deltaX = Math.abs(touch.clientX - touchStartX);
+    const deltaY = Math.abs(touch.clientY - touchStartY);
+    
     // Clear visual feedback
     document.querySelectorAll('.favorite-item').forEach(item => {
         item.style.borderTop = '';
@@ -512,7 +531,12 @@ function handleTouchEnd(e) {
         item.style.opacity = '1';
     });
     
-    const touch = e.changedTouches[0];
+    // If it was a small movement, don't treat it as a drag (allow button clicks)
+    if (deltaX < 10 && deltaY < 10) {
+        draggedElement = null;
+        return; // Don't prevent default, allow normal click events
+    }
+    
     const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
     const targetItem = elementBelow?.closest('.favorite-item');
     
