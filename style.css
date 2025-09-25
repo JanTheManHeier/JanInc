@@ -285,6 +285,43 @@ main {
     box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
 }
 
+.favorite-item:active {
+    cursor: grabbing;
+}
+
+/* Drag states */
+.favorite-item.dragging {
+    opacity: 0.3;
+    transform: scale(0.95);
+    transition: none;
+}
+
+.favorite-item.drag-over {
+    border-top: 3px solid #4CAF50;
+    margin-top: 1rem;
+}
+
+.favorite-item.drag-over-bottom {
+    border-bottom: 3px solid #4CAF50;
+    margin-bottom: 1rem;
+}
+
+/* Floating drag ghost */
+.drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border-left: 4px solid #4CAF50;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: rotate(3deg) scale(1.05);
+    transition: none;
+    max-width: 350px;
+    opacity: 0.9;
+}
+
 @media (max-width: 480px) {
     header {
         padding: 1rem;
