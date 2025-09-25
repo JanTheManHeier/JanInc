@@ -1,5 +1,41 @@
-// Array of tips with text and category
-const tips = [
+// Language support
+const translations = {
+    en: {
+        appTitle: "Cravings Helper",
+        categoryAll: "All",
+        categoryHydration: "Hydration",
+        categoryDistraction: "Distraction", 
+        categoryMindset: "Mindset",
+        helpMeNow: "Help Me Now",
+        saveAsFavorite: "Save as Favorite",
+        savedAsFavorite: "Saved as Favorite!",
+        alreadySaved: "Already Saved!",
+        yourTip: "Your Tip",
+        savedFavorites: "Saved Favorites",
+        noFavoritesYet: "No favorites saved yet.",
+        clickHelpMe: "Click \"Help Me Now\" to get a helpful tip!",
+        remove: "Remove"
+    },
+    no: {
+        appTitle: "Mitt Valg",
+        categoryAll: "Alle",
+        categoryHydration: "Væske",
+        categoryDistraction: "Avledning",
+        categoryMindset: "Tankesett",
+        helpMeNow: "Hjelp meg nå",
+        saveAsFavorite: "Lagre som favoritt",
+        savedAsFavorite: "Lagret som favoritt!",
+        alreadySaved: "Allerede lagret!",
+        yourTip: "Ditt tips",
+        savedFavorites: "Lagrede favoritter",
+        noFavoritesYet: "Ingen favoritter lagret ennå.",
+        clickHelpMe: "Klikk \"Hjelp meg nå\" for å få et nyttig tips!",
+        remove: "Fjern"
+    }
+};
+
+// Array of tips with text and category (English)
+const tipsEN = [
     // Hydration tips
     { text: "💧 Drink a large glass of water slowly. Sometimes cravings are just thirst in disguise.", category: "hydration" },
     { text: "🍋 Try sparkling water with a slice of lemon or lime for a refreshing alternative.", category: "hydration" },
@@ -67,6 +103,76 @@ const tips = [
     { text: "💎 Remember: 'Discomfort is temporary, but results last.'", category: "mindset" }
 ];
 
+// Norwegian tips
+const tipsNO = [
+    // Væsketips
+    { text: "💧 Drikk et stort glass vann sakte. Noen ganger er sug bare tørst i forkledning.", category: "hydration" },
+    { text: "🍋 Prøv boblende vann med en skive sitron eller lime som et forfriskende alternativ.", category: "hydration" },
+    { text: "🍵 Ta deg en kopp urte-te. Varmen og smaken kan tilfredsstille suget ditt.", category: "hydration" },
+    { text: "🥥 Drikk kokosmelk for naturlige elektrolytter og en mild søt smak.", category: "hydration" },
+    { text: "🧊 Prøv isskald vann med agurk-skiver for en spa-lignende forfriskende opplevelse.", category: "hydration" },
+    { text: "🌡️ Sipp på varmt vann med en skvett sitron for å roe magen.", category: "hydration" },
+    { text: "🫐 Tilsett bær eller mynte i vannet ditt for en naturlig smaksboost.", category: "hydration" },
+    { text: "🍶 Bær en vannflaske og ta små slurker hvert par minutt.", category: "hydration" },
+    { text: "🍽️ Drikk et glass vann før hvert måltid for å føle deg mer mett.", category: "hydration" },
+    { text: "✨ Prøv kalorifattig smakstilsatt vann hvis du har sug etter noe søtt.", category: "hydration" },
+    { text: "🍲 Ta en varm buljongsbasert drikk for å lindre sult.", category: "hydration" },
+    { text: "🔄 Veksle mellom vann og urte-te gjennom dagen.", category: "hydration" },
+    { text: "🧂 Tilsett en klype salt i vannet hvis du har svettet mye.", category: "hydration" },
+    { text: "⏰ Drikk vann før du bestemmer deg for å snakse—vent 10 minutter etterpå.", category: "hydration" },
+    { text: "🖥️ Ha et glass vann på skrivebordet og fyll det opp ofte.", category: "hydration" },
+    { text: "🥂 Prøv boblende vann i et fancy glass for å gjøre det spesielt.", category: "hydration" },
+    { text: "🥤 Drikk vann med sugerør—det kan få deg til å drikke mer uten å legge merke til det.", category: "hydration" },
+    { text: "🌅 Start dagen med et stort glass vann før kaffe eller te.", category: "hydration" },
+    { text: "⏲️ Sett en timer for å minne deg selv på å drikke vann hver time.", category: "hydration" },
+    { text: "🎯 Utfordre deg selv til å tømme en vannflaske før lunsj.", category: "hydration" },
+
+    // Avledningstips
+    { text: "🌬️ Ta 10 dype åndedrag og tell dem sakte. Fokuser bare på pusten din.", category: "distraction" },
+    { text: "🚶 Gå en 5-minutters tur, selv om det bare er rundt hjemmet eller kontoret.", category: "distraction" },
+    { text: "📞 Ring eller send melding til noen du bryr deg om. Kontakt kan endre fokuset ditt.", category: "distraction" },
+    { text: "🏃 Gjør 20 hopp eller push-ups for å få blodet i sirkulasjon.", category: "distraction" },
+    { text: "🎵 Lytt til favorittsangen din og fokuser virkelig på teksten eller melodien.", category: "distraction" },
+    { text: "📝 Skriv ned 3 ting du er takknemlig for akkurat nå.", category: "distraction" },
+    { text: "🗂️ Organiser et lite område av hjemmet ditt—som en skuff eller hylle.", category: "distraction" },
+    { text: "🧩 Spill et raskt hjernespill eller puslespill på telefonen din.", category: "distraction" },
+    { text: "🪥 Puss tennene for å nullstille smaksløkene og friske opp munnen.", category: "distraction" },
+    { text: "🧘 Gjør en rask tøyningsrutine for å slippe spenning.", category: "distraction" },
+    { text: "😂 Se en kort morsom video for å løfte stemningen.", category: "distraction" },
+    { text: "🌳 Gå ut og få litt frisk luft i noen få minutter.", category: "distraction" },
+    { text: "👕 Brett klær eller gjør en liten husoppgave.", category: "distraction" },
+    { text: "📖 Les noen få sider av en bok eller en artikkel du liker.", category: "distraction" },
+    { text: "✏️ Skisser eller krible noe kreativt i 5 minutter.", category: "distraction" },
+    { text: "👀 Øv på en rask mindfulness-øvelse—legg merke til 5 ting rundt deg.", category: "distraction" },
+    { text: "🥗 Planlegg neste måltid på en sunn måte i stedet for å snakse.", category: "distraction" },
+    { text: "📔 Skriv ned suget ditt i en dagbok og hvordan du føler deg.", category: "distraction" },
+    { text: "🏠 Gjør en rask opprydning av arbeidsplassen eller stuen.", category: "distraction" },
+    { text: "📸 Se på gamle bilder som gjør deg glad.", category: "distraction" },
+
+    // Tankesett-tips
+    { text: "⏳ Minn deg selv: 'Dette suget er midlertidig og vil gå over.'", category: "mindset" },
+    { text: "❓ Spør deg selv: 'Hva er jeg egentlig sulten på?' Det kan være trøst, ikke mat.", category: "mindset" },
+    { text: "🎯 Husk målene dine og hvorfor du startet denne reisen.", category: "mindset" },
+    { text: "💪 Si til deg selv: 'Jeg har kontroll over valgene mine og jeg velger det som er best for meg.'", category: "mindset" },
+    { text: "😊 Tenk på hvor stolt du vil føle deg om 30 minutter hvis du ikke gir etter for dette suget.", category: "mindset" },
+    { text: "🤗 Øv selvmedfølelse. Du er menneske, og sug er normalt.", category: "mindset" },
+    { text: "🔮 Visualiser ditt fremtidige selv som oppnår helsemålene dine.", category: "mindset" },
+    { text: "💭 Gjenta en positiv bekreftelse som 'Jeg er sterkere enn dette suget.'", category: "mindset" },
+    { text: "🚫 Minn deg selv på at én snacks ikke vil fikse stress eller kjedsomhet.", category: "mindset" },
+    { text: "📈 Tenk på hvor mye innsats du allerede har lagt ned i fremgangen din.", category: "mindset" },
+    { text: "🤔 Spør: 'Vil dette valget bringe meg nærmere målet mitt eller lenger unna?'", category: "mindset" },
+    { text: "🌅 Forestill deg hvor godt det føles å våkne i morgen uten anger.", category: "mindset" },
+    { text: "⏱️ Fokuser på at sug vanligvis bare varer 10-15 minutter.", category: "mindset" },
+    { text: "⏰ Si til deg selv: 'Jeg kan spise senere hvis jeg fortsatt vil ha det, men jeg venter nå.'", category: "mindset" },
+    { text: "🎉 Feir små seire—hvert sug du motstår er fremgang.", category: "mindset" },
+    { text: "⚡ Tenk på ikke-vekt-relaterte seire du sikter mot (energi, selvtillit).", category: "mindset" },
+    { text: "🆚 Minn deg selv på at sult og sug ikke er det samme.", category: "mindset" },
+    { text: "🍽️ Se for deg at du nyter et sunt måltid senere i stedet for å snakse nå.", category: "mindset" },
+    { text: "✨ Si: 'Jeg fortjener å føle meg bra, ikke skyldig.'", category: "mindset" },
+    { text: "💎 Husk: 'Ubehag er midlertidig, men resultater varer.'", category: "mindset" }
+];
+
+let currentLanguage = 'en';
 let currentTip = null;
 
 // DOM elements
@@ -96,9 +202,67 @@ function getStorage(name) {
     }
 }
 
+// Get current tips based on language
+function getCurrentTips() {
+    return currentLanguage === 'en' ? tipsEN : tipsNO;
+}
+
+// Function to translate a tip from one language to another
+function translateTip(tip, targetLanguage) {
+    // If tip has stored index, use it for reliable translation
+    if (tip.tipIndex !== undefined && tip.tipIndex >= 0) {
+        const targetArray = targetLanguage === 'en' ? tipsEN : tipsNO;
+        if (targetArray[tip.tipIndex]) {
+            return {
+                text: targetArray[tip.tipIndex].text,
+                category: targetArray[tip.tipIndex].category
+            };
+        }
+    }
+    
+    // Fallback: try to find the tip by matching text and category
+    let tipIndex = -1;
+    
+    // Check English array first
+    tipIndex = tipsEN.findIndex(t => 
+        t.text === tip.text && t.category === tip.category
+    );
+    
+    if (tipIndex !== -1) {
+        // Found in English array
+        const targetArray = targetLanguage === 'en' ? tipsEN : tipsNO;
+        if (targetArray[tipIndex]) {
+            return {
+                text: targetArray[tipIndex].text,
+                category: targetArray[tipIndex].category
+            };
+        }
+    } else {
+        // Try Norwegian array
+        tipIndex = tipsNO.findIndex(t => 
+            t.text === tip.text && t.category === tip.category
+        );
+        
+        if (tipIndex !== -1) {
+            const targetArray = targetLanguage === 'en' ? tipsEN : tipsNO;
+            if (targetArray[tipIndex]) {
+                return {
+                    text: targetArray[tipIndex].text,
+                    category: targetArray[tipIndex].category
+                };
+            }
+        }
+    }
+    
+    // If translation fails, return original tip
+    console.log('Translation failed for tip:', tip);
+    return tip;
+}
+
 // Get random tip based on selected category
 function getRandomTip() {
     const selectedCategory = categorySelect.value.toLowerCase();
+    const tips = getCurrentTips();
     let filteredTips = tips;
 
     if (selectedCategory !== 'all') {
@@ -111,7 +275,11 @@ function getRandomTip() {
 
 // Display tip
 function displayTip(tip) {
-    tipDisplay.innerHTML = `<p><strong>${tip.category.charAt(0).toUpperCase() + tip.category.slice(1)}:</strong> ${tip.text}</p>`;
+    // Get translated category name
+    const categoryKey = `category${tip.category.charAt(0).toUpperCase() + tip.category.slice(1)}`;
+    const categoryName = translations[currentLanguage][categoryKey] || tip.category;
+    
+    tipDisplay.innerHTML = `<p><strong>${categoryName}:</strong> ${tip.text}</p>`;
     
     // Reset button state
     saveFavoriteButton.style.display = 'block';
@@ -123,11 +291,11 @@ function displayTip(tip) {
     const isAlreadyFavorite = favorites.some(fav => fav.text === tip.text && fav.category === tip.category);
     
     if (isAlreadyFavorite) {
-        saveFavoriteButton.textContent = 'Already Saved!';
+        saveFavoriteButton.textContent = translations[currentLanguage].alreadySaved;
         saveFavoriteButton.style.backgroundColor = '#6c757d';
         saveFavoriteButton.disabled = true;
     } else {
-        saveFavoriteButton.textContent = 'Save as Favorite';
+        saveFavoriteButton.textContent = translations[currentLanguage].saveAsFavorite;
     }
     
     currentTip = tip;
@@ -139,21 +307,41 @@ function saveFavorite() {
 
     const favorites = getFavorites();
     
-    // Check if tip is already in favorites
-    const isAlreadyFavorite = favorites.some(fav => fav.text === currentTip.text && fav.category === currentTip.category);
+    // Find the tip index to store for easier translation
+    let tipIndex = -1;
+    const currentTips = getCurrentTips();
+    tipIndex = currentTips.findIndex(t => 
+        t.text === currentTip.text && t.category === currentTip.category
+    );
+    
+    // Create enhanced tip object with index for translation
+    const tipToSave = {
+        ...currentTip,
+        tipIndex: tipIndex,
+        originalLanguage: currentLanguage
+    };
+    
+    // Check if tip is already in favorites (check by index if available)
+    const isAlreadyFavorite = favorites.some(fav => {
+        if (fav.tipIndex !== undefined && fav.tipIndex === tipIndex) {
+            return true;
+        }
+        return fav.text === currentTip.text && fav.category === currentTip.category;
+    });
+    
     if (isAlreadyFavorite) {
-        saveFavoriteButton.textContent = 'Already Saved!';
+        saveFavoriteButton.textContent = translations[currentLanguage].alreadySaved;
         saveFavoriteButton.style.backgroundColor = '#6c757d';
         return;
     }
 
-    favorites.push(currentTip);
+    favorites.push(tipToSave);
     const saveSuccess = setStorage('cravingsFavorites', JSON.stringify(favorites));
     console.log('Save attempt:', saveSuccess, 'Favorites:', favorites);
     displayFavorites();
     
     // Update button to show saved state
-    saveFavoriteButton.textContent = 'Saved as Favorite!';
+    saveFavoriteButton.textContent = translations[currentLanguage].savedAsFavorite;
     saveFavoriteButton.style.backgroundColor = '#6c757d';
     saveFavoriteButton.disabled = true;
 }
@@ -170,7 +358,7 @@ function displayFavorites() {
     console.log('Displaying favorites:', favorites);
     
     if (favorites.length === 0) {
-        favoritesList.innerHTML = '<p>No favorites saved yet.</p>';
+        favoritesList.innerHTML = `<p id="noFavoritesText">${translations[currentLanguage].noFavoritesYet}</p>`;
         return;
     }
 
@@ -179,9 +367,17 @@ function displayFavorites() {
     
     favoritesList.innerHTML = reversedFavorites.map((tip, displayIndex) => {
         const actualIndex = favorites.length - 1 - displayIndex;
+        
+        // Translate the tip to current language for display
+        const translatedTip = translateTip(tip, currentLanguage);
+        
+        // Get translated category name
+        const categoryKey = `category${tip.category.charAt(0).toUpperCase() + tip.category.slice(1)}`;
+        const categoryName = translations[currentLanguage][categoryKey] || tip.category;
+        
         return `<div class="favorite-item" draggable="true" data-index="${actualIndex}">
-            <p><strong>${tip.category.charAt(0).toUpperCase() + tip.category.slice(1)}:</strong> ${tip.text}</p>
-            <button onclick="removeFavorite(${actualIndex})" style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem;">Remove</button>
+            <p><strong>${categoryName}:</strong> ${translatedTip.text}</p>
+            <button onclick="removeFavorite(${actualIndex})" style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem;">${translations[currentLanguage].remove}</button>
         </div>`;
     }).join('');
     
@@ -207,15 +403,23 @@ saveFavoriteButton.addEventListener('click', saveFavorite);
 
 // Drag and drop functionality
 let draggedElement = null;
+let touchStartY = 0;
+let touchStartX = 0;
 
 function addDragAndDropListeners() {
     const favoriteItems = document.querySelectorAll('.favorite-item');
     
     favoriteItems.forEach(item => {
+        // Desktop drag events
         item.addEventListener('dragstart', handleDragStart);
         item.addEventListener('dragover', handleDragOver);
         item.addEventListener('drop', handleDrop);
         item.addEventListener('dragend', handleDragEnd);
+        
+        // Mobile touch events
+        item.addEventListener('touchstart', handleTouchStart, { passive: false });
+        item.addEventListener('touchmove', handleTouchMove, { passive: false });
+        item.addEventListener('touchend', handleTouchEnd, { passive: false });
     });
 }
 
@@ -261,7 +465,140 @@ function handleDragEnd(e) {
     draggedElement = null;
 }
 
+// Mobile touch handlers
+function handleTouchStart(e) {
+    draggedElement = this;
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    this.style.opacity = '0.5';
+    e.preventDefault();
+}
+
+function handleTouchMove(e) {
+    if (!draggedElement) return;
+    
+    const touch = e.touches[0];
+    const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+    const favoriteItem = elementBelow?.closest('.favorite-item');
+    
+    if (favoriteItem && favoriteItem !== draggedElement) {
+        // Add visual feedback
+        document.querySelectorAll('.favorite-item').forEach(item => {
+            item.style.borderTop = '';
+            item.style.borderBottom = '';
+        });
+        
+        const rect = favoriteItem.getBoundingClientRect();
+        const midY = rect.top + rect.height / 2;
+        
+        if (touch.clientY < midY) {
+            favoriteItem.style.borderTop = '3px solid #007bff';
+        } else {
+            favoriteItem.style.borderBottom = '3px solid #007bff';
+        }
+    }
+    
+    e.preventDefault();
+}
+
+function handleTouchEnd(e) {
+    if (!draggedElement) return;
+    
+    // Clear visual feedback
+    document.querySelectorAll('.favorite-item').forEach(item => {
+        item.style.borderTop = '';
+        item.style.borderBottom = '';
+        item.style.opacity = '1';
+    });
+    
+    const touch = e.changedTouches[0];
+    const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+    const targetItem = elementBelow?.closest('.favorite-item');
+    
+    if (targetItem && targetItem !== draggedElement) {
+        const favorites = getFavorites();
+        const draggedIndex = parseInt(draggedElement.dataset.index);
+        const targetIndex = parseInt(targetItem.dataset.index);
+        
+        // Reorder items
+        const draggedItem = favorites[draggedIndex];
+        favorites.splice(draggedIndex, 1);
+        favorites.splice(targetIndex, 0, draggedItem);
+        
+        // Save and refresh
+        setStorage('cravingsFavorites', JSON.stringify(favorites));
+        displayFavorites();
+    }
+    
+    draggedElement = null;
+    e.preventDefault();
+}
+
+// Language switching functions
+function switchLanguage(lang) {
+    currentLanguage = lang;
+    setStorage('preferredLanguage', lang);
+    
+    // Update UI language
+    updateUILanguage();
+    
+    // Update language button states
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`lang${lang.toUpperCase()}`).classList.add('active');
+    
+    // Clear current tip if showing
+    if (currentTip) {
+        document.getElementById('tipDisplay').innerHTML = `<p id="clickHelpText">${translations[lang].clickHelpMe}</p>`;
+        document.getElementById('saveFavoriteButton').style.display = 'none';
+        currentTip = null;
+    }
+}
+
+function updateUILanguage() {
+    const t = translations[currentLanguage];
+    
+    // Update main UI elements
+    document.getElementById('appTitle').textContent = t.appTitle;
+    document.getElementById('helpButton').textContent = t.helpMeNow;
+    document.getElementById('yourTipTitle').textContent = t.yourTip;
+    document.getElementById('savedFavoritesTitle').textContent = t.savedFavorites;
+    
+    // Update category options
+    const categorySelect = document.getElementById('categorySelect');
+    categorySelect.options[0].textContent = t.categoryAll;
+    categorySelect.options[1].textContent = t.categoryHydration;
+    categorySelect.options[2].textContent = t.categoryDistraction;
+    categorySelect.options[3].textContent = t.categoryMindset;
+    
+    // Update placeholders and buttons
+    const clickHelpText = document.getElementById('clickHelpText');
+    if (clickHelpText) {
+        clickHelpText.textContent = t.clickHelpMe;
+    }
+    
+    const noFavoritesText = document.getElementById('noFavoritesText');
+    if (noFavoritesText) {
+        noFavoritesText.textContent = t.noFavoritesYet;
+    }
+    
+    // Refresh favorites display
+    displayFavorites();
+}
+
+function detectBrowserLanguage() {
+    const browserLang = navigator.language || navigator.languages[0];
+    return browserLang.startsWith('no') ? 'no' : 'en';
+}
+
 // Initialize app on page load
 document.addEventListener('DOMContentLoaded', () => {
+    // Check for saved language preference or detect browser language
+    const savedLanguage = getStorage('preferredLanguage');
+    currentLanguage = savedLanguage || detectBrowserLanguage();
+    
+    // Initialize UI
+    updateUILanguage();
+    switchLanguage(currentLanguage);
     displayFavorites();
 });

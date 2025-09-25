@@ -4,36 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cravings Helper</title>
+    
+    <!-- App Icon and PWA Meta Tags -->
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Cravings Helper">
+    <meta name="theme-color" content="#007bff">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Cravings Helper</h1>
+        <div class="header-content">
+            <h1 id="appTitle">Cravings Helper</h1>
+            <div class="language-switcher">
+                <button id="langEN" class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+                <button id="langNO" class="lang-btn" onclick="switchLanguage('no')">NO</button>
+            </div>
+        </div>
     </header>
 
     <main>
         <div class="controls">
             <select id="categorySelect">
-                <option value="All">All</option>
-                <option value="Hydration">Hydration</option>
-                <option value="Distraction">Distraction</option>
-                <option value="Mindset">Mindset</option>
+                <option value="All" data-en="All" data-no="Alle">All</option>
+                <option value="Hydration" data-en="Hydration" data-no="Væske">Hydration</option>
+                <option value="Distraction" data-en="Distraction" data-no="Avledning">Distraction</option>
+                <option value="Mindset" data-en="Mindset" data-no="Tankesett">Mindset</option>
             </select>
             <button id="helpButton">Help Me Now</button>
         </div>
 
         <section id="tipSection">
-            <h2>Your Tip</h2>
+            <h2 id="yourTipTitle">Your Tip</h2>
             <div id="tipDisplay">
-                <p>Click "Help Me Now" to get a helpful tip!</p>
+                <p id="clickHelpText">Click "Help Me Now" to get a helpful tip!</p>
             </div>
             <button id="saveFavoriteButton" style="display: none;">Save as Favorite</button>
         </section>
 
         <section id="favoritesSection">
-            <h2>Saved Favorites</h2>
+            <h2 id="savedFavoritesTitle">Saved Favorites</h2>
             <div id="favoritesList">
-                <p>No favorites saved yet.</p>
+                <p id="noFavoritesText">No favorites saved yet.</p>
             </div>
         </section>
     </main>
