@@ -1,6 +1,10 @@
 {
   "routes": [
     {
+      "route": "/api/*",
+      "allowedRoles": ["anonymous"]
+    },
+    {
       "route": "/SmartHandel/*",
       "allowedRoles": ["approved"]
     },
@@ -9,10 +13,18 @@
       "allowedRoles": ["approved"]
     }
   ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/api/*", "/mychoice/*", "*.js", "*.css", "*.png", "*.jpg", "*.svg", "*.ico", "*.json", "*.mp3", "*.mp4"]
+  },
   "responseOverrides": {
     "401": {
       "redirect": "/.auth/login/aad",
       "statusCode": 302
     }
+  },
+  "globalHeaders": {
+    "X-Frame-Options": "DENY",
+    "X-Content-Type-Options": "nosniff"
   }
 }

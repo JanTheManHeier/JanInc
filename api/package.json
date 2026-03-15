@@ -1,0 +1,8 @@
+{
+  "name": "janinc-api",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "tedious": "^18.0.0"
+  }
+}
