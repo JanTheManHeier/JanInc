@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>SmartHandel Test</title></head>
+<body>
+<h2>SmartHandel Test</h2>
+<div id="output">Loading...</div>
+<script src="db.js"></script>
+<script src="coop-receipt-parser.js"></script>
+<script src="receipt-parser.js"></script>
+<script src="pattern-engine.js"></script>
+<script src="suggestions.js"></script>
+<script src="insights.js"></script>
+<script src="receipt-data.js"></script>
+<script>
+async function test() {
+  const out = document.getElementById('output');
+  let html = '';
+  try {
+    html += '<p>1. DB init... ';
+    await db.init();
+    html += 'OK</p>';
+
+    html += '<p>2. Receipt data: ' + RECEIPT_DATA.receipts.length + ' receipts, ' + RECEIPT_DATA.purchases.length + ' purchases</p>';
+
+    html += '<p>3. Checking existing receipts... ';
+    const existing = await db.getAllReceipts();
+    html += existing.length + ' in DB</p>';
+
+    if (existing.length === 0) {
+      html += '<p>4. Importing receipt data... ';
+      out.innerHTML = html + 'importing...</p>';
+      const result = await loadReceiptData();
+      html += 'Done! ' + result.receipts + ' receipts, ' + result.purchases + ' purchases</p>';
+    } else {
+      html += '<p>4. Already imported, skipping</p>';
+    }
+
+    html += '<p>5. Loading all purchases... ';
+    const purchases = await db.getAllPurchases();
+    html += purchases.length + ' purchases loaded</p>';
+
+    html += '<p>6. Building frequency data... ';
+    const items = {};
+    for (const p of purchases) {
+      const key = p.normalizedName || p.itemName.toLowerCase();
+      if (!items[key]) items[key] = { name: p.itemName, category: p.category, dates: [], count: 0 };
+      items[key].dates.push(new Date(p.date));
+      items[key].count++;
+    }
+    html += Object.keys(items).length + ' unique items</p>';
+
+    html += '<p>7. Calculating suggestions... ';
+    const today = new Date();
+    const suggestions = [];
+    for (const [key, data] of Object.entries(items)) {
+      if (data.count < 3) continue;
+      data.dates.sort((a, b) => a - b);
+      const intervals = [];
+      for (let i = 1; i < data.dates.length; i++) {
+        intervals.push((data.dates[i] - data.dates[i - 1]) / (1000 * 60 * 60 * 24));
+      }
+      const avgDays = intervals.reduce((s, v) => s + v, 0) / intervals.length;
+      const lastDate = data.dates[data.dates.length - 1];
+      const daysSinceLast = (today - lastDate) / (1000 * 60 * 60 * 24);
+      const urgency = daysSinceLast / avgDays;
+      if (avgDays < 3) continue; // skip noise from same-day purchases
+      if (['Diverse', 'Hygiene', 'Rengjøringsartikler'].includes(data.category)) continue;
+      if (urgency >= 0.8) {
+        suggestions.push({ name: data.name, category: data.category, urgency, avgDays: Math.round(avgDays), daysSinceLast: Math.round(daysSinceLast), overdue: urgency >= 1.0 });
+      }
+    }
+    suggestions.sort((a, b) => b.urgency - a.urgency);
+    html += suggestions.length + ' suggestions</p>';
+
+    html += '<h3>Today\'s shopping suggestions:</h3><ul>';
+    suggestions.slice(0, 30).forEach(s => {
+      html += '<li><strong>' + s.name + '</strong> [' + s.category + '] - ' + (s.overdue ? 'OVERDUE' : 'due soon') + ' (last: ' + s.daysSinceLast + 'd ago, avg: ' + s.avgDays + 'd)</li>';
+    });
+    html += '</ul>';
+
+    html += '<p style="color:green;font-weight:bold">ALL TESTS PASSED</p>';
+  } catch(e) {
+    html += '<p style="color:red">ERROR: ' + e.message + '<br>' + e.stack + '</p>';
+  }
+  out.innerHTML = html;
+}
+test();
+</script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TurPakker - Pakkeliste for skiturer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- MSAL.js for Microsoft auth -->
+  <script src="https://alcdn.msauth.net/browser/2.38.0/js/msal-browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Snowflake animation -->
+  <div class="snowflakes" id="snowflakes"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="app-logo">
+      <div class="logo-icon"></div>
+      <span>TurPakker</span>
+    </div>
+    <div class="header-actions">
+      <span id="user-name" style="display:none"></span>
+      <button id="auth-btn">Logg inn med Microsoft</button>
+    </div>
+  </header>
+
+  <!-- Tab navigation -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="plan">Planlegg Tur</button>
+    <button class="tab-btn" data-tab="packing">Pakkeliste</button>
+    <button class="tab-btn" data-tab="weather">V&aelig;r</button>
+    <button class="tab-btn" data-tab="trips">Mine Turer</button>
+  </nav>
+
+  <!-- Main content -->
+  <main class="app-main">
+
+    <!-- Plan Trip Tab -->
+    <section id="tab-plan" class="tab-content active">
+      <h2 style="margin-bottom: 20px; color: var(--primary-dark);">Planlegg din skitur</h2>
+
+      <div class="form-group">
+        <label for="trip-name">Turnavn (valgfritt)</label>
+        <input type="text" id="trip-name" placeholder="F.eks. Vinterferie 2026">
+      </div>
+
+      <div class="form-group">
+        <label for="destination">Reisem&aring;l</label>
+        <select id="destination">
+          <option value="">Velg reisem&aring;l...</option>
+        </select>
+        <div id="destination-custom">
+          <input type="text" id="destination-custom-input" placeholder="Skriv inn stedsnavnet">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="start-date">Fra dato</label>
+          <input type="date" id="start-date">
+        </div>
+        <div class="form-group">
+          <label for="end-date">Til dato</label>
+          <input type="date" id="end-date">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="trip-type">Turtype</label>
+        <select id="trip-type">
+          <option value="alpint">Alpint (Downhill)</option>
+          <option value="langrenn">Langrenn (Cross-country)</option>
+          <option value="topptur">Topptur/Randonee (Ski touring)</option>
+          <option value="hyttetur">Hyttetur (Cabin trip)</option>
+        </select>
+      </div>
+
+      <div class="form-section">
+        <h3>Familiemedlemmer</h3>
+        <div id="family-members"></div>
+        <button class="btn btn-secondary" id="add-member-btn" style="margin-top: 8px;">+ Legg til medlem</button>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-primary" id="generate-list-btn">Generer pakkeliste</button>
+        <button class="btn btn-accent" id="load-today-btn" onclick="App.loadTodaysTrip()">Last inn dagens tur: Kvaløyvågen → Finnvikdalen</button>
+      </div>
+    </section>
+
+    <!-- Packing List Tab -->
+    <section id="tab-packing" class="tab-content">
+      <div id="packing-list">
+        <div class="empty-state">
+          <p>Ingen pakkeliste enn&aring;.</p>
+          <p>G&aring; til "Planlegg Tur" og sett opp din neste skitur!</p>
+        </div>
+      </div>
+      <div class="action-buttons" style="margin-top: 20px;">
+        <button class="btn btn-primary" id="sync-todo-btn" style="display:none" onclick="App.syncToTodo()">Synk til To Do</button>
+        <button class="btn btn-secondary" onclick="App.saveCurrentTrip()">Lagre tur</button>
+        <button class="btn btn-secondary" onclick="App.printList()">Skriv ut</button>
+      </div>
+    </section>
+
+    <!-- Weather Tab -->
+    <section id="tab-weather" class="tab-content">
+      <div id="weather-content">
+        <div class="empty-state">
+          <p>Planlegg en tur f&oslash;rst for &aring; se v&aelig;rmelding.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- My Trips Tab -->
+    <section id="tab-trips" class="tab-content">
+      <h2 style="margin-bottom: 20px; color: var(--primary-dark);">Mine lagrede turer</h2>
+      <div id="saved-trips">
+        <div class="empty-state">
+          <p>Ingen lagrede turer enn&aring;.</p>
+          <p>Planlegg en tur og lagre den for gjenbruk!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts (order matters) -->
+  <script src="packing-lists.js"></script>
+  <script src="auth.js"></script>
+  <script src="todo-api.js"></script>
+  <script src="weather.js"></script>
+  <script src="trip-planner.js"></script>
+  <script src="app.js"></script>
+
+  <!-- Snowflake generator -->
+  <script>
+    (function() {
+      const container = document.getElementById('snowflakes');
+      const flakes = ['\u2744', '\u2745', '\u2746', '\u00B7'];
+      for (let i = 0; i < 20; i++) {
+        const el = document.createElement('span');
+        el.className = 'snowflake';
+        el.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.animationDuration = (8 + Math.random() * 12) + 's';
+        el.style.animationDelay = Math.random() * 10 + 's';
+        el.style.fontSize = (0.6 + Math.random() * 0.8) + 'rem';
+        container.appendChild(el);
+      }
+    })();
+  </script>
+
+</body>
+</html>

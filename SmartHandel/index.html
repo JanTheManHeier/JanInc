@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartHandel - Smart handleliste</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- MSAL.js 2.x for Microsoft Auth -->
+  <script src="msal-browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="app-logo">
+      <div class="app-logo-icon"></div>
+      <span>SmartHandel</span>
+    </div>
+    <div class="auth-section">
+      <span id="auth-status"></span>
+      <button id="auth-btn" onclick="auth.isLoggedIn() ? auth.logout() : auth.login()">Logg inn</button>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="app-nav">
+    <button class="nav-tab active" data-tab="shopping">
+      <span class="nav-tab-icon">&#128722;</span>
+      Handleliste
+    </button>
+    <button class="nav-tab" data-tab="receipts">
+      <span class="nav-tab-icon">&#128203;</span>
+      Kvitteringer
+    </button>
+    <button class="nav-tab" data-tab="meals">
+      <span class="nav-tab-icon">&#127858;</span>
+      M&aring;ltider
+    </button>
+    <button class="nav-tab" data-tab="suggestions">
+      <span class="nav-tab-icon">&#128161;</span>
+      Forslag
+    </button>
+    <button class="nav-tab" data-tab="insights">
+      <span class="nav-tab-icon">&#128200;</span>
+      Innsikt
+    </button>
+    <button class="nav-tab" data-tab="settings">
+      <span class="nav-tab-icon">&#9881;</span>
+      Innstillinger
+    </button>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="app-main">
+
+    <!-- Shopping List Tab -->
+    <section id="tab-shopping" class="tab-content active">
+      <div class="card">
+        <h2>Handleliste</h2>
+
+        <div class="list-selector-bar">
+          <select id="todo-list-selector" class="input">
+            <option value="">Velg en To Do-liste...</option>
+          </select>
+        </div>
+
+        <div class="quick-add">
+          <input type="text" id="quick-add-input" class="input" placeholder="Legg til vare...">
+          <button id="quick-add-btn" class="btn btn-primary">Legg til</button>
+        </div>
+        <button id="suggest-today-btn" class="btn btn-orange" style="margin-top:0.75rem;width:100%">Hva b&oslash;r vi handle i dag?</button>
+      </div>
+
+      <div class="card">
+        <div id="todo-tasks">
+          <div class="empty-state">
+            <p>Logg inn med Microsoft-kontoen din for &aring; koble til To Do-listene dine.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="app-stats"></div>
+    </section>
+
+    <!-- Receipts Tab -->
+    <section id="tab-receipts" class="tab-content">
+      <div class="card">
+        <h2>Legg til kvittering</h2>
+
+        <div id="receipt-upload-area" class="receipt-upload-area">
+          <div class="receipt-upload-icon">&#128196;</div>
+          <div class="receipt-upload-text">Klikk for &aring; laste opp en kvitteringsfil (.txt)</div>
+        </div>
+        <input type="file" id="receipt-file-input" accept=".txt,.text" style="display:none">
+
+        <div class="form-group">
+          <label>Eller lim inn kvitteringstekst:</label>
+          <textarea id="receipt-text" class="input" rows="10" placeholder="Lim inn kvitteringstekst her...&#10;&#10;Eksempel:&#10;REMA 1000&#10;2024-03-10&#10;Melk 1L    34.90&#10;Br&oslash;d     42.50&#10;SUM        77.40"></textarea>
+        </div>
+
+        <div class="receipt-actions">
+          <button id="parse-receipt-btn" class="btn btn-primary">Analyser kvittering</button>
+          <button id="load-sample-btn" class="btn btn-secondary">Last inn eksempler</button>
+          <button id="save-receipt-btn" class="btn btn-orange" style="display:none">Lagre kvittering</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="parsed-receipt"></div>
+      </div>
+
+      <div id="receipt-history"></div>
+    </section>
+
+    <!-- Meals Tab -->
+    <section id="tab-meals" class="tab-content">
+      <div class="card">
+        <h2>M&aring;ltider</h2>
+        <p class="muted" style="margin-bottom:1rem">Oppdag m&aring;ltidsm&oslash;nstre fra handelen din, eller opprett m&aring;ltider manuelt.</p>
+
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap">
+          <button id="detect-patterns-btn" class="btn btn-primary">Analyser m&oslash;nstre</button>
+          <button id="create-meal-btn" class="btn btn-secondary">Opprett m&aring;ltid manuelt</button>
+        </div>
+      </div>
+
+      <div id="detected-patterns"></div>
+
+      <div id="saved-meals">
+        <div class="empty-state">
+          <p>Ingen m&aring;ltider lagret enn&aring;.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Suggestions Tab -->
+    <section id="tab-suggestions" class="tab-content">
+      <div class="card">
+        <h2>Smarte forslag</h2>
+        <p class="muted" style="margin-bottom:1rem">Basert p&aring; kj&oslash;pshistorikken din, her er hva du kanskje trenger.</p>
+
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap">
+          <button id="refresh-suggestions-btn" class="btn btn-primary">Oppdater forslag</button>
+          <button id="weekly-list-btn" class="btn btn-orange">Generer ukeliste</button>
+        </div>
+      </div>
+
+      <div id="suggestions-container">
+        <div class="empty-state">
+          <p>Legg til kvitteringer for &aring; f&aring; smarte handleforslag.</p>
+        </div>
+      </div>
+
+      <div id="weekly-list-container"></div>
+    </section>
+
+    <!-- Insights Tab -->
+    <section id="tab-insights" class="tab-content">
+      <div class="card">
+        <h2>Forbruksinnsikt</h2>
+        <p class="muted" style="margin-bottom:1rem">Analyse av handlem&oslash;nstre, forbruk og sammenlikning med SIFO referansebudsjett.</p>
+        <button id="generate-insights-btn" class="btn btn-primary">Generer rapport</button>
+      </div>
+      <div id="insights-container"></div>
+    </section>
+
+    <!-- Settings Tab -->
+    <section id="tab-settings" class="tab-content">
+      <div class="card">
+        <div class="settings-section">
+          <h3>Microsoft Graph API</h3>
+          <p class="muted" style="margin-bottom:1rem">
+            For &aring; koble til Microsoft To Do trenger du en Azure AD-app med <code>Tasks.ReadWrite</code> tillatelse.
+            <br>Opprett en app p&aring; <a href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade" target="_blank">Azure Portal</a> og lim inn Client ID under.
+          </p>
+
+          <div class="form-group">
+            <label>Application (Client) ID</label>
+            <div class="quick-add">
+              <input type="text" id="client-id-input" class="input" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+              <button id="save-client-id-btn" class="btn btn-primary">Lagre</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>Dine To Do-lister</h3>
+          <div id="settings-lists">
+            <p class="muted">Logg inn for &aring; se lister</p>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>Data</h3>
+          <div class="settings-actions">
+            <button id="export-data-btn" class="btn btn-secondary">Eksporter data (JSON)</button>
+            <button id="clear-data-btn" class="btn btn-secondary" style="color:var(--red-500)">Slett all lokal data</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title">Modal</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Scripts (order matters: db first, then modules, then app) -->
+  <script src="db.js?v=15"></script>
+  <script src="auth.js?v=15"></script>
+  <script src="todo-api.js?v=15"></script>
+  <script src="coop-receipt-parser.js?v=15"></script>
+  <script src="receipt-parser.js?v=15"></script>
+  <script src="pattern-engine.js?v=15"></script>
+  <script src="suggestions.js?v=15"></script>
+  <script src="insights.js?v=15"></script>
+  <script src="receipt-data.js?v=15"></script>
+  <script src="app.js?v=15"></script>
+
+</body>
+</html>

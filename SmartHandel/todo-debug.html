@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>To Do Debug</title>
+<script src="msal-browser.min.js"></script>
+<style>body{font-family:Inter,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}
+pre{background:#f3f4f6;padding:1rem;border-radius:8px;overflow-x:auto;font-size:0.85rem}
+button{padding:0.5rem 1rem;margin:0.25rem;cursor:pointer;border:1px solid #ccc;border-radius:6px;background:#fff}
+button:hover{background:#f0fdf4}
+h3{margin-top:1.5rem}
+.item{padding:0.4rem 0;border-bottom:1px solid #eee;display:flex;gap:1rem;font-size:0.9rem}
+.item .title{flex:1;font-weight:500}
+.item .meta{color:#888;font-size:0.8rem}
+.fav{color:#f59e0b}
+</style>
+</head>
+<body>
+<h2>To Do Debug - Personal Account</h2>
+<div id="auth-area">
+  <button onclick="login()">Logg inn med janhj@hotmail.com</button>
+  <button onclick="exportAllLists()" style="background:#22c55e;color:white;font-weight:bold">Eksporter alle lister</button>
+  <span id="status"></span>
+</div>
+<div id="output"></div>
+
+<script>
+let msalApp = null;
+let account = null;
+
+async function init() {
+  var statusEl = document.getElementById('status');
+  try {
+    statusEl.textContent = 'Initialiserer MSAL...';
+    console.log('MSAL available:', typeof msal !== 'undefined');
+    console.log('Redirect URI:', window.location.origin + window.location.pathname);
+
+    msalApp = new msal.PublicClientApplication({
+      auth: {
+        clientId: '4896c649-0b5c-4660-8471-393d887ae137',
+        authority: 'https://login.microsoftonline.com/consumers',
+        redirectUri: window.location.origin + '/',
+      },
+      cache: { cacheLocation: 'localStorage' }
+    });
+    statusEl.textContent = 'Kaller initialize()...';
+    await msalApp.initialize();
+    statusEl.textContent = 'Sjekker redirect...';
+    var resp = await msalApp.handleRedirectPromise();
+    if (resp) account = resp.account;
+    else {
+      var accs = msalApp.getAllAccounts();
+      if (accs.length) account = accs[0];
+    }
+    if (account) {
+      statusEl.textContent = 'Logget inn som ' + account.name;
+      loadLists();
+    } else {
+      statusEl.textContent = 'Klar - klikk Logg inn';
+    }
+  } catch(e) {
+    statusEl.textContent = 'Init feil: ' + e.message;
+    console.error('Init error:', e);
+  }
+}
+
+
+async function login() {
+  if (!msalApp) { alert('Venter på initialisering, prøv igjen om 2 sekunder'); return; }
+  try {
+    const resp = await msalApp.loginPopup({ scopes: ['Tasks.ReadWrite'] });
+    account = resp.account;
+    document.getElementById('status').textContent = 'Logget inn som ' + account.name;
+    loadLists();
+  } catch(e) { alert('Login feil: ' + e.message); }
+}
+
+async function getToken() {
+  try {
+    const r = await msalApp.acquireTokenSilent({ scopes: ['Tasks.ReadWrite'], account });
+    return r.accessToken;
+  } catch(e) {
+    const r = await msalApp.acquireTokenPopup({ scopes: ['Tasks.ReadWrite'] });
+    return r.accessToken;
+  }
+}
+
+async function graphGet(url) {
+  const token = await getToken();
+  const r = await fetch('https://graph.microsoft.com/v1.0' + url, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  });
+  return r.json();
+}
+
+async function loadLists() {
+  const out = document.getElementById('output');
+  out.innerHTML = '<p>Laster lister...</p>';
+
+  const data = await graphGet('/me/todo/lists');
+  const lists = data.value || [];
+
+  let html = '<h3>Dine To Do-lister (' + lists.length + ')</h3>';
+  lists.forEach(function(list, idx) {
+    html += '<button onclick="loadCompletedTasks(\'' + list.id + '\', \'' + list.displayName.replace(/'/g, "\\'") + '\')">' + list.displayName + '</button>';
+  });
+
+  // Auto-find Frukt og grønt
+  const frukt = lists.find(function(l) { return l.displayName.toLowerCase().includes('frukt'); });
+  if (frukt) {
+    html += '<h3>Laster "' + frukt.displayName + '" automatisk...</h3>';
+    out.innerHTML = html;
+    loadCompletedTasks(frukt.id, frukt.displayName);
+  } else {
+    html += '<p>Klikk på en liste for å se de siste fullførte oppgavene.</p>';
+    out.innerHTML = html;
+  }
+}
+
+async function loadCompletedTasks(listId, listName) {
+  const out = document.getElementById('output');
+  const existing = out.innerHTML.split('<h3>Siste')[0];
+  out.innerHTML = existing + '<p>Laster oppgaver fra "' + listName + '"...</p>';
+
+  const data = await graphGet('/me/todo/lists/' + listId + '/tasks?$filter=status eq \'completed\'&$orderby=completedDateTime/dateTime desc&$top=10');
+  const tasks = data.value || [];
+
+  const activeData = await graphGet('/me/todo/lists/' + listId + '/tasks?$filter=status ne \'completed\'&$top=50');
+  const activeTasks = activeData.value || [];
+
+  let html = existing;
+
+  html += '<h3>Siste 10 fullførte i "' + listName + '"</h3>';
+  if (tasks.length === 0) {
+    html += '<p>Ingen fullførte oppgaver funnet.</p>';
+  } else {
+    tasks.forEach(function(t) {
+      var completed = t.completedDateTime ? t.completedDateTime.dateTime.substring(0,16).replace('T',' ') : 'ukjent';
+      var fav = t.importance === 'high' ? ' <span class="fav">★</span>' : '';
+      html += '<div class="item"><span class="title">' + t.title + fav + '</span><span class="meta">Fullført: ' + completed + '</span></div>';
+    });
+  }
+
+  html += '<h3>Aktive oppgaver i "' + listName + '" (' + activeTasks.length + ')</h3>';
+  activeTasks.forEach(function(t) {
+    var fav = t.importance === 'high' ? ' <span class="fav">★</span>' : '';
+    var modified = t.lastModifiedDateTime ? t.lastModifiedDateTime.substring(0,16).replace('T',' ') : '';
+    html += '<div class="item"><span class="title">' + t.title + fav + '</span><span class="meta">Endret: ' + modified + '</span></div>';
+  });
+
+  if (tasks.length > 0) {
+    html += '<h3>Eksempel-oppgave (rå JSON)</h3>';
+    html += '<pre>' + JSON.stringify(tasks[0], null, 2) + '</pre>';
+  }
+
+  out.innerHTML = html;
+}
+
+// === Export ALL lists data for analysis ===
+async function exportAllLists() {
+  const out = document.getElementById('output');
+  const data = await graphGet('/me/todo/lists');
+  const lists = data.value || [];
+
+  out.innerHTML += '<h3>Eksporterer alle lister...</h3>';
+
+  var allData = {};
+  var totalItems = 0;
+
+  var shoppingLists = ['frukt og grønt', 'kjøtt og ost', 'brødmat', 'frysevarer', 'melkeskapet', 'drikke', 'tørrvarer', 'bakevarer', 'andre tørrvarer', 'hygiene', 'rengjøringsartikler', 'godis', 'is', 'tran og sanasol', 'hund', 'polet', 'apoteket', 'jula', 'diverse'];
+
+  var filteredLists = lists.filter(function(l) {
+    return shoppingLists.some(function(s) { return l.displayName.toLowerCase().includes(s); });
+  });
+
+  for (var i = 0; i < filteredLists.length; i++) {
+    var list = filteredLists[i];
+    out.innerHTML = out.innerHTML.replace(/Eksporterer.*<\/h3>/, 'Eksporterer... ' + (i+1) + '/' + filteredLists.length + ' ' + list.displayName + '</h3>');
+
+    // Get ALL tasks (completed + active)
+    var allTasks = [];
+    var nextLink = '/me/todo/lists/' + list.id + '/tasks?$top=200';
+    while (nextLink) {
+      var resp = await graphGet(nextLink);
+      allTasks = allTasks.concat(resp.value || []);
+      nextLink = resp['@odata.nextLink'] ? resp['@odata.nextLink'].replace('https://graph.microsoft.com/v1.0', '') : null;
+    }
+
+    allData[list.displayName] = allTasks.map(function(t) {
+      return {
+        title: t.title,
+        status: t.status,
+        importance: t.importance,
+        completedDateTime: t.completedDateTime ? t.completedDateTime.dateTime : null,
+        lastModifiedDateTime: t.lastModifiedDateTime,
+        createdDateTime: t.createdDateTime,
+      };
+    });
+    totalItems += allTasks.length;
+  }
+
+  // Save as JSON file
+  var blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'todo-lists-export.json';
+  a.click();
+  URL.revokeObjectURL(url);
+
+  out.innerHTML += '<p style="color:green;font-weight:bold">Eksportert ' + filteredLists.length + ' handlelister, ' + totalItems + ' oppgaver totalt. Fil lastet ned.</p>';
+}
+
+init();
+</script>
+</body>
+</html>
