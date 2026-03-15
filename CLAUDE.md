@@ -75,10 +75,55 @@ Users will be prompted to log in with a Microsoft account.
 
 ### Important constraints
 
-- **No server-side code** — Azure Static Web Apps (Free tier) hosts static files only (HTML/JS/CSS/images)
 - **Max file size** — GitHub rejects files >100 MB. Use `.gitignore` for large files (videos, datasets)
 - **Storage limit** — 250 MB per app on the free tier
 - **.gitignore** is set up to exclude `node_modules/`, `.env`, `__pycache__/`, `.claude/`, `temp/`
+
+### Database: Azure SQL Database (Free tier)
+
+| Component | Detail |
+|-----------|--------|
+| **Server** | `janinc-db-server.database.windows.net` |
+| **Database** | `janinc-db` |
+| **Region** | North Europe |
+| **Tier** | Free (32 GB, auto-pause after 60 min idle) |
+| **Admin user** | `janincadmin` |
+| **Connection string** | Stored as `DATABASE_CONNECTION_STRING` app setting in Azure (never in code) |
+
+### API: Azure Functions (built into Static Web Apps)
+
+API code lives in the `api/` folder. Each function is a subfolder with `function.json` + `index.js`.
+
+```
+api/
+├── host.json              — Azure Functions runtime config
+├── package.json           — Dependencies (tedious for SQL)
+├── shared/
+│   └── db.js              — Database helper (getConnection, executeQuery)
+└── health/
+    ├── function.json      — HTTP trigger config
+    └── index.js           — Health check endpoint
+```
+
+- **Health check:** `GET https://janinc.no/api/health` — returns DB connectivity status
+- **Adding a new API endpoint:**
+  1. Create folder: `api/myendpoint/`
+  2. Add `function.json` (HTTP trigger config)
+  3. Add `index.js` (handler using `../shared/db.js`)
+  4. Commit and push — auto-deploys
+
+**Example: Creating a new API function**
+```js
+// api/myendpoint/index.js
+const { getConnection, executeQuery, TYPES } = require('../shared/db');
+
+module.exports = async function (context, req) {
+    const connection = await getConnection();
+    const rows = await executeQuery(connection, 'SELECT * FROM MyTable');
+    connection.close();
+    context.res = { status: 200, body: rows };
+};
+```
 
 ## Site Structure
 
