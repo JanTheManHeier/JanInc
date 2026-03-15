@@ -1,0 +1,18 @@
+{
+  "routes": [
+    {
+      "route": "/SmartHandel/*",
+      "allowedRoles": ["approved"]
+    },
+    {
+      "route": "/TurPakker/*",
+      "allowedRoles": ["approved"]
+    }
+  ],
+  "responseOverrides": {
+    "401": {
+      "redirect": "/.auth/login/aad",
+      "statusCode": 302
+    }
+  }
+}
