@@ -1,0 +1,2332 @@
+/* ============================================================
+   SpisSlank — Mobile-first weight-loss meal planning PWA
+   ============================================================ */
+
+/* --- Google Fonts import --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+/* ============================================================
+   1. CSS Custom Properties
+   ============================================================ */
+:root {
+  /* Core palette */
+  --bg-primary: #1a1a2e;
+  --bg-card: #16213e;
+  --bg-card-hover: #1a2744;
+  --text-primary: #e8e8e8;
+  --text-secondary: #9ca3af;
+  --accent-green: #22c55e;
+  --accent-amber: #f59e0b;
+  --accent-warm: #f97316;
+
+  /* Pathway colors */
+  --pathway-glp1: #22c55e;
+  --pathway-gip: #eab308;
+  --pathway-glucagon: #ef4444;
+  --pathway-amylin: #a855f7;
+  --pathway-pyy: #3b82f6;
+  --pathway-leptin: #f97316;
+  --pathway-ghrelin: #6b7280;
+  --pathway-insulin: #06b6d4;
+
+  /* Generation badge colors */
+  --gen1: #6b7280;
+  --gen2: #f59e0b;
+  --gen3: #22c55e;
+
+  /* Meal-type accent (left border) */
+  --meal-breakfast: #f59e0b;
+  --meal-lunch: #22c55e;
+  --meal-dinner: #f97316;
+  --meal-snack: #a855f7;
+
+  /* Surfaces & overlays */
+  --bg-glass: rgba(22, 33, 62, 0.75);
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.35);
+  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.45);
+
+  /* Typography */
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --fs-xs: clamp(0.65rem, 1.8vw, 0.75rem);
+  --fs-sm: clamp(0.75rem, 2vw, 0.8125rem);
+  --fs-base: clamp(0.875rem, 2.4vw, 1rem);
+  --fs-md: clamp(1rem, 2.8vw, 1.125rem);
+  --fs-lg: clamp(1.125rem, 3.2vw, 1.375rem);
+  --fs-xl: clamp(1.375rem, 4vw, 1.75rem);
+  --fs-2xl: clamp(1.75rem, 5vw, 2.25rem);
+
+  /* Spacing */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-pill: 20px;
+  --radius-full: 9999px;
+
+  /* Layout */
+  --max-content: 480px;
+  --header-height: 56px;
+  --bottomnav-height: 64px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 150ms var(--ease-out);
+  --transition-base: 250ms var(--ease-out);
+  --transition-slow: 400ms var(--ease-out);
+}
+
+/* ============================================================
+   2. Reset & Base
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+a {
+  color: var(--accent-green);
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ============================================================
+   3. Layout Containers
+   ============================================================ */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: calc(var(--header-height) + var(--sp-4)) var(--sp-4)
+           calc(var(--bottomnav-height) + var(--safe-bottom) + var(--sp-4));
+}
+
+.section-title {
+  font-size: var(--fs-lg);
+  margin-bottom: var(--sp-4);
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   4. App Header
+   ============================================================ */
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--sp-4);
+  background: rgba(26, 26, 46, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: 100;
+}
+
+.app-header__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-amber));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-header__subtitle {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.app-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.app-header__btn {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.app-header__btn:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   5. Bottom Navigation
+   ============================================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--bottomnav-height) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  display: flex;
+  align-items: stretch;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-subtle);
+  z-index: 100;
+}
+
+.bottom-nav__tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-nav__tab-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+  transition: transform var(--transition-fast);
+}
+
+.bottom-nav__tab.active {
+  color: var(--accent-green);
+}
+
+.bottom-nav__tab.active .bottom-nav__tab-icon {
+  transform: scale(1.15);
+}
+
+.bottom-nav__tab:active {
+  transform: scale(0.92);
+}
+
+/* ============================================================
+   6. Tab / View Panels
+   ============================================================ */
+.view-panel {
+  display: none;
+  animation: fadeIn 250ms var(--ease-out);
+}
+
+.view-panel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   7. Meal Cards
+   ============================================================ */
+.meal-card {
+  position: relative;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--accent-green);
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--sp-3);
+  overflow: hidden;
+  transition: background var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.meal-card:hover {
+  background: var(--bg-card-hover);
+}
+
+/* Left border colors by meal type */
+.meal-type-breakfast { border-left-color: var(--meal-breakfast); }
+.meal-type-lunch     { border-left-color: var(--meal-lunch); }
+.meal-type-dinner    { border-left-color: var(--meal-dinner); }
+.meal-type-snack     { border-left-color: var(--meal-snack); }
+
+/* Card header — always visible */
+.meal-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.meal-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.meal-card__type {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-1);
+}
+
+.meal-card__name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+  margin-bottom: var(--sp-2);
+}
+
+.meal-card__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.meal-card__prep {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.meal-card__calories {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+/* Swap button */
+.meal-card__swap {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  transition: background var(--transition-fast), color var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+.meal-card__swap:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--accent-green);
+}
+
+.meal-card__swap:active {
+  transform: rotate(180deg) scale(0.9);
+}
+
+/* Expand / collapse chevron */
+.meal-card__chevron {
+  position: absolute;
+  bottom: var(--sp-2);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  opacity: 0.5;
+  transition: transform var(--transition-base), opacity var(--transition-fast);
+}
+
+.meal-card.expanded .meal-card__chevron {
+  transform: translateX(-50%) rotate(180deg);
+  opacity: 0.8;
+}
+
+/* Expandable body */
+.meal-card__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 400ms var(--ease-out);
+}
+
+.meal-card.expanded .meal-card__body {
+  max-height: 800px;
+}
+
+.meal-card__body-inner {
+  padding: 0 var(--sp-4) var(--sp-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* Sections inside expanded card */
+.meal-card__section {
+  margin-top: var(--sp-3);
+}
+
+.meal-card__section-title {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--sp-2);
+}
+
+/* Ingredients list */
+.meal-card__ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.meal-card__ingredient {
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  padding-left: var(--sp-3);
+  position: relative;
+}
+
+.meal-card__ingredient::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--text-secondary);
+}
+
+/* Instructions */
+.meal-card__instructions {
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  line-height: 1.65;
+}
+
+/* Science note */
+.meal-card__science {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.55;
+  padding: var(--sp-2) var(--sp-3);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--accent-amber);
+}
+
+/* Drug equivalent badge */
+.meal-card__drug-equiv {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--accent-amber);
+  background: rgba(245, 158, 11, 0.1);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  margin-top: var(--sp-2);
+}
+
+/* ============================================================
+   8. Pathway Badges / Pills
+   ============================================================ */
+.pathway-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.pathway-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.pathway-pill:hover {
+  transform: scale(1.08);
+}
+
+.pathway-pill:active {
+  transform: scale(0.95);
+}
+
+/* Dot-only variant (compact, no text) */
+.pathway-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.pathway-dot:hover {
+  transform: scale(1.4);
+}
+
+/* Pathway color variants */
+.pathway-glp1 {
+  background: rgba(34, 197, 94, 0.18);
+  color: var(--pathway-glp1);
+}
+.pathway-dot.pathway-glp1 { background: var(--pathway-glp1); }
+
+.pathway-gip {
+  background: rgba(234, 179, 8, 0.18);
+  color: var(--pathway-gip);
+}
+.pathway-dot.pathway-gip { background: var(--pathway-gip); }
+
+.pathway-glucagon {
+  background: rgba(239, 68, 68, 0.18);
+  color: var(--pathway-glucagon);
+}
+.pathway-dot.pathway-glucagon { background: var(--pathway-glucagon); }
+
+.pathway-amylin {
+  background: rgba(168, 85, 247, 0.18);
+  color: var(--pathway-amylin);
+}
+.pathway-dot.pathway-amylin { background: var(--pathway-amylin); }
+
+.pathway-pyy {
+  background: rgba(59, 130, 246, 0.18);
+  color: var(--pathway-pyy);
+}
+.pathway-dot.pathway-pyy { background: var(--pathway-pyy); }
+
+.pathway-leptin {
+  background: rgba(249, 115, 22, 0.18);
+  color: var(--pathway-leptin);
+}
+.pathway-dot.pathway-leptin { background: var(--pathway-leptin); }
+
+.pathway-ghrelin {
+  background: rgba(107, 114, 128, 0.18);
+  color: var(--pathway-ghrelin);
+}
+.pathway-dot.pathway-ghrelin { background: var(--pathway-ghrelin); }
+
+.pathway-insulin {
+  background: rgba(6, 182, 212, 0.18);
+  color: var(--pathway-insulin);
+}
+.pathway-dot.pathway-insulin { background: var(--pathway-insulin); }
+
+/* ============================================================
+   9. Pathway Radar Chart
+   ============================================================ */
+.radar-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: var(--sp-3) 0 var(--sp-4);
+}
+
+.radar-canvas {
+  width: 200px;
+  height: 200px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.04) 0%, transparent 70%);
+}
+
+/* ============================================================
+   10. Shopping List
+   ============================================================ */
+.shopping-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.shopping-section__header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  padding-bottom: var(--sp-2);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.shopping-section__emoji {
+  font-size: 1.2rem;
+}
+
+.shopping-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+  transition: opacity var(--transition-base);
+}
+
+.shopping-item.checked {
+  opacity: 0.45;
+}
+
+.shopping-item__checkbox {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.shopping-item__checkbox input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--text-secondary);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.shopping-item__checkbox input:checked {
+  border-color: var(--accent-green);
+  background: var(--accent-green);
+}
+
+.shopping-item__checkbox input:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  animation: checkPop 200ms var(--ease-spring);
+}
+
+@keyframes checkPop {
+  0%   { transform: translate(-50%, -50%) scale(0); }
+  60%  { transform: translate(-50%, -50%) scale(1.3); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+.shopping-item__label {
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  transition: text-decoration-color var(--transition-base);
+  text-decoration: line-through transparent;
+}
+
+.shopping-item.checked .shopping-item__label {
+  text-decoration-color: var(--text-secondary);
+  color: var(--text-secondary);
+}
+
+.shopping-item__qty {
+  margin-left: auto;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   11. Science View
+   ============================================================ */
+
+/* Drug cards */
+.drug-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-3);
+  box-shadow: var(--shadow-card);
+  transition: background var(--transition-fast);
+}
+
+.drug-card:hover {
+  background: var(--bg-card-hover);
+}
+
+.drug-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+
+.drug-card__name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+
+.drug-card__weight-loss {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--accent-green);
+  margin-top: var(--sp-2);
+}
+
+/* Generation badges */
+.gen-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.gen-badge--1 {
+  background: rgba(107, 114, 128, 0.18);
+  color: var(--gen1);
+}
+
+.gen-badge--2 {
+  background: rgba(245, 158, 11, 0.18);
+  color: var(--gen2);
+}
+
+.gen-badge--3 {
+  background: rgba(34, 197, 94, 0.18);
+  color: var(--gen3);
+}
+
+/* Pathway explanation cards */
+.pathway-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-3);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+}
+
+.pathway-card__indicator {
+  width: 4px;
+  min-height: 40px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.pathway-card__content {
+  flex: 1;
+}
+
+.pathway-card__name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  margin-bottom: var(--sp-1);
+}
+
+.pathway-card__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* Food arsenal table */
+.food-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 calc(-1 * var(--sp-4));
+  padding: 0 var(--sp-4);
+}
+
+.food-table {
+  width: 100%;
+  min-width: 500px;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+
+.food-table thead {
+  position: sticky;
+  top: 0;
+}
+
+.food-table th {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  text-align: left;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.food-table td {
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.food-table tbody tr {
+  transition: background var(--transition-fast);
+}
+
+.food-table tbody tr:hover {
+  background: var(--bg-card);
+}
+
+/* ============================================================
+   12. Week View
+   ============================================================ */
+.week-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.week-day {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.week-day__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background var(--transition-fast);
+}
+
+.week-day__header:hover {
+  background: var(--bg-card-hover);
+}
+
+.week-day__name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  font-weight: 600;
+}
+
+.week-day__today {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--accent-green);
+  background: rgba(34, 197, 94, 0.12);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.week-day__chevron {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  transition: transform var(--transition-base);
+}
+
+.week-day.expanded .week-day__chevron {
+  transform: rotate(180deg);
+}
+
+.week-day__meals {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 400ms var(--ease-out);
+}
+
+.week-day.expanded .week-day__meals {
+  max-height: 600px;
+}
+
+.week-day__meals-inner {
+  padding: 0 var(--sp-4) var(--sp-3);
+}
+
+/* Compact meal row (week view) */
+.meal-compact {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.meal-compact:last-child {
+  border-bottom: none;
+}
+
+.meal-compact__type-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.meal-compact__name {
+  flex: 1;
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meal-compact__dots {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   13. Modals / Overlays
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  width: 100%;
+  max-width: var(--max-content);
+  max-height: 85dvh;
+  background: var(--bg-card);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: var(--sp-6) var(--sp-4) calc(var(--sp-6) + var(--safe-bottom));
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 350ms var(--ease-out);
+}
+
+.modal-overlay.active .modal {
+  transform: translateY(0);
+}
+
+.modal__handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  margin: 0 auto var(--sp-4);
+}
+
+.modal__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  margin-bottom: var(--sp-4);
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--sp-4);
+  right: var(--sp-4);
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.modal__close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+/* Swap options list (inside modal) */
+.swap-option {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.swap-option:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.swap-option__name {
+  font-size: var(--fs-base);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.swap-option__meta {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   14. Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  height: 44px;
+  padding: 0 var(--sp-6);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  transition: background var(--transition-fast), transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn--primary {
+  background: var(--accent-green);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: #1db954;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
+}
+
+.btn--secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+}
+
+.btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn--small {
+  height: 32px;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-xs);
+}
+
+.btn--icon {
+  width: 44px;
+  padding: 0;
+}
+
+/* ============================================================
+   15. Date / Day Header
+   ============================================================ */
+.day-header {
+  text-align: center;
+  padding: var(--sp-2) 0;
+}
+
+.day-header__date {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.day-header__label {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   16. Utility Classes
+   ============================================================ */
+.hidden {
+  display: none !important;
+}
+
+.expanded {}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-center  { text-align: center; }
+.text-muted   { color: var(--text-secondary); }
+.text-green   { color: var(--accent-green); }
+.text-amber   { color: var(--accent-amber); }
+.text-warm    { color: var(--accent-warm); }
+
+.mt-1 { margin-top: var(--sp-1); }
+.mt-2 { margin-top: var(--sp-2); }
+.mt-3 { margin-top: var(--sp-3); }
+.mt-4 { margin-top: var(--sp-4); }
+.mb-1 { margin-bottom: var(--sp-1); }
+.mb-2 { margin-bottom: var(--sp-2); }
+.mb-3 { margin-bottom: var(--sp-3); }
+.mb-4 { margin-bottom: var(--sp-4); }
+
+/* ============================================================
+   18. View Headers & Layout (used by index.html + app.js)
+   ============================================================ */
+[data-view] {
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: var(--sp-4) var(--sp-4) calc(var(--bottomnav-height) + var(--safe-bottom) + var(--sp-6));
+}
+
+.view-header {
+  margin-bottom: var(--sp-4);
+}
+
+.header-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--sp-2);
+}
+
+.view-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.header-date {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.header-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.header-intro {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: var(--sp-2);
+}
+
+/* ============================================================
+   19. Pathway Coverage Dots (today header)
+   ============================================================ */
+.pathway-coverage {
+  margin: var(--sp-3) 0;
+}
+
+.coverage-label {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  display: block;
+  margin-bottom: var(--sp-2);
+}
+
+.pathway-dots {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--text-secondary);
+  opacity: 0.3;
+  transition: opacity var(--transition-fast), background var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+.dot.dot-active,
+.dot-active {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* ============================================================
+   20. Radar Container
+   ============================================================ */
+.radar-container {
+  display: flex;
+  justify-content: center;
+  padding: var(--sp-3) 0 var(--sp-4);
+}
+
+#pathway-radar {
+  width: 200px;
+  height: 200px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.04) 0%, transparent 70%);
+}
+
+/* ============================================================
+   21. Meal Card (flat class names used by app.js)
+   ============================================================ */
+.meal-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.meal-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.meal-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.meal-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.meal-type {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-1);
+}
+
+.meal-name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.prep-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pathway-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0 var(--sp-4) var(--sp-2);
+}
+
+.meal-detail {
+  padding: 0 var(--sp-4) var(--sp-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.meal-detail[hidden] {
+  display: none;
+}
+
+.meal-actions {
+  display: flex;
+  gap: var(--sp-2);
+  padding: 0 var(--sp-4) var(--sp-3);
+}
+
+.btn-expand,
+.btn-swap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  height: 32px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-expand {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+}
+
+.btn-expand:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-swap {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-swap:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--accent-green);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 var(--sp-4);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  transition: background var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Detail sections inside expanded meal card */
+.detail-section {
+  margin-top: var(--sp-3);
+}
+
+.detail-section h3 {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--sp-2);
+}
+
+.detail-section ul,
+.detail-section ol {
+  padding-left: var(--sp-6);
+  list-style: disc;
+}
+
+.detail-section ol {
+  list-style: decimal;
+}
+
+.detail-section li {
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  margin-bottom: var(--sp-1);
+}
+
+.detail-science {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.55;
+  padding: var(--sp-2) var(--sp-3);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--accent-amber);
+}
+
+.detail-drug {
+  margin-top: var(--sp-2);
+}
+
+.detail-drug p {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--accent-amber);
+  background: rgba(245, 158, 11, 0.1);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+
+/* ============================================================
+   22. Bottom Nav (flat class names from index.html)
+   ============================================================ */
+.nav-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+  transition: transform var(--transition-fast);
+}
+
+.nav-label {
+  font-size: var(--fs-xs);
+}
+
+.nav-tab.active {
+  color: var(--accent-green);
+}
+
+.nav-tab.active .nav-icon {
+  transform: scale(1.15);
+}
+
+.nav-tab:active {
+  transform: scale(0.92);
+}
+
+/* ============================================================
+   23. Week View (flat class names from app.js)
+   ============================================================ */
+.week-selector {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+}
+
+.week-btn {
+  flex: 1;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.week-btn.active {
+  background: var(--accent-green);
+  color: #fff;
+}
+
+.week-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.week-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.day-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.day-card.day-today {
+  border-left: 3px solid var(--accent-green);
+}
+
+.day-card .day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background var(--transition-fast);
+  text-align: left;
+}
+
+.day-card .day-header:hover {
+  background: var(--bg-card-hover);
+}
+
+.day-name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  font-weight: 600;
+}
+
+.day-summary {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.day-expand-icon {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  transition: transform var(--transition-base);
+}
+
+.day-meals {
+  padding: 0 var(--sp-4) var(--sp-3);
+}
+
+.day-meals[hidden] {
+  display: none;
+}
+
+.day-meal-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) 0;
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.day-meal-row:last-child {
+  border-bottom: none;
+}
+
+/* ============================================================
+   24. Modal (flat class names from index.html)
+   ============================================================ */
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: var(--max-content);
+  max-height: 85dvh;
+  background: var(--bg-card);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: var(--sp-6) var(--sp-4) calc(var(--sp-6) + var(--safe-bottom));
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 350ms var(--ease-out);
+}
+
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal-close {
+  position: absolute;
+  top: var(--sp-4);
+  right: var(--sp-4);
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  z-index: 1;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.modal-heading {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  margin-bottom: var(--sp-4);
+}
+
+.modal-meal-name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: var(--sp-4);
+}
+
+/* Swap modal list */
+.swap-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.swap-name {
+  font-size: var(--fs-base);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.swap-prep {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+
+.swap-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: var(--sp-6) 0;
+}
+
+/* ============================================================
+   25. Shopping Summary (shopping.js)
+   ============================================================ */
+.shopping-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--sp-4);
+}
+
+.shopping-summary__total {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.shopping-summary__progress {
+  font-size: var(--fs-xs);
+  color: var(--accent-green);
+  font-weight: 500;
+}
+
+.shopping-actions {
+  margin-top: var(--sp-2);
+}
+
+.shopping-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+/* ============================================================
+   26. Science View (science.js class names)
+   ============================================================ */
+.science-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+}
+
+.science-block {
+  margin-bottom: var(--sp-4);
+}
+
+.science-heading {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--sp-2);
+}
+
+.science-intro {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--sp-4);
+}
+
+/* Drug card grid */
+.drug-card-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 calc(-1 * var(--sp-4));
+  padding: 0 var(--sp-4);
+}
+
+.drug-card-grid {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+@media (min-width: 400px) {
+  .drug-card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+.drug-card-top {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+
+.drug-name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--sp-1);
+}
+
+.drug-brand {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: var(--sp-2);
+}
+
+.drug-mechanism {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--sp-2);
+}
+
+.drug-pathways {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: var(--sp-2);
+}
+
+.drug-weight-loss {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+}
+
+.weight-loss-label {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.weight-loss-value {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--accent-green);
+}
+
+.drug-food-arrow {
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.arrow-icon {
+  display: block;
+  font-size: var(--fs-lg);
+  color: var(--accent-green);
+  margin-bottom: var(--sp-1);
+}
+
+.arrow-label {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  margin-bottom: var(--sp-1);
+}
+
+.arrow-foods {
+  display: block;
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Status badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.status-approved {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--accent-green);
+}
+
+.status-trial {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-amber);
+}
+
+/* Evidence badges */
+.evidence-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.evidence-strong {
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--accent-green);
+}
+
+.evidence-moderate {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--accent-amber);
+}
+
+.evidence-preliminary {
+  background: rgba(107, 114, 128, 0.12);
+  color: var(--text-secondary);
+}
+
+/* Pathway explanation cards (science) */
+.pathway-grid {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.pathway-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
+}
+
+.pathway-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.pathway-name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  font-weight: 600;
+}
+
+.pathway-desc {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: var(--sp-2);
+}
+
+.pathway-detail-row {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-1);
+}
+
+.detail-label {
+  font-weight: 600;
+}
+
+.detail-value {
+  color: var(--text-primary);
+}
+
+/* Food arsenal table (science) */
+.food-arsenal-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 calc(-1 * var(--sp-4));
+  padding: 0 var(--sp-4);
+}
+
+.food-arsenal-table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+
+.food-arsenal-table th {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  text-align: left;
+  padding: var(--sp-2) var(--sp-2);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+}
+
+.food-arsenal-table td {
+  padding: var(--sp-2) var(--sp-2);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.food-arsenal-table tbody tr {
+  transition: background var(--transition-fast);
+}
+
+.food-arsenal-table tbody tr:hover {
+  background: var(--bg-card);
+}
+
+.food-th-pathway {
+  text-align: center !important;
+}
+
+.food-td-score {
+  text-align: center;
+}
+
+.th-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.th-label {
+  font-size: 0.55rem;
+}
+
+.score-dots {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.score-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid transparent;
+}
+
+.score-dot.filled {
+  border-color: transparent;
+}
+
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  font-size: 0.6rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+}
+
+/* Before / After timeline (science) */
+.cascade {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+}
+
+@media (max-width: 480px) {
+  .cascade {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cascade-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.cascade-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  margin-bottom: var(--sp-3);
+  text-align: center;
+}
+
+.cascade-title-before {
+  color: var(--pathway-glucagon);
+}
+
+.cascade-title-after {
+  color: var(--accent-green);
+}
+
+.timeline-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.timeline-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: var(--sp-2);
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+}
+
+.timeline-time {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  min-width: 40px;
+}
+
+.timeline-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.timeline-text {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.timeline-detail {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.timeline-dots {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+}
+
+/* Disclaimer */
+.disclaimer {
+  margin-top: var(--sp-6);
+  padding: var(--sp-4);
+  background: rgba(239, 68, 68, 0.06);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--pathway-glucagon);
+}
+
+.disclaimer p {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+.mb-3 { margin-bottom: var(--sp-3); }
+.mb-4 { margin-bottom: var(--sp-4); }
+
+.flex        { display: flex; }
+.flex-wrap   { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.gap-1       { gap: var(--sp-1); }
+.gap-2       { gap: var(--sp-2); }
+.gap-3       { gap: var(--sp-3); }
+
+/* ============================================================
+   17. Loading / Skeleton States
+   ============================================================ */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 25%,
+    var(--bg-card-hover) 50%,
+    var(--bg-card) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton--text {
+  height: 14px;
+  width: 60%;
+  margin-bottom: var(--sp-2);
+}
+
+.skeleton--title {
+  height: 20px;
+  width: 80%;
+  margin-bottom: var(--sp-2);
+}
+
+.skeleton--pill {
+  height: 20px;
+  width: 48px;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+}
+
+/* ============================================================
+   18. Scrollbar
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================================
+   19. Toast / Notification
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: calc(var(--bottomnav-height) + var(--safe-bottom) + var(--sp-4));
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  padding: var(--sp-3) var(--sp-6);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-elevated);
+  border: 1px solid var(--border-subtle);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+  z-index: 300;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* ============================================================
+   20. Responsive — Tablet
+   ============================================================ */
+@media (min-width: 768px) {
+  .meal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-3);
+  }
+
+  .meal-grid .meal-card {
+    margin-bottom: 0;
+  }
+
+  .main-content {
+    max-width: 720px;
+    padding-left: var(--sp-6);
+    padding-right: var(--sp-6);
+  }
+
+  .modal {
+    max-width: 520px;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--sp-6);
+  }
+}
+
+/* ============================================================
+   21. Responsive — Desktop
+   ============================================================ */
+@media (min-width: 1024px) {
+  .main-content {
+    max-width: var(--max-content);
+  }
+
+  .meal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bottom-nav {
+    max-width: var(--max-content);
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+  }
+
+  .app-header {
+    max-width: var(--max-content);
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  }
+}
+
+/* ============================================================
+   22. Print (minimal)
+   ============================================================ */
+@media print {
+  .app-header,
+  .bottom-nav,
+  .modal-overlay,
+  .toast {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #222;
+  }
+
+  .main-content {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .meal-card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .meal-card__body {
+    max-height: none !important;
+  }
+}

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpisSlank — Spis deg slank</title>
+  <meta name="description" content="Måltidsplaner som etterligner slankemedisinenes effekt med vanlig mat fra dagligvarebutikken">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== TODAY VIEW (default) ===== -->
+  <section id="view-today" data-view="today" aria-label="Dagens måltidsplan">
+    <header class="view-header">
+      <div class="header-top">
+        <h1 class="view-title">I dag</h1>
+        <time id="today-date" class="header-date" datetime=""></time>
+      </div>
+
+      <div class="pathway-coverage" aria-label="Dekning av metthetsveier">
+        <span class="coverage-label">Veier dekket i dag</span>
+        <div id="today-pathway-dots" class="pathway-dots">
+          <span class="dot dot-glp1" title="GLP-1" aria-label="GLP-1"></span>
+          <span class="dot dot-gip" title="GIP" aria-label="GIP"></span>
+          <span class="dot dot-pyy" title="PYY" aria-label="PYY"></span>
+          <span class="dot dot-cck" title="CCK" aria-label="CCK"></span>
+          <span class="dot dot-leptin" title="Leptin" aria-label="Leptin"></span>
+          <span class="dot dot-ghrelin" title="Ghrelin ↓" aria-label="Ghrelin reduksjon"></span>
+          <span class="dot dot-mechano" title="Mekanisk strekk" aria-label="Mekanisk strekk"></span>
+          <span class="dot dot-thermo" title="Termogenese" aria-label="Termogenese"></span>
+        </div>
+      </div>
+
+      <div class="radar-container">
+        <canvas id="pathway-radar" width="300" height="300" aria-label="Radardiagram over veidekning"></canvas>
+      </div>
+    </header>
+
+    <div id="today-meals" class="meal-card-list" role="list" aria-label="Dagens måltider">
+      <!-- JS populates meal cards here. Structure per card:
+        <article class="meal-card" role="listitem">
+          <div class="meal-card-header">
+            <span class="meal-icon">🌅</span>
+            <div class="meal-meta">
+              <span class="meal-type">Frokost</span>
+              <h2 class="meal-name">…</h2>
+            </div>
+            <span class="prep-badge">⏱ 10 min</span>
+          </div>
+          <div class="pathway-badges">…</div>
+          <div class="meal-detail" hidden>…</div>
+          <div class="meal-actions">
+            <button class="btn-expand" aria-expanded="false">Vis detaljer</button>
+            <button class="btn-swap">🔄 Bytt</button>
+          </div>
+        </article>
+      -->
+    </div>
+  </section>
+
+  <!-- ===== WEEK VIEW ===== -->
+  <section id="view-week" data-view="week" style="display: none" aria-label="Ukeoversikt">
+    <header class="view-header">
+      <h1 class="view-title">Ukeoversikt</h1>
+      <nav class="week-selector" aria-label="Velg uke">
+        <button class="week-btn active" data-week="1" aria-pressed="true">Uke 1</button>
+        <button class="week-btn" data-week="2" aria-pressed="false">Uke 2</button>
+        <button class="week-btn" data-week="3" aria-pressed="false">Uke 3</button>
+        <button class="week-btn" data-week="4" aria-pressed="false">Uke 4</button>
+      </nav>
+    </header>
+
+    <div id="week-grid" class="week-grid" role="list" aria-label="Ukens dager">
+      <!-- JS populates 7 day cards here. Structure per day:
+        <article class="day-card" role="listitem" data-day="0">
+          <button class="day-header" aria-expanded="false">
+            <span class="day-name">Mandag</span>
+            <span class="day-summary">4 måltider</span>
+            <span class="day-expand-icon" aria-hidden="true">▸</span>
+          </button>
+          <div class="day-meals" hidden>
+            <div class="day-meal-row">🌅 Frokost: …</div>
+            <div class="day-meal-row">🥗 Lunsj-tillegg: …</div>
+            <div class="day-meal-row">🥜 Mellommåltid: …</div>
+            <div class="day-meal-row">🍽️ Middag: …</div>
+          </div>
+        </article>
+      -->
+    </div>
+  </section>
+
+  <!-- ===== SHOPPING VIEW ===== -->
+  <section id="view-shopping" data-view="shopping" style="display: none" aria-label="Handleliste">
+    <header class="view-header">
+      <div class="header-top">
+        <h1 class="view-title">Handleliste</h1>
+        <span id="shopping-week-label" class="header-subtitle">Uke 1</span>
+      </div>
+      <div class="shopping-actions">
+        <button id="btn-clear-shopping" class="btn-secondary" aria-label="Nullstill alle avkrysninger">
+          Nullstill
+        </button>
+      </div>
+    </header>
+
+    <div id="shopping-list" class="shopping-sections" aria-label="Handleliste gruppert etter avdeling">
+      <!-- JS populates sections here. Structure:
+        <section class="shop-section" aria-label="Meieri">
+          <h2 class="shop-section-header"><span aria-hidden="true">🥛</span> Meieri</h2>
+          <ul class="shop-items" role="list">
+            <li class="shop-item">
+              <label>
+                <input type="checkbox" class="shop-check">
+                <span class="shop-item-name">Gresk yoghurt</span>
+                <span class="shop-item-qty">500 g</span>
+              </label>
+            </li>
+          </ul>
+        </section>
+      -->
+    </div>
+  </section>
+
+  <!-- ===== SCIENCE VIEW ===== -->
+  <section id="view-science" data-view="science" style="display: none" aria-label="Vitenskapen bak SpisSlank">
+    <header class="view-header">
+      <h1 class="view-title">Hvordan virker det?</h1>
+      <p class="header-intro">
+        Maten i SpisSlank er satt sammen for å aktivere de samme metthetsveiene som moderne slankemedisiner — helt naturlig.
+      </p>
+    </header>
+
+    <div id="science-content" class="science-sections">
+
+      <!-- Section 1: Drug cards -->
+      <section class="science-block" aria-labelledby="science-drugs-heading">
+        <h2 id="science-drugs-heading" class="science-heading">Slankemedisiner — hva de gjør</h2>
+        <p class="science-intro">Nye slankemedisiner virker ved å etterligne kroppens egne metthetshormoner. Her er de viktigste:</p>
+        <div id="drug-cards" class="drug-card-grid" role="list" aria-label="Oversikt over slankemedisiner">
+          <!-- JS populates drug cards:
+            <article class="drug-card" role="listitem">
+              <h3 class="drug-name">Wegovy (semaglutid)</h3>
+              <span class="drug-gen">2. generasjon</span>
+              <div class="drug-pathways">Veier: GLP-1</div>
+              <div class="drug-effect">Vekttap: ~15 %</div>
+            </article>
+          -->
+        </div>
+      </section>
+
+      <!-- Section 2: The 8 pathways -->
+      <section class="science-block" aria-labelledby="science-pathways-heading">
+        <h2 id="science-pathways-heading" class="science-heading">8 veier til metthet</h2>
+        <p class="science-intro">Kroppen har flere mekanismer for å regulere appetitt og metthet. SpisSlank dekker alle åtte:</p>
+        <div id="pathway-explainers" class="pathway-grid" role="list" aria-label="De åtte metthetsveiene">
+          <!-- JS populates pathway cards:
+            <article class="pathway-card" role="listitem">
+              <span class="pathway-icon" style="background: var(--color-glp1)">1</span>
+              <h3 class="pathway-name">GLP-1</h3>
+              <p class="pathway-desc">Bremser magesekkens tømming, signalerer metthet til hjernen…</p>
+            </article>
+          -->
+        </div>
+      </section>
+
+      <!-- Section 3: Food arsenal -->
+      <section class="science-block" aria-labelledby="science-food-heading">
+        <h2 id="science-food-heading" class="science-heading">Matens superkrefter</h2>
+        <p class="science-intro">Disse matvarene scorer høyt på én eller flere metthetsveier:</p>
+        <div id="food-arsenal" aria-label="Matvarer og deres veipoeng">
+          <!-- JS populates a responsive table/card grid -->
+        </div>
+      </section>
+
+      <!-- Section 4: Before / after cascade -->
+      <section class="science-block" aria-labelledby="science-cascade-heading">
+        <h2 id="science-cascade-heading" class="science-heading">Din dag — før og etter</h2>
+        <p class="science-intro">Slik endres kroppens signaler gjennom dagen med SpisSlank-maten:</p>
+        <div id="cascade-diagram" class="cascade" aria-label="Tidslinje for metthetseffekt gjennom dagen">
+          <!-- JS populates the before/after cascade timeline -->
+        </div>
+      </section>
+
+      <!-- Disclaimer -->
+      <aside class="disclaimer" role="note" aria-label="Medisinsk ansvarsfraskrivelse">
+        <p>
+          <strong>⚕️ Medisinsk merknad:</strong> SpisSlank er ikke medisinsk behandling og erstatter ikke legemidler foreskrevet av lege.
+          Kostholdsendringer kan påvirke blodsukkernivå og annen medisinering — rådfør deg med lege før du gjør store endringer i kostholdet.
+          Vekttapstallene som vises er basert på publiserte kliniske studier av legemidlene, ikke på denne matplanen.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== MEAL DETAIL MODAL ===== -->
+  <div id="meal-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Måltidsdetaljer" hidden>
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Lukk">&times;</button>
+      <div id="modal-body">
+        <!-- JS populates:
+          <h2 class="modal-meal-name">…</h2>
+          <div class="modal-section">
+            <h3>Ingredienser</h3>
+            <ul>…</ul>
+          </div>
+          <div class="modal-section">
+            <h3>Fremgangsmåte</h3>
+            <ol>…</ol>
+          </div>
+          <div class="modal-section modal-science">
+            <h3>🔬 Hvorfor dette virker</h3>
+            <p>…</p>
+          </div>
+          <div class="modal-section modal-drug-eq">
+            <h3>💊 Medisin-ekvivalent</h3>
+            <p>…</p>
+          </div>
+        -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SWAP PICKER MODAL ===== -->
+  <div id="swap-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Bytt måltid" hidden>
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Lukk">&times;</button>
+      <h2 class="modal-heading">Velg alternativt måltid</h2>
+      <div id="swap-options" class="swap-list" role="list" aria-label="Alternative måltider">
+        <!-- JS populates swap option cards -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BOTTOM NAVIGATION ===== -->
+  <nav class="bottom-nav" aria-label="Hovednavigasjon">
+    <button class="nav-tab active" data-view="today" aria-label="I dag" aria-current="page">
+      <span class="nav-icon" aria-hidden="true">📋</span>
+      <span class="nav-label">I dag</span>
+    </button>
+    <button class="nav-tab" data-view="week" aria-label="Ukeoversikt">
+      <span class="nav-icon" aria-hidden="true">📅</span>
+      <span class="nav-label">Uke</span>
+    </button>
+    <button class="nav-tab" data-view="shopping" aria-label="Handleliste">
+      <span class="nav-icon" aria-hidden="true">🛒</span>
+      <span class="nav-label">Handel</span>
+    </button>
+    <button class="nav-tab" data-view="science" aria-label="Vitenskapen">
+      <span class="nav-icon" aria-hidden="true">🧬</span>
+      <span class="nav-label">Vitenskap</span>
+    </button>
+  </nav>
+
+  <script src="pathways.js"></script>
+  <script src="meals.js"></script>
+  <script src="shopping.js"></script>
+  <script src="science.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

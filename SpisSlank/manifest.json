@@ -1,0 +1,41 @@
+{
+  "name": "SpisSlank",
+  "short_name": "SpisSlank",
+  "description": "Spis deg slank — måltidsplaner som etterligner slankemedisinenes effekt",
+  "start_url": "/SpisSlank/",
+  "scope": "/SpisSlank/",
+  "display": "standalone",
+  "theme_color": "#1a1a2e",
+  "background_color": "#1a1a2e",
+  "lang": "no",
+  "categories": [
+    "health",
+    "food"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192x192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-512x512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
