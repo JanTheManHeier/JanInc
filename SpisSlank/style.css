@@ -1599,6 +1599,104 @@ ul, ol {
   border-bottom: none;
 }
 
+/* ── Week view: expandable meal items with recipes ── */
+
+.day-meal-item {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.day-meal-item:last-child {
+  border-bottom: none;
+}
+
+.day-meal-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  padding: var(--sp-2) 0;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.day-meal-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.day-meal-badges {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.day-meal-badges .pathway-pill {
+  font-size: 0.6rem;
+  padding: 1px 5px;
+}
+
+.day-meal-expand {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.day-meal-header:hover .day-meal-expand {
+  opacity: 1;
+}
+
+.day-meal-recipe {
+  padding: var(--sp-2) var(--sp-3) var(--sp-3);
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--sp-2);
+  animation: recipeSlide 0.2s ease-out;
+}
+
+@keyframes recipeSlide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.day-meal-recipe .detail-section {
+  margin-bottom: var(--sp-2);
+}
+
+.day-meal-recipe .detail-section h3 {
+  font-size: var(--fs-sm);
+  color: var(--accent-green);
+  margin-bottom: var(--sp-1);
+}
+
+.day-meal-recipe .detail-section ul,
+.day-meal-recipe .detail-section ol {
+  padding-left: var(--sp-4);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.day-meal-recipe .detail-section li {
+  margin-bottom: 2px;
+}
+
+.day-meal-recipe .detail-science,
+.day-meal-recipe .detail-drug {
+  font-size: var(--fs-xs);
+  opacity: 0.8;
+}
+
+.day-meal-item.recipe-open {
+  background: rgba(34, 197, 94, 0.04);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--sp-2);
+}
+
 /* ============================================================
    24. Modal (flat class names from index.html)
    ============================================================ */

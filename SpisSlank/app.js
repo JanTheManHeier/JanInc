@@ -425,7 +425,17 @@
       const isToday = dayIndex === getTodayIndex();
       const mealRows = meals.map(({ icon, label, meal }) => {
         const dots = buildPathwayBadges(meal);
-        return `<div class="day-meal-row">${icon} <strong>${label}:</strong> ${meal.name} ${dots}</div>`;
+        return `
+          <div class="day-meal-item" data-meal-id="${meal.id}">
+            <button class="day-meal-header" aria-expanded="false">
+              <span class="day-meal-label">${icon} <strong>${label}:</strong> ${meal.name}</span>
+              <span class="day-meal-badges">${dots}</span>
+              <span class="day-meal-expand" aria-hidden="true">📖</span>
+            </button>
+            <div class="day-meal-recipe" hidden>
+              ${buildMealDetail(meal)}
+            </div>
+          </div>`;
       }).join('');
 
       return `
@@ -444,6 +454,38 @@
 
   /** Expand/collapse dagkort i vekeoversikten */
   const handleDayCardClick = (e) => {
+    // Handle recipe expand/collapse within a meal
+    const mealHeader = e.target.closest('.day-meal-header');
+    if (mealHeader) {
+      e.stopPropagation();
+      const mealItem = mealHeader.closest('.day-meal-item');
+      if (!mealItem) return;
+
+      const recipe = mealItem.querySelector('.day-meal-recipe');
+      const expandIcon = mealItem.querySelector('.day-meal-expand');
+      const isExpanded = mealHeader.getAttribute('aria-expanded') === 'true';
+
+      // Collapse other open recipes in same day
+      const dayCard = mealItem.closest('.day-card');
+      dayCard.querySelectorAll('.day-meal-item').forEach((item) => {
+        if (item !== mealItem) {
+          item.querySelector('.day-meal-header')?.setAttribute('aria-expanded', 'false');
+          const r = item.querySelector('.day-meal-recipe');
+          if (r) r.hidden = true;
+          const ic = item.querySelector('.day-meal-expand');
+          if (ic) ic.textContent = '📖';
+          item.classList.remove('recipe-open');
+        }
+      });
+
+      mealHeader.setAttribute('aria-expanded', String(!isExpanded));
+      if (recipe) recipe.hidden = isExpanded;
+      if (expandIcon) expandIcon.textContent = isExpanded ? '📖' : '✕';
+      mealItem.classList.toggle('recipe-open', !isExpanded);
+      return;
+    }
+
+    // Handle day card expand/collapse
     const header = e.target.closest('.day-header');
     if (!header) return;
 
