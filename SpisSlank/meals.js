@@ -1,4 +1,4 @@
-// SpisSlank Meal Database — all 37 meals + 4 weekly plans
+// SpisSlank Meal Database — meals + 4 weekly plans
 // Pathway scores 0-5: glp1, gip, glucagon, amylin, pyy, leptin, ghrelin, insulin
 
 window.MEALS = [
@@ -151,6 +151,154 @@ window.MEALS = [
     ],
     instructions: "Visp egg. Stek grønnsaker i olje, hell over egg, strø ost. Stek til stivnet.",
     tags: ["high-protein", "low-carb"]
+  },
+
+  // ─── BREAKFAST: Havregrøt-varianter (autopilot hverdager) ─────────
+
+  {
+    id: "havregrot-banan",
+    name: "Havregrøt med Banan & Kanel",
+    type: "breakfast",
+    prepTime: 5,
+    pathways: { glp1: 4, gip: 2, glucagon: 1, amylin: 1, pyy: 2, leptin: 2, ghrelin: 4, insulin: 4 },
+    scienceNote: "Betaglukan i havre → GLP-1. Kanel bedrer insulinfølsomhet. Banan gir naturlig sødme uten tilsatt sukker.",
+    drugEquivalent: "Ozempic",
+    ingredients: [
+      { name: "Havregryn", amount: "80 g", section: "Tørrvarer" },
+      { name: "Melk", amount: "1.5 dl", section: "Meieri" },
+      { name: "Banan", amount: "1 stk", section: "Frukt & Grønt" },
+      { name: "Kanel", amount: "1 ts", section: "Tørrvarer" }
+    ],
+    instructions: "Kok havregryn med melk i 3-4 min. Skjær banan i skiver oppå. Dryss kanel.",
+    tags: ["quick", "high-fiber", "autopilot"]
+  },
+
+  {
+    id: "havregrot-blabar",
+    name: "Havregrøt med Blåbær",
+    type: "breakfast",
+    prepTime: 5,
+    pathways: { glp1: 4, gip: 2, glucagon: 1, amylin: 1, pyy: 2, leptin: 2, ghrelin: 4, insulin: 5 },
+    scienceNote: "Betaglukan → GLP-1. Blåbær har antioksidanter som bedrer insulinfølsomhet.",
+    drugEquivalent: "Ozempic",
+    ingredients: [
+      { name: "Havregryn", amount: "80 g", section: "Tørrvarer" },
+      { name: "Melk", amount: "1.5 dl", section: "Meieri" },
+      { name: "Blåbær", amount: "75 g", section: "Frukt & Grønt" },
+      { name: "Kanel", amount: "½ ts", section: "Tørrvarer" }
+    ],
+    instructions: "Kok havregryn med melk i 3-4 min. Ha blåbær oppå. Dryss litt kanel.",
+    tags: ["quick", "high-fiber", "autopilot"]
+  },
+
+  {
+    id: "havregrot-druer",
+    name: "Havregrøt med Druer",
+    type: "breakfast",
+    prepTime: 5,
+    pathways: { glp1: 4, gip: 2, glucagon: 1, amylin: 1, pyy: 2, leptin: 2, ghrelin: 3, insulin: 4 },
+    scienceNote: "Betaglukan → GLP-1. Druer gir naturlig sødme og resveratrol som støtter fettforbrenning.",
+    drugEquivalent: "Ozempic",
+    ingredients: [
+      { name: "Havregryn", amount: "80 g", section: "Tørrvarer" },
+      { name: "Melk", amount: "1.5 dl", section: "Meieri" },
+      { name: "Druer", amount: "80 g", section: "Frukt & Grønt" },
+      { name: "Kanel", amount: "½ ts", section: "Tørrvarer" }
+    ],
+    instructions: "Kok havregryn med melk i 3-4 min. Del druene i to og legg oppå.",
+    tags: ["quick", "high-fiber", "autopilot"]
+  },
+
+  {
+    id: "havregrot-eple",
+    name: "Havregrøt med Eple & Kanel",
+    type: "breakfast",
+    prepTime: 5,
+    pathways: { glp1: 4, gip: 2, glucagon: 1, amylin: 1, pyy: 3, leptin: 2, ghrelin: 4, insulin: 5 },
+    scienceNote: "Betaglukan + pektin fra eple → dobbel GLP-1. Eplefiber senker kolesterol.",
+    drugEquivalent: "Ozempic",
+    ingredients: [
+      { name: "Havregryn", amount: "80 g", section: "Tørrvarer" },
+      { name: "Melk", amount: "1.5 dl", section: "Meieri" },
+      { name: "Eple", amount: "1 stk", section: "Frukt & Grønt" },
+      { name: "Kanel", amount: "1 ts", section: "Tørrvarer" }
+    ],
+    instructions: "Kok havregryn med melk i 3-4 min. Riv eller kutt eple i biter oppå. Dryss kanel.",
+    tags: ["quick", "high-fiber", "autopilot"]
+  },
+
+  // ─── BREAKFAST: Knekkebrød-varianter (autopilot hverdager uke 3-4) ──
+
+  {
+    id: "knekke-egg-tomat",
+    name: "Knekkebrød med Egg & Tomat",
+    type: "breakfast",
+    prepTime: 8,
+    pathways: { glp1: 2, gip: 3, glucagon: 3, amylin: 2, pyy: 3, leptin: 2, ghrelin: 3, insulin: 3 },
+    scienceNote: "Egg gir 13 g protein → glukagon + PYY. Tomat gir lykopen og vitamin C.",
+    drugEquivalent: "Mounjaro",
+    ingredients: [
+      { name: "Fullkornsknekkebrød", amount: "2 stk", section: "Bakeri" },
+      { name: "Egg", amount: "2 stk", section: "Meieri" },
+      { name: "Tomat", amount: "1 stk", section: "Frukt & Grønt" },
+      { name: "Salt og pepper", amount: "etter smak", section: "Tørrvarer" }
+    ],
+    instructions: "Kok egg 7 min (bløtkokt) eller 9 min (hardkokt). Skjær i skiver på knekkebrød med tomatskiver.",
+    tags: ["quick", "high-protein", "autopilot"]
+  },
+
+  {
+    id: "knekke-avokado",
+    name: "Knekkebrød med Avokado & Chili",
+    type: "breakfast",
+    prepTime: 5,
+    pathways: { glp1: 2, gip: 2, glucagon: 2, amylin: 1, pyy: 2, leptin: 3, ghrelin: 3, insulin: 2 },
+    scienceNote: "Avokado-fett bremser absorpsjon → jevnt blodsukker. Chili → termogenese.",
+    drugEquivalent: "Retatrutide",
+    ingredients: [
+      { name: "Fullkornsknekkebrød", amount: "2 stk", section: "Bakeri" },
+      { name: "Avokado", amount: "½ stk", section: "Frukt & Grønt" },
+      { name: "Sitronjuice", amount: "litt", section: "Frukt & Grønt" },
+      { name: "Chiliflak", amount: "en klype", section: "Tørrvarer" },
+      { name: "Salt", amount: "en klype", section: "Tørrvarer" }
+    ],
+    instructions: "Mos avokado med sitron, salt og chili. Smør på knekkebrød.",
+    tags: ["quick", "no-cook", "healthy-fats", "autopilot"]
+  },
+
+  {
+    id: "knekke-cottage-agurk",
+    name: "Knekkebrød med Cottage Cheese & Agurk",
+    type: "breakfast",
+    prepTime: 3,
+    pathways: { glp1: 2, gip: 2, glucagon: 2, amylin: 2, pyy: 3, leptin: 2, ghrelin: 3, insulin: 2 },
+    scienceNote: "Kasein fra cottage cheese → langsom PYY-frigjøring hele formiddagen.",
+    drugEquivalent: "CagriSema",
+    ingredients: [
+      { name: "Fullkornsknekkebrød", amount: "2 stk", section: "Bakeri" },
+      { name: "Cottage cheese", amount: "100 g", section: "Meieri" },
+      { name: "Agurk", amount: "¼ stk", section: "Frukt & Grønt" },
+      { name: "Sort pepper", amount: "etter smak", section: "Tørrvarer" }
+    ],
+    instructions: "Smør cottage cheese på knekkebrød. Legg agurkskiver oppå. Kvern pepper.",
+    tags: ["quick", "no-cook", "high-protein", "autopilot"]
+  },
+
+  {
+    id: "knekke-ost-paprika",
+    name: "Knekkebrød med Ost & Paprika",
+    type: "breakfast",
+    prepTime: 3,
+    pathways: { glp1: 1, gip: 2, glucagon: 2, amylin: 1, pyy: 2, leptin: 2, ghrelin: 3, insulin: 2 },
+    scienceNote: "Ost gir kasein-protein for langvarig metthet. Paprika er rik på C-vitamin.",
+    drugEquivalent: "CagriSema",
+    ingredients: [
+      { name: "Fullkornsknekkebrød", amount: "2 stk", section: "Bakeri" },
+      { name: "Brunost eller gulost", amount: "2 skiver", section: "Meieri" },
+      { name: "Paprika", amount: "½ stk", section: "Frukt & Grønt" }
+    ],
+    instructions: "Legg ost på knekkebrød. Kutt paprika i strimler ved siden av.",
+    tags: ["quick", "no-cook", "autopilot"]
   },
 
   // ─── LUNCH ADD-ONS (5) ────────────────────────────────────────────
@@ -678,60 +826,60 @@ window.WEEKLY_PLANS = [
   {
     id: "week-1",
     name: "Uke 1 — Komme i Gang",
-    description: "Fokus på enkle, kjente måltider og nye vaner",
+    description: "Havregrøt-autopilot hverdager, variert helg",
     days: [
-      { day: "Mandag",  meals: { breakfast: "overnight-oats-skyr",   lunchAddon: "kikerter-addon", snack: "cottage-notter",    dinner: "laks-sotpotet",    evening: null } },
-      { day: "Tirsdag", meals: { breakfast: "eggerore-knekke",       lunchAddon: "bonner-addon",   snack: "skyr-banan",        dinner: "kyllingwok",       evening: "gronn-te-ingefar" } },
-      { day: "Onsdag",  meals: { breakfast: "skyr-bowl",             lunchAddon: "avokado-addon",  snack: "egg-hardkokt",      dinner: "kjottdeig-bonner", evening: null } },
-      { day: "Torsdag", meals: { breakfast: "overnight-oats-banan",  lunchAddon: "notter-addon",   snack: "gulrot-hummus",     dinner: "fiskegrateng",     evening: "mork-sjokolade" } },
-      { day: "Fredag",  meals: { breakfast: "cottage-laks-knekke",   lunchAddon: "kikerter-addon", snack: "eple-peanottsmor",  dinner: "fisk-taco",        evening: "popcorn-luft" } },
-      { day: "Lørdag",  meals: { breakfast: "omelett-gronnsaker",    lunchAddon: "linser-addon",   snack: "knekke-ost",        dinner: "fiskesuppe",       evening: "skyr-kanel" } },
-      { day: "Søndag",  meals: { breakfast: "smoothie-gronn",        lunchAddon: "bonner-addon",   snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
+      { day: "Mandag",  meals: { breakfast: "havregrot-banan",         lunchAddon: "kikerter-addon", snack: "cottage-notter",    dinner: "laks-sotpotet",    evening: null } },
+      { day: "Tirsdag", meals: { breakfast: "havregrot-blabar",        lunchAddon: "bonner-addon",   snack: "skyr-banan",        dinner: "kyllingwok",       evening: "gronn-te-ingefar" } },
+      { day: "Onsdag",  meals: { breakfast: "havregrot-druer",         lunchAddon: "avokado-addon",  snack: "egg-hardkokt",      dinner: "kjottdeig-bonner", evening: null } },
+      { day: "Torsdag", meals: { breakfast: "havregrot-eple",          lunchAddon: "notter-addon",   snack: "gulrot-hummus",     dinner: "fiskegrateng",     evening: "mork-sjokolade" } },
+      { day: "Fredag",  meals: { breakfast: "havregrot-banan",         lunchAddon: "kikerter-addon", snack: "eple-peanottsmor",  dinner: "fisk-taco",        evening: "popcorn-luft" } },
+      { day: "Lørdag",  meals: { breakfast: "eggerore-knekke",         lunchAddon: "linser-addon",   snack: "knekke-ost",        dinner: "fiskesuppe",       evening: "skyr-kanel" } },
+      { day: "Søndag",  meals: { breakfast: "omelett-gronnsaker",      lunchAddon: "bonner-addon",   snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
     ]
   },
 
   {
     id: "week-2",
     name: "Uke 2 — Mer Variasjon",
-    description: "Introduserer flere oppskrifter og smaker",
+    description: "Havregrøt-autopilot hverdager, nye helgefrokoster",
     days: [
-      { day: "Mandag",  meals: { breakfast: "kokt-egg-avokado",      lunchAddon: "linser-addon",   snack: "cottage-notter",    dinner: "kylling-burrito",  evening: null } },
-      { day: "Tirsdag", meals: { breakfast: "overnight-oats-skyr",   lunchAddon: "kikerter-addon", snack: "gulrot-hummus",     dinner: "omelett-middag",   evening: "gronn-te-ingefar" } },
-      { day: "Onsdag",  meals: { breakfast: "eggerore-knekke",       lunchAddon: "bonner-addon",   snack: "skyr-banan",        dinner: "lakseburger",      evening: null } },
-      { day: "Torsdag", meals: { breakfast: "skyr-bowl",             lunchAddon: "avokado-addon",  snack: "egg-hardkokt",      dinner: "bacalao",          evening: "mork-sjokolade" } },
-      { day: "Fredag",  meals: { breakfast: "smoothie-gronn",        lunchAddon: "notter-addon",   snack: "eple-peanottsmor",  dinner: "laks-sotpotet",    evening: "popcorn-luft" } },
-      { day: "Lørdag",  meals: { breakfast: "cottage-laks-knekke",   lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "tikka-masala",     evening: "skyr-kanel" } },
-      { day: "Søndag",  meals: { breakfast: "omelett-gronnsaker",    lunchAddon: "linser-addon",   snack: "nottemiks",         dinner: "kjottdeig-bonner", evening: "bar-cottage" } }
+      { day: "Mandag",  meals: { breakfast: "havregrot-eple",          lunchAddon: "linser-addon",   snack: "cottage-notter",    dinner: "kylling-burrito",  evening: null } },
+      { day: "Tirsdag", meals: { breakfast: "havregrot-banan",         lunchAddon: "kikerter-addon", snack: "gulrot-hummus",     dinner: "omelett-middag",   evening: "gronn-te-ingefar" } },
+      { day: "Onsdag",  meals: { breakfast: "havregrot-blabar",        lunchAddon: "bonner-addon",   snack: "skyr-banan",        dinner: "lakseburger",      evening: null } },
+      { day: "Torsdag", meals: { breakfast: "havregrot-druer",         lunchAddon: "avokado-addon",  snack: "egg-hardkokt",      dinner: "bacalao",          evening: "mork-sjokolade" } },
+      { day: "Fredag",  meals: { breakfast: "havregrot-eple",          lunchAddon: "notter-addon",   snack: "eple-peanottsmor",  dinner: "laks-sotpotet",    evening: "popcorn-luft" } },
+      { day: "Lørdag",  meals: { breakfast: "kokt-egg-avokado",        lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "tikka-masala",     evening: "skyr-kanel" } },
+      { day: "Søndag",  meals: { breakfast: "smoothie-gronn",          lunchAddon: "linser-addon",   snack: "nottemiks",         dinner: "kjottdeig-bonner", evening: "bar-cottage" } }
     ]
   },
 
   {
     id: "week-3",
-    name: "Uke 3 — Krydder og Smak",
-    description: "Termogene krydder og sterkere smaker",
+    name: "Uke 3 — Knekkebrød-uke",
+    description: "Knekkebrød-autopilot hverdager, variert helg",
     days: [
-      { day: "Mandag",  meals: { breakfast: "overnight-oats-banan",  lunchAddon: "kikerter-addon", snack: "gulrot-hummus",     dinner: "tikka-masala",     evening: "gronn-te-ingefar" } },
-      { day: "Tirsdag", meals: { breakfast: "kokt-egg-avokado",      lunchAddon: "linser-addon",   snack: "cottage-notter",    dinner: "kyllingwok",       evening: null } },
-      { day: "Onsdag",  meals: { breakfast: "skyr-bowl",             lunchAddon: "bonner-addon",   snack: "egg-hardkokt",      dinner: "fisk-taco",        evening: "mork-sjokolade" } },
-      { day: "Torsdag", meals: { breakfast: "smoothie-gronn",        lunchAddon: "avokado-addon",  snack: "eple-peanottsmor",  dinner: "bacalao",          evening: null } },
-      { day: "Fredag",  meals: { breakfast: "eggerore-knekke",       lunchAddon: "notter-addon",   snack: "skyr-banan",        dinner: "lakseburger",      evening: "popcorn-luft" } },
-      { day: "Lørdag",  meals: { breakfast: "overnight-oats-skyr",   lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "kjottdeig-bonner", evening: "skyr-kanel" } },
-      { day: "Søndag",  meals: { breakfast: "cottage-laks-knekke",   lunchAddon: "linser-addon",   snack: "nottemiks",         dinner: "fiskesuppe",       evening: "bar-cottage" } }
+      { day: "Mandag",  meals: { breakfast: "cottage-laks-knekke",     lunchAddon: "kikerter-addon", snack: "gulrot-hummus",     dinner: "tikka-masala",     evening: "gronn-te-ingefar" } },
+      { day: "Tirsdag", meals: { breakfast: "knekke-egg-tomat",        lunchAddon: "linser-addon",   snack: "cottage-notter",    dinner: "kyllingwok",       evening: null } },
+      { day: "Onsdag",  meals: { breakfast: "knekke-avokado",          lunchAddon: "bonner-addon",   snack: "egg-hardkokt",      dinner: "fisk-taco",        evening: "mork-sjokolade" } },
+      { day: "Torsdag", meals: { breakfast: "knekke-cottage-agurk",    lunchAddon: "avokado-addon",  snack: "eple-peanottsmor",  dinner: "bacalao",          evening: null } },
+      { day: "Fredag",  meals: { breakfast: "knekke-ost-paprika",      lunchAddon: "notter-addon",   snack: "skyr-banan",        dinner: "lakseburger",      evening: "popcorn-luft" } },
+      { day: "Lørdag",  meals: { breakfast: "skyr-bowl",               lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "kjottdeig-bonner", evening: "skyr-kanel" } },
+      { day: "Søndag",  meals: { breakfast: "omelett-gronnsaker",      lunchAddon: "linser-addon",   snack: "nottemiks",         dinner: "fiskesuppe",       evening: "bar-cottage" } }
     ]
   },
 
   {
     id: "week-4",
     name: "Uke 4 — Mestringsuken",
-    description: "Miks av alt — du mestrer dette nå!",
+    description: "Knekkebrød-autopilot hverdager, du mestrer dette!",
     days: [
-      { day: "Mandag",  meals: { breakfast: "smoothie-gronn",        lunchAddon: "linser-addon",   snack: "cottage-notter",    dinner: "laks-sotpotet",    evening: "gronn-te-ingefar" } },
-      { day: "Tirsdag", meals: { breakfast: "kokt-egg-avokado",      lunchAddon: "kikerter-addon", snack: "gulrot-hummus",     dinner: "tikka-masala",     evening: null } },
-      { day: "Onsdag",  meals: { breakfast: "overnight-oats-skyr",   lunchAddon: "bonner-addon",   snack: "egg-hardkokt",      dinner: "kylling-burrito",  evening: "mork-sjokolade" } },
-      { day: "Torsdag", meals: { breakfast: "omelett-gronnsaker",    lunchAddon: "avokado-addon",  snack: "skyr-banan",        dinner: "fiskegrateng",     evening: null } },
-      { day: "Fredag",  meals: { breakfast: "cottage-laks-knekke",   lunchAddon: "notter-addon",   snack: "eple-peanottsmor",  dinner: "kyllingwok",       evening: "popcorn-luft" } },
-      { day: "Lørdag",  meals: { breakfast: "overnight-oats-banan",  lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "bacalao",          evening: "skyr-kanel" } },
-      { day: "Søndag",  meals: { breakfast: "skyr-bowl",             lunchAddon: "linser-addon",   snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
+      { day: "Mandag",  meals: { breakfast: "knekke-egg-tomat",        lunchAddon: "linser-addon",   snack: "cottage-notter",    dinner: "laks-sotpotet",    evening: "gronn-te-ingefar" } },
+      { day: "Tirsdag", meals: { breakfast: "knekke-avokado",          lunchAddon: "kikerter-addon", snack: "gulrot-hummus",     dinner: "tikka-masala",     evening: null } },
+      { day: "Onsdag",  meals: { breakfast: "cottage-laks-knekke",     lunchAddon: "bonner-addon",   snack: "egg-hardkokt",      dinner: "kylling-burrito",  evening: "mork-sjokolade" } },
+      { day: "Torsdag", meals: { breakfast: "knekke-cottage-agurk",    lunchAddon: "avokado-addon",  snack: "skyr-banan",        dinner: "fiskegrateng",     evening: null } },
+      { day: "Fredag",  meals: { breakfast: "knekke-ost-paprika",      lunchAddon: "notter-addon",   snack: "eple-peanottsmor",  dinner: "kyllingwok",       evening: "popcorn-luft" } },
+      { day: "Lørdag",  meals: { breakfast: "eggerore-knekke",         lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "bacalao",          evening: "skyr-kanel" } },
+      { day: "Søndag",  meals: { breakfast: "smoothie-gronn",          lunchAddon: "linser-addon",   snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
     ]
   }
 ];
