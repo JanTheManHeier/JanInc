@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpisSlank — Middag i dag</title>
+  <meta name="theme-color" content="#1a1a2e">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1a1a2e;
+      color: #e8e8e8;
+      padding: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+    h1 { font-size: 1.4rem; margin-bottom: 4px; }
+    .date { color: #9ca3af; font-size: 0.85rem; margin-bottom: 20px; }
+    .card {
+      background: #16213e;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      border-left: 4px solid #22c55e;
+    }
+    .card h2 { font-size: 1.1rem; margin-bottom: 12px; color: #22c55e; }
+    .card h3 { font-size: 0.95rem; margin: 14px 0 8px; color: #f59e0b; }
+    .steps { list-style: none; counter-reset: step; }
+    .steps li {
+      counter-increment: step;
+      padding: 10px 0 10px 40px;
+      position: relative;
+      border-bottom: 1px solid #1a2744;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .steps li:last-child { border-bottom: none; }
+    .steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 28px;
+      height: 28px;
+      background: #22c55e;
+      color: #1a1a2e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .ingredient { font-weight: 600; color: #f59e0b; }
+    .pills { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+    .pill {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+    .pill-glp1 { background: #22c55e22; color: #22c55e; }
+    .pill-gip { background: #eab30822; color: #eab308; }
+    .pill-pyy { background: #3b82f622; color: #3b82f6; }
+    .pill-glucagon { background: #ef444422; color: #ef4444; }
+    .pill-insulin { background: #06b6d422; color: #06b6d4; }
+    .science {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      font-style: italic;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #1a2744;
+    }
+    .tip {
+      background: #1a2744;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+    .tip strong { color: #f59e0b; }
+    .back {
+      display: inline-block;
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-top: 16px;
+      padding: 8px 0;
+    }
+    .check { cursor: pointer; }
+    .check input { display: none; }
+    .check span { position: relative; padding-left: 28px; display: block; }
+    .check span::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 2px;
+      width: 18px; height: 18px;
+      border: 2px solid #9ca3af;
+      border-radius: 4px;
+    }
+    .check input:checked + span::before {
+      background: #22c55e;
+      border-color: #22c55e;
+    }
+    .check input:checked + span::after {
+      content: '✓';
+      position: absolute;
+      left: 3px; top: 0;
+      color: #1a1a2e;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .check input:checked + span { text-decoration: line-through; opacity: 0.6; }
+    .solo-badge {
+      display: inline-block;
+      background: #a855f722;
+      color: #a855f7;
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍽️ Middag — Fredag</h1>
+  <p class="date">20. mars 2026 · Alene hjemme-middag</p>
+  <span class="solo-badge">👨‍🍳 1 porsjon · 10 min</span>
+
+  <div class="tip">
+    <strong>💡 Alene-kveld strategi:</strong> Legg opp én porsjon på tallerken. Ikke sett stekepannen på bordet. Spis ved bordet, ikke foran TV.
+  </div>
+
+  <div class="card">
+    <h2>🥚 Omelett med Grønnsaker</h2>
+
+    <h3>Ingredienser</h3>
+    <label class="check"><input type="checkbox"><span><b class="ingredient">3 egg</b></span></label>
+    <label class="check"><input type="checkbox"><span><b class="ingredient">½ paprika</b> — i strimler</span></label>
+    <label class="check"><input type="checkbox"><span><b class="ingredient">1 tomat</b> — i biter</span></label>
+    <label class="check"><input type="checkbox"><span><b class="ingredient">30 g revet ost</b></span></label>
+    <label class="check"><input type="checkbox"><span><b class="ingredient">1 ts olivenolje</b></span></label>
+    <label class="check"><input type="checkbox"><span><b class="ingredient">Salt og pepper</b></span></label>
+    <label class="check"><input type="checkbox"><span><b class="ingredient">Valgfritt:</b> litt chiliflak 🌶️</span></label>
+
+    <h3>Fremgangsmåte</h3>
+    <ol class="steps">
+      <li>Visp <b class="ingredient">3 egg</b> med en klype salt og pepper i en bolle.</li>
+      <li>Varm <b class="ingredient">olivenolje</b> i en stekepanne på middels varme.</li>
+      <li>Stek <b class="ingredient">paprika</b> og <b class="ingredient">tomat</b> i 2-3 min til de er myke.</li>
+      <li>Hell eggblandingen over grønnsakene. La det stivne i bunnen, 2 min.</li>
+      <li>Strø <b class="ingredient">ost</b> over den ene halvdelen. Valgfritt: dryss chiliflak.</li>
+      <li>Brett omeletten i to. Stek 1 min til. Ferdig!</li>
+    </ol>
+
+    <div class="pills">
+      <span class="pill pill-gip">GIP</span>
+      <span class="pill pill-glucagon">Glukagon</span>
+      <span class="pill pill-pyy">PYY</span>
+    </div>
+    <div class="science">
+      🔬 Egg gir 20g protein → sterk PYY + glukagon-respons. Chili aktiverer termogenese (som retatrutide). Ost gir kasein for langvarig metthet.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🥗 Tilbehør: Enkel Salat</h2>
+    <p style="font-size:0.9rem; color:#9ca3af; margin-bottom:10px;">Bruk det du har — her er et forslag:</p>
+    <label class="check"><input type="checkbox"><span>Salatblader</span></label>
+    <label class="check"><input type="checkbox"><span>Agurk i skiver</span></label>
+    <label class="check"><input type="checkbox"><span>Litt olivenolje + sitron som dressing</span></label>
+  </div>
+
+  <div class="tip">
+    <strong>⏰ Etter middag:</strong> Lag en kopp te (grønn te + ingefær = bonus GLP-1). Eller ta en tur med hunden 🐕 — 20 min gange etter mat øker GLP-1 og insulinfølsomhet direkte.
+  </div>
+
+  <div class="tip">
+    <strong>🌙 Kveldssnack hvis det kribbler:</strong> En håndfull Naturmix nøtter (30g) eller Skyr yoghurt. Ikke åpne chipsposen!
+  </div>
+
+  <a href="/SpisSlank/" class="back">← Tilbake til SpisSlank</a>
+
+</body>
+</html>
