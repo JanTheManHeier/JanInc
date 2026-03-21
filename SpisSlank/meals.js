@@ -833,7 +833,7 @@ window.WEEKLY_PLANS = [
       { day: "Onsdag",  meals: { breakfast: "havregrot-druer",         lunchAddon: "avokado-addon",  snack: "egg-hardkokt",      dinner: "kjottdeig-bonner", evening: null } },
       { day: "Torsdag", meals: { breakfast: "havregrot-eple",          lunchAddon: "notter-addon",   snack: "gulrot-hummus",     dinner: "fiskegrateng",     evening: "mork-sjokolade" } },
       { day: "Fredag",  meals: { breakfast: "havregrot-banan",         lunchAddon: "kikerter-addon", snack: "eple-peanottsmor",  dinner: "fisk-taco",        evening: "popcorn-luft" } },
-      { day: "Lørdag",  meals: { breakfast: "eggerore-knekke",         lunchAddon: "linser-addon",   snack: "knekke-ost",        dinner: "fiskesuppe",       evening: "skyr-kanel" } },
+      { day: "Lørdag",  meals: { breakfast: "eggerore-knekke",         lunchAddon: "linser-addon",   snack: "knekke-ost",        dinner: "kylling-salat",    evening: "skyr-kanel" } },
       { day: "Søndag",  meals: { breakfast: "omelett-gronnsaker",      lunchAddon: "bonner-addon",   snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
     ]
   },
