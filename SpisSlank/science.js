@@ -12,6 +12,8 @@
   var DRUGS = window.DRUGS;
   var FOOD_ARSENAL = window.FOOD_ARSENAL;
 
+  var tFn = window.t || function (k) { return k; };
+
   // Ordered pathway IDs used throughout the view
   var PATHWAY_ORDER = ['glp1', 'gip', 'glucagon', 'amylin', 'pyy', 'leptin', 'ghrelin', 'insulin'];
 
@@ -38,16 +40,19 @@
   }
 
   function renderStatusBadge(status) {
+    var label = status === 'Godkjent' ? tFn('science.approved') : tFn('science.phase3');
     var cls = status === 'Godkjent' ? 'status-approved' : 'status-trial';
-    return '<span class="status-badge ' + cls + '">' + esc(status) + '</span>';
+    return '<span class="status-badge ' + cls + '">' + esc(label) + '</span>';
   }
 
   function renderEvidenceBadge(level) {
+    var labelMap = { 'Sterk': tFn('science.evidenceStrong'), 'Moderat': tFn('science.evidenceModerate') };
+    var translated = labelMap[level] || tFn('science.evidencePreliminary');
     var cls = 'evidence-badge ';
     if (level === 'Sterk') cls += 'evidence-strong';
     else if (level === 'Moderat') cls += 'evidence-moderate';
     else cls += 'evidence-preliminary';
-    return '<span class="' + cls + '">' + esc(level) + '</span>';
+    return '<span class="' + cls + '">' + esc(translated) + '</span>';
   }
 
   function renderScoreDots(score, color) {
@@ -114,7 +119,7 @@
           '<p class="drug-mechanism">' + esc(drug.mechanism) + '</p>' +
           '<div class="drug-pathways">' + pills + '</div>' +
           '<div class="drug-weight-loss">' +
-            '<span class="weight-loss-label">Vekttap:</span> ' +
+            '<span class="weight-loss-label">' + esc(tFn('science.weightLoss')) + ':</span> ' +
             '<strong class="weight-loss-value">' + esc(drug.weightLoss) + '</strong>' +
           '</div>' +
           '<div class="drug-food-arrow">' +
@@ -127,10 +132,9 @@
 
     return '' +
       '<section class="science-block" aria-labelledby="science-drugs-heading">' +
-        '<h2 id="science-drugs-heading" class="science-heading">Slankemedisiner — hva de gjør</h2>' +
+        '<h2 id="science-drugs-heading" class="science-heading">' + esc(tFn('science.drugsHeading')) + '</h2>' +
         '<p class="science-intro">' +
-          'Slankemedisiner som Ozempic, Mounjaro og Retatrutide virker ved å etterligne hormoner ' +
-          'kroppen allerede lager. SpisSlank bruker mat som aktiverer de samme hormonene — naturlig.' +
+          esc(tFn('science.drugsIntro')) +
         '</p>' +
         '<div class="drug-card-scroll">' +
           '<div class="drug-card-grid" role="list" aria-label="Oversikt over slankemedisiner">' +
@@ -184,9 +188,9 @@
 
     return '' +
       '<section class="science-block" aria-labelledby="science-pathways-heading">' +
-        '<h2 id="science-pathways-heading" class="science-heading">8 veier til metthet</h2>' +
+        '<h2 id="science-pathways-heading" class="science-heading">' + esc(tFn('science.pathwaysHeading')) + '</h2>' +
         '<p class="science-intro">' +
-          'Kroppen har flere mekanismer for å regulere appetitt og metthet. SpisSlank dekker alle åtte:' +
+          esc(tFn('science.pathwaysIntro')) +
         '</p>' +
         '<div class="pathway-grid" role="list" aria-label="De åtte metthetsveiene">' +
           cards.join('') +
@@ -237,9 +241,9 @@
 
     return '' +
       '<section class="science-block" aria-labelledby="science-food-heading">' +
-        '<h2 id="science-food-heading" class="science-heading">Matens superkrefter</h2>' +
+        '<h2 id="science-food-heading" class="science-heading">' + esc(tFn('science.foodHeading')) + '</h2>' +
         '<p class="science-intro">' +
-          'Disse matvarene scorer høyt på én eller flere metthetsveier:' +
+          esc(tFn('science.foodIntro')) +
         '</p>' +
         '<div class="food-arsenal-scroll">' +
           '<table class="food-arsenal-table">' +
@@ -295,9 +299,9 @@
 
     return '' +
       '<section class="science-block" aria-labelledby="science-cascade-heading">' +
-        '<h2 id="science-cascade-heading" class="science-heading">Din dag — før og etter</h2>' +
+        '<h2 id="science-cascade-heading" class="science-heading">' + esc(tFn('science.cascadeHeading')) + '</h2>' +
         '<p class="science-intro">' +
-          'Slik endres kroppens signaler gjennom dagen med SpisSlank-maten:' +
+          esc(tFn('science.cascadeIntro')) +
         '</p>' +
         '<div class="cascade">' +
           '<div class="cascade-column timeline-before">' +
@@ -319,14 +323,7 @@
   function renderDisclaimer() {
     return '' +
       '<aside class="disclaimer" role="note" aria-label="Medisinsk ansvarsfraskrivelse">' +
-        '<p>' +
-          '<strong>⚕️ Medisinsk merknad:</strong> Denne appen er ikke medisinsk rådgivning. ' +
-          'Rådfør deg med lege for vekthåndtering. Matbaserte strategier kan ikke erstatte ' +
-          'medisiner, men kan støtte en sunnere livsstil. Kostholdsendringer kan påvirke ' +
-          'blodsukkernivå og annen medisinering — rådfør deg med lege før du gjør store ' +
-          'endringer i kostholdet. Vekttapstallene som vises er basert på publiserte ' +
-          'kliniske studier av legemidlene, ikke på denne matplanen.' +
-        '</p>' +
+        '<p>' + esc(tFn('science.disclaimer')) + '</p>' +
       '</aside>';
   }
 

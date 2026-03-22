@@ -290,11 +290,12 @@
 
     var total = document.createElement('span');
     total.className = 'shopping-summary__total';
-    total.textContent = totalCount + ' varer denne uken';
+    var tFn = window.t || function (k) { return k; };
+    total.textContent = totalCount + ' ' + tFn('shopping.itemsThisWeek');
 
     var progress = document.createElement('span');
     progress.className = 'shopping-summary__progress';
-    progress.textContent = checkedCount + ' av ' + totalCount + ' handlet';
+    progress.textContent = tFn('shopping.progress').replace('{checked}', checkedCount).replace('{total}', totalCount);
 
     summary.appendChild(total);
     summary.appendChild(progress);
@@ -399,7 +400,7 @@
       }
 
       saveChecked(currentChecked);
-      summaryEls.progressEl.textContent = checkedCount + ' av ' + totalCount + ' handlet';
+      summaryEls.progressEl.textContent = (window.t || function(k){return k;})('shopping.progress').replace('{checked}', checkedCount).replace('{total}', totalCount);
     });
 
     // Nullstill button
@@ -418,7 +419,7 @@
           if (r) r.classList.remove('checked');
         }
         checkedCount = 0;
-        summaryEls.progressEl.textContent = '0 av ' + totalCount + ' handlet';
+        summaryEls.progressEl.textContent = (window.t || function(k){return k;})('shopping.progress').replace('{checked}', 0).replace('{total}', totalCount);
       });
     }
 
@@ -440,11 +441,13 @@
     // Update week label
     var weekLabel = document.getElementById('shopping-week-label');
     if (weekLabel) {
-      weekLabel.textContent = 'Uke ' + (weekIndex + 1);
+      weekLabel.textContent = (window.t ? window.t('shopping.weekLabel') : 'Uke') + ' ' + (weekIndex + 1);
     }
 
-    // Collect meals and aggregate
-    var meals = getMealsForWeek(weekIndex, swaps);
+    // Collect meals and aggregate (use filtered meals from app.js if available)
+    var meals = (typeof window.getFilteredMealsForWeek === 'function')
+      ? window.getFilteredMealsForWeek(weekIndex)
+      : getMealsForWeek(weekIndex, swaps);
     var ingredientMap = buildIngredientMap(meals);
     var sectionGroups = groupBySection(ingredientMap);
     var checkedMap = loadChecked();

@@ -12,6 +12,8 @@
     swaps:           'spisslank-swaps',
     shoppingChecked: 'spisslank-shoppingChecked',
     lastView:        'spisslank-lastView',
+    profile:         'spisslank-profile',
+    onboardingDone:  'spisslank-onboarding-done',
   };
 
   const MEAL_TYPES = [
@@ -34,20 +36,83 @@
 
   // ── Hjelpefunksjoner ────────────────────────────────────────
 
+  /** Les brukarprofil frå localStorage */
+  const getProfile = () => {
+    try { return JSON.parse(localStorage.getItem('spisslank-profile')) || {}; }
+    catch { return {}; }
+  };
+
+  /** Returner berre dei måltidstypane brukaren har slått på */
+  const getActiveMealTypes = () => {
+    const { mealFrequency } = getProfile();
+    if (!mealFrequency) return MEAL_TYPES;
+    return MEAL_TYPES.filter((mt) => mealFrequency[mt.key] !== false);
+  };
+
   /** Hent måltid fra MEALS-arrayen */
   const getMealById = (id) => window.MEALS.find((m) => m.id === id) || null;
 
-  /** Norsk dagnamn */
-  const getNorwegianDay = (dayIndex) => NORWEGIAN_DAYS[dayIndex] || '';
+  /** Sjekk om eit måltid er kompatibelt med brukarprofilen (allergiar + kosthold) */
+  const isMealCompatible = (meal, profile) => {
+    if (!meal || !profile) return true;
 
-  /** Formater dagens dato på norsk, f.eks. «Tirsdag 17. mars» */
+    const allergies = profile.allergies || [];
+    if (allergies.length > 0 && meal.allergens) {
+      for (const allergen of meal.allergens) {
+        if (allergies.includes(allergen)) return false;
+      }
+    }
+
+    const restrictions = profile.dietaryRestrictions || [];
+    if (restrictions.length > 0 && meal.dietary) {
+      for (const restriction of restrictions) {
+        if (!meal.dietary.includes(restriction)) return false;
+      }
+    }
+
+    return true;
+  };
+
+  /** Finn eit kompatibelt erstatningsmåltid av same type */
+  const findReplacement = (mealType, excludeIds, profile) => {
+    const slotToType = {
+      breakfast: 'breakfast',
+      lunchAddon: 'lunch-addon',
+      snack: 'snack',
+      dinner: 'dinner',
+      evening: 'evening',
+    };
+    const type = slotToType[mealType] || mealType;
+
+    const candidates = window.MEALS.filter((m) =>
+      m.type === type &&
+      !excludeIds.includes(m.id) &&
+      isMealCompatible(m, profile)
+    );
+
+    if (candidates.length === 0) return null;
+
+    return candidates.reduce((best, m) => {
+      const score = Object.values(m.pathways || {}).reduce((s, v) => s + v, 0);
+      const bestScore = Object.values(best.pathways || {}).reduce((s, v) => s + v, 0);
+      return score > bestScore ? m : best;
+    }, candidates[0]);
+  };
+
+  /** Day name via translation */
+  const DAY_KEYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  const MONTH_KEYS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+
+  const getNorwegianDay = (dayIndex) => t('day.' + DAY_KEYS[dayIndex]) || NORWEGIAN_DAYS[dayIndex] || '';
+
+  /** Formater dagens dato, f.eks. «Tirsdag 17. mars» / «Tuesday 17. March» */
   const getNorwegianDate = () => {
     const now = new Date();
     const jsDay = now.getDay();                     // 0=søndag
     const dayIndex = jsDay === 0 ? 6 : jsDay - 1;   // 0=mandag
     const dayName = getNorwegianDay(dayIndex);
     const date = now.getDate();
-    const month = NORWEGIAN_MONTHS[now.getMonth()];
+    const month = t('month.' + MONTH_KEYS[now.getMonth()]);
     return `${dayName} ${date}. ${month}`;
   };
 
@@ -95,30 +160,54 @@
     const dayObj = plan.days[dayIndex];
     const base = { ...(dayObj.meals || dayObj) };
     const swaps = getSwaps();
+    const profile = getProfile();
+
+    // Apply user swaps first
     for (const mt of MEAL_TYPES) {
       const override = swaps[`${dayIndex}-${mt.key}`];
       if (override) base[mt.key] = override;
     }
+
+    // Apply dietary/allergy filtering
+    if (profile.allergies?.length > 0 || profile.dietaryRestrictions?.length > 0) {
+      const usedIds = Object.values(base).filter(Boolean);
+      for (const mt of MEAL_TYPES) {
+        const mealId = base[mt.key];
+        if (!mealId) continue;
+        const meal = getMealById(mealId);
+        if (meal && !isMealCompatible(meal, profile)) {
+          const replacement = findReplacement(mt.key, usedIds, profile);
+          if (replacement) {
+            base[mt.key] = replacement.id;
+            usedIds.push(replacement.id);
+          } else {
+            base[mt.key] = null;
+          }
+        }
+      }
+    }
+
     return base;
   };
 
-  /** Hent fullstendige måltidsobjekt for éin dag */
+  /** Hent fullstendige måltidsobjekt for éin dag (berre aktive typar) */
   const getTodaysMeals = () => {
     const plan = getDayPlan(getCurrentWeek(), getTodayIndex());
     if (!plan) return [];
-    return MEAL_TYPES.map((mt) => ({
+    return getActiveMealTypes().map((mt) => ({
       ...mt,
       meal: getMealById(plan[mt.key]),
     })).filter((m) => m.meal);
   };
 
-  /** Hent alle måltid for ei heil veke (7 dagar) */
+  /** Hent alle måltid for ei heil veke — berre aktive typar (7 dagar) */
   const getWeekMeals = (weekIndex) => {
+    const activeMT = getActiveMealTypes();
     const week = [];
     for (let d = 0; d < 7; d++) {
       const dayPlan = getDayPlan(weekIndex, d);
       const meals = dayPlan
-        ? MEAL_TYPES.map((mt) => ({ ...mt, meal: getMealById(dayPlan[mt.key]) })).filter((m) => m.meal)
+        ? activeMT.map((mt) => ({ ...mt, meal: getMealById(dayPlan[mt.key]) })).filter((m) => m.meal)
         : [];
       week.push({ dayIndex: d, meals });
     }
@@ -179,8 +268,9 @@
     // Deleger rendering til rette modul
     if (viewName === 'today')    renderTodayView();
     if (viewName === 'week')     renderWeekView();
-    if (viewName === 'shopping' && typeof window.renderShoppingList === 'function') window.renderShoppingList();
+    if (viewName === 'shopping' && typeof window.renderShoppingList === 'function') window.renderShoppingList(getCurrentWeek(), getSwaps());
     if (viewName === 'science'  && typeof window.renderScienceView  === 'function') window.renderScienceView();
+    if (viewName === 'settings') renderSettingsView();
   };
 
   // ── Today-visning ───────────────────────────────────────────
@@ -196,6 +286,13 @@
 
     const todayMeals = getTodaysMeals();
     const mealObjects = todayMeals.map((m) => m.meal);
+
+    // Personleg velkomst
+    const profile = getProfile();
+    const titleEl = document.querySelector('#view-today .view-title');
+    if (titleEl && profile.name) {
+      titleEl.textContent = `Hei, ${profile.name}!`;
+    }
 
     renderPathwayDots(mealObjects);
     drawRadarChart(mealObjects);
@@ -233,7 +330,7 @@
           <div class="meal-card-header">
             <span class="meal-icon">${icon}</span>
             <div class="meal-meta">
-              <span class="meal-type">${label}</span>
+              <span class="meal-type">${t('mealType.' + key)}</span>
               <h2 class="meal-name">${meal.name}</h2>
             </div>
             <span class="prep-badge">⏱ ${formatPrepTime(meal.prepTime)}</span>
@@ -243,8 +340,8 @@
             ${buildMealDetail(meal)}
           </div>
           <div class="meal-actions">
-            <button class="btn-expand" aria-expanded="false">Vis detaljer</button>
-            <button class="btn-swap" data-meal-type="${key}" data-meal-id="${meal.id}">🔄 Bytt</button>
+            <button class="btn-expand" aria-expanded="false">${t('today.showDetails')}</button>
+            <button class="btn-swap" data-meal-type="${key}" data-meal-id="${meal.id}">${t('today.swap')}</button>
           </div>
         </article>`;
     }).join('');
@@ -280,10 +377,10 @@
     }
 
     let html = '';
-    if (ingredients) html += `<div class="detail-section"><h3>Ingredienser</h3><ul>${ingredients}</ul></div>`;
-    if (steps)       html += `<div class="detail-section"><h3>Fremgangsmåte</h3><ol>${steps}</ol></div>`;
-    if (meal.scienceNote)    html += `<div class="detail-section detail-science"><h3>🔬 Hvorfor dette virker</h3><p>${meal.scienceNote}</p></div>`;
-    if (meal.drugEquivalent) html += `<div class="detail-section detail-drug"><h3>💊 Medisin-ekvivalent</h3><p>${meal.drugEquivalent}</p></div>`;
+    if (ingredients) html += `<div class="detail-section"><h3>${t('today.ingredients')}</h3><ul>${ingredients}</ul></div>`;
+    if (steps)       html += `<div class="detail-section"><h3>${t('today.instructions')}</h3><ol>${steps}</ol></div>`;
+    if (meal.scienceNote)    html += `<div class="detail-section detail-science"><h3>${t('today.scienceNote')}</h3><p>${meal.scienceNote}</p></div>`;
+    if (meal.drugEquivalent) html += `<div class="detail-section detail-drug"><h3>${t('today.drugEquivalent')}</h3><p>${meal.drugEquivalent}</p></div>`;
     return html;
   };
 
@@ -306,7 +403,7 @@
         const d = c.querySelector('.meal-detail');
         if (d) d.hidden = true;
         const btn = c.querySelector('.btn-expand');
-        if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.textContent = 'Vis detaljer'; }
+        if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.textContent = t('today.showDetails'); }
       }
     });
 
@@ -315,12 +412,12 @@
       card.classList.remove('expanded');
       if (detail) detail.hidden = true;
       expandBtn.setAttribute('aria-expanded', 'false');
-      expandBtn.textContent = 'Vis detaljer';
+      expandBtn.textContent = t('today.showDetails');
     } else {
       card.classList.add('expanded');
       if (detail) detail.hidden = false;
       expandBtn.setAttribute('aria-expanded', 'true');
-      expandBtn.textContent = 'Skjul detaljer';
+      expandBtn.textContent = t('today.hideDetails');
     }
   };
 
@@ -341,13 +438,14 @@
     };
     const mealType = slotToMealType[mealTypeKey] || mealTypeKey;
 
-    // Finn alternative måltid av same type
+    // Finn alternative måltid av same type (filtrert for kompatibilitet)
+    const profile = getProfile();
     const alternatives = window.MEALS
-      .filter((m) => m.type === mealType && m.id !== currentMealId)
+      .filter((m) => m.type === mealType && m.id !== currentMealId && isMealCompatible(m, profile))
       .slice(0, 5);
 
     if (alternatives.length === 0) {
-      optionsContainer.innerHTML = '<p class="swap-empty">Ingen alternativer tilgjengeleg.</p>';
+      optionsContainer.innerHTML = '<p class="swap-empty">' + t('swap.noAlternatives') + '</p>';
     } else {
       optionsContainer.innerHTML = alternatives.map((alt) => `
         <button class="swap-option" role="listitem" data-swap-id="${alt.id}" data-swap-type="${mealTypeKey}">
@@ -423,12 +521,12 @@
     grid.innerHTML = weekData.map(({ dayIndex, meals }) => {
       const dayName = getNorwegianDay(dayIndex);
       const isToday = dayIndex === getTodayIndex();
-      const mealRows = meals.map(({ icon, label, meal }) => {
+      const mealRows = meals.map(({ key, icon, label, meal }) => {
         const dots = buildPathwayBadges(meal);
         return `
           <div class="day-meal-item" data-meal-id="${meal.id}">
             <button class="day-meal-header" aria-expanded="false">
-              <span class="day-meal-label">${icon} <strong>${label}:</strong> ${meal.name}</span>
+              <span class="day-meal-label">${icon} <strong>${t('mealType.' + key)}:</strong> ${meal.name}</span>
               <span class="day-meal-badges">${dots}</span>
               <span class="day-meal-expand" aria-hidden="true">📖</span>
             </button>
@@ -441,8 +539,8 @@
       return `
         <article class="day-card${isToday ? ' day-today' : ''}" role="listitem" data-day="${dayIndex}">
           <button class="day-header" aria-expanded="false">
-            <span class="day-name">${dayName}${isToday ? ' (i dag)' : ''}</span>
-            <span class="day-summary">${meals.length} måltider</span>
+            <span class="day-name">${dayName}${isToday ? ' ' + t('week.today') : ''}</span>
+            <span class="day-summary">${meals.length} / ${getActiveMealTypes().length} ${t('week.meals')}</span>
             <span class="day-expand-icon" aria-hidden="true">▸</span>
           </button>
           <div class="day-meals" hidden>
@@ -626,7 +724,100 @@
     ctx.fillText(`${pct}%`, cx, cy - 6);
     ctx.font = '11px Inter, sans-serif';
     ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-    ctx.fillText('Dekning', cx, cy + 12);
+    ctx.fillText(t('today.coverage'), cx, cy + 12);
+  };
+
+  // ── Settings-visning ────────────────────────────────────────
+
+  const renderSettingsView = () => {
+    const profile = getProfile();
+
+    // Name
+    const nameInput = document.getElementById('settings-name');
+    if (nameInput && profile.name) nameInput.value = profile.name;
+
+    // Language
+    const lang = profile.language || window.getLanguage?.() || 'no';
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    // Dietary restrictions
+    const dietary = profile.dietaryRestrictions || [];
+    document.querySelectorAll('[data-dietary]').forEach(cb => {
+      cb.checked = dietary.includes(cb.dataset.dietary);
+    });
+
+    // Allergies
+    const allergies = profile.allergies || [];
+    document.querySelectorAll('[data-allergy]').forEach(cb => {
+      cb.checked = allergies.includes(cb.dataset.allergy);
+    });
+
+    // Meal frequency
+    const freq = profile.mealFrequency || { breakfast: true, lunchAddon: true, snack: true, dinner: true, evening: true };
+    document.querySelectorAll('[data-meal-freq]').forEach(cb => {
+      cb.checked = freq[cb.dataset.mealFreq] !== false;
+    });
+  };
+
+  const saveSettings = () => {
+    const profile = {
+      name: document.getElementById('settings-name')?.value?.trim() || '',
+      language: document.querySelector('.lang-btn.active')?.dataset?.lang || 'no',
+      dietaryRestrictions: [...document.querySelectorAll('[data-dietary]:checked')].map(cb => cb.dataset.dietary),
+      allergies: [...document.querySelectorAll('[data-allergy]:checked')].map(cb => cb.dataset.allergy),
+      mealFrequency: {},
+    };
+
+    document.querySelectorAll('[data-meal-freq]').forEach(cb => {
+      profile.mealFrequency[cb.dataset.mealFreq] = cb.checked;
+    });
+
+    localStorage.setItem(STORAGE_KEYS.profile, JSON.stringify(profile));
+
+    // Update language
+    if (window.setLanguage) window.setLanguage(profile.language);
+
+    // Show saved message
+    const msg = document.getElementById('settings-saved-msg');
+    if (msg) {
+      msg.hidden = false;
+      setTimeout(() => { msg.hidden = true; }, 2000);
+    }
+  };
+
+  // ── Onboarding ─────────────────────────────────────────────
+
+  const showOnboarding = () => {
+    const done = localStorage.getItem(STORAGE_KEYS.onboardingDone);
+    if (done) return;
+
+    const modal = document.getElementById('onboarding-modal');
+    if (!modal) return;
+
+    modal.hidden = false;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const handleOnboardingDone = () => {
+    const name = document.getElementById('onboarding-name')?.value?.trim() || '';
+    const dietary = [...document.querySelectorAll('[data-onboard-dietary]:checked')].map(cb => cb.dataset.onboardDietary);
+
+    const profile = getProfile();
+    if (name) profile.name = name;
+    if (dietary.length > 0) profile.dietaryRestrictions = dietary;
+
+    localStorage.setItem(STORAGE_KEYS.profile, JSON.stringify(profile));
+    localStorage.setItem(STORAGE_KEYS.onboardingDone, 'true');
+
+    closeModals();
+  };
+
+  const handleOnboardingSkip = () => {
+    localStorage.setItem(STORAGE_KEYS.onboardingDone, 'true');
+    closeModals();
   };
 
   // ── Veke-veljar ─────────────────────────────────────────────
@@ -721,9 +912,41 @@
         }
       }, 200);
     });
+
+    // Settings save
+    document.getElementById('btn-save-settings')?.addEventListener('click', saveSettings);
+
+    // Language toggle
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Onboarding
+    document.getElementById('btn-onboarding-done')?.addEventListener('click', handleOnboardingDone);
+    document.getElementById('btn-onboarding-skip')?.addEventListener('click', handleOnboardingSkip);
   };
 
   // ── Initialisering ──────────────────────────────────────────
+
+  /** Eksporter filtrerte måltid for ei veke (brukt av shopping.js) */
+  window.getFilteredMealsForWeek = (weekIndex) => {
+    const activeMT = getActiveMealTypes();
+    const mealObjects = [];
+    for (let d = 0; d < 7; d++) {
+      const dayPlan = getDayPlan(weekIndex, d);
+      if (!dayPlan) continue;
+      for (const mt of activeMT) {
+        const mealId = dayPlan[mt.key];
+        if (!mealId) continue;
+        const meal = getMealById(mealId);
+        if (meal) mealObjects.push(meal);
+      }
+    }
+    return mealObjects;
+  };
 
   const init = () => {
     // Sjekk at naudsynte data finst
@@ -733,6 +956,9 @@
     }
 
     setupEventListeners();
+
+    // Show onboarding on first visit
+    setTimeout(showOnboarding, 500);
 
     // Gå til sist brukte visning, eller «today»
     const lastView = localStorage.getItem(STORAGE_KEYS.lastView) || 'today';
