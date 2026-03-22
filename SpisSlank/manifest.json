@@ -1,17 +1,17 @@
 {
-  "name": "SpisSlank",
+  "name": "SpisSlank — Spis deg slank",
   "short_name": "SpisSlank",
-  "description": "Spis deg slank — måltidsplaner som etterligner slankemedisinenes effekt",
+  "description": "Måltidsplaner som etterligner slankemedisinenes effekt med vanlig mat fra dagligvarebutikken. Free meal plans that mimic weight-loss drug pathways.",
   "start_url": "/SpisSlank/",
   "scope": "/SpisSlank/",
   "display": "standalone",
+  "orientation": "portrait",
   "theme_color": "#1a1a2e",
   "background_color": "#1a1a2e",
   "lang": "no",
-  "categories": [
-    "health",
-    "food"
-  ],
+  "dir": "ltr",
+  "categories": ["health", "food", "lifestyle"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "icons/icon-192x192.png",
@@ -36,6 +36,20 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "I dag",
+      "short_name": "I dag",
+      "url": "/SpisSlank/?view=today",
+      "icons": [{ "src": "icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Handleliste",
+      "short_name": "Handel",
+      "url": "/SpisSlank/?view=shopping",
+      "icons": [{ "src": "icons/icon-192x192.png", "sizes": "192x192" }]
     }
   ]
 }
