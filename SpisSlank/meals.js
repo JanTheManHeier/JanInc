@@ -20,7 +20,9 @@ window.MEALS = [
       { name: "Melk", amount: "1 dl", section: "Meieri" }
     ],
     instructions: "Bland havregryn, skyr og melk kvelden før. Topp med blåbær om morgenen.",
-    tags: ["quick", "no-cook", "high-fiber", "high-protein"]
+    tags: ["quick", "no-cook", "high-fiber", "high-protein"],
+    allergens: ["dairy", "gluten"],
+    dietary: ["vegetarian"]
   },
 
   {
@@ -38,7 +40,9 @@ window.MEALS = [
       { name: "Melk", amount: "1.5 dl", section: "Meieri" }
     ],
     instructions: "Bland havregryn og melk kvelden før. Skjær banan og dryss kanel på om morgenen.",
-    tags: ["quick", "no-cook", "high-fiber"]
+    tags: ["quick", "no-cook", "high-fiber"],
+    allergens: ["dairy", "gluten"],
+    dietary: ["vegetarian"]
   },
 
   {
@@ -57,7 +61,9 @@ window.MEALS = [
       { name: "Salt og pepper", amount: "etter smak", section: "Tørrvarer" }
     ],
     instructions: "Visp egg og melk. Stek på lav varme med smør, rør forsiktig. Server på knekkebrød.",
-    tags: ["high-protein", "quick"]
+    tags: ["high-protein", "quick"],
+    allergens: ["dairy", "gluten", "eggs"],
+    dietary: ["vegetarian"]
   },
 
   {
@@ -76,7 +82,9 @@ window.MEALS = [
       { name: "Chiliflak", amount: "en klype", section: "Tørrvarer" }
     ],
     instructions: "Kok egg 7–8 min. Mos avokado med sitron og chili, smør på knekkebrød.",
-    tags: ["high-protein", "healthy-fats"]
+    tags: ["high-protein", "healthy-fats"],
+    allergens: ["gluten", "eggs"],
+    dietary: ["vegetarian", "lactose-free"]
   },
 
   {
@@ -94,7 +102,9 @@ window.MEALS = [
       { name: "Bringebær", amount: "50 g", section: "Frukt & Grønt" }
     ],
     instructions: "Ha skyr i bolle. Topp med nøtter, bær og en tynn strime honning.",
-    tags: ["quick", "no-cook", "high-protein"]
+    tags: ["quick", "no-cook", "high-protein"],
+    allergens: ["dairy", "nuts"],
+    dietary: ["vegetarian", "gluten-free"]
   },
 
   {
@@ -113,7 +123,9 @@ window.MEALS = [
       { name: "Vann", amount: "1.5 dl", section: "Drikke" }
     ],
     instructions: "Blend alt til glatt konsistens. Tilsett mer vann om det er for tykt.",
-    tags: ["quick", "high-fiber", "high-protein"]
+    tags: ["quick", "high-fiber", "high-protein"],
+    allergens: ["dairy", "gluten"],
+    dietary: ["vegetarian"]
   },
 
   {
@@ -131,7 +143,9 @@ window.MEALS = [
       { name: "Dill", amount: "litt", section: "Frukt & Grønt" }
     ],
     instructions: "Smør cottage cheese på knekkebrød, legg på laks og dill.",
-    tags: ["quick", "no-cook", "high-protein", "omega-3"]
+    tags: ["quick", "no-cook", "high-protein", "omega-3"],
+    allergens: ["dairy", "gluten", "fish"],
+    dietary: []
   },
 
   {
@@ -150,7 +164,9 @@ window.MEALS = [
       { name: "Olivenolje", amount: "1 ts", section: "Tørrvarer" }
     ],
     instructions: "Visp egg. Stek grønnsaker i olje, hell over egg, strø ost. Stek til stivnet.",
-    tags: ["high-protein", "low-carb"]
+    tags: ["high-protein", "low-carb"],
+    allergens: ["dairy", "eggs"],
+    dietary: ["vegetarian", "gluten-free"]
   },
 
   // ─── BREAKFAST: Havregrøt-varianter (autopilot hverdager) ─────────
@@ -170,7 +186,9 @@ window.MEALS = [
       { name: "Kanel", amount: "1 ts", section: "Tørrvarer" }
     ],
     instructions: "Kok havregryn med melk i 3-4 min. Skjær banan i skiver oppå. Dryss kanel.",
-    tags: ["quick", "high-fiber", "autopilot"]
+    tags: ["quick", "high-fiber", "autopilot"],
+    allergens: ["dairy", "gluten"],
+    dietary: ["vegetarian"]
   },
 
   {
@@ -188,7 +206,9 @@ window.MEALS = [
       { name: "Kanel", amount: "½ ts", section: "Tørrvarer" }
     ],
     instructions: "Kok havregryn med melk i 3-4 min. Ha blåbær oppå. Dryss litt kanel.",
-    tags: ["quick", "high-fiber", "autopilot"]
+    tags: ["quick", "high-fiber", "autopilot"],
+    allergens: ["dairy", "gluten"],
+    dietary: ["vegetarian"]
   },
 
   {
@@ -206,7 +226,9 @@ window.MEALS = [
       { name: "Kanel", amount: "½ ts", section: "Tørrvarer" }
     ],
     instructions: "Kok havregryn med melk i 3-4 min. Del druene i to og legg oppå.",
-    tags: ["quick", "high-fiber", "autopilot"]
+    tags: ["quick", "high-fiber", "autopilot"],
+    allergens: ["dairy", "gluten"],
+    dietary: ["vegetarian"]
   },
 
   {
@@ -224,7 +246,9 @@ window.MEALS = [
       { name: "Kanel", amount: "1 ts", section: "Tørrvarer" }
     ],
     instructions: "Kok havregryn med melk i 3-4 min. Riv eller kutt eple i biter oppå. Dryss kanel.",
-    tags: ["quick", "high-fiber", "autopilot"]
+    tags: ["quick", "high-fiber", "autopilot"],
+    allergens: ["dairy", "gluten"],
+    dietary: ["vegetarian"]
   },
 
   // ─── BREAKFAST: Knekkebrød-varianter (autopilot hverdager uke 3-4) ──
@@ -244,7 +268,9 @@ window.MEALS = [
       { name: "Salt og pepper", amount: "etter smak", section: "Tørrvarer" }
     ],
     instructions: "Kok egg 7 min (bløtkokt) eller 9 min (hardkokt). Skjær i skiver på knekkebrød med tomatskiver.",
-    tags: ["quick", "high-protein", "autopilot"]
+    tags: ["quick", "high-protein", "autopilot"],
+    allergens: ["gluten", "eggs"],
+    dietary: ["vegetarian", "lactose-free"]
   },
 
   {
@@ -263,7 +289,9 @@ window.MEALS = [
       { name: "Salt", amount: "en klype", section: "Tørrvarer" }
     ],
     instructions: "Mos avokado med sitron, salt og chili. Smør på knekkebrød.",
-    tags: ["quick", "no-cook", "healthy-fats", "autopilot"]
+    tags: ["quick", "no-cook", "healthy-fats", "autopilot"],
+    allergens: ["gluten"],
+    dietary: ["vegetarian", "vegan", "lactose-free"]
   },
 
   {
@@ -281,7 +309,9 @@ window.MEALS = [
       { name: "Sort pepper", amount: "etter smak", section: "Tørrvarer" }
     ],
     instructions: "Smør cottage cheese på knekkebrød. Legg agurkskiver oppå. Kvern pepper.",
-    tags: ["quick", "no-cook", "high-protein", "autopilot"]
+    tags: ["quick", "no-cook", "high-protein", "autopilot"],
+    allergens: ["dairy", "gluten"],
+    dietary: ["vegetarian"]
   },
 
   {
@@ -298,7 +328,9 @@ window.MEALS = [
       { name: "Paprika", amount: "½ stk", section: "Frukt & Grønt" }
     ],
     instructions: "Legg ost på knekkebrød. Kutt paprika i strimler ved siden av.",
-    tags: ["quick", "no-cook", "autopilot"]
+    tags: ["quick", "no-cook", "autopilot"],
+    allergens: ["dairy", "gluten"],
+    dietary: ["vegetarian"]
   },
 
   // ─── LUNCH ADD-ONS (5) ────────────────────────────────────────────
@@ -315,7 +347,9 @@ window.MEALS = [
       { name: "Hermetiske kikerter", amount: "100 g", section: "Tørrvarer" }
     ],
     instructions: "Skyll og ha på salaten. Kan krydres med paprikapulver.",
-    tags: ["quick", "high-fiber", "high-protein", "budget"]
+    tags: ["quick", "high-fiber", "high-protein", "budget"],
+    allergens: [],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   {
@@ -330,7 +364,9 @@ window.MEALS = [
       { name: "Hermetiske hvite bønner", amount: "100 g", section: "Tørrvarer" }
     ],
     instructions: "Skyll og bland inn i salaten.",
-    tags: ["quick", "high-fiber", "high-protein", "budget"]
+    tags: ["quick", "high-fiber", "high-protein", "budget"],
+    allergens: [],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   {
@@ -345,7 +381,9 @@ window.MEALS = [
       { name: "Hermetiske linser", amount: "100 g", section: "Tørrvarer" }
     ],
     instructions: "Skyll og ha på salaten. Passer spesielt godt med fetaost.",
-    tags: ["quick", "high-fiber", "high-protein", "budget"]
+    tags: ["quick", "high-fiber", "high-protein", "budget"],
+    allergens: [],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   {
@@ -360,7 +398,9 @@ window.MEALS = [
       { name: "Valnøtter/mandler", amount: "30 g", section: "Tørrvarer" }
     ],
     instructions: "Ha en håndfull nøtter på salaten for crunch og metthet.",
-    tags: ["quick", "no-cook", "healthy-fats"]
+    tags: ["quick", "no-cook", "healthy-fats"],
+    allergens: ["nuts"],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   {
@@ -375,7 +415,9 @@ window.MEALS = [
       { name: "Avokado", amount: "½ stk", section: "Frukt & Grønt" }
     ],
     instructions: "Skjær i skiver og legg på salaten. Dryss gjerne litt salt og sitron.",
-    tags: ["quick", "no-cook", "healthy-fats"]
+    tags: ["quick", "no-cook", "healthy-fats"],
+    allergens: [],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   // ─── SNACK 15:30 (7) ──────────────────────────────────────────────
@@ -393,7 +435,9 @@ window.MEALS = [
       { name: "Nøttemiks", amount: "20 g", section: "Tørrvarer" }
     ],
     instructions: "Ha cottage cheese i boks, topp med nøtter. Ta med på jobb.",
-    tags: ["quick", "no-cook", "high-protein", "portable"]
+    tags: ["quick", "no-cook", "high-protein", "portable"],
+    allergens: ["dairy", "nuts"],
+    dietary: ["vegetarian", "gluten-free"]
   },
 
   {
@@ -409,7 +453,9 @@ window.MEALS = [
       { name: "Banan", amount: "½ stk", section: "Frukt & Grønt" }
     ],
     instructions: "Skjær banan i skiver, bland med skyr. Ta med i matboks.",
-    tags: ["quick", "no-cook", "high-protein", "portable"]
+    tags: ["quick", "no-cook", "high-protein", "portable"],
+    allergens: ["dairy"],
+    dietary: ["vegetarian", "gluten-free"]
   },
 
   {
@@ -424,7 +470,9 @@ window.MEALS = [
       { name: "Egg", amount: "2 stk", section: "Meieri" }
     ],
     instructions: "Kok egg kvelden før (10 min). Ta med i matboks på jobb.",
-    tags: ["meal-prep", "high-protein", "portable", "zero-carb"]
+    tags: ["meal-prep", "high-protein", "portable", "zero-carb"],
+    allergens: ["eggs"],
+    dietary: ["vegetarian", "lactose-free", "gluten-free"]
   },
 
   {
@@ -440,7 +488,9 @@ window.MEALS = [
       { name: "Hummus", amount: "3 ss", section: "Tørrvarer" }
     ],
     instructions: "Skjær gulrøtter i stenger. Ha hummus i liten boks. Ta med.",
-    tags: ["quick", "high-fiber", "portable"]
+    tags: ["quick", "high-fiber", "portable"],
+    allergens: [],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   {
@@ -456,7 +506,9 @@ window.MEALS = [
       { name: "Peanøttsmør", amount: "1 ss", section: "Tørrvarer" }
     ],
     instructions: "Skjær eple i båter, dypp i peanøttsmør.",
-    tags: ["quick", "no-cook", "portable"]
+    tags: ["quick", "no-cook", "portable"],
+    allergens: ["nuts"],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   {
@@ -473,7 +525,9 @@ window.MEALS = [
       { name: "Agurk", amount: "noen skiver", section: "Frukt & Grønt" }
     ],
     instructions: "Legg brunost og agurk på knekkebrød. Enkelt og norsk.",
-    tags: ["quick", "no-cook", "portable"]
+    tags: ["quick", "no-cook", "portable"],
+    allergens: ["dairy", "gluten"],
+    dietary: ["vegetarian"]
   },
 
   {
@@ -490,7 +544,9 @@ window.MEALS = [
       { name: "Cashewnøtter", amount: "10 g", section: "Tørrvarer" }
     ],
     instructions: "Ha i en liten pose eller boks. Maks 30 g per dag.",
-    tags: ["quick", "no-cook", "portable", "healthy-fats"]
+    tags: ["quick", "no-cook", "portable", "healthy-fats"],
+    allergens: ["nuts"],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   // ─── DINNER (12) ──────────────────────────────────────────────────
@@ -512,7 +568,9 @@ window.MEALS = [
       { name: "Salt og pepper", amount: "etter smak", section: "Tørrvarer" }
     ],
     instructions: "Stek søtpotet i ovn 200°C i 20 min. Legg laks og brokkoli ved siden, stek 12 min til.",
-    tags: ["high-protein", "omega-3", "high-fiber"]
+    tags: ["high-protein", "omega-3", "high-fiber"],
+    allergens: ["fish"],
+    dietary: ["lactose-free", "gluten-free"]
   },
 
   {
@@ -532,7 +590,9 @@ window.MEALS = [
       { name: "Sesamolje", amount: "1 ts", section: "Tørrvarer" }
     ],
     instructions: "Stek kylling i biter. Tilsett grønnsaker, ingefær og chili. Smak til med soya.",
-    tags: ["high-protein", "thermogenic", "quick"]
+    tags: ["high-protein", "thermogenic", "quick"],
+    allergens: ["soy"],
+    dietary: ["lactose-free", "gluten-free"]
   },
 
   {
@@ -553,7 +613,9 @@ window.MEALS = [
       { name: "Spisskummen", amount: "½ ts", section: "Tørrvarer" }
     ],
     instructions: "Brun kjøttdeig med løk og hvitløk. Tilsett tomater, bønner og krydder. Kok 15 min.",
-    tags: ["high-protein", "high-fiber", "meal-prep", "budget"]
+    tags: ["high-protein", "high-fiber", "meal-prep", "budget"],
+    allergens: [],
+    dietary: ["lactose-free", "gluten-free"]
   },
 
   {
@@ -573,7 +635,9 @@ window.MEALS = [
       { name: "Smør", amount: "1 ss", section: "Meieri" }
     ],
     instructions: "Legg fisk og brokkoli i form. Lag hvit saus, hell over. Strø ost. Stek 200°C 20 min.",
-    tags: ["high-protein", "comfort-food"]
+    tags: ["high-protein", "comfort-food"],
+    allergens: ["dairy", "gluten", "fish"],
+    dietary: []
   },
 
   {
@@ -593,7 +657,9 @@ window.MEALS = [
       { name: "Rømme lett", amount: "2 ss", section: "Meieri" }
     ],
     instructions: "Stek kylling i biter med krydder. Fyll tortilla med kylling, kikerter, grønt og rømme.",
-    tags: ["high-protein", "high-fiber"]
+    tags: ["high-protein", "high-fiber"],
+    allergens: ["dairy", "gluten"],
+    dietary: []
   },
 
   {
@@ -612,7 +678,9 @@ window.MEALS = [
       { name: "Olivenolje", amount: "1 ts", section: "Tørrvarer" }
     ],
     instructions: "Stek grønnsaker, hell over vispede egg. Smuldre feta over. Stek til stivnet.",
-    tags: ["high-protein", "low-carb", "quick", "budget"]
+    tags: ["high-protein", "low-carb", "quick", "budget"],
+    allergens: ["dairy", "eggs"],
+    dietary: ["vegetarian", "gluten-free"]
   },
 
   {
@@ -632,7 +700,9 @@ window.MEALS = [
       { name: "Agurk", amount: "noen skiver", section: "Frukt & Grønt" }
     ],
     instructions: "Bland laks, egg, rasp og dill. Form burgere, stek 4 min per side. Server i salatblader.",
-    tags: ["high-protein", "low-carb", "omega-3"]
+    tags: ["high-protein", "low-carb", "omega-3"],
+    allergens: ["gluten", "eggs", "fish"],
+    dietary: ["lactose-free"]
   },
 
   {
@@ -652,7 +722,9 @@ window.MEALS = [
       { name: "Gurkemeie", amount: "½ ts", section: "Tørrvarer" }
     ],
     instructions: "Marinér kylling i yoghurt og paste. Stek, tilsett tomat. Riv blomkål til 'ris', dampkok.",
-    tags: ["high-protein", "thermogenic", "low-carb"]
+    tags: ["high-protein", "thermogenic", "low-carb"],
+    allergens: ["dairy"],
+    dietary: ["gluten-free"]
   },
 
   {
@@ -672,7 +744,9 @@ window.MEALS = [
       { name: "Koriander", amount: "litt", section: "Frukt & Grønt" }
     ],
     instructions: "Stek fisk med krydder, del i biter. Fyll tortilla med fisk, kålsalat og rømme.",
-    tags: ["high-protein", "quick"]
+    tags: ["high-protein", "quick"],
+    allergens: ["dairy", "gluten", "fish"],
+    dietary: []
   },
 
   {
@@ -693,7 +767,9 @@ window.MEALS = [
       { name: "Hvitløk", amount: "2 fedd", section: "Frukt & Grønt" }
     ],
     instructions: "Stek løk, hvitløk og paprika. Tilsett tomater og poteter, kok 15 min. Legg i torsk, kok 10 min.",
-    tags: ["high-protein", "traditional"]
+    tags: ["high-protein", "traditional"],
+    allergens: ["fish"],
+    dietary: ["lactose-free", "gluten-free"]
   },
 
   {
@@ -713,7 +789,9 @@ window.MEALS = [
       { name: "Fløte", amount: "1 dl", section: "Meieri" }
     ],
     instructions: "Kok grønnsaker i kraft 10 min. Tilsett fisk i biter, kok 5 min. Rør inn fløte.",
-    tags: ["high-protein", "comfort-food", "traditional"]
+    tags: ["high-protein", "comfort-food", "traditional"],
+    allergens: ["dairy", "fish"],
+    dietary: ["gluten-free"]
   },
 
   {
@@ -733,8 +811,111 @@ window.MEALS = [
       { name: "Olivenolje", amount: "1 ss", section: "Tørrvarer" }
     ],
     instructions: "Stek eller bruk grillrester av kylling. Bland alle ingredienser, dryss olje over.",
-    tags: ["high-protein", "low-carb", "quick"]
+    tags: ["high-protein", "low-carb", "quick"],
+    allergens: ["dairy"],
+    dietary: ["gluten-free"]
   },
+
+
+  {
+    id: "kikert-curry",
+    name: "Kikertcurry med Spinat",
+    type: "dinner",
+    prepTime: 25,
+    pathways: { glp1: 4, gip: 2, glucagon: 1, amylin: 1, pyy: 4, leptin: 3, ghrelin: 4, insulin: 4 },
+    scienceNote: "Kikerter har resistens-stivelse → kraftig GLP-1. Gurkemeie er antiinflammatorisk.",
+    drugEquivalent: "Ozempic + Mounjaro",
+    ingredients: [
+      { name: "Hermetiske kikerter", amount: "1 boks (400 g)", section: "Tørrvarer" },
+      { name: "Babyspinat", amount: "100 g", section: "Frukt & Grønt" },
+      { name: "Kokosmelk lett", amount: "2 dl", section: "Tørrvarer" },
+      { name: "Løk", amount: "1 stk", section: "Frukt & Grønt" },
+      { name: "Hvitløk", amount: "2 fedd", section: "Frukt & Grønt" },
+      { name: "Ingefær", amount: "1 ts revet", section: "Frukt & Grønt" },
+      { name: "Gurkemeie", amount: "1 ts", section: "Tørrvarer" },
+      { name: "Garam masala", amount: "1 ts", section: "Tørrvarer" },
+      { name: "Hakkede tomater", amount: "1 boks", section: "Tørrvarer" }
+    ],
+    instructions: "Fres løk, hvitløk og ingefær. Tilsett krydder, tomater og kokosmelk. Kok 10 min. Ha i kikerter og spinat, kok 5 min til.",
+    tags: ["high-fiber", "high-protein", "thermogenic"],
+    allergens: [],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
+  },
+
+  {
+    id: "linsesuppe",
+    name: "Krydret Linsesuppe",
+    type: "dinner",
+    prepTime: 30,
+    pathways: { glp1: 4, gip: 2, glucagon: 1, amylin: 1, pyy: 4, leptin: 3, ghrelin: 4, insulin: 4 },
+    scienceNote: "Linser senker glykemisk indeks → GLP-1 og PYY. Varm suppe øker metthet via vagusnerven.",
+    drugEquivalent: "Ozempic + Mounjaro",
+    ingredients: [
+      { name: "Røde linser", amount: "200 g", section: "Tørrvarer" },
+      { name: "Gulrot", amount: "2 stk", section: "Frukt & Grønt" },
+      { name: "Løk", amount: "1 stk", section: "Frukt & Grønt" },
+      { name: "Hvitløk", amount: "2 fedd", section: "Frukt & Grønt" },
+      { name: "Hakkede tomater", amount: "1 boks", section: "Tørrvarer" },
+      { name: "Grønnsaksbuljong", amount: "5 dl", section: "Tørrvarer" },
+      { name: "Spisskummen", amount: "1 ts", section: "Tørrvarer" },
+      { name: "Gurkemeie", amount: "½ ts", section: "Tørrvarer" },
+      { name: "Sitron", amount: "½ stk", section: "Frukt & Grønt" }
+    ],
+    instructions: "Fres løk, hvitløk og gulrot. Tilsett linser, tomater, buljong og krydder. Kok 20 min til linsene er myke. Press over sitron.",
+    tags: ["high-fiber", "high-protein", "comfort-food", "budget", "meal-prep"],
+    allergens: [],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
+  },
+
+  {
+    id: "tofu-wok",
+    name: "Grønnsakswok med Tofu",
+    type: "dinner",
+    prepTime: 20,
+    pathways: { glp1: 3, gip: 2, glucagon: 2, amylin: 1, pyy: 3, leptin: 2, ghrelin: 3, insulin: 3 },
+    scienceNote: "Tofu gir planteprotein → PYY. Chili og ingefær → termogenese og ghrelin-demping.",
+    drugEquivalent: "Mounjaro + Contrave",
+    ingredients: [
+      { name: "Fast tofu", amount: "200 g", section: "Kjøtt & Fisk" },
+      { name: "Wokgrønnsaker", amount: "300 g", section: "Frukt & Grønt" },
+      { name: "Ingefær", amount: "1 ts revet", section: "Frukt & Grønt" },
+      { name: "Hvitløk", amount: "2 fedd", section: "Frukt & Grønt" },
+      { name: "Soyasaus", amount: "2 ss", section: "Tørrvarer" },
+      { name: "Sesamolje", amount: "1 ts", section: "Tørrvarer" },
+      { name: "Chili", amount: "½ stk", section: "Frukt & Grønt" },
+      { name: "Sesamfrø", amount: "1 ss", section: "Tørrvarer" }
+    ],
+    instructions: "Kutt tofu i terninger og stek sprø. Tilsett grønnsaker, ingefær, hvitløk og chili. Smak til med soyasaus og sesamolje. Dryss sesamfrø.",
+    tags: ["high-protein", "thermogenic", "quick"],
+    allergens: ["soy"],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
+  },
+
+  {
+    id: "bonne-sotpotet-chili",
+    name: "Bønne- og Søtpotetchili",
+    type: "dinner",
+    prepTime: 30,
+    pathways: { glp1: 4, gip: 2, glucagon: 1, amylin: 1, pyy: 4, leptin: 3, ghrelin: 4, insulin: 4 },
+    scienceNote: "Bønner + søtpotet → dobbel fiber for kraftig GLP-1 og PYY. Chili → termogenese.",
+    drugEquivalent: "Ozempic + Mounjaro + Contrave",
+    ingredients: [
+      { name: "Hermetiske svarte bønner", amount: "1 boks (400 g)", section: "Tørrvarer" },
+      { name: "Søtpotet", amount: "200 g", section: "Frukt & Grønt" },
+      { name: "Hakkede tomater", amount: "1 boks", section: "Tørrvarer" },
+      { name: "Løk", amount: "1 stk", section: "Frukt & Grønt" },
+      { name: "Hvitløk", amount: "2 fedd", section: "Frukt & Grønt" },
+      { name: "Paprika", amount: "1 stk", section: "Frukt & Grønt" },
+      { name: "Spisskummen", amount: "1 ts", section: "Tørrvarer" },
+      { name: "Chili", amount: "1 stk", section: "Frukt & Grønt" },
+      { name: "Koriander", amount: "litt", section: "Frukt & Grønt" }
+    ],
+    instructions: "Kutt søtpotet i terninger, fres med løk og hvitløk. Tilsett tomater, bønner og krydder. Kok 20 min. Topp med koriander.",
+    tags: ["high-fiber", "high-protein", "meal-prep", "budget", "thermogenic"],
+    allergens: [],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
+  },
+
 
   // ─── EVENING (5) ──────────────────────────────────────────────────
 
@@ -751,7 +932,9 @@ window.MEALS = [
       { name: "Fersk ingefær", amount: "2 skiver", section: "Frukt & Grønt" }
     ],
     instructions: "Kok vann, legg i te og ingefær. Trekk 3 min.",
-    tags: ["zero-cal", "thermogenic", "quick"]
+    tags: ["zero-cal", "thermogenic", "quick"],
+    allergens: [],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   {
@@ -768,7 +951,9 @@ window.MEALS = [
       { name: "Valnøtter", amount: "15 g", section: "Tørrvarer" }
     ],
     instructions: "Liten porsjon skyr med kanel og knuste valnøtter.",
-    tags: ["quick", "no-cook", "high-protein"]
+    tags: ["quick", "no-cook", "high-protein"],
+    allergens: ["dairy", "nuts"],
+    dietary: ["vegetarian", "gluten-free"]
   },
 
   {
@@ -783,7 +968,9 @@ window.MEALS = [
       { name: "Mørk sjokolade 70%+", amount: "20 g (2–3 biter)", section: "Tørrvarer" }
     ],
     instructions: "Nyt sakte, 2–3 biter. La det smelte på tunga.",
-    tags: ["treat", "mindful-eating"]
+    tags: ["treat", "mindful-eating"],
+    allergens: [],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   {
@@ -799,7 +986,9 @@ window.MEALS = [
       { name: "Salt", amount: "en klype", section: "Tørrvarer" }
     ],
     instructions: "Popp i kjele uten fett eller bruk luftpopper. Dryss litt salt.",
-    tags: ["high-fiber", "low-cal", "high-volume"]
+    tags: ["high-fiber", "low-cal", "high-volume"],
+    allergens: [],
+    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   {
@@ -815,7 +1004,9 @@ window.MEALS = [
       { name: "Blandede bær", amount: "50 g", section: "Frukt & Grønt" }
     ],
     instructions: "Ha cottage cheese i skål, topp med bær.",
-    tags: ["quick", "no-cook", "high-protein"]
+    tags: ["quick", "no-cook", "high-protein"],
+    allergens: ["dairy"],
+    dietary: ["vegetarian", "gluten-free"]
   }
 ];
 
