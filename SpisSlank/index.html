@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SpisSlank — Spis deg slank</title>
   <meta name="description" content="Måltidsplaner som etterligner slankemedisinenes effekt med vanlig mat fra dagligvarebutikken">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="SpisSlank — Eat yourself slim">
+  <meta property="og:description" content="Free meal plans that mimic weight-loss drug pathways using ordinary grocery store food.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://janinc.no/SpisSlank/">
+  <meta property="og:image" content="https://janinc.no/SpisSlank/icons/icon-512x512.png">
+  <meta property="og:locale" content="nb_NO">
+  <meta property="og:locale:alternate" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SpisSlank — Spis deg slank">
+  <meta name="twitter:description" content="Måltidsplaner som etterligner slankemedisinenes effekt med vanlig mat.">
+  <meta name="twitter:image" content="https://janinc.no/SpisSlank/icons/icon-512x512.png">
+
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1a1a2e">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -76,9 +92,10 @@
         <button class="week-btn" data-week="3" aria-pressed="false">Uke 3</button>
         <button class="week-btn" data-week="4" aria-pressed="false">Uke 4</button>
       </nav>
+      <button id="btn-share-plan" class="btn-share btn-share-plan">📤 Del denne ukeplanen</button>
     </header>
 
-    <div id="week-grid" class="week-grid" role="list" aria-label="Ukens dager">
+    <div id="week-grid" class="week-grid"role="list" aria-label="Ukens dager">
       <!-- JS populates 7 day cards here. Structure per day:
         <article class="day-card" role="listitem" data-day="0">
           <button class="day-header" aria-expanded="false">
@@ -200,6 +217,87 @@
     </div>
   </section>
 
+  <!-- ===== SETTINGS VIEW ===== -->
+  <section id="view-settings" data-view="settings" style="display: none" aria-label="Innstillinger">
+    <header class="view-header">
+      <h1 class="view-title">Innstillinger</h1>
+    </header>
+
+    <div class="settings-content">
+      <!-- Name -->
+      <div class="settings-group">
+        <label class="settings-label" for="settings-name">Navn</label>
+        <input type="text" id="settings-name" class="settings-input" placeholder="Ditt navn" autocomplete="given-name">
+      </div>
+
+      <!-- Language -->
+      <div class="settings-group">
+        <label class="settings-label">Språk</label>
+        <div class="settings-toggle-row">
+          <button class="lang-btn active" data-lang="no">🇳🇴 Norsk</button>
+          <button class="lang-btn" data-lang="en">🇬🇧 English</button>
+        </div>
+      </div>
+
+      <!-- Dietary Restrictions -->
+      <div class="settings-group">
+        <label class="settings-label">Kostholdsrestriksjoner</label>
+        <div class="settings-checks">
+          <label class="settings-check"><input type="checkbox" data-dietary="vegetarian"><span>🥬 Vegetar</span></label>
+          <label class="settings-check"><input type="checkbox" data-dietary="vegan"><span>🌱 Vegan</span></label>
+          <label class="settings-check"><input type="checkbox" data-dietary="lactose-free"><span>🥛 Laktosefri</span></label>
+          <label class="settings-check"><input type="checkbox" data-dietary="gluten-free"><span>🌾 Glutenfri</span></label>
+        </div>
+      </div>
+
+      <!-- Allergies -->
+      <div class="settings-group">
+        <label class="settings-label">Allergier</label>
+        <div class="settings-checks">
+          <label class="settings-check"><input type="checkbox" data-allergy="nuts"><span>🥜 Nøtter</span></label>
+          <label class="settings-check"><input type="checkbox" data-allergy="shellfish"><span>🦐 Skalldyr</span></label>
+          <label class="settings-check"><input type="checkbox" data-allergy="eggs"><span>🥚 Egg</span></label>
+          <label class="settings-check"><input type="checkbox" data-allergy="dairy"><span>🧀 Melk</span></label>
+          <label class="settings-check"><input type="checkbox" data-allergy="soy"><span>🫘 Soya</span></label>
+          <label class="settings-check"><input type="checkbox" data-allergy="gluten"><span>🌾 Gluten</span></label>
+          <label class="settings-check"><input type="checkbox" data-allergy="fish"><span>🐟 Fisk</span></label>
+        </div>
+      </div>
+
+      <!-- Meal Frequency -->
+      <div class="settings-group">
+        <label class="settings-label">Måltidsfrekvens</label>
+        <div class="settings-checks">
+          <label class="settings-check"><input type="checkbox" data-meal-freq="breakfast" checked><span>🌅 Frokost</span></label>
+          <label class="settings-check"><input type="checkbox" data-meal-freq="lunchAddon" checked><span>🥗 Lunsj-tillegg</span></label>
+          <label class="settings-check"><input type="checkbox" data-meal-freq="snack" checked><span>🥜 Mellommåltid</span></label>
+          <label class="settings-check"><input type="checkbox" data-meal-freq="dinner" checked><span>🍽️ Middag</span></label>
+          <label class="settings-check"><input type="checkbox" data-meal-freq="evening"><span>🌙 Kveldsmat</span></label>
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <button id="btn-save-settings" class="btn-primary settings-save">Lagre</button>
+      <span id="settings-saved-msg" class="settings-saved" hidden>✓ Lagret!</span>
+
+      <!-- Share -->
+      <div class="settings-group">
+        <label class="settings-label">Del</label>
+        <button id="btn-share-app" class="btn-share">
+          <span class="share-icon">📤</span>
+          <span>Del SpisSlank med venner</span>
+        </button>
+      </div>
+
+      <!-- About -->
+      <div class="settings-about">
+        <h2 class="settings-about-title">Om SpisSlank</h2>
+        <p>SpisSlank er en gratis måltidsplanlegger som bruker vanlig mat fra dagligvarebutikken for å aktivere de samme metthetsveiene som moderne slankemedisiner.</p>
+        <p class="settings-version">Versjon 2.0</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== MEAL DETAIL MODAL ===== -->
   <div id="meal-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Måltidsdetaljer" hidden>
     <div class="modal-content">
@@ -239,6 +337,34 @@
     </div>
   </div>
 
+  <!-- ===== ONBOARDING MODAL ===== -->
+  <div id="onboarding-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Velkommen" hidden>
+    <div class="modal-content onboarding-content">
+      <h2 class="modal-heading">👋 Velkommen til SpisSlank!</h2>
+      <p class="onboarding-subtitle">La oss tilpasse planen din.</p>
+      
+      <div class="settings-group">
+        <label class="settings-label" for="onboarding-name">Hva heter du?</label>
+        <input type="text" id="onboarding-name" class="settings-input" placeholder="Ditt navn" autocomplete="given-name">
+      </div>
+
+      <div class="settings-group">
+        <label class="settings-label">Noen matrestriksjoner?</label>
+        <div class="settings-checks">
+          <label class="settings-check"><input type="checkbox" data-onboard-dietary="vegetarian"><span>🥬 Vegetar</span></label>
+          <label class="settings-check"><input type="checkbox" data-onboard-dietary="vegan"><span>🌱 Vegan</span></label>
+          <label class="settings-check"><input type="checkbox" data-onboard-dietary="lactose-free"><span>🥛 Laktosefri</span></label>
+          <label class="settings-check"><input type="checkbox" data-onboard-dietary="gluten-free"><span>🌾 Glutenfri</span></label>
+        </div>
+      </div>
+
+      <div class="onboarding-actions">
+        <button id="btn-onboarding-skip" class="btn-secondary">Hopp over</button>
+        <button id="btn-onboarding-done" class="btn-primary">Ferdig ✓</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== BOTTOM NAVIGATION ===== -->
   <nav class="bottom-nav" aria-label="Hovednavigasjon">
     <button class="nav-tab active" data-view="today" aria-label="I dag" aria-current="page">
@@ -257,10 +383,16 @@
       <span class="nav-icon" aria-hidden="true">🧬</span>
       <span class="nav-label">Vitenskap</span>
     </button>
+    <button class="nav-tab" data-view="settings" aria-label="Innstillinger">
+      <span class="nav-icon" aria-hidden="true">⚙️</span>
+      <span class="nav-label">Instillinger</span>
+    </button>
   </nav>
 
   <script src="pathways.js"></script>
   <script src="meals.js"></script>
+  <script src="translations.js"></script>
+  <script src="api-client.js"></script>
   <script src="shopping.js"></script>
   <script src="science.js"></script>
   <script src="app.js"></script>

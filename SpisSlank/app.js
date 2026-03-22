@@ -381,6 +381,7 @@
     if (steps)       html += `<div class="detail-section"><h3>${t('today.instructions')}</h3><ol>${steps}</ol></div>`;
     if (meal.scienceNote)    html += `<div class="detail-section detail-science"><h3>${t('today.scienceNote')}</h3><p>${meal.scienceNote}</p></div>`;
     if (meal.drugEquivalent) html += `<div class="detail-section detail-drug"><h3>${t('today.drugEquivalent')}</h3><p>${meal.drugEquivalent}</p></div>`;
+    html += `<button class="btn-share-meal" data-meal-id="${meal.id}">📤 ${t('share.shareMeal')}</button>`;
     return html;
   };
 
@@ -831,6 +832,47 @@
     renderWeekView();
   };
 
+  // ── Toast Notification ──────────────────────────────────────
+
+  const showToast = (message) => {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => toast.classList.add('toast-visible'));
+    setTimeout(() => {
+      toast.classList.remove('toast-visible');
+      setTimeout(() => toast.remove(), 300);
+    }, 2000);
+  };
+
+  // ── Share Helpers ──────────────────────────────────────────
+
+  const shareMealText = async (meal) => {
+    const lang = window.getLanguage?.() || 'no';
+    const name = (lang === 'en' && meal.nameEN) ? meal.nameEN : meal.name;
+    const instructions = (lang === 'en' && meal.instructionsEN) ? meal.instructionsEN : meal.instructions;
+    const ingredients = (meal.ingredients || []).map(ing => {
+      const ingName = (lang === 'en' && ing.nameEN) ? ing.nameEN : ing.name;
+      return `• ${ing.amount} ${ingName}`;
+    }).join('\n');
+
+    const text = `🍽️ ${name}\n\n${t('today.ingredients')}:\n${ingredients}\n\n${t('today.instructions')}:\n${typeof instructions === 'string' ? instructions : instructions.join('\n')}\n\n— SpisSlank`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: name, text });
+      } catch (e) { /* cancelled */ }
+    } else {
+      await navigator.clipboard.writeText(text);
+      showToast(t('share.copied'));
+    }
+  };
+
   // ── Event-delegering ────────────────────────────────────────
 
   const setupEventListeners = () => {
@@ -847,6 +889,14 @@
         // Expand/collapse
         if (e.target.closest('.btn-expand')) {
           handleMealCardClick(e);
+          return;
+        }
+
+        // Del-knapp
+        const shareBtn = e.target.closest('.btn-share-meal');
+        if (shareBtn) {
+          const meal = getMealById(shareBtn.dataset.mealId);
+          if (meal) shareMealText(meal);
           return;
         }
 
@@ -922,6 +972,62 @@
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
       });
+    });
+
+    // Share app
+    document.getElementById('btn-share-app')?.addEventListener('click', async () => {
+      const shareData = {
+        title: t('share.shareTitle'),
+        text: t('share.shareText'),
+        url: window.location.origin + '/SpisSlank/',
+      };
+
+      if (navigator.share) {
+        try { await navigator.share(shareData); } catch (e) { /* user cancelled */ }
+      } else {
+        await navigator.clipboard.writeText(shareData.url);
+        showToast(t('share.copied'));
+      }
+    });
+
+    // Share plan
+    document.getElementById('btn-share-plan')?.addEventListener('click', async () => {
+      const weekIndex = getCurrentWeek();
+      const plan = window.WEEKLY_PLANS[weekIndex];
+      if (!plan) return;
+
+      const weekData = getWeekMeals(weekIndex);
+      const planSnapshot = {
+        weekIndex,
+        weekName: plan.name,
+        days: weekData.map(({ dayIndex, meals }) => ({
+          dayIndex,
+          meals: meals.map(({ key, meal }) => ({
+            slot: key,
+            mealId: meal.id,
+            name: meal.name,
+            nameEN: meal.nameEN,
+          })),
+        })),
+      };
+
+      const result = await window.sharePlan?.(planSnapshot, plan.name || 'Min uke');
+      if (result && result.shortCode) {
+        const fullUrl = window.location.origin + `/SpisSlank/?plan=${result.shortCode}`;
+
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: t('share.sharePlan'),
+              text: `${plan.name}\n${t('share.shareText')}`,
+              url: fullUrl,
+            });
+          } catch (e) { /* cancelled */ }
+        } else {
+          await navigator.clipboard.writeText(fullUrl);
+        }
+        showToast(`${t('share.copied')} ${result.shortCode}`);
+      }
     });
 
     // Onboarding
