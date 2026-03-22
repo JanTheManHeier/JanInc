@@ -287,6 +287,10 @@
           <span class="share-icon" aria-hidden="true">📤</span>
           <span>Del SpisSlank med venner</span>
         </button>
+        <div class="qr-code-container">
+          <p class="qr-label">Eller skann QR-koden:</p>
+          <canvas id="qr-canvas" width="200" height="200" aria-label="QR-kode til SpisSlank"></canvas>
+        </div>
       </div>
 
       <!-- About -->
@@ -389,6 +393,7 @@
     </button>
   </nav>
 
+  <script src="qr-code.js"></script>
   <script src="pathways.js"></script>
   <script src="meals.js"></script>
   <script src="translations.js"></script>

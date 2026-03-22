@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'spisslank-v2.0';
+const CACHE_VERSION = 'spisslank-v2.1';
 const ASSETS_TO_CACHE = [
   '/SpisSlank/',
   '/SpisSlank/index.html',
@@ -10,6 +10,7 @@ const ASSETS_TO_CACHE = [
   '/SpisSlank/shopping.js',
   '/SpisSlank/science.js',
   '/SpisSlank/app.js',
+  '/SpisSlank/qr-code.js',
   '/SpisSlank/manifest.json',
   '/SpisSlank/icons/icon-192x192.png',
   '/SpisSlank/icons/icon-512x512.png',

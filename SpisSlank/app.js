@@ -771,6 +771,9 @@
     document.querySelectorAll('[data-meal-freq]').forEach(cb => {
       cb.checked = freq[cb.dataset.mealFreq] !== false;
     });
+
+    // QR code
+    if (window.renderQRCode) window.renderQRCode('qr-canvas', 'https://janinc.no/SpisSlank/');
   };
 
   const saveSettings = () => {
