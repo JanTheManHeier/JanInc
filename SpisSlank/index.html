@@ -60,7 +60,7 @@
       </div>
     </header>
 
-    <div id="today-meals" class="meal-card-list" role="list" aria-label="Dagens måltider">
+    <div id="today-meals" class="meal-card-list" role="list" aria-label="Dagens måltider" aria-live="polite">
       <!-- JS populates meal cards here. Structure per card:
         <article class="meal-card" role="listitem">
           <div class="meal-card-header">
@@ -92,10 +92,10 @@
         <button class="week-btn" data-week="3" aria-pressed="false">Uke 3</button>
         <button class="week-btn" data-week="4" aria-pressed="false">Uke 4</button>
       </nav>
-      <button id="btn-share-plan" class="btn-share btn-share-plan">📤 Del denne ukeplanen</button>
+      <button id="btn-share-plan" class="btn-share btn-share-plan" aria-label="Del denne ukeplanen">📤 Del denne ukeplanen</button>
     </header>
 
-    <div id="week-grid" class="week-grid"role="list" aria-label="Ukens dager">
+    <div id="week-grid" class="week-grid" role="list" aria-label="Ukens dager" aria-live="polite">
       <!-- JS populates 7 day cards here. Structure per day:
         <article class="day-card" role="listitem" data-day="0">
           <button class="day-header" aria-expanded="false">
@@ -128,7 +128,7 @@
       </div>
     </header>
 
-    <div id="shopping-list" class="shopping-sections" aria-label="Handleliste gruppert etter avdeling">
+    <div id="shopping-list" class="shopping-sections" aria-label="Handleliste gruppert etter avdeling" aria-live="polite">
       <!-- JS populates sections here. Structure:
         <section class="shop-section" aria-label="Meieri">
           <h2 class="shop-section-header"><span aria-hidden="true">🥛</span> Meieri</h2>
@@ -241,8 +241,8 @@
 
       <!-- Dietary Restrictions -->
       <div class="settings-group">
-        <label class="settings-label">Kostholdsrestriksjoner</label>
-        <div class="settings-checks">
+        <label class="settings-label" id="dietary-label">Kostholdsrestriksjoner</label>
+        <div class="settings-checks" role="group" aria-labelledby="dietary-label">
           <label class="settings-check"><input type="checkbox" data-dietary="vegetarian"><span>🥬 Vegetar</span></label>
           <label class="settings-check"><input type="checkbox" data-dietary="vegan"><span>🌱 Vegan</span></label>
           <label class="settings-check"><input type="checkbox" data-dietary="lactose-free"><span>🥛 Laktosefri</span></label>
@@ -252,8 +252,8 @@
 
       <!-- Allergies -->
       <div class="settings-group">
-        <label class="settings-label">Allergier</label>
-        <div class="settings-checks">
+        <label class="settings-label" id="allergy-label">Allergier</label>
+        <div class="settings-checks" role="group" aria-labelledby="allergy-label">
           <label class="settings-check"><input type="checkbox" data-allergy="nuts"><span>🥜 Nøtter</span></label>
           <label class="settings-check"><input type="checkbox" data-allergy="shellfish"><span>🦐 Skalldyr</span></label>
           <label class="settings-check"><input type="checkbox" data-allergy="eggs"><span>🥚 Egg</span></label>
@@ -266,8 +266,8 @@
 
       <!-- Meal Frequency -->
       <div class="settings-group">
-        <label class="settings-label">Måltidsfrekvens</label>
-        <div class="settings-checks">
+        <label class="settings-label" id="meal-freq-label">Måltidsfrekvens</label>
+        <div class="settings-checks" role="group" aria-labelledby="meal-freq-label">
           <label class="settings-check"><input type="checkbox" data-meal-freq="breakfast" checked><span>🌅 Frokost</span></label>
           <label class="settings-check"><input type="checkbox" data-meal-freq="lunchAddon" checked><span>🥗 Lunsj-tillegg</span></label>
           <label class="settings-check"><input type="checkbox" data-meal-freq="snack" checked><span>🥜 Mellommåltid</span></label>
@@ -278,13 +278,13 @@
 
       <!-- Save Button -->
       <button id="btn-save-settings" class="btn-primary settings-save">Lagre</button>
-      <span id="settings-saved-msg" class="settings-saved" hidden>✓ Lagret!</span>
+      <span id="settings-saved-msg" class="settings-saved" role="status" hidden>✓ Lagret!</span>
 
       <!-- Share -->
       <div class="settings-group">
         <label class="settings-label">Del</label>
-        <button id="btn-share-app" class="btn-share">
-          <span class="share-icon">📤</span>
+        <button id="btn-share-app" class="btn-share" aria-label="Del SpisSlank med venner">
+          <span class="share-icon" aria-hidden="true">📤</span>
           <span>Del SpisSlank med venner</span>
         </button>
       </div>

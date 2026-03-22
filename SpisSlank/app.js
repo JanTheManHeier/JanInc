@@ -460,6 +460,9 @@
     modal.hidden = false;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    closeModals._returnFocus = document.activeElement;
+    const closeBtn = modal.querySelector('.modal-close');
+    if (closeBtn) closeBtn.focus();
   };
 
   const closeModals = () => {
@@ -468,6 +471,11 @@
       m.classList.remove('active');
     });
     document.body.style.overflow = '';
+    // Restore focus to the element that opened the modal
+    if (closeModals._returnFocus) {
+      closeModals._returnFocus.focus();
+      closeModals._returnFocus = null;
+    }
   };
 
   const handleSwapSelection = (e) => {
@@ -498,6 +506,9 @@
     modal.hidden = false;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    closeModals._returnFocus = document.activeElement;
+    const closeBtn = modal.querySelector('.modal-close');
+    if (closeBtn) closeBtn.focus();
   };
 
   // ── Week-visning ────────────────────────────────────────────
@@ -779,6 +790,7 @@
 
     // Update language
     if (window.setLanguage) window.setLanguage(profile.language);
+    document.documentElement.lang = profile.language;
 
     // Show saved message
     const msg = document.getElementById('settings-saved-msg');
@@ -800,6 +812,8 @@
     modal.hidden = false;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    const nameInput = document.getElementById('onboarding-name');
+    if (nameInput) nameInput.focus();
   };
 
   const handleOnboardingDone = () => {
@@ -841,6 +855,8 @@
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.textContent = message;
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'assertive');
     document.body.appendChild(toast);
 
     requestAnimationFrame(() => toast.classList.add('toast-visible'));
@@ -945,9 +961,24 @@
       });
     });
 
-    // Escape-tast lukkar modalar
+    // Escape-tast lukkar modalar + focus trap
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModals();
+      if (e.key === 'Escape') { closeModals(); return; }
+
+      // Focus trap for open modals
+      if (e.key === 'Tab') {
+        const activeModal = document.querySelector('.modal-overlay:not([hidden])');
+        if (!activeModal) return;
+        const focusable = activeModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
     });
 
     // Redraw radar ved resize
@@ -1069,6 +1100,13 @@
     // Gå til sist brukte visning, eller «today»
     const lastView = localStorage.getItem(STORAGE_KEYS.lastView) || 'today';
     switchView(lastView);
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/SpisSlank/sw.js')
+        .then((reg) => console.log('SW registered:', reg.scope))
+        .catch((err) => console.warn('SW registration failed:', err));
+    }
   };
 
   // Vent på DOM

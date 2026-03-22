@@ -26,11 +26,11 @@
   --pathway-amylin: #a855f7;
   --pathway-pyy: #3b82f6;
   --pathway-leptin: #f97316;
-  --pathway-ghrelin: #6b7280;
+  --pathway-ghrelin: #94a3b8;
   --pathway-insulin: #06b6d4;
 
   /* Generation badge colors */
-  --gen1: #6b7280;
+  --gen1: #94a3b8;
   --gen2: #f59e0b;
   --gen3: #22c55e;
 
@@ -2725,5 +2725,39 @@ ul, ol {
 
   .meal-card__body {
     max-height: none !important;
+  }
+}
+
+/* ── Accessibility: Focus visible styles ─────────────────── */
+.nav-tab:focus-visible,
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-expand:focus-visible,
+.btn-swap:focus-visible,
+.btn-share:focus-visible,
+.btn-share-meal:focus-visible,
+.week-btn:focus-visible,
+.lang-btn:focus-visible,
+.swap-option:focus-visible,
+.day-header:focus-visible,
+.day-meal-header:focus-visible,
+.modal-close:focus-visible,
+.settings-check:focus-within {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 2px;
+}
+
+.settings-input:focus-visible {
+  outline: none;
+}
+
+/* ── Accessibility: Reduced motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
