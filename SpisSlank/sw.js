@@ -1,10 +1,13 @@
-const CACHE_VERSION = 'spisslank-v2.1';
+const CACHE_VERSION = 'spisslank-v3.0';
 const ASSETS_TO_CACHE = [
   '/SpisSlank/',
   '/SpisSlank/index.html',
   '/SpisSlank/style.css',
   '/SpisSlank/pathways.js',
   '/SpisSlank/meals.js',
+  '/SpisSlank/carnivore-pathways.js',
+  '/SpisSlank/carnivore-meals.js',
+  '/SpisSlank/carnivore-science.js',
   '/SpisSlank/translations.js',
   '/SpisSlank/api-client.js',
   '/SpisSlank/shopping.js',

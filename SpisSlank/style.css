@@ -2778,3 +2778,353 @@ ul, ol {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ============================================================
+   === Carnivore Mode Theme ===
+   Warm red/maroon accent overrides when body has .carnivore-mode
+   ============================================================ */
+
+/* ── Smooth transition when switching modes ─────────────── */
+body {
+  transition: background-color 0.3s ease;
+}
+
+/* ── Custom property overrides ──────────────────────────── */
+body.carnivore-mode {
+  --accent-green: #c0392b;
+  --accent-amber: #e67e22;
+  --accent-warm: #d35400;
+
+  --pathway-glp1: #c0392b;
+  --pathway-gip: #e67e22;
+  --pathway-glucagon: #e74c3c;
+  --pathway-amylin: #8e44ad;
+  --pathway-leptin: #d35400;
+
+  --gen1: #94a3b8;
+  --gen2: #e67e22;
+  --gen3: #c0392b;
+
+  --meal-breakfast: #e67e22;
+  --meal-lunch: #c0392b;
+  --meal-dinner: #d35400;
+  --meal-snack: #8e44ad;
+}
+
+/* ── App header ─────────────────────────────────────────── */
+body.carnivore-mode .app-header__title {
+  background: linear-gradient(135deg, #c0392b, #e67e22);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Bottom navigation ──────────────────────────────────── */
+body.carnivore-mode .bottom-nav__tab.active {
+  color: #c0392b;
+}
+
+/* ── Nav tabs (science / food views) ────────────────────── */
+body.carnivore-mode .nav-tab.active {
+  color: #c0392b;
+}
+
+body.carnivore-mode .nav-tab.active .nav-icon {
+  color: #c0392b;
+}
+
+/* ── Primary buttons ────────────────────────────────────── */
+body.carnivore-mode .btn--primary,
+body.carnivore-mode .btn-primary {
+  background: #c0392b;
+}
+
+body.carnivore-mode .btn--primary:hover,
+body.carnivore-mode .btn-primary:hover {
+  background: #a93226;
+}
+
+body.carnivore-mode .btn--primary:active,
+body.carnivore-mode .btn-primary:active {
+  background: #922b21;
+}
+
+/* ── Week / language toggle buttons ─────────────────────── */
+body.carnivore-mode .week-btn.active,
+body.carnivore-mode .lang-btn.active {
+  background: #c0392b;
+  color: #fff;
+}
+
+/* ── Meal cards ─────────────────────────────────────────── */
+body.carnivore-mode .meal-card {
+  border-left-color: #c0392b;
+}
+
+body.carnivore-mode .meal-card__swap:hover {
+  color: #c0392b;
+}
+
+/* ── Day card (today highlight) ─────────────────────────── */
+body.carnivore-mode .day-card.day-today {
+  border-left-color: #c0392b;
+}
+
+/* ── Pathway dots ───────────────────────────────────────── */
+body.carnivore-mode .dot.dot-active,
+body.carnivore-mode .dot-active {
+  background: #c0392b;
+}
+
+/* ── Radar chart background glow ────────────────────────── */
+body.carnivore-mode #pathway-radar {
+  background: radial-gradient(circle, rgba(192, 57, 43, 0.06) 0%, transparent 70%);
+}
+
+/* ── Shopping list checkboxes ───────────────────────────── */
+body.carnivore-mode .shopping-item__checkbox input:checked {
+  border-color: #c0392b;
+  background: #c0392b;
+}
+
+/* ── Settings inputs & checks ───────────────────────────── */
+body.carnivore-mode .settings-input:focus {
+  border-color: #c0392b;
+}
+
+body.carnivore-mode .settings-check:has(input:checked) {
+  border-color: #c0392b;
+}
+
+body.carnivore-mode .settings-check input[type="checkbox"] {
+  accent-color: #c0392b;
+}
+
+body.carnivore-mode .settings-save {
+  background: #c0392b;
+}
+
+/* ── Onboarding primary button ──────────────────────────── */
+body.carnivore-mode .onboarding-actions .btn-primary {
+  background: #c0392b;
+}
+
+/* ── Science section accents ────────────────────────────── */
+body.carnivore-mode .meal-card__science {
+  border-left-color: #e67e22;
+}
+
+body.carnivore-mode .meal-card__drug-equiv {
+  color: #e67e22;
+}
+
+/* ── Focus outlines ─────────────────────────────────────── */
+body.carnivore-mode .nav-tab:focus-visible,
+body.carnivore-mode .btn-primary:focus-visible,
+body.carnivore-mode .btn-secondary:focus-visible,
+body.carnivore-mode .btn-expand:focus-visible,
+body.carnivore-mode .btn-swap:focus-visible,
+body.carnivore-mode .btn-share:focus-visible,
+body.carnivore-mode .btn-share-meal:focus-visible,
+body.carnivore-mode .week-btn:focus-visible,
+body.carnivore-mode .lang-btn:focus-visible,
+body.carnivore-mode .swap-option:focus-visible,
+body.carnivore-mode .day-header:focus-visible,
+body.carnivore-mode .day-meal-header:focus-visible,
+body.carnivore-mode .modal-close:focus-visible,
+body.carnivore-mode .settings-check:focus-within {
+  outline-color: #c0392b;
+}
+
+/* ── Generic text-green overrides ───────────────────────── */
+body.carnivore-mode .text-green {
+  color: #c0392b;
+}
+
+body.carnivore-mode .text-amber {
+  color: #e67e22;
+}
+
+body.carnivore-mode .text-warm {
+  color: #d35400;
+}
+
+/* ============================================================
+   Carnivore-specific UI Components
+   ============================================================ */
+
+/* ── Diet mode selector (settings) ──────────────────────── */
+.diet-mode-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.diet-mode-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border: 2px solid #333;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.diet-mode-option:hover {
+  border-color: #555;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.diet-mode-option.active {
+  border-color: var(--accent-green, #4CAF50);
+  background: rgba(76, 175, 80, 0.1);
+}
+
+body.carnivore-mode .diet-mode-option.active {
+  border-color: #c0392b;
+  background: rgba(192, 57, 43, 0.1);
+}
+
+.diet-mode-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.diet-mode-label {
+  font-weight: 600;
+  color: var(--text-primary, #e8e8e8);
+}
+
+.diet-mode-desc {
+  font-size: 0.85em;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+/* ── Carnivore variant sub-selector ─────────────────────── */
+.carnivore-variant-selector {
+  margin-top: 8px;
+  padding-left: 16px;
+  display: none;
+}
+
+.carnivore-variant-selector.visible {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.variant-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: var(--text-primary, #e8e8e8);
+  transition: all 0.2s;
+}
+
+.variant-option:hover {
+  border-color: #666;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.variant-option.active {
+  border-color: #c0392b;
+  background: rgba(192, 57, 43, 0.1);
+}
+
+.variant-option .variant-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.variant-option .variant-label {
+  font-weight: 500;
+}
+
+/* ── Carnivore science / mechanism cards ────────────────── */
+.carnivore-mechanism-card {
+  border-left: 4px solid var(--mechanism-color, #c0392b);
+  background: rgba(30, 30, 30, 0.8);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.carnivore-mechanism-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.carnivore-mechanism-card h4 {
+  color: var(--text-primary, #e8e8e8);
+  margin-bottom: 8px;
+  font-size: var(--fs-base, 1rem);
+}
+
+.carnivore-mechanism-card p {
+  color: var(--text-secondary, #9ca3af);
+  font-size: var(--fs-sm, 0.875rem);
+  line-height: 1.5;
+}
+
+/* ── Carnivore food table ───────────────────────────────── */
+.carnivore-food-table {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carnivore-food-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm, 0.875rem);
+}
+
+.carnivore-food-table thead {
+  background: rgba(192, 57, 43, 0.15);
+  position: sticky;
+  top: 0;
+}
+
+.carnivore-food-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  color: #c0392b;
+  white-space: nowrap;
+  border-bottom: 2px solid rgba(192, 57, 43, 0.3);
+}
+
+.carnivore-food-table td {
+  padding: 8px 12px;
+  color: var(--text-primary, #e8e8e8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.carnivore-food-table tbody tr {
+  transition: background 0.15s;
+}
+
+.carnivore-food-table tbody tr:hover {
+  background: rgba(192, 57, 43, 0.08);
+}
+
+/* ── Food arsenal table overrides in carnivore mode ─────── */
+body.carnivore-mode .food-arsenal-table th {
+  color: #c0392b;
+}
+
+body.carnivore-mode .food-arsenal-table thead {
+  background: rgba(192, 57, 43, 0.12);
+}
+
+body.carnivore-mode .food-arsenal-table tbody tr:hover {
+  background: rgba(192, 57, 43, 0.08);
+}

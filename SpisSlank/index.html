@@ -239,8 +239,37 @@
         </div>
       </div>
 
-      <!-- Dietary Restrictions -->
+      <!-- Diet Mode -->
       <div class="settings-group">
+        <label class="settings-label">Diettmodus</label>
+        <div class="diet-mode-selector">
+          <div class="diet-mode-option active" data-diet="spisslank">
+            <span class="diet-mode-icon">🥗</span>
+            <div>
+              <div class="diet-mode-label">SpisSlank</div>
+              <div class="diet-mode-desc">Standard — mat som etterligner slankemedisiner</div>
+            </div>
+          </div>
+          <div class="diet-mode-option" data-diet="carnivore">
+            <span class="diet-mode-icon">🥩</span>
+            <div>
+              <div class="diet-mode-label">Carnivore</div>
+              <div class="diet-mode-desc">Kjøttbasert — ketose, protein, eliminasjon</div>
+            </div>
+          </div>
+        </div>
+        <div class="carnivore-variant-selector" id="carnivore-variant-selector">
+          <div class="variant-option active" data-variant="strict">
+            <span>🥩 Strikt — kun kjøtt, fisk, egg, smør</span>
+          </div>
+          <div class="variant-option" data-variant="animal-based">
+            <span>🥩+ Animal-Based — + meieri, honning, frukt</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dietary Restrictions (hidden in carnivore mode) -->
+      <div class="settings-group" id="settings-dietary-group">
         <label class="settings-label" id="dietary-label">Kostholdsrestriksjoner</label>
         <div class="settings-checks" role="group" aria-labelledby="dietary-label">
           <label class="settings-check"><input type="checkbox" data-dietary="vegetarian"><span>🥬 Vegetar</span></label>
@@ -250,8 +279,8 @@
         </div>
       </div>
 
-      <!-- Allergies -->
-      <div class="settings-group">
+      <!-- Allergies (hidden in carnivore mode) -->
+      <div class="settings-group" id="settings-allergy-group">
         <label class="settings-label" id="allergy-label">Allergier</label>
         <div class="settings-checks" role="group" aria-labelledby="allergy-label">
           <label class="settings-check"><input type="checkbox" data-allergy="nuts"><span>🥜 Nøtter</span></label>
@@ -265,14 +294,15 @@
       </div>
 
       <!-- Meal Frequency -->
-      <div class="settings-group">
+      <div class="settings-group" id="settings-mealfreq-group">
         <label class="settings-label" id="meal-freq-label">Måltidsfrekvens</label>
         <div class="settings-checks" role="group" aria-labelledby="meal-freq-label">
           <label class="settings-check"><input type="checkbox" data-meal-freq="breakfast" checked><span>🌅 Frokost</span></label>
-          <label class="settings-check"><input type="checkbox" data-meal-freq="lunchAddon" checked><span>🥗 Lunsj-tillegg</span></label>
-          <label class="settings-check"><input type="checkbox" data-meal-freq="snack" checked><span>🥜 Mellommåltid</span></label>
+          <label class="settings-check" data-spisslank-only><input type="checkbox" data-meal-freq="lunchAddon" checked><span>🥗 Lunsj-tillegg</span></label>
+          <label class="settings-check"><input type="checkbox" data-meal-freq="lunch" checked><span>🍽️ Lunsj</span></label>
+          <label class="settings-check" data-spisslank-only><input type="checkbox" data-meal-freq="snack" checked><span>🥜 Mellommåltid</span></label>
           <label class="settings-check"><input type="checkbox" data-meal-freq="dinner" checked><span>🍽️ Middag</span></label>
-          <label class="settings-check"><input type="checkbox" data-meal-freq="evening"><span>🌙 Kveldsmat</span></label>
+          <label class="settings-check" data-spisslank-only><input type="checkbox" data-meal-freq="evening"><span>🌙 Kveldsmat</span></label>
         </div>
       </div>
 
@@ -396,7 +426,10 @@
   <script src="qr-code.js"></script>
   <script src="pathways.js"></script>
   <script src="meals.js"></script>
+  <script src="carnivore-pathways.js"></script>
+  <script src="carnivore-meals.js"></script>
   <script src="translations.js"></script>
+  <script src="carnivore-science.js"></script>
   <script src="api-client.js"></script>
   <script src="shopping.js"></script>
   <script src="science.js"></script>

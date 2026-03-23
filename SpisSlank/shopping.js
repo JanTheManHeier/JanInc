@@ -20,6 +20,15 @@
     { key: 'Drikke',         emoji: '☕' },
   ];
 
+  // Carnivore diet store sections
+  var CARNIVORE_SECTION_ORDER = [
+    { key: 'Kjøtt',          emoji: '🥩' },
+    { key: 'Fisk',           emoji: '🐟' },
+    { key: 'Egg & Meieri',   emoji: '🥚' },
+    { key: 'Krydder & Salt', emoji: '🧂' },
+    { key: 'Ekstra',         emoji: '🍯' },
+  ];
+
   // Units we know how to sum
   var KNOWN_UNITS = ['g', 'kg', 'dl', 'l', 'ss', 'ts', 'stk'];
 
@@ -86,8 +95,8 @@
    * Resolve the meals for a given weekIndex, applying any user swaps.
    * Returns a flat array of meal objects.
    */
-  function getMealsForWeek(weekIndex, swaps) {
-    var plans = window.WEEKLY_PLANS;
+  function getMealsForWeek(weekIndex, swaps, plansSource, mealsSource) {
+    var plans = plansSource || window.WEEKLY_PLANS;
     if (!plans || !plans[weekIndex]) return [];
 
     var plan = plans[weekIndex];
@@ -100,7 +109,7 @@
       days = plan;
     }
 
-    var meals = window.MEALS || [];
+    var meals = mealsSource || window.MEALS || [];
     var mealMap = {};
     for (var m = 0; m < meals.length; m++) {
       mealMap[meals[m].id] = meals[m];
@@ -158,8 +167,8 @@
    * Aggregate all ingredients from the given meals into a map:
    *   { "ingredient name (lowercase)": { name, section, amounts: [...] } }
    */
-  function buildIngredientMap(meals) {
-    var arsenal = window.FOOD_ARSENAL || [];
+  function buildIngredientMap(meals, arsenalSource) {
+    var arsenal = arsenalSource || window.FOOD_ARSENAL || [];
     var arsenalMap = {};
     for (var a = 0; a < arsenal.length; a++) {
       arsenalMap[arsenal[a].id] = arsenal[a];
@@ -215,7 +224,8 @@
    * Group ingredient map entries by store section.
    * Returns array of { section, emoji, items: [{ name, qty }] } in aisle order.
    */
-  function groupBySection(ingredientMap) {
+  function groupBySection(ingredientMap, sectionOrder) {
+    sectionOrder = sectionOrder || SECTION_ORDER;
     var sections = {};
 
     var keys = Object.keys(ingredientMap);
@@ -237,10 +247,10 @@
       });
     }
 
-    // Build ordered result following SECTION_ORDER
+    // Build ordered result following section order
     var result = [];
-    for (var o = 0; o < SECTION_ORDER.length; o++) {
-      var def = SECTION_ORDER[o];
+    for (var o = 0; o < sectionOrder.length; o++) {
+      var def = sectionOrder[o];
       if (sections[def.key]) {
         result.push({
           section: def.key,
@@ -438,6 +448,15 @@
     weekIndex = weekIndex || 0;
     swaps = swaps || {};
 
+    // Detect carnivore diet mode
+    var profile = JSON.parse(localStorage.getItem('spisslank-profile') || '{}');
+    var isCarnivore = profile.dietMode === 'carnivore';
+
+    var plansSource = isCarnivore ? window.CARNIVORE_WEEKLY_PLANS : window.WEEKLY_PLANS;
+    var mealsSource = isCarnivore ? window.CARNIVORE_MEALS : window.MEALS;
+    var sections = isCarnivore ? CARNIVORE_SECTION_ORDER : SECTION_ORDER;
+    var foodArsenal = isCarnivore ? window.CARNIVORE_FOOD_ARSENAL : window.FOOD_ARSENAL;
+
     // Update week label
     var weekLabel = document.getElementById('shopping-week-label');
     if (weekLabel) {
@@ -447,9 +466,9 @@
     // Collect meals and aggregate (use filtered meals from app.js if available)
     var meals = (typeof window.getFilteredMealsForWeek === 'function')
       ? window.getFilteredMealsForWeek(weekIndex)
-      : getMealsForWeek(weekIndex, swaps);
-    var ingredientMap = buildIngredientMap(meals);
-    var sectionGroups = groupBySection(ingredientMap);
+      : getMealsForWeek(weekIndex, swaps, plansSource, mealsSource);
+    var ingredientMap = buildIngredientMap(meals, foodArsenal);
+    var sectionGroups = groupBySection(ingredientMap, sections);
     var checkedMap = loadChecked();
 
     render(sectionGroups, checkedMap);

@@ -62,6 +62,7 @@
 
       // Meal types
       'mealType.breakfast':  'Frokost',
+      'mealType.lunch':      'Lunsj',
       'mealType.lunchAddon': 'Lunsj-tillegg',
       'mealType.snack':      'Mellommåltid 16:00',
       'mealType.dinner':     'Middag',
@@ -143,7 +144,52 @@
       'section.bakeri':     'Bakeri',
       'section.torrvarer':  'Tørrvarer',
       'section.helse':      'Helse',
-      'section.drikke':     'Drikke'
+      'section.drikke':     'Drikke',
+
+      // === Carnivore Mode ===
+
+      // Diet mode settings
+      'settings.dietMode':           'Diettmodus',
+      'settings.dietSpisslank':      'SpisSlank (standard)',
+      'settings.dietCarnivore':      'Carnivore (kjøttbasert)',
+      'settings.carnivoreVariant':   'Variant',
+      'settings.carnivoreStrict':    'Strikt — kun kjøtt, fisk, egg, smør',
+      'settings.carnivoreAnimalBased': 'Animal-Based — + meieri, honning, frukt',
+
+      // Carnivore science
+      'carnivore.scienceTitle':       'Hvordan virker carnivore?',
+      'carnivore.scienceIntro':       'Carnivore-dietten eliminerer alle plantebaserte matvarer og fokuserer på animalske produkter. Kroppen bytter fra karbohydrater til fett som primær energikilde.',
+      'carnivore.mechanismsHeading':  'Mekanismer',
+      'carnivore.foodHeading':        'Matkart',
+      'carnivore.referencesHeading':  'Forskning & Kilder',
+      'carnivore.disclaimer':         '⚠️ Carnivore-dietten er kontroversiell. Rådene her er basert på tilgjengelig forskning og anekdotisk evidens. Snakk med legen din før du gjør store kostholdsendringer.',
+
+      // Carnivore meal types
+      'carnivore.mealType.breakfast': 'Frokost',
+      'carnivore.mealType.lunch':     'Lunsj',
+      'carnivore.mealType.dinner':    'Middag',
+
+      // Carnivore pathway names
+      'carnivore.pathway.ketosis':   'Ketose',
+      'carnivore.pathway.protein':   'Proteinmetthet',
+      'carnivore.pathway.mtor':      'mTOR / Muskel',
+      'carnivore.pathway.autophagy': 'Autofagi',
+      'carnivore.pathway.omega':     'Omega-3 / DHA',
+      'carnivore.pathway.collagen':  'Kollagen',
+      'carnivore.pathway.iron':      'Jernstatus',
+      'carnivore.pathway.inflam':    'Anti-inflammasjon',
+
+      // Carnivore store sections
+      'carnivore.section.meat':     'Kjøtt',
+      'carnivore.section.fish':     'Fisk',
+      'carnivore.section.eggDairy': 'Egg & Meieri',
+      'carnivore.section.spices':   'Krydder & Salt',
+      'carnivore.section.extras':   'Ekstra (Animal-Based)',
+
+      // Carnivore evidence levels
+      'carnivore.evidenceStrong':      'Sterk evidens',
+      'carnivore.evidenceModerate':    'Moderat evidens',
+      'carnivore.evidencePreliminary': 'Foreløpig evidens'
     },
 
     en: {
@@ -203,6 +249,7 @@
 
       // Meal types
       'mealType.breakfast':  'Breakfast',
+      'mealType.lunch':      'Lunch',
       'mealType.lunchAddon': 'Lunch add-on',
       'mealType.snack':      'Afternoon snack',
       'mealType.dinner':     'Dinner',
@@ -284,7 +331,52 @@
       'section.bakeri':     'Bakery',
       'section.torrvarer':  'Dry goods',
       'section.helse':      'Health',
-      'section.drikke':     'Beverages'
+      'section.drikke':     'Beverages',
+
+      // === Carnivore Mode ===
+
+      // Diet mode settings
+      'settings.dietMode':           'Diet Mode',
+      'settings.dietSpisslank':      'SpisSlank (standard)',
+      'settings.dietCarnivore':      'Carnivore (meat-based)',
+      'settings.carnivoreVariant':   'Variant',
+      'settings.carnivoreStrict':    'Strict — meat, fish, eggs, butter only',
+      'settings.carnivoreAnimalBased': 'Animal-Based — + dairy, honey, fruit',
+
+      // Carnivore science
+      'carnivore.scienceTitle':       'How does carnivore work?',
+      'carnivore.scienceIntro':       'The carnivore diet eliminates all plant-based foods and focuses on animal products. The body switches from carbohydrates to fat as its primary energy source.',
+      'carnivore.mechanismsHeading':  'Mechanisms',
+      'carnivore.foodHeading':        'Food Map',
+      'carnivore.referencesHeading':  'Research & Sources',
+      'carnivore.disclaimer':         '⚠️ The carnivore diet is controversial. The advice here is based on available research and anecdotal evidence. Talk to your doctor before making major dietary changes.',
+
+      // Carnivore meal types
+      'carnivore.mealType.breakfast': 'Breakfast',
+      'carnivore.mealType.lunch':     'Lunch',
+      'carnivore.mealType.dinner':    'Dinner',
+
+      // Carnivore pathway names
+      'carnivore.pathway.ketosis':   'Ketosis',
+      'carnivore.pathway.protein':   'Protein Satiety',
+      'carnivore.pathway.mtor':      'mTOR / Muscle',
+      'carnivore.pathway.autophagy': 'Autophagy',
+      'carnivore.pathway.omega':     'Omega-3 / DHA',
+      'carnivore.pathway.collagen':  'Collagen',
+      'carnivore.pathway.iron':      'Iron Status',
+      'carnivore.pathway.inflam':    'Anti-inflammation',
+
+      // Carnivore store sections
+      'carnivore.section.meat':     'Meat',
+      'carnivore.section.fish':     'Fish',
+      'carnivore.section.eggDairy': 'Eggs & Dairy',
+      'carnivore.section.spices':   'Spices & Salt',
+      'carnivore.section.extras':   'Extras (Animal-Based)',
+
+      // Carnivore evidence levels
+      'carnivore.evidenceStrong':      'Strong evidence',
+      'carnivore.evidenceModerate':    'Moderate evidence',
+      'carnivore.evidencePreliminary': 'Preliminary evidence'
     }
   };
 

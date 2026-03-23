@@ -24,6 +24,12 @@
     { key: 'evening',    icon: '🌙', label: 'Kveldsmat' },
   ];
 
+  const CARNIVORE_MEAL_TYPES = [
+    { key: 'breakfast', icon: '🌅', label: 'Frokost' },
+    { key: 'lunch',     icon: '🍖', label: 'Lunsj' },
+    { key: 'dinner',    icon: '🥩', label: 'Middag' },
+  ];
+
   const NORWEGIAN_DAYS = [
     'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag',
     'Fredag', 'Lørdag', 'Søndag',
@@ -42,15 +48,37 @@
     catch { return {}; }
   };
 
-  /** Returner berre dei måltidstypane brukaren har slått på */
-  const getActiveMealTypes = () => {
-    const { mealFrequency } = getProfile();
-    if (!mealFrequency) return MEAL_TYPES;
-    return MEAL_TYPES.filter((mt) => mealFrequency[mt.key] !== false);
+  /** Check if carnivore mode is active */
+  const isCarnivore = () => getProfile().dietMode === 'carnivore';
+
+  /** Get the active meals array based on diet mode */
+  const getMealsArray = () => isCarnivore() ? (window.CARNIVORE_MEALS || []) : window.MEALS;
+
+  /** Get the active weekly plans based on diet mode */
+  const getWeeklyPlans = () => isCarnivore() ? (window.CARNIVORE_WEEKLY_PLANS || []) : window.WEEKLY_PLANS;
+
+  /** Get the active pathways based on diet mode */
+  const getPathways = () => isCarnivore() ? (window.CARNIVORE_PATHWAYS || {}) : window.PATHWAYS;
+
+  /** Get pathway order based on diet mode */
+  const getPathwayOrder = () => isCarnivore() ? (window.CARNIVORE_PATHWAY_ORDER || []) : null;
+
+  /** Apply or remove carnivore body class */
+  const applyDietTheme = () => {
+    document.body.classList.toggle('carnivore-mode', isCarnivore());
   };
 
-  /** Hent måltid fra MEALS-arrayen */
-  const getMealById = (id) => window.MEALS.find((m) => m.id === id) || null;
+  /** Returner berre dei måltidstypane brukaren har slått på */
+  const getActiveMealTypes = () => {
+    const profile = getProfile();
+    const types = isCarnivore() ? CARNIVORE_MEAL_TYPES : MEAL_TYPES;
+    const { mealFrequency } = profile;
+    if (!mealFrequency) return types;
+    return types.filter((mt) => mealFrequency[mt.key] !== false);
+  };
+
+  /** Hent måltid fra riktig MEALS-array */
+  const getMealById = (id) => getMealsArray().find((m) => m.id === id) || null;
 
   /** Sjekk om eit måltid er kompatibelt med brukarprofilen (allergiar + kosthold) */
   const isMealCompatible = (meal, profile) => {
@@ -78,13 +106,14 @@
     const slotToType = {
       breakfast: 'breakfast',
       lunchAddon: 'lunch-addon',
+      lunch: 'lunch',
       snack: 'snack',
       dinner: 'dinner',
       evening: 'evening',
     };
     const type = slotToType[mealType] || mealType;
 
-    const candidates = window.MEALS.filter((m) =>
+    const candidates = getMealsArray().filter((m) =>
       m.type === type &&
       !excludeIds.includes(m.id) &&
       isMealCompatible(m, profile)
@@ -155,15 +184,17 @@
    * Returnerer { breakfast: id, lunch: id, snack: id, dinner: id }
    */
   const getDayPlan = (weekIndex, dayIndex) => {
-    const plan = window.WEEKLY_PLANS[weekIndex];
+    const plans = getWeeklyPlans();
+    const plan = plans[weekIndex];
     if (!plan || !plan.days[dayIndex]) return null;
     const dayObj = plan.days[dayIndex];
     const base = { ...(dayObj.meals || dayObj) };
     const swaps = getSwaps();
     const profile = getProfile();
+    const mealTypes = isCarnivore() ? CARNIVORE_MEAL_TYPES : MEAL_TYPES;
 
     // Apply user swaps first
-    for (const mt of MEAL_TYPES) {
+    for (const mt of mealTypes) {
       const override = swaps[`${dayIndex}-${mt.key}`];
       if (override) base[mt.key] = override;
     }
@@ -171,7 +202,7 @@
     // Apply dietary/allergy filtering
     if (profile.allergies?.length > 0 || profile.dietaryRestrictions?.length > 0) {
       const usedIds = Object.values(base).filter(Boolean);
-      for (const mt of MEAL_TYPES) {
+      for (const mt of mealTypes) {
         const mealId = base[mt.key];
         if (!mealId) continue;
         const meal = getMealById(mealId);
@@ -215,7 +246,7 @@
   };
 
   /** Pathway-nøklar i fast rekkefølge (brukt av radar m.m.) */
-  const pathwayKeys = () => Object.keys(window.PATHWAYS);
+  const pathwayKeys = () => getPathwayOrder() || Object.keys(getPathways());
 
   /**
    * Rekn ut dagsdekning for kvar pathway.
@@ -269,7 +300,13 @@
     if (viewName === 'today')    renderTodayView();
     if (viewName === 'week')     renderWeekView();
     if (viewName === 'shopping' && typeof window.renderShoppingList === 'function') window.renderShoppingList(getCurrentWeek(), getSwaps());
-    if (viewName === 'science'  && typeof window.renderScienceView  === 'function') window.renderScienceView();
+    if (viewName === 'science') {
+      if (isCarnivore() && typeof window.renderCarnivoreScienceView === 'function') {
+        window.renderCarnivoreScienceView();
+      } else if (typeof window.renderScienceView === 'function') {
+        window.renderScienceView();
+      }
+    }
     if (viewName === 'settings') renderSettingsView();
   };
 
@@ -308,7 +345,8 @@
     const normalized = calculateDailyPathways(mealObjects);
 
     container.innerHTML = keys.map((k) => {
-      const pw = window.PATHWAYS[k];
+      const pw = getPathways()[k];
+      if (!pw) return '';
       const level = normalized[k] || 0;
       const active = level >= 1;
       return `<span class="dot${active ? ' dot-active' : ''}"
@@ -351,11 +389,13 @@
   const buildPathwayBadges = (meal) => {
     if (!meal || !meal.pathways) return '';
     const keys = pathwayKeys();
+    const pw = getPathways();
     return keys
       .filter((k) => (meal.pathways[k] || 0) >= 3)
       .map((k) => {
-        const pw = window.PATHWAYS[k];
-        return `<span class="pathway-pill" style="background:${pw.color}" title="${pw.name}">${pw.name}</span>`;
+        const p = pw[k];
+        if (!p) return '';
+        return `<span class="pathway-pill" style="background:${p.color}" title="${p.name}">${p.name}</span>`;
       })
       .join('');
   };
@@ -433,6 +473,7 @@
     const slotToMealType = {
       breakfast: 'breakfast',
       lunchAddon: 'lunch-addon',
+      lunch: 'lunch',
       snack: 'snack',
       dinner: 'dinner',
       evening: 'evening',
@@ -441,7 +482,7 @@
 
     // Finn alternative måltid av same type (filtrert for kompatibilitet)
     const profile = getProfile();
-    const alternatives = window.MEALS
+    const alternatives = getMealsArray()
       .filter((m) => m.type === mealType && m.id !== currentMealId && isMealCompatible(m, profile))
       .slice(0, 5);
 
@@ -692,9 +733,10 @@
       else ctx.lineTo(x, y);
     }
     ctx.closePath();
-    ctx.fillStyle = 'rgba(34, 197, 94, 0.25)';
+    const radarColor = isCarnivore() ? '192, 57, 43' : '34, 197, 94';
+    ctx.fillStyle = `rgba(${radarColor}, 0.25)`;
     ctx.fill();
-    ctx.strokeStyle = 'rgba(34, 197, 94, 0.8)';
+    ctx.strokeStyle = `rgba(${radarColor}, 0.8)`;
     ctx.lineWidth = 2;
     ctx.stroke();
 
@@ -709,7 +751,7 @@
 
       ctx.beginPath();
       ctx.arc(x, y, 3, 0, 2 * Math.PI);
-      ctx.fillStyle = window.PATHWAYS[k].color;
+      ctx.fillStyle = getPathways()[k].color;
       ctx.fill();
     }
 
@@ -720,7 +762,7 @@
 
     for (let i = 0; i < n; i++) {
       const k = keys[i];
-      const pw = window.PATHWAYS[k];
+      const pw = getPathways()[k];
       const angle = startAngle + i * angleStep;
       const labelR = radius + 22;
       const x = cx + labelR * Math.cos(angle);
@@ -754,6 +796,28 @@
       btn.classList.toggle('active', btn.dataset.lang === lang);
     });
 
+    // Diet mode
+    const dietMode = profile.dietMode || 'spisslank';
+    document.querySelectorAll('.diet-mode-option').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.diet === dietMode);
+    });
+    const variantSelector = document.getElementById('carnivore-variant-selector');
+    if (variantSelector) {
+      variantSelector.classList.toggle('visible', dietMode === 'carnivore');
+    }
+    const carnivoreVariant = profile.carnivoreVariant || 'strict';
+    document.querySelectorAll('.variant-option').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.variant === carnivoreVariant);
+    });
+
+    // Hide/show SpisSlank-only sections
+    const isCarn = dietMode === 'carnivore';
+    document.getElementById('settings-dietary-group')?.style.setProperty('display', isCarn ? 'none' : '');
+    document.getElementById('settings-allergy-group')?.style.setProperty('display', isCarn ? 'none' : '');
+    document.querySelectorAll('[data-spisslank-only]').forEach(el => {
+      el.style.display = isCarn ? 'none' : '';
+    });
+
     // Dietary restrictions
     const dietary = profile.dietaryRestrictions || [];
     document.querySelectorAll('[data-dietary]').forEach(cb => {
@@ -767,7 +831,10 @@
     });
 
     // Meal frequency
-    const freq = profile.mealFrequency || { breakfast: true, lunchAddon: true, snack: true, dinner: true, evening: true };
+    const defaultFreq = isCarn
+      ? { breakfast: true, lunch: true, dinner: true }
+      : { breakfast: true, lunchAddon: true, snack: true, dinner: true, evening: true };
+    const freq = profile.mealFrequency || defaultFreq;
     document.querySelectorAll('[data-meal-freq]').forEach(cb => {
       cb.checked = freq[cb.dataset.mealFreq] !== false;
     });
@@ -777,9 +844,16 @@
   };
 
   const saveSettings = () => {
+    const activeDiet = document.querySelector('.diet-mode-option.active');
+    const dietMode = activeDiet?.dataset?.diet || 'spisslank';
+    const activeVariant = document.querySelector('.variant-option.active');
+    const carnivoreVariant = activeVariant?.dataset?.variant || 'strict';
+
     const profile = {
       name: document.getElementById('settings-name')?.value?.trim() || '',
       language: document.querySelector('.lang-btn.active')?.dataset?.lang || 'no',
+      dietMode,
+      carnivoreVariant,
       dietaryRestrictions: [...document.querySelectorAll('[data-dietary]:checked')].map(cb => cb.dataset.dietary),
       allergies: [...document.querySelectorAll('[data-allergy]:checked')].map(cb => cb.dataset.allergy),
       mealFrequency: {},
@@ -790,6 +864,9 @@
     });
 
     localStorage.setItem(STORAGE_KEYS.profile, JSON.stringify(profile));
+
+    // Apply diet theme
+    applyDietTheme();
 
     // Update language
     if (window.setLanguage) window.setLanguage(profile.language);
@@ -1008,6 +1085,31 @@
       });
     });
 
+    // Diet mode toggle
+    document.querySelectorAll('.diet-mode-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        document.querySelectorAll('.diet-mode-option').forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        const variantSel = document.getElementById('carnivore-variant-selector');
+        if (variantSel) variantSel.classList.toggle('visible', opt.dataset.diet === 'carnivore');
+        // Hide/show SpisSlank-only sections
+        const isCarn = opt.dataset.diet === 'carnivore';
+        document.getElementById('settings-dietary-group')?.style.setProperty('display', isCarn ? 'none' : '');
+        document.getElementById('settings-allergy-group')?.style.setProperty('display', isCarn ? 'none' : '');
+        document.querySelectorAll('[data-spisslank-only]').forEach(el => {
+          el.style.display = isCarn ? 'none' : '';
+        });
+      });
+    });
+
+    // Carnivore variant toggle
+    document.querySelectorAll('.variant-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        document.querySelectorAll('.variant-option').forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+      });
+    });
+
     // Share app
     document.getElementById('btn-share-app')?.addEventListener('click', async () => {
       const shareData = {
@@ -1027,7 +1129,8 @@
     // Share plan
     document.getElementById('btn-share-plan')?.addEventListener('click', async () => {
       const weekIndex = getCurrentWeek();
-      const plan = window.WEEKLY_PLANS[weekIndex];
+      const plans = getWeeklyPlans();
+      const plan = plans[weekIndex];
       if (!plan) return;
 
       const weekData = getWeekMeals(weekIndex);
@@ -1094,6 +1197,9 @@
       console.error('SpisSlank: Mangler data (PATHWAYS, MEALS eller WEEKLY_PLANS).');
       return;
     }
+
+    // Apply diet theme on load
+    applyDietTheme();
 
     setupEventListeners();
 
