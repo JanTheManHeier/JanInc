@@ -855,6 +855,7 @@
         const pct = item.target_qty > 0 ? Math.min(100, Math.round(sold / item.target_qty * 100)) : 0;
         const revenue = (item.sales || []).reduce((s, sale) => s + sale.quantity * item.price, 0);
         const paidRevenue = (item.sales || []).filter(s => s.paid).reduce((s, sale) => s + sale.quantity * item.price, 0);
+        const deliveredQty = (item.sales || []).filter(s => s.delivered).reduce((s, sale) => s + sale.quantity, 0);
 
         html += `
           <div class="card">
@@ -866,11 +867,11 @@
               <button class="btn-icon danger" onclick="deleteItem(${item.id},${d.id})" title="Slett vare">🗑</button>
             </div>
             <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
-            <div class="progress-text"><span>${sold}/${item.target_qty} solgt</span><span>${formatKr(paidRevenue)}/${formatKr(revenue)} betalt</span></div>
+            <div class="progress-text"><span>${sold}/${item.target_qty} solgt · ${deliveredQty} utlevert</span><span>${formatKr(paidRevenue)}/${formatKr(revenue)} betalt</span></div>
 
             <div style="margin-top:12px">
               <table class="data-table">
-                <thead><tr><th>Kjøper</th><th>Ant.</th><th>Sum</th><th>Betalt</th><th></th></tr></thead>
+                <thead><tr><th>Kjøper</th><th>Ant.</th><th>Sum</th><th>Betalt</th><th>Utlevert</th><th></th></tr></thead>
                 <tbody>
                   ${(item.sales || []).map(s => `
                     <tr>
@@ -880,6 +881,11 @@
                       <td>
                         <span class="${s.paid ? 'paid-yes' : 'paid-no'}" style="cursor:pointer" onclick="togglePaid(${s.id},${!s.paid},${d.id})">
                           ${s.paid ? '✅ Ja' : '❌ Nei'}
+                        </span>
+                      </td>
+                      <td>
+                        <span class="${s.delivered ? 'paid-yes' : 'paid-no'}" style="cursor:pointer" onclick="toggleDelivered(${s.id},${!s.delivered},${d.id})">
+                          ${s.delivered ? '📦 Ja' : '⬜ Nei'}
                         </span>
                       </td>
                       <td><button class="btn-icon danger btn-sm" onclick="deleteSale(${s.id},${d.id})" style="width:24px;height:24px;font-size:12px">🗑</button></td>
@@ -1065,6 +1071,13 @@
             </select>
           </div>
         </div>
+        <div class="form-group">
+          <label>Utlevert?</label>
+          <select id="md-sdelivered">
+            <option value="0">Nei</option>
+            <option value="1">Ja</option>
+          </select>
+        </div>
         <button class="btn btn-primary btn-block" onclick="submitAddSale(${itemId},${dugnadId})">Registrer</button>
       `);
     }
@@ -1073,8 +1086,9 @@
       const buyer_name = document.getElementById('md-sbuyer').value.trim();
       const quantity = parseInt(document.getElementById('md-sqty').value) || 1;
       const paid = document.getElementById('md-spaid').value === '1';
+      const delivered = document.getElementById('md-sdelivered').value === '1';
       if (!buyer_name) return alert('Fyll inn kjøpernavn');
-      await api('POST', { action: 'add_sale', item_id: itemId, buyer_name, quantity, paid });
+      await api('POST', { action: 'add_sale', item_id: itemId, buyer_name, quantity, paid, delivered });
       closeModal();
       await loadData();
       openDugnad(dugnadId);
@@ -1149,6 +1163,12 @@
     // ── Actions ──
     async function togglePaid(saleId, paid, dugnadId) {
       await api('POST', { action: 'update_sale', id: saleId, paid });
+      await loadData();
+      openDugnad(dugnadId);
+    }
+
+    async function toggleDelivered(saleId, delivered, dugnadId) {
+      await api('POST', { action: 'update_sale', id: saleId, delivered });
       await loadData();
       openDugnad(dugnadId);
     }

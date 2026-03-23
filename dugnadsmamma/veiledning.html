@@ -268,7 +268,7 @@
         <li><a href="#ny-dugnad">Opprette ny dugnad</a></li>
         <li><a href="#salgsdugnad">Salgsdugnad — varer og kjøpere</a></li>
         <li><a href="#fysisk-dugnad">Fysisk dugnad — oppgaver</a></li>
-        <li><a href="#betaling">Betaling — marker som betalt</a></li>
+        <li><a href="#betaling">Betaling og levering</a></li>
         <li><a href="#fullfor">Fullføre og slette dugnader</a></li>
         <li><a href="#navigasjon">Navigasjon</a></li>
         <li><a href="#tips">Tips og triks</a></li>
@@ -390,15 +390,16 @@
         <li>Skriv inn <strong>kjøpers navn</strong> (f.eks. «Tante Berit»)</li>
         <li>Angi <strong>antall</strong></li>
         <li>Velg om det er <strong>betalt</strong> (Ja/Nei)</li>
+        <li>Velg om varen er <strong>utlevert</strong> (Ja/Nei)</li>
         <li>Trykk <span class="ui-ref">Registrer</span></li>
       </ol>
 
       <h3>Oversikt over salg</h3>
       <p>For hver vare ser du:</p>
       <ul>
-        <li><strong>Fremgangsbar</strong> — antall solgt vs. mål</li>
+        <li><strong>Fremgangsbar</strong> — antall solgt vs. mål, og antall utlevert</li>
         <li><strong>Betalingsoversikt</strong> — betalt beløp vs. totalt beløp</li>
-        <li><strong>Kjøperliste</strong> med navn, antall, sum og betalingsstatus</li>
+        <li><strong>Kjøperliste</strong> med navn, antall, sum, betalingsstatus og leveringsstatus</li>
       </ul>
     </section>
 
@@ -426,16 +427,25 @@
 
     <!-- 7. Betaling -->
     <section class="section" id="betaling">
-      <h2>💰 7. Betaling — marker som betalt</h2>
+      <h2>💰 7. Betaling og levering</h2>
       <p>Når noen har betalt for varene sine:</p>
       <ol class="steps">
         <li>Åpne salgsdugnad og finn kjøperen i tabellen</li>
         <li>I kolonnen «Betalt» står det <span style="color:#d9534f;font-weight:600">❌ Nei</span></li>
         <li>Trykk på <span style="color:#d9534f;font-weight:600">❌ Nei</span> for å endre til <span style="color:#5cb85c;font-weight:600">✅ Ja</span></li>
       </ol>
-      <p>Betalingsstatusen oppdateres umiddelbart i databasen. Du kan trykke igjen for å angre.</p>
+
+      <h3>Marker som utlevert</h3>
+      <p>Når du har levert varene til kjøperen:</p>
+      <ol class="steps">
+        <li>Finn kjøperen i tabellen</li>
+        <li>I kolonnen «Utlevert» står det <span style="color:#d9534f;font-weight:600">⬜ Nei</span></li>
+        <li>Trykk på <span style="color:#d9534f;font-weight:600">⬜ Nei</span> for å endre til <span style="color:#5cb85c;font-weight:600">📦 Ja</span></li>
+      </ol>
+
+      <p>Begge statusene oppdateres umiddelbart i databasen. Du kan trykke igjen for å angre.</p>
       <div class="tip">
-        <strong>💡 Tips:</strong> Dashboardets «Utestående»-boks oppdateres automatisk når du markerer betalinger.
+        <strong>💡 Tips:</strong> Dashboardets «Utestående»-boks oppdateres automatisk når du markerer betalinger. Antall utlevert vises i fremdriftsoversikten per vare.
       </div>
     </section>
 

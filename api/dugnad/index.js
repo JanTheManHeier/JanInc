@@ -57,6 +57,9 @@ CREATE TABLE dm_tasks (
     created_at DATETIME2 DEFAULT GETDATE(),
     CONSTRAINT FK_task_dugnad FOREIGN KEY (dugnad_id) REFERENCES dm_dugnads(id) ON DELETE CASCADE
 );
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('dm_sales') AND name = 'delivered')
+    ALTER TABLE dm_sales ADD delivered BIT DEFAULT 0;
 `;
 
 const SEED_CHILDREN = `
@@ -278,14 +281,15 @@ async function handlePost(context, req, conn) {
             const err = requiredFields(body, ['item_id', 'buyer_name']);
             if (err) return json(context, 400, { error: err });
             const rows = await executeQuery(conn,
-                `INSERT INTO dm_sales (item_id, buyer_name, quantity, paid)
+                `INSERT INTO dm_sales (item_id, buyer_name, quantity, paid, delivered)
                  OUTPUT INSERTED.*
-                 VALUES (@item_id, @buyer_name, @quantity, @paid)`,
+                 VALUES (@item_id, @buyer_name, @quantity, @paid, @delivered)`,
                 [
                     { name: 'item_id', type: TYPES.Int, value: body.item_id },
                     { name: 'buyer_name', type: TYPES.NVarChar, value: body.buyer_name },
                     { name: 'quantity', type: TYPES.Int, value: body.quantity || 1 },
                     { name: 'paid', type: TYPES.Bit, value: body.paid ? 1 : 0 },
+                    { name: 'delivered', type: TYPES.Bit, value: body.delivered ? 1 : 0 },
                 ]);
             json(context, 201, rows[0]);
             break;
@@ -303,6 +307,10 @@ async function handlePost(context, req, conn) {
                 params.push({ name: 'paid', type: TYPES.Bit, value: body.paid ? 1 : 0 });
                 sets.push('paid_date = @paid_date');
                 params.push({ name: 'paid_date', type: TYPES.Date, value: body.paid ? new Date().toISOString().split('T')[0] : null });
+            }
+            if (body.delivered !== undefined) {
+                sets.push('delivered = @delivered');
+                params.push({ name: 'delivered', type: TYPES.Bit, value: body.delivered ? 1 : 0 });
             }
             if (sets.length === 0) return json(context, 400, { error: 'Nothing to update' });
             await executeQuery(conn, `UPDATE dm_sales SET ${sets.join(', ')} WHERE id = @id`, params);
