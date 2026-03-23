@@ -1611,6 +1611,7 @@ ul, ol {
 
 .day-meal-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--sp-2);
   width: 100%;
@@ -1632,12 +1633,43 @@ ul, ol {
 .day-meal-badges {
   display: flex;
   gap: 4px;
-  flex-shrink: 0;
+  flex-wrap: wrap;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .day-meal-badges .pathway-pill {
   font-size: 0.6rem;
   padding: 1px 5px;
+}
+
+/* Mobile: stack label above badges in week meal rows */
+@media (max-width: 480px) {
+  .day-meal-header {
+    align-items: flex-start;
+  }
+  .day-meal-label {
+    flex-basis: calc(100% - 2rem);
+  }
+  .day-meal-badges {
+    flex-basis: 100%;
+    order: 3;
+    margin-top: -2px;
+  }
+  .day-meal-expand {
+    order: 2;
+    margin-left: auto;
+    position: absolute;
+    right: 0;
+    top: var(--sp-2);
+  }
+  .day-meal-item {
+    position: relative;
+  }
+  .day-meal-badges .pathway-pill {
+    font-size: 0.55rem;
+    padding: 1px 4px;
+  }
 }
 
 .day-meal-expand {
