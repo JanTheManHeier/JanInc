@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brukerveiledning — Dugnadsmamma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a8f50;
+      --primary-dark: #157a43;
+      --primary-light: #3fb970;
+      --primary-bg: rgba(26,143,80,0.08);
+      --bg: #f4f6f5;
+      --surface: #ffffff;
+      --border: #e0e5e2;
+      --text: #1a1a1a;
+      --text-dim: #6b7c72;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .guide-header {
+      background: var(--primary);
+      color: white;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    .guide-header img { height: 48px; margin-bottom: 12px; border-radius: 4px; }
+
+    .guide-header h1 {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .guide-header p {
+      opacity: 0.85;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    /* Main */
+    .guide-main {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px 16px 60px;
+    }
+
+    /* TOC */
+    .toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .toc h2 {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .toc ol {
+      padding-left: 20px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .toc a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .toc a:hover { text-decoration: underline; }
+
+    /* Sections */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section h3 {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 16px 0 8px;
+    }
+
+    .section p {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .section ul, .section ol {
+      font-size: 14px;
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    .section li { margin-bottom: 6px; }
+
+    /* Steps */
+    .steps {
+      counter-reset: step;
+      padding: 0;
+      list-style: none;
+    }
+
+    .steps li {
+      counter-increment: step;
+      position: relative;
+      padding-left: 44px;
+      margin-bottom: 14px;
+      min-height: 32px;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 30px;
+      height: 30px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Nunito Sans', sans-serif;
+    }
+
+    /* Keyboard shortcuts / UI elements */
+    .ui-ref {
+      display: inline-block;
+      background: var(--primary-bg);
+      color: var(--primary);
+      font-weight: 600;
+      padding: 1px 8px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .tip {
+      background: rgba(240,173,78,0.1);
+      border-left: 3px solid #f0ad4e;
+      padding: 10px 14px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+
+    .tip strong { color: #c87f0a; }
+
+    .warn {
+      background: rgba(217,83,79,0.08);
+      border-left: 3px solid #d9534f;
+      padding: 10px 14px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+
+    .warn strong { color: #d9534f; }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: white;
+      opacity: 0.85;
+      text-decoration: none;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .back-link:hover { opacity: 1; }
+
+    /* Table */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+
+    .info-table td {
+      padding: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .info-table td:first-child {
+      font-weight: 600;
+      width: 140px;
+      color: var(--text-dim);
+    }
+
+    /* Footer */
+    .guide-footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .guide-footer a { color: var(--primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <header class="guide-header">
+    <a href="/dugnadsmamma/" class="back-link">← Tilbake til appen</a>
+    <br>
+    <img src="https://cdn-bloc.no/background/200000195/1558/2026/2/25/floeya_logo.png" alt="Fløya IF">
+    <h1>📖 Brukerveiledning</h1>
+    <p>Dugnadsmamma — din dugnadsassistent for Fløya IF</p>
+  </header>
+
+  <main class="guide-main">
+
+    <!-- TOC -->
+    <nav class="toc" id="innhold">
+      <h2>📋 Innhold</h2>
+      <ol>
+        <li><a href="#innlogging">Innlogging</a></li>
+        <li><a href="#dashboard">Dashboard — oversikt</a></li>
+        <li><a href="#barn">Administrere barn</a></li>
+        <li><a href="#ny-dugnad">Opprette ny dugnad</a></li>
+        <li><a href="#salgsdugnad">Salgsdugnad — varer og kjøpere</a></li>
+        <li><a href="#fysisk-dugnad">Fysisk dugnad — oppgaver</a></li>
+        <li><a href="#betaling">Betaling — marker som betalt</a></li>
+        <li><a href="#fullfor">Fullføre og slette dugnader</a></li>
+        <li><a href="#navigasjon">Navigasjon</a></li>
+        <li><a href="#tips">Tips og triks</a></li>
+      </ol>
+    </nav>
+
+    <!-- 1. Innlogging -->
+    <section class="section" id="innlogging">
+      <h2>🔐 1. Innlogging</h2>
+      <p>Appen er beskyttet med enkel innlogging. Du trenger brukernavn og passord for å komme inn.</p>
+      <ol class="steps">
+        <li>Gå til <a href="https://janinc.no/dugnadsmamma/" style="color:var(--primary)">janinc.no/dugnadsmamma/</a></li>
+        <li>Skriv inn <strong>brukernavn</strong> og <strong>passord</strong> i feltene</li>
+        <li>Trykk <span class="ui-ref">Logg inn</span> eller trykk Enter</li>
+      </ol>
+      <div class="tip">
+        <strong>💡 Tips:</strong> Du forblir innlogget til du lukker nettleserfanen eller trykker «Logg ut».
+      </div>
+    </section>
+
+    <!-- 2. Dashboard -->
+    <section class="section" id="dashboard">
+      <h2>📊 2. Dashboard — oversikt</h2>
+      <p>Etter innlogging kommer du til dashboardet — din sentrale oversikt over alle aktive dugnader.</p>
+
+      <h3>Statistikkboksene øverst</h3>
+      <table class="info-table">
+        <tr><td>Aktive dugnader</td><td>Totalt antall pågående dugnader for alle barna</td></tr>
+        <tr><td>Utestående</td><td>Total sum i kroner som ikke er betalt ennå (vises i rødt hvis > 0)</td></tr>
+        <tr><td>Oppgaver gjenstår</td><td>Antall fysiske oppgaver som ikke er fullført (gult hvis > 0)</td></tr>
+        <tr><td>Frist ≤ 7 dager</td><td>Dugnader med frist innen en uke</td></tr>
+      </table>
+
+      <h3>Dugnadskort</h3>
+      <p>Under statistikken ser du et kort for hver aktive dugnad med:</p>
+      <ul>
+        <li><strong>Tittel</strong> og hvilken unge det gjelder (grønn brikke)</li>
+        <li><strong>Fremgangsbar</strong> — hvor langt du har kommet med salget eller oppgavene</li>
+        <li><strong>Type</strong>-merke: 🏷 Salg eller 🔧 Fysisk</li>
+        <li><strong>Frist</strong>-merke — blir rødt hvis fristen er innen 7 dager</li>
+      </ul>
+      <p>Trykk på et dugnadskort for å se detaljer og registrere salg/oppgaver.</p>
+    </section>
+
+    <!-- 3. Barn -->
+    <section class="section" id="barn">
+      <h2>👧 3. Administrere barn</h2>
+      <p>Barna dine (Osvald, Eilif, Gudmund og Gunnvår) er forhåndsregistrert. Du kan redigere laginfo, legge til flere barn, eller slette barn uten aktive dugnader.</p>
+
+      <h3>Se alle barn</h3>
+      <ol class="steps">
+        <li>Trykk <span class="ui-ref">👧 Barn</span> i toppmenyen (eller bunnmenyen på mobil)</li>
+        <li>Du ser en liste over alle barn med lag/årstrinn og antall aktive dugnader</li>
+      </ol>
+
+      <h3>Legg til nytt barn</h3>
+      <ol class="steps">
+        <li>Gå til Barn-visningen</li>
+        <li>Trykk <span class="ui-ref">+ Legg til</span></li>
+        <li>Fyll inn navn og lag/årstrinn (f.eks. «G14» eller «J12»)</li>
+        <li>Trykk <span class="ui-ref">Legg til</span></li>
+      </ol>
+
+      <h3>Rediger barn</h3>
+      <ol class="steps">
+        <li>Trykk ✏️ ved siden av barnet du vil redigere</li>
+        <li>Endre navn eller lag</li>
+        <li>Trykk <span class="ui-ref">Lagre</span></li>
+      </ol>
+
+      <div class="warn">
+        <strong>⚠️ Obs:</strong> Et barn med aktive dugnader kan ikke slettes. Slett eller fullfør dugnadene først.
+      </div>
+    </section>
+
+    <!-- 4. Ny dugnad -->
+    <section class="section" id="ny-dugnad">
+      <h2>➕ 4. Opprette ny dugnad</h2>
+      <p>Det finnes to typer dugnader:</p>
+      <ul>
+        <li><strong>🏷 Salgsdugnad</strong> — for salg av lodd, tulipaner, dopapir, kalendere, tennbriketter, godis osv.</li>
+        <li><strong>🔧 Fysisk dugnad</strong> — for vakt, vaskedugnad, rigging til kamp osv.</li>
+      </ul>
+
+      <ol class="steps">
+        <li>Trykk <span class="ui-ref">+ Ny dugnad</span> på dashboardet (eller ➕ i bunnmenyen)</li>
+        <li>Velg <strong>hvilket barn</strong> dugnaden gjelder for</li>
+        <li>Velg <strong>type</strong> — Salgsdugnad eller Fysisk dugnad</li>
+        <li>Gi dugnaden en <strong>tittel</strong> (f.eks. «Loddsalg vår 2026»)</li>
+        <li>Sett en <strong>frist</strong> om du har en (valgfritt)</li>
+        <li>Legg til <strong>notater</strong> om ønskelig (valgfritt)</li>
+        <li>Trykk <span class="ui-ref">Opprett dugnad</span></li>
+      </ol>
+
+      <div class="tip">
+        <strong>💡 Tips:</strong> Dugnaden er nå tom — du legger til varer (salg) eller oppgaver (fysisk) i neste steg.
+      </div>
+    </section>
+
+    <!-- 5. Salgsdugnad -->
+    <section class="section" id="salgsdugnad">
+      <h2>🏷 5. Salgsdugnad — varer og kjøpere</h2>
+
+      <h3>Legg til salgsvare</h3>
+      <p>Først må du definere hva som skal selges:</p>
+      <ol class="steps">
+        <li>Åpne dugnaden fra dashboardet</li>
+        <li>Trykk <span class="ui-ref">+ Legg til vare</span></li>
+        <li>Fyll inn <strong>varenavn</strong> (f.eks. «Lodd»), <strong>pris per stk</strong> og <strong>antall å selge</strong> (mål)</li>
+        <li>Trykk <span class="ui-ref">Legg til</span></li>
+      </ol>
+      <p>Du kan legge til flere ulike varer på samme dugnad (f.eks. «Lodd» + «Tulipaner»).</p>
+
+      <h3>Registrer kjøper (salg)</h3>
+      <p>Når noen kjøper en vare fra deg:</p>
+      <ol class="steps">
+        <li>Finn varen i dugnaddetaljen</li>
+        <li>Trykk <span class="ui-ref">+ Legg til kjøper</span></li>
+        <li>Skriv inn <strong>kjøpers navn</strong> (f.eks. «Tante Berit»)</li>
+        <li>Angi <strong>antall</strong></li>
+        <li>Velg om det er <strong>betalt</strong> (Ja/Nei)</li>
+        <li>Trykk <span class="ui-ref">Registrer</span></li>
+      </ol>
+
+      <h3>Oversikt over salg</h3>
+      <p>For hver vare ser du:</p>
+      <ul>
+        <li><strong>Fremgangsbar</strong> — antall solgt vs. mål</li>
+        <li><strong>Betalingsoversikt</strong> — betalt beløp vs. totalt beløp</li>
+        <li><strong>Kjøperliste</strong> med navn, antall, sum og betalingsstatus</li>
+      </ul>
+    </section>
+
+    <!-- 6. Fysisk dugnad -->
+    <section class="section" id="fysisk-dugnad">
+      <h2>🔧 6. Fysisk dugnad — oppgaver</h2>
+
+      <h3>Legg til oppgave</h3>
+      <ol class="steps">
+        <li>Åpne den fysiske dugnaden fra dashboardet</li>
+        <li>Trykk <span class="ui-ref">+ Legg til oppgave</span></li>
+        <li>Skriv inn <strong>oppgavens navn</strong> (f.eks. «Vakt lørdag 15. mars»)</li>
+        <li>Velg en <strong>dato</strong> om relevant (valgfritt)</li>
+        <li>Legg til <strong>notater</strong> (valgfritt)</li>
+        <li>Trykk <span class="ui-ref">Legg til</span></li>
+      </ol>
+
+      <h3>Marker oppgave som fullført</h3>
+      <ol class="steps">
+        <li>Trykk ⬜ (tom boks) ved oppgaven</li>
+        <li>Boksen endres til ✅ og oppgaven fades ut</li>
+      </ol>
+      <p>Du kan trykke igjen for å angre.</p>
+    </section>
+
+    <!-- 7. Betaling -->
+    <section class="section" id="betaling">
+      <h2>💰 7. Betaling — marker som betalt</h2>
+      <p>Når noen har betalt for varene sine:</p>
+      <ol class="steps">
+        <li>Åpne salgsdugnad og finn kjøperen i tabellen</li>
+        <li>I kolonnen «Betalt» står det <span style="color:#d9534f;font-weight:600">❌ Nei</span></li>
+        <li>Trykk på <span style="color:#d9534f;font-weight:600">❌ Nei</span> for å endre til <span style="color:#5cb85c;font-weight:600">✅ Ja</span></li>
+      </ol>
+      <p>Betalingsstatusen oppdateres umiddelbart i databasen. Du kan trykke igjen for å angre.</p>
+      <div class="tip">
+        <strong>💡 Tips:</strong> Dashboardets «Utestående»-boks oppdateres automatisk når du markerer betalinger.
+      </div>
+    </section>
+
+    <!-- 8. Fullføre/slette -->
+    <section class="section" id="fullfor">
+      <h2>✅ 8. Fullføre og slette dugnader</h2>
+
+      <h3>Marker dugnad som fullført</h3>
+      <ol class="steps">
+        <li>Åpne dugnaden</li>
+        <li>Trykk ✅ (grønn hake) øverst til høyre</li>
+        <li>Dugnaden forsvinner fra dashboardet</li>
+      </ol>
+      <p>For å reaktivere: finn dugnaden i listen over fullførte og trykk 🔄.</p>
+
+      <h3>Slett dugnad</h3>
+      <ol class="steps">
+        <li>Åpne dugnaden</li>
+        <li>Trykk 🗑 (søppelkasse) øverst til høyre</li>
+        <li>Bekreft i dialogboksen</li>
+      </ol>
+
+      <div class="warn">
+        <strong>⚠️ Obs:</strong> Sletting er permanent! Alle tilhørende varer, salg og oppgaver slettes også.
+      </div>
+
+      <h3>Slett enkeltting</h3>
+      <ul>
+        <li>Slett en <strong>vare</strong>: trykk 🗑 til høyre for varen (sletter også alle salg av varen)</li>
+        <li>Slett et <strong>salg</strong>: trykk 🗑 ved kjøperens rad</li>
+        <li>Slett en <strong>oppgave</strong>: trykk 🗑 ved oppgaven</li>
+      </ul>
+    </section>
+
+    <!-- 9. Navigasjon -->
+    <section class="section" id="navigasjon">
+      <h2>🧭 9. Navigasjon</h2>
+
+      <h3>På mobil (under 500px bredde)</h3>
+      <p>Bruk <strong>bunnmenyen</strong> med tre knapper:</p>
+      <ul>
+        <li><strong>📊 Oversikt</strong> — tilbake til dashboardet</li>
+        <li><strong>➕ Ny dugnad</strong> — opprett ny dugnad</li>
+        <li><strong>👧 Barn</strong> — administrer barn</li>
+      </ul>
+
+      <h3>På PC/nettbrett</h3>
+      <p>Bruk <strong>toppmenyen</strong> i den grønne headeren:</p>
+      <ul>
+        <li><strong>📊</strong> — Dashboard</li>
+        <li><strong>👧</strong> — Barn</li>
+        <li><strong>Logg ut</strong> — avslutter økten</li>
+      </ul>
+
+      <h3>Inne i en dugnad</h3>
+      <p>Trykk <span class="ui-ref">← Tilbake</span> øverst for å gå tilbake til dashboardet.</p>
+    </section>
+
+    <!-- 10. Tips -->
+    <section class="section" id="tips">
+      <h2>💡 10. Tips og triks</h2>
+      <ul>
+        <li>📱 <strong>Legg til på hjemskjerm</strong> — åpne appen i Safari/Chrome, trykk «Del» → «Legg til på hjemskjerm» for app-lignende opplevelse</li>
+        <li>⚡ <strong>Alt lagres i skyen</strong> — dataene dine er trygt lagret i Azure-databasen. Du kan bruke appen fra hvilken som helst enhet</li>
+        <li>🔴 <strong>Sjekk røde tall</strong> — utestående beløp og oppgaver som gjenstår markeres med rødt/gult. Sjekk disse jevnlig!</li>
+        <li>📅 <strong>Sett frister</strong> — dugnader med frist innen 7 dager vises i «Frist ≤ 7 dager»-boksen slik at du ikke glemmer dem</li>
+        <li>🏷 <strong>Flere varer per dugnad</strong> — en salgsdugnad kan ha flere varer (f.eks. lodd + tulipaner). Legg til varer etter hvert</li>
+        <li>🔄 <strong>Marker betaling direkte</strong> — trykk ❌/✅ i kjøperlisten for å veksle betalingsstatus uten å åpne noe ekstra</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="guide-footer">
+    <p>Dugnadsmamma — laget med ❤️ for Fløya IF-familier</p>
+    <p><a href="/dugnadsmamma/">Åpne appen</a> · <a href="#innhold">Til toppen</a></p>
+  </footer>
+
+</body>
+</html>
