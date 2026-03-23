@@ -773,7 +773,7 @@
     });
 
     // QR code
-    if (window.renderQRCode) window.renderQRCode('qr-canvas', 'https://janinc.no/SpisSlank/');
+    if (window.renderQRCode) window.renderQRCode('qr-canvas');
   };
 
   const saveSettings = () => {
