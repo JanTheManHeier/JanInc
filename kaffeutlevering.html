@@ -149,6 +149,23 @@
     .zone-mainland { color: var(--zone-mainland); }
     .zone-mainland::before { background: var(--zone-mainland); }
 
+    .bridge-marker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 6px 60px;
+      font-size: 11px;
+      color: var(--text-done);
+      font-style: italic;
+    }
+
+    .bridge-marker::before {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--border);
+    }
+
     /* ── Route container ── */
     .route {
       padding: 0 16px;
@@ -683,30 +700,33 @@
     const DONE_KEY = 'kaffeutlevering-done';
     const ORDER_KEY = 'kaffeutlevering-order';
 
-    // ── Data ──
+    // ── Data (route optimized via geocoding + bridge-aware TSP) ──
     const DEFAULT_STOPS = [
-      { id: 'kristina-a', name: 'Kristina Antonsen', address: 'Sparre Schneiders gate 2', mapsQ: 'Sparre+Schneiders+gate+2,+Tromsø', beans: 1, filter: 0, paid: true, paidDate: '29.1', zone: 'sentrum' },
-      { id: 'randi', name: 'Randi (Lilly)', address: 'Anna Eides gate', mapsQ: 'Anna+Eides+gate,+Tromsø', beans: 0, filter: 1, paid: false, zone: 'sentrum' },
-      { id: 'cathrine', name: 'Cathrine', address: 'Prost Schjelderups gate 9-1', mapsQ: 'Prost+Schjelderups+gate+9,+Tromsø', beans: 0, filter: 2, paid: false, zone: 'sentrum' },
-      { id: 'hilde', name: 'Hilde', address: 'Sjømannsbyen, Redervegen', mapsQ: 'Sjømannsbyen+Redervegen,+Tromsø', beans: 0, filter: 1, paid: true, paidDate: '30.1', zone: 'north' },
+      // ZONE: Nord-Tromsøya (closest to start, head north first)
+      { id: 'hilde', name: 'Hilde', address: 'Redervegen, Sjømannsbyen', mapsQ: 'Redervegen,+Sjømannsbyen,+Tromsø', beans: 0, filter: 1, paid: true, paidDate: '30.1', zone: 'north' },
       { id: 'tone', name: 'Tone', address: 'Hamna', mapsQ: 'Hamna,+Tromsø', beans: 1, filter: 0, paid: false, zone: 'north' },
+      // ZONE: Fastlandet (cross Tromsøbrua to mainland)
+      { id: 'camilla', name: 'Camilla R-P', address: 'Lunheim', mapsQ: 'Lunheim,+Tromsø', beans: 1, filter: 0, paid: true, paidDate: '29.1', zone: 'mainland' },
+      // ZONE: Tromsøya sør (back across bridge, sweep south)
+      { id: 'havard', name: 'Håvard (Ingrid)', address: 'Draugen 28, Workinnmarka', mapsQ: 'Draugen+28,+Tromsø', beans: 2, filter: 0, paid: true, paidDate: '29.1', zone: 'south' },
+      { id: 'aase', name: 'Åse', address: 'Draugen 26, Workinnmarka', mapsQ: 'Draugen+26,+Tromsø', beans: 1, filter: 0, paid: false, zone: 'south' },
+      { id: 'kristina-a', name: 'Kristina Antonsen', address: 'Sparre Schneiders gate 2', mapsQ: 'Sparre+Schneiders+gate+2,+Tromsø', beans: 1, filter: 0, paid: true, paidDate: '29.1', zone: 'south' },
+      { id: 'cathrine', name: 'Cathrine', address: 'Prost Schielderups gate 9-1', mapsQ: 'Prost+Schielderups+gate+9,+Tromsø', beans: 0, filter: 2, paid: false, zone: 'south' },
+      { id: 'thomas-maja', name: 'Thomas & Maja', address: 'Senjavegen 2, Bekkevoll', mapsQ: 'Senjavegen+2,+Tromsø', beans: 1, filter: 0, paid: false, zone: 'south' },
+      { id: 'randi', name: 'Randi (Lilly)', address: 'Anna Eides veg 23', mapsQ: 'Anna+Eides+veg+23,+Tromsø', beans: 0, filter: 1, paid: false, zone: 'south' },
+      { id: 'cathrin-c', name: 'Cathrin C.', address: 'Bamsestien 6, Elverhøy', mapsQ: 'Bamsestien+6,+Tromsø', beans: 2, filter: 0, paid: false, zone: 'south' },
       { id: 'birgit', name: 'Birgit', address: 'Hansmarkvegen 54', mapsQ: 'Hansmarkvegen+54,+Tromsø', beans: 0, filter: 2, paid: false, zone: 'south' },
-      { id: 'cathrin-c', name: 'Cathrin C.', address: 'Bamsestien 6', mapsQ: 'Bamsestien+6,+Tromsø', beans: 2, filter: 0, paid: false, zone: 'south' },
-      { id: 'havard', name: 'Håvard (Ingrid)', address: 'Workinmarka', mapsQ: 'Workinmarka,+Tromsø', beans: 2, filter: 0, paid: true, paidDate: '29.1', zone: 'south' },
-      { id: 'aase', name: 'Åse', address: 'Workinmarka', mapsQ: 'Workinmarka,+Tromsø', beans: 1, filter: 0, paid: false, zone: 'south' },
-      { id: 'camilla', name: 'Camilla R-P', address: 'Lunheim', mapsQ: 'Lunheim,+Tromsø', beans: 1, filter: 0, paid: true, paidDate: '29.1', zone: 'south' },
-      { id: 'trond-bjornar', name: 'Trond-Bjørnar', address: 'Hummervegen, Kvaløysletta', mapsQ: 'Hummervegen,+Kvaløysletta,+Tromsø', beans: 1, filter: 0, paid: false, zone: 'kvaloya' },
+      // ZONE: Kvaløysletta (cross Sandnessund bru)
       { id: 'rune', name: 'Rune', address: 'Kråkebollevegen 2, Kvaløysletta', mapsQ: 'Kråkebollevegen+2,+Kvaløysletta,+Tromsø', beans: 1, filter: 0, paid: true, paidDate: '30.1', zone: 'kvaloya' },
-      { id: 'thomas-maja', name: 'Thomas & Maja', address: 'Senjavegen 2', mapsQ: 'Senjavegen+2,+Tromsø', beans: 1, filter: 0, paid: false, zone: 'mainland' },
-      { id: 'tante-unn', name: 'Tante-Unn', address: 'Storelva', mapsQ: 'Storelva,+Tromsø', beans: 0, filter: 1, paid: true, paidDate: '24.2', zone: 'mainland' },
+      { id: 'trond-bjornar', name: 'Trond-Bjørnar', address: 'Hummervegen, Kvaløysletta', mapsQ: 'Hummervegen,+Kvaløysletta,+Tromsø', beans: 1, filter: 0, paid: false, zone: 'kvaloya' },
+      { id: 'tante-unn', name: 'Tante-Unn', address: 'Storvolltunet 18, Kvaløysletta', mapsQ: 'Storvolltunet+18,+Tromsø', beans: 0, filter: 1, paid: true, paidDate: '24.2', zone: 'kvaloya' },
     ];
 
     const ZONE_LABELS = {
-      sentrum: { label: 'Sentrum', css: 'zone-sentrum' },
-      north: { label: 'Sjømannsbyen / Hamna', css: 'zone-north' },
-      south: { label: 'Sør-Tromsøya', css: 'zone-south' },
-      kvaloya: { label: 'Kvaløysletta', css: 'zone-kvaloya' },
-      mainland: { label: 'Fastlandet', css: 'zone-mainland' },
+      north: { label: '🌉 Nord-Tromsøya', css: 'zone-north' },
+      mainland: { label: '🌉 Fastlandet (via Tromsøbrua)', css: 'zone-mainland' },
+      south: { label: '🌉 Tromsøya sør', css: 'zone-south' },
+      kvaloya: { label: '🌉 Kvaløysletta (via Sandnessund)', css: 'zone-kvaloya' },
     };
 
     const PRICE = 190;
