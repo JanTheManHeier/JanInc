@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Åse — Dugnadsmamma ⚽</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a8f50;
+      --primary-dark: #157a43;
+      --primary-light: #3fb970;
+      --primary-bg: rgba(26,143,80,0.08);
+      --accent: #0054a6;
+      --bg: #f4f6f5;
+      --surface: #ffffff;
+      --border: #e0e5e2;
+      --text: #1a1a1a;
+      --text-dim: #6b7c72;
+      --text-light: #9aaa9f;
+      --danger: #d9534f;
+      --danger-bg: rgba(217,83,79,0.08);
+      --warning: #f0ad4e;
+      --warning-bg: rgba(240,173,78,0.1);
+      --success: #5cb85c;
+      --success-bg: rgba(92,184,92,0.1);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ── Header ── */
+    .app-header {
+      background: var(--primary);
+      color: white;
+      padding: 0 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .header-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-logo {
+      height: 36px;
+      border-radius: 4px;
+    }
+
+    .header-title {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .header-subtitle {
+      font-size: 11px;
+      opacity: 0.8;
+      font-weight: 400;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 4px;
+    }
+
+    .nav-btn {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .nav-btn.active { background: rgba(255,255,255,0.3); }
+    .nav-btn:hover { background: rgba(255,255,255,0.25); }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.8);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* ── Main ── */
+    .app-main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* ── Login ── */
+    .login-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+    }
+
+    .login-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .login-card img { height: 60px; margin-bottom: 16px; }
+    .login-card h1 {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 22px;
+      margin-bottom: 4px;
+      color: var(--primary);
+    }
+    .login-card p { color: var(--text-dim); margin-bottom: 24px; font-size: 14px; }
+
+    .login-card input {
+      display: block;
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-family: inherit;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    .login-card input:focus { border-color: var(--primary); }
+
+    .login-error {
+      color: var(--danger);
+      font-size: 13px;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-sm { padding: 6px 12px; font-size: 13px; }
+    .btn-block { width: 100%; justify-content: center; }
+    .btn-icon {
+      width: 32px; height: 32px; padding: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 50%; background: transparent; border: 1px solid var(--border);
+      color: var(--text-dim); cursor: pointer; font-size: 16px;
+    }
+    .btn-icon:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-icon.danger:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    /* ── Section headers ── */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0 12px;
+    }
+
+    .section-title {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-sales { background: var(--primary-bg); color: var(--primary); }
+    .badge-physical { background: rgba(0,84,166,0.08); color: var(--accent); }
+    .badge-danger { background: var(--danger-bg); color: var(--danger); }
+    .badge-warning { background: var(--warning-bg); color: var(--warning); }
+    .badge-success { background: var(--success-bg); color: var(--success); }
+    .badge-child {
+      background: var(--primary);
+      color: white;
+      font-size: 11px;
+      padding: 2px 8px;
+    }
+
+    /* ── Stat boxes ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .stat-label { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+    .stat-box.danger .stat-num { color: var(--danger); }
+    .stat-box.warning .stat-num { color: var(--warning); }
+
+    /* ── Progress bar ── */
+    .progress {
+      width: 100%;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 6px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* ── Table ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 2px solid var(--border);
+      font-size: 12px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .data-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .data-table tr:last-child td { border: none; }
+
+    .paid-yes { color: var(--success); font-weight: 600; }
+    .paid-no { color: var(--danger); font-weight: 600; }
+
+    /* ── Form ── */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 200;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--surface);
+      border-radius: var(--radius) var(--radius) 0 0;
+      width: 100%;
+      max-width: 500px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 20px;
+      animation: slideUp 0.25s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-dim);
+      padding: 4px;
+    }
+
+    /* ── Dugnad list item ── */
+    .dugnad-item {
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .dugnad-item:hover { border-color: var(--primary); }
+
+    .dugnad-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-dim);
+    }
+
+    .empty-state .emoji { font-size: 40px; margin-bottom: 8px; }
+
+    /* ── Children chips ── */
+    .child-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .child-chip .team { font-size: 12px; color: var(--text-dim); font-weight: 400; }
+
+    .children-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    /* ── Tabs ── */
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .tab {
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dim);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      font-family: inherit;
+    }
+
+    .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .back-link:hover { color: var(--primary); }
+
+    /* ── View containers ── */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ── Responsive ── */
+    @media (max-width: 500px) {
+      .form-row { grid-template-columns: 1fr; }
+      .header-nav { display: none; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── Bottom nav (mobile) ── */
+    .bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      z-index: 100;
+      padding: 4px 0 max(4px, env(safe-area-inset-bottom));
+    }
+
+    .bottom-nav-inner {
+      display: flex;
+      justify-content: space-around;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .bnav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 12px;
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 10px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .bnav-btn .bnav-icon { font-size: 20px; }
+    .bnav-btn.active { color: var(--primary); }
+
+    @media (max-width: 500px) {
+      .bottom-nav { display: block; }
+      body { padding-bottom: 70px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ LOGIN ══ -->
+  <div id="login-view">
+    <div class="login-wrap">
+      <div class="login-card">
+        <img src="https://cdn-bloc.no/background/200000195/1558/2026/2/25/floeya_logo.png" alt="Fløya IF">
+        <h1>Dugnadsmamma ⚽</h1>
+        <p>Logg inn for å se dugnader</p>
+        <div class="login-error" id="login-error">Feil brukernavn eller passord</div>
+        <input type="text" id="login-user" placeholder="Brukernavn" autocomplete="username">
+        <input type="password" id="login-pass" placeholder="Passord" autocomplete="current-password">
+        <button class="btn btn-primary btn-block" onclick="doLogin()" style="margin-top:8px">Logg inn</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ APP ══ -->
+  <div id="app-wrap" style="display:none">
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="header-left">
+          <img class="header-logo" src="https://cdn-bloc.no/background/200000195/1558/2026/2/25/floeya_logo.png" alt="Fløya">
+          <div>
+            <div class="header-title">Dugnadsmamma</div>
+            <div class="header-subtitle">Fløya IF</div>
+          </div>
+        </div>
+        <div class="header-nav">
+          <button class="nav-btn active" onclick="showView('dashboard')">📊</button>
+          <button class="nav-btn" onclick="showView('children')">👧</button>
+          <button class="logout-btn" onclick="doLogout()">Logg ut</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <!-- ── DASHBOARD ── -->
+      <div id="view-dashboard" class="view active">
+        <div class="stats-grid" id="dash-stats"></div>
+
+        <div class="section-header">
+          <span class="section-title">Aktive dugnader</span>
+          <button class="btn btn-primary btn-sm" onclick="openNewDugnad()">+ Ny dugnad</button>
+        </div>
+        <div id="dash-dugnads"></div>
+      </div>
+
+      <!-- ── CHILDREN ── -->
+      <div id="view-children" class="view">
+        <div class="section-header">
+          <span class="section-title">Barn</span>
+          <button class="btn btn-primary btn-sm" onclick="openChildModal()">+ Legg til</button>
+        </div>
+        <div id="children-list"></div>
+      </div>
+
+      <!-- ── DUGNAD DETAIL ── -->
+      <div id="view-dugnad" class="view">
+        <div class="back-link" onclick="showView('dashboard')">← Tilbake</div>
+        <div id="dugnad-detail"></div>
+      </div>
+    </main>
+
+    <!-- Bottom nav (mobile) -->
+    <nav class="bottom-nav">
+      <div class="bottom-nav-inner">
+        <button class="bnav-btn active" onclick="showView('dashboard')" data-view="dashboard">
+          <span class="bnav-icon">📊</span>Oversikt
+        </button>
+        <button class="bnav-btn" onclick="openNewDugnad()" data-view="new">
+          <span class="bnav-icon">➕</span>Ny dugnad
+        </button>
+        <button class="bnav-btn" onclick="showView('children')" data-view="children">
+          <span class="bnav-icon">👧</span>Barn
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ══ MODAL ══ -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModalOverlay(event)">
+    <div class="modal" id="modal-content"></div>
+  </div>
+
+  <script>
+    const API = '/api/dugnad';
+    let DATA = { children: [], dugnads: [] };
+
+    // ── Auth ──
+    function doLogin() {
+      const u = document.getElementById('login-user').value.toLowerCase().trim();
+      const p = document.getElementById('login-pass').value.trim();
+      if (u === 'åse' && p === 'håvard') {
+        sessionStorage.setItem('dm-auth', '1');
+        document.getElementById('login-error').style.display = 'none';
+        boot();
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !sessionStorage.getItem('dm-auth')) doLogin();
+    });
+
+    function doLogout() {
+      sessionStorage.removeItem('dm-auth');
+      location.reload();
+    }
+
+    function boot() {
+      document.getElementById('login-view').style.display = 'none';
+      document.getElementById('app-wrap').style.display = 'block';
+      initDB().then(() => loadData());
+    }
+
+    // ── API helpers ──
+    async function api(method, body) {
+      const opts = { method, headers: { 'Content-Type': 'application/json' } };
+      if (body) opts.body = JSON.stringify(body);
+      const res = await fetch(API, opts);
+      return res.json();
+    }
+
+    async function initDB() {
+      await api('POST', { action: 'init_db' });
+    }
+
+    async function loadData() {
+      DATA = await api('GET');
+      renderDashboard();
+    }
+
+    // ── Views ──
+    function showView(name) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-' + name).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll(`[onclick*="'${name}'"]`).forEach(b => b.classList.add('active'));
+
+      if (name === 'children') renderChildren();
+      if (name === 'dashboard') renderDashboard();
+    }
+
+    // ── Dashboard ──
+    function renderDashboard() {
+      const active = DATA.dugnads.filter(d => d.status === 'active');
+      const allItems = active.filter(d => d.type === 'sales').flatMap(d => d.items || []);
+      const allSales = allItems.flatMap(i => i.sales || []);
+      const unpaidSales = allSales.filter(s => !s.paid);
+      const unpaidAmount = unpaidSales.reduce((s, sale) => {
+        const item = allItems.find(i => (i.sales || []).includes(sale));
+        return s + (item ? item.price * sale.quantity : 0);
+      }, 0);
+
+      const allTasks = active.filter(d => d.type === 'physical').flatMap(d => d.tasks || []);
+      const pendingTasks = allTasks.filter(t => !t.completed);
+
+      const upcoming = active.filter(d => {
+        if (!d.deadline) return false;
+        const dl = new Date(d.deadline);
+        const now = new Date();
+        const diff = (dl - now) / (1000*60*60*24);
+        return diff >= 0 && diff <= 7;
+      });
+
+      document.getElementById('dash-stats').innerHTML = `
+        <div class="stat-box"><div class="stat-num">${active.length}</div><div class="stat-label">Aktive dugnader</div></div>
+        <div class="stat-box ${unpaidAmount > 0 ? 'danger' : ''}"><div class="stat-num">${formatKr(unpaidAmount)}</div><div class="stat-label">Utestående</div></div>
+        <div class="stat-box ${pendingTasks.length > 0 ? 'warning' : ''}"><div class="stat-num">${pendingTasks.length}</div><div class="stat-label">Oppgaver gjenstår</div></div>
+        <div class="stat-box"><div class="stat-num">${upcoming.length}</div><div class="stat-label">Frist ≤ 7 dager</div></div>
+      `;
+
+      if (active.length === 0) {
+        document.getElementById('dash-dugnads').innerHTML = `
+          <div class="empty-state"><div class="emoji">⚽</div><p>Ingen aktive dugnader ennå.<br>Trykk "Ny dugnad" for å komme i gang!</p></div>`;
+        return;
+      }
+
+      document.getElementById('dash-dugnads').innerHTML = active.map(d => {
+        const child = DATA.children.find(c => c.id === d.child_id);
+        const childName = child ? child.name : '?';
+        const deadlineStr = d.deadline ? formatDate(d.deadline) : 'Ingen frist';
+        const isUrgent = d.deadline && daysUntil(d.deadline) <= 7 && daysUntil(d.deadline) >= 0;
+
+        let progressHTML = '';
+        if (d.type === 'sales' && d.items && d.items.length > 0) {
+          const totalTarget = d.items.reduce((s, i) => s + i.target_qty, 0);
+          const totalSold = d.items.reduce((s, i) => s + (i.sales || []).reduce((ss, sale) => ss + sale.quantity, 0), 0);
+          const pct = totalTarget > 0 ? Math.min(100, Math.round(totalSold / totalTarget * 100)) : 0;
+          progressHTML = `
+            <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <div class="progress-text"><span>${totalSold} av ${totalTarget} solgt</span><span>${pct}%</span></div>`;
+        }
+        if (d.type === 'physical' && d.tasks && d.tasks.length > 0) {
+          const total = d.tasks.length;
+          const done = d.tasks.filter(t => t.completed).length;
+          const pct = Math.round(done / total * 100);
+          progressHTML = `
+            <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <div class="progress-text"><span>${done} av ${total} fullført</span><span>${pct}%</span></div>`;
+        }
+
+        return `
+          <div class="card dugnad-item" onclick="openDugnad(${d.id})">
+            <div class="card-header">
+              <div class="card-title">${esc(d.title)}</div>
+              <span class="badge badge-child">${esc(childName)}</span>
+            </div>
+            ${progressHTML}
+            <div class="dugnad-meta">
+              <span class="badge ${d.type === 'sales' ? 'badge-sales' : 'badge-physical'}">${d.type === 'sales' ? '🏷 Salg' : '🔧 Fysisk'}</span>
+              <span class="badge ${isUrgent ? 'badge-danger' : 'badge-success'}">📅 ${deadlineStr}</span>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // ── Dugnad detail ──
+    function openDugnad(id) {
+      const d = DATA.dugnads.find(x => x.id === id);
+      if (!d) return;
+      showView('dugnad');
+      const child = DATA.children.find(c => c.id === d.child_id);
+
+      let html = `
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title" style="font-size:20px">${esc(d.title)}</div>
+              <div style="margin-top:4px">
+                <span class="badge badge-child">${esc(child?.name || '?')}</span>
+                <span class="badge ${d.type === 'sales' ? 'badge-sales' : 'badge-physical'}">${d.type === 'sales' ? '🏷 Salg' : '🔧 Fysisk'}</span>
+                ${d.deadline ? `<span class="badge badge-warning">📅 ${formatDate(d.deadline)}</span>` : ''}
+              </div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn-icon" onclick="toggleDugnadStatus(${d.id})" title="${d.status === 'active' ? 'Marker fullført' : 'Reaktiver'}">
+                ${d.status === 'active' ? '✅' : '🔄'}
+              </button>
+              <button class="btn-icon danger" onclick="deleteDugnad(${d.id})" title="Slett">🗑</button>
+            </div>
+          </div>
+          ${d.notes ? `<p style="color:var(--text-dim);font-size:14px;margin-top:8px">${esc(d.notes)}</p>` : ''}
+        </div>`;
+
+      if (d.type === 'sales') {
+        html += renderSalesDetail(d);
+      } else {
+        html += renderTasksDetail(d);
+      }
+
+      document.getElementById('dugnad-detail').innerHTML = html;
+    }
+
+    function renderSalesDetail(d) {
+      let html = `
+        <div class="section-header">
+          <span class="section-title">Salgsvarer</span>
+          <button class="btn btn-primary btn-sm" onclick="openAddItem(${d.id})">+ Legg til vare</button>
+        </div>`;
+
+      if (!d.items || d.items.length === 0) {
+        html += `<div class="empty-state"><div class="emoji">📦</div><p>Ingen varer ennå</p></div>`;
+        return html;
+      }
+
+      d.items.forEach(item => {
+        const sold = (item.sales || []).reduce((s, sale) => s + sale.quantity, 0);
+        const paidQty = (item.sales || []).filter(s => s.paid).reduce((s, sale) => s + sale.quantity, 0);
+        const pct = item.target_qty > 0 ? Math.min(100, Math.round(sold / item.target_qty * 100)) : 0;
+        const revenue = (item.sales || []).reduce((s, sale) => s + sale.quantity * item.price, 0);
+        const paidRevenue = (item.sales || []).filter(s => s.paid).reduce((s, sale) => s + sale.quantity * item.price, 0);
+
+        html += `
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">${esc(item.item_name)}</div>
+                <div style="font-size:13px;color:var(--text-dim)">${formatKr(item.price)} per stk · Mål: ${item.target_qty} stk</div>
+              </div>
+              <button class="btn-icon danger" onclick="deleteItem(${item.id},${d.id})" title="Slett vare">🗑</button>
+            </div>
+            <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <div class="progress-text"><span>${sold}/${item.target_qty} solgt</span><span>${formatKr(paidRevenue)}/${formatKr(revenue)} betalt</span></div>
+
+            <div style="margin-top:12px">
+              <table class="data-table">
+                <thead><tr><th>Kjøper</th><th>Ant.</th><th>Sum</th><th>Betalt</th><th></th></tr></thead>
+                <tbody>
+                  ${(item.sales || []).map(s => `
+                    <tr>
+                      <td>${esc(s.buyer_name)}</td>
+                      <td>${s.quantity}</td>
+                      <td>${formatKr(s.quantity * item.price)}</td>
+                      <td>
+                        <span class="${s.paid ? 'paid-yes' : 'paid-no'}" style="cursor:pointer" onclick="togglePaid(${s.id},${!s.paid},${d.id})">
+                          ${s.paid ? '✅ Ja' : '❌ Nei'}
+                        </span>
+                      </td>
+                      <td><button class="btn-icon danger btn-sm" onclick="deleteSale(${s.id},${d.id})" style="width:24px;height:24px;font-size:12px">🗑</button></td>
+                    </tr>`).join('')}
+                </tbody>
+              </table>
+              <button class="btn btn-outline btn-sm" style="margin-top:8px" onclick="openAddSale(${item.id},${d.id})">+ Legg til kjøper</button>
+            </div>
+          </div>`;
+      });
+
+      return html;
+    }
+
+    function renderTasksDetail(d) {
+      let html = `
+        <div class="section-header">
+          <span class="section-title">Oppgaver</span>
+          <button class="btn btn-primary btn-sm" onclick="openAddTask(${d.id})">+ Legg til oppgave</button>
+        </div>`;
+
+      if (!d.tasks || d.tasks.length === 0) {
+        html += `<div class="empty-state"><div class="emoji">📋</div><p>Ingen oppgaver ennå</p></div>`;
+        return html;
+      }
+
+      d.tasks.forEach(t => {
+        html += `
+          <div class="card" style="display:flex;align-items:center;gap:12px;${t.completed ? 'opacity:0.5' : ''}">
+            <button class="btn-icon" onclick="toggleTask(${t.id},${!t.completed},${d.id})" style="font-size:20px;width:36px;height:36px;flex-shrink:0">
+              ${t.completed ? '✅' : '⬜'}
+            </button>
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:600;${t.completed ? 'text-decoration:line-through' : ''}">${esc(t.task_name)}</div>
+              ${t.task_date ? `<div style="font-size:12px;color:var(--text-dim)">📅 ${formatDate(t.task_date)}</div>` : ''}
+              ${t.notes ? `<div style="font-size:12px;color:var(--text-dim)">${esc(t.notes)}</div>` : ''}
+            </div>
+            <button class="btn-icon danger" onclick="deleteTask(${t.id},${d.id})" style="width:28px;height:28px;font-size:12px">🗑</button>
+          </div>`;
+      });
+
+      return html;
+    }
+
+    // ── Children ──
+    function renderChildren() {
+      const el = document.getElementById('children-list');
+      if (DATA.children.length === 0) {
+        el.innerHTML = `<div class="empty-state"><div class="emoji">👧</div><p>Ingen barn registrert</p></div>`;
+        return;
+      }
+      el.innerHTML = DATA.children.map(c => {
+        const count = DATA.dugnads.filter(d => d.child_id === c.id && d.status === 'active').length;
+        return `
+          <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-weight:700;font-size:16px">${esc(c.name)}</div>
+              <div style="font-size:13px;color:var(--text-dim)">${c.team ? esc(c.team) : 'Lag ikke satt'} · ${count} aktive dugnader</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn-icon" onclick="openChildModal(${c.id})">✏️</button>
+              <button class="btn-icon danger" onclick="deleteChild(${c.id})">🗑</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // ── Modals ──
+    function openModal(html) {
+      document.getElementById('modal-content').innerHTML = html;
+      document.getElementById('modal-overlay').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open');
+    }
+
+    function closeModalOverlay(e) {
+      if (e.target === document.getElementById('modal-overlay')) closeModal();
+    }
+
+    function openNewDugnad() {
+      const childOpts = DATA.children.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('');
+      openModal(`
+        <div class="modal-header">
+          <div class="modal-title">Ny dugnad</div>
+          <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="form-group">
+          <label>Barn</label>
+          <select id="md-child">${childOpts}</select>
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select id="md-type">
+            <option value="sales">🏷 Salgsdugnad</option>
+            <option value="physical">🔧 Fysisk dugnad</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tittel</label>
+          <input id="md-title" placeholder="F.eks. Loddsalg vår 2026">
+        </div>
+        <div class="form-group">
+          <label>Frist</label>
+          <input type="date" id="md-deadline">
+        </div>
+        <div class="form-group">
+          <label>Notater</label>
+          <textarea id="md-notes" rows="2" placeholder="Valgfritt"></textarea>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="submitNewDugnad()">Opprett dugnad</button>
+      `);
+    }
+
+    async function submitNewDugnad() {
+      const child_id = parseInt(document.getElementById('md-child').value);
+      const type = document.getElementById('md-type').value;
+      const title = document.getElementById('md-title').value.trim();
+      const deadline = document.getElementById('md-deadline').value || null;
+      const notes = document.getElementById('md-notes').value.trim() || null;
+      if (!title) return alert('Fyll inn tittel');
+      await api('POST', { action: 'add_dugnad', child_id, type, title, deadline, notes });
+      closeModal();
+      await loadData();
+    }
+
+    function openAddItem(dugnadId) {
+      openModal(`
+        <div class="modal-header">
+          <div class="modal-title">Legg til vare</div>
+          <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="form-group">
+          <label>Varenavn</label>
+          <input id="md-iname" placeholder="F.eks. Lodd, Tulipaner, Dopapir">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Pris per stk (kr)</label>
+            <input type="number" id="md-iprice" placeholder="50">
+          </div>
+          <div class="form-group">
+            <label>Antall å selge</label>
+            <input type="number" id="md-iqty" placeholder="20">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="submitAddItem(${dugnadId})">Legg til</button>
+      `);
+    }
+
+    async function submitAddItem(dugnadId) {
+      const item_name = document.getElementById('md-iname').value.trim();
+      const price = parseFloat(document.getElementById('md-iprice').value);
+      const target_qty = parseInt(document.getElementById('md-iqty').value);
+      if (!item_name || !price || !target_qty) return alert('Fyll inn alle felt');
+      await api('POST', { action: 'add_item', dugnad_id: dugnadId, item_name, price, target_qty });
+      closeModal();
+      await loadData();
+      openDugnad(dugnadId);
+    }
+
+    function openAddSale(itemId, dugnadId) {
+      openModal(`
+        <div class="modal-header">
+          <div class="modal-title">Registrer salg</div>
+          <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="form-group">
+          <label>Kjøper (navn)</label>
+          <input id="md-sbuyer" placeholder="F.eks. Tante Berit">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Antall</label>
+            <input type="number" id="md-sqty" value="1" min="1">
+          </div>
+          <div class="form-group">
+            <label>Betalt?</label>
+            <select id="md-spaid">
+              <option value="0">Nei</option>
+              <option value="1">Ja</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="submitAddSale(${itemId},${dugnadId})">Registrer</button>
+      `);
+    }
+
+    async function submitAddSale(itemId, dugnadId) {
+      const buyer_name = document.getElementById('md-sbuyer').value.trim();
+      const quantity = parseInt(document.getElementById('md-sqty').value) || 1;
+      const paid = document.getElementById('md-spaid').value === '1';
+      if (!buyer_name) return alert('Fyll inn kjøpernavn');
+      await api('POST', { action: 'add_sale', item_id: itemId, buyer_name, quantity, paid });
+      closeModal();
+      await loadData();
+      openDugnad(dugnadId);
+    }
+
+    function openAddTask(dugnadId) {
+      openModal(`
+        <div class="modal-header">
+          <div class="modal-title">Legg til oppgave</div>
+          <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="form-group">
+          <label>Oppgave</label>
+          <input id="md-tname" placeholder="F.eks. Vakt lørdag, Vaskedugnad">
+        </div>
+        <div class="form-group">
+          <label>Dato</label>
+          <input type="date" id="md-tdate">
+        </div>
+        <div class="form-group">
+          <label>Notater</label>
+          <textarea id="md-tnotes" rows="2" placeholder="Valgfritt"></textarea>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="submitAddTask(${dugnadId})">Legg til</button>
+      `);
+    }
+
+    async function submitAddTask(dugnadId) {
+      const task_name = document.getElementById('md-tname').value.trim();
+      const task_date = document.getElementById('md-tdate').value || null;
+      const notes = document.getElementById('md-tnotes').value.trim() || null;
+      if (!task_name) return alert('Fyll inn oppgavenavn');
+      await api('POST', { action: 'add_task', dugnad_id: dugnadId, task_name, task_date, notes });
+      closeModal();
+      await loadData();
+      openDugnad(dugnadId);
+    }
+
+    function openChildModal(id) {
+      const child = id ? DATA.children.find(c => c.id === id) : null;
+      openModal(`
+        <div class="modal-header">
+          <div class="modal-title">${child ? 'Rediger barn' : 'Legg til barn'}</div>
+          <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="form-group">
+          <label>Navn</label>
+          <input id="md-cname" value="${child ? esc(child.name) : ''}" placeholder="Barnets navn">
+        </div>
+        <div class="form-group">
+          <label>Lag / årstrinn</label>
+          <input id="md-cteam" value="${child?.team ? esc(child.team) : ''}" placeholder="F.eks. G14, J12">
+        </div>
+        <button class="btn btn-primary btn-block" onclick="submitChild(${id || 'null'})">${child ? 'Lagre' : 'Legg til'}</button>
+      `);
+    }
+
+    async function submitChild(id) {
+      const name = document.getElementById('md-cname').value.trim();
+      const team = document.getElementById('md-cteam').value.trim() || null;
+      if (!name) return alert('Fyll inn navn');
+      if (id) {
+        await api('POST', { action: 'update_child', id, name, team });
+      } else {
+        await api('POST', { action: 'add_child', name, team });
+      }
+      closeModal();
+      await loadData();
+      renderChildren();
+    }
+
+    // ── Actions ──
+    async function togglePaid(saleId, paid, dugnadId) {
+      await api('POST', { action: 'update_sale', id: saleId, paid });
+      await loadData();
+      openDugnad(dugnadId);
+    }
+
+    async function toggleTask(taskId, completed, dugnadId) {
+      await api('POST', { action: 'update_task', id: taskId, completed });
+      await loadData();
+      openDugnad(dugnadId);
+    }
+
+    async function toggleDugnadStatus(dugnadId) {
+      const d = DATA.dugnads.find(x => x.id === dugnadId);
+      const newStatus = d.status === 'active' ? 'completed' : 'active';
+      await api('POST', { action: 'update_dugnad', id: dugnadId, status: newStatus });
+      await loadData();
+      if (newStatus === 'completed') showView('dashboard');
+      else openDugnad(dugnadId);
+    }
+
+    async function deleteDugnad(id) {
+      if (!confirm('Slett denne dugnaden og alt tilhørende?')) return;
+      await api('POST', { action: 'delete_dugnad', id });
+      await loadData();
+      showView('dashboard');
+    }
+
+    async function deleteItem(id, dugnadId) {
+      if (!confirm('Slett denne varen og alle salg?')) return;
+      await api('POST', { action: 'delete_item', id });
+      await loadData();
+      openDugnad(dugnadId);
+    }
+
+    async function deleteSale(id, dugnadId) {
+      await api('POST', { action: 'delete_sale', id });
+      await loadData();
+      openDugnad(dugnadId);
+    }
+
+    async function deleteTask(id, dugnadId) {
+      await api('POST', { action: 'delete_task', id });
+      await loadData();
+      openDugnad(dugnadId);
+    }
+
+    async function deleteChild(id) {
+      const dugnads = DATA.dugnads.filter(d => d.child_id === id);
+      if (dugnads.length > 0) return alert('Kan ikke slette barn med aktive dugnader. Slett dugnadene først.');
+      if (!confirm('Slett dette barnet?')) return;
+      await api('POST', { action: 'delete_child', id });
+      await loadData();
+      renderChildren();
+    }
+
+    // ── Helpers ──
+    function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+    function formatKr(n) { return new Intl.NumberFormat('nb-NO', { style: 'currency', currency: 'NOK', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n); }
+    function formatDate(d) {
+      if (!d) return '';
+      const date = new Date(d);
+      return date.toLocaleDateString('nb-NO', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+    function daysUntil(d) {
+      const dl = new Date(d);
+      const now = new Date();
+      return Math.ceil((dl - now) / (1000*60*60*24));
+    }
+
+    // ── Init ──
+    if (sessionStorage.getItem('dm-auth')) {
+      boot();
+    }
+  </script>
+</body>
+</html>

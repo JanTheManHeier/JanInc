@@ -25,7 +25,7 @@
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/api/*", "/mychoice/*", "/spisslank", "/spisslank/*", "/SpisSlank", "/SpisSlank/*", "*.js", "*.css", "*.png", "*.jpg", "*.svg", "*.ico", "*.json", "*.mp3", "*.mp4"]
+    "exclude": ["/api/*", "/mychoice/*", "/dugnadsmamma/*", "/spisslank", "/spisslank/*", "/SpisSlank", "/SpisSlank/*", "*.js", "*.css", "*.png", "*.jpg", "*.svg", "*.ico", "*.json", "*.mp3", "*.mp4"]
   },
   "responseOverrides": {
     "401": {
