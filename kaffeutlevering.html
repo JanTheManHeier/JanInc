@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>☕ Kaffeutlevering — Tromsø</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0d0a;
+      --surface: #1c1814;
+      --surface-hover: #252019;
+      --card: #231e18;
+      --card-done: #161310;
+      --border: #3a3228;
+      --border-done: #2a2520;
+      --text: #f0e6d6;
+      --text-dim: #a09080;
+      --text-done: #5a5040;
+      --accent: #d4a056;
+      --accent-glow: rgba(212, 160, 86, 0.3);
+      --green: #4caf50;
+      --green-dim: rgba(76,175,80,0.15);
+      --vipps-orange: #ff5b24;
+      --vipps-bg: rgba(255,91,36,0.1);
+      --next-glow: rgba(212, 160, 86, 0.12);
+      --zone-sentrum: #5b9bd5;
+      --zone-north: #70c1b3;
+      --zone-south: #e8a838;
+      --zone-kvaloya: #c77dba;
+      --zone-mainland: #e06060;
+      --route-line: #3a3228;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 100px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ── Header ── */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 85%, transparent 100%);
+      padding: 16px 16px 24px;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .header h1 span { color: var(--accent); }
+
+    .stats {
+      display: flex;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .stats .num { font-weight: 700; color: var(--accent); }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--green));
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
+    /* ── Start point ── */
+    .start-point {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      margin: 0 16px 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .start-point .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ── Zone headers ── */
+    .zone-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 18px 16px 8px 60px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .zone-header::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      border-radius: 1px;
+    }
+
+    .zone-sentrum { color: var(--zone-sentrum); }
+    .zone-sentrum::before { background: var(--zone-sentrum); }
+    .zone-north { color: var(--zone-north); }
+    .zone-north::before { background: var(--zone-north); }
+    .zone-south { color: var(--zone-south); }
+    .zone-south::before { background: var(--zone-south); }
+    .zone-kvaloya { color: var(--zone-kvaloya); }
+    .zone-kvaloya::before { background: var(--zone-kvaloya); }
+    .zone-mainland { color: var(--zone-mainland); }
+    .zone-mainland::before { background: var(--zone-mainland); }
+
+    /* ── Route container ── */
+    .route {
+      padding: 0 16px;
+      position: relative;
+    }
+
+    /* ── Delivery card ── */
+    .stop {
+      display: flex;
+      gap: 12px;
+      padding: 14px 0;
+      position: relative;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Route line */
+    .stop-line {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 36px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .stop-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dim);
+      z-index: 2;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .stop.is-next .stop-num {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .stop.is-done .stop-num {
+      background: var(--green-dim);
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .connector {
+      width: 2px;
+      flex-grow: 1;
+      background: var(--route-line);
+      min-height: 8px;
+    }
+
+    .stop:last-child .connector:last-child { display: none; }
+
+    /* Card body */
+    .stop-card {
+      flex: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      transition: all 0.3s ease;
+      min-width: 0;
+    }
+
+    .stop.is-next .stop-card {
+      background: var(--next-glow);
+      border-color: var(--accent);
+      box-shadow: 0 4px 24px rgba(212,160,86,0.08);
+    }
+
+    .stop.is-done .stop-card {
+      background: var(--card-done);
+      border-color: var(--border-done);
+      opacity: 0.55;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .stop-name {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+
+    .stop.is-done .stop-name {
+      text-decoration: line-through;
+      color: var(--text-done);
+    }
+
+    .check-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      color: transparent;
+      font-size: 18px;
+    }
+
+    .check-btn:active {
+      transform: scale(0.9);
+    }
+
+    .stop.is-done .check-btn {
+      background: var(--green);
+      border-color: var(--green);
+      color: white;
+    }
+
+    .stop-address {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stop-address a {
+      color: var(--text-dim);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--text-dim);
+    }
+
+    .stop-address a:hover { color: var(--text); }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-beans {
+      background: rgba(139, 90, 43, 0.2);
+      color: #d4a056;
+      border: 1px solid rgba(139, 90, 43, 0.3);
+    }
+
+    .badge-filter {
+      background: rgba(90, 130, 90, 0.15);
+      color: #8ab88a;
+      border: 1px solid rgba(90, 130, 90, 0.25);
+    }
+
+    .badge-paid {
+      background: var(--green-dim);
+      color: var(--green);
+      border: 1px solid rgba(76,175,80,0.25);
+    }
+
+    .badge-unpaid {
+      background: var(--vipps-bg);
+      color: var(--vipps-orange);
+      border: 1px solid rgba(255,91,36,0.2);
+    }
+
+    /* ── Vipps box ── */
+    .vipps-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: var(--vipps-bg);
+      border: 1px solid rgba(255,91,36,0.2);
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    .vipps-box .vipps-label {
+      font-weight: 700;
+      color: var(--vipps-orange);
+      margin-bottom: 4px;
+    }
+
+    .vipps-box .vipps-details {
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .vipps-box .vipps-amount {
+      font-weight: 800;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    /* ── Non-delivery card ── */
+    .non-delivery {
+      margin: 24px 16px;
+      padding: 14px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      opacity: 0.5;
+    }
+
+    .non-delivery .nd-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-done);
+      margin-bottom: 6px;
+    }
+
+    .non-delivery .nd-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+
+    .non-delivery .nd-info {
+      font-size: 12px;
+      color: var(--text-done);
+      margin-top: 4px;
+    }
+
+    /* ── Summary ── */
+    .summary {
+      margin: 32px 16px;
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .summary h2 {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .summary-item {
+      text-align: center;
+      padding: 12px;
+      background: var(--card);
+      border-radius: 10px;
+    }
+
+    .summary-item .s-num {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .summary-item .s-label {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    /* ── Reset button ── */
+    .reset-wrap {
+      text-align: center;
+      margin: 24px 16px;
+    }
+
+    .reset-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .reset-btn:active { opacity: 0.6; }
+
+    /* ── Reorder arrows ── */
+    .reorder-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .arrow-btn {
+      width: 32px;
+      height: 26px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-dim);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.15s ease;
+      padding: 0;
+    }
+
+    .arrow-btn:active {
+      background: var(--accent);
+      color: var(--bg);
+      transform: scale(0.9);
+    }
+
+    .arrow-btn:disabled {
+      opacity: 0.2;
+      cursor: default;
+    }
+
+    .arrow-btn:disabled:active {
+      background: var(--surface);
+      color: var(--text-dim);
+      transform: none;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    /* ── Next badge ── */
+    .next-badge {
+      display: none;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .stop.is-next .next-badge { display: block; }
+
+    /* ── All done banner ── */
+    .all-done {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+      margin: 20px 16px;
+      background: var(--green-dim);
+      border: 1px solid rgba(76,175,80,0.3);
+      border-radius: 16px;
+    }
+
+    .all-done.visible { display: block; }
+
+    .all-done .done-icon { font-size: 48px; margin-bottom: 12px; }
+    .all-done .done-text { font-size: 20px; font-weight: 800; color: var(--green); }
+    .all-done .done-sub { font-size: 14px; color: var(--text-dim); margin-top: 6px; }
+
+    /* ── Packing list toggle ── */
+    .packing-toggle {
+      margin: 16px;
+      text-align: center;
+    }
+
+    .packing-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+    }
+
+    .packing-list {
+      display: none;
+      margin: 0 16px 16px;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .packing-list.visible { display: block; }
+
+    .packing-list h3 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .pack-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .pack-item:last-child { border: none; }
+    .pack-item .pack-qty { font-weight: 700; color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-top">
+      <h1>☕ <span>Kaffe</span>utlevering</h1>
+      <div class="stats">
+        <span><span class="num" id="delivered-count">0</span> / <span id="total-count">14</span> levert</span>
+      </div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <!-- Start point -->
+  <div class="start-point">
+    <div class="icon">📍</div>
+    <div>
+      <strong>Start:</strong> Tromsø Turnhall Templarheimen
+    </div>
+  </div>
+
+  <!-- Packing list -->
+  <div class="packing-toggle">
+    <button class="packing-btn" onclick="togglePacking()">📦 Pakkeliste</button>
+  </div>
+  <div class="packing-list" id="packing-list">
+    <h3>☕ Ta med i bilen</h3>
+    <div class="pack-item"><span>Hele bønner</span><span class="pack-qty">12 poser</span></div>
+    <div class="pack-item"><span>Filtermalt</span><span class="pack-qty">7 poser</span></div>
+    <div class="pack-item"><span>Totalt</span><span class="pack-qty">19 poser</span></div>
+    <div style="margin-top:12px; font-size:12px; color:var(--text-dim);">
+      Inkl. 1 pose hele bønner til Josefine (ikke lever – ta vare på)
+    </div>
+  </div>
+
+  <!-- Route (rendered by JS) -->
+  <div class="route" id="route"></div>
+
+  <!-- All done banner -->
+  <div class="all-done" id="all-done">
+    <div class="done-icon">🎉</div>
+    <div class="done-text">Alle levert!</div>
+    <div class="done-sub">God kaffekos til alle i Tromsø ☕</div>
+  </div>
+
+  <!-- Non-delivery -->
+  <div class="non-delivery">
+    <div class="nd-label">🚫 Leveres ikke</div>
+    <div class="nd-name">Josefine</div>
+    <div class="nd-info">1 × Hele bønner · Betalt 30.1 · Ingen leveringsadresse</div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary">
+    <h2>📊 Oppsummering</h2>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="s-num">14</div>
+        <div class="s-label">Leveringer</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-num">19</div>
+        <div class="s-label">Poser totalt</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-num">7</div>
+        <div class="s-label">Har betalt</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-num" id="unpaid-total">1 520 kr</div>
+        <div class="s-label">Utestående</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset -->
+  <div class="reset-wrap">
+    <button class="reset-btn" onclick="resetAll()">🔄 Nullstill alle leveringer</button>
+    <button class="reset-btn" style="margin-top:8px;" onclick="resetOrder()">↩ Tilbakestill rekkefølge</button>
+  </div>
+
+  <script>
+    const DONE_KEY = 'kaffeutlevering-done';
+    const ORDER_KEY = 'kaffeutlevering-order';
+
+    // ── Data ──
+    const DEFAULT_STOPS = [
+      { id: 'kristina-a', name: 'Kristina Antonsen', address: 'Sparre Schneiders gate 2', mapsQ: 'Sparre+Schneiders+gate+2,+Tromsø', beans: 1, filter: 0, paid: true, paidDate: '29.1', zone: 'sentrum' },
+      { id: 'randi', name: 'Randi (Lilly)', address: 'Anna Eides gate', mapsQ: 'Anna+Eides+gate,+Tromsø', beans: 0, filter: 1, paid: false, zone: 'sentrum' },
+      { id: 'cathrine', name: 'Cathrine', address: 'Prost Schjelderups gate 9-1', mapsQ: 'Prost+Schjelderups+gate+9,+Tromsø', beans: 0, filter: 2, paid: false, zone: 'sentrum' },
+      { id: 'hilde', name: 'Hilde', address: 'Sjømannsbyen, Redervegen', mapsQ: 'Sjømannsbyen+Redervegen,+Tromsø', beans: 0, filter: 1, paid: true, paidDate: '30.1', zone: 'north' },
+      { id: 'tone', name: 'Tone', address: 'Hamna', mapsQ: 'Hamna,+Tromsø', beans: 1, filter: 0, paid: false, zone: 'north' },
+      { id: 'birgit', name: 'Birgit', address: 'Hansmarkvegen 54', mapsQ: 'Hansmarkvegen+54,+Tromsø', beans: 0, filter: 2, paid: false, zone: 'south' },
+      { id: 'cathrin-c', name: 'Cathrin C.', address: 'Bamsestien 6', mapsQ: 'Bamsestien+6,+Tromsø', beans: 2, filter: 0, paid: false, zone: 'south' },
+      { id: 'havard', name: 'Håvard (Ingrid)', address: 'Workinmarka', mapsQ: 'Workinmarka,+Tromsø', beans: 2, filter: 0, paid: true, paidDate: '29.1', zone: 'south' },
+      { id: 'aase', name: 'Åse', address: 'Workinmarka', mapsQ: 'Workinmarka,+Tromsø', beans: 1, filter: 0, paid: false, zone: 'south' },
+      { id: 'camilla', name: 'Camilla R-P', address: 'Lunheim', mapsQ: 'Lunheim,+Tromsø', beans: 1, filter: 0, paid: true, paidDate: '29.1', zone: 'south' },
+      { id: 'trond-bjornar', name: 'Trond-Bjørnar', address: 'Hummervegen, Kvaløysletta', mapsQ: 'Hummervegen,+Kvaløysletta,+Tromsø', beans: 1, filter: 0, paid: false, zone: 'kvaloya' },
+      { id: 'rune', name: 'Rune', address: 'Kråkebollevegen 2, Kvaløysletta', mapsQ: 'Kråkebollevegen+2,+Kvaløysletta,+Tromsø', beans: 1, filter: 0, paid: true, paidDate: '30.1', zone: 'kvaloya' },
+      { id: 'thomas-maja', name: 'Thomas & Maja', address: 'Senjavegen 2', mapsQ: 'Senjavegen+2,+Tromsø', beans: 1, filter: 0, paid: false, zone: 'mainland' },
+      { id: 'tante-unn', name: 'Tante-Unn', address: 'Storelva', mapsQ: 'Storelva,+Tromsø', beans: 0, filter: 1, paid: true, paidDate: '24.2', zone: 'mainland' },
+    ];
+
+    const ZONE_LABELS = {
+      sentrum: { label: 'Sentrum', css: 'zone-sentrum' },
+      north: { label: 'Sjømannsbyen / Hamna', css: 'zone-north' },
+      south: { label: 'Sør-Tromsøya', css: 'zone-south' },
+      kvaloya: { label: 'Kvaløysletta', css: 'zone-kvaloya' },
+      mainland: { label: 'Fastlandet', css: 'zone-mainland' },
+    };
+
+    const PRICE = 190;
+
+    // ── State helpers ──
+    function getDoneState() {
+      try { return JSON.parse(localStorage.getItem(DONE_KEY)) || {}; } catch { return {}; }
+    }
+    function saveDoneState(s) { localStorage.setItem(DONE_KEY, JSON.stringify(s)); }
+
+    function getOrder() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(ORDER_KEY));
+        if (Array.isArray(saved) && saved.length === DEFAULT_STOPS.length) return saved;
+      } catch {}
+      return DEFAULT_STOPS.map(s => s.id);
+    }
+    function saveOrder(ids) { localStorage.setItem(ORDER_KEY, JSON.stringify(ids)); }
+
+    function getOrderedStops() {
+      const order = getOrder();
+      const map = Object.fromEntries(DEFAULT_STOPS.map(s => [s.id, s]));
+      return order.map(id => map[id]).filter(Boolean);
+    }
+
+    // ── Actions ──
+    function toggleDone(id) {
+      const s = getDoneState();
+      s[id] = !s[id];
+      saveDoneState(s);
+      render();
+    }
+
+    function moveStop(id, dir) {
+      const order = getOrder();
+      const idx = order.indexOf(id);
+      const target = idx + dir;
+      if (target < 0 || target >= order.length) return;
+      [order[idx], order[target]] = [order[target], order[idx]];
+      saveOrder(order);
+      render();
+      // Scroll moved card into view
+      setTimeout(() => {
+        const el = document.querySelector(`.stop[data-id="${id}"]`);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
+    }
+
+    function resetAll() {
+      if (confirm('Nullstill alle leveringer?')) {
+        localStorage.removeItem(DONE_KEY);
+        render();
+      }
+    }
+
+    function resetOrder() {
+      if (confirm('Tilbakestill til foreslått rekkefølge?')) {
+        localStorage.removeItem(ORDER_KEY);
+        render();
+      }
+    }
+
+    function togglePacking() {
+      document.getElementById('packing-list').classList.toggle('visible');
+    }
+
+    // ── Render ──
+    function render() {
+      const stops = getOrderedStops();
+      const done = getDoneState();
+      const container = document.getElementById('route');
+
+      let html = '';
+      let prevZone = null;
+      let doneCount = 0;
+      let firstUndoneIdx = -1;
+
+      stops.forEach((s, i) => {
+        const isDone = !!done[s.id];
+        if (isDone) doneCount++;
+        else if (firstUndoneIdx === -1) firstUndoneIdx = i;
+      });
+
+      stops.forEach((s, i) => {
+        const isDone = !!done[s.id];
+        const isNext = (i === firstUndoneIdx);
+        const isFirst = (i === 0);
+        const isLast = (i === stops.length - 1);
+
+        // Zone header
+        if (s.zone !== prevZone) {
+          const z = ZONE_LABELS[s.zone] || { label: s.zone, css: '' };
+          html += `<div class="zone-header ${z.css}">${z.label}</div>`;
+          prevZone = s.zone;
+        }
+
+        const classes = ['stop'];
+        if (isDone) classes.push('is-done');
+        if (isNext) classes.push('is-next');
+
+        const qty = s.beans + s.filter;
+        const amount = qty * PRICE;
+
+        let badges = '';
+        if (s.beans > 0) badges += `<span class="badge badge-beans">☕ ${s.beans} × Hele bønner</span>`;
+        if (s.filter > 0) badges += `<span class="badge badge-filter">⚙ ${s.filter} × Filtermalt</span>`;
+        if (s.paid) badges += `<span class="badge badge-paid">✓ Betalt ${s.paidDate}</span>`;
+        else badges += `<span class="badge badge-unpaid">Ikke betalt</span>`;
+
+        let vipps = '';
+        if (!s.paid) {
+          vipps = `
+            <div class="vipps-box">
+              <div class="vipps-label">💸 Vipps-betaling</div>
+              <div class="vipps-details">
+                Til: <strong>Kristina Kantola</strong><br>
+                Nr: <strong>91159196</strong><br>
+                Beløp: <span class="vipps-amount">${amount} kr</span>
+              </div>
+            </div>`;
+        }
+
+        const nameEsc = s.name.replace(/&/g, '&amp;');
+
+        html += `
+          <div class="${classes.join(' ')}" data-id="${s.id}">
+            <div class="stop-line">
+              <div class="connector"></div>
+              <div class="stop-num">${i + 1}</div>
+              <div class="connector"${isLast ? ' style="visibility:hidden"' : ''}></div>
+            </div>
+            <div class="stop-card">
+              <div class="card-top">
+                <div style="min-width:0">
+                  <div class="next-badge">▶ Neste levering</div>
+                  <div class="stop-name">${nameEsc}</div>
+                </div>
+                <div class="card-actions">
+                  <div class="reorder-btns">
+                    <button class="arrow-btn" onclick="moveStop('${s.id}',-1)" ${isFirst ? 'disabled' : ''} aria-label="Flytt opp">▲</button>
+                    <button class="arrow-btn" onclick="moveStop('${s.id}',1)" ${isLast ? 'disabled' : ''} aria-label="Flytt ned">▼</button>
+                  </div>
+                  <button class="check-btn" onclick="toggleDone('${s.id}')">✓</button>
+                </div>
+              </div>
+              <div class="stop-address">📍 <a href="https://maps.google.com/?q=${s.mapsQ}" target="_blank">${s.address}</a></div>
+              <div class="badges">${badges}</div>
+              ${vipps}
+            </div>
+          </div>`;
+      });
+
+      container.innerHTML = html;
+
+      // Update header
+      const total = stops.length;
+      document.getElementById('delivered-count').textContent = doneCount;
+      document.getElementById('total-count').textContent = total;
+      const pct = total > 0 ? (doneCount / total * 100) : 0;
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('all-done').classList.toggle('visible', doneCount === total);
+    }
+
+    // Initial render
+    render();
+  </script>
+
+</body>
+</html>
