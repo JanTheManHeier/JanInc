@@ -385,102 +385,115 @@ window.MEALS = [
 
   {
     id: "kikerter-addon",
-    name: "Kikerter til Salaten",
-    nameEN: "Chickpeas for the Salad",
+    name: "Kikerter fra Salatbaren",
+    nameEN: "Chickpeas from the Salad Bar",
     type: "lunch-addon",
-    prepTime: 2,
+    prepTime: 1,
     pathways: { glp1: 3, gip: 2, glucagon: 1, amylin: 1, pyy: 3, leptin: 2, ghrelin: 3, insulin: 3 },
-    scienceNote: "Kikerter har resistens-stivelse → kraftig GLP-1-frigjøring.",
-    scienceNoteEN: "Chickpeas contain resistant starch → strong GLP-1 release.",
+    scienceNote: "Kikerter har resistens-stivelse → kraftig GLP-1-frigjøring. Ta rikelig fra salatbaren!",
+    scienceNoteEN: "Chickpeas contain resistant starch → strong GLP-1 release. Take plenty from the salad bar!",
     drugEquivalent: "Ozempic",
     ingredients: [
-      { name: "Hermetiske kikerter", nameEN: "Canned chickpeas", amount: "100 g", section: "Tørrvarer" }
+      { name: "Kikerter (salatbar)", nameEN: "Chickpeas (salad bar)", amount: "2-3 skjeer", section: "Salatbar" },
+      { name: "Fetaost (salatbar)", nameEN: "Feta cheese (salad bar)", amount: "2-3 terninger", section: "Salatbar" },
+      { name: "Oliven (salatbar)", nameEN: "Olives (salad bar)", amount: "4-5 stk", section: "Salatbar" }
     ],
-    instructions: "Skyll og ha på salaten. Kan krydres med paprikapulver.",
-    instructionsEN: "Rinse and add to the salad. Can be seasoned with paprika powder.",
-    tags: ["quick", "high-fiber", "high-protein", "budget"],
-    allergens: [],
-    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
+    instructions: "Øs rikelig kikerter fra salatbaren. Topp med fetaost og oliven for ekstra metthet.",
+    instructionsEN: "Scoop plenty of chickpeas from the salad bar. Top with feta and olives for extra satiety.",
+    tags: ["quick", "high-fiber", "high-protein", "salad-bar"],
+    allergens: ["milk"],
+    dietary: ["vegetarian", "lactose-free", "gluten-free"]
   },
 
   {
     id: "bonner-addon",
-    name: "Hvite Bønner til Salaten",
-    nameEN: "White Beans for the Salad",
-    type: "lunch-addon",
-    prepTime: 2,
-    pathways: { glp1: 3, gip: 2, glucagon: 1, amylin: 1, pyy: 3, leptin: 2, ghrelin: 3, insulin: 3 },
-    scienceNote: "Bønner gir fiber + protein → GLP-1 og PYY samtidig.",
-    scienceNoteEN: "Beans provide fiber + protein → GLP-1 and PYY simultaneously.",
-    drugEquivalent: "Ozempic",
-    ingredients: [
-      { name: "Hermetiske hvite bønner", nameEN: "Canned white beans", amount: "100 g", section: "Tørrvarer" }
-    ],
-    instructions: "Skyll og bland inn i salaten.",
-    instructionsEN: "Rinse and mix into the salad.",
-    tags: ["quick", "high-fiber", "high-protein", "budget"],
-    allergens: [],
-    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
-  },
-
-  {
-    id: "linser-addon",
-    name: "Linser til Salaten",
-    nameEN: "Lentils for the Salad",
-    type: "lunch-addon",
-    prepTime: 2,
-    pathways: { glp1: 3, gip: 2, glucagon: 1, amylin: 1, pyy: 3, leptin: 2, ghrelin: 3, insulin: 4 },
-    scienceNote: "Linser senker glykemisk indeks i hele måltidet → bedre insulin.",
-    scienceNoteEN: "Lentils lower the glycemic index of the entire meal → better insulin.",
-    drugEquivalent: "Ozempic",
-    ingredients: [
-      { name: "Hermetiske linser", nameEN: "Canned lentils", amount: "100 g", section: "Tørrvarer" }
-    ],
-    instructions: "Skyll og ha på salaten. Passer spesielt godt med fetaost.",
-    instructionsEN: "Rinse and add to the salad. Pairs especially well with feta cheese.",
-    tags: ["quick", "high-fiber", "high-protein", "budget"],
-    allergens: [],
-    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
-  },
-
-  {
-    id: "notter-addon",
-    name: "Nøtter til Salaten",
-    nameEN: "Nuts for the Salad",
+    name: "Kidney Bønner fra Salatbaren",
+    nameEN: "Kidney Beans from the Salad Bar",
     type: "lunch-addon",
     prepTime: 1,
-    pathways: { glp1: 1, gip: 1, glucagon: 1, amylin: 0, pyy: 2, leptin: 3, ghrelin: 2, insulin: 1 },
-    scienceNote: "Umettet fett + protein → leptin-signalering og metthet.",
-    scienceNoteEN: "Unsaturated fat + protein → leptin signaling and satiety.",
-    drugEquivalent: "Mounjaro",
+    pathways: { glp1: 3, gip: 2, glucagon: 1, amylin: 1, pyy: 3, leptin: 2, ghrelin: 3, insulin: 3 },
+    scienceNote: "Kidney bønner gir fiber + protein → GLP-1 og PYY samtidig. Kombiner med egg for maks effekt.",
+    scienceNoteEN: "Kidney beans provide fiber + protein → GLP-1 and PYY simultaneously. Combine with egg for max effect.",
+    drugEquivalent: "Ozempic",
     ingredients: [
-      { name: "Valnøtter/mandler", nameEN: "Walnuts/almonds", amount: "30 g", section: "Tørrvarer" }
+      { name: "Kidney bønner (salatbar)", nameEN: "Kidney beans (salad bar)", amount: "2-3 skjeer", section: "Salatbar" },
+      { name: "Cherrytomater (salatbar)", nameEN: "Cherry tomatoes (salad bar)", amount: "4-5 stk", section: "Salatbar" },
+      { name: "Agurk (salatbar)", nameEN: "Cucumber (salad bar)", amount: "noen skiver", section: "Salatbar" }
     ],
-    instructions: "Ha en håndfull nøtter på salaten for crunch og metthet.",
-    instructionsEN: "Add a handful of nuts to the salad for crunch and satiety.",
-    tags: ["quick", "no-cook", "healthy-fats"],
-    allergens: ["nuts"],
+    instructions: "Ta rikelig kidney bønner fra salatbaren. Kombiner med cherrytomater og agurk for en frisk, mettende salattopping.",
+    instructionsEN: "Take plenty of kidney beans from the salad bar. Combine with cherry tomatoes and cucumber for a fresh, filling salad topping.",
+    tags: ["quick", "high-fiber", "high-protein", "salad-bar"],
+    allergens: [],
     dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
   },
 
   {
-    id: "avokado-addon",
-    name: "Avokado til Salaten",
-    nameEN: "Avocado for the Salad",
+    id: "egg-tunfisk-addon",
+    name: "Egg & Tunfisk fra Salatbaren",
+    nameEN: "Egg & Tuna from the Salad Bar",
+    type: "lunch-addon",
+    prepTime: 1,
+    pathways: { glp1: 2, gip: 1, glucagon: 3, amylin: 2, pyy: 3, leptin: 2, ghrelin: 3, insulin: 2 },
+    scienceNote: "Dobbel protein-dose: egg + tunfisk → kraftig PYY og glukagon. Omega-3 fra tunfisk bremser sult.",
+    scienceNoteEN: "Double protein hit: egg + tuna → strong PYY and glucagon. Omega-3 from tuna curbs hunger.",
+    drugEquivalent: "Saxenda",
+    ingredients: [
+      { name: "Kokte egg (salatbar)", nameEN: "Boiled eggs (salad bar)", amount: "1-2 stk", section: "Salatbar" },
+      { name: "Tunfisk (salatbar)", nameEN: "Tuna (salad bar)", amount: "2-3 skjeer", section: "Salatbar" },
+      { name: "Sylteagurk (salatbar)", nameEN: "Pickled cucumber (salad bar)", amount: "2-3 skiver", section: "Salatbar" }
+    ],
+    instructions: "Ta egg og tunfisk fra salatbaren — dette er protein-bomben. Sylteagurk gir fermentert tarmhelse-bonus.",
+    instructionsEN: "Take eggs and tuna from the salad bar — this is the protein bomb. Pickled cucumber adds a fermented gut health bonus.",
+    tags: ["quick", "high-protein", "omega-3", "salad-bar"],
+    allergens: ["egg", "fish"],
+    dietary: ["lactose-free", "gluten-free"]
+  },
+
+  {
+    id: "salatbar-topp-addon",
+    name: "Salatbar Topp-Tallerken",
+    nameEN: "Salad Bar Power Plate",
     type: "lunch-addon",
     prepTime: 2,
-    pathways: { glp1: 1, gip: 1, glucagon: 0, amylin: 0, pyy: 2, leptin: 3, ghrelin: 2, insulin: 1 },
-    scienceNote: "Enumettet fett bremser magetømming → forlenget metthet.",
-    scienceNoteEN: "Monounsaturated fat slows gastric emptying → prolonged satiety.",
+    pathways: { glp1: 3, gip: 2, glucagon: 2, amylin: 1, pyy: 3, leptin: 3, ghrelin: 3, insulin: 3 },
+    scienceNote: "Alt-i-ett: kikerter (GLP-1) + egg (PYY) + feta (kasein) + oliven (sunt fett) = alle metthetsveier aktivert.",
+    scienceNoteEN: "All-in-one: chickpeas (GLP-1) + egg (PYY) + feta (casein) + olives (healthy fat) = all satiety pathways activated.",
     drugEquivalent: "Mounjaro",
     ingredients: [
-      { name: "Avokado", nameEN: "Avocado", amount: "½ stk", section: "Frukt & Grønt" }
+      { name: "Kikerter (salatbar)", nameEN: "Chickpeas (salad bar)", amount: "2 skjeer", section: "Salatbar" },
+      { name: "Kokt egg (salatbar)", nameEN: "Boiled egg (salad bar)", amount: "1 stk", section: "Salatbar" },
+      { name: "Fetaost (salatbar)", nameEN: "Feta cheese (salad bar)", amount: "3-4 terninger", section: "Salatbar" },
+      { name: "Oliven (salatbar)", nameEN: "Olives (salad bar)", amount: "4-5 stk", section: "Salatbar" },
+      { name: "Cherrytomater (salatbar)", nameEN: "Cherry tomatoes (salad bar)", amount: "4-5 stk", section: "Salatbar" }
     ],
-    instructions: "Skjær i skiver og legg på salaten. Dryss gjerne litt salt og sitron.",
-    instructionsEN: "Slice and place on the salad. Optionally sprinkle with a little salt and lemon.",
-    tags: ["quick", "no-cook", "healthy-fats"],
-    allergens: [],
-    dietary: ["vegetarian", "vegan", "lactose-free", "gluten-free"]
+    instructions: "Bygg den ultimate tallerkenen: base av salat, rikelig kikerter, et egg delt i to, fetaost-terninger, oliven og cherrytomater. Hopp over krutonger og mais!",
+    instructionsEN: "Build the ultimate plate: salad base, plenty of chickpeas, a halved egg, feta cubes, olives and cherry tomatoes. Skip croutons and corn!",
+    tags: ["high-fiber", "high-protein", "healthy-fats", "salad-bar"],
+    allergens: ["egg", "milk"],
+    dietary: ["vegetarian", "gluten-free"]
+  },
+
+  {
+    id: "seibiff-salat-addon",
+    name: "Kantineprotein med Salatbar",
+    nameEN: "Canteen Protein with Salad Bar",
+    type: "lunch-addon",
+    prepTime: 1,
+    pathways: { glp1: 2, gip: 2, glucagon: 3, amylin: 2, pyy: 3, leptin: 2, ghrelin: 3, insulin: 2 },
+    scienceNote: "Ta proteinet fra kantina (fisk, kylling, kjøtt) og kombiner med salatbar i stedet for potet/ris. Maks protein, minimalt karb.",
+    scienceNoteEN: "Take the protein from the canteen (fish, chicken, meat) and combine with salad bar instead of potato/rice. Max protein, minimal carb.",
+    drugEquivalent: "Ozempic",
+    ingredients: [
+      { name: "Dagens protein (kantine)", nameEN: "Today's protein (canteen)", amount: "1 porsjon", section: "Kantine" },
+      { name: "Blandet salat (salatbar)", nameEN: "Mixed salad (salad bar)", amount: "1 tallerken", section: "Salatbar" },
+      { name: "Kidney bønner (salatbar)", nameEN: "Kidney beans (salad bar)", amount: "2 skjeer", section: "Salatbar" },
+      { name: "Fetaost (salatbar)", nameEN: "Feta cheese (salad bar)", amount: "2-3 terninger", section: "Salatbar" }
+    ],
+    instructions: "Ta kun proteinet fra dagens rett (seibiff, kylling, kjøttboller osv.) — dropp poteter, ris og saus. Bygg opp med salatbar: salat, bønner, fetaost, oliven.",
+    instructionsEN: "Take only the protein from today's dish (saithe steak, chicken, meatballs etc.) — skip potatoes, rice and sauce. Build up with salad bar: salad, beans, feta, olives.",
+    tags: ["high-protein", "low-carb", "salad-bar"],
+    allergens: ["milk", "fish"],
+    dietary: ["gluten-free"]
   },
 
   // ─── SNACK 15:30 (7) ──────────────────────────────────────────────
@@ -1170,10 +1183,10 @@ window.WEEKLY_PLANS = [
     days: [
       { day: "Mandag",  meals: { breakfast: "havregrot-banan",         lunchAddon: "kikerter-addon", snack: "cottage-notter",    dinner: "laks-sotpotet",    evening: null } },
       { day: "Tirsdag", meals: { breakfast: "havregrot-blabar",        lunchAddon: "bonner-addon",   snack: "skyr-banan",        dinner: "kyllingwok",       evening: "gronn-te-ingefar" } },
-      { day: "Onsdag",  meals: { breakfast: "havregrot-druer",         lunchAddon: "avokado-addon",  snack: "egg-hardkokt",      dinner: "kjottdeig-bonner", evening: null } },
-      { day: "Torsdag", meals: { breakfast: "havregrot-eple",          lunchAddon: "notter-addon",   snack: "gulrot-hummus",     dinner: "fiskegrateng",     evening: "mork-sjokolade" } },
+      { day: "Onsdag",  meals: { breakfast: "havregrot-druer",         lunchAddon: "egg-tunfisk-addon", snack: "egg-hardkokt",      dinner: "kjottdeig-bonner", evening: null } },
+      { day: "Torsdag", meals: { breakfast: "havregrot-eple",          lunchAddon: "seibiff-salat-addon", snack: "gulrot-hummus",     dinner: "fiskegrateng",     evening: "mork-sjokolade" } },
       { day: "Fredag",  meals: { breakfast: "havregrot-banan",         lunchAddon: "kikerter-addon", snack: "eple-peanottsmor",  dinner: "fisk-taco",        evening: "popcorn-luft" } },
-      { day: "Lørdag",  meals: { breakfast: "eggerore-knekke",         lunchAddon: "linser-addon",   snack: "knekke-ost",        dinner: "kylling-salat",    evening: "skyr-kanel" } },
+      { day: "Lørdag",  meals: { breakfast: "eggerore-knekke",         lunchAddon: "salatbar-topp-addon", snack: "knekke-ost",        dinner: "kylling-salat",    evening: "skyr-kanel" } },
       { day: "Søndag",  meals: { breakfast: "omelett-gronnsaker",      lunchAddon: "bonner-addon",   snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
     ]
   },
@@ -1185,13 +1198,13 @@ window.WEEKLY_PLANS = [
     description: "Havregrøt-autopilot hverdager, nye helgefrokoster",
     descriptionEN: "Oatmeal autopilot weekdays, new weekend breakfasts",
     days: [
-      { day: "Mandag",  meals: { breakfast: "havregrot-eple",          lunchAddon: "linser-addon",   snack: "cottage-notter",    dinner: "kylling-burrito",  evening: null } },
+      { day: "Mandag",  meals: { breakfast: "havregrot-eple",          lunchAddon: "seibiff-salat-addon", snack: "cottage-notter",    dinner: "kylling-burrito",  evening: null } },
       { day: "Tirsdag", meals: { breakfast: "havregrot-banan",         lunchAddon: "kikerter-addon", snack: "gulrot-hummus",     dinner: "omelett-middag",   evening: "gronn-te-ingefar" } },
       { day: "Onsdag",  meals: { breakfast: "havregrot-blabar",        lunchAddon: "bonner-addon",   snack: "skyr-banan",        dinner: "lakseburger",      evening: null } },
-      { day: "Torsdag", meals: { breakfast: "havregrot-druer",         lunchAddon: "avokado-addon",  snack: "egg-hardkokt",      dinner: "bacalao",          evening: "mork-sjokolade" } },
-      { day: "Fredag",  meals: { breakfast: "havregrot-eple",          lunchAddon: "notter-addon",   snack: "eple-peanottsmor",  dinner: "laks-sotpotet",    evening: "popcorn-luft" } },
+      { day: "Torsdag", meals: { breakfast: "havregrot-druer",         lunchAddon: "salatbar-topp-addon", snack: "egg-hardkokt",      dinner: "bacalao",          evening: "mork-sjokolade" } },
+      { day: "Fredag",  meals: { breakfast: "havregrot-eple",          lunchAddon: "egg-tunfisk-addon", snack: "eple-peanottsmor",  dinner: "laks-sotpotet",    evening: "popcorn-luft" } },
       { day: "Lørdag",  meals: { breakfast: "kokt-egg-avokado",        lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "tikka-masala",     evening: "skyr-kanel" } },
-      { day: "Søndag",  meals: { breakfast: "smoothie-gronn",          lunchAddon: "linser-addon",   snack: "nottemiks",         dinner: "kjottdeig-bonner", evening: "bar-cottage" } }
+      { day: "Søndag",  meals: { breakfast: "smoothie-gronn",          lunchAddon: "egg-tunfisk-addon", snack: "nottemiks",         dinner: "kjottdeig-bonner", evening: "bar-cottage" } }
     ]
   },
 
@@ -1203,12 +1216,12 @@ window.WEEKLY_PLANS = [
     descriptionEN: "Crispbread autopilot weekdays, varied weekend",
     days: [
       { day: "Mandag",  meals: { breakfast: "cottage-laks-knekke",     lunchAddon: "kikerter-addon", snack: "gulrot-hummus",     dinner: "tikka-masala",     evening: "gronn-te-ingefar" } },
-      { day: "Tirsdag", meals: { breakfast: "knekke-egg-tomat",        lunchAddon: "linser-addon",   snack: "cottage-notter",    dinner: "kyllingwok",       evening: null } },
+      { day: "Tirsdag", meals: { breakfast: "knekke-egg-tomat",        lunchAddon: "egg-tunfisk-addon", snack: "cottage-notter",    dinner: "kyllingwok",       evening: null } },
       { day: "Onsdag",  meals: { breakfast: "knekke-avokado",          lunchAddon: "bonner-addon",   snack: "egg-hardkokt",      dinner: "fisk-taco",        evening: "mork-sjokolade" } },
-      { day: "Torsdag", meals: { breakfast: "knekke-cottage-agurk",    lunchAddon: "avokado-addon",  snack: "eple-peanottsmor",  dinner: "bacalao",          evening: null } },
-      { day: "Fredag",  meals: { breakfast: "knekke-ost-paprika",      lunchAddon: "notter-addon",   snack: "skyr-banan",        dinner: "lakseburger",      evening: "popcorn-luft" } },
+      { day: "Torsdag", meals: { breakfast: "knekke-cottage-agurk",    lunchAddon: "salatbar-topp-addon", snack: "eple-peanottsmor",  dinner: "bacalao",          evening: null } },
+      { day: "Fredag",  meals: { breakfast: "knekke-ost-paprika",      lunchAddon: "seibiff-salat-addon", snack: "skyr-banan",        dinner: "lakseburger",      evening: "popcorn-luft" } },
       { day: "Lørdag",  meals: { breakfast: "skyr-bowl",               lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "kjottdeig-bonner", evening: "skyr-kanel" } },
-      { day: "Søndag",  meals: { breakfast: "omelett-gronnsaker",      lunchAddon: "linser-addon",   snack: "nottemiks",         dinner: "fiskesuppe",       evening: "bar-cottage" } }
+      { day: "Søndag",  meals: { breakfast: "omelett-gronnsaker",      lunchAddon: "salatbar-topp-addon", snack: "nottemiks",         dinner: "fiskesuppe",       evening: "bar-cottage" } }
     ]
   },
 
@@ -1219,13 +1232,13 @@ window.WEEKLY_PLANS = [
     description: "Knekkebrød-autopilot hverdager, du mestrer dette!",
     descriptionEN: "Crispbread autopilot weekdays, you've got this!",
     days: [
-      { day: "Mandag",  meals: { breakfast: "knekke-egg-tomat",        lunchAddon: "linser-addon",   snack: "cottage-notter",    dinner: "laks-sotpotet",    evening: "gronn-te-ingefar" } },
+      { day: "Mandag",  meals: { breakfast: "knekke-egg-tomat",        lunchAddon: "seibiff-salat-addon", snack: "cottage-notter",    dinner: "laks-sotpotet",    evening: "gronn-te-ingefar" } },
       { day: "Tirsdag", meals: { breakfast: "knekke-avokado",          lunchAddon: "kikerter-addon", snack: "gulrot-hummus",     dinner: "tikka-masala",     evening: null } },
       { day: "Onsdag",  meals: { breakfast: "cottage-laks-knekke",     lunchAddon: "bonner-addon",   snack: "egg-hardkokt",      dinner: "kylling-burrito",  evening: "mork-sjokolade" } },
-      { day: "Torsdag", meals: { breakfast: "knekke-cottage-agurk",    lunchAddon: "avokado-addon",  snack: "skyr-banan",        dinner: "fiskegrateng",     evening: null } },
-      { day: "Fredag",  meals: { breakfast: "knekke-ost-paprika",      lunchAddon: "notter-addon",   snack: "eple-peanottsmor",  dinner: "kyllingwok",       evening: "popcorn-luft" } },
+      { day: "Torsdag", meals: { breakfast: "knekke-cottage-agurk",    lunchAddon: "egg-tunfisk-addon", snack: "skyr-banan",        dinner: "fiskegrateng",     evening: null } },
+      { day: "Fredag",  meals: { breakfast: "knekke-ost-paprika",      lunchAddon: "salatbar-topp-addon", snack: "eple-peanottsmor",  dinner: "kyllingwok",       evening: "popcorn-luft" } },
       { day: "Lørdag",  meals: { breakfast: "eggerore-knekke",         lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "bacalao",          evening: "skyr-kanel" } },
-      { day: "Søndag",  meals: { breakfast: "smoothie-gronn",          lunchAddon: "linser-addon",   snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
+      { day: "Søndag",  meals: { breakfast: "smoothie-gronn",          lunchAddon: "egg-tunfisk-addon", snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
     ]
   }
 ];
