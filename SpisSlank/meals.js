@@ -193,6 +193,35 @@ window.MEALS = [
     dietary: ["vegetarian", "gluten-free"]
   },
 
+  {
+    id: "sondags-omelett-skyr",
+    name: "Søndagsomelett med Skyr Bowl",
+    nameEN: "Sunday Omelette with Skyr Bowl",
+    type: "breakfast",
+    prepTime: 15,
+    pathways: { glp1: 2, gip: 3, glucagon: 3, amylin: 2, pyy: 4, leptin: 3, ghrelin: 3, insulin: 3 },
+    scienceNote: "Omelett + skyr = dobbel proteinkilde. Kasein i skyr fordøyes sakte → mett hele formiddagen. Mandler bremser magetømming ytterligere.",
+    scienceNoteEN: "Omelette + skyr = double protein source. Casein in skyr digests slowly → full all morning. Almonds further slow gastric emptying.",
+    drugEquivalent: "Mounjaro",
+    ingredients: [
+      { name: "Egg", nameEN: "Eggs", amount: "2-3 stk", section: "Meieri" },
+      { name: "Paprika", nameEN: "Bell pepper", amount: "½ stk", section: "Frukt & Grønt" },
+      { name: "Løk", nameEN: "Onion", amount: "¼ stk", section: "Frukt & Grønt" },
+      { name: "Tomat", nameEN: "Tomato", amount: "1 stk", section: "Frukt & Grønt" },
+      { name: "Salami", nameEN: "Salami", amount: "3-4 skiver", section: "Kjøtt" },
+      { name: "Skyr", nameEN: "Skyr", amount: "1 dl", section: "Meieri" },
+      { name: "Blåbær", nameEN: "Blueberries", amount: "1 håndfull", section: "Frukt & Grønt" },
+      { name: "Jordbær", nameEN: "Strawberries", amount: "3-4 stk", section: "Frukt & Grønt" },
+      { name: "Mandler", nameEN: "Almonds", amount: "1 håndfull", section: "Tørrvarer" },
+      { name: "Honning", nameEN: "Honey", amount: "1 ts", section: "Tørrvarer" }
+    ],
+    instructions: "Del 1: Visp egg, stek med paprika, løk og tomat. Legg salami oppå. Del 2: Skyr i skål, topp med blåbær, jordbær, mandler og en teskje honning.",
+    instructionsEN: "Part 1: Whisk eggs, fry with bell pepper, onion and tomato. Add salami on top. Part 2: Skyr in a bowl, top with blueberries, strawberries, almonds and a teaspoon of honey.",
+    tags: ["high-protein", "weekend", "two-part"],
+    allergens: ["dairy", "eggs", "nuts"],
+    dietary: ["gluten-free"]
+  },
+
   // ─── BREAKFAST: Havregrøt-varianter (autopilot hverdager) ─────────
 
   {
@@ -1187,7 +1216,7 @@ window.WEEKLY_PLANS = [
       { day: "Torsdag", meals: { breakfast: "havregrot-eple",          lunchAddon: "seibiff-salat-addon", snack: "gulrot-hummus",     dinner: "fiskegrateng",     evening: "mork-sjokolade" } },
       { day: "Fredag",  meals: { breakfast: "havregrot-banan",         lunchAddon: "kikerter-addon", snack: "eple-peanottsmor",  dinner: "fisk-taco",        evening: "popcorn-luft" } },
       { day: "Lørdag",  meals: { breakfast: "eggerore-knekke",         lunchAddon: "salatbar-topp-addon", snack: "knekke-ost",        dinner: "kylling-salat",    evening: "skyr-kanel" } },
-      { day: "Søndag",  meals: { breakfast: "omelett-gronnsaker",      lunchAddon: "bonner-addon",   snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
+      { day: "Søndag",  meals: { breakfast: "sondags-omelett-skyr",   lunchAddon: "bonner-addon",   snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
     ]
   },
 
@@ -1204,7 +1233,7 @@ window.WEEKLY_PLANS = [
       { day: "Torsdag", meals: { breakfast: "havregrot-druer",         lunchAddon: "salatbar-topp-addon", snack: "egg-hardkokt",      dinner: "bacalao",          evening: "mork-sjokolade" } },
       { day: "Fredag",  meals: { breakfast: "havregrot-eple",          lunchAddon: "egg-tunfisk-addon", snack: "eple-peanottsmor",  dinner: "laks-sotpotet",    evening: "popcorn-luft" } },
       { day: "Lørdag",  meals: { breakfast: "kokt-egg-avokado",        lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "tikka-masala",     evening: "skyr-kanel" } },
-      { day: "Søndag",  meals: { breakfast: "smoothie-gronn",          lunchAddon: "egg-tunfisk-addon", snack: "nottemiks",         dinner: "kjottdeig-bonner", evening: "bar-cottage" } }
+      { day: "Søndag",  meals: { breakfast: "sondags-omelett-skyr",   lunchAddon: "egg-tunfisk-addon", snack: "nottemiks",         dinner: "kjottdeig-bonner", evening: "bar-cottage" } }
     ]
   },
 
@@ -1221,7 +1250,7 @@ window.WEEKLY_PLANS = [
       { day: "Torsdag", meals: { breakfast: "knekke-cottage-agurk",    lunchAddon: "salatbar-topp-addon", snack: "eple-peanottsmor",  dinner: "bacalao",          evening: null } },
       { day: "Fredag",  meals: { breakfast: "knekke-ost-paprika",      lunchAddon: "seibiff-salat-addon", snack: "skyr-banan",        dinner: "lakseburger",      evening: "popcorn-luft" } },
       { day: "Lørdag",  meals: { breakfast: "skyr-bowl",               lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "kjottdeig-bonner", evening: "skyr-kanel" } },
-      { day: "Søndag",  meals: { breakfast: "omelett-gronnsaker",      lunchAddon: "salatbar-topp-addon", snack: "nottemiks",         dinner: "fiskesuppe",       evening: "bar-cottage" } }
+      { day: "Søndag",  meals: { breakfast: "sondags-omelett-skyr",   lunchAddon: "salatbar-topp-addon", snack: "nottemiks",         dinner: "fiskesuppe",       evening: "bar-cottage" } }
     ]
   },
 
@@ -1238,7 +1267,7 @@ window.WEEKLY_PLANS = [
       { day: "Torsdag", meals: { breakfast: "knekke-cottage-agurk",    lunchAddon: "egg-tunfisk-addon", snack: "skyr-banan",        dinner: "fiskegrateng",     evening: null } },
       { day: "Fredag",  meals: { breakfast: "knekke-ost-paprika",      lunchAddon: "salatbar-topp-addon", snack: "eple-peanottsmor",  dinner: "kyllingwok",       evening: "popcorn-luft" } },
       { day: "Lørdag",  meals: { breakfast: "eggerore-knekke",         lunchAddon: "kikerter-addon", snack: "knekke-ost",        dinner: "bacalao",          evening: "skyr-kanel" } },
-      { day: "Søndag",  meals: { breakfast: "smoothie-gronn",          lunchAddon: "egg-tunfisk-addon", snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
+      { day: "Søndag",  meals: { breakfast: "sondags-omelett-skyr",   lunchAddon: "egg-tunfisk-addon", snack: "nottemiks",         dinner: "kylling-salat",    evening: "bar-cottage" } }
     ]
   }
 ];
