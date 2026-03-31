@@ -5493,7 +5493,7 @@ Analyser hva som egentlig gikk galt her — del opp i spesifikke servicefeil. Sk
 
       // Show correct content
       container.querySelectorAll(':scope > .tab-content').forEach(panel => {
-        panel.classList.toggle('active', panel.id === targetId);
+        panel.classList.toggle('active', panel.dataset.tab === targetId);
       });
     });
 
