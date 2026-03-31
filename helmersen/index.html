@@ -755,18 +755,18 @@
        SCENARIO NAVIGATION
        ═══════════════════════════════════════════════ -->
   <nav class="scenario-nav" id="scenarioNav">
-    <a href="#scenario-1"  data-scenario="1"><span class="nav-num">01</span> Meny</a>
-    <a href="#scenario-2"  data-scenario="2"><span class="nav-num">02</span> Anmeldelser</a>
-    <a href="#scenario-3"  data-scenario="3"><span class="nav-num">03</span> SoMe</a>
-    <a href="#scenario-4"  data-scenario="4"><span class="nav-num">04</span> Opplæring</a>
-    <a href="#scenario-5"  data-scenario="5"><span class="nav-num">05</span> Regnskap</a>
-    <a href="#scenario-6"  data-scenario="6"><span class="nav-num">06</span> Allergener</a>
-    <a href="#scenario-7"  data-scenario="7"><span class="nav-num">07</span> Svinn</a>
-    <a href="#scenario-8"  data-scenario="8"><span class="nav-num">08</span> Arrangementer</a>
-    <a href="#scenario-9"  data-scenario="9"><span class="nav-num">09</span> Kundeservice</a>
-    <a href="#scenario-10" data-scenario="10"><span class="nav-num">10</span> Leverandører</a>
-    <a href="#scenario-11" data-scenario="11"><span class="nav-num">11</span> Markedsanalyse</a>
-    <a href="#scenario-12" data-scenario="12"><span class="nav-num">12</span> Internkontroll</a>
+    <a href="#no-deep-1"  data-scenario="1"><span class="nav-num">01</span> Meny</a>
+    <a href="#no-deep-2"  data-scenario="2"><span class="nav-num">02</span> Anmeldelser</a>
+    <a href="#no-deep-3"  data-scenario="3"><span class="nav-num">03</span> SoMe</a>
+    <a href="#no-deep-4"  data-scenario="4"><span class="nav-num">04</span> Opplæring</a>
+    <a href="#no-deep-5"  data-scenario="5"><span class="nav-num">05</span> Regnskap</a>
+    <a href="#no-deep-6"  data-scenario="6"><span class="nav-num">06</span> Allergener</a>
+    <a href="#no-deep-7"  data-scenario="7"><span class="nav-num">07</span> Svinn</a>
+    <a href="#no-deep-8"  data-scenario="8"><span class="nav-num">08</span> Arrangementer</a>
+    <a href="#no-deep-9"  data-scenario="9"><span class="nav-num">09</span> Kundeservice</a>
+    <a href="#no-deep-10" data-scenario="10"><span class="nav-num">10</span> Leverandører</a>
+    <a href="#no-deep-11" data-scenario="11"><span class="nav-num">11</span> Markedsanalyse</a>
+    <a href="#no-deep-12" data-scenario="12"><span class="nav-num">12</span> Internkontroll</a>
   </nav>
 
   <!-- ═══════════════════════════════════════════════
@@ -5471,10 +5471,10 @@ Analyser hva som egentlig gikk galt her — del opp i spesifikke servicefeil. Sk
     }
 
     function updateNavForLang(lang) {
-      const prefix = lang === 'en' ? 'en-' : '';
+      const prefix = lang === 'en' ? 'en-deep-' : 'no-deep-';
       document.querySelectorAll('.scenario-nav a').forEach(a => {
         const num = a.dataset.scenario;
-        a.href = '#' + prefix + 'scenario-' + num;
+        a.href = '#' + prefix + num;
       });
     }
 
@@ -5571,7 +5571,7 @@ Analyser hva som egentlig gikk galt her — del opp i spesifikke servicefeil. Sk
         let currentId = '';
 
         // Find all scenario sections (both languages)
-        const scenarioSections = document.querySelectorAll('[id^="scenario-"], [id^="en-scenario-"]');
+        const scenarioSections = document.querySelectorAll('[id^="no-deep-"], [id^="en-deep-"]');
 
         scenarioSections.forEach(section => {
           const rect = section.getBoundingClientRect();
