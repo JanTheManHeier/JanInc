@@ -60,6 +60,38 @@
             color: #00e5ff;
         }
 
+        .projects-nav {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .projects-nav a {
+            font-family: 'Orbitron', monospace, sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(0, 229, 255, 0.5);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .projects-nav a:hover {
+            color: #00e5ff;
+            border-color: rgba(0, 229, 255, 0.5);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
+        }
+
         .dot {
             display: inline-block;
             width: 0.15em;
@@ -110,6 +142,10 @@
             <span class="accent">J</span>AN<span class="accent">I</span>NC<span class="dot"></span>
         </div>
     </div>
+
+    <nav class="projects-nav">
+        <a href="https://escape.janinc.no">🔐 Escape Room</a>
+    </nav>
 
     <script>
         const canvas = document.getElementById('network');
