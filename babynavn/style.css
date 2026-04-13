@@ -526,6 +526,162 @@ html, body {
     transition: width 0.6s ease;
 }
 
+/* === H2H BUTTON (Done View) === */
+.h2h-btn {
+    background: linear-gradient(135deg, #f9ca24, #f0932b);
+    box-shadow: 0 4px 15px rgba(249,202,36,0.4);
+    margin-bottom: 0.75rem;
+}
+.h2h-btn:hover { box-shadow: 0 6px 20px rgba(249,202,36,0.5); }
+
+/* === H2H VIEW === */
+.h2h-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.h2h-info-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.h2h-info {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.h2h-total {
+    font-size: 0.7rem;
+    color: var(--text-light);
+}
+
+.h2h-arena {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+}
+
+.h2h-card {
+    flex: 1;
+    max-width: 180px;
+    aspect-ratio: 3 / 4;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.h2h-card:hover { transform: scale(1.04); box-shadow: var(--shadow); }
+.h2h-card:active { transform: scale(0.98); }
+
+.h2h-card.h2h-entering {
+    animation: cardEnter 0.35s ease-out;
+}
+
+.h2h-card.h2h-winner {
+    background: linear-gradient(135deg, #fff0f3, #ffe6ea);
+    border: 3px solid var(--love);
+    transform: scale(1.06);
+    transition: all 0.3s ease;
+}
+
+.h2h-card.h2h-loser {
+    opacity: 0.4;
+    transform: scale(0.92);
+    transition: all 0.3s ease;
+}
+
+.h2h-name {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.h2h-vs {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--love);
+    flex-shrink: 0;
+}
+
+/* === RANKING === */
+.rank-item {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.rank-item:last-child { border-bottom: none; }
+
+.rank-pos {
+    width: 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.rank-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    flex: 1;
+}
+
+.rank-stats {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    margin-right: 0.75rem;
+}
+
+.rank-score {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--love);
+    min-width: 2.5rem;
+    text-align: right;
+}
+
+/* === TOAST === */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(1rem);
+    background: rgba(45,52,54,0.92);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    text-align: center;
+    max-width: 90%;
+}
+.toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
 /* === Hearts animation === */
 .hearts-container {
     position: fixed;
@@ -577,11 +733,15 @@ html, body {
     .card-name { font-size: 2.4rem; }
     .name-card { max-width: 280px; }
     .user-btn { padding: 1.2rem 1.5rem; min-width: 100px; }
+    .h2h-name { font-size: 1.4rem; }
+    .h2h-card { max-width: 140px; }
 }
 
 @media (min-width: 600px) {
     .card-name { font-size: 3.5rem; }
     .name-card { max-width: 380px; }
+    .h2h-name { font-size: 2.2rem; }
+    .h2h-card { max-width: 220px; }
 }
 
 /* Safe area for notched phones */

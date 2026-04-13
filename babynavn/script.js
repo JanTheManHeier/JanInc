@@ -5,7 +5,7 @@ const T = {
         loading: "Chargement des prénoms…",
         progressOf: "sur",
         doneTitle: "C'est fini !",
-        doneSub: "Vous avez voté pour les 100 prénoms.",
+        doneSub: "Vous avez aimé {n} prénoms sur {total}.",
         doneBtn: "Voir les résultats",
         resultsTitle: "Résultats",
         matchesSection: "💕 Prénoms en commun",
@@ -17,14 +17,28 @@ const T = {
         voted: "votés",
         likes: "coups de cœur",
         back: "Retour",
-        waitingPartner: "En attente que Peder vote…"
+        waitingPartner: "En attente que Peder vote…",
+        h2hStart: "Commencer le duel 🏆",
+        h2hContinue: "Continuer le duel 🏆",
+        h2hTitle: "Duel",
+        h2hRound: "Série",
+        h2hMatch: "Match",
+        rankingTitle: "Mon classement",
+        rankingEmpty: "Jouez des matchs pour voir votre classement",
+        rankingContinue: "Continuer",
+        roundComplete: "Série terminée !",
+        yourNumber1: "N°1 :",
+        topNamesSection: "🏆 Top prénoms",
+        h2hNotEnough: "Il faut au moins 4 coups de cœur pour le duel.",
+        matchesRanked: "💕 Prénoms en commun (classés)",
+        dbSleeping: "Base de données en veille… réessayez bientôt"
     },
     peder: {
         welcomeSub: "Finn det perfekte navnet sammen",
         loading: "Laster navn…",
         progressOf: "av",
         doneTitle: "Ferdig!",
-        doneSub: "Du har stemt på alle 100 navnene.",
+        doneSub: "Du likte {n} av {total} navn.",
         doneBtn: "Se resultater",
         resultsTitle: "Resultater",
         matchesSection: "💕 Navn dere begge liker",
@@ -36,18 +50,46 @@ const T = {
         voted: "stemt",
         likes: "favoritter",
         back: "Tilbake",
-        waitingPartner: "Venter på at Margaux stemmer…"
+        waitingPartner: "Venter på at Margaux stemmer…",
+        h2hStart: "Start duell 🏆",
+        h2hContinue: "Fortsett duell 🏆",
+        h2hTitle: "Duell",
+        h2hRound: "Runde",
+        h2hMatch: "Kamp",
+        rankingTitle: "Min rangering",
+        rankingEmpty: "Spill kamper for å se din rangering",
+        rankingContinue: "Fortsett",
+        roundComplete: "Runde ferdig!",
+        yourNumber1: "Din #1:",
+        topNamesSection: "🏆 Toppnavn",
+        h2hNotEnough: "Du trenger minst 4 favoritter for duell.",
+        matchesRanked: "💕 Felles navn (rangert)",
+        dbSleeping: "Databasen sover… prøv igjen snart"
     }
 };
 
 // ── State ──
-let currentUser = null; // 'margaux' | 'peder'
-let votes = {};         // { "Alice": true, "Emma": false, ... }
-let nameQueue = [];     // names not yet voted on
+let currentUser = null;
+let votes = {};
+let nameQueue = [];
 let currentName = null;
-let lastVote = null;    // for undo
+let lastVote = null;
 let matchCount = 0;
 let previousView = 'welcome';
+
+// H2H state
+let h2hNames = [];
+let h2hElo = {};
+let h2hPairs = [];
+let h2hPairIndex = 0;
+let h2hRound = 0;
+let h2hTotalMatchups = 0;
+let h2hHistory = [];
+let h2hBusy = false;
+
+// Sync state
+let syncQueue = [];
+let isSyncing = false;
 
 // ── Helpers ──
 function t(key) { return currentUser ? T[currentUser][key] : T.peder[key]; }
@@ -70,27 +112,23 @@ function showView(id) {
     document.getElementById('view-' + id).classList.add('active');
 }
 
-function goBack() {
-    showView('welcome');
-    currentUser = null;
-}
+function goBack() { showView('welcome'); currentUser = null; }
 
 function goBackFromResults() {
-    // Go back to swipe if we have names left, otherwise welcome
-    if (currentUser && nameQueue.length > 0) {
-        showView('swipe');
-    } else if (currentUser) {
-        showView('done');
-    } else {
-        showView('welcome');
-    }
+    if (currentUser && nameQueue.length > 0) showView('swipe');
+    else if (currentUser) showView('done');
+    else showView('welcome');
 }
 
-// ── Floating hearts ──
-function spawnHearts(count = 6) {
+function debounce(fn, ms) {
+    let timer;
+    return function() { clearTimeout(timer); timer = setTimeout(fn, ms); };
+}
+
+function spawnHearts(count) {
     const container = document.getElementById('hearts-container');
-    const hearts = ['💕', '💖', '💗', '💝', '♥'];
-    for (let i = 0; i < count; i++) {
+    const hearts = ['💕','💖','💗','💝','♥'];
+    for (let i = 0; i < (count||6); i++) {
         const el = document.createElement('span');
         el.className = 'floating-heart';
         el.textContent = hearts[Math.floor(Math.random() * hearts.length)];
@@ -102,128 +140,161 @@ function spawnHearts(count = 6) {
     }
 }
 
-// ── API ──
+function showToast(msg, duration) {
+    const el = document.createElement('div');
+    el.className = 'toast';
+    el.textContent = msg;
+    document.body.appendChild(el);
+    requestAnimationFrame(() => el.classList.add('visible'));
+    setTimeout(() => {
+        el.classList.remove('visible');
+        setTimeout(() => el.remove(), 300);
+    }, duration || 2500);
+}
+
+// ── localStorage ──
+function saveVotesLocal() {
+    localStorage.setItem('babynavn_votes_' + currentUser, JSON.stringify(votes));
+}
+function loadVotesLocal() {
+    try { const d = localStorage.getItem('babynavn_votes_' + currentUser); return d ? JSON.parse(d) : null; }
+    catch { return null; }
+}
+function saveH2HLocal() {
+    localStorage.setItem('babynavn_h2h_' + currentUser, JSON.stringify({
+        names: h2hNames, elo: h2hElo, round: h2hRound,
+        total: h2hTotalMatchups, history: h2hHistory
+    }));
+}
+function loadH2HLocal() {
+    try {
+        const d = localStorage.getItem('babynavn_h2h_' + currentUser);
+        if (!d) return false;
+        const s = JSON.parse(d);
+        h2hNames = s.names || []; h2hElo = s.elo || {};
+        h2hRound = s.round || 0; h2hTotalMatchups = s.total || 0;
+        h2hHistory = s.history || [];
+        return h2hNames.length >= 4;
+    } catch { return false; }
+}
+
+// ── API (background sync) ──
 async function apiGet(url) {
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`API error ${res.status}`);
+    if (!res.ok) throw new Error('API ' + res.status);
     return res.json();
 }
-
 async function apiPost(url, body) {
     const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: {'Content-Type':'application/json'},
         body: JSON.stringify(body)
     });
-    if (!res.ok) throw new Error(`API error ${res.status}`);
+    if (!res.ok) throw new Error('API ' + res.status);
     return res.json();
 }
 
-async function loadVotes() {
-    try {
-        const data = await apiGet(`/api/babynavn-vote?user=${currentUser}`);
-        votes = {};
-        data.votes.forEach(v => { votes[v.name] = v.vote; });
-    } catch (err) {
-        console.warn('Could not load votes, starting fresh:', err);
-        votes = {};
+function queueVoteSync(name, vote) {
+    syncQueue.push({ name, vote });
+    localStorage.setItem('babynavn_pending_' + currentUser, JSON.stringify(syncQueue));
+    debouncedFlush();
+}
+const debouncedFlush = debounce(flushSyncQueue, 3000);
+
+async function flushSyncQueue() {
+    if (isSyncing || syncQueue.length === 0 || !currentUser) return;
+    isSyncing = true;
+    const batch = [...syncQueue];
+    const failed = [];
+    for (const item of batch) {
+        try { await apiPost('/api/babynavn-vote', { user: currentUser, name: item.name, vote: item.vote }); }
+        catch { failed.push(item); }
     }
+    syncQueue = failed;
+    localStorage.setItem('babynavn_pending_' + currentUser, JSON.stringify(syncQueue));
+    isSyncing = false;
 }
 
-async function sendVote(name, vote) {
+async function syncFromServer() {
     try {
-        await apiPost('/api/babynavn-vote', { user: currentUser, name, vote });
-    } catch (err) {
-        console.error('Vote send failed:', err);
-        // Queue for retry — store locally as fallback
-        const key = `babynavn_pending_${currentUser}`;
-        const pending = JSON.parse(localStorage.getItem(key) || '[]');
-        pending.push({ name, vote, ts: Date.now() });
-        localStorage.setItem(key, JSON.stringify(pending));
-    }
-}
-
-async function flushPendingVotes() {
-    const key = `babynavn_pending_${currentUser}`;
-    const pending = JSON.parse(localStorage.getItem(key) || '[]');
-    if (pending.length === 0) return;
-
-    const remaining = [];
-    for (const v of pending) {
-        try {
-            await apiPost('/api/babynavn-vote', { user: currentUser, name: v.name, vote: v.vote });
-        } catch {
-            remaining.push(v);
+        const data = await apiGet('/api/babynavn-vote?user=' + currentUser);
+        const pendingNames = new Set(syncQueue.map(s => s.name));
+        let updated = false;
+        for (const v of data.votes) {
+            if (!pendingNames.has(v.name) && !(v.name in votes)) {
+                votes[v.name] = v.vote; updated = true;
+            }
         }
-    }
-    localStorage.setItem(key, JSON.stringify(remaining));
+        if (updated) {
+            saveVotesLocal();
+            nameQueue = shuffle(BABY_NAMES.filter(n => !(n in votes)));
+            if (document.querySelector('#view-swipe.active')) updateProgress();
+        }
+        flushSyncQueue();
+    } catch {}
+}
+
+async function syncRankingToServer() {
+    if (!currentUser || h2hNames.length === 0) return;
+    const rankings = h2hNames.map(name => ({
+        name, score: h2hElo[name] || 1000,
+        wins: h2hHistory.filter(m => m.winner === name).length,
+        losses: h2hHistory.filter(m => m.loser === name).length
+    }));
+    try { await apiPost('/api/babynavn-ranking', { user: currentUser, rankings }); } catch {}
 }
 
 async function fetchResults() {
-    try {
-        return await apiGet('/api/babynavn-results');
-    } catch {
-        return { matches: [], margaux: { voted: 0, likes: 0, favorites: [] }, peder: { voted: 0, likes: 0, favorites: [] } };
-    }
+    try { return await apiGet('/api/babynavn-results'); }
+    catch { return { matches: [], margaux: {voted:0,likes:0,favorites:[]}, peder: {voted:0,likes:0,favorites:[]} }; }
 }
 
-// ── User Selection ──
+// ── User Selection (localStorage-first = instant) ──
 async function selectUser(user) {
     currentUser = user;
-    const loadingText = document.getElementById('loading-text');
-    loadingText.textContent = t('loading');
-    showView('loading');
+    try {
+        const p = localStorage.getItem('babynavn_pending_' + currentUser);
+        if (p) syncQueue = JSON.parse(p);
+    } catch { syncQueue = []; }
 
-    await loadVotes();
-    await flushPendingVotes();
-
-    // Build queue of unvoted names (shuffled)
-    nameQueue = shuffle(BABY_NAMES.filter(n => !(n in votes)));
-
-    if (nameQueue.length === 0) {
-        showDone();
+    const localVotes = loadVotesLocal();
+    if (localVotes && Object.keys(localVotes).length > 0) {
+        votes = localVotes;
+        nameQueue = shuffle(BABY_NAMES.filter(n => !(n in votes)));
+        nameQueue.length === 0 ? showDone() : showSwipe();
+        syncFromServer(); // non-blocking background sync
     } else {
-        showSwipe();
+        document.getElementById('loading-text').textContent = t('loading');
+        showView('loading');
+        try {
+            const data = await apiGet('/api/babynavn-vote?user=' + currentUser);
+            votes = {};
+            data.votes.forEach(v => { votes[v.name] = v.vote; });
+            saveVotesLocal();
+        } catch { votes = {}; }
+        nameQueue = shuffle(BABY_NAMES.filter(n => !(n in votes)));
+        nameQueue.length === 0 ? showDone() : showSwipe();
     }
 }
 
 // ── Swipe View ──
-function showSwipe() {
-    updateProgress();
-    showNextName();
-    showView('swipe');
-}
+function showSwipe() { updateProgress(); showNextName(); showView('swipe'); }
 
 function showNextName() {
     const card = document.getElementById('name-card');
-    const nameEl = document.getElementById('card-name');
-
-    if (nameQueue.length === 0) {
-        showDone();
-        return;
-    }
-
+    if (nameQueue.length === 0) { showDone(); return; }
     currentName = nameQueue[0];
-    nameEl.textContent = currentName;
-
-    // Reset card state
+    document.getElementById('card-name').textContent = currentName;
     card.className = 'name-card entering';
-    card.style.transform = '';
-    card.style.opacity = '';
+    card.style.transform = ''; card.style.opacity = '';
     card.querySelector('.like-indicator').style.opacity = '0';
     card.querySelector('.nope-indicator').style.opacity = '0';
-
-    // Show undo button if there's a last vote
     document.getElementById('undo-btn').style.display = lastVote ? 'flex' : 'none';
 }
 
 function updateProgress() {
-    const voted = Object.keys(votes).length;
-    const total = BABY_NAMES.length;
-    const pct = (voted / total) * 100;
-
-    document.getElementById('progress-text').textContent = `${voted} ${t('progressOf')} ${total}`;
-    document.getElementById('progress-fill').style.width = pct + '%';
+    const voted = Object.keys(votes).length, total = BABY_NAMES.length;
+    document.getElementById('progress-text').textContent = voted + ' ' + t('progressOf') + ' ' + total;
+    document.getElementById('progress-fill').style.width = ((voted / total) * 100) + '%';
 }
 
 async function updateMatchBadge() {
@@ -231,73 +302,160 @@ async function updateMatchBadge() {
         const data = await fetchResults();
         matchCount = data.matches.length;
         const badge = document.getElementById('match-badge');
-        if (matchCount > 0) {
-            badge.textContent = matchCount;
-            badge.style.display = 'flex';
-        } else {
-            badge.style.display = 'none';
-        }
-    } catch { /* ignore */ }
+        badge.textContent = matchCount;
+        badge.style.display = matchCount > 0 ? 'flex' : 'none';
+    } catch {}
 }
 
-// ── Voting ──
-async function castVote(liked) {
+// ── Voting (localStorage-first = instant) ──
+function castVote(liked) {
     if (!currentName) return;
-
     const card = document.getElementById('name-card');
-    card.classList.remove('entering', 'dragging');
+    card.classList.remove('entering','dragging');
     card.classList.add(liked ? 'exit-right' : 'exit-left');
-
     if (liked) spawnHearts(4);
-
-    // Save vote
     votes[currentName] = liked;
     lastVote = { name: currentName, vote: liked };
     nameQueue.shift();
-
-    sendVote(currentName, liked);
+    saveVotesLocal();
+    queueVoteSync(currentName, liked);
     updateProgress();
-
-    // Check matches periodically
-    const votedCount = Object.keys(votes).length;
-    if (votedCount % 10 === 0 || votedCount === BABY_NAMES.length) {
-        updateMatchBadge();
-    }
-
-    // Show next card after animation
-    setTimeout(() => {
-        if (nameQueue.length === 0) {
-            showDone();
-        } else {
-            showNextName();
-        }
-    }, 350);
+    const vc = Object.keys(votes).length;
+    if (vc % 15 === 0 || vc === BABY_NAMES.length) updateMatchBadge();
+    setTimeout(() => { nameQueue.length === 0 ? showDone() : showNextName(); }, 350);
 }
 
-async function undoVote() {
+function undoVote() {
     if (!lastVote) return;
-
-    // Remove last vote
     delete votes[lastVote.name];
     nameQueue.unshift(lastVote.name);
-
-    // Send a "delete" by re-voting — actually, let's just re-show the name
-    // The undo is local; if they vote again it'll overwrite in the DB
+    saveVotesLocal();
     lastVote = null;
-    updateProgress();
-    showNextName();
+    updateProgress(); showNextName();
 }
 
 // ── Done View ──
 function showDone() {
+    const likedCount = Object.values(votes).filter(v => v === true).length;
+    const total = BABY_NAMES.length;
     document.getElementById('done-title').textContent = t('doneTitle');
-    document.getElementById('done-subtitle').textContent = t('doneSub');
+    document.getElementById('done-subtitle').textContent = t('doneSub').replace('{n}', likedCount).replace('{total}', total);
     document.getElementById('done-results-btn').textContent = t('doneBtn');
+    const h2hBtn = document.getElementById('done-h2h-btn');
+    if (likedCount >= 4) {
+        const hasH2H = loadH2HLocal();
+        h2hBtn.textContent = hasH2H ? t('h2hContinue') : t('h2hStart');
+        h2hBtn.style.display = 'block';
+    } else { h2hBtn.style.display = 'none'; }
     showView('done');
     updateMatchBadge();
 }
 
-// ── Results View ──
+// ── Head-to-Head (Elo tournament) ──
+function computeElo(winnerScore, loserScore) {
+    const K = 32;
+    const e = 1 / (1 + Math.pow(10, (loserScore - winnerScore) / 400));
+    const delta = Math.max(1, Math.round(K * (1 - e)));
+    return { winner: winnerScore + delta, loser: loserScore - delta };
+}
+
+function generateH2HPairs() {
+    const sorted = [...h2hNames].sort((a, b) => (h2hElo[b]||1000) - (h2hElo[a]||1000));
+    const pairs = [];
+    for (let i = 0; i < sorted.length - 1; i += 2) {
+        pairs.push(Math.random() > 0.5 ? [sorted[i], sorted[i+1]] : [sorted[i+1], sorted[i]]);
+    }
+    return shuffle(pairs);
+}
+
+function startH2H() {
+    const likedNames = BABY_NAMES.filter(n => votes[n] === true);
+    if (likedNames.length < 4) { showToast(t('h2hNotEnough')); return; }
+    const hasExisting = loadH2HLocal();
+    if (!hasExisting) {
+        h2hNames = likedNames;
+        h2hElo = {}; likedNames.forEach(n => { h2hElo[n] = 1000; });
+        h2hRound = 0; h2hTotalMatchups = 0; h2hHistory = [];
+    }
+    h2hPairs = generateH2HPairs();
+    h2hPairIndex = 0;
+    showView('h2h');
+    showH2HPair();
+}
+
+function showH2HPair() {
+    if (h2hPairIndex >= h2hPairs.length) {
+        h2hRound++;
+        const top = getTopRanked(1);
+        showToast(t('roundComplete') + ' ' + t('yourNumber1') + ' ' + (top[0] ? top[0].name : '?'));
+        if (h2hRound % 2 === 0) syncRankingToServer();
+        saveH2HLocal();
+        h2hPairs = generateH2HPairs();
+        h2hPairIndex = 0;
+    }
+    const pair = h2hPairs[h2hPairIndex];
+    document.getElementById('h2h-left-name').textContent = pair[0];
+    document.getElementById('h2h-right-name').textContent = pair[1];
+    document.getElementById('h2h-left').className = 'h2h-card h2h-entering';
+    document.getElementById('h2h-right').className = 'h2h-card h2h-entering';
+    document.getElementById('h2h-info').textContent =
+        t('h2hRound') + ' ' + (h2hRound+1) + ' · ' + t('h2hMatch') + ' ' + (h2hPairIndex+1) + '/' + h2hPairs.length;
+    document.getElementById('h2h-total').textContent = h2hTotalMatchups + ' total';
+}
+
+function h2hPick(side) {
+    if (h2hBusy || h2hPairIndex >= h2hPairs.length) return;
+    h2hBusy = true;
+    const pair = h2hPairs[h2hPairIndex];
+    const winner = side === 'left' ? pair[0] : pair[1];
+    const loser  = side === 'left' ? pair[1] : pair[0];
+    const result = computeElo(h2hElo[winner]||1000, h2hElo[loser]||1000);
+    h2hElo[winner] = result.winner;
+    h2hElo[loser]  = result.loser;
+    h2hHistory.push({ winner, loser });
+    h2hTotalMatchups++;
+    const winCard  = document.getElementById(side === 'left' ? 'h2h-left' : 'h2h-right');
+    const loseCard = document.getElementById(side === 'left' ? 'h2h-right' : 'h2h-left');
+    winCard.classList.add('h2h-winner');
+    loseCard.classList.add('h2h-loser');
+    saveH2HLocal();
+    setTimeout(() => { h2hPairIndex++; showH2HPair(); h2hBusy = false; }, 500);
+}
+
+function getTopRanked(n) {
+    return h2hNames.map(name => ({ name, score: h2hElo[name]||1000 }))
+        .sort((a,b) => b.score - a.score).slice(0, n||10);
+}
+
+function exitH2H() { saveH2HLocal(); syncRankingToServer(); showDone(); }
+
+// ── Ranking View ──
+function showRanking() {
+    document.getElementById('ranking-title').textContent = t('rankingTitle');
+    showView('ranking');
+    const body = document.getElementById('ranking-body');
+    const ranked = getTopRanked(h2hNames.length);
+    if (ranked.length === 0) {
+        body.innerHTML = '<div class="empty-message"><span class="empty-icon">🏆</span>' + t('rankingEmpty') + '</div>';
+        return;
+    }
+    let html = '<div class="results-card">';
+    ranked.forEach((item, i) => {
+        const medal = i===0 ? '🥇' : i===1 ? '🥈' : i===2 ? '🥉' : '#'+(i+1);
+        const wins = h2hHistory.filter(m => m.winner === item.name).length;
+        const losses = h2hHistory.filter(m => m.loser === item.name).length;
+        html += '<div class="rank-item"><span class="rank-pos">' + medal + '</span>' +
+            '<span class="rank-name">' + item.name + '</span>' +
+            '<span class="rank-stats">' + wins + 'W ' + losses + 'L</span>' +
+            '<span class="rank-score">' + item.score + '</span></div>';
+    });
+    html += '</div>';
+    body.innerHTML = html;
+}
+
+function backFromRanking() { showView('h2h'); }
+
+// ── Results View (local-first, server for partner) ──
 async function showResults() {
     document.getElementById('results-title').textContent = t('resultsTitle');
     showView('results');
@@ -306,105 +464,131 @@ async function showResults() {
 
 async function refreshResults() {
     const body = document.getElementById('results-body');
-    body.innerHTML = '<div class="loading-content" style="padding:2rem;text-align:center"><div class="loading-spinner"></div></div>';
-
-    const data = await fetchResults();
-    const me = data[currentUser];
-    const partner = currentUser === 'margaux' ? data.peder : data.margaux;
-    const partnerName = currentUser === 'margaux' ? 'Peder' : 'Margaux';
-    const partnerFlag = currentUser === 'margaux' ? '🇳🇴' : '🇫🇷';
-    const myFlag = currentUser === 'margaux' ? '🇫🇷' : '🇳🇴';
-    const myName = currentUser === 'margaux' ? 'Margaux' : 'Peder';
     const total = BABY_NAMES.length;
-
-    matchCount = data.matches.length;
+    const myFlag = currentUser === 'margaux' ? '🇫🇷' : '🇳🇴';
+    const partnerFlag = currentUser === 'margaux' ? '🇳🇴' : '🇫🇷';
+    const myName = currentUser === 'margaux' ? 'Margaux' : 'Peder';
+    const partnerName = currentUser === 'margaux' ? 'Peder' : 'Margaux';
+    const partnerUser = currentUser === 'margaux' ? 'peder' : 'margaux';
+    const myLikes = BABY_NAMES.filter(n => votes[n] === true);
+    const myVoted = Object.keys(votes).length;
+    const hasH2H = loadH2HLocal();
 
     let html = '';
 
-    // Matches section
-    html += `<div class="results-section">
-        <div class="results-section-title">${t('matchesSection')}</div>`;
-    if (data.matches.length > 0) {
-        html += '<div class="results-card">';
-        data.matches.forEach((name, i) => {
-            html += `<div class="match-item">
-                <span class="match-heart">💕</span>
-                <span class="match-name">${name}</span>
-                <span class="match-rank">#${i + 1}</span>
-            </div>`;
-        });
-        html += '</div>';
-    } else {
-        html += `<div class="results-card"><div class="empty-message">
-            <span class="empty-icon">🤞</span>${t('noMatches')}
-        </div></div>`;
-    }
-    html += '</div>';
+    // Matches placeholder (needs server)
+    html += '<div class="results-section" id="results-matches-section">' +
+        '<div class="results-section-title">' + t('matchesSection') + '</div>' +
+        '<div class="results-card"><div class="empty-message"><div class="loading-spinner" style="margin:0 auto 0.5rem"></div>' +
+        t('loading') + '</div></div></div>';
 
-    // Progress section
-    html += `<div class="results-section">
-        <div class="results-section-title">${t('progressSection')}</div>
-        <div class="progress-stats">
-            <div class="stat-card">
-                <div class="stat-flag">${myFlag}</div>
-                <div class="stat-name">${myName}</div>
-                <div class="stat-number">${me.voted}</div>
-                <div class="stat-label">${t('voted')}</div>
-                <div class="stat-bar-track"><div class="stat-bar-fill" style="width:${(me.voted/total)*100}%"></div></div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-flag">${partnerFlag}</div>
-                <div class="stat-name">${partnerName}</div>
-                <div class="stat-number">${partner.voted}</div>
-                <div class="stat-label">${t('voted')}</div>
-                <div class="stat-bar-track"><div class="stat-bar-fill" style="width:${(partner.voted/total)*100}%"></div></div>
-            </div>
-        </div>
-    </div>`;
+    // My H2H ranking
+    if (hasH2H && h2hTotalMatchups > 0) {
+        const topNames = getTopRanked(10);
+        html += '<div class="results-section"><div class="results-section-title">' + t('topNamesSection') + '</div><div class="results-card">';
+        topNames.forEach((item, i) => {
+            const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1);
+            html += '<div class="match-item"><span class="match-heart">' + medal + '</span>' +
+                '<span class="match-name">' + item.name + '</span>' +
+                '<span class="match-rank">' + item.score + ' pts</span></div>';
+        });
+        html += '</div></div>';
+    }
+
+    // Progress
+    html += '<div class="results-section"><div class="results-section-title">' + t('progressSection') + '</div>' +
+        '<div class="progress-stats">' +
+        '<div class="stat-card"><div class="stat-flag">' + myFlag + '</div><div class="stat-name">' + myName + '</div>' +
+        '<div class="stat-number">' + myVoted + '</div><div class="stat-label">' + t('voted') + '</div>' +
+        '<div class="stat-bar-track"><div class="stat-bar-fill" style="width:' + ((myVoted/total)*100) + '%"></div></div></div>' +
+        '<div class="stat-card" id="partner-stat"><div class="stat-flag">' + partnerFlag + '</div><div class="stat-name">' + partnerName + '</div>' +
+        '<div class="stat-number">…</div><div class="stat-label">' + t('voted') + '</div>' +
+        '<div class="stat-bar-track"><div class="stat-bar-fill" style="width:0%"></div></div></div></div></div>';
 
     // My favorites
-    html += `<div class="results-section">
-        <div class="results-section-title">${t('myFavs')}</div>`;
-    if (me.favorites.length > 0) {
+    html += '<div class="results-section"><div class="results-section-title">' + t('myFavs') + '</div>';
+    if (myLikes.length > 0) {
+        const sortedLikes = hasH2H ? [...myLikes].sort((a,b) => (h2hElo[b]||1000) - (h2hElo[a]||1000)) : myLikes.sort();
         html += '<div class="results-card">';
-        me.favorites.forEach(name => {
-            html += `<div class="fav-item"><span class="fav-icon">♥</span><span class="fav-name">${name}</span></div>`;
+        sortedLikes.forEach(name => {
+            html += '<div class="fav-item"><span class="fav-icon">♥</span><span class="fav-name">' + name + '</span></div>';
         });
         html += '</div>';
     } else {
-        html += `<div class="results-card"><div class="empty-message">${t('noFavs')}</div></div>`;
+        html += '<div class="results-card"><div class="empty-message">' + t('noFavs') + '</div></div>';
     }
     html += '</div>';
 
-    // Partner favorites
-    html += `<div class="results-section">
-        <div class="results-section-title">${t('partnerFavs')}</div>`;
-    if (partner.favorites.length > 0) {
-        html += '<div class="results-card">';
-        partner.favorites.forEach(name => {
-            html += `<div class="fav-item"><span class="fav-icon">♥</span><span class="fav-name">${name}</span></div>`;
-        });
-        html += '</div>';
-    } else {
-        html += `<div class="results-card"><div class="empty-message">
-            <span class="empty-icon">⏳</span>${t('waitingPartner')}
-        </div></div>`;
-    }
-    html += '</div>';
+    // Partner placeholder
+    html += '<div class="results-section" id="results-partner-section">' +
+        '<div class="results-section-title">' + t('partnerFavs') + '</div>' +
+        '<div class="results-card"><div class="empty-message"><div class="loading-spinner" style="margin:0 auto 0.5rem"></div></div></div></div>';
 
     body.innerHTML = html;
 
-    // Animate match hearts if matches exist
-    if (data.matches.length > 0) spawnHearts(8);
+    // Fetch partner data from server (background)
+    try {
+        const data = await fetchResults();
+        const partner = data[partnerUser];
+        matchCount = data.matches.length;
+
+        // Update matches
+        const matchSection = document.getElementById('results-matches-section');
+        if (matchSection) {
+            let mhtml = '<div class="results-section-title">' + t('matchesSection') + '</div>';
+            if (data.matches.length > 0) {
+                let matchList = data.matches;
+                if (hasH2H && h2hTotalMatchups > 0) {
+                    matchList = [...matchList].sort((a,b) => (h2hElo[b]||1000) - (h2hElo[a]||1000));
+                }
+                mhtml += '<div class="results-card">';
+                matchList.forEach((name, i) => {
+                    mhtml += '<div class="match-item"><span class="match-heart">💕</span>' +
+                        '<span class="match-name">' + name + '</span>' +
+                        '<span class="match-rank">#' + (i+1) + '</span></div>';
+                });
+                mhtml += '</div>';
+                spawnHearts(8);
+            } else {
+                mhtml += '<div class="results-card"><div class="empty-message"><span class="empty-icon">🤞</span>' + t('noMatches') + '</div></div>';
+            }
+            matchSection.innerHTML = mhtml;
+        }
+
+        // Update partner stat
+        const partnerStat = document.getElementById('partner-stat');
+        if (partnerStat) {
+            partnerStat.innerHTML = '<div class="stat-flag">' + partnerFlag + '</div><div class="stat-name">' + partnerName + '</div>' +
+                '<div class="stat-number">' + partner.voted + '</div><div class="stat-label">' + t('voted') + '</div>' +
+                '<div class="stat-bar-track"><div class="stat-bar-fill" style="width:' + ((partner.voted/total)*100) + '%"></div></div>';
+        }
+
+        // Update partner favorites
+        const partnerSection = document.getElementById('results-partner-section');
+        if (partnerSection) {
+            let phtml = '<div class="results-section-title">' + t('partnerFavs') + '</div>';
+            if (partner.favorites.length > 0) {
+                phtml += '<div class="results-card">';
+                partner.favorites.forEach(name => {
+                    phtml += '<div class="fav-item"><span class="fav-icon">♥</span><span class="fav-name">' + name + '</span></div>';
+                });
+                phtml += '</div>';
+            } else {
+                phtml += '<div class="results-card"><div class="empty-message"><span class="empty-icon">⏳</span>' + t('waitingPartner') + '</div></div>';
+            }
+            partnerSection.innerHTML = phtml;
+        }
+    } catch {
+        const matchSection = document.getElementById('results-matches-section');
+        if (matchSection) {
+            matchSection.innerHTML = '<div class="results-section-title">' + t('matchesSection') + '</div>' +
+                '<div class="results-card"><div class="empty-message">😴 ' + t('dbSleeping') + '</div></div>';
+        }
+    }
 }
 
-// Clicking results header goes to refreshResults
-document.querySelector('.results-peek')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    showResults();
-});
-
-// Override the onclick for results button in header
+// ── Event listeners ──
+document.querySelector('.results-peek')?.addEventListener('click', e => { e.preventDefault(); showResults(); });
 document.querySelectorAll('[onclick="showView(\'results\')"]').forEach(el => {
     el.removeAttribute('onclick');
     el.addEventListener('click', () => showResults());
@@ -413,117 +597,72 @@ document.querySelectorAll('[onclick="showView(\'results\')"]').forEach(el => {
 // ── Touch Swipe ──
 (function initSwipe() {
     const card = document.getElementById('name-card');
-    let startX = 0, startY = 0, dx = 0, isDragging = false;
-    const THRESHOLD = 80;
+    let startX = 0, dx = 0, isDragging = false;
+    const TH = 80;
 
-    card.addEventListener('touchstart', (e) => {
+    card.addEventListener('touchstart', e => {
         if (e.touches.length > 1) return;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        isDragging = true;
-        card.classList.add('dragging');
-        card.classList.remove('entering');
+        startX = e.touches[0].clientX; isDragging = true;
+        card.classList.add('dragging'); card.classList.remove('entering');
     }, { passive: true });
 
-    card.addEventListener('touchmove', (e) => {
+    card.addEventListener('touchmove', e => {
         if (!isDragging) return;
         dx = e.touches[0].clientX - startX;
-        const dy = e.touches[0].clientY - startY;
-
-        // Only horizontal
-        if (Math.abs(dx) < Math.abs(dy) && Math.abs(dx) < 10) return;
-
-        const rotate = dx * 0.08;
-        const opacity = Math.max(0, 1 - Math.abs(dx) / 300);
-        card.style.transform = `translateX(${dx}px) rotate(${rotate}deg)`;
-
-        // Show indicators
-        const likeInd = card.querySelector('.like-indicator');
-        const nopeInd = card.querySelector('.nope-indicator');
-        if (dx > 30) {
-            likeInd.style.opacity = Math.min(1, (dx - 30) / 60);
-            nopeInd.style.opacity = '0';
-        } else if (dx < -30) {
-            nopeInd.style.opacity = Math.min(1, (-dx - 30) / 60);
-            likeInd.style.opacity = '0';
-        } else {
-            likeInd.style.opacity = '0';
-            nopeInd.style.opacity = '0';
-        }
+        card.style.transform = `translateX(${dx}px) rotate(${dx*0.08}deg)`;
+        const li = card.querySelector('.like-indicator'), ni = card.querySelector('.nope-indicator');
+        if (dx > 30) { li.style.opacity = Math.min(1,(dx-30)/60); ni.style.opacity='0'; }
+        else if (dx < -30) { ni.style.opacity = Math.min(1,(-dx-30)/60); li.style.opacity='0'; }
+        else { li.style.opacity='0'; ni.style.opacity='0'; }
     }, { passive: true });
 
     card.addEventListener('touchend', () => {
-        if (!isDragging) return;
-        isDragging = false;
-        card.classList.remove('dragging');
-
-        if (dx > THRESHOLD) {
-            castVote(true);
-        } else if (dx < -THRESHOLD) {
-            castVote(false);
-        } else {
-            // Snap back
-            card.style.transform = '';
-            card.style.opacity = '';
-            card.querySelector('.like-indicator').style.opacity = '0';
-            card.querySelector('.nope-indicator').style.opacity = '0';
-        }
+        if (!isDragging) return; isDragging = false; card.classList.remove('dragging');
+        if (dx > TH) castVote(true);
+        else if (dx < -TH) castVote(false);
+        else { card.style.transform=''; card.style.opacity=''; card.querySelector('.like-indicator').style.opacity='0'; card.querySelector('.nope-indicator').style.opacity='0'; }
         dx = 0;
     });
 
-    // Mouse drag for desktop
-    card.addEventListener('mousedown', (e) => {
-        startX = e.clientX;
-        isDragging = true;
-        card.classList.add('dragging');
-        card.classList.remove('entering');
-        e.preventDefault();
+    card.addEventListener('mousedown', e => {
+        startX = e.clientX; isDragging = true;
+        card.classList.add('dragging'); card.classList.remove('entering'); e.preventDefault();
     });
-
-    document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        dx = e.clientX - startX;
-        const rotate = dx * 0.08;
-        card.style.transform = `translateX(${dx}px) rotate(${rotate}deg)`;
-
-        const likeInd = card.querySelector('.like-indicator');
-        const nopeInd = card.querySelector('.nope-indicator');
-        if (dx > 30) {
-            likeInd.style.opacity = Math.min(1, (dx - 30) / 60);
-            nopeInd.style.opacity = '0';
-        } else if (dx < -30) {
-            nopeInd.style.opacity = Math.min(1, (-dx - 30) / 60);
-            likeInd.style.opacity = '0';
-        } else {
-            likeInd.style.opacity = '0';
-            nopeInd.style.opacity = '0';
-        }
+    document.addEventListener('mousemove', e => {
+        if (!isDragging) return; dx = e.clientX - startX;
+        card.style.transform = `translateX(${dx}px) rotate(${dx*0.08}deg)`;
+        const li = card.querySelector('.like-indicator'), ni = card.querySelector('.nope-indicator');
+        if (dx > 30) { li.style.opacity = Math.min(1,(dx-30)/60); ni.style.opacity='0'; }
+        else if (dx < -30) { ni.style.opacity = Math.min(1,(-dx-30)/60); li.style.opacity='0'; }
+        else { li.style.opacity='0'; ni.style.opacity='0'; }
     });
-
     document.addEventListener('mouseup', () => {
-        if (!isDragging) return;
-        isDragging = false;
-        card.classList.remove('dragging');
-
-        if (dx > THRESHOLD) {
-            castVote(true);
-        } else if (dx < -THRESHOLD) {
-            castVote(false);
-        } else {
-            card.style.transform = '';
-            card.querySelector('.like-indicator').style.opacity = '0';
-            card.querySelector('.nope-indicator').style.opacity = '0';
-        }
+        if (!isDragging) return; isDragging = false; card.classList.remove('dragging');
+        if (dx > TH) castVote(true);
+        else if (dx < -TH) castVote(false);
+        else { card.style.transform=''; card.querySelector('.like-indicator').style.opacity='0'; card.querySelector('.nope-indicator').style.opacity='0'; }
         dx = 0;
     });
 })();
 
 // ── Keyboard ──
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', e => {
     const active = document.querySelector('.view.active');
-    if (!active || active.id !== 'view-swipe') return;
+    if (!active) return;
+    if (active.id === 'view-swipe') {
+        if (e.key==='ArrowRight'||e.key==='l') castVote(true);
+        else if (e.key==='ArrowLeft'||e.key==='h') castVote(false);
+        else if (e.key==='z'&&(e.ctrlKey||e.metaKey)) undoVote();
+    } else if (active.id === 'view-h2h') {
+        if (e.key==='ArrowLeft'||e.key==='1') h2hPick('left');
+        else if (e.key==='ArrowRight'||e.key==='2') h2hPick('right');
+    }
+});
 
-    if (e.key === 'ArrowRight' || e.key === 'l') castVote(true);
-    else if (e.key === 'ArrowLeft' || e.key === 'h') castVote(false);
-    else if (e.key === 'z' && (e.ctrlKey || e.metaKey)) undoVote();
+// Flush pending on page unload
+window.addEventListener('beforeunload', () => {
+    if (syncQueue.length > 0 && currentUser) {
+        const blob = new Blob([JSON.stringify({user:currentUser, name:syncQueue[0].name, vote:syncQueue[0].vote})], {type:'application/json'});
+        navigator.sendBeacon('/api/babynavn-vote', blob);
+    }
 });

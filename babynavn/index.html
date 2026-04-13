@@ -31,7 +31,7 @@
                 </button>
             </div>
 
-            <p class="welcome-footer" id="welcome-footer">100 jentenavn · norsk · français · english</p>
+            <p class="welcome-footer" id="welcome-footer">200 navn · norsk · français · english</p>
         </div>
     </div>
 
@@ -87,8 +87,9 @@
         <div class="done-content">
             <div class="done-icon">🎉</div>
             <h2 id="done-title">Ferdig!</h2>
-            <p id="done-subtitle">Du har stemt på alle 100 navnene.</p>
-            <button class="primary-btn" onclick="showView('results')" id="done-results-btn">Se resultater</button>
+            <p id="done-subtitle">Du har stemt på alle navnene.</p>
+            <button class="primary-btn" onclick="showResults()" id="done-results-btn">Se resultater</button>
+            <button class="primary-btn h2h-btn" onclick="startH2H()" id="done-h2h-btn" style="display:none">Start duell 🏆</button>
             <button class="secondary-btn" onclick="goBack()">Tilbake</button>
         </div>
     </div>
@@ -104,10 +105,44 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
             </button>
         </header>
+        <div class="results-body" id="results-body"></div>
+    </div>
 
-        <div class="results-body" id="results-body">
-            <!-- Populated by JS -->
+    <!-- H2H VIEW -->
+    <div id="view-h2h" class="view">
+        <header class="h2h-header">
+            <button class="header-btn" onclick="exitH2H()" aria-label="Tilbake">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="h2h-info-section">
+                <span class="h2h-info" id="h2h-info">Runde 1 · Kamp 1/10</span>
+                <span class="h2h-total" id="h2h-total">0 total</span>
+            </div>
+            <button class="header-btn" onclick="showRanking()" aria-label="Rangering">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </button>
+        </header>
+        <div class="h2h-arena">
+            <div class="h2h-card" id="h2h-left" onclick="h2hPick('left')">
+                <span class="h2h-name" id="h2h-left-name">Alice</span>
+            </div>
+            <div class="h2h-vs">VS</div>
+            <div class="h2h-card" id="h2h-right" onclick="h2hPick('right')">
+                <span class="h2h-name" id="h2h-right-name">Emma</span>
+            </div>
         </div>
+    </div>
+
+    <!-- RANKING VIEW -->
+    <div id="view-ranking" class="view">
+        <header class="results-header">
+            <button class="header-btn" onclick="backFromRanking()" aria-label="Tilbake">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <h2 class="results-title" id="ranking-title">Rangering</h2>
+            <div style="width:44px"></div>
+        </header>
+        <div class="results-body" id="ranking-body"></div>
     </div>
 
     <!-- Hearts animation container -->
