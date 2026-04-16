@@ -1,52 +1,79 @@
-// 150 boy names — norsk · english — nature/seasons + bilingual classics
-const BOY_NAMES = [
-    // ── Nature & Seasons (sibling to Winter) ──
-    "Storm", "Frost", "Ash", "Heath", "Reed", "Cliff", "Glen",
-    "Flint", "Stone", "Brook", "River", "Sky", "Forest", "Blaze",
-    "Hawk", "Fox", "Wolf", "Bear", "Orion", "Atlas", "Phoenix",
-    "Sol", "Bay", "Dale", "North", "Cove", "Ridge", "Lake",
-    "Elm", "Oak", "Moss", "Ember", "Slate", "Onyx", "Jet",
-    "Steel", "Birk", "Summit", "Tor", "Stein", "Bjørn",
-    "Sølv", "Tind", "Fjell", "Bre", "Høst",
+// ── ROUND 2 ──
+// Curated based on Åge & Marie's round 1 preferences:
+//   Åge: loves modern/unisex/celestial (Quinn, Jordan, Avery, Adam, Orion)
+//   Marie: loves elegant classics + poetic nature (Oscar, Arthur, Aspen, Høst, Hugo, Florian)
+//   Middle ground: international elegance, celestial, refined nature, short & clean
+//   + SSB Top 100 Norway 2024
 
-    // ── Bilingual classics (work in NO + EN) ──
-    "Oscar", "Leo", "Emil", "Max", "Noah", "Oliver", "Felix",
-    "Axel", "Sebastian", "Alexander", "Adrian", "Martin", "Daniel",
-    "David", "Samuel", "Simon", "Marcus", "Thomas", "Jonas", "Lucas",
-    "Elias", "Henrik", "Benjamin", "Filip", "Teodor", "Nikolai",
-    "Tobias", "Magnus", "Victor", "Robert", "Anton", "Herman",
-    "Albert", "Alfred", "August", "Leonard", "Vincent", "William",
-    "Julian", "Mathias", "Gabriel", "Rafael", "Mikael", "Stefan",
-    "Philip", "Liam", "Theo", "Milo", "Leon", "Adam",
-
-    // ── Nordic/Norse that English speakers recognize ──
-    "Odin", "Thor", "Leif", "Sven", "Arne", "Lars", "Ragnar",
-    "Sigurd", "Ivar", "Alvin", "Erling", "Gunnar", "Haldor",
-    "Vidar", "Tristan", "Roald", "Einar", "Nils",
-
-    // ── Modern bilingual ──
-    "Casper", "Lukas", "Isak", "Aron", "Hugo", "Mats",
-    "Kristian", "Edvin", "Ludvig", "Konrad", "Harald", "Sverre",
-    "Brage", "Even", "Markus", "Eskil", "Vetle", "Sander",
-    "Aksel", "Didrik", "Halvard", "Sindre", "Iver",
-
-    // ── Strong & timeless ──
-    "Arthur", "Edward", "Edmund", "Edgar", "Ernest", "Cecil",
-    "Cedric", "Conrad", "Roland", "Ruben", "Valentin", "Severin",
-    "Viljar"
+// SSB Top 100 Norway 2024 (not in round 1)
+const SSB_POPULAR = [
+    "Johannes", "Olav", "Jakob", "Ulrik", "Matheo", "Gustav", "Mikkel",
+    "Johan", "Håkon", "Jens", "Henry", "Ole", "Jacob", "Ola",
+    "Mio", "Leander", "Jesper", "Edvard", "Linus", "Ask", "Elliot",
+    "Andreas", "Amund", "Jonathan", "Fredrik", "Levi", "Emrik", "Georg",
+    "Hans", "Trym"
 ];
 
-// 50 unisex names — norsk · english — nature-inspired + modern
-const UNISEX_NAMES = [
-    "Rowan", "Sage", "Robin", "Rune", "Kai", "Kim", "Alex",
-    "Jordan", "Morgan", "Quinn", "Eden", "Noa", "Luca",
-    "Mika", "Nico", "Sam", "Charlie", "Ari", "Jesse", "Pax",
-    "Reyn", "Aspen", "Indigo", "Lyric", "Wren", "Lark",
-    "Stellan", "Milan", "Florian", "Jules", "Eli", "Ray",
-    "Sølve", "Eira", "Idun", "Saga", "Marin", "Lin",
-    "Avery", "Emery", "Blair", "Dana", "Linden", "Kellan",
-    "Finley", "Riley", "Tatum", "Skye", "Bryn", "Haven"
+// Celestial & mythic (Åge loved Orion)
+const CELESTIAL = [
+    "Cassian", "Sirius", "Apollo", "Cosmo", "Perseus",
+    "Zenith", "Altair", "Caius", "Rigel", "Stellaris", "Aster", "Oriel"
 ];
 
-// Combined list for the swipe phase
-const BABY_NAMES = [...BOY_NAMES, ...UNISEX_NAMES];
+// Elegant nature (Marie loved Aspen, Høst, North)
+const NATURE_ELEGANT = [
+    "Harbor", "Canyon", "Glacier", "Reef", "Shore", "Spruce",
+    "Horizon", "Wilder", "Prairie", "Haze", "Summit", "Crest",
+    "Bay", "Moor", "Briar", "Quill", "Marsh",
+    "Sage", "Talon", "Loch", "Peak",
+    "Boulder"
+];
+
+// Modern international (Åge's sweet spot)
+const MODERN_INTL = [
+    "Zane", "Blake", "Cameron", "Dylan", "Evan", "Hayden", "Ryan",
+    "Spencer", "Beckett", "Griffin", "Sawyer", "Logan", "Hudson",
+    "Mason", "Parker", "Hunter", "Cooper", "Carter", "Carson",
+    "Devon", "Ashton", "Lennon", "Ronan", "Nolan", "Callum", "Declan"
+];
+
+// Elegant classics (Marie's sweet spot)
+const CLASSICS = [
+    "Benedict", "Leopold", "Desmond", "Lawrence", "Malcolm",
+    "Quentin", "Winston", "Douglas", "Duncan", "Patrick", "Wesley",
+    "Lionel", "Hamish", "Ambrose", "Hector", "Clarence", "Wallace",
+    "Rupert", "Lysander", "Percival", "Barnaby", "Edmund"
+];
+
+// Short & clean (bridges both tastes)
+const SHORT_CLEAN = [
+    "Cole", "Jude", "Beau", "Knox", "Tate", "Wade", "Lane", "Dean",
+    "Grant", "Nash", "Reid", "Cruz", "Jace", "Rhys", "Rex",
+    "Seth", "Noel", "Kit", "Gage", "Shane", "Scott", "Brett",
+    "Ace", "Rune", "Grim"
+];
+
+// Modern-classic bridge names
+const BRIDGE = [
+    "Miles", "Everett", "Emmett", "Calvin", "Hayes", "Barrett",
+    "Brooks", "Fletcher", "Graham", "Harvey", "Dawson",
+    "Edison", "Marshall", "Porter", "Lincoln", "Silas", "Ezra", "Caleb",
+    "Kieran", "Pierce", "Warren", "Thane", "Sullivan", "Harlan",
+    "Hendrix", "Amos", "Cyrus", "Tobias", "Casper", "Sterling"
+];
+
+// European & Nordic extras
+const EXTRAS = [
+    "Otto", "Elio", "Rio", "Remy", "Alec", "Dante", "Enzo",
+    "Bastian", "Soren", "Cato", "Bo", "Anders", "Petter", "Niklas",
+    "Mattis", "Torsten", "Fritjof", "Halvar", "Lev", "Ivo",
+    "Alaric", "Theron", "Boden", "Stig", "Tarjei", "Kristoffer",
+    "Vebjørn", "Teodor", "Rafael", "Arvid", "Viljar", "Sindre",
+    "Birger"
+];
+
+// Combined list for swipe phase
+const BABY_NAMES = [
+    ...SSB_POPULAR, ...CELESTIAL, ...NATURE_ELEGANT, ...MODERN_INTL,
+    ...CLASSICS, ...SHORT_CLEAN, ...BRIDGE, ...EXTRAS
+];

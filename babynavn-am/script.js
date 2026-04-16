@@ -154,21 +154,21 @@ function showToast(msg, duration) {
 
 // ── localStorage ──
 function saveVotesLocal() {
-    localStorage.setItem('babynavn_am_votes_' + currentUser, JSON.stringify(votes));
+    localStorage.setItem('babynavn_am_r2_votes_' + currentUser, JSON.stringify(votes));
 }
 function loadVotesLocal() {
-    try { const d = localStorage.getItem('babynavn_am_votes_' + currentUser); return d ? JSON.parse(d) : null; }
+    try { const d = localStorage.getItem('babynavn_am_r2_votes_' + currentUser); return d ? JSON.parse(d) : null; }
     catch { return null; }
 }
 function saveH2HLocal() {
-    localStorage.setItem('babynavn_am_h2h_' + currentUser, JSON.stringify({
+    localStorage.setItem('babynavn_am_r2_h2h_' + currentUser, JSON.stringify({
         names: h2hNames, elo: h2hElo, round: h2hRound,
         total: h2hTotalMatchups, history: h2hHistory
     }));
 }
 function loadH2HLocal() {
     try {
-        const d = localStorage.getItem('babynavn_am_h2h_' + currentUser);
+        const d = localStorage.getItem('babynavn_am_r2_h2h_' + currentUser);
         if (!d) return false;
         const s = JSON.parse(d);
         h2hNames = s.names || []; h2hElo = s.elo || {};
@@ -195,7 +195,7 @@ async function apiPost(url, body) {
 
 function queueVoteSync(name, vote) {
     syncQueue.push({ name, vote });
-    localStorage.setItem('babynavn_am_pending_' + currentUser, JSON.stringify(syncQueue));
+    localStorage.setItem('babynavn_am_r2_pending_' + currentUser, JSON.stringify(syncQueue));
     debouncedFlush();
 }
 const debouncedFlush = debounce(flushSyncQueue, 3000);
@@ -210,17 +210,18 @@ async function flushSyncQueue() {
         catch { failed.push(item); }
     }
     syncQueue = failed;
-    localStorage.setItem('babynavn_am_pending_' + currentUser, JSON.stringify(syncQueue));
+    localStorage.setItem('babynavn_am_r2_pending_' + currentUser, JSON.stringify(syncQueue));
     isSyncing = false;
 }
 
 async function syncFromServer() {
     try {
+        const nameSet = new Set(BABY_NAMES);
         const data = await apiGet('/api/babynavn-vote?user=' + currentUser);
         const pendingNames = new Set(syncQueue.map(s => s.name));
         let updated = false;
         for (const v of data.votes) {
-            if (!pendingNames.has(v.name) && !(v.name in votes)) {
+            if (nameSet.has(v.name) && !pendingNames.has(v.name) && !(v.name in votes)) {
                 votes[v.name] = v.vote; updated = true;
             }
         }
@@ -252,7 +253,7 @@ async function fetchResults() {
 async function selectUser(user) {
     currentUser = user;
     try {
-        const p = localStorage.getItem('babynavn_am_pending_' + currentUser);
+        const p = localStorage.getItem('babynavn_am_r2_pending_' + currentUser);
         if (p) syncQueue = JSON.parse(p);
     } catch { syncQueue = []; }
 
@@ -292,7 +293,7 @@ function showNextName() {
 }
 
 function updateProgress() {
-    const voted = Object.keys(votes).length, total = BABY_NAMES.length;
+    const voted = BABY_NAMES.filter(n => n in votes).length, total = BABY_NAMES.length;
     document.getElementById('progress-text').textContent = voted + ' ' + t('progressOf') + ' ' + total;
     document.getElementById('progress-fill').style.width = ((voted / total) * 100) + '%';
 }
@@ -336,7 +337,7 @@ function undoVote() {
 
 // ── Done View ──
 function showDone() {
-    const likedCount = Object.values(votes).filter(v => v === true).length;
+    const likedCount = BABY_NAMES.filter(n => votes[n] === true).length;
     const total = BABY_NAMES.length;
     document.getElementById('done-title').textContent = t('doneTitle');
     document.getElementById('done-subtitle').textContent = t('doneSub').replace('{n}', likedCount).replace('{total}', total);
