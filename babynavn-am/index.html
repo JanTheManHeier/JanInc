@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Babynavn ❄️ Åge & Marie</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#e0f2f7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
+    <!-- WELCOME VIEW -->
+    <div id="view-welcome" class="view active">
+        <div class="welcome-content">
+            <div class="welcome-icon">❄️</div>
+            <h1 class="welcome-title">Babynavn</h1>
+            <p class="welcome-subtitle" id="welcome-subtitle">Finn det perfekte navnet sammen</p>
+
+            <div class="user-buttons">
+                <button class="user-btn" data-user="age" onclick="selectUser('age')">
+                    <span class="user-flag">🏔️</span>
+                    <span class="user-name">Åge</span>
+                </button>
+                <span class="user-divider">♥</span>
+                <button class="user-btn" data-user="marie" onclick="selectUser('marie')">
+                    <span class="user-flag">🌊</span>
+                    <span class="user-name">Marie</span>
+                </button>
+            </div>
+
+            <p class="welcome-footer" id="welcome-footer">200 navn · bror til Winter · norsk · english</p>
+        </div>
+    </div>
+
+    <!-- LOADING VIEW -->
+    <div id="view-loading" class="view">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p id="loading-text">Laster navn...</p>
+        </div>
+    </div>
+
+    <!-- SWIPE VIEW -->
+    <div id="view-swipe" class="view">
+        <header class="swipe-header">
+            <button class="header-btn" onclick="goBack()" aria-label="Tilbake">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="progress-section">
+                <span class="progress-text" id="progress-text">0 / 200</span>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <button class="header-btn results-peek" onclick="showView('results')" aria-label="Resultater">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                <span class="match-badge" id="match-badge" style="display:none">0</span>
+            </button>
+        </header>
+
+        <div class="card-area">
+            <div class="name-card" id="name-card">
+                <div class="card-indicator like-indicator">♥</div>
+                <div class="card-indicator nope-indicator">✕</div>
+                <span class="card-name" id="card-name">Storm</span>
+            </div>
+        </div>
+
+        <div class="swipe-buttons">
+            <button class="swipe-btn nope-btn" onclick="castVote(false)" aria-label="Nei">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+            <button class="swipe-btn undo-btn" onclick="undoVote()" id="undo-btn" aria-label="Angre" style="display:none">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h10a5 5 0 0 1 5 5v2M3 10l4-4M3 10l4 4"/></svg>
+            </button>
+            <button class="swipe-btn love-btn" onclick="castVote(true)" aria-label="Ja">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- DONE VIEW (all names voted) -->
+    <div id="view-done" class="view">
+        <div class="done-content">
+            <div class="done-icon">🎉</div>
+            <h2 id="done-title">Ferdig!</h2>
+            <p id="done-subtitle">Du har stemt på alle navnene.</p>
+            <button class="primary-btn" onclick="showResults()" id="done-results-btn">Se resultater</button>
+            <button class="primary-btn h2h-btn" onclick="startH2H()" id="done-h2h-btn" style="display:none">Start duell 🏆</button>
+            <button class="secondary-btn" onclick="goBack()">Tilbake</button>
+        </div>
+    </div>
+
+    <!-- RESULTS VIEW -->
+    <div id="view-results" class="view">
+        <header class="results-header">
+            <button class="header-btn" onclick="goBackFromResults()" aria-label="Tilbake">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <h2 class="results-title" id="results-title">Resultater</h2>
+            <button class="header-btn" onclick="refreshResults()" aria-label="Oppdater">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </button>
+        </header>
+        <div class="results-body" id="results-body"></div>
+    </div>
+
+    <!-- H2H VIEW -->
+    <div id="view-h2h" class="view">
+        <header class="h2h-header">
+            <button class="header-btn" onclick="exitH2H()" aria-label="Tilbake">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="h2h-info-section">
+                <span class="h2h-info" id="h2h-info">Runde 1 · Kamp 1/10</span>
+                <span class="h2h-total" id="h2h-total">0 total</span>
+            </div>
+            <button class="header-btn" onclick="showRanking()" aria-label="Rangering">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </button>
+        </header>
+        <div class="h2h-arena">
+            <div class="h2h-card" id="h2h-left" onclick="h2hPick('left')">
+                <span class="h2h-name" id="h2h-left-name">Storm</span>
+            </div>
+            <div class="h2h-vs">VS</div>
+            <div class="h2h-card" id="h2h-right" onclick="h2hPick('right')">
+                <span class="h2h-name" id="h2h-right-name">Frost</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- RANKING VIEW -->
+    <div id="view-ranking" class="view">
+        <header class="results-header">
+            <button class="header-btn" onclick="backFromRanking()" aria-label="Tilbake">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <h2 class="results-title" id="ranking-title">Rangering</h2>
+            <div style="width:44px"></div>
+        </header>
+        <div class="results-body" id="ranking-body"></div>
+    </div>
+
+    <!-- Snowflakes animation container -->
+    <div id="hearts-container" class="hearts-container"></div>
+
+    <script src="names.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -22,7 +22,7 @@ module.exports = async function (context, req) {
 
         if (req.method === 'GET') {
             const user = (req.query.user || '').toLowerCase();
-            if (!user || !['margaux', 'peder'].includes(user)) {
+            if (!user || !['margaux', 'peder', 'age', 'marie'].includes(user)) {
                 context.res = { status: 400, headers, body: { error: 'Invalid user' } };
                 return;
             }
@@ -49,7 +49,7 @@ module.exports = async function (context, req) {
             const { user, rankings } = req.body || {};
             const userLower = (user || '').toLowerCase();
 
-            if (!userLower || !['margaux', 'peder'].includes(userLower)) {
+            if (!userLower || !['margaux', 'peder', 'age', 'marie'].includes(userLower)) {
                 context.res = { status: 400, headers, body: { error: 'Invalid user' } };
                 return;
             }
