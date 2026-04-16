@@ -48,6 +48,20 @@ module.exports = async function (context, req) {
                 context.res = { status: 400, headers, body: { error: 'Invalid user' } };
                 return;
             }
+
+            // Delete a vote (to resurface a name)
+            if (vote === null) {
+                await executeQuery(connection, 
+                    'DELETE FROM BabyNavnVotes WHERE user_name = @user AND baby_name = @name',
+                    [
+                        { name: 'user', type: TYPES.NVarChar, value: userLower },
+                        { name: 'name', type: TYPES.NVarChar, value: name }
+                    ]
+                );
+                context.res = { status: 200, headers, body: { success: true, deleted: true } };
+                return;
+            }
+
             if (!name || typeof vote !== 'boolean') {
                 context.res = { status: 400, headers, body: { error: 'Provide name (string) and vote (boolean)' } };
                 return;
