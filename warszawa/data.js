@@ -7,7 +7,7 @@ const TRIP = {
   subtitle: "Terjes utdrikningslag • Warszawa",
   groom: "Terje",
   startISO: "2026-04-23T06:00:00+02:00",
-  endISO: "2026-04-26T21:30:00+02:00"
+  endISO: "2026-04-26T21:45:00+02:00"
 };
 
 const HOTEL = {
@@ -32,11 +32,14 @@ const FLIGHTS = {
     layovers: ["1t 00m Oslo", "2t 55m København T3"]
   },
   home: {
+    ref: "",
     date: "Søndag 26. april 2026",
     segments: [
-      { flight: "Norwegian", carrier: "Norwegian", from: "WAW", fromName: "Warszawa", to: "TOS", toName: "Tromsø", dep: "16:05", arr: "21:30", dur: "ca 5t 25m (med mellomlanding)" }
+      { flight: "DY1021", carrier: "Norwegian", from: "WAW", fromName: "Warszawa", to: "OSL", toName: "Oslo-Gardermoen", dep: "16:05", arr: "18:00", dur: "1t 55m" },
+      { flight: "DY328",  carrier: "Norwegian", from: "OSL", fromName: "Oslo-Gardermoen", to: "TOS", toName: "Tromsø", dep: "19:50", arr: "21:45", dur: "1t 55m" }
     ],
-    notes: "Norwegian, avgang Warszawa 16:05, fremme Tromsø 21:30."
+    layovers: ["1t 50m Oslo-Gardermoen"],
+    notes: "Norwegian LowFare — seter ikke reservert."
   }
 };
 
@@ -179,8 +182,10 @@ const PROGRAM = [
     { time: "11:00", title: "🥞 Frokost + avskjed", desc: "Forslag: Charlotte (Plac Zba) — lokalinstitusjon, croissanter + egg. Perfekt siste stopp.", status: "suggestion", placeId: "charlotte" },
     { time: "13:00", title: "🚕 Avreise til flyplass", desc: "Bolt til Chopin Airport (WAW).", status: "planned" },
     { time: "14:00", title: "✈️ Innsjekk WAW", desc: "Norwegian.", status: "planned" },
-    { time: "16:05", title: "✈️ Hjemreise", desc: "Norwegian WAW → TOS.", status: "confirmed" },
-    { time: "21:30", title: "🛬 Hjemme i Tromsø", desc: "Villhingsten er tammet. Eller?", status: "confirmed" }
+    { time: "16:05", title: "✈️ WAW → OSL", desc: "DY1021 — Norwegian. 1t 55m.", status: "confirmed" },
+    { time: "18:00", title: "🛬 Landet Gardermoen", desc: "1t 50m layover på Oslo-Gardermoen.", status: "confirmed" },
+    { time: "19:50", title: "✈️ OSL → TOS", desc: "DY328 — Norwegian. 1t 55m.", status: "confirmed" },
+    { time: "21:45", title: "🛬 Hjemme i Tromsø", desc: "Villhingsten er tammet. Eller?", status: "confirmed" }
   ]}
 ];
 
