@@ -186,7 +186,7 @@ a:hover { color: var(--ink); }
 .tab {
   padding: 0.75rem 1rem;
   min-height: 44px;
-  display: inline-flex; align-items: center;
+  display: inline-flex; align-items: center; gap: 0.4rem;
   color: var(--ink-dim);
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -198,7 +198,9 @@ a:hover { color: var(--ink); }
   white-space: nowrap;
   flex-shrink: 0;
   scroll-snap-align: start;
+  text-decoration: none;
 }
+.tab-ic { font-size: 1.05rem; }
 .tab:hover { color: var(--ink); background: rgba(212, 175, 55, 0.08); }
 .tab.active {
   color: var(--gold);
@@ -209,6 +211,51 @@ a:hover { color: var(--ink); }
   position: absolute; left: 1rem; right: 1rem; bottom: -0.8rem;
   height: 2px; background: var(--gold);
   box-shadow: 0 0 8px var(--gold-glow);
+}
+
+/* ===== MOBIL: bottom tab bar (iOS-stil) ===== */
+@media (max-width: 768px) {
+  .tabs {
+    position: fixed !important;
+    top: auto !important;
+    left: 0; right: 0; bottom: 0;
+    margin: 0;
+    padding: 0.35rem 0.25rem;
+    padding-bottom: calc(0.35rem + env(safe-area-inset-bottom));
+    background: var(--bg-1);
+    border-top: 1px solid var(--border);
+    border-bottom: none;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 0;
+    overflow: visible;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--bg-1) 92%, transparent);
+  }
+  .tab {
+    flex-direction: column;
+    padding: 0.35rem 0.15rem;
+    min-height: 52px;
+    gap: 2px;
+    font-size: 0.55rem;
+    letter-spacing: 0.02em;
+    border-radius: 4px;
+    justify-content: center;
+  }
+  .tab-ic { font-size: 1.35rem; line-height: 1; }
+  .tab-lbl {
+    font-size: 0.58rem;
+    letter-spacing: 0.01em;
+  }
+  .tab.active::after { display: none; }
+  .tab.active {
+    background: rgba(212, 175, 55, 0.18);
+  }
+  main {
+    padding-bottom: calc(90px + env(safe-area-inset-bottom)) !important;
+  }
 }
 
 /* ==========================================================
@@ -1057,8 +1104,6 @@ footer {
   .site-header { padding: 1rem; }
   .brand-title { font-size: 1.1rem; }
   .brand-sub { font-size: 0.75rem; }
-  .tabs { gap: 0.1rem; }
-  .tab { padding: 0.4rem 0.7rem; font-size: 0.75rem; letter-spacing: 0.05em; }
   main { padding: 1.5rem 1rem; }
   .hero { padding: 2.5rem 1rem; }
   .hero-title { font-size: 3rem; }
@@ -1066,8 +1111,5 @@ footer {
   .timeline::before { left: 3.5rem; }
   .event { grid-template-columns: 4rem 1fr; gap: 0.75rem; }
   .event-time { font-size: 0.95rem; }
-  #expense-form { grid-template-columns: 1fr 1fr; }
-  #expense-form button { grid-column: 1 / -1; }
-  .expense-row { grid-template-columns: 1fr 1fr; font-size: 0.8rem; }
   #map { height: 400px; }
 }
