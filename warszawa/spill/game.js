@@ -108,12 +108,12 @@
   function startGame() {
     entities = [];
     particles = [];
-    terje = { lane: 1, targetLane: 1, laneOffset: 0, crew: 1, rings: 0, hits: 0,
-              invincibleUntil: 0, speedBoostUntil: 0, shake: 0 };
+    terje = { lane: 1, targetLane: 1, laneOffset: 0, crew: 3, rings: 0, hits: 0,
+              invincibleUntil: performance.now() + 2000, speedBoostUntil: 0, shake: 0 };
     elapsed = 0;
     speedMul = 1;
-    nextSpawn = 800;
-    nextGate = 4000;
+    nextSpawn = 2200;
+    nextGate = 5500;
     churchSpawned = false;
     startTime = performance.now();
     lastTime = startTime;
