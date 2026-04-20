@@ -389,46 +389,120 @@ function updateChallengeStats() {
 }
 
 /* ==========================================================
-   WEATHER (open-meteo, no key)
+   WEATHER (api.met.no / yr.no — no key, free public data)
    ========================================================== */
 
-const WMO = {
-  0:'☀️ Klart',1:'🌤️ Lett skyet',2:'⛅ Delvis skyet',3:'☁️ Overskyet',
-  45:'🌫️ Tåke',48:'🌫️ Tåke',
-  51:'🌦️ Lett støvregn',53:'🌦️ Støvregn',55:'🌦️ Kraftig støvregn',
-  61:'🌧️ Lett regn',63:'🌧️ Regn',65:'🌧️ Kraftig regn',
-  71:'🌨️ Lett snø',73:'🌨️ Snø',75:'🌨️ Mye snø',
-  80:'🌦️ Regnskyll',81:'🌦️ Regnskyll',82:'⛈️ Kraftige regnskyll',
-  95:'⛈️ Torden',96:'⛈️ Torden med hagl',99:'⛈️ Kraftig torden'
+// Yr symbol_code → emoji + norsk tekst
+const YR_EMOJI = {
+  clearsky: '☀️', fair: '🌤️', partlycloudy: '⛅', cloudy: '☁️',
+  lightrainshowers: '🌦️', rainshowers: '🌦️', heavyrainshowers: '🌧️',
+  lightrain: '🌦️', rain: '🌧️', heavyrain: '🌧️',
+  lightsleet: '🌨️', sleet: '🌨️', heavysleet: '🌨️',
+  lightsleetshowers: '🌨️', sleetshowers: '🌨️', heavysleetshowers: '🌨️',
+  lightsnow: '🌨️', snow: '❄️', heavysnow: '❄️',
+  lightsnowshowers: '🌨️', snowshowers: '🌨️', heavysnowshowers: '❄️',
+  fog: '🌫️',
+  thunder: '⛈️', rainshowersandthunder: '⛈️', rainandthunder: '⛈️',
+  snowandthunder: '⛈️', sleetandthunder: '⛈️',
+  heavyrainandthunder: '⛈️', heavyrainshowersandthunder: '⛈️',
+  heavysleetandthunder: '⛈️', heavysleetshowersandthunder: '⛈️',
+  heavysnowandthunder: '⛈️', heavysnowshowersandthunder: '⛈️',
+  lightrainandthunder: '⛈️', lightrainshowersandthunder: '⛈️',
+  lightsleetandthunder: '⛈️', lightsnowandthunder: '⛈️',
+  lightssleetshowersandthunder: '⛈️', lightssnowshowersandthunder: '⛈️'
+};
+const YR_TEXT = {
+  clearsky: 'Klart', fair: 'Lettskyet', partlycloudy: 'Delvis skyet', cloudy: 'Skyet',
+  lightrainshowers: 'Lette regnbyger', rainshowers: 'Regnbyger', heavyrainshowers: 'Kraftige regnbyger',
+  lightrain: 'Lett regn', rain: 'Regn', heavyrain: 'Kraftig regn',
+  lightsleet: 'Lett sludd', sleet: 'Sludd', heavysleet: 'Kraftig sludd',
+  lightsnow: 'Lett snø', snow: 'Snø', heavysnow: 'Kraftig snø',
+  fog: 'Tåke', thunder: 'Torden',
+  rainshowersandthunder: 'Regnbyger og torden', rainandthunder: 'Regn og torden'
 };
 
-async function initWeather() {
-  try {
-    const url = 'https://api.open-meteo.com/v1/forecast?latitude=52.23&longitude=21.01&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FWarsaw&start_date=2026-04-23&end_date=2026-04-26';
-    const r = await fetch(url);
-    if (!r.ok) throw new Error('no weather');
-    const d = await r.json();
-    const cur = d.current;
-    const fc = d.daily;
+function parseYrSymbol(code) {
+  if (!code) return { e: '❓', t: '' };
+  const base = code.replace(/_day$|_night$|_polartwilight$/, '');
+  return { e: YR_EMOJI[base] || '❓', t: YR_TEXT[base] || base.replace(/_/g, ' ') };
+}
 
-    const days = ['Tor','Fre','Lør','Søn'];
-    const forecast = fc.time.map((date, i) => `
+async function initWeather() {
+  const root = $('#weather');
+  if (!root) return;
+  try {
+    const r = await fetch('https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=52.2370&lon=20.9940');
+    if (!r.ok) throw new Error('met.no ' + r.status);
+    const d = await r.json();
+    const series = d.properties.timeseries;
+    if (!series || !series.length) throw new Error('empty series');
+
+    // NÅ
+    const now = series[0];
+    const curT = now.data.instant.details.air_temperature;
+    const curWind = now.data.instant.details.wind_speed;
+    const curSym = now.data.next_1_hours?.summary?.symbol_code
+                || now.data.next_6_hours?.summary?.symbol_code || '';
+    const curParsed = parseYrSymbol(curSym);
+
+    // DAGLIG (tur-datoer 23.–26. april 2026)
+    const tripDates = ['2026-04-23', '2026-04-24', '2026-04-25', '2026-04-26'];
+    const dayNames = ['Tor', 'Fre', 'Lør', 'Søn'];
+    const daily = tripDates.map((date, i) => {
+      const points = series.filter(t => t.time.startsWith(date));
+      if (!points.length) return null;
+      const temps = points.map(p => p.data.instant.details.air_temperature);
+      const tMin = Math.min(...temps);
+      const tMax = Math.max(...temps);
+      // Symbol fra kl 12 hvis tilgjengelig
+      const noon = points.find(p => p.time.includes('T12:'))
+                || points.find(p => p.time.includes('T14:'))
+                || points[Math.floor(points.length / 2)];
+      const sym = noon.data.next_6_hours?.summary?.symbol_code
+               || noon.data.next_1_hours?.summary?.symbol_code || '';
+      return { day: dayNames[i], tMin, tMax, sym };
+    }).filter(Boolean);
+
+    const forecast = daily.map(dy => `
       <div class="weather-day">
-        <div class="wd-day">${days[i] || date}</div>
-        <div class="wd-icon">${(WMO[fc.weather_code[i]] || '').split(' ')[0]}</div>
-        <div class="wd-temp">${Math.round(fc.temperature_2m_min[i])}° / ${Math.round(fc.temperature_2m_max[i])}°</div>
+        <div class="wd-day">${dy.day}</div>
+        <div class="wd-icon">${parseYrSymbol(dy.sym).e}</div>
+        <div class="wd-temp">${Math.round(dy.tMin)}° / ${Math.round(dy.tMax)}°</div>
       </div>
     `).join('');
 
-    $('#weather').innerHTML = `
+    const updated = new Date().toLocaleTimeString('nb-NO', { hour: '2-digit', minute: '2-digit' });
+
+    root.innerHTML = `
       <div class="weather-main">
-        <div class="weather-temp">${Math.round(cur.temperature_2m)}°</div>
-        <div class="weather-desc">Nå i Warszawa · ${WMO[cur.weather_code] || 'Ukjent'}</div>
+        <div class="weather-temp">${Math.round(curT)}°</div>
+        <div class="weather-desc">
+          Nå i Warszawa${curParsed.e ? ` · ${curParsed.e} ${curParsed.t}` : ''}
+          <span class="muted small"> · vind ${Math.round(curWind)} m/s</span>
+        </div>
       </div>
-      <div class="weather-forecast">${forecast}</div>
+      <div class="weather-forecast">${forecast || ''}</div>
+      ${daily.length === 0 ? '<p class="muted small" style="text-align:center;margin:0.5rem 0 1rem">Daglig prognose tilgjengelig fra ca 9 dager før avreise.</p>' : ''}
+      <div class="weather-meteogram">
+        <div class="wm-label">48-timers prognose</div>
+        <a href="https://www.yr.no/nb/v%C3%A6rvarsel/daglig-tabell/2-756135/Polen/Mazowieckie/Warsaw/Warszawa" target="_blank" rel="noopener" aria-label="Åpne full prognose på yr.no">
+          <img src="https://www.yr.no/en/content/2-756135/meteogram.svg"
+               alt="Meteogram for Warszawa fra yr.no"
+               loading="lazy"
+               onerror="this.parentElement.style.display='none'">
+        </a>
+      </div>
+      <p class="weather-source">
+        Data fra <a href="https://www.yr.no/nb/v%C3%A6rvarsel/daglig-tabell/2-756135/Polen/Mazowieckie/Warsaw/Warszawa" target="_blank" rel="noopener">yr.no</a>
+        · © Meteorologisk institutt / NRK · Oppdatert ${updated}
+      </p>
     `;
   } catch (e) {
-    $('#weather').innerHTML = '<p class="muted small">Kunne ikke hente vær. Sjekk yr.no/warszawa.</p>';
+    root.innerHTML = `
+      <p class="muted small">Kunne ikke hente sanntidsvær.
+        <a href="https://www.yr.no/nb/v%C3%A6rvarsel/daglig-tabell/2-756135/Polen/Mazowieckie/Warsaw/Warszawa" target="_blank" rel="noopener">Se yr.no/warszawa →</a>
+      </p>
+    `;
   }
 }
 
