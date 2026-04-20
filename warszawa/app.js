@@ -269,7 +269,18 @@ function initMap() {
       iconSize: [32, 32], iconAnchor: [16, 16]
     });
     const m = L.marker([p.lat, p.lng], { icon }).addTo(map);
-    m.bindPopup(`<strong>${p.name}</strong><br>${p.desc}`);
+    const gmaps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Warszawa')}`;
+    const igLink = p.ig ? `<a href="https://www.instagram.com/${p.ig}/" target="_blank" rel="noopener" class="map-popup-link ig">📷 Instagram</a>` : '';
+    m.bindPopup(`
+      <div class="map-popup">
+        <strong>${p.name}</strong>
+        <div class="map-popup-desc">${p.desc}</div>
+        <div class="map-popup-links">
+          <a href="${gmaps}" target="_blank" rel="noopener" class="map-popup-link gmaps">🗺️ Google Maps</a>
+          ${igLink}
+        </div>
+      </div>
+    `);
     markers[p.id] = { marker: m, cat: p.cat };
   });
 

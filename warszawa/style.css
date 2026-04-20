@@ -1426,3 +1426,46 @@ footer {
 @media (max-width: 500px) {
   .song-actions .btn { flex: 1 1 auto; text-align: center; }
 }
+
+/* ===== Brand link (header → hjem) ===== */
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  flex: 1;
+  min-width: 0;
+}
+.brand-link:hover .brand-title { color: #f1c96a; }
+.brand-link:focus-visible { outline: 2px solid #d4af37; outline-offset: 3px; border-radius: 6px; }
+
+/* ===== Map popup ===== */
+.map-popup { min-width: 180px; }
+.map-popup strong { font-size: 1rem; color: #0a0807; }
+.map-popup-desc { margin: 4px 0 10px; font-size: 0.9rem; color: #333; }
+.map-popup-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.map-popup-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  padding: 5px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.1s, filter 0.1s;
+}
+.map-popup-link:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.map-popup-link.gmaps {
+  background: #4285f4;
+  color: #fff;
+}
+.map-popup-link.ig {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: #fff;
+}

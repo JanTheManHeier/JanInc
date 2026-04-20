@@ -18,17 +18,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="/warszawa/style.css?v=17">
+  <link rel="stylesheet" href="/warszawa/style.css?v=18">
 </head>
 <body>
 
 <header class="site-header">
   <div class="brand">
-    <img class="brand-mark" src="/warszawa/images/logo-villhingsten.png" alt="Den siste villhingsten" />
-    <div>
-      <h1 class="brand-title">Den siste villhingsten</h1>
-      <div class="brand-sub">Terjes utdrikningslag · Warszawa · 23.–26. april 2026</div>
-    </div>
+    <a class="brand-link" href="#hjem" data-tab="hjem" aria-label="Gå til hjem">
+      <img class="brand-mark" src="/warszawa/images/logo-villhingsten.png" alt="Den siste villhingsten" />
+      <div>
+        <h1 class="brand-title">Den siste villhingsten</h1>
+        <div class="brand-sub">Terjes utdrikningslag · Warszawa · 23.–26. april 2026</div>
+      </div>
+    </a>
     <button id="theme-btn" class="theme-btn" aria-label="Bytt tema" title="Bytt tema">🎨</button>
   </div>
   <nav class="tabs" id="tabs">
@@ -354,6 +356,6 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="/warszawa/data.js?v=14"></script>
-<script src="/warszawa/app.js?v=17"></script>
+<script src="/warszawa/app.js?v=18"></script>
 </body>
 </html>
