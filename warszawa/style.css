@@ -1469,3 +1469,26 @@ footer {
   background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
   color: #fff;
 }
+
+/* ===== Leaflet popup override (force light on dark themes) ===== */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #fff !important;
+  color: #0a0807 !important;
+}
+.leaflet-popup-content-wrapper { border-radius: 10px !important; }
+.leaflet-popup-content { margin: 12px 14px !important; }
+.map-popup { color: #0a0807; }
+.map-popup strong {
+  display: block;
+  font-size: 1rem;
+  color: #0a0807;
+  margin-bottom: 2px;
+}
+.map-popup-desc {
+  margin: 2px 0 10px;
+  font-size: 0.9rem;
+  color: #333 !important;
+  line-height: 1.35;
+}
+.leaflet-container a.map-popup-link { color: #fff !important; }
