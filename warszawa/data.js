@@ -55,6 +55,7 @@ const PEOPLE = [
     id: "vegard",
     name: "Vegard Lund Aspen",
     role: "ARRANGØREN",
+    age: 45,
     job: "Avdelingssjef — Bravida AS, Tromsø (rør)",
     bio: "Arrangøren som har satt opp hele greia. Bestilte hotell og Level 27. Avdelingssjef hos Bravida Tromsø — under hans ledelse ble avdelingen nominert til Årets Lærebedrift 2023 for hvordan de følger opp lærlingene. Gift med Silje Helèn siden 2023. Utdannet fra Tromsdalen VGS + UiT.",
     tags: ["Sjefen", "Fikser alt", "Lærling-mentor"]
@@ -63,8 +64,9 @@ const PEOPLE = [
     id: "jan",
     name: "Jan Heier Johansen",
     role: "APP-ARKITEKTEN",
+    age: 48,
     job: "TPM — Microsoft",
-    bio: "Fyren som bygger denne appen. TPM i Microsoft. Liker folkeliv, lokale favoritter og hidden gems over museer. Kjører ski med Thomas.",
+    bio: "Fyren som bygger denne appen. TPM i Microsoft. Blir 49 i august. Liker folkeliv, lokale favoritter og hidden gems over museer. Kjører ski med Thomas.",
     tags: ["App-hjernen", "Microsoft", "Ski"]
   },
   {
