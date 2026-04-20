@@ -47,62 +47,70 @@ const PEOPLE = [
     role: "VILLHINGSTEN",
     isGroom: true,
     age: 46,
-    job: "Aksjer & valuta — Sparebanken Nord-Norge",
-    bio: "Hovedpersonen. Ungdommelig, pen, velkledd, ordentlig. Familiemann gift med Silje (47) etter 20 år sammen — far til Lilly (10) og Iver (17). Fit, går på fjellet om sommeren, jakter rype på høsten. Hundeeier (Milo). Høy moral, god stemning — en knakende god fyr.",
-    tags: ["Familiemann", "Fjellmann", "Rypejeger", "Finans"]
+    job: "Head of Investor Relations — SpareBank 1 Nord-Norge",
+    bio: "Hovedpersonen. Leder IR-funksjonen i SpareBank 1 Nord-Norge — han som snakker tall med investorer og analytikere hver kvartal. Ungdommelig, pen, velkledd, ordentlig. Familiemann gift med Silje (47) etter 20 år sammen — far til Lilly (10) og Iver (17). Fit, går på fjellet om sommeren, jakter rype på høsten. Hundeeier (Milo). Høy moral, god stemning — en knakende god fyr.",
+    tags: ["Familiemann", "Fjellmann", "Rypejeger", "IR-sjef"]
   },
   {
     id: "vegard",
     name: "Vegard Lund Aspen",
-    role: "ARRANGØR",
-    job: "Avdelingsleder Bravida rør, Tromsø",
-    bio: "Arrangøren som har satt opp hele greia. Bestilte hotell og Level 27. Gift med Silje Helèn siden 2023. Utdannet fra Tromsdalen VGS + UiT.",
-    tags: ["Sjefen", "Fikser alt"]
+    role: "ARRANGØREN",
+    job: "Avdelingssjef — Bravida AS, Tromsø (rør)",
+    bio: "Arrangøren som har satt opp hele greia. Bestilte hotell og Level 27. Avdelingssjef hos Bravida Tromsø — under hans ledelse ble avdelingen nominert til Årets Lærebedrift 2023 for hvordan de følger opp lærlingene. Gift med Silje Helèn siden 2023. Utdannet fra Tromsdalen VGS + UiT.",
+    tags: ["Sjefen", "Fikser alt", "Lærling-mentor"]
   },
   {
     id: "jan",
     name: "Jan Heier Johansen",
-    role: "DEN NYE APPENS FAR",
-    bio: "Fyren som bygger denne appen. Liker folkeliv, lokale favoritter og hider gems over museer.",
-    tags: ["App-hjernen"]
+    role: "APP-ARKITEKTEN",
+    job: "TPM — Microsoft",
+    bio: "Fyren som bygger denne appen. TPM i Microsoft. Liker folkeliv, lokale favoritter og hidden gems over museer. Kjører ski med Thomas.",
+    tags: ["App-hjernen", "Microsoft", "Ski"]
   },
   {
     id: "thomas",
     name: "Thomas Helge Hansen",
     role: "FOMO-MESTEREN",
     age: 49,
-    bio: "Yes-mannen som aldri går glipp av neste ting. Trener, kjører ski med Jan. Sovner som regel på do i løpet av festen. Far til Snorre (20) og Birk (17), gift med Maja (46). Blir 50 i mai 2026 — egen fest allerede bookt.",
-    tags: ["FOMO", "Ski", "Sovnet-på-do-klubben"]
+    job: "Sales Director North America — GC Rieber VivoMega (omega-3)",
+    bio: "Yes-mannen som aldri går glipp av neste ting. 20+ års erfaring i omega-3-bransjen — kom nylig tilbake til GC Rieber VivoMega for å lede Nord-Amerika-salget. Tidligere daglig leder i Olivita AS (Tromsø). Trener, kjører ski med Jan. Sovner som regel på do i løpet av festen. Far til Snorre (20) og Birk (17), gift med Maja (46). Blir 50 i mai 2026 — egen fest allerede bookt.",
+    tags: ["FOMO", "Omega-3", "Ski", "Sovnet-på-do-klubben"]
   },
   {
     id: "trond-bjornar",
     name: "Trond-Bjørnar Pedersen",
     role: "DEN ROLIGE VETERANEN",
     age: 50,
-    bio: "Flott skikompis, rolig og avbalansert. Singel. Far til Alma (22) og Vetle (17). Nylig fylt 50.",
-    tags: ["Skikompis", "Zen-master"]
+    job: "Leder Flykoordineringssentralen — Luftambulansetjenesten",
+    bio: "Leder Luftambulansetjenestens flykoordineringssentral i Tromsø — det er han som sørger for at ambulanseflyene kommer fram. Bor på Kvaløya. Flott skikompis, rolig og avbalansert. Singel. Far til Alma (22) og Vetle (17). Nylig fylt 50.",
+    tags: ["Luftambulanse", "Skikompis", "Zen-master"]
   },
   {
     id: "magnus",
     name: "Magnus Seppola",
     role: "NORDREISA-REPRESENTANTEN",
     age: 48,
-    bio: "Hyggelig og fin mann fra Nord-Reisa. Fit. Gift med Ellen, har barn. Trener fredag morgen — alle er invitert.",
-    tags: ["Nord-Reisa", "Trening"]
+    job: "Business Developer — Norinnova AS (TTO for UiT)",
+    bio: "Hyggelig og fin mann fra Nord-Reisa. Business Developer hos Norinnova — hjelper UiT-forskere å kommersialisere innovasjonene sine. Fit. Gift med Ellen, har barn. Trener fredag morgen — alle er invitert.",
+    tags: ["Nord-Reisa", "Innovasjon", "Trening"]
   },
   {
     id: "mikal",
     name: "Mikal Johnsen",
     role: "KLUBB-KOORDINATOREN",
-    bio: "Han som booket Level 27 og holder styr på nattelivet. Aktiv på event-siden.",
-    tags: ["Nattliv", "Level 27"]
+    age: 44,
+    job: "Utviklingssjef — SmartDok AS",
+    bio: "Utviklingssjef i SmartDok (programvare for byggebransjen) — bygde blant annet dokumentsenteret deres. Bakgrunn fra Tromsø, basert i Alta, i bransjen siden 2011. Han som booket Level 27 og holder styr på nattelivet. Aktiv på event-siden.",
+    tags: ["Utvikler", "Nattliv", "Level 27"]
   },
   {
     id: "ole-nicolai",
     name: "Ole Nicolai S. Aarbakke",
     role: "BEERMILE-GENERALEN",
-    bio: "Lørdagens ankermann. Leder beermile-avdelingen kl 12:00 lørdag — craft beer-crawl gjennom sentrum.",
-    tags: ["Beermile", "Craft beer"]
+    age: 45,
+    job: "Daglig leder — Norwegian Seaweed Association",
+    bio: "Marinbiolog fra Tromsø, født 1981. PhD fra UiT på hoppekreps (!). Siden mars 2024 daglig leder i Norwegian Seaweed Association — tang og tare-gjengens sjef. Bor i Steigen. Lørdagens ankermann: leder beermile-avdelingen kl 12:00 — craft beer-crawl gjennom sentrum.",
+    tags: ["Marinbiolog", "Tang & tare", "Beermile", "Craft beer"]
   }
 ];
 
@@ -325,7 +333,6 @@ const PACKING = [
     "Paracet / ibuprofen",
     "Plaster",
     "Myggmiddel (hvis varmt)",
-    "Kondomer (bare i tilfelle… for VENNENE, ikke Terje)",
     "Resolve / dagen-derpå-redning"
   ]},
   { cat: "🔌 Elektronikk", items: [
