@@ -48,6 +48,7 @@ const PEOPLE = [
     isGroom: true,
     age: 46,
     job: "Head of Investor Relations — SpareBank 1 Nord-Norge",
+    phone: "41122220",
     bio: "Hovedpersonen. Leder IR-funksjonen i SpareBank 1 Nord-Norge — han som snakker tall med investorer og analytikere hver kvartal. Ungdommelig, pen, velkledd, ordentlig. Familiemann gift med Silje (47) etter 20 år sammen — far til Lilly (10) og Iver (17). Fit, går på fjellet om sommeren, jakter rype på høsten. Hundeeier (Milo). Høy moral, god stemning — en knakende god fyr.",
     tags: ["Familiemann", "Fjellmann", "Rypejeger", "IR-sjef"]
   },
@@ -66,6 +67,7 @@ const PEOPLE = [
     role: "APP-ARKITEKTEN",
     age: 48,
     job: "TPM — Microsoft",
+    phone: "41416828",
     bio: "Fyren som bygger denne appen. TPM i Microsoft. Blir 49 i august. Liker folkeliv, lokale favoritter og hidden gems over museer. Kjører ski med Thomas.",
     tags: ["App-hjernen", "Microsoft", "Ski"]
   },
@@ -75,6 +77,7 @@ const PEOPLE = [
     role: "FOMO-MESTEREN",
     age: 49,
     job: "Sales Director North America — GC Rieber VivoMega (omega-3)",
+    phone: "97775929",
     bio: "Yes-mannen som aldri går glipp av neste ting. 20+ års erfaring i omega-3-bransjen — kom nylig tilbake til GC Rieber VivoMega for å lede Nord-Amerika-salget. Tidligere daglig leder i Olivita AS (Tromsø). Trener, kjører ski med Jan. Sovner som regel på do i løpet av festen. Far til Snorre (20) og Birk (17), gift med Maja (46). Blir 50 i mai 2026 — egen fest allerede bookt.",
     tags: ["FOMO", "Omega-3", "Ski", "Sovnet-på-do-klubben"]
   },
@@ -84,6 +87,7 @@ const PEOPLE = [
     role: "DEN ROLIGE VETERANEN",
     age: 50,
     job: "Leder Flykoordineringssentralen — Luftambulansetjenesten",
+    phone: "91126286",
     bio: "Leder Luftambulansetjenestens flykoordineringssentral i Tromsø — det er han som sørger for at ambulanseflyene kommer fram. Bor på Kvaløya. Flott skikompis, rolig og avbalansert. Singel. Far til Alma (22) og Vetle (17). Nylig fylt 50.",
     tags: ["Luftambulanse", "Skikompis", "Zen-master"]
   },
@@ -102,6 +106,7 @@ const PEOPLE = [
     role: "KLUBB-KOORDINATOREN",
     age: 44,
     job: "Utviklingssjef — SmartDok AS",
+    phone: "98269088",
     bio: "Utviklingssjef i SmartDok (programvare for byggebransjen) — bygde blant annet dokumentsenteret deres. Bakgrunn fra Tromsø, basert i Alta, i bransjen siden 2011. Han som booket Level 27 og holder styr på nattelivet. Aktiv på event-siden.",
     tags: ["Utvikler", "Nattliv", "Level 27"]
   },
@@ -111,6 +116,7 @@ const PEOPLE = [
     role: "BEERMILE-GENERALEN",
     age: 45,
     job: "Daglig leder — Norwegian Seaweed Association",
+    phone: "41296866",
     bio: "Marinbiolog fra Tromsø, født 1981. PhD fra UiT på hoppekreps (!). Siden mars 2024 daglig leder i Norwegian Seaweed Association — tang og tare-gjengens sjef. Bor i Steigen. Lørdagens ankermann: leder beermile-avdelingen kl 12:00 — craft beer-crawl gjennom sentrum.",
     tags: ["Marinbiolog", "Tang & tare", "Beermile", "Craft beer"]
   }

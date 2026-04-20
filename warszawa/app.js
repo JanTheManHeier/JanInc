@@ -192,6 +192,7 @@ function renderPeople() {
       <div class="person-body">
         ${p.job ? `<div class="person-meta">💼 ${p.job}</div>` : ''}
         ${p.age ? `<div class="person-meta">🎂 ${p.age} år</div>` : ''}
+        ${p.phone ? `<div class="person-meta">📞 <a href="tel:+47${p.phone}">${p.phone.replace(/(\d{3})(\d{2})(\d{3})/, '$1 $2 $3')}</a></div>` : ''}
         <p class="person-bio">${p.bio}</p>
         ${p.tags ? `<div class="person-tags">${p.tags.map(t => `<span class="person-tag">${t}</span>`).join('')}</div>` : ''}
       </div>
