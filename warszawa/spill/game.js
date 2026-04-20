@@ -13,10 +13,10 @@
   const LANES = 3;
   const LANE_X = [0.2, 0.5, 0.8];     // fraksjon av bredden
   const PLAYER_Y_FRAC = 0.78;          // hvor Terje står (fra topp)
-  const BASE_SPEED = 0.00042;          // world-units/ms — ramp over tid
-  const SPAWN_START = 1400;            // ms mellom fiender i start
-  const SPAWN_MIN = 550;
-  const GATE_INTERVAL = 8500;          // ms mellom gate-trioer
+  const BASE_SPEED = 0.00028;          // world-units/ms — ramp over tid
+  const SPAWN_START = 1600;            // ms mellom fiender i start
+  const SPAWN_MIN = 700;
+  const GATE_INTERVAL = 9500;          // ms mellom gate-trioer
   const MAX_CREW_RENDER = 12;          // cap på hvor mange prikker vi tegner
   const CHURCH_APPEAR_AT = 5; // sekunder igjen når kirken vises
 
@@ -61,13 +61,19 @@
   window.addEventListener('orientationchange', resize);
   resize();
 
-  // --- Input: tap venstre/høyre halvdel + swipe -------------
+  // --- Input: hold-and-drag (tommel nede, dra sidelengs) ----
+  // Også støtte for tap på venstre/høyre halvdel
   let touchStartX = null, touchStartY = null, touchStartT = 0;
+  let touchStartLane = 1;
+  let touchMoved = false;
+  const DRAG_PX_PER_LANE = 55; // hvor mye man må dra for en lane
   function changeLane(delta) {
     const next = Math.max(0, Math.min(LANES - 1, terje.targetLane + delta));
-    if (next !== terje.targetLane) {
-      terje.targetLane = next;
-    }
+    if (next !== terje.targetLane) terje.targetLane = next;
+  }
+  function setLane(lane) {
+    const next = Math.max(0, Math.min(LANES - 1, lane));
+    if (next !== terje.targetLane) terje.targetLane = next;
   }
 
   canvas.addEventListener('touchstart', (e) => {
@@ -76,26 +82,37 @@
     touchStartX = t.clientX;
     touchStartY = t.clientY;
     touchStartT = performance.now();
+    touchStartLane = terje.targetLane;
+    touchMoved = false;
+    e.preventDefault();
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', (e) => {
+    if (!running || touchStartX === null) return;
+    const t = e.touches[0];
+    const dx = t.clientX - touchStartX;
+    if (Math.abs(dx) > 8) touchMoved = true;
+    // Absolutt drag → lane: startLane + Math.round(dx / DRAG_PX_PER_LANE)
+    const targetLane = touchStartLane + Math.round(dx / DRAG_PX_PER_LANE);
+    setLane(targetLane);
     e.preventDefault();
   }, { passive: false });
 
   canvas.addEventListener('touchend', (e) => {
     if (!running || touchStartX === null) return;
-    const t = e.changedTouches[0];
-    const dx = t.clientX - touchStartX;
-    const dy = t.clientY - touchStartY;
-    const dt = performance.now() - touchStartT;
-    const absDx = Math.abs(dx), absDy = Math.abs(dy);
-    // Swipe hvis rask + langt horisontalt, ellers tap
-    if (dt < 500 && absDx > 30 && absDx > absDy) {
-      changeLane(dx > 0 ? 1 : -1);
-    } else if (absDx < 20 && absDy < 20) {
-      // Tap: venstre halvdel = venstre, høyre = høyre
+    // Hvis ingen drag, behandle som tap (venstre/høyre halvdel)
+    if (!touchMoved) {
       changeLane(touchStartX < W / 2 ? -1 : 1);
     }
     touchStartX = null;
+    touchMoved = false;
     e.preventDefault();
   }, { passive: false });
+
+  canvas.addEventListener('touchcancel', () => {
+    touchStartX = null;
+    touchMoved = false;
+  });
 
   // Dev: piltaster
   window.addEventListener('keydown', (e) => {
@@ -108,6 +125,7 @@
   function startGame() {
     entities = [];
     particles = [];
+    floaters = [];
     terje = { lane: 1, targetLane: 1, laneOffset: 0, crew: 3, rings: 0, hits: 0,
               invincibleUntil: performance.now() + 2000, speedBoostUntil: 0, shake: 0 };
     elapsed = 0;
@@ -205,20 +223,22 @@
   // --- Collision --------------------------------------------
   function handleDameHit(e, now) {
     e.hit = true;
+    const fx = laneX(e.lane), fy = playerY();
+    floater(fx, fy - 10, '💋', 60);
     if (now < terje.invincibleUntil) {
       // hest = plow through, gain +1 kompis
       terje.crew = Math.min(terje.crew + 1, 99);
-      burst(laneX(e.lane), playerY(), '#d4af37', 12);
+      burst(fx, fy, '#d4af37', 12);
       return;
     }
     if (terje.crew > 1) {
       terje.crew--;
-      burst(laneX(e.lane), playerY(), '#ff5577', 10);
+      burst(fx, fy, '#ff5577', 10);
       terje.shake = 300;
     } else {
       // Siste liv — game over
       terje.crew = 0;
-      burst(laneX(e.lane), playerY(), '#ff5577', 20);
+      burst(fx, fy, '#ff5577', 20);
       endGame(false);
     }
   }
@@ -245,9 +265,17 @@
 
   function handlePickup(e) {
     e.hit = true;
-    if (e.kind === 'ring') { terje.rings++; burst(laneX(e.lane), playerY(), '#d4af37', 6); }
-    else if (e.kind === 'beer') { terje.speedBoostUntil = performance.now() + 3000; burst(laneX(e.lane), playerY(), '#ffc866', 10); }
-    else if (e.kind === 'horse') { terje.invincibleUntil = performance.now() + 3500; burst(laneX(e.lane), playerY(), '#d4af37', 12); }
+    const fx = laneX(e.lane), fy = playerY();
+    floater(fx, fy - 10, '⭐', 54);
+    if (e.kind === 'ring') { terje.rings++; burst(fx, fy, '#d4af37', 6); }
+    else if (e.kind === 'beer') { terje.speedBoostUntil = performance.now() + 3000; burst(fx, fy, '#ffc866', 10); }
+    else if (e.kind === 'horse') { terje.invincibleUntil = performance.now() + 3500; burst(fx, fy, '#d4af37', 12); }
+  }
+
+  // --- Floating emojis ved treff ---------------------------
+  let floaters = []; // {x, y, emoji, age, life, vy, size}
+  function floater(x, y, emoji, size = 46) {
+    floaters.push({ x, y, emoji, age: 0, life: 800, vy: -120, size });
   }
 
   // --- Particles --------------------------------------------
@@ -276,9 +304,9 @@
     lastTime = now;
     elapsed = now - startTime;
 
-    // Speed ramp
-    speedMul = 1 + (elapsed / 1000) * 0.028; // +2.8%/sek
-    if (now < terje.speedBoostUntil) speedMul *= 1.4;
+    // Speed ramp (roligere)
+    speedMul = 1 + (elapsed / 1000) * 0.018; // +1.8%/sek
+    if (now < terje.speedBoostUntil) speedMul *= 1.35;
 
     update(dt, now);
     render(now);
@@ -355,6 +383,13 @@
     }
     particles = particles.filter(p => p.age < p.life);
 
+    // Floaters
+    for (const f of floaters) {
+      f.age += dt;
+      f.y += f.vy * dt / 1000;
+    }
+    floaters = floaters.filter(f => f.age < f.life);
+
     if (terje.shake > 0) terje.shake -= dt;
   }
 
@@ -396,6 +431,17 @@
     }
     ctx.globalAlpha = 1;
 
+    // Floaters (kyss, stjerner)
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    for (const f of floaters) {
+      const a = 1 - f.age / f.life;
+      ctx.globalAlpha = a;
+      ctx.font = `${f.size}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", serif`;
+      ctx.fillText(f.emoji, f.x, f.y);
+    }
+    ctx.globalAlpha = 1;
+
     ctx.restore();
   }
 
@@ -421,12 +467,12 @@
       ctx.stroke();
     }
 
-    // Animerte "road marks" i center lane
+    // Animerte "road marks" i center lane — beveger seg NED (mot spiller)
     ctx.fillStyle = 'rgba(212, 175, 55, 0.35)';
     const markSpacing = 120;
     const offset = scrollY % markSpacing;
     for (let i = 0; i < 10; i++) {
-      const rawY = horizonY + i * markSpacing - offset;
+      const rawY = horizonY + i * markSpacing + offset;
       if (rawY < horizonY || rawY > H) continue;
       const t = (rawY - horizonY) / (H - horizonY);
       const w = 8 + t * 30;
@@ -550,38 +596,33 @@
     if (e.y < 0 || e.y > 1.15) return;
     const x = laneXPersp(e.lane, e.y);
     const y = yToScreen(e.y);
-    const scale = 0.3 + e.y * 0.8;
-    const size = 30 * scale;
-    ctx.font = `${size}px serif`;
+    const scale = 0.4 + e.y * 1.0;
+    const size = 54 * scale;
+    ctx.font = `${size}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    // Rødaktig aura
-    ctx.fillStyle = `rgba(255, 85, 119, ${0.2 * scale})`;
-    ctx.beginPath();
-    ctx.arc(x, y, size * 0.9, 0, Math.PI * 2);
-    ctx.fill();
     ctx.fillText('💃', x, y);
   }
 
   function drawGate(e) {
     if (e.y < 0 || e.y > 1.1) return;
     const y = yToScreen(e.y);
-    const scale = 0.3 + e.y * 0.8;
+    const scale = 0.4 + e.y * 1.0;
     const xCenter = laneXPersp(e.lane, e.y);
     const w = laneW * scale * 0.9;
-    const h = 90 * scale;
-    // Pillarer
+    const h = 110 * scale;
+    // Pillarer (solid-ish)
     ctx.fillStyle = e.gate.color;
-    ctx.globalAlpha = 0.4;
+    ctx.globalAlpha = 0.55;
     ctx.fillRect(xCenter - w / 2, y - h, w, h);
     ctx.globalAlpha = 1;
     // Kantstreker
     ctx.strokeStyle = e.gate.color;
-    ctx.lineWidth = 3 * scale;
+    ctx.lineWidth = 4 * scale;
     ctx.strokeRect(xCenter - w / 2, y - h, w, h);
     // Label
     ctx.fillStyle = '#fff';
-    ctx.font = `bold ${26 * scale}px -apple-system, sans-serif`;
+    ctx.font = `bold ${32 * scale}px -apple-system, sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(e.gate.label, xCenter, y - h / 2);
@@ -591,17 +632,12 @@
     if (e.y < 0 || e.y > 1.15) return;
     const x = laneXPersp(e.lane, e.y);
     const y = yToScreen(e.y);
-    const scale = 0.3 + e.y * 0.8;
-    const size = 26 * scale;
-    ctx.font = `${size}px serif`;
+    const scale = 0.4 + e.y * 1.0;
+    const size = 46 * scale;
+    ctx.font = `${size}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     const icon = e.kind === 'ring' ? '💍' : e.kind === 'beer' ? '🍺' : '🐎';
-    // Glow
-    ctx.fillStyle = `rgba(212, 175, 55, ${0.3 * scale})`;
-    ctx.beginPath();
-    ctx.arc(x, y, size * 0.8, 0, Math.PI * 2);
-    ctx.fill();
     ctx.fillText(icon, x, y);
   }
 
