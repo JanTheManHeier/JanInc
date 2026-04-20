@@ -89,7 +89,7 @@ const PEOPLE = [
     age: 50,
     job: "Leder Flykoordineringssentralen — Luftambulansetjenesten",
     phone: "91126286",
-    bio: "Leder Luftambulansetjenestens flykoordineringssentral i Tromsø — det er han som sørger for at ambulanseflyene kommer fram. Bor på Kvaløya. Flott skikompis, rolig og avbalansert. Singel. Far til Alma (22) og Vetle (17). Nylig fylt 50.",
+    bio: "Leder Luftambulansetjenestens flykoordineringssentral i Tromsø — det er han som sørger for at ambulanseflyene kommer fram. Bor på Kvaløya. Flott skikompis, rolig og avbalansert. Singel. Far til Alma (f. 17. sept 2005, 20 år) og Vetle (17). Nylig fylt 50.",
     tags: ["Luftambulanse", "Skikompis", "Zen-master"]
   },
   {
