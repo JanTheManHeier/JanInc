@@ -1117,3 +1117,19 @@ footer {
   .event-time { font-size: 0.95rem; }
   #map { height: 400px; }
 }
+
+/* ===== GAME CTA ===== */
+.game-cta {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));
+  border: 1px solid var(--gold); border-radius: 8px;
+  text-decoration: none; color: var(--ink);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.game-cta:hover, .game-cta:active { transform: translateY(-2px); box-shadow: 0 4px 20px var(--gold-glow); }
+.game-cta-ic { font-size: 2.2rem; }
+.game-cta b { display: block; color: var(--gold); font-size: 1.05rem; letter-spacing: 0.02em; }
+.game-cta small { display: block; color: var(--ink-dim); font-size: 0.85rem; margin-top: 0.2rem; }
+.game-cta-arrow { margin-left: auto; color: var(--gold); font-size: 1.4rem; }
+

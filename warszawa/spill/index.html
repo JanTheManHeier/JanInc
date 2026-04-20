@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#0a0807" />
+  <title>Til kirken løper Terje</title>
+  <link rel="icon" href="/warszawa/images/logo-villhingsten.png" />
+  <link rel="stylesheet" href="/warszawa/spill/style.css?v=1" />
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div class="hud-row">
+      <div class="hud-box"><span class="hud-lbl">KOMPISER</span><span id="hud-crew">1</span></div>
+      <div class="hud-box"><span class="hud-lbl">RINGER</span><span id="hud-score">0</span></div>
+      <div class="hud-box"><span class="hud-lbl">TID</span><span id="hud-time">60</span></div>
+    </div>
+  </div>
+
+  <!-- START-SKJERM -->
+  <div id="start" class="overlay">
+    <div class="overlay-inner">
+      <div class="logo-wrap">
+        <img src="/warszawa/images/logo-villhingsten.png" alt="Terje" class="logo-img" />
+      </div>
+      <h1>TIL KIRKEN<br/>LØPER TERJE</h1>
+      <p class="tagline">Unngå de single damene. Plukk opp kompiser og øl.<br/>Kom til kirken på <b>60 sekunder</b>.</p>
+      <div class="how">
+        <div>👈 👉 Sveip (eller tap) for å bytte fil</div>
+        <div>💃 Damer tar kompiser</div>
+        <div>🏆 Gylne porter: velg best</div>
+        <div>💍 øl 🐎 = bonus</div>
+      </div>
+      <button id="btn-start" class="btn-gold">START</button>
+      <a href="/warszawa/" class="back">← tilbake til appen</a>
+    </div>
+  </div>
+
+  <!-- SLUTT-SKJERM -->
+  <div id="end" class="overlay hidden">
+    <div class="overlay-inner">
+      <h1 id="end-title">TERJE NÅDDE KIRKEN!</h1>
+      <p id="end-sub" class="tagline"></p>
+      <div class="score-box">
+        <div><span class="hud-lbl">KOMPISER</span><b id="end-crew">0</b></div>
+        <div><span class="hud-lbl">RINGER</span><b id="end-score">0</b></div>
+        <div><span class="hud-lbl">TID IGJEN</span><b id="end-time">0</b></div>
+        <div class="total"><span class="hud-lbl">TOTAL</span><b id="end-total">0</b></div>
+      </div>
+      <button id="btn-retry" class="btn-gold">SPILL IGJEN</button>
+      <a href="/warszawa/" class="back">← tilbake til appen</a>
+    </div>
+  </div>
+
+  <script src="/warszawa/spill/game.js?v=1"></script>
+</body>
+</html>
