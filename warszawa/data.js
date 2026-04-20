@@ -58,6 +58,7 @@ const PEOPLE = [
     role: "ARRANGØREN",
     age: 45,
     job: "Avdelingssjef — Bravida AS, Tromsø (rør)",
+    phone: "93218121",
     bio: "Arrangøren som har satt opp hele greia. Bestilte hotell og Level 27. Avdelingssjef hos Bravida Tromsø — under hans ledelse ble avdelingen nominert til Årets Lærebedrift 2023 for hvordan de følger opp lærlingene. Gift med Silje Helèn siden 2023. Utdannet fra Tromsdalen VGS + UiT.",
     tags: ["Sjefen", "Fikser alt", "Lærling-mentor"]
   },
@@ -97,6 +98,7 @@ const PEOPLE = [
     role: "NORDREISA-REPRESENTANTEN",
     age: 48,
     job: "Business Developer — Norinnova AS (TTO for UiT)",
+    phone: "95112385",
     bio: "Hyggelig og fin mann fra Nord-Reisa. Business Developer hos Norinnova — hjelper UiT-forskere å kommersialisere innovasjonene sine. Fit. Gift med Ellen, har barn. Trener fredag morgen — alle er invitert.",
     tags: ["Nord-Reisa", "Innovasjon", "Trening"]
   },
