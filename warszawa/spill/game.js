@@ -18,7 +18,7 @@
   const SPAWN_MIN = 550;
   const GATE_INTERVAL = 8500;          // ms mellom gate-trioer
   const MAX_CREW_RENDER = 12;          // cap på hvor mange prikker vi tegner
-  const CHURCH_APPEAR_AT = GAME_SECONDS - 5; // sekunder igjen når kirken vises
+  const CHURCH_APPEAR_AT = 5; // sekunder igjen når kirken vises
 
   // --- State ------------------------------------------------
   let W = 0, H = 0;                   // CSS-piksler
