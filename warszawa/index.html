@@ -15,7 +15,7 @@
   <title>Den siste villhingsten · Warszawa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="stylesheet" href="style.css">
@@ -29,6 +29,7 @@
       <h1 class="brand-title">Den siste villhingsten</h1>
       <div class="brand-sub">Terjes utdrikningslag · Warszawa · 23.–26. april 2026</div>
     </div>
+    <button id="theme-btn" class="theme-btn" aria-label="Bytt tema" title="Bytt tema">🎨</button>
   </div>
   <nav class="tabs" id="tabs">
     <a href="#hjem" class="tab active" data-tab="hjem">Hjem</a>
@@ -37,6 +38,7 @@
     <a href="#reise" class="tab" data-tab="reise">Reise</a>
     <a href="#kart" class="tab" data-tab="kart">Kart</a>
     <a href="#utfordringer" class="tab" data-tab="utfordringer">Utfordringer</a>
+    <a href="#pakke" class="tab" data-tab="pakke">Pakke</a>
     <a href="#verktoy" class="tab" data-tab="verktoy">Verktøy</a>
   </nav>
 </header>
@@ -164,6 +166,17 @@
     <p class="section-lede">Huk av etterhvert. Lagres i nettleseren. <span class="tag-crude">C</span> = litt crude.</p>
     <div class="challenge-stats" id="challenge-stats"></div>
     <div id="challenges-root"></div>
+  </section>
+
+  <!-- ===== PAKKE ===== -->
+  <section id="pakke" class="panel">
+    <h2 class="section-title">Pakkeliste</h2>
+    <p class="muted" style="margin-top:-0.5rem">Pakk lett. Men ta med alt. 🐎</p>
+    <div class="pack-progress">
+      <div class="pack-progress-bar"><div id="pack-fill"></div></div>
+      <span id="pack-count" class="muted small">0 / 0</span>
+    </div>
+    <div id="pack-root" class="pack-grid"></div>
   </section>
 
   <!-- ===== VERKTØY ===== -->

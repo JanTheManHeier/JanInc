@@ -11,6 +11,40 @@ const LS = {
 };
 
 /* ==========================================================
+   THEME SWITCHER
+   ========================================================== */
+const THEMES = [
+  { id: 'dark-gold', label: 'Dark Gold', color: '#d4af37', bg: '#0a0807' },
+  { id: 'neon-noir', label: 'Neon Noir', color: '#ff3cac', bg: '#0b0618' },
+  { id: 'papier',    label: 'Papier',    color: '#c1272d', bg: '#f5f1e8' }
+];
+
+function applyTheme(id) {
+  const t = THEMES.find(x => x.id === id) || THEMES[0];
+  document.documentElement.setAttribute('data-theme', t.id);
+  LS.set('theme', t.id);
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', t.bg);
+}
+
+function initTheme() {
+  const saved = LS.get('theme', 'dark-gold');
+  applyTheme(saved);
+  const btn = document.getElementById('theme-btn');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'dark-gold';
+    const idx = THEMES.findIndex(t => t.id === current);
+    const next = THEMES[(idx + 1) % THEMES.length];
+    applyTheme(next.id);
+    // Flash label
+    const old = btn.innerHTML;
+    btn.innerHTML = `<span style="font-size:10px;letter-spacing:.05em">${next.label}</span>`;
+    setTimeout(() => btn.innerHTML = '🎨', 1200);
+  });
+}
+
+/* ==========================================================
    TABS + HASH ROUTING
    ========================================================== */
 
@@ -79,18 +113,27 @@ function renderProgram() {
       <div class="day-header"><h3>${day.day}</h3></div>
       <div class="timeline">
         ${day.items.map((item, i) => {
-          const place = item.placeId ? placeById[item.placeId] : null;
-          const linksHtml = place ? `
+          const ids = item.placeIds || (item.placeId ? [item.placeId] : []);
+          const places = ids.map(id => placeById[id]).filter(Boolean);
+          const multi = places.length > 1;
+          const linksHtml = places.length ? `
             <div class="event-links">
-              <a href="#kart" class="event-link" data-place="${place.id}" title="Vis på kart">
-                <span class="el-icon">🗺️</span><span>Kart</span>
-              </a>
-              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name + ' Warszawa')}" target="_blank" rel="noopener" class="event-link" title="Google Maps">
-                <span class="el-icon">🌐</span><span>Google Maps</span>
-              </a>
-              ${place.ig ? `<a href="https://www.instagram.com/${place.ig}/" target="_blank" rel="noopener" class="event-link" title="Instagram">
-                <span class="el-icon">📸</span><span>Instagram</span>
-              </a>` : ''}
+              ${places.map(place => `
+                <div class="event-place">
+                  ${multi ? `<div class="event-place-name">${place.name}</div>` : ''}
+                  <div class="event-place-links">
+                    <a href="#kart" class="event-link" data-place="${place.id}" title="Vis på kart">
+                      <span class="el-icon">🗺️</span><span>Kart</span>
+                    </a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name + ' Warszawa')}" target="_blank" rel="noopener" class="event-link" title="Google Maps">
+                      <span class="el-icon">🌐</span><span>Google Maps</span>
+                    </a>
+                    ${place.ig ? `<a href="https://www.instagram.com/${place.ig}/" target="_blank" rel="noopener" class="event-link" title="Instagram">
+                      <span class="el-icon">📸</span><span>Instagram</span>
+                    </a>` : ''}
+                  </div>
+                </div>
+              `).join('')}
             </div>` : '';
           return `
           <div class="event ${item.status}" data-idx="${day.dayId}-${i}">
@@ -468,6 +511,49 @@ function renderEmergency() {
 }
 
 /* ==========================================================
+   PACKING LIST
+   ========================================================== */
+
+function renderPacking() {
+  const root = $('#pack-root');
+  const done = LS.get('packing-done', {});
+  root.innerHTML = PACKING.map((group, gi) => `
+    <div class="pack-group">
+      <h3 class="pack-cat">${group.cat}</h3>
+      ${group.items.map((item, ii) => {
+        const id = `${gi}-${ii}`;
+        return `
+          <label class="pack-item ${done[id] ? 'checked' : ''}" data-id="${id}">
+            <span class="pack-check"></span>
+            <span class="pack-text">${item}</span>
+          </label>`;
+      }).join('')}
+    </div>
+  `).join('');
+
+  updatePackProgress();
+
+  $$('.pack-item', root).forEach(el => el.addEventListener('click', e => {
+    e.preventDefault();
+    const id = el.dataset.id;
+    const d = LS.get('packing-done', {});
+    d[id] = !d[id];
+    LS.set('packing-done', d);
+    el.classList.toggle('checked', !!d[id]);
+    updatePackProgress();
+  }));
+}
+
+function updatePackProgress() {
+  const done = LS.get('packing-done', {});
+  const total = PACKING.reduce((n, g) => n + g.items.length, 0);
+  const checked = Object.values(done).filter(Boolean).length;
+  const pct = total ? (checked / total) * 100 : 0;
+  $('#pack-fill').style.width = pct + '%';
+  $('#pack-count').textContent = `${checked} / ${total}`;
+}
+
+/* ==========================================================
    EXPENSES (budget)
    ========================================================== */
 
@@ -646,6 +732,7 @@ function resize(file, maxDim) {
    ========================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   initTabs();
   initCountdown();
   renderProgram();
@@ -657,4 +744,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initCurrency();
   renderPhrases();
   renderEmergency();
+  renderPacking();
 });

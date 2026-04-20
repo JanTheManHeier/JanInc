@@ -126,7 +126,7 @@ const PROGRAM = [
     { time: "15:00", title: "🏨 Innsjekk hotell", desc: "Radisson Collection — Grzybowska 24. SPA-avdeling, basseng, badstu. Husk speedoen 😏", status: "confirmed", placeId: "hotel" },
     { time: "16:00", title: "🍸 Første drink", desc: "Forslag: Warszawa Powiśle — gammel togstasjon under broen, ikonisk bar. Eller start på Nowy Świat.", status: "suggestion", placeId: "warszawa-powisle" },
     { time: "19:00", title: "🍽️ Middag", desc: "Forslag: Poznańska-gata — matgate lokalene elsker. Velg når dere ser hva som frister.", status: "suggestion", placeId: "poznanska" },
-    { time: "23:00", title: "🌃 Nattklubb?", desc: "Forslag: Smolna (lokalenes valg, rå stemning) eller Opera Club (elegant).", status: "suggestion" }
+    { time: "23:00", title: "🌃 Nattklubb?", desc: "Forslag: Smolna (lokalenes valg, rå stemning) eller Opera Club (elegant).", status: "suggestion", placeIds: ["smolna", "opera-club"] }
   ]},
 
   // FREDAG 24. APRIL
@@ -149,11 +149,11 @@ const PROGRAM = [
     { time: "10:00", title: "🚴 Leie sykkel", desc: "Veloturystyka eller lignende. Sykkelrute langs Vistula-boulevarden (Wisłostrada) — flat, bilfri.", status: "planned" },
     { time: "10:30", title: "🚴 Sykkelrute: Gamlebyen → Praga", desc: "Start Gamlebyen → sørover langs elva → Kopernikus Science Centre (morsomme installasjoner utenfor) → kryss bro til Praga → kaffe på Centrum Praskie Koneser (gammelt vodka-destilleri, nå kreativt nav).", status: "suggestion", placeId: "old-town" },
     { time: "11:00", title: "🗺️ Guide (valgfritt)", desc: "Alternativ: Free Walking Tour Warsaw — Gamlebyen, 2,5t, tips-basert. Eller privat guide via GetYourGuide.", status: "planned" },
-    { time: "12:00", title: "🍺 Beermile @ Ole", desc: "Ole leder! Rute (gangavstand, Nowogrodzka-området): Kufle i Kapsle → Jabeerwocky → Cuda na Kiju → PiwPaw Beer Heaven (100+ taps).", status: "confirmed", placeId: "kufle" },
-    { time: "14:00", title: "🍴 Lunsj", desc: "Forslag: Hala Gwardii (mindre turistete søsterhall ved Gamlebyen) eller Elektrownia Powiśle (gammelt kraftverk, food hall).", status: "suggestion", placeId: "elektrownia" },
+    { time: "12:00", title: "🍺 Beermile @ Ole", desc: "Ole leder! Rute (gangavstand, Nowogrodzka-området): Kufle i Kapsle → Jabeerwocky → Cuda na Kiju → PiwPaw Beer Heaven (100+ taps).", status: "confirmed", placeIds: ["kufle", "jabeerwocky", "cuda", "piwpaw"] },
+    { time: "14:00", title: "🍴 Lunsj", desc: "Forslag: Hala Gwardii (mindre turistete søsterhall ved Gamlebyen) eller Elektrownia Powiśle (gammelt kraftverk, food hall).", status: "suggestion", placeIds: ["hala-gwardii", "elektrownia"] },
     { time: "16:00", title: "🛍️ Valgfri tid", desc: "Nowy Świat shopping, Old Town wandering, eller Praga murals. Hidden gem: Neon Muzeum (Praga) — kommunisttidens neonskilt, 15 zł, 45 min.", status: "suggestion", placeId: "neon" },
     { time: "17:00", title: "🏨 Hotellhvile — Smart Casual", desc: "Lading før siste kveld.", status: "planned" },
-    { time: "20:00", title: "🍽️ Middag — siste kveld", desc: "Forslag: Zoni (gammel vodka-fabrikk, moderne polsk, Koneser/Praga) · Bibenda (uformell, kreativ, fullt av lokale) · Kieliszki na Próżnej (vinbar + polsk mat, stemning).", status: "suggestion", placeId: "zoni" }
+    { time: "20:00", title: "🍽️ Middag — siste kveld", desc: "Forslag: Zoni (gammel vodka-fabrikk, moderne polsk, Koneser/Praga) · Bibenda (uformell, kreativ, fullt av lokale) · Kieliszki na Próżnej (vinbar + polsk mat, stemning).", status: "suggestion", placeIds: ["zoni", "bibenda", "kieliszki"] }
   ]},
 
   // SØNDAG 26. APRIL
@@ -199,7 +199,11 @@ const PLACES = [
   { id: "neon", name: "Neon Muzeum (Praga)", cat: "sight", lat: 52.2572, lng: 21.0495, desc: "Kommunisttidens neonskilt. 15 zł, 45 min.", ig: "neonmuzeum" },
   { id: "nowy-swiat", name: "Nowy Świat", cat: "sight", lat: 52.2373, lng: 21.0175, desc: "Hovedstrøket — spaser her." },
   { id: "poznanska", name: "Poznańska-gata", cat: "sight", lat: 52.2247, lng: 21.0133, desc: "Matgate-strekk lokale elsker." },
-  { id: "alewino", name: "Alewino (booket)", cat: "food", lat: 52.2311, lng: 21.0252, desc: "Vinbar — fredag 19:00, booket.", ig: "alewino" }
+  { id: "alewino", name: "Alewino (booket)", cat: "food", lat: 52.2311, lng: 21.0252, desc: "Vinbar — fredag 19:00, booket.", ig: "alewino" },
+
+  // Nattklubber — fredag/torsdag-alternativer
+  { id: "smolna", name: "Smolna", cat: "club", lat: 52.2335, lng: 21.0243, desc: "Rå stemning, lokalenes valg. Smolna 38.", ig: "smolna38" },
+  { id: "opera-club", name: "Opera Club", cat: "club", lat: 52.2409, lng: 21.0118, desc: "Elegant klubb under operaen. Plac Teatralny.", ig: "operaclub" }
 ];
 
 /* ============================================================
@@ -276,3 +280,77 @@ const EMERGENCY = [
   { label: "Blokker norsk bankkort (DNB/Sparebanken)", value: "+47 915 04800", type: "phone" },
   { label: "Chopin Airport (WAW) info", value: "+48 22 650 42 20", type: "phone" }
 ];
+
+/* ============================================================
+   PAKKELISTE — menn som pusher 50, pakk lett men ta med alt
+   ============================================================ */
+
+const PACKING = [
+  { cat: "🎯 Essensielt — glem dette og du er screwed", items: [
+    "Pass (gyldig min 3 mnd)",
+    "Bankkort + backup-kort",
+    "Kontanter (noen €, veksles til PLN i Warszawa)",
+    "Telefon + lader",
+    "Reiseforsikring-kort / app",
+    "Europeisk helsetrygdekort",
+    "Boardingkort (last ned offline)",
+    "Hotell-adresse på polsk (bruk Hjelp-knappen)"
+  ]},
+  { cat: "👔 Smart Casual — dresscode Level 27 + Alewino", items: [
+    "1 chinos eller mørk jeans (ikke slitt)",
+    "1 skjorte (strøket)",
+    "1 blazer/dressjakke (valgfritt, men hever)",
+    "Pene sko (ikke sneakers — Level 27 avviser)",
+    "Belte som matcher skoene"
+  ]},
+  { cat: "👕 Klær — 3 netter, pakk lett", items: [
+    "3 t-skjorter (+ 1 ekstra for sikkerhet)",
+    "2 skjorter dag/kveld",
+    "1 genser / hettegenser",
+    "1 lett jakke (~12°C + regn mulig)",
+    "1 jeans dag + 1 pen bukse",
+    "4 par undertøy (+ 1 ekstra)",
+    "4 par sokker (+ 1 ekstra)",
+    "Komfortable sko til mye gåing",
+    "Speedo / badebukse (Radisson har basseng + spa)",
+    "Treningstøy (Magnus' morgentrening fredag)"
+  ]},
+  { cat: "🧴 Toalett — travel-size", items: [
+    "Tannbørste + tannkrem",
+    "Deodorant",
+    "Barbering (eller: la skjegget herje)",
+    "Shampoo/sjampo (hotellet har, men…)",
+    "Hårvoks/gel hvis du bruker",
+    "Neglesaks",
+    "Paracet / ibuprofen",
+    "Plaster",
+    "Myggmiddel (hvis varmt)",
+    "Kondomer (bare i tilfelle… for VENNENE, ikke Terje)",
+    "Resolve / dagen-derpå-redning"
+  ]},
+  { cat: "🔌 Elektronikk", items: [
+    "Type C/E adapter (Polen = EU-plugg, samme som Norge — men sjekk)",
+    "Powerbank (10 000 mAh+)",
+    "Ladekabler (USB-C, Lightning om du må)",
+    "Hodetelefoner / AirPods",
+    "Kamera (valgfritt — telefon er nok)"
+  ]},
+  { cat: "💊 Utdrikningslag-spesifikt", items: [
+    "Godt humør",
+    "Toleranse for Terjes reaksjoner",
+    "Noe smått å gi Terje når han fullfører utfordringer (sjokolade, shot, osv)",
+    "Evt. kostyme-element (speedo over klærne på Level 27? Vegard avgjør)",
+    "Kontanter til drikkepenger (15% restaurant, avrunding bar)"
+  ]},
+  { cat: "🧠 Smart å ha — lett glemt", items: [
+    "Solbriller",
+    "Lip balm",
+    "Ørepropper (for de som snorker… eller naboen)",
+    "Sovemaske",
+    "Liten sekk / veske til dagsbruk",
+    "Vaskepose til brukt undertøy",
+    "Tyggegummi",
+    "Kulepenn (grense-skjema, kvitteringer)"
+  ]}
+];
+
