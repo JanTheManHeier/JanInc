@@ -743,11 +743,6 @@ function resize(file, maxDim) {
    ========================================================== */
 
 function initSOS() {
-  const btn = $('#sos-btn');
-  const modal = $('#sos-modal');
-  const closeBtn = $('#sos-close');
-  if (!btn || !modal) return;
-
   // Populer hotell fra data.js
   if (typeof HOTEL !== 'undefined') {
     const nameEl = $('#taxi-hotel-name');
@@ -769,22 +764,6 @@ function initSOS() {
         </a>`;
       }).join('');
   }
-
-  function open() {
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
-  }
-  function close() {
-    modal.hidden = true;
-    document.body.style.overflow = '';
-  }
-
-  btn.addEventListener('click', open);
-  closeBtn.addEventListener('click', close);
-  modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.hidden) close();
-  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {

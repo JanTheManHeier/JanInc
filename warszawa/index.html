@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="/warszawa/style.css?v=13">
+  <link rel="stylesheet" href="/warszawa/style.css?v=14">
 </head>
 <body>
 
@@ -41,6 +41,7 @@
     <a href="/warszawa/spill/" class="tab tab-ext"><span class="tab-ic">🎮</span><span class="tab-lbl">Spill</span></a>
     <a href="#pakke" class="tab" data-tab="pakke"><span class="tab-ic">🎒</span><span class="tab-lbl">Pakke</span></a>
     <a href="#verktoy" class="tab" data-tab="verktoy"><span class="tab-ic">🔧</span><span class="tab-lbl">Verktøy</span></a>
+    <a href="#sos" class="tab" data-tab="sos"><span class="tab-ic">🆘</span><span class="tab-lbl">SOS</span></a>
   </nav>
 </header>
 
@@ -227,23 +228,10 @@
 
   <!-- ===== MINNER (removed) ===== -->
 
-</main>
-
-<footer>
-  <p>🐎 Den siste villhingsten · janinc.no/warszawa · Bygget av Jan · April 2026</p>
-</footer>
-
-<!-- ===== SOS / TAXI KORT ===== -->
-<button id="sos-btn" class="sos-btn" aria-label="SOS — hjelp / taxi">
-  <span class="sos-ic">🆘</span><span class="sos-lbl">SOS</span>
-</button>
-
-<div id="sos-modal" class="sos-modal" hidden>
-  <div class="sos-sheet" role="dialog" aria-modal="true" aria-labelledby="sos-title">
-    <button id="sos-close" class="sos-close" aria-label="Lukk">✕</button>
-
-    <h2 id="sos-title" class="sos-title">🆘 Hjelp meg hjem</h2>
-    <p class="sos-sub">Vis denne siden til taxi-sjåføren</p>
+  <!-- ===== SOS ===== -->
+  <section id="sos" class="panel">
+    <h2>🆘 Hjelp meg hjem</h2>
+    <p class="section-intro">Vis denne siden til taxi-sjåføren, eller ring etter hjelp.</p>
 
     <!-- STORT TAXI-KORT PÅ POLSK -->
     <div class="taxi-card">
@@ -298,13 +286,17 @@
       <h3>👥 Ring gjengen</h3>
       <div id="sos-people" class="sos-people"></div>
     </div>
+  </section>
 
-  </div>
-</div>
+</main>
+
+<footer>
+  <p>🐎 Den siste villhingsten · janinc.no/warszawa · Bygget av Jan · April 2026</p>
+</footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="/warszawa/data.js?v=14"></script>
-<script src="/warszawa/app.js?v=14"></script>
+<script src="/warszawa/app.js?v=15"></script>
 </body>
 </html>
