@@ -123,9 +123,9 @@ const PROGRAM = [
     { time: "11:00", title: "CPH chill / SPA / mat", desc: "Lang pause på Kastrup. Spisemuligheter + duty-free.", status: "planned" },
     { time: "13:05", title: "✈️ CPH → WAW", desc: "SK2761 — SAS Connect. 1t 20m.", status: "confirmed" },
     { time: "14:25", title: "🛬 Landet Warszawa", desc: "Bolt/Uber til hotell — billig, ca 40-60 zł.", status: "confirmed" },
-    { time: "15:00", title: "🏨 Innsjekk hotell", desc: "Radisson Collection — Grzybowska 24. SPA-avdeling, basseng, badstu. Husk speedoen 😏", status: "confirmed" },
-    { time: "16:00", title: "🍸 Første drink", desc: "Forslag: Warszawa Powiśle — gammel togstasjon under broen, ikonisk bar. Eller start på Nowy Świat.", status: "suggestion" },
-    { time: "19:00", title: "🍽️ Middag", desc: "Forslag: Poznańska-gata — matgate lokalene elsker. Velg når dere ser hva som frister.", status: "suggestion" },
+    { time: "15:00", title: "🏨 Innsjekk hotell", desc: "Radisson Collection — Grzybowska 24. SPA-avdeling, basseng, badstu. Husk speedoen 😏", status: "confirmed", placeId: "hotel" },
+    { time: "16:00", title: "🍸 Første drink", desc: "Forslag: Warszawa Powiśle — gammel togstasjon under broen, ikonisk bar. Eller start på Nowy Świat.", status: "suggestion", placeId: "warszawa-powisle" },
+    { time: "19:00", title: "🍽️ Middag", desc: "Forslag: Poznańska-gata — matgate lokalene elsker. Velg når dere ser hva som frister.", status: "suggestion", placeId: "poznanska" },
     { time: "23:00", title: "🌃 Nattklubb?", desc: "Forslag: Smolna (lokalenes valg, rå stemning) eller Opera Club (elegant).", status: "suggestion" }
   ]},
 
@@ -135,30 +135,30 @@ const PROGRAM = [
     { time: "09:00", title: "🏋️ Trening @ Magnus", desc: "Magnus leder morgentrening for de som orker. Frivillig.", status: "planned" },
     { time: "10:00", title: "🥞 Frokost", desc: "Inkludert på Radisson. Bra utvalg.", status: "confirmed" },
     { time: "11:00", title: "🧖 SPA + hotell-chill", desc: "Basseng, badstu, spa-avdeling. Restitusjon før helgen kicker.", status: "confirmed" },
-    { time: "14:00", title: "🍴 Lunsj — Hala Koszyki", desc: "Restaurert markedshall fra 1908, nå food hall med 20+ barer/restauranter. Lokalt favoritt. Koszykowa 63.", status: "suggestion" },
-    { time: "16:00", title: "🚶 Plac Zbawiciela + Nowy Świat", desc: "Gå Plac Zba → Nowy Świat. Kaffe på Charlotte Menora. Stopp på E. Wedel Pijalnia Czekolady for varm sjokolade så tykk du må spise den med skje.", status: "suggestion" },
+    { time: "14:00", title: "🍴 Lunsj — Hala Koszyki", desc: "Restaurert markedshall fra 1908, nå food hall med 20+ barer/restauranter. Lokalt favoritt. Koszykowa 63.", status: "suggestion", placeId: "hala-koszyki" },
+    { time: "16:00", title: "🚶 Plac Zbawiciela + Nowy Świat", desc: "Gå Plac Zba → Nowy Świat. Kaffe på Charlotte Menora. Stopp på E. Wedel Pijalnia Czekolady for varm sjokolade så tykk du må spise den med skje.", status: "suggestion", placeId: "plac-zba" },
     { time: "17:00", title: "🏨 Hotellhvile — Smart Casual", desc: "Bytt til finstas før middag.", status: "planned" },
-    { time: "19:00", title: "🍷 Alewino", desc: "Vinbar — booket.", status: "confirmed" },
+    { time: "19:00", title: "🍷 Alewino", desc: "Vinbar — booket.", status: "confirmed", placeId: "alewino" },
     { time: "20:00", title: "🍽️ Middag", desc: "Booket (sted: sjekk med Vegard).", status: "confirmed" },
-    { time: "23:00", title: "🌃 Level 27 — BOOKET", desc: "Bord booket av Mikal. 50% av bordkravet betalt, resten betales ved inngangen. Rooftop-klubb på Warsaw Hotel. DRESSCODE: smart casual.", status: "confirmed" }
+    { time: "23:00", title: "🌃 Level 27 — BOOKET", desc: "Bord booket av Mikal. 50% av bordkravet betalt, resten betales ved inngangen. Rooftop-klubb på Warsaw Hotel. DRESSCODE: smart casual.", status: "confirmed", placeId: "level27" }
   ]},
 
   // LØRDAG 25. APRIL
   { day: "Lørdag 25. april", dayId: "lordag", date: "2026-04-25", items: [
     { time: "09:00", title: "🥞 Frokost", desc: "Radisson.", status: "confirmed" },
     { time: "10:00", title: "🚴 Leie sykkel", desc: "Veloturystyka eller lignende. Sykkelrute langs Vistula-boulevarden (Wisłostrada) — flat, bilfri.", status: "planned" },
-    { time: "10:30", title: "🚴 Sykkelrute: Gamlebyen → Praga", desc: "Start Gamlebyen → sørover langs elva → Kopernikus Science Centre (morsomme installasjoner utenfor) → kryss bro til Praga → kaffe på Centrum Praskie Koneser (gammelt vodka-destilleri, nå kreativt nav).", status: "suggestion" },
+    { time: "10:30", title: "🚴 Sykkelrute: Gamlebyen → Praga", desc: "Start Gamlebyen → sørover langs elva → Kopernikus Science Centre (morsomme installasjoner utenfor) → kryss bro til Praga → kaffe på Centrum Praskie Koneser (gammelt vodka-destilleri, nå kreativt nav).", status: "suggestion", placeId: "old-town" },
     { time: "11:00", title: "🗺️ Guide (valgfritt)", desc: "Alternativ: Free Walking Tour Warsaw — Gamlebyen, 2,5t, tips-basert. Eller privat guide via GetYourGuide.", status: "planned" },
-    { time: "12:00", title: "🍺 Beermile @ Ole", desc: "Ole leder! Rute (gangavstand, Nowogrodzka-området): Kufle i Kapsle → Jabeerwocky → Cuda na Kiju → PiwPaw Beer Heaven (100+ taps).", status: "confirmed" },
-    { time: "14:00", title: "🍴 Lunsj", desc: "Forslag: Hala Gwardii (mindre turistete søsterhall ved Gamlebyen) eller Elektrownia Powiśle (gammelt kraftverk, food hall).", status: "suggestion" },
-    { time: "16:00", title: "🛍️ Valgfri tid", desc: "Nowy Świat shopping, Old Town wandering, eller Praga murals. Hidden gem: Neon Muzeum (Praga) — kommunisttidens neonskilt, 15 zł, 45 min.", status: "suggestion" },
+    { time: "12:00", title: "🍺 Beermile @ Ole", desc: "Ole leder! Rute (gangavstand, Nowogrodzka-området): Kufle i Kapsle → Jabeerwocky → Cuda na Kiju → PiwPaw Beer Heaven (100+ taps).", status: "confirmed", placeId: "kufle" },
+    { time: "14:00", title: "🍴 Lunsj", desc: "Forslag: Hala Gwardii (mindre turistete søsterhall ved Gamlebyen) eller Elektrownia Powiśle (gammelt kraftverk, food hall).", status: "suggestion", placeId: "elektrownia" },
+    { time: "16:00", title: "🛍️ Valgfri tid", desc: "Nowy Świat shopping, Old Town wandering, eller Praga murals. Hidden gem: Neon Muzeum (Praga) — kommunisttidens neonskilt, 15 zł, 45 min.", status: "suggestion", placeId: "neon" },
     { time: "17:00", title: "🏨 Hotellhvile — Smart Casual", desc: "Lading før siste kveld.", status: "planned" },
-    { time: "20:00", title: "🍽️ Middag — siste kveld", desc: "Forslag: Zoni (gammel vodka-fabrikk, moderne polsk, Koneser/Praga) · Bibenda (uformell, kreativ, fullt av lokale) · Kieliszki na Próżnej (vinbar + polsk mat, stemning).", status: "suggestion" }
+    { time: "20:00", title: "🍽️ Middag — siste kveld", desc: "Forslag: Zoni (gammel vodka-fabrikk, moderne polsk, Koneser/Praga) · Bibenda (uformell, kreativ, fullt av lokale) · Kieliszki na Próżnej (vinbar + polsk mat, stemning).", status: "suggestion", placeId: "zoni" }
   ]},
 
   // SØNDAG 26. APRIL
   { day: "Søndag 26. april", dayId: "sondag", date: "2026-04-26", items: [
-    { time: "11:00", title: "🥞 Frokost + avskjed", desc: "Forslag: Charlotte (Plac Zba) — lokalinstitusjon, croissanter + egg. Perfekt siste stopp.", status: "suggestion" },
+    { time: "11:00", title: "🥞 Frokost + avskjed", desc: "Forslag: Charlotte (Plac Zba) — lokalinstitusjon, croissanter + egg. Perfekt siste stopp.", status: "suggestion", placeId: "charlotte" },
     { time: "13:00", title: "🚕 Avreise til flyplass", desc: "Bolt til Chopin Airport (WAW).", status: "planned" },
     { time: "14:00", title: "✈️ Innsjekk WAW", desc: "Norwegian.", status: "planned" },
     { time: "16:05", title: "✈️ Hjemreise", desc: "Norwegian WAW → TOS.", status: "confirmed" },
@@ -171,35 +171,35 @@ const PROGRAM = [
    ============================================================ */
 
 const PLACES = [
-  { id: "hotel", name: "Radisson Collection Hotel", cat: "hotel", lat: 52.2370, lng: 20.9940, desc: "Vårt hotell. Grzybowska 24." },
+  { id: "hotel", name: "Radisson Collection Hotel", cat: "hotel", lat: 52.2370, lng: 20.9940, desc: "Vårt hotell. Grzybowska 24.", ig: "radissoncollectionwarsaw" },
 
   // Bars / drikke
-  { id: "level27", name: "Level 27", cat: "club", lat: 52.2329, lng: 21.0005, desc: "Rooftop-klubb, Warsaw Hotel. Booket fredag 23:00." },
-  { id: "warszawa-powisle", name: "Warszawa Powiśle", cat: "bar", lat: 52.2370, lng: 21.0268, desc: "Gammel togstasjon under broen, ikonisk lokal bar." },
-  { id: "charlotte", name: "Charlotte Menora (Plac Zba)", cat: "cafe", lat: 52.2204, lng: 21.0160, desc: "Kafé/bar/bakeri, lokalinstitusjon." },
-  { id: "kufle", name: "Kufle i Kapsle", cat: "bar", lat: 52.2273, lng: 21.0080, desc: "Craft beer-mekka. Beermile-start." },
-  { id: "jabeerwocky", name: "Jabeerwocky", cat: "bar", lat: 52.2269, lng: 21.0082, desc: "20+ taps, rett ved Kufle. Beermile #2." },
-  { id: "cuda", name: "Cuda na Kiju", cat: "bar", lat: 52.2388, lng: 21.0153, desc: "Craft + urban stemning." },
-  { id: "piwpaw", name: "PiwPaw Beer Heaven", cat: "bar", lat: 52.2305, lng: 21.0167, desc: "100+ taps. Beermile-finale." },
+  { id: "level27", name: "Level 27", cat: "club", lat: 52.2329, lng: 21.0005, desc: "Rooftop-klubb, Warsaw Hotel. Booket fredag 23:00.", ig: "level27warsaw" },
+  { id: "warszawa-powisle", name: "Warszawa Powiśle", cat: "bar", lat: 52.2370, lng: 21.0268, desc: "Gammel togstasjon under broen, ikonisk lokal bar.", ig: "warszawapowisle" },
+  { id: "charlotte", name: "Charlotte Menora (Plac Zba)", cat: "cafe", lat: 52.2204, lng: 21.0160, desc: "Kafé/bar/bakeri, lokalinstitusjon.", ig: "bistrocharlotte" },
+  { id: "kufle", name: "Kufle i Kapsle", cat: "bar", lat: 52.2273, lng: 21.0080, desc: "Craft beer-mekka. Beermile-start.", ig: "kufleikapsle" },
+  { id: "jabeerwocky", name: "Jabeerwocky", cat: "bar", lat: 52.2269, lng: 21.0082, desc: "20+ taps, rett ved Kufle. Beermile #2.", ig: "jabeerwocky" },
+  { id: "cuda", name: "Cuda na Kiju", cat: "bar", lat: 52.2388, lng: 21.0153, desc: "Craft + urban stemning.", ig: "cudanakiju" },
+  { id: "piwpaw", name: "PiwPaw Beer Heaven", cat: "bar", lat: 52.2305, lng: 21.0167, desc: "100+ taps. Beermile-finale.", ig: "piwpaw" },
 
   // Mat
-  { id: "hala-koszyki", name: "Hala Koszyki", cat: "food", lat: 52.2197, lng: 21.0161, desc: "Food hall, 20+ steder, 1908-markedshall. Fredags-lunsj." },
-  { id: "hala-gwardii", name: "Hala Gwardii", cat: "food", lat: 52.2451, lng: 21.0055, desc: "Mindre turistete søsterhall." },
-  { id: "elektrownia", name: "Elektrownia Powiśle", cat: "food", lat: 52.2405, lng: 21.0277, desc: "Gammelt kraftverk, food hall + shopping." },
-  { id: "zoni", name: "Zoni (Koneser)", cat: "food", lat: 52.2562, lng: 21.0480, desc: "Moderne polsk i gammel vodka-fabrikk." },
-  { id: "bibenda", name: "Bibenda", cat: "food", lat: 52.2269, lng: 21.0082, desc: "Uformell, kreativ polsk mat." },
-  { id: "kieliszki", name: "Kieliszki na Próżnej", cat: "food", lat: 52.2359, lng: 21.0074, desc: "Vinbar + polsk mat, liten gate." },
-  { id: "wedel", name: "E. Wedel Pijalnia Czekolady", cat: "cafe", lat: 52.2350, lng: 21.0160, desc: "Varm sjokolade så tykk du må spise den med skje." },
+  { id: "hala-koszyki", name: "Hala Koszyki", cat: "food", lat: 52.2197, lng: 21.0161, desc: "Food hall, 20+ steder, 1908-markedshall. Fredags-lunsj.", ig: "halakoszyki" },
+  { id: "hala-gwardii", name: "Hala Gwardii", cat: "food", lat: 52.2451, lng: 21.0055, desc: "Mindre turistete søsterhall.", ig: "halagwardii" },
+  { id: "elektrownia", name: "Elektrownia Powiśle", cat: "food", lat: 52.2405, lng: 21.0277, desc: "Gammelt kraftverk, food hall + shopping.", ig: "elektrowniapowisle" },
+  { id: "zoni", name: "Zoni (Koneser)", cat: "food", lat: 52.2562, lng: 21.0480, desc: "Moderne polsk i gammel vodka-fabrikk.", ig: "zoni_restaurant" },
+  { id: "bibenda", name: "Bibenda", cat: "food", lat: 52.2269, lng: 21.0082, desc: "Uformell, kreativ polsk mat.", ig: "bibendawarszawa" },
+  { id: "kieliszki", name: "Kieliszki na Próżnej", cat: "food", lat: 52.2359, lng: 21.0074, desc: "Vinbar + polsk mat, liten gate.", ig: "kieliszkinaproznej" },
+  { id: "wedel", name: "E. Wedel Pijalnia Czekolady", cat: "cafe", lat: 52.2350, lng: 21.0160, desc: "Varm sjokolade så tykk du må spise den med skje.", ig: "ewedelofficial" },
 
   // Severdigheter / micro-stops
   { id: "old-town", name: "Stare Miasto (Gamlebyen)", cat: "sight", lat: 52.2500, lng: 21.0123, desc: "UNESCO. Gjenoppbygget murstein for murstein." },
   { id: "st-anne", name: "St. Anne's Church-tårnet", cat: "sight", lat: 52.2494, lng: 21.0138, desc: "147 trinn opp — beste utsikt, ~10 zł." },
   { id: "plac-zba", name: "Plac Zbawiciela", cat: "sight", lat: 52.2204, lng: 21.0160, desc: "Hipster-plassen. Kaféer, folkeliv." },
-  { id: "koneser", name: "Centrum Praskie Koneser", cat: "sight", lat: 52.2562, lng: 21.0480, desc: "Gammel vodka-fabrikk i Praga, nå kreativt nav." },
-  { id: "neon", name: "Neon Muzeum (Praga)", cat: "sight", lat: 52.2572, lng: 21.0495, desc: "Kommunisttidens neonskilt. 15 zł, 45 min." },
+  { id: "koneser", name: "Centrum Praskie Koneser", cat: "sight", lat: 52.2562, lng: 21.0480, desc: "Gammel vodka-fabrikk i Praga, nå kreativt nav.", ig: "koneserpraga" },
+  { id: "neon", name: "Neon Muzeum (Praga)", cat: "sight", lat: 52.2572, lng: 21.0495, desc: "Kommunisttidens neonskilt. 15 zł, 45 min.", ig: "neonmuzeum" },
   { id: "nowy-swiat", name: "Nowy Świat", cat: "sight", lat: 52.2373, lng: 21.0175, desc: "Hovedstrøket — spaser her." },
   { id: "poznanska", name: "Poznańska-gata", cat: "sight", lat: 52.2247, lng: 21.0133, desc: "Matgate-strekk lokale elsker." },
-  { id: "alewino", name: "Alewino (booket)", cat: "food", lat: 52.2311, lng: 21.0252, desc: "Vinbar — fredag 19:00, booket." }
+  { id: "alewino", name: "Alewino (booket)", cat: "food", lat: 52.2311, lng: 21.0252, desc: "Vinbar — fredag 19:00, booket.", ig: "alewino" }
 ];
 
 /* ============================================================

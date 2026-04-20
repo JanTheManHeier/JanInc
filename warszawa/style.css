@@ -363,6 +363,36 @@ main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 }
 .event.open .event-desc { max-height: 200px; margin-top: 0.5rem; }
 
+.event-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s, margin 0.3s;
+}
+.event.open .event-links { max-height: 100px; margin-top: 0.6rem; }
+.event-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--gold);
+  border-radius: 3px;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  background: rgba(212, 175, 55, 0.05);
+  min-height: 32px;
+  transition: background 0.15s, color 0.15s;
+}
+.event-link:hover, .event-link:active {
+  background: var(--gold);
+  color: var(--bg-0);
+}
+.event-link .el-icon { font-size: 0.95rem; }
+
 .event-badge {
   display: inline-block;
   font-size: 0.65rem;

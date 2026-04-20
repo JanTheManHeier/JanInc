@@ -38,7 +38,6 @@
     <a href="#kart" class="tab" data-tab="kart">Kart</a>
     <a href="#utfordringer" class="tab" data-tab="utfordringer">Utfordringer</a>
     <a href="#verktoy" class="tab" data-tab="verktoy">Verktøy</a>
-    <a href="#minner" class="tab" data-tab="minner">Minner</a>
   </nav>
 </header>
 
@@ -204,63 +203,13 @@
     </div>
   </section>
 
-  <!-- ===== MINNER ===== -->
-  <section id="minner" class="panel">
-    <h2 class="section-title">Minner</h2>
-
-    <div class="minner-grid">
-
-      <div class="memory-card">
-        <h3>💸 Spleis / budsjett</h3>
-        <form id="expense-form">
-          <input type="text" id="exp-desc" placeholder="Hva (f.eks. lunsj Hala Koszyki)" required>
-          <input type="number" id="exp-amount" placeholder="Beløp" step="0.01" required>
-          <select id="exp-currency">
-            <option value="PLN">PLN</option>
-            <option value="NOK">NOK</option>
-          </select>
-          <input type="text" id="exp-who" placeholder="Hvem betalte" required>
-          <button type="submit" class="btn btn-gold small">+ Legg til</button>
-        </form>
-        <div id="expenses-list"></div>
-        <div id="expenses-summary" class="expenses-summary"></div>
-      </div>
-
-      <div class="memory-card">
-        <h3>📝 Notater per dag</h3>
-        <div class="day-select">
-          <button class="day-btn active" data-day="torsdag">Tor</button>
-          <button class="day-btn" data-day="fredag">Fre</button>
-          <button class="day-btn" data-day="lordag">Lør</button>
-          <button class="day-btn" data-day="sondag">Søn</button>
-        </div>
-        <textarea id="notes-area" placeholder="Skriv ned det dere ikke må glemme…"></textarea>
-        <div class="notes-footer">
-          <span id="notes-status" class="muted small">Lagres automatisk</span>
-        </div>
-      </div>
-
-      <div class="memory-card wide">
-        <h3>📸 Bildegalleri</h3>
-        <p class="muted small">Bilder lagres lokalt i nettleseren din (max ~5MB totalt). Del dem separat i Messenger for å beholde dem permanent.</p>
-        <label class="upload-btn">
-          📷 Legg til bilder
-          <input type="file" id="photo-input" accept="image/*" multiple hidden>
-        </label>
-        <div id="photos-root" class="photos-grid"></div>
-      </div>
-
-    </div>
-  </section>
+  <!-- ===== MINNER (removed) ===== -->
 
 </main>
 
 <footer>
   <p>🐎 Den siste villhingsten · janinc.no/warszawa · Bygget av Jan · April 2026</p>
 </footer>
-
-<!-- Modal for fullscreen image -->
-<div id="img-modal" class="img-modal" hidden><img id="img-modal-img" alt=""><button id="img-modal-close" aria-label="Lukk">✕</button></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>

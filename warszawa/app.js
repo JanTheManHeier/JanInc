@@ -73,24 +73,58 @@ function initCountdown() {
 
 function renderProgram() {
   const root = $('#program-root');
+  const placeById = Object.fromEntries(PLACES.map(p => [p.id, p]));
   root.innerHTML = PROGRAM.map(day => `
     <div class="day-block">
       <div class="day-header"><h3>${day.day}</h3></div>
       <div class="timeline">
-        ${day.items.map((item, i) => `
+        ${day.items.map((item, i) => {
+          const place = item.placeId ? placeById[item.placeId] : null;
+          const linksHtml = place ? `
+            <div class="event-links">
+              <a href="#kart" class="event-link" data-place="${place.id}" title="Vis på kart">
+                <span class="el-icon">🗺️</span><span>Kart</span>
+              </a>
+              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name + ' Warszawa')}" target="_blank" rel="noopener" class="event-link" title="Google Maps">
+                <span class="el-icon">🌐</span><span>Google Maps</span>
+              </a>
+              ${place.ig ? `<a href="https://www.instagram.com/${place.ig}/" target="_blank" rel="noopener" class="event-link" title="Instagram">
+                <span class="el-icon">📸</span><span>Instagram</span>
+              </a>` : ''}
+            </div>` : '';
+          return `
           <div class="event ${item.status}" data-idx="${day.dayId}-${i}">
             <div class="event-time">${item.time}</div>
             <div class="event-body">
               <h4>${item.title}<span class="event-badge">${badgeText(item.status)}</span></h4>
               <p class="event-desc">${item.desc}</p>
+              ${linksHtml}
             </div>
-          </div>
-        `).join('')}
+          </div>`;
+        }).join('')}
       </div>
     </div>
   `).join('');
 
-  $$('.event', root).forEach(e => e.addEventListener('click', () => e.classList.toggle('open')));
+  $$('.event', root).forEach(e => e.addEventListener('click', ev => {
+    if (ev.target.closest('.event-link')) return;
+    e.classList.toggle('open');
+  }));
+
+  $$('.event-link[data-place]', root).forEach(a => a.addEventListener('click', ev => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const id = a.dataset.place;
+    location.hash = 'kart';
+    setTimeout(() => {
+      const entry = window._markers && window._markers[id];
+      const place = placeById[id];
+      if (entry && window._map && place) {
+        window._map.setView([place.lat, place.lng], 16);
+        entry.marker.openPopup();
+      }
+    }, 200);
+  }));
 }
 
 function badgeText(s) {
@@ -623,7 +657,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initCurrency();
   renderPhrases();
   renderEmergency();
-  initExpenses();
-  initNotes();
-  initPhotos();
 });
