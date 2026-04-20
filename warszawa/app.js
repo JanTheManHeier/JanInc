@@ -176,7 +176,7 @@ const CAT_ICONS = { hotel: '🏨', food: '🍽️', bar: '🍺', club: '🌃', c
 
 function initMap() {
   const map = L.map('map').setView([52.235, 21.010], 13);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; OpenStreetMap &copy; CARTO',
     maxZoom: 19
   }).addTo(map);
@@ -195,6 +195,67 @@ function initMap() {
 
   window._map = map;
   window._markers = markers;
+
+  // "Her er du nå"-prikk (pulserende blå)
+  let meMarker = null;
+  let meCircle = null;
+  const meIcon = L.divIcon({
+    className: 'me-marker',
+    html: '<div class="me-dot"><div class="me-pulse"></div></div>',
+    iconSize: [20, 20], iconAnchor: [10, 10]
+  });
+
+  function updateMe(lat, lng, acc) {
+    if (!meMarker) {
+      meMarker = L.marker([lat, lng], { icon: meIcon, zIndexOffset: 1000 }).addTo(map);
+      meMarker.bindPopup('Her er du nå 📍');
+      meCircle = L.circle([lat, lng], {
+        radius: acc || 30,
+        color: '#4a9eff', fillColor: '#4a9eff', fillOpacity: 0.12, weight: 1
+      }).addTo(map);
+    } else {
+      meMarker.setLatLng([lat, lng]);
+      meCircle.setLatLng([lat, lng]);
+      if (acc) meCircle.setRadius(acc);
+    }
+  }
+
+  if ('geolocation' in navigator) {
+    // Initial fix — zoom til brukeren hvis vi er i Warszawa-området
+    navigator.geolocation.getCurrentPosition(pos => {
+      const { latitude, longitude, accuracy } = pos.coords;
+      updateMe(latitude, longitude, accuracy);
+      // Hvis innenfor ~50km fra Warszawa, pan dit
+      const d = Math.hypot(latitude - 52.235, longitude - 21.010);
+      if (d < 0.6) map.setView([latitude, longitude], 14);
+    }, err => console.log('Geolocation:', err.message), {
+      enableHighAccuracy: true, timeout: 10000, maximumAge: 30000
+    });
+    // Live oppdatering
+    navigator.geolocation.watchPosition(pos => {
+      updateMe(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy);
+    }, null, { enableHighAccuracy: true, maximumAge: 10000 });
+  }
+
+  // "Senter på meg"-knapp
+  const locBtn = L.control({ position: 'topright' });
+  locBtn.onAdd = function() {
+    const btn = L.DomUtil.create('button', 'locate-btn');
+    btn.innerHTML = '📍';
+    btn.title = 'Senter på meg';
+    btn.onclick = () => {
+      if (meMarker) map.setView(meMarker.getLatLng(), 15);
+      else if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          updateMe(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy);
+          map.setView([pos.coords.latitude, pos.coords.longitude], 15);
+        });
+      }
+    };
+    L.DomEvent.disableClickPropagation(btn);
+    return btn;
+  };
+  locBtn.addTo(map);
 
   $$('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
     $$('.filter-btn').forEach(b => b.classList.remove('active'));

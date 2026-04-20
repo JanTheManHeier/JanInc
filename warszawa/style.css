@@ -23,7 +23,12 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 html, body {
   margin: 0; padding: 0;
@@ -34,6 +39,8 @@ html, body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  min-height: 100dvh;
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -42,6 +49,21 @@ body {
     radial-gradient(ellipse at bottom left, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
     linear-gradient(180deg, var(--bg-0), var(--bg-1));
   background-attachment: fixed;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* iOS-friendly tap + inputs */
+button, a, .tab, .chip, input, select, textarea, label {
+  touch-action: manipulation;
+}
+input, select, textarea {
+  font-size: 16px; /* prevent iOS zoom on focus */
+  font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 8px;
 }
 
 h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; letter-spacing: 0.02em; color: var(--ink); margin: 0 0 0.5em; }
@@ -59,13 +81,24 @@ a:hover { color: var(--ink); }
 .site-header {
   position: sticky; top: 0; z-index: 100;
   background: linear-gradient(180deg, rgba(10,8,7,0.95) 0%, rgba(10,8,7,0.85) 100%);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   padding: 1rem 2rem;
+  padding-top: calc(1rem + env(safe-area-inset-top));
+  padding-left: calc(2rem + env(safe-area-inset-left));
+  padding-right: calc(2rem + env(safe-area-inset-right));
 }
 
 .brand { display: flex; align-items: center; gap: 1rem; }
-.brand-mark { font-size: 2.5rem; filter: drop-shadow(0 0 8px var(--gold-glow)); }
+.brand-mark {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 16px var(--gold-glow), inset 0 0 0 1px rgba(0,0,0,0.4);
+  flex-shrink: 0;
+}
 .brand-title {
   font-family: var(--font-display);
   font-size: 1.5rem; font-weight: 900;
@@ -79,20 +112,29 @@ a:hover { color: var(--ink); }
 .tabs {
   display: flex; gap: 0.25rem;
   margin-top: 1rem;
-  flex-wrap: wrap;
   border-top: 1px solid var(--border);
   padding-top: 0.75rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
 }
+.tabs::-webkit-scrollbar { display: none; }
 .tab {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
+  min-height: 44px;
+  display: inline-flex; align-items: center;
   color: var(--ink-dim);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 500;
-  border-radius: 3px;
-  transition: all 0.2s;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
   position: relative;
+  white-space: nowrap;
+  flex-shrink: 0;
+  scroll-snap-align: start;
 }
 .tab:hover { color: var(--ink); background: rgba(212, 175, 55, 0.08); }
 .tab.active {
@@ -147,11 +189,13 @@ main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
   text-align: center;
 }
 .hero::before {
-  content: '🐎';
+  content: '';
   position: absolute;
-  font-size: 20rem; opacity: 0.04;
-  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  inset: 0;
+  background: url('images/logo-villhingsten.png') center/contain no-repeat;
+  opacity: 0.08;
   filter: blur(1px);
+  pointer-events: none;
 }
 .hero-inner { position: relative; }
 .hero-eyebrow {
@@ -495,6 +539,45 @@ main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 .leaflet-popup-tip { background: var(--gold); }
 .leaflet-popup-content { font-family: var(--font-body); }
 .leaflet-popup-content strong { color: var(--gold); }
+
+/* "Her er du nå"-prikk */
+.me-marker { background: transparent; border: none; }
+.me-dot {
+  position: relative;
+  width: 20px; height: 20px;
+  background: #4a9eff;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(74, 158, 255, 0.8), 0 2px 6px rgba(0,0,0,0.4);
+}
+.me-pulse {
+  position: absolute;
+  top: -3px; left: -3px;
+  width: 20px; height: 20px;
+  border: 3px solid #4a9eff;
+  border-radius: 50%;
+  animation: me-pulse 2s ease-out infinite;
+  opacity: 0;
+}
+@keyframes me-pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+/* Senter-på-meg-knapp */
+.locate-btn {
+  width: 40px; height: 40px;
+  background: var(--bg-2);
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  color: var(--gold);
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: center;
+  margin: 10px;
+}
+.locate-btn:hover { background: var(--gold); color: var(--bg-0); }
 
 /* ==========================================================
    UTFORDRINGER
