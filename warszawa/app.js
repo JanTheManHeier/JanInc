@@ -183,7 +183,7 @@ function renderPeople() {
   root.innerHTML = PEOPLE.map(p => `
     <div class="person ${p.isGroom ? 'groom' : ''}">
       <div class="person-head">
-        <img class="person-avatar" src="images/${p.id}.jpg" alt="${p.name}" onerror="this.style.display='none'">
+        <img class="person-avatar" src="/warszawa/images/${p.id}.jpg" alt="${p.name}" onerror="this.style.display='none'">
         <div>
           <h3 class="person-name">${p.name}</h3>
           <div class="person-role">${p.role}</div>
