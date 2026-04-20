@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="/warszawa/style.css?v=16">
+  <link rel="stylesheet" href="/warszawa/style.css?v=17">
 </head>
 <body>
 
@@ -74,7 +74,52 @@
         </div>
       </div>
       <audio id="song-audio" controls preload="metadata" src="/warszawa/den-siste-villhingsten.mp3"></audio>
-      <a class="btn btn-outline song-download" href="/warszawa/den-siste-villhingsten.mp3" download="Den siste villhingsten.mp3">⬇️ Last ned MP3</a>
+      <div class="song-actions">
+        <a class="btn btn-outline song-download" href="/warszawa/den-siste-villhingsten.mp3" download="Den siste villhingsten.mp3">⬇️ Last ned MP3</a>
+        <button type="button" class="btn btn-outline song-lyrics-toggle" id="song-lyrics-toggle" aria-expanded="false" aria-controls="song-lyrics">📜 Vis tekst</button>
+      </div>
+      <div class="song-lyrics" id="song-lyrics" hidden>
+        <div class="lyric-section">
+          <div class="lyric-head">Verse 1 — whispered, piano + acoustic guitar</div>
+          <p>Hei du Terje, gamle venn<br>
+          Nu e turen kommen igjen<br>
+          For et syn i stillheten har spiret<br>
+          Vegard ringte, Mikal booka<br>
+          Og det syn som brant seg fast i vår forstand<br>
+          Hestemann —<br>
+          I Warszawas stille land</p>
+        </div>
+        <div class="lyric-section">
+          <div class="lyric-head">Verse 2 — building, strings + light drums</div>
+          <p>Under neon og i drøm<br>
+          Rusla syv mann langs en strøm<br>
+          Ole leder ned mot rus og krus<br>
+          Gjennom byens gamle hus<br>
+          Alewino, Level 27, Vistula-kaj<br>
+          På den vei —<br>
+          Villhingsten sa ingenting</p>
+        </div>
+        <div class="lyric-section lyric-loud">
+          <div class="lyric-head">Verse 3 — FULL POWER, distorted guitars, pounding drums</div>
+          <p>Og i SPA'en så vi ham stå!<br>
+          Speedoen var sort og blå!<br>
+          IR-sjefen uten tall å dele<br>
+          Kvartalsrapporten byttet han mot helge<br>
+          Banken sover, Tromsø venter lengtende<br>
+          Men han sang —<br>
+          Til et stille Warszawa-land!</p>
+        </div>
+        <div class="lyric-section">
+          <div class="lyric-head">Breakdown — quiet again, just piano</div>
+          <p>Hei du Terje, gamle venn<br>
+          Nu e villhingsten tammet, endelig<br>
+          Silje, Iver, Lilly venter<br>
+          Milo logrer, fjellet renter<br>
+          Rypa ruger, Tromsø åpner sine armer<br>
+          For vår mann —<br>
+          Den siste villhingsten.</p>
+        </div>
+      </div>
     </div>
 
     <div class="cards">
@@ -309,6 +354,6 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="/warszawa/data.js?v=14"></script>
-<script src="/warszawa/app.js?v=16"></script>
+<script src="/warszawa/app.js?v=17"></script>
 </body>
 </html>

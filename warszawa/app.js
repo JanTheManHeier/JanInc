@@ -855,4 +855,17 @@ document.addEventListener('DOMContentLoaded', () => {
   renderEmergency();
   renderPacking();
   initSOS();
+  initSongLyrics();
 });
+
+function initSongLyrics() {
+  const btn = document.getElementById('song-lyrics-toggle');
+  const box = document.getElementById('song-lyrics');
+  if (!btn || !box) return;
+  btn.addEventListener('click', () => {
+    const open = !box.hidden;
+    box.hidden = open;
+    btn.setAttribute('aria-expanded', String(!open));
+    btn.textContent = open ? '📜 Vis tekst' : '📜 Skjul tekst';
+  });
+}

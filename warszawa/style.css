@@ -1387,3 +1387,42 @@ footer {
 @media (max-width: 500px) {
   .song-card .song-download { align-self: stretch; text-align: center; }
 }
+
+/* ===== Song lyrics ===== */
+.song-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.song-actions .btn {
+  font-size: 0.92rem;
+  padding: 8px 14px;
+}
+.song-lyrics {
+  margin-top: 6px;
+  padding: 16px 18px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 10px;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.song-lyrics[hidden] { display: none; }
+.lyric-section + .lyric-section { margin-top: 16px; }
+.lyric-head {
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-bottom: 6px;
+  font-style: italic;
+}
+.lyric-section p { margin: 0; }
+.lyric-section.lyric-loud p {
+  font-weight: 700;
+  color: #f1c96a;
+  text-shadow: 0 0 6px rgba(212,175,55,0.25);
+}
+@media (max-width: 500px) {
+  .song-actions .btn { flex: 1 1 auto; text-align: center; }
+}
