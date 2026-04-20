@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Den siste villhingsten · Warszawa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <span class="brand-mark">🐎</span>
+    <div>
+      <h1 class="brand-title">Den siste villhingsten</h1>
+      <div class="brand-sub">Terjes utdrikningslag · Warszawa · 23.–26. april 2026</div>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <a href="#hjem" class="tab active" data-tab="hjem">Hjem</a>
+    <a href="#program" class="tab" data-tab="program">Program</a>
+    <a href="#gjengen" class="tab" data-tab="gjengen">Gjengen</a>
+    <a href="#reise" class="tab" data-tab="reise">Reise</a>
+    <a href="#kart" class="tab" data-tab="kart">Kart</a>
+    <a href="#utfordringer" class="tab" data-tab="utfordringer">Utfordringer</a>
+    <a href="#verktoy" class="tab" data-tab="verktoy">Verktøy</a>
+    <a href="#minner" class="tab" data-tab="minner">Minner</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ===== HJEM ===== -->
+  <section id="hjem" class="panel active">
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="hero-eyebrow">« Den nydelige villhingsten av en mann »</div>
+        <h2 class="hero-title">Warszawa<br>kaller</h2>
+        <p class="hero-lede">
+          Terje skal tammes. Syv mann flyr fra Tromsø.<br>
+          Tre netter. Én helg. Evig minner.
+        </p>
+        <div id="countdown" class="countdown"></div>
+        <div class="hero-actions">
+          <a href="#program" class="btn btn-gold">Se programmet</a>
+          <a href="#utfordringer" class="btn btn-outline">Utfordringer til Terje</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">✈️</div>
+        <h3>Avreise</h3>
+        <p>Torsdag 23. april · <strong>06:00</strong><br>Tromsø → Oslo → København → Warszawa<br>Fremme <strong>14:25</strong></p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏨</div>
+        <h3>Hotell</h3>
+        <p><strong>Radisson Collection</strong><br>Grzybowska 24 · SPA/basseng/badstu<br><em>Husk speedoen 😏</em></p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🍸</div>
+        <h3>Fredag kveld</h3>
+        <p>Alewino → Middag → <strong>Level 27</strong><br>Rooftop-klubb, booket av Mikal</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🍺</div>
+        <h3>Lørdag</h3>
+        <p>Sykkel langs Vistula →<br><strong>Beermile</strong> med Ole<br>→ Middag siste kveld</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROGRAM ===== -->
+  <section id="program" class="panel">
+    <h2 class="section-title">Programmet</h2>
+    <p class="section-lede">Booket er booket. Forslag er forslag. Klikk for detaljer.</p>
+    <div id="program-root"></div>
+  </section>
+
+  <!-- ===== GJENGEN ===== -->
+  <section id="gjengen" class="panel">
+    <h2 class="section-title">Gjengen</h2>
+    <p class="section-lede">Åtte mann. Én villhingst.</p>
+    <div id="people-root" class="people-grid"></div>
+  </section>
+
+  <!-- ===== REISE ===== -->
+  <section id="reise" class="panel">
+    <h2 class="section-title">Reisen</h2>
+
+    <div class="reise-grid">
+      <div class="flight-card">
+        <h3>✈️ Utreise · Torsdag 23. april</h3>
+        <div class="flight-ref">Ref <strong>XNLJ6Z</strong> · SAS</div>
+        <div id="flights-out"></div>
+      </div>
+
+      <div class="flight-card">
+        <h3>🏠 Hjemreise · Søndag 26. april</h3>
+        <div id="flights-home"></div>
+      </div>
+
+      <div class="hotel-card">
+        <h3>🏨 Hotell</h3>
+        <h4>Radisson Collection Hotel, Warsaw</h4>
+        <p class="muted">Grzybowska 24, 00-132 Warszawa</p>
+        <ul>
+          <li>SPA-avdeling, basseng og badstu</li>
+          <li>Frokost inkludert</li>
+          <li>Ca 3700 NOK pp for hele oppholdet</li>
+          <li>Booket av Vegard (inkl. Terjes andel)</li>
+        </ul>
+        <p class="muted small">«Hotellet har også SPA avdeling/Basseng/Badstu noe Terje ikke er fremmed for 😉 husk speedoen.» — Vegard</p>
+      </div>
+
+      <div class="practical-card">
+        <h3>💡 Praktisk</h3>
+        <ul>
+          <li><strong>Valuta:</strong> Polsk zloty (PLN). Ca 1 NOK ≈ 0,38 PLN</li>
+          <li><strong>Transport:</strong> Bolt/Uber — billig, ca 40-60 zł flyplass→sentrum</li>
+          <li><strong>Tipping:</strong> ~10% på restaurant</li>
+          <li><strong>Vær (april):</strong> 8–15 °C, lett jakke anbefales</li>
+          <li><strong>Strøm:</strong> Samme som Norge (Type C/E)</li>
+          <li><strong>Språk:</strong> Polsk. Engelsk ok i sentrum</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KART ===== -->
+  <section id="kart" class="panel">
+    <h2 class="section-title">Kart</h2>
+    <p class="section-lede">Alle stoppene. Klikk på pinnene.</p>
+    <div class="map-filters" id="map-filters">
+      <button class="filter-btn active" data-cat="all">Alle</button>
+      <button class="filter-btn" data-cat="hotel">🏨 Hotell</button>
+      <button class="filter-btn" data-cat="food">🍽️ Mat</button>
+      <button class="filter-btn" data-cat="bar">🍺 Barer</button>
+      <button class="filter-btn" data-cat="club">🌃 Klubber</button>
+      <button class="filter-btn" data-cat="cafe">☕ Kafé</button>
+      <button class="filter-btn" data-cat="sight">⭐ Severdigheter</button>
+    </div>
+    <div id="map"></div>
+  </section>
+
+  <!-- ===== UTFORDRINGER ===== -->
+  <section id="utfordringer" class="panel">
+    <h2 class="section-title">Utfordringer til Terje</h2>
+    <p class="section-lede">Huk av etterhvert. Lagres i nettleseren. <span class="tag-crude">C</span> = litt crude.</p>
+    <div class="challenge-stats" id="challenge-stats"></div>
+    <div id="challenges-root"></div>
+  </section>
+
+  <!-- ===== VERKTØY ===== -->
+  <section id="verktoy" class="panel">
+    <h2 class="section-title">Verktøy</h2>
+
+    <div class="tools-grid">
+
+      <div class="tool-card">
+        <h3>🌤️ Vær i Warszawa</h3>
+        <div id="weather"></div>
+      </div>
+
+      <div class="tool-card">
+        <h3>💱 NOK ↔ PLN</h3>
+        <div class="currency-widget">
+          <label>NOK <input type="number" id="nok-input" value="1000" step="50"></label>
+          <div class="arrow">↓</div>
+          <label>PLN <input type="number" id="pln-input" readonly></label>
+          <div class="currency-note">
+            Rate: <span id="rate-display">0.38</span> PLN per NOK
+            <button id="rate-edit" class="mini-btn">Juster</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card wide">
+        <h3>🇵🇱 Polsk parlør</h3>
+        <div id="phrases-root"></div>
+      </div>
+
+      <div class="tool-card wide">
+        <h3>🆘 Nødinfo</h3>
+        <div id="emergency-root"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== MINNER ===== -->
+  <section id="minner" class="panel">
+    <h2 class="section-title">Minner</h2>
+
+    <div class="minner-grid">
+
+      <div class="memory-card">
+        <h3>💸 Spleis / budsjett</h3>
+        <form id="expense-form">
+          <input type="text" id="exp-desc" placeholder="Hva (f.eks. lunsj Hala Koszyki)" required>
+          <input type="number" id="exp-amount" placeholder="Beløp" step="0.01" required>
+          <select id="exp-currency">
+            <option value="PLN">PLN</option>
+            <option value="NOK">NOK</option>
+          </select>
+          <input type="text" id="exp-who" placeholder="Hvem betalte" required>
+          <button type="submit" class="btn btn-gold small">+ Legg til</button>
+        </form>
+        <div id="expenses-list"></div>
+        <div id="expenses-summary" class="expenses-summary"></div>
+      </div>
+
+      <div class="memory-card">
+        <h3>📝 Notater per dag</h3>
+        <div class="day-select">
+          <button class="day-btn active" data-day="torsdag">Tor</button>
+          <button class="day-btn" data-day="fredag">Fre</button>
+          <button class="day-btn" data-day="lordag">Lør</button>
+          <button class="day-btn" data-day="sondag">Søn</button>
+        </div>
+        <textarea id="notes-area" placeholder="Skriv ned det dere ikke må glemme…"></textarea>
+        <div class="notes-footer">
+          <span id="notes-status" class="muted small">Lagres automatisk</span>
+        </div>
+      </div>
+
+      <div class="memory-card wide">
+        <h3>📸 Bildegalleri</h3>
+        <p class="muted small">Bilder lagres lokalt i nettleseren din (max ~5MB totalt). Del dem separat i Messenger for å beholde dem permanent.</p>
+        <label class="upload-btn">
+          📷 Legg til bilder
+          <input type="file" id="photo-input" accept="image/*" multiple hidden>
+        </label>
+        <div id="photos-root" class="photos-grid"></div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>🐎 Den siste villhingsten · janinc.no/warszawa · Bygget av Jan · April 2026</p>
+</footer>
+
+<!-- Modal for fullscreen image -->
+<div id="img-modal" class="img-modal" hidden><img id="img-modal-img" alt=""><button id="img-modal-close" aria-label="Lukk">✕</button></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
