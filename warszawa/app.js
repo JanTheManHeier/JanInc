@@ -458,15 +458,23 @@ function initCurrency() {
 
   function applyRate(r) {
     $('#rate-display').textContent = r.toFixed(3);
-    convert();
+    fromNok(); // initial render basert på NOK-feltet
   }
 
-  function convert() {
-    const nok = parseFloat($('#nok-input').value) || 0;
+  function fromNok() {
+    const nok = parseFloat($('#nok-input').value);
+    if (isNaN(nok)) { $('#pln-input').value = ''; return; }
     $('#pln-input').value = (nok * rate).toFixed(2);
   }
 
-  $('#nok-input').addEventListener('input', convert);
+  function fromPln() {
+    const pln = parseFloat($('#pln-input').value);
+    if (isNaN(pln)) { $('#nok-input').value = ''; return; }
+    $('#nok-input').value = (pln / rate).toFixed(2);
+  }
+
+  $('#nok-input').addEventListener('input', fromNok);
+  $('#pln-input').addEventListener('input', fromPln);
   $('#rate-edit').addEventListener('click', () => {
     const v = prompt('Ny PLN-rate (PLN per 1 NOK):', rate);
     if (v && !isNaN(parseFloat(v))) {

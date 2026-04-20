@@ -202,9 +202,9 @@
       <div class="tool-card">
         <h3>💱 NOK ↔ PLN</h3>
         <div class="currency-widget">
-          <label>NOK <input type="number" id="nok-input" value="1000" step="50"></label>
-          <div class="arrow">↓</div>
-          <label>PLN <input type="number" id="pln-input" readonly></label>
+          <label>NOK <input type="number" id="nok-input" value="1000" step="50" inputmode="decimal"></label>
+          <div class="arrow">↕</div>
+          <label>PLN <input type="number" id="pln-input" value="380" step="50" inputmode="decimal"></label>
           <div class="currency-note">
             Rate: <span id="rate-display">0.38</span> PLN per NOK
             <button id="rate-edit" class="mini-btn">Juster</button>
@@ -235,7 +235,7 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script src="/warszawa/data.js?v=11"></script>
-<script src="/warszawa/app.js?v=11"></script>
+<script src="/warszawa/data.js?v=12"></script>
+<script src="/warszawa/app.js?v=12"></script>
 </body>
 </html>
