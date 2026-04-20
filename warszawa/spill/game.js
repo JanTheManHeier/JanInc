@@ -13,7 +13,7 @@
   const LANES = 3;
   const LANE_X = [0.2, 0.5, 0.8];     // fraksjon av bredden
   const PLAYER_Y_FRAC = 0.78;          // hvor Terje står (fra topp)
-  const BASE_SPEED = 0.00028;          // world-units/ms — ramp over tid
+  const BASE_SPEED = 0.00031;          // world-units/ms — ramp over tid (+10% fra 0.00028)
   const SPAWN_START = 1600;            // ms mellom fiender i start
   const SPAWN_MIN = 700;
   const GATE_INTERVAL = 9500;          // ms mellom gate-trioer
@@ -45,6 +45,10 @@
   let particles = [];
   let scrollY = 0;                    // bakgrunn-parallax
   let churchSpawned = false;
+  let sideProps = [];                 // {side:-1|1, y, kind, jitter}
+  let nextProp = 0;
+
+  const PROP_KINDS = ['tree', 'house', 'lamp', 'pine', 'building'];
 
   // --- Sizing -----------------------------------------------
   function resize() {
@@ -126,6 +130,8 @@
     entities = [];
     particles = [];
     floaters = [];
+    sideProps = [];
+    nextProp = 600;
     terje = { lane: 1, targetLane: 1, laneOffset: 0, crew: 3, rings: 0, hits: 0,
               invincibleUntil: performance.now() + 2000, speedBoostUntil: 0, shake: 0 };
     elapsed = 0;
@@ -357,6 +363,17 @@
     // Beveg entities
     const speed = BASE_SPEED * speedMul * dt;
     scrollY += speed * 800;
+
+    // Spawn side-scenery (trær, hus, lyktestolper)
+    if (now - startTime > nextProp) {
+      nextProp = now - startTime + 260 + Math.random() * 280;
+      const side = Math.random() < 0.5 ? -1 : 1;
+      const kind = PROP_KINDS[Math.floor(Math.random() * PROP_KINDS.length)];
+      sideProps.push({ side, y: -0.05, kind, jitter: (Math.random() - 0.5) * 0.06 });
+    }
+    for (const p of sideProps) p.y += speed;
+    sideProps = sideProps.filter(p => p.y < 1.25);
+
     for (const e of entities) {
       e.y += speed;
       // Kollisjon: terje er ved ~0.78. Hitbox når y i [0.73, 0.83] og samme lane
@@ -407,6 +424,7 @@
     ctx.fillRect(0, 0, W, H);
     drawRoad();
     drawSkyline();
+    drawSideProps();
 
     // Entities (bakerste først)
     const sorted = entities.slice().sort((a, b) => a.y - b.y);
@@ -447,7 +465,7 @@
 
   function drawRoad() {
     // Gulv — gylden sti som forsvinner i horisonten
-    const horizonY = H * 0.3;
+    const horizonY = H * 0.22;
     const grad = ctx.createLinearGradient(0, horizonY, 0, H);
     grad.addColorStop(0, '#1a1208');
     grad.addColorStop(0.4, '#2a1a0c');
@@ -483,7 +501,7 @@
 
   function drawSkyline() {
     // Palace of Culture silhouette (forenklet) + domes
-    const y = H * 0.3;
+    const y = H * 0.22;
     ctx.fillStyle = '#0d0a08';
     // Bygning 1 — venstre
     ctx.fillRect(W * 0.05, y - 50, W * 0.15, 50);
@@ -582,7 +600,7 @@
 
   function yToScreen(yFrac) {
     // Lineær 3D-ish: yFrac 0 = horisont, 1 = nederst (ved Terje)
-    const horizonY = H * 0.3;
+    const horizonY = H * 0.22;
     return horizonY + yFrac * (H - horizonY);
   }
 
@@ -590,6 +608,109 @@
     const xBottom = LANE_X[lane] * W;
     const xTop = W / 2 + (xBottom - W / 2) * 0.25;
     return xTop + (xBottom - xTop) * yFrac;
+  }
+
+  // Perspektivisk X for objekter utenfor veien (side-scenery)
+  // frac < 0 = venstre av vei, > 1 = høyre av vei
+  function sideXPersp(frac, yFrac) {
+    const xBottom = frac * W;
+    const xTop = W / 2 + (xBottom - W / 2) * 0.22;
+    return xTop + (xBottom - xTop) * yFrac;
+  }
+
+  function drawSideProps() {
+    // Sorter bakerste først
+    const sorted = sideProps.slice().sort((a, b) => a.y - b.y);
+    for (const p of sorted) {
+      if (p.y < 0 || p.y > 1.2) continue;
+      // Frac: venstre-siden rett utenfor vei, glir utover til off-screen nederst
+      const frac = p.side < 0 ? (-0.12 + p.jitter) : (1.12 + p.jitter);
+      const x = sideXPersp(frac, p.y);
+      const y = yToScreen(p.y);
+      const scale = 0.25 + p.y * 1.4;
+      drawProp(x, y, scale, p.kind);
+    }
+  }
+
+  function drawProp(x, y, scale, kind) {
+    ctx.save();
+    if (kind === 'tree' || kind === 'pine') {
+      // Bar-tre: mørk grønn silhuett
+      const h = 70 * scale;
+      const w = 28 * scale;
+      ctx.fillStyle = '#3a2510';
+      ctx.fillRect(x - 2 * scale, y - 6 * scale, 4 * scale, 14 * scale); // stamme
+      ctx.fillStyle = kind === 'pine' ? '#1a3820' : '#244a24';
+      ctx.beginPath();
+      ctx.moveTo(x, y - h);
+      ctx.lineTo(x - w / 2, y - h * 0.45);
+      ctx.lineTo(x - w / 3, y - h * 0.45);
+      ctx.lineTo(x - w / 1.5, y - 5 * scale);
+      ctx.lineTo(x + w / 1.5, y - 5 * scale);
+      ctx.lineTo(x + w / 3, y - h * 0.45);
+      ctx.lineTo(x + w / 2, y - h * 0.45);
+      ctx.closePath();
+      ctx.fill();
+    } else if (kind === 'house') {
+      // Hytte med saltak
+      const w = 52 * scale;
+      const h = 40 * scale;
+      ctx.fillStyle = '#2a1f15';
+      ctx.fillRect(x - w / 2, y - h, w, h);
+      // Tak
+      ctx.fillStyle = '#1a1208';
+      ctx.beginPath();
+      ctx.moveTo(x - w / 2 - 4 * scale, y - h);
+      ctx.lineTo(x, y - h - 22 * scale);
+      ctx.lineTo(x + w / 2 + 4 * scale, y - h);
+      ctx.closePath();
+      ctx.fill();
+      // Vindu
+      ctx.fillStyle = 'rgba(212, 175, 55, 0.7)';
+      ctx.fillRect(x - w * 0.2, y - h * 0.65, w * 0.2, h * 0.3);
+    } else if (kind === 'building') {
+      // Bygård
+      const w = 60 * scale;
+      const h = 95 * scale;
+      ctx.fillStyle = '#1a1208';
+      ctx.fillRect(x - w / 2, y - h, w, h);
+      // Vinduer i grid
+      ctx.fillStyle = 'rgba(212, 175, 55, 0.6)';
+      const cols = 3, rows = 5;
+      const pw = w * 0.18, ph = h * 0.1;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          if (Math.random() < 0.75) {
+            const wx = x - w / 2 + (c + 0.5) * (w / cols) - pw / 2;
+            const wy = y - h + (r + 0.3) * (h / rows);
+            ctx.fillRect(wx, wy, pw, ph);
+          }
+        }
+      }
+    } else if (kind === 'lamp') {
+      // Gatelykt
+      const h = 80 * scale;
+      ctx.strokeStyle = '#2a1f15';
+      ctx.lineWidth = 3 * scale;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x, y - h);
+      ctx.stroke();
+      // Lampehode
+      ctx.fillStyle = '#d4af37';
+      ctx.beginPath();
+      ctx.arc(x, y - h, 6 * scale, 0, Math.PI * 2);
+      ctx.fill();
+      // Glow
+      const grad = ctx.createRadialGradient(x, y - h, 0, x, y - h, 40 * scale);
+      grad.addColorStop(0, 'rgba(212, 175, 55, 0.4)');
+      grad.addColorStop(1, 'rgba(212, 175, 55, 0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(x, y - h, 40 * scale, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
   }
 
   function drawDame(e) {
