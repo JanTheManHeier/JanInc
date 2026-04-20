@@ -58,6 +58,8 @@ function initTabs() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
   tabs.forEach(t => t.addEventListener('click', e => {
+    // Eksterne tabs (f.eks. spillet) — la nettleseren navigere
+    if (t.classList.contains('tab-ext')) return;
     e.preventDefault();
     location.hash = t.dataset.tab;
     showTab(t.dataset.tab);

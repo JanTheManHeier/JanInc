@@ -1133,3 +1133,8 @@ footer {
 .game-cta small { display: block; color: var(--ink-dim); font-size: 0.85rem; margin-top: 0.2rem; }
 .game-cta-arrow { margin-left: auto; color: var(--gold); font-size: 1.4rem; }
 
+
+/* Spill-tab — gyllen aksent */
+.tab.tab-ext .tab-ic { filter: drop-shadow(0 0 6px var(--gold-glow)); }
+.tab.tab-ext .tab-lbl { color: var(--gold); font-weight: 600; }
+
