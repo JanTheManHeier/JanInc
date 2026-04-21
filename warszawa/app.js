@@ -1036,7 +1036,7 @@ function initFlightMap() {
 
 function scrollProgramToNext() {
   const root = $('#program-root');
-  if (!root || !window.PROGRAM) return;
+  if (!root || typeof PROGRAM === 'undefined') return;
   const now = new Date();
   // Find first item whose timestamp is in the future (or the same day as today)
   let targetEl = null;
