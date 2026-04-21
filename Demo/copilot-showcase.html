@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copilot CLI Showcase — AI-Assisted Development</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-glow: rgba(88, 166, 255, 0.15);
+      --green: #3fb950;
+      --green-dim: rgba(63, 185, 80, 0.12);
+      --purple: #bc8cff;
+      --purple-dim: rgba(188, 140, 255, 0.12);
+      --orange: #f0883e;
+      --orange-dim: rgba(240, 136, 62, 0.12);
+      --pink: #f778ba;
+      --pink-dim: rgba(247, 120, 186, 0.12);
+      --yellow: #d29922;
+      --yellow-dim: rgba(210, 153, 34, 0.12);
+      --cyan: #39d2c0;
+      --cyan-dim: rgba(57, 210, 192, 0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+      background: linear-gradient(180deg, rgba(88,166,255,0.08) 0%, transparent 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-glow);
+      border: 1px solid rgba(88,166,255,0.25);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      max-width: 650px;
+      margin: 0 auto 2rem;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat .num {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .hero-stat .label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Category nav */
+    .cat-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .cat-nav a {
+      padding: 0.4rem 1rem;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .cat-nav a:hover {
+      color: var(--text);
+      background: var(--surface);
+      border-color: var(--border);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section {
+      padding: 4rem 0 2rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .section-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .section-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .section-header .count {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: var(--surface);
+      padding: 0.15rem 0.6rem;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 30px rgba(88,166,255,0.08);
+    }
+    .card-body {
+      padding: 1.5rem;
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      border: 1px solid;
+    }
+    .tag-blue { color: var(--accent); border-color: rgba(88,166,255,0.3); background: var(--accent-glow); }
+    .tag-green { color: var(--green); border-color: rgba(63,185,80,0.3); background: var(--green-dim); }
+    .tag-purple { color: var(--purple); border-color: rgba(188,140,255,0.3); background: var(--purple-dim); }
+    .tag-orange { color: var(--orange); border-color: rgba(240,136,62,0.3); background: var(--orange-dim); }
+    .tag-pink { color: var(--pink); border-color: rgba(247,120,186,0.3); background: var(--pink-dim); }
+    .tag-yellow { color: var(--yellow); border-color: rgba(210,153,34,0.3); background: var(--yellow-dim); }
+    .tag-cyan { color: var(--cyan); border-color: rgba(57,210,192,0.3); background: var(--cyan-dim); }
+
+    /* Screenshots */
+    .screenshots {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .screenshots.single { grid-template-columns: 1fr; max-width: 480px; }
+    .screenshots.duo { grid-template-columns: 1fr 1fr; }
+    .screenshots.trio { grid-template-columns: 1fr 1fr 1fr; }
+    .screenshot-wrap {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #000;
+    }
+    .screenshot-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .screenshot-wrap:hover img { transform: scale(1.02); }
+    .screenshot-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.4rem 0.6rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+      font-size: 0.7rem;
+      color: #ccc;
+    }
+
+    .highlights {
+      list-style: none;
+      padding: 0;
+    }
+    .highlights li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding: 0.3rem 0;
+      padding-left: 1.4rem;
+      position: relative;
+    }
+    .highlights li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.7rem;
+    }
+
+    .compliance {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: 99px;
+      margin-top: 0.5rem;
+    }
+    .compliance-safe {
+      color: var(--green);
+      background: var(--green-dim);
+      border: 1px solid rgba(63,185,80,0.25);
+    }
+    .compliance-redact {
+      color: var(--yellow);
+      background: var(--yellow-dim);
+      border: 1px solid rgba(210,153,34,0.25);
+    }
+
+    .terminal-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(8px);
+      cursor: zoom-out;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: 0 0 60px rgba(0,0,0,0.5);
+    }
+
+    @media (max-width: 700px) {
+      .screenshots.duo, .screenshots.trio { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">GitHub Copilot CLI</div>
+    <h1>AI-Assisted Development<br>Showcase</h1>
+    <p>Real examples of AI building complete applications, automating workflows, and generating structured output — all from natural language prompts in the terminal.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">12</div>
+        <div class="label">Projects Built</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">40+</div>
+        <div class="label">Sessions</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">7</div>
+        <div class="label">Categories</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">100%</div>
+        <div class="label">Compliance Safe</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category nav -->
+  <nav class="cat-nav">
+    <a href="#full-apps">🚀 Full Apps</a>
+    <a href="#live-research">🔬 Live Research</a>
+    <a href="#realtime">⚡ Real-Time</a>
+    <a href="#domain-expert">🧠 Domain Expert</a>
+    <a href="#graph-integration">📊 Graph + API</a>
+    <a href="#ux-iteration">🎨 UX Iteration</a>
+    <a href="#utilities">🛠️ Utility Apps</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- ============================================ -->
+    <!-- CATEGORY 1: FULL APPS FROM SCRATCH -->
+    <!-- ============================================ -->
+    <section class="section" id="full-apps">
+      <div class="section-header">
+        <div class="section-icon" style="background: var(--accent-glow); color: var(--accent);">🚀</div>
+        <h2>Complete Apps Built from Scratch</h2>
+        <span class="count">3 examples</span>
+      </div>
+
+      <div class="card-grid">
+
+        <!-- Warsaw -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">🇵🇱 Warsaw Bachelor Party App</div>
+            <div class="card-subtitle">One prompt → 8-tab mobile app with games, maps, and emergency features</div>
+            <div class="tags">
+              <span class="tag tag-blue">Vanilla JS</span>
+              <span class="tag tag-green">PWA</span>
+              <span class="tag tag-purple">Leaflet Maps</span>
+              <span class="tag tag-orange">Canvas Game Engine</span>
+              <span class="tag tag-pink">Bilingual NO/EN</span>
+            </div>
+            <div class="screenshots duo">
+              <div class="screenshot-wrap">
+                <img src="screenshots/warszawa.png" alt="Warsaw app home" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Home — countdown, audio player, dark gold theme</div>
+              </div>
+              <div class="screenshot-wrap">
+                <img src="screenshots/game.png" alt="In-game" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Canvas game — 3-lane runner with gates &amp; dancers</div>
+              </div>
+            </div>
+            <ul class="highlights">
+              <li>Complete 8-tab SPA: countdown, participants, map, challenges, packing, currency, game, SOS</li>
+              <li>Canvas game engine with perspective lanes, touch controls, +3/-3 gates, emoji obstacles</li>
+              <li>Built-in audio player with custom theme song, NOK↔PLN currency calculator</li>
+              <li>iPhone PWA optimized with safe-area-inset padding &amp; bottom tab bar</li>
+            </ul>
+            <span class="compliance compliance-redact">⚠️ Blur participant names before sharing</span>
+          </div>
+        </div>
+
+        <!-- SpisSlank -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">🥗 SpisSlank — Weight Loss Science App</div>
+            <div class="card-subtitle">AI researched 7 drugs × 8 hormonal pathways → built a personalized meal planner</div>
+            <div class="tags">
+              <span class="tag tag-blue">Vanilla JS</span>
+              <span class="tag tag-green">PWA</span>
+              <span class="tag tag-purple">Radar Charts</span>
+              <span class="tag tag-orange">Carnivore Mode</span>
+              <span class="tag tag-pink">Bilingual NO/EN</span>
+            </div>
+            <div class="screenshots single">
+              <div class="screenshot-wrap">
+                <img src="screenshots/spisslank.png" alt="SpisSlank daily view" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Daily meal plan with radar chart, pathway tags, ingredients &amp; science</div>
+              </div>
+            </div>
+            <ul class="highlights">
+              <li>Deep research: 7 drugs (Ozempic, Mounjaro, Retatrutide…) across 8 hormonal pathways</li>
+              <li>8-axis radar chart shows 41% pathway coverage, updates live when swapping meals</li>
+              <li>Each meal shows pathway tags (GLP-1, Ghrelin↓, Insulinstabilitet), cook time, ingredients</li>
+              <li>"Hvorfor dette virker" — explains the science behind each meal (Betaglukan → GLP-1)</li>
+              <li>Carnivore mode toggle: parallel 30-meal system with ketosis/mTOR mechanisms</li>
+              <li>Bottom nav: I dag, Uke, Handel, Vitenskap, Innstillinger</li>
+            </ul>
+            <span class="compliance compliance-safe">✓ Compliance safe — public nutrition data only</span>
+          </div>
+        </div>
+
+        <!-- Babynavn -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">👶 Babynavn — Tinder-Style Name Picker</div>
+            <div class="card-subtitle">Swipe voting with Elo tournament for expecting parents (French + Norwegian)</div>
+            <div class="tags">
+              <span class="tag tag-blue">Vanilla JS</span>
+              <span class="tag tag-green">Azure SQL</span>
+              <span class="tag tag-purple">Elo Algorithm</span>
+              <span class="tag tag-pink">FR + NO + EN</span>
+            </div>
+            <div class="screenshots single">
+              <div class="screenshot-wrap">
+                <img src="screenshots/babynavn.png" alt="Babynavn landing" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Landing page — choose FR or NO profile, 200 curated names</div>
+              </div>
+            </div>
+            <ul class="highlights">
+              <li>200 curated girl names compatible with French + Norwegian naming conventions</li>
+              <li>Swipe gestures with heart animations, localStorage-first for instant feedback</li>
+              <li>Head-to-head tournament with Elo ranking (K=32, Swiss-style pairing)</li>
+              <li>Partner matching view: "Are we agreed?" comparison across both profiles</li>
+            </ul>
+            <span class="compliance compliance-safe">✓ Compliance safe — personal family project</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CATEGORY 2: LIVE RESEARCH → OUTPUT -->
+    <!-- ============================================ -->
+    <section class="section" id="live-research">
+      <div class="section-header">
+        <div class="section-icon" style="background: var(--purple-dim); color: var(--purple);">🔬</div>
+        <h2>Multi-Step Research → Structured Output</h2>
+        <span class="count">1 example</span>
+      </div>
+
+      <div class="card-grid">
+
+        <!-- Cedra -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">🎤 Cedra Live Demo — Grant Application</div>
+            <div class="card-subtitle">Live on stage in Tromsø: one prompt → research → analysis → PDF → email, all in 5 minutes</div>
+            <div class="tags">
+              <span class="tag tag-purple">Playwright</span>
+              <span class="tag tag-blue">Web Research</span>
+              <span class="tag tag-green">PDF Generation</span>
+              <span class="tag tag-orange">Outlook Integration</span>
+              <span class="tag tag-cyan">Live Demo</span>
+            </div>
+            <div class="card-desc">
+              Presented at the Cedra opening in Tromsø, March 2026 for an SMB customer audience. A single prompt asked the AI to research 
+              a ski lift foundation (Sparebankstiftelsen SpareBank 1 Nord-Norge), analyze grant chances for BakOlsen skitrekk, 
+              write a formal application, and email the PDF — all live on stage.
+            </div>
+            <div class="terminal-block">
+              <span style="color: var(--green);">$</span> <span style="color: var(--text);">copilot</span><br>
+              <span style="color: var(--accent);">&gt;</span> Jeg skal ha møte med Kristina Antonsen i Sparebankstiftelsen SpareBank 1 
+              Nord-Norge. Jeg sitter i styret til BakOlsen skitrekk og vi trenger støtte 
+              til ny heis. Research Sparebankstiftelsen og BakOlsen, vurder sjansen for 
+              å få støtte, hvor mye vi bør be om, hva er risikoen, hvorfor vil søknaden 
+              bli godkjent og hvorfor ikke. Lag søknaden som en PDF og send den til meg når den er ferdig.
+            </div>
+            <ul class="highlights">
+              <li><strong>Step 1:</strong> Playwright opens Sparebankstiftelsen website → reads grant guidelines, amounts, deadlines</li>
+              <li><strong>Step 2:</strong> Playwright opens BakOlsen.no → reads history, current infrastructure, user numbers</li>
+              <li><strong>Step 3:</strong> Playwright opens Brønnøysundregistrene → fetches official organization data</li>
+              <li><strong>Step 4:</strong> AI analyzes fit, estimates approval probability, recommends amount</li>
+              <li><strong>Step 5:</strong> Generates formal PDF grant application</li>
+              <li><strong>Step 6:</strong> Sends completed PDF via Outlook email</li>
+            </ul>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem;">
+              📂 Includes: reveal.js slide deck, teleprompter app, cached research data, backup PDF
+            </p>
+            <span class="compliance compliance-redact">⚠️ Blur email address before sharing</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CATEGORY 3: REAL-TIME FEATURES -->
+    <!-- ============================================ -->
+    <section class="section" id="realtime">
+      <div class="section-header">
+        <div class="section-icon" style="background: var(--orange-dim); color: var(--orange);">⚡</div>
+        <h2>Real-Time Multi-User Systems</h2>
+        <span class="count">1 example</span>
+      </div>
+
+      <div class="card-grid">
+
+        <!-- Escape Room -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">🔐 Escape Room Management System</div>
+            <div class="card-subtitle">Socket.IO multi-room system with admin panel, live countdown, analytics, and 261 tests</div>
+            <div class="tags">
+              <span class="tag tag-blue">Next.js 16</span>
+              <span class="tag tag-green">Socket.IO</span>
+              <span class="tag tag-purple">Prisma + PostgreSQL</span>
+              <span class="tag tag-orange">261 Tests</span>
+              <span class="tag tag-pink">Azure App Service</span>
+            </div>
+            <div class="screenshots duo">
+              <div class="screenshot-wrap">
+                <img src="screenshots/escaperoom-display.png" alt="Display client" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Display client — live countdown with room branding</div>
+              </div>
+              <div class="screenshot-wrap">
+                <img src="screenshots/escaperoom-admin.png" alt="Admin panel" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Admin panel — room control, timer, messages, status</div>
+              </div>
+            </div>
+            <ul class="highlights">
+              <li>Real-time sync between admin panel + display screen via Socket.IO</li>
+              <li>Display shows branded countdown with "● Live" indicator, bilingual welcome messages</li>
+              <li>Admin controls: timer, messages, video, background — all sync instantly</li>
+              <li>Puzzle tracking with progress bar, analytics dashboard with heatmaps</li>
+              <li>Post-game: Canvas-rendered certificate, 5-star rating, confetti animation</li>
+              <li>Hints system with auto-translation to 6 languages (Azure Translator)</li>
+              <li>261 passing unit tests covering sockets, API auth, React components</li>
+            </ul>
+            <span class="compliance compliance-safe">✓ Compliance safe — customer-facing entertainment app</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CATEGORY 4: DOMAIN EXPERT -->
+    <!-- ============================================ -->
+    <section class="section" id="domain-expert">
+      <div class="section-header">
+        <div class="section-icon" style="background: var(--yellow-dim); color: var(--yellow);">🧠</div>
+        <h2>AI as Domain Expert</h2>
+        <span class="count">3 examples</span>
+      </div>
+
+      <div class="card-grid">
+
+        <!-- NorskSkatt -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">🇳🇴 NorskSkatt — Stock Tax Calculator</div>
+            <div class="card-subtitle">AI implemented Norwegian tax law: FIFO, skjermingsfradrag, oppjusteringsfaktor → RF-1159 form</div>
+            <div class="tags">
+              <span class="tag tag-blue">Vanilla JS</span>
+              <span class="tag tag-green">Norwegian Tax Law</span>
+              <span class="tag tag-purple">FIFO Engine</span>
+              <span class="tag tag-orange">CSV Parsing</span>
+              <span class="tag tag-yellow">RF-1159 Form</span>
+            </div>
+            <div class="screenshots single">
+              <div class="screenshot-wrap">
+                <img src="screenshots/norskskatt.png" alt="NorskSkatt" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Tax settings + Fidelity CSV upload with 24 parsed sales</div>
+              </div>
+            </div>
+            <ul class="highlights">
+              <li>Upload Fidelity stock sale CSV → automatic FIFO lot matching with cost basis in USD &amp; NOK</li>
+              <li>Norwegian flag header with 4-tab interface: Aksjesalg, Fradrag, Skattemelding, Oversikt</li>
+              <li>Configurable tax parameters: skjermingsrente 3.2%, oppjusteringsfaktor 1.72, skattesats 22%</li>
+              <li>Skjermingsfradrag calculated per lot with accumulation of unused shielding forward</li>
+              <li>Currency conversion using actual transfer rates or Norges Bank official rates</li>
+              <li>RF-1159 form output with ISIN lookup for major stocks (MSFT, AAPL, NVDA…)</li>
+              <li>Tax deductions checklist (home office, union fees, travel, etc.)</li>
+            </ul>
+            <span class="compliance compliance-redact">⚠️ Blur any real stock sale amounts if visible</span>
+          </div>
+        </div>
+
+        <!-- Piggtind -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">⛷️ Piggtind — Ski Touring Tracker</div>
+            <div class="card-subtitle">Trip tracking with MapLibre maps, avalanche overlays, and summit logging</div>
+            <div class="tags">
+              <span class="tag tag-blue">React</span>
+              <span class="tag tag-green">MapLibre GL</span>
+              <span class="tag tag-purple">NVE Avalanche API</span>
+              <span class="tag tag-orange">PostGIS</span>
+              <span class="tag tag-cyan">Strava Sync</span>
+            </div>
+            <div class="screenshots duo">
+              <div class="screenshot-wrap">
+                <img src="screenshots/piggtind.png" alt="Piggtind desktop" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Desktop — trip detail with avalanche steepness overlay and GPS track</div>
+              </div>
+              <div class="screenshot-wrap">
+                <img src="screenshots/piggtind-mobile.png" alt="Piggtind mobile" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Mobile — map-first layout after 5 rounds of AI-assisted UX iteration</div>
+              </div>
+            </div>
+            <ul class="highlights">
+              <li>Trip detail with GPS track (cyan) on topo basemap, summit markers, and trip stats</li>
+              <li>Avalanche layer system: steepness overlay with opacity slider, runout zones, RegObs observations</li>
+              <li>Switchable base maps: Topo, Satellite, Grayscale, Topo Raster</li>
+              <li>Weather layers: snow depth, fresh snow, wind speed/animation, sun &amp; shade, 3D terrain</li>
+              <li>Measure tool, fullscreen mode, summit logging with elevation data</li>
+              <li>Strava activity sync — import trips with GPS tracks and friends</li>
+            </ul>
+            <span class="compliance compliance-warn">⚠ Blur friend names in trip title</span>
+          </div>
+        </div>
+
+        <!-- Topptur of the Day -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">🌤️ Topptur of the Day — Weather-Smart Tour Picker</div>
+            <div class="card-subtitle">Daily ski tour recommendations based on live weather conditions in Tromsø</div>
+            <div class="tags">
+              <span class="tag tag-blue">React</span>
+              <span class="tag tag-purple">Yr.no Weather API</span>
+              <span class="tag tag-orange">PostGIS</span>
+              <span class="tag tag-cyan">Strava Sync</span>
+            </div>
+            <div class="screenshots single">
+              <div class="screenshot-wrap">
+                <img src="screenshots/topptur-of-day.png" alt="Topptur of the Day" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Weather-based recommendations — "Try something new" from 126 undone tours</div>
+              </div>
+            </div>
+            <ul class="highlights">
+              <li>Fetches today's &amp; tomorrow's weather (temp, wind, precip, clouds) → go/no-go verdict</li>
+              <li>"Not recommended" banner with reason (strong wind, heavy precipitation)</li>
+              <li>Target profile from 35 day tours (±14 days): 1051 m ascent, 10.2 km distance</li>
+              <li>"Try something new" — 126 undone tours ranked by match to target profile</li>
+              <li>"A classic to revisit" — 32 previously completed tours</li>
+              <li>Tour cards with ascent, elevation, distance, drive time, and difficulty grade</li>
+            </ul>
+            <span class="compliance compliance-safe">✓ Compliance safe — personal outdoor app</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CATEGORY 5: GRAPH + API INTEGRATION -->
+    <!-- ============================================ -->
+    <section class="section" id="graph-integration">
+      <div class="section-header">
+        <div class="section-icon" style="background: var(--cyan-dim); color: var(--cyan);">📊</div>
+        <h2>Microsoft Graph &amp; API Integration</h2>
+        <span class="count">1 example</span>
+      </div>
+
+      <div class="card-grid">
+
+        <!-- SmartHandel -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">🛒 SmartHandel — Smart Grocery Shopping</div>
+            <div class="card-subtitle">Receipt parsing + pattern detection + Microsoft To Do sync — all built by AI</div>
+            <div class="tags">
+              <span class="tag tag-blue">Vanilla JS</span>
+              <span class="tag tag-green">MSAL.js 2.x</span>
+              <span class="tag tag-purple">Microsoft Graph</span>
+              <span class="tag tag-orange">IndexedDB</span>
+              <span class="tag tag-cyan">Co-occurrence ML</span>
+            </div>
+            <div class="card-desc">
+              AI built a complete grocery intelligence app: parses Norwegian store receipts (REMA, KIWI, MENY, COOP), 
+              tracks purchase frequency, detects meal patterns through co-occurrence analysis, generates smart restock reminders, 
+              and syncs everything with Microsoft To Do via Graph API.
+            </div>
+            <ul class="highlights">
+              <li>Receipt parser handles 5+ Norwegian grocery chains with different formats</li>
+              <li>Pattern engine: purchase frequency tracking with interval analysis</li>
+              <li>Co-occurrence meal detection: items bought together 2+ times → suggested meal</li>
+              <li>Smart suggestions: restock reminders ("På tide" / "Snart tid"), meal-based lists</li>
+              <li>MSAL.js auth → Microsoft Graph Tasks.ReadWrite → To Do list sync</li>
+              <li>6 tabs: Handleliste, Kvitteringer, Måltider, Forslag, Innsikt, Innstillinger</li>
+              <li>Full offline support via IndexedDB with ~150 pre-seeded Norwegian grocery items</li>
+            </ul>
+            <span class="compliance compliance-safe">✓ Compliance safe — personal shopping app</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CATEGORY 6: UX ITERATION -->
+    <!-- ============================================ -->
+    <section class="section" id="ux-iteration">
+      <div class="section-header">
+        <div class="section-icon" style="background: var(--green-dim); color: var(--green);">🎨</div>
+        <h2>Iterative UX with User Feedback</h2>
+        <span class="count">Visual evidence of AI iteration</span>
+      </div>
+
+      <div class="card-grid">
+
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">📱 Piggtind Mobile — 5 Rounds of Feedback</div>
+            <div class="card-subtitle">User sends screenshot from phone → AI adjusts CSS → repeat until perfect</div>
+            <div class="card-desc">
+              The Piggtind trip detail page went through 5 rounds of user feedback on real iPhone screenshots.
+              Each round: user takes a photo, describes what's wrong, AI fixes the CSS, user tests again.
+              Final result: map-first layout with compact overlay, iOS fullscreen fallback, thumb-friendly scroll area.
+            </div>
+            <ul class="highlights">
+              <li>Round 1: "Map is too small" → changed to map-first layout filling viewport</li>
+              <li>Round 2: "Overlay hides the peak" → made overlay static, positioned above map</li>
+              <li>Round 3: "Need more scroll grab area" → increased grab area to 80px</li>
+              <li>Round 4: "Toolbar overlaps zoom controls" → offset MapLibre controls by 54px</li>
+              <li>Round 5: "Fullscreen doesn't work on iPhone" → CSS-based fullscreen fallback for iOS Safari</li>
+            </ul>
+            <span class="compliance compliance-safe">✓ Compliance safe</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CATEGORY 7: UTILITY APPS -->
+    <!-- ============================================ -->
+    <section class="section" id="utilities">
+      <div class="section-header">
+        <div class="section-icon" style="background: var(--pink-dim); color: var(--pink);">🛠️</div>
+        <h2>Utility &amp; Lifestyle Apps</h2>
+        <span class="count">2 examples</span>
+      </div>
+
+      <div class="card-grid">
+
+        <!-- Kaffeutlevering -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">☕ Kaffeutlevering — Coffee Delivery Route</div>
+            <div class="card-subtitle">Optimized delivery route app with payment tracking and Vipps integration</div>
+            <div class="tags">
+              <span class="tag tag-blue">Vanilla JS</span>
+              <span class="tag tag-green">Route Optimization</span>
+              <span class="tag tag-orange">Vipps Payment</span>
+              <span class="tag tag-pink">Dark Theme</span>
+            </div>
+            <div class="screenshots single">
+              <div class="screenshot-wrap">
+                <img src="screenshots/kaffeutlevering.png" alt="Kaffeutlevering" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Delivery route — ordered stops, payment status, packing list</div>
+              </div>
+            </div>
+            <ul class="highlights">
+              <li>Optimized delivery route grouped by area (Nord-Tromsøya)</li>
+              <li>Order details: product type (Filtermalt, Hele bønner), payment status</li>
+              <li>Reorder stops with up/down controls, mark as delivered with checkboxes</li>
+              <li>Vipps payment integration link for unpaid orders</li>
+              <li>Packing list feature for pre-loading</li>
+            </ul>
+            <span class="compliance compliance-redact">⚠️ Blur customer names before sharing</span>
+          </div>
+        </div>
+
+        <!-- My Choice -->
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">💪 My Choice — Cravings Management</div>
+            <div class="card-subtitle">Bilingual PWA for managing cravings with mindset tips and favorites</div>
+            <div class="tags">
+              <span class="tag tag-blue">Vanilla JS</span>
+              <span class="tag tag-green">PWA</span>
+              <span class="tag tag-purple">Bilingual EN/NO</span>
+              <span class="tag tag-pink">localStorage</span>
+            </div>
+            <div class="screenshots single">
+              <div class="screenshot-wrap">
+                <img src="screenshots/mychoice.png" alt="My Choice" loading="lazy" onclick="openLightbox(this)">
+                <div class="screenshot-label">Mindset tips with save-as-favorite and language toggle</div>
+              </div>
+            </div>
+            <ul class="highlights">
+              <li>"Help Me Now" button generates instant cravings management tips</li>
+              <li>Category filter for different tip types (mindset, activity, nutrition)</li>
+              <li>Save favorites for quick access, bilingual EN/NO with flag toggle</li>
+              <li>Clean, calming UI with soft colors and rounded cards</li>
+            </ul>
+            <span class="compliance compliance-safe">✓ Compliance safe — personal wellness app</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Built with Copilot CLI — All examples from personal projects at janinc.no</p>
+    <p style="margin-top: 0.3rem;">April 2026 · No Microsoft-internal content</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+    function openLightbox(img) {
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightbox-img').src = img.src;
+      lb.classList.add('active');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+</body>
+</html>
