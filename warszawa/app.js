@@ -252,7 +252,7 @@ function renderFlights() {
    MAP
    ========================================================== */
 
-const CAT_ICONS = { hotel: '🏨', food: '🍽️', bar: '🍺', club: '🌃', cafe: '☕', sight: '⭐' };
+const CAT_ICONS = { hotel: '🏨', food: '🍽️', bar: '🍺', club: '🌃', cafe: '☕', sight: '⭐', hidden: '💎' };
 
 function initMap() {
   const map = L.map('map').setView([52.235, 21.010], 13);
@@ -867,6 +867,10 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPacking();
   initSOS();
   initSongLyrics();
+  renderOmWarszawa();
+  initFlightMap();
+  initShareCopy();
+  scrollProgramToNext();
 });
 
 function initSongLyrics() {
@@ -878,5 +882,206 @@ function initSongLyrics() {
     box.hidden = open;
     btn.setAttribute('aria-expanded', String(!open));
     btn.textContent = open ? '📜 Vis tekst' : '📜 Skjul tekst';
+  });
+}
+
+/* ==========================================================
+   OM WARSZAWA — historikk, fakta, top 5, events, hidden gems
+   ========================================================== */
+
+function renderOmWarszawa() {
+  const intro = $('#warsaw-intro');
+  if (intro) intro.textContent = WARSAW_INTRO;
+
+  // Events
+  const evRoot = $('#events-root');
+  if (evRoot) {
+    evRoot.innerHTML = EVENTS_WEEKEND.map(d => `
+      <div class="events-day">
+        <div class="events-day-head">${d.day}</div>
+        <ul class="events-list">
+          ${d.items.map(i => `
+            <li class="event-item ${i.pick ? 'event-pick' : ''}">
+              <span class="event-item-time">${i.time}</span>
+              <div class="event-item-body">
+                <div class="event-item-title">${i.title}</div>
+                <div class="event-item-venue">📍 <a href="${SEARCH_URL(i.venue)}" target="_blank" rel="noopener">${i.venue}</a></div>
+                ${i.note ? `<div class="event-item-note">${i.note}</div>` : ''}
+              </div>
+            </li>`).join('')}
+        </ul>
+      </div>`).join('');
+  }
+
+  // Top sights
+  const tsRoot = $('#top-sights-root');
+  if (tsRoot) tsRoot.innerHTML = TOP_SIGHTS.map(t => `
+    <div class="top5-card">
+      <div class="top5-rank">#${t.n}</div>
+      <div class="top5-body">
+        <div class="top5-title">${t.emoji} ${t.name}</div>
+        <div class="top5-why">${t.why}</div>
+        <div class="top5-actions">
+          ${t.placeId ? `<a href="#kart" class="event-link" data-place="${t.placeId}">🗺️ Kart</a>` : ''}
+          <a href="${SEARCH_URL(t.name)}" target="_blank" rel="noopener" class="event-link">🌐 Les mer</a>
+        </div>
+      </div>
+    </div>`).join('');
+
+  // Top activities
+  const taRoot = $('#top-activities-root');
+  if (taRoot) taRoot.innerHTML = TOP_ACTIVITIES.map(t => `
+    <div class="top5-card">
+      <div class="top5-rank">#${t.n}</div>
+      <div class="top5-body">
+        <div class="top5-title">${t.emoji} ${t.name}</div>
+        <div class="top5-why">${t.why}</div>
+      </div>
+    </div>`).join('');
+
+  // Hidden gems
+  const hgRoot = $('#hidden-gems-root');
+  if (hgRoot) {
+    const gems = PLACES.filter(p => p.cat === 'hidden');
+    hgRoot.innerHTML = gems.map(p => `
+      <div class="gem-card">
+        <div class="gem-name">💎 ${p.name}</div>
+        <div class="gem-desc">${p.desc}</div>
+        <div class="gem-actions">
+          <a href="#kart" class="event-link" data-place="${p.id}">🗺️ Kart</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Warszawa')}" target="_blank" rel="noopener" class="event-link">🌐 Google Maps</a>
+          ${p.ig ? `<a href="https://www.instagram.com/${p.ig}/" target="_blank" rel="noopener" class="event-link">📸 Instagram</a>` : ''}
+        </div>
+      </div>`).join('');
+  }
+
+  // Fun facts
+  const ffRoot = $('#facts-root');
+  if (ffRoot) ffRoot.innerHTML = FUN_FACTS.map(f => `
+    <div class="fact-card">
+      <div class="fact-emoji">${f.emoji}</div>
+      <div class="fact-body">
+        <div class="fact-title">${f.title}</div>
+        <div class="fact-text">${f.text}</div>
+      </div>
+    </div>`).join('');
+
+  // Wire up place-link clicks from this tab too
+  $$('.event-link[data-place]', $('#omwarszawa')).forEach(a => a.addEventListener('click', ev => {
+    ev.preventDefault();
+    const id = a.dataset.place;
+    location.hash = 'kart';
+    setTimeout(() => {
+      const entry = window._markers && window._markers[id];
+      const place = PLACES.find(p => p.id === id);
+      if (entry && window._map && place) {
+        window._map.setView([place.lat, place.lng], 16);
+        entry.marker.openPopup();
+      }
+    }, 200);
+  }));
+}
+
+/* ==========================================================
+   FLIGHT ROUTE MAP (Reise-fanen)
+   ========================================================== */
+
+const AIRPORTS = {
+  TOS: { lat: 69.6833, lng: 18.9189, name: "Tromsø" },
+  OSL: { lat: 60.1939, lng: 11.1004, name: "Oslo" },
+  CPH: { lat: 55.6180, lng: 12.6560, name: "København" },
+  WAW: { lat: 52.1657, lng: 20.9671, name: "Warszawa" }
+};
+
+function initFlightMap() {
+  const el = document.getElementById('flight-map');
+  if (!el || typeof L === 'undefined') return;
+  const map = L.map('flight-map', { scrollWheelZoom: false, zoomControl: true })
+    .setView([60, 15], 4);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OSM &copy; CARTO',
+    maxZoom: 10
+  }).addTo(map);
+
+  const outCoords = [AIRPORTS.TOS, AIRPORTS.OSL, AIRPORTS.CPH, AIRPORTS.WAW].map(a => [a.lat, a.lng]);
+  const homeCoords = [AIRPORTS.WAW, AIRPORTS.OSL, AIRPORTS.TOS].map(a => [a.lat, a.lng]);
+
+  L.polyline(outCoords, { color: '#d4af37', weight: 3, opacity: 0.9, dashArray: null })
+    .addTo(map).bindTooltip('Utreise: TOS → OSL → CPH → WAW');
+  L.polyline(homeCoords, { color: '#4aa5a5', weight: 3, opacity: 0.9, dashArray: '8,6', offset: 6 })
+    .addTo(map).bindTooltip('Hjemreise: WAW → OSL → TOS');
+
+  Object.entries(AIRPORTS).forEach(([code, a]) => {
+    const icon = L.divIcon({
+      className: 'airport-marker',
+      html: `<div class="airport-dot">${code}</div>`,
+      iconSize: [40, 24], iconAnchor: [20, 12]
+    });
+    L.marker([a.lat, a.lng], { icon }).addTo(map)
+      .bindPopup(`<strong>${code}</strong><br>${a.name}`);
+  });
+
+  map.fitBounds(outCoords, { padding: [20, 20] });
+
+  // Re-invalidate size when the reise tab becomes active
+  window.addEventListener('hashchange', () => {
+    if (location.hash === '#reise') setTimeout(() => map.invalidateSize(), 100);
+  });
+  if (location.hash === '#reise') setTimeout(() => map.invalidateSize(), 200);
+}
+
+/* ==========================================================
+   PROGRAM AUTO-SCROLL TO NEXT UPCOMING ITEM
+   ========================================================== */
+
+function scrollProgramToNext() {
+  const root = $('#program-root');
+  if (!root || !window.PROGRAM) return;
+  const now = new Date();
+  // Find first item whose timestamp is in the future (or the same day as today)
+  let targetEl = null;
+  for (const day of PROGRAM) {
+    for (let i = 0; i < day.items.length; i++) {
+      const it = day.items[i];
+      const [hh, mm] = (it.time.match(/\d+/g) || ['12','00']).map(Number);
+      const ts = new Date(`${day.date}T${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:00+02:00`);
+      if (ts >= now) {
+        targetEl = root.querySelector(`[data-idx="${day.dayId}-${i}"]`);
+        break;
+      }
+    }
+    if (targetEl) break;
+  }
+  if (!targetEl) return;
+  targetEl.classList.add('event-current');
+  // Only scroll when we're on the program tab
+  if (location.hash === '#program' || location.hash === '') {
+    setTimeout(() => targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+  }
+  // Also hook on hashchange so it works when user navigates to program later
+  window.addEventListener('hashchange', () => {
+    if (location.hash === '#program') {
+      setTimeout(() => targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 250);
+    }
+  });
+}
+
+/* ==========================================================
+   SHARE COPY BUTTON
+   ========================================================== */
+
+function initShareCopy() {
+  const btn = document.getElementById('share-copy');
+  if (!btn) return;
+  btn.addEventListener('click', async () => {
+    const url = 'https://janinc.no/warszawa/';
+    try {
+      await navigator.clipboard.writeText(url);
+      const orig = btn.textContent;
+      btn.textContent = '✅ Kopiert!';
+      setTimeout(() => { btn.textContent = orig; }, 1800);
+    } catch (e) {
+      btn.textContent = '⚠️ Prøv å kopier manuelt';
+    }
   });
 }

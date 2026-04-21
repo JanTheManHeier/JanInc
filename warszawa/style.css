@@ -1492,3 +1492,252 @@ footer {
   line-height: 1.35;
 }
 .leaflet-container a.map-popup-link { color: #fff !important; }
+
+/* ===== Share card (QR on Hjem) ===== */
+.share-card {
+  background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.02));
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 14px;
+  padding: 18px;
+  margin: 22px 0 24px;
+}
+.share-card-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.share-card-icon { font-size: 32px; line-height: 1; }
+.share-card-title { font-weight: 700; font-size: 1.1rem; }
+.share-card-sub { font-size: 0.88rem; opacity: 0.75; }
+.share-card-body {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.share-qr {
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px;
+  flex: 0 0 auto;
+}
+.share-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-width: 180px;
+}
+.share-link {
+  background: rgba(0,0,0,0.25);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.95rem;
+  display: inline-block;
+}
+
+/* ===== Flight map (Reise) ===== */
+.flight-map-card {
+  grid-column: 1 / -1;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 12px;
+  padding: 16px;
+}
+.flight-map-card h3 { margin-top: 0; }
+#flight-map {
+  height: 360px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 8px;
+  background: #0f0d0a;
+}
+.airport-marker { background: transparent; border: none; }
+.airport-dot {
+  background: #d4af37;
+  color: #0a0807;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(212,175,55,0.5);
+  border: 2px solid #0a0807;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* ===== Program auto-scroll highlight ===== */
+.event.event-current {
+  box-shadow: 0 0 0 2px #d4af37, 0 0 20px rgba(212,175,55,0.35);
+  position: relative;
+}
+.event.event-current::after {
+  content: "🕒 Neste";
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  background: #d4af37;
+  color: #0a0807;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* ===== Om Warszawa tab ===== */
+.om-section {
+  margin: 28px 0;
+  padding-top: 8px;
+}
+.om-h {
+  font-size: 1.3rem;
+  margin: 0 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(212,175,55,0.2);
+}
+
+/* Events list */
+.events-day {
+  margin-bottom: 18px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+.events-day-head {
+  font-weight: 700;
+  color: #f1c96a;
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+}
+.events-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.event-item {
+  display: flex;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px dotted rgba(255,255,255,0.06);
+}
+.event-item:last-child { border-bottom: none; }
+.event-item-time {
+  flex: 0 0 70px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.85rem;
+  opacity: 0.75;
+  padding-top: 2px;
+}
+.event-item-body { flex: 1; min-width: 0; }
+.event-item-title { font-weight: 600; }
+.event-item.event-pick .event-item-title { color: #f1c96a; }
+.event-item.event-pick .event-item-title::after {
+  content: " ✨";
+}
+.event-item-venue {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+.event-item-venue a { color: inherit; }
+.event-item-note {
+  font-size: 0.82rem;
+  opacity: 0.65;
+  margin-top: 3px;
+  font-style: italic;
+}
+
+/* Top 5 cards */
+.top5-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.top5-card {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 10px;
+}
+.top5-rank {
+  flex: 0 0 auto;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #d4af37;
+  min-width: 40px;
+}
+.top5-body { flex: 1; }
+.top5-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+.top5-why {
+  font-size: 0.92rem;
+  opacity: 0.88;
+  line-height: 1.45;
+}
+.top5-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* Hidden gems */
+.gem-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.gem-card {
+  background: linear-gradient(135deg, rgba(212,175,55,0.06), rgba(0,0,0,0.15));
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 10px;
+  padding: 14px;
+}
+.gem-name {
+  font-weight: 700;
+  color: #f1c96a;
+  margin-bottom: 4px;
+}
+.gem-desc {
+  font-size: 0.92rem;
+  opacity: 0.88;
+  line-height: 1.45;
+}
+.gem-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* Fun facts */
+.facts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.fact-card {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 10px;
+}
+.fact-emoji { font-size: 1.8rem; flex: 0 0 auto; line-height: 1; }
+.fact-body { flex: 1; }
+.fact-title { font-weight: 700; margin-bottom: 3px; }
+.fact-text { font-size: 0.92rem; opacity: 0.88; line-height: 1.45; }
+
+@media (min-width: 720px) {
+  .top5-grid, .gem-grid, .facts-grid { grid-template-columns: 1fr 1fr; }
+}

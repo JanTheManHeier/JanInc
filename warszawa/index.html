@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="/warszawa/style.css?v=19">
+  <link rel="stylesheet" href="/warszawa/style.css?v=20">
 </head>
 <body>
 
@@ -43,6 +43,7 @@
     <a href="/warszawa/spill/" class="tab tab-ext"><span class="tab-ic">🎮</span><span class="tab-lbl">Spill</span></a>
     <a href="#pakke" class="tab" data-tab="pakke"><span class="tab-ic">🎒</span><span class="tab-lbl">Pakke</span></a>
     <a href="#verktoy" class="tab" data-tab="verktoy"><span class="tab-ic">🔧</span><span class="tab-lbl">Verktøy</span></a>
+    <a href="#omwarszawa" class="tab" data-tab="omwarszawa"><span class="tab-ic">🇵🇱</span><span class="tab-lbl">Om byen</span></a>
     <a href="#sos" class="tab" data-tab="sos"><span class="tab-ic">🆘</span><span class="tab-lbl">SOS</span></a>
   </nav>
 </header>
@@ -146,6 +147,23 @@
         <p>Sykkel langs Vistula →<br><strong>Beermile</strong> med Ole<br>→ Middag siste kveld</p>
       </div>
     </div>
+
+    <div class="share-card">
+      <div class="share-card-head">
+        <div class="share-card-icon">📱</div>
+        <div>
+          <div class="share-card-title">Del appen med gjengen</div>
+          <div class="share-card-sub">Skann QR-koden eller kopier lenken</div>
+        </div>
+      </div>
+      <div class="share-card-body">
+        <img class="share-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https%3A%2F%2Fjaninc.no%2Fwarszawa%2F&margin=8&bgcolor=ffffff&color=0a0807" alt="QR-kode til janinc.no/warszawa/" width="220" height="220" loading="lazy">
+        <div class="share-card-actions">
+          <code class="share-link">janinc.no/warszawa/</code>
+          <button type="button" class="btn btn-outline" id="share-copy">📋 Kopier lenke</button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ===== PROGRAM ===== -->
@@ -176,6 +194,12 @@
       <div class="flight-card">
         <h3>🏠 Hjemreise · Søndag 26. april</h3>
         <div id="flights-home"></div>
+      </div>
+
+      <div class="flight-map-card">
+        <h3>🌍 Flyruten</h3>
+        <p class="muted small">Utreise i gull · hjemreise i turkis</p>
+        <div id="flight-map"></div>
       </div>
 
       <div class="hotel-card">
@@ -217,6 +241,7 @@
       <button class="filter-btn" data-cat="club">🌃 Klubber</button>
       <button class="filter-btn" data-cat="cafe">☕ Kafé</button>
       <button class="filter-btn" data-cat="sight">⭐ Severdigheter</button>
+      <button class="filter-btn" data-cat="hidden">💎 Hidden gems</button>
     </div>
     <div id="map"></div>
   </section>
@@ -262,9 +287,9 @@
       <div class="tool-card">
         <h3>💱 NOK ↔ PLN</h3>
         <div class="currency-widget">
-          <label>NOK <input type="number" id="nok-input" value="1000" step="50" inputmode="decimal"></label>
-          <div class="arrow">↕</div>
           <label>PLN <input type="number" id="pln-input" value="380" step="50" inputmode="decimal"></label>
+          <div class="arrow">↕</div>
+          <label>NOK <input type="number" id="nok-input" value="1000" step="50" inputmode="decimal"></label>
           <div class="currency-note">
             Rate: <span id="rate-display">0.38</span> PLN per NOK
             <button id="rate-edit" class="mini-btn">Juster</button>
@@ -286,6 +311,40 @@
   </section>
 
   <!-- ===== MINNER (removed) ===== -->
+
+  <!-- ===== SOS ===== -->
+  <!-- ===== OM WARSZAWA ===== -->
+  <section id="omwarszawa" class="panel">
+    <h2 class="section-title">Om Warszawa</h2>
+    <p class="section-lede" id="warsaw-intro"></p>
+
+    <div class="om-section">
+      <h3 class="om-h">🎉 Denne helgen i byen</h3>
+      <p class="muted small">Research pr. 21. april 2026 — sjekk nettsider for oppdatert info og billetter.</p>
+      <div id="events-root"></div>
+    </div>
+
+    <div class="om-section">
+      <h3 class="om-h">⭐ Topp 5 turistplasser</h3>
+      <div id="top-sights-root" class="top5-grid"></div>
+    </div>
+
+    <div class="om-section">
+      <h3 class="om-h">🎯 Topp 5 aktiviteter</h3>
+      <div id="top-activities-root" class="top5-grid"></div>
+    </div>
+
+    <div class="om-section">
+      <h3 class="om-h">💎 Mat &amp; drikke — hidden gems</h3>
+      <p class="muted small">Lokale favoritter, Praga-tunge. Minst turister, mest sjarm.</p>
+      <div id="hidden-gems-root" class="gem-grid"></div>
+    </div>
+
+    <div class="om-section">
+      <h3 class="om-h">🤓 Fun facts</h3>
+      <div id="facts-root" class="facts-grid"></div>
+    </div>
+  </section>
 
   <!-- ===== SOS ===== -->
   <section id="sos" class="panel">
@@ -355,7 +414,7 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script src="/warszawa/data.js?v=15"></script>
-<script src="/warszawa/app.js?v=18"></script>
+<script src="/warszawa/data.js?v=16"></script>
+<script src="/warszawa/app.js?v=19"></script>
 </body>
 </html>

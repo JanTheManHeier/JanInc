@@ -226,7 +226,17 @@ const PLACES = [
 
   // Nattklubber — fredag/torsdag-alternativer
   { id: "smolna", name: "Smolna", cat: "club", lat: 52.2335, lng: 21.0243, desc: "Rå stemning, lokalenes valg. Smolna 38.", ig: "smolna38" },
-  { id: "opera-club", name: "Opera Club", cat: "club", lat: 52.2409, lng: 21.0118, desc: "Elegant klubb under operaen. Plac Teatralny.", ig: "operaclub" }
+  { id: "opera-club", name: "Opera Club", cat: "club", lat: 52.2409, lng: 21.0118, desc: "Elegant klubb under operaen. Plac Teatralny.", ig: "operaclub" },
+
+  // Hidden gems — lokale favoritter, Praga-tunge
+  { id: "pyzy-flaki", name: "Pyzy, Flaki Gorące!", cat: "hidden", lat: 52.2562, lng: 21.0346, desc: "Kult-vindu i Praga på Brzeska 29/31. Tradisjonelle dumplings + varm flaki-suppe rett ut av luka. Lokalene elsker det.", ig: "pyzyflakigorace" },
+  { id: "peaches", name: "Peaches Gastro Girls", cat: "hidden", lat: 52.2596, lng: 21.0388, desc: "Kreativt vegansk/vegetarisk i Praga (Stalowa 36). Sesongbasert, leken meny, liten lokalfavoritt.", ig: "peachesgastrogirls" },
+  { id: "w-oparach", name: "W Oparach Absurdu", cat: "hidden", lat: 52.2570, lng: 21.0385, desc: "Bar/kafé på Ząbkowska med vintage-interiør og live-musikk. Rå, arty stemning — tidligkvelds eller sent.", ig: "woparachabsurdu" },
+  { id: "pardon", name: "Pardon, To Tu", cat: "hidden", lat: 52.2535, lng: 21.0402, desc: "Legendarisk Praga-jazzbar. Live-konserter — jazz, elektronika, world music. Hipster-hub.", ig: "pardontotu" },
+  { id: "halas", name: "Hałas (vinyl + kaffe)", cat: "hidden", lat: 52.2235, lng: 21.0135, desc: "Specialty-kaffe og vinylplater i samme rom. Rolig, støvete og stilig.", ig: "halaskawa" },
+  { id: "zabkowska", name: "Ząbkowska-gata", cat: "hidden", lat: 52.2570, lng: 21.0385, desc: "Praga-gata som går fra rå til hipster — kafeer, barer, gatekunst, gamle bygg. Spaser her om kvelden." },
+  { id: "hala-mirowska", name: "Hala Mirowska", cat: "hidden", lat: 52.2370, lng: 20.9992, desc: "Historisk matmarked rett ved hotellet. Snacks, blomster, lokalt folkeliv. Ikke turistete.", ig: "halamirowska" },
+  { id: "skaryszewski", name: "Skaryszewski Park", cat: "hidden", lat: 52.2418, lng: 21.0485, desc: "Underdog-parken i Praga. Grønn oase lokalene bruker for piknik og unwinding. Perfekt dagen derpå." }
 ];
 
 /* ============================================================
@@ -287,8 +297,62 @@ const PHRASES = [
 ];
 
 /* ============================================================
-   NØDINFO
+   OM WARSZAWA — historikk, fakta, topp 5, events, hidden gems
    ============================================================ */
+
+const WARSAW_INTRO = "Phoenix-byen. Ødelagt til 85% i WW2, gjenoppbygget murstein for murstein. UNESCO-gamleby, Chopin's by, havfrue på våpenskjoldet, og et nattliv som locals vet om men turistene sjelden finner.";
+
+const FUN_FACTS = [
+  { emoji: "🔥", title: "Phoenix-byen", text: "85% av Warszawa ble jevnet med jorden etter oppstanden i 1944. Gamlebyen ble gjenoppbygget stein for stein etter krigen — UNESCO kaller det et enestående eksempel på total rekonstruksjon." },
+  { emoji: "🎹", title: "Chopin-benkene", text: "Rundt i byen finner du svarte benker. Trykk på knappen og du hører Chopin-komposisjoner + korte historier om hans tilknytning til byen. Gratis konsert i lomma." },
+  { emoji: "🧜‍♀️", title: "Havfruen Syrenka", text: "Warszawas symbol. Legenden sier hun bestemte seg for å bli og beskytte byen etter at fiskere reddet henne. Hovedstatuen står på Gamlebyens torg." },
+  { emoji: "🏛️", title: "Stalin-gaven", text: "Kulturpalasset (237 m) var en \"gave\" fra Stalin i 1955. Polakkene har blandede følelser om det — men utsikten fra 30. etasje er fantastisk." },
+  { emoji: "🙏", title: "Willy Brandts kne", text: "I 1970 knelte Vest-Tysklands kansler foran Ghetto-minnesmerket her — en historisk forsoningsgest som endret Europa." },
+  { emoji: "🌳", title: "25% grønt", text: "Nesten en fjerdedel av byen er parker og grøntområder. Łazienki, Saski, Skaryszewski — pusterom overalt." },
+  { emoji: "🎷", title: "Jazz-hovedstad", text: "Warszawa har en av Europas mest levende jazzscener. Pardon To Tu i Praga er en legende." },
+  { emoji: "🥟", title: "Pierogi-testen", text: "Ekte polakker dømmer deg på hvordan du sier og spiser pierogi (ikke \"pie-row-gi\" — det er \"pje-ro-gi\")." }
+];
+
+const TOP_SIGHTS = [
+  { n: 1, emoji: "🏰", name: "Stare Miasto (Gamlebyen)", why: "UNESCO-verdensarv, fargerike fasader, Havfruestatuen på torget. Gjenoppbygd etter krigen med vanvittig detaljnivå.", placeId: "old-town" },
+  { n: 2, emoji: "🌳", name: "Łazienki Park", why: "Elegant palass-park med påfugler, Chopin-monumentet og søndagskonserter. Perfekt for en lat ettermiddag.", placeId: null },
+  { n: 3, emoji: "🏛️", name: "Kulturpalasset", why: "237 m høyt skyskraper-symbol. Ta heisen til 30. etasje — hele byen under deg.", placeId: null },
+  { n: 4, emoji: "🎨", name: "Praga-distriktet", why: "Hipster-hjertet. Gatekunst, Neon Muzeum, Koneser vodka-fabrikk. Ikke i de fleste turistguidene, men lokalenes favoritt.", placeId: "koneser" },
+  { n: 5, emoji: "🏰", name: "Wilanów-palasset", why: "\"Det polske Versailles\". Barokk, hager, kunstsamling. 30 min med buss fra sentrum.", placeId: null }
+];
+
+const TOP_ACTIVITIES = [
+  { n: 1, emoji: "🚲", name: "Sykle langs Vistula", why: "Flat, vakker elvesti — fra Old Town ned til Praga-siden. Vi gjør dette lørdag." },
+  { n: 2, emoji: "🥃", name: "Vodka-smaking på Koneser", why: "Gammel vodka-fabrikk med museum + tasting. Koneser = kjenner, og gjengen blir det." },
+  { n: 3, emoji: "🍺", name: "Craft beer-crawl", why: "Warszawa er Polens craft-hovedstad. Kufle i Kapsle, Jabeerwocky, PiwPaw — vår beermile." },
+  { n: 4, emoji: "🥟", name: "Pierogi-kurs eller milk bar-lunsj", why: "Lær å lage dumplings, eller bare spis en supperask ekte polsk lunsj for 30 zł på en bar mleczny." },
+  { n: 5, emoji: "🎷", name: "Live jazz i Praga", why: "Pardon To Tu eller Miłośći. Det er her lokale hipstere går på kveldstid." }
+];
+
+const EVENTS_WEEKEND = [
+  { day: "Tor 23.", items: [
+    { time: "20:00", title: "Lovejoy (indie/rock)", venue: "Klub Proxima", note: "Britisk indie-band — ungt publikum" },
+    { time: "20:00", title: "bôa (alt-rock)", venue: "Klub Progresja", note: "90-talls cult-band som har comeback" },
+    { time: "20:00", title: "Wieczór Włoski", venue: "Teatr Buffo", note: "Italiensk musikk-aften — hvis gjengen vil ha noe litt kulturelt" }
+  ]},
+  { day: "Fre 24.", items: [
+    { time: "19:00", title: "Falstaff (Verdi)", venue: "Teatr Wielki – Opera Narodowa", note: "Klassisk opera i praktfullt hus. Kultur-opsjon før Level 27" },
+    { time: "20:00", title: "Only The Poets", venue: "Klub Niebo", note: "Britisk pop/indie" },
+    { time: "All day", title: "Camper Caravan Show", venue: "Ptak Warsaw Expo", note: "For bobilnerden — ikke oss, kanskje" }
+  ]},
+  { day: "Lør 25.", items: [
+    { time: "20:00", title: "GoGo Penguin (jazz/electronica) 🔥", venue: "Klub Progresja", note: "Britisk instrumentaltrio i verdensklasse. Dette passer gjengen!", pick: true },
+    { time: "20:00", title: "Pezet (polsk hiphop)", venue: "COS Torwar", note: "Polens største hiphop-navn — stor arena-vibe" },
+    { time: "10:00", title: "Breakfast Markets Żoliborz", venue: "Plac Słoneczny", note: "Frokost-marked lokalene elsker — kaffe, boller, lokalt" }
+  ]},
+  { day: "Søn 26.", items: [
+    { time: "14:00", title: "Chopin-konsert", venue: "Łazienki Park (hvis fint vær)", note: "Sommerkonsertene starter — sjekk sesongstart" },
+    { time: "Hele helga", title: "Mazurkas of the World-festival", venue: "Ulike scener", note: "Folk/tradisjonsmusikk-festival" }
+  ]}
+];
+
+const SEARCH_URL = (q) => `https://www.google.com/search?q=${encodeURIComponent(q + ' Warszawa')}`;
+
 
 const EMERGENCY = [
   { label: "Europeisk nødnummer", value: "112", type: "phone" },
