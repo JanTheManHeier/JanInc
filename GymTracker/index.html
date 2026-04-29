@@ -356,6 +356,8 @@ en: {
   'settings.never': 'Never', 'settings.export': 'Export Data', 'settings.clear': 'Clear All Data',
   'settings.clear_confirm': 'Are you sure? This will delete all local data.',
   'settings.close': 'Close',
+  'settings.share': 'Share', 'settings.share_desc': 'Show this QR code to share the app',
+  'settings.made_with': 'Made with AI ✨',
   'celebrate.title': 'Workout Complete!', 'celebrate.great': 'Great work! 💪',
   'celebrate.duration': 'Duration', 'celebrate.sets_done': 'Sets Done', 'celebrate.calories': 'Est. Calories',
   'celebrate.done': 'Done',
@@ -403,6 +405,8 @@ no: {
   'settings.never': 'Aldri', 'settings.export': 'Eksporter data', 'settings.clear': 'Slett alle data',
   'settings.clear_confirm': 'Er du sikker? Dette sletter alle lokale data.',
   'settings.close': 'Lukk',
+  'settings.share': 'Del', 'settings.share_desc': 'Vis denne QR-koden for å dele appen',
+  'settings.made_with': 'Laget med AI ✨',
   'celebrate.title': 'Trening fullført!', 'celebrate.great': 'Bra jobba! 💪',
   'celebrate.duration': 'Varighet', 'celebrate.sets_done': 'Sett utført', 'celebrate.calories': 'Est. kalorier',
   'celebrate.done': 'Ferdig',
@@ -1630,6 +1634,14 @@ function showSettings() {
         </div>
         <button class="btn btn-primary btn-block btn-sm" style="margin-bottom:8px" onclick="syncToServer().then(()=>showSettings())">${t('settings.sync')}</button>
         <button class="btn btn-danger btn-block btn-sm" onclick="clearAllData()">${t('settings.clear')}</button>
+      </div>
+
+      <div class="settings-section" style="text-align:center">
+        <h3>${t('settings.share')}</h3>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:12px">${t('settings.share_desc')}</p>
+        <img src="qr-code.png" alt="QR Code" style="width:180px;height:180px;border-radius:12px;border:2px solid var(--border)">
+        <div style="font-size:14px;color:var(--accent);margin-top:8px;font-weight:600">janinc.no/GymTracker</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:4px">${t('settings.made_with')}</div>
       </div>
 
       <button class="btn btn-secondary btn-block" style="margin-top:16px" onclick="document.getElementById('settingsOverlay').remove()">${t('settings.close')}</button>
