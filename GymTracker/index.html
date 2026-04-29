@@ -48,6 +48,7 @@ input,select{font:inherit;color:var(--text);background:var(--surface2);border:1p
 .header-title span{color:var(--accent)}
 .header-actions{display:flex;gap:8px;align-items:center}
 .header-btn{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--surface2)}
+.sats-header-btn{width:auto;padding:0 10px;font-size:12px;font-weight:800;letter-spacing:0.5px;color:#fff;background:var(--accent2);border:none}
 .lang-btn{font-size:20px;padding:4px 8px;border-radius:8px;background:transparent;min-width:36px;text-align:center;line-height:1}
 
 .content{
@@ -81,6 +82,10 @@ input,select{font:inherit;color:var(--text);background:var(--surface2);border:1p
 }
 .plan-card.today{border-color:var(--accent);box-shadow:0 0 20px rgba(0,180,216,.15)}
 .plan-card.today .plan-badge{background:var(--accent);color:var(--bg)}
+.plan-card.past{opacity:.55}
+.past-days-toggle{margin-top:8px}
+.past-days-toggle summary{color:var(--text2);font-size:14px;font-weight:600;padding:12px 0;cursor:pointer;list-style:none;text-align:center}
+.past-days-toggle summary::-webkit-details-marker{display:none}
 .plan-day{font-size:13px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:1px}
 .plan-title{font-size:18px;font-weight:700;margin:4px 0}
 .plan-subtitle{font-size:14px;color:var(--text2)}
@@ -228,6 +233,8 @@ input,select{font:inherit;color:var(--text);background:var(--surface2);border:1p
 .log-title{font-size:14px;font-weight:600}
 .log-meta{font-size:12px;color:var(--text2)}
 .log-cals{font-size:13px;font-weight:600;color:var(--accent2)}
+.log-delete{font-size:18px;padding:4px;opacity:.4;cursor:pointer;background:none;border:none;line-height:1}
+.log-delete:hover,.log-delete:active{opacity:1;color:var(--danger)}
 
 .weight-chart{background:var(--surface);border-radius:14px;padding:16px;margin-bottom:16px}
 .weight-chart svg{width:100%;height:120px}
@@ -373,7 +380,7 @@ en: {
   'day.0': 'Sunday', 'day.1': 'Monday', 'day.2': 'Tuesday', 'day.3': 'Wednesday', 'day.4': 'Thursday', 'day.5': 'Friday', 'day.6': 'Saturday',
   'day.short.0': 'Sun', 'day.short.1': 'Mon', 'day.short.2': 'Tue', 'day.short.3': 'Wed', 'day.short.4': 'Thu', 'day.short.5': 'Fri', 'day.short.6': 'Sat',
   'plan.today': 'TODAY', 'plan.rest': 'Rest', 'plan.optional': 'Optional solo weights', 'plan.with_friend': 'With friend',
-  'plan.start_solo': 'Start Solo Workout', 'plan.quick_log': 'Log Class', 'plan.at': 'at',
+  'plan.start_solo': 'Start Solo Workout', 'plan.quick_log': 'Log Class', 'plan.at': 'at', 'plan.earlier': 'Earlier this week',
   'workout.start': 'Start Workout', 'workout.end': 'End Workout', 'workout.cancel': 'Cancel',
   'workout.elapsed': 'Elapsed', 'workout.sets': 'sets', 'workout.set': 'Set',
   'workout.log_set': 'Log Set', 'workout.complete_set': '✓ Done', 'workout.skip': 'Skip',
@@ -390,7 +397,7 @@ en: {
   'progress.body_weight': 'Body Weight', 'progress.current': 'Current', 'progress.goal': 'Goal',
   'progress.add_weight': 'Log Weight', 'progress.history': 'Workout History', 'progress.empty': 'No workouts yet!',
   'progress.frequency': 'Weekly Frequency', 'progress.target': 'Target: 3×/week',
-  'progress.calories': 'cal', 'progress.minutes': 'min',
+  'progress.calories': 'cal', 'progress.minutes': 'min', 'progress.delete_confirm': 'Delete this workout?',
   'goals.title': 'Goals', 'goals.current': 'Current', 'goals.target': '3-month goal',
   'schedule.title': 'SATS Schedule', 'schedule.cycling': 'Cycling', 'schedule.strength': 'Strength',
   'schedule.all': 'All', 'schedule.langnes': 'Langnes', 'schedule.tromso': 'Tromsø',
@@ -427,7 +434,7 @@ no: {
   'day.0': 'Søndag', 'day.1': 'Mandag', 'day.2': 'Tirsdag', 'day.3': 'Onsdag', 'day.4': 'Torsdag', 'day.5': 'Fredag', 'day.6': 'Lørdag',
   'day.short.0': 'Søn', 'day.short.1': 'Man', 'day.short.2': 'Tir', 'day.short.3': 'Ons', 'day.short.4': 'Tor', 'day.short.5': 'Fre', 'day.short.6': 'Lør',
   'plan.today': 'I DAG', 'plan.rest': 'Hvile', 'plan.optional': 'Valgfri solostyrke', 'plan.with_friend': 'Med kompis',
-  'plan.start_solo': 'Start solotrening', 'plan.quick_log': 'Logg time', 'plan.at': 'på',
+  'plan.start_solo': 'Start solotrening', 'plan.quick_log': 'Logg time', 'plan.at': 'på', 'plan.earlier': 'Tidligere denne uken',
   'workout.start': 'Start trening', 'workout.end': 'Avslutt trening', 'workout.cancel': 'Avbryt',
   'workout.elapsed': 'Tid', 'workout.sets': 'sett', 'workout.set': 'Sett',
   'workout.log_set': 'Logg sett', 'workout.complete_set': '✓ Ferdig', 'workout.skip': 'Hopp over',
@@ -444,7 +451,7 @@ no: {
   'progress.body_weight': 'Kroppsvekt', 'progress.current': 'Nå', 'progress.goal': 'Mål',
   'progress.add_weight': 'Logg vekt', 'progress.history': 'Treningshistorikk', 'progress.empty': 'Ingen treninger ennå!',
   'progress.frequency': 'Treningsfrekvens', 'progress.target': 'Mål: 3×/uke',
-  'progress.calories': 'kal', 'progress.minutes': 'min',
+  'progress.calories': 'kal', 'progress.minutes': 'min', 'progress.delete_confirm': 'Slette denne treningen?',
   'goals.title': 'Mål', 'goals.current': 'Nå', 'goals.target': '3-månedersmål',
   'schedule.title': 'SATS Timeplan', 'schedule.cycling': 'Sykling', 'schedule.strength': 'Styrke',
   'schedule.all': 'Alle', 'schedule.langnes': 'Langnes', 'schedule.tromso': 'Tromsø',
@@ -773,6 +780,7 @@ function renderHeader() {
     <div class="header-title"><span>🏋️</span> ${t('app.name')}</div>
     <div class="header-actions">
       <button class="lang-btn" onclick="toggleLang()">${state.lang === 'no' ? '🇳🇴' : '🇬🇧'}</button>
+      <button class="header-btn sats-header-btn" onclick="openSatsApp()">SATS</button>
       <button class="header-btn" onclick="showSettings()">⚙️</button>
     </div>
   `;
@@ -823,12 +831,17 @@ function renderAll() { renderHeader(); renderTabs(); renderContent(); }
 // ==================== PLAN VIEW ====================
 function renderPlan() {
   const today = dayOfWeek();
-  let html = `<div class="sats-banner">
-    <span class="sats-banner-logo">SATS</span>
-    <button class="btn btn-orange btn-sm" onclick="openSatsApp()">${t('sats.open')}</button>
-  </div>`;
-  html += WEEK.map(w => {
+  // Normalize day for Mon(1)–Sun(0) ordering: Mon=1..Sat=6, Sun=7
+  const norm = d => d === 0 ? 7 : d;
+  const todayN = norm(today);
+  let html = '';
+
+  const todayAndFuture = WEEK.filter(w => norm(w.day) >= todayN);
+  const past = WEEK.filter(w => norm(w.day) < todayN);
+
+  function renderCard(w) {
     const isToday = w.day === today;
+    const isPast = norm(w.day) < todayN;
     const todayBadge = isToday ? `<span class="plan-badge">${t('plan.today')}</span>` : '';
     let actions = '';
     if (w.canSolo) {
@@ -842,7 +855,7 @@ function renderPlan() {
     }
     const timeStr = w.time ? `<span style="color:var(--accent)">${w.time}</span> ${t('plan.at')} ${w.location}` : '';
     return `
-      <div class="plan-card ${isToday ? 'today' : ''}">
+      <div class="plan-card ${isToday ? 'today' : ''} ${isPast ? 'past' : ''}">
         <span class="plan-emoji">${w.emoji}</span>
         <div class="plan-day">${t('day.' + w.day)} ${todayBadge}</div>
         <div class="plan-title">${tName(w.title)}</div>
@@ -851,7 +864,17 @@ function renderPlan() {
         ${actions}
       </div>
     `;
-  }).join('');
+  }
+
+  html += todayAndFuture.map(renderCard).join('');
+
+  if (past.length > 0) {
+    html += `<details class="past-days-toggle">
+      <summary>${t('plan.earlier')} ▾</summary>
+      ${past.map(renderCard).join('')}
+    </details>`;
+  }
+
   return html;
 }
 
@@ -1299,6 +1322,19 @@ function closeCelebration() {
   switchTab('progress');
 }
 
+function deleteWorkout(id) {
+  if (!confirm(t('progress.delete_confirm'))) return;
+  const all = Store.getWorkouts();
+  const idx = all.findIndex(w => w.id === id);
+  if (idx >= 0) {
+    all[idx].deleted = true;
+    all[idx]._dirty = true;
+    Store.set('workouts', all);
+    Store.syncSoon();
+  }
+  renderAll();
+}
+
 function updateGoalProgress(exerciseData) {
   const progress = Store.getGoalProgress();
   for (const ex of exerciseData) {
@@ -1465,6 +1501,7 @@ function renderProgress() {
             <div class="log-meta">${formatDate(w.date)} · ${w.duration} ${t('common.min')}${volStr}</div>
           </div>
           <span class="log-cals">~${cals} ${t('progress.calories')}</span>
+          <button class="log-delete" onclick="deleteWorkout('${w.id}')" title="Delete">🗑️</button>
         </div>
       `;
     }
@@ -1541,12 +1578,6 @@ function calcWeeksActive(workouts) {
 function renderSchedule() {
   const f = state.scheduleFilter;
   let html = `<h2 style="margin-bottom:12px">${t('schedule.title')}</h2>`;
-
-  // SATS app link
-  html += `<div class="sats-banner">
-    <span class="sats-banner-logo">SATS</span>
-    <button class="btn btn-orange btn-sm" onclick="openSatsApp()">${t('sats.open')}</button>
-  </div>`;
 
   // Type filter
   html += `<div class="schedule-filters">
