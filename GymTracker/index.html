@@ -301,6 +301,35 @@ input,select{font:inherit;color:var(--text);background:var(--surface2);border:1p
 
 .hidden{display:none!important}
 
+/* PR Toast */
+.pr-toast{
+  position:fixed;top:calc(var(--safe-top) + 12px);left:50%;transform:translateX(-50%);z-index:400;
+  background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1a1a;
+  padding:10px 24px;border-radius:12px;font-size:15px;font-weight:700;
+  box-shadow:0 4px 20px rgba(251,191,36,.4);animation:prToastIn .4s ease-out;
+  white-space:nowrap;
+}
+.pr-toast.hiding{animation:prToastOut .3s ease-in forwards}
+@keyframes prToastIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes prToastOut{from{opacity:1;transform:translateX(-50%) translateY(0)}to{opacity:0;transform:translateX(-50%) translateY(-20px)}}
+.exercise-pr{font-size:11px;color:#fbbf24;margin-top:3px;font-weight:600}
+
+/* Exercise History Modal */
+.history-list{margin:8px 0 16px}
+.history-session{background:var(--surface2);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.history-date{font-size:12px;color:var(--accent);font-weight:700;margin-bottom:4px}
+.history-sets{font-size:13px;color:var(--text2)}
+
+/* SATS Banner */
+.sats-banner{
+  background:linear-gradient(135deg,rgba(255,107,53,.12),rgba(255,107,53,.06));
+  border:1px solid rgba(255,107,53,.3);border-radius:14px;
+  padding:12px 16px;margin-bottom:14px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.sats-banner-logo{font-size:18px;font-weight:800;color:var(--accent2);letter-spacing:1px}
+.sats-banner .btn{white-space:nowrap}
+
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
@@ -368,6 +397,10 @@ en: {
   'timer.hold': 'HOLD', 'timer.tap_start': 'Tap to start timer', 'timer.actual': 'Actual',
   'common.kg': 'kg', 'common.sec': 'sec', 'common.min': 'min', 'common.per_side': '/side',
   'common.cancel': 'Cancel', 'common.save': 'Save', 'common.delete': 'Delete',
+  'pr.new': '🏆 New PR!', 'pr.title': 'Personal Record', 'pr.count': 'New PRs',
+  'history.title': 'Exercise History', 'history.empty': 'No history yet', 'history.sessions': 'Last sessions',
+  'sats.open': 'Open SATS App',
+  'celebrate.volume': 'Total Volume',
 },
 no: {
   'app.name': 'GymTracker',
@@ -417,6 +450,10 @@ no: {
   'timer.hold': 'HOLD', 'timer.tap_start': 'Trykk for å starte nedtelling', 'timer.actual': 'Faktisk',
   'common.kg': 'kg', 'common.sec': 'sek', 'common.min': 'min', 'common.per_side': '/side',
   'common.cancel': 'Avbryt', 'common.save': 'Lagre', 'common.delete': 'Slett',
+  'pr.new': '🏆 Ny rekord!', 'pr.title': 'Personlig rekord', 'pr.count': 'Nye rekorder',
+  'history.title': 'Øvelseshistorikk', 'history.empty': 'Ingen historikk ennå', 'history.sessions': 'Siste økter',
+  'sats.open': 'Åpne SATS-appen',
+  'celebrate.volume': 'Totalvolum',
 }
 };
 
@@ -578,6 +615,9 @@ const Store = {
   getGoalProgress() { return this.get('goal_progress', {}); },
   saveGoalProgress(g) { this.set('goal_progress', g); },
 
+  getPRs() { return this.get('prs', {}); },
+  savePRs(p) { this.set('prs', p); },
+
   _syncTimeout: null,
   syncSoon() { clearTimeout(this._syncTimeout); this._syncTimeout = setTimeout(() => syncToServer(), 3000); },
 };
@@ -668,6 +708,20 @@ function estimateCalories(type, durationMin) {
   const mets = { solo: 4, cycling: 8, strength_class: 5 };
   return Math.round((mets[type] || 4) * weight * (durationMin / 60));
 }
+function estimateCaloriesDetailed(type, durationMin, exerciseData) {
+  const weight = 90;
+  const mets = { solo: 4, cycling: 8, strength_class: 5 };
+  const baseCal = Math.round((mets[type] || 4) * weight * (durationMin / 60));
+  if (!exerciseData || !exerciseData.length) return { calories: baseCal, volume: 0 };
+  let totalVolume = 0;
+  for (const ex of exerciseData) {
+    for (const s of ex.sets) {
+      if (s.weight > 0 && s.reps > 0) totalVolume += s.weight * s.reps;
+    }
+  }
+  const bonus = Math.min(baseCal * 0.5, totalVolume * 0.002);
+  return { calories: Math.round(baseCal + bonus), volume: Math.round(totalVolume) };
+}
 function getLastExerciseData(exId) {
   const workouts = Store.getWorkouts();
   for (const w of workouts) {
@@ -749,7 +803,11 @@ function renderAll() { renderHeader(); renderTabs(); renderContent(); }
 // ==================== PLAN VIEW ====================
 function renderPlan() {
   const today = dayOfWeek();
-  return WEEK.map(w => {
+  let html = `<div class="sats-banner">
+    <span class="sats-banner-logo">SATS</span>
+    <button class="btn btn-orange btn-sm" onclick="openSatsApp()">${t('sats.open')}</button>
+  </div>`;
+  html += WEEK.map(w => {
     const isToday = w.day === today;
     const todayBadge = isToday ? `<span class="plan-badge">${t('plan.today')}</span>` : '';
     let actions = '';
@@ -774,6 +832,7 @@ function renderPlan() {
       </div>
     `;
   }).join('');
+  return html;
 }
 
 // ==================== WORKOUT VIEW ====================
@@ -838,12 +897,13 @@ function renderWorkout() {
           <div style="display:flex;justify-content:space-between;align-items:start">
             <div>
               <span class="exercise-num">${ex.num}</span>
-              <span class="exercise-name">${tName(exDef.name)}</span>
+              <span class="exercise-name" onclick="showExHistory('${ex.exId}')" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px">${tName(exDef.name)}</span>
             </div>
           </div>
           <div class="exercise-target">${targetStr}</div>
           <div class="exercise-instruction">${tName(exDef.instruction)}</div>
           ${lastInfo ? `<div class="exercise-last">📋 ${lastInfo}</div>` : ''}
+          ${(() => { const prStr = getPRDisplay(ex.exId); return prStr ? `<div class="exercise-pr">${prStr}</div>` : ''; })()}
           <div class="exercise-sets">
             ${setDots}
             ${!allDone && block.type !== 'warmup' ? `<button class="exercise-log-btn" onclick="openSetLogger('${block.id}','${ex.exId}',${currentSet})">${t('workout.log_set')}</button>` : ''}
@@ -1081,13 +1141,22 @@ function confirmLogSet(blockId, exId, setIndex, isTimeBased) {
   const block = state.activeWorkout.blocks.find(b => b.id === blockId);
   const ex = block.exerciseList.find(e => e.exId === exId);
 
+  let setData;
   if (isTimeBased) {
     const dur = parseInt($('logDuration')?.textContent || '30');
-    ex.loggedSets[setIndex] = { completed: true, weight: 0, reps: 0, duration: dur };
+    setData = { completed: true, weight: 0, reps: 0, duration: dur };
   } else {
     const w = parseFloat($('logWeight')?.textContent || '0');
     const r = parseInt($('logReps')?.textContent || '0');
-    ex.loggedSets[setIndex] = { completed: true, weight: w, reps: r, duration: 0 };
+    setData = { completed: true, weight: w, reps: r, duration: 0 };
+  }
+  ex.loggedSets[setIndex] = setData;
+
+  // Check for PR
+  const isPR = checkAndShowPR(exId, setData);
+  if (isPR) {
+    if (!state.activeWorkout.prCount) state.activeWorkout.prCount = 0;
+    state.activeWorkout.prCount++;
   }
 
   document.getElementById('setLoggerOverlay')?.remove();
@@ -1163,16 +1232,27 @@ function showCelebration() {
       if (logged.length) exerciseData.push({ exId: ex.exId, sets: logged });
     }
   }
-  const calories = estimateCalories(w.type, duration);
+  const detailed = estimateCaloriesDetailed(w.type, duration, exerciseData);
+  const calories = detailed.calories;
+  const volume = detailed.volume;
+  const prCount = w.prCount || 0;
 
-  // Save workout
+  // Save workout (include volume)
   Store.saveWorkout({
     id: w.id, date: new Date().toISOString(), type: w.type,
-    duration, exercises: exerciseData, notes: '',
+    duration, exercises: exerciseData, notes: '', volume,
   });
 
   // Update goal progress from logged data
   updateGoalProgress(exerciseData);
+
+  let extraStats = '';
+  if (volume > 0) {
+    extraStats += `<div class="celebration-stat"><div class="val">${volume.toLocaleString()}</div><div class="lbl">${t('celebrate.volume')} (${t('common.kg')})</div></div>`;
+  }
+  if (prCount > 0) {
+    extraStats += `<div class="celebration-stat"><div class="val" style="color:#fbbf24">${prCount}</div><div class="lbl">${t('pr.count')}</div></div>`;
+  }
 
   const overlay = document.createElement('div');
   overlay.className = 'celebration';
@@ -1186,6 +1266,7 @@ function showCelebration() {
       <div class="celebration-stat"><div class="val">${totalSets}</div><div class="lbl">${t('celebrate.sets_done')}</div></div>
       <div class="celebration-stat"><div class="val">~${calories}</div><div class="lbl">${t('progress.calories')}</div></div>
     </div>
+    ${extraStats ? `<div class="celebration-stats">${extraStats}</div>` : ''}
     <button class="btn btn-primary btn-block" onclick="closeCelebration()">${t('celebrate.done')}</button>
   `;
   document.body.appendChild(overlay);
@@ -1355,12 +1436,13 @@ function renderProgress() {
     for (const w of workouts.slice(0, 20)) {
       const typeEmoji = w.type === 'cycling' ? '🚴' : w.type === 'strength_class' ? '💪' : '🏋️';
       const cals = estimateCalories(w.type, w.duration);
+      const volStr = w.volume ? ` · ${w.volume.toLocaleString()} ${t('common.kg')}` : '';
       html += `
         <div class="log-item">
           <span class="log-emoji">${typeEmoji}</span>
           <div class="log-info">
             <div class="log-title">${t('workout.' + w.type)}</div>
-            <div class="log-meta">${formatDate(w.date)} · ${w.duration} ${t('common.min')}</div>
+            <div class="log-meta">${formatDate(w.date)} · ${w.duration} ${t('common.min')}${volStr}</div>
           </div>
           <span class="log-cals">~${cals} ${t('progress.calories')}</span>
         </div>
@@ -1439,6 +1521,12 @@ function calcWeeksActive(workouts) {
 function renderSchedule() {
   const f = state.scheduleFilter;
   let html = `<h2 style="margin-bottom:12px">${t('schedule.title')}</h2>`;
+
+  // SATS app link
+  html += `<div class="sats-banner">
+    <span class="sats-banner-logo">SATS</span>
+    <button class="btn btn-orange btn-sm" onclick="openSatsApp()">${t('sats.open')}</button>
+  </div>`;
 
   // Type filter
   html += `<div class="schedule-filters">
@@ -1662,9 +1750,125 @@ function adjustRestTimer(delta) {
 
 function clearAllData() {
   if (confirm(t('settings.clear_confirm'))) {
-    ['gym_workouts', 'gym_bodyweight', 'gym_settings', 'gym_goal_progress', 'gym_sync_ts'].forEach(k => localStorage.removeItem(k));
+    ['gym_workouts', 'gym_bodyweight', 'gym_settings', 'gym_goal_progress', 'gym_prs', 'gym_sync_ts'].forEach(k => localStorage.removeItem(k));
     location.reload();
   }
+}
+
+// ==================== PR DETECTION ====================
+function checkAndShowPR(exId, setData) {
+  const exDef = EX[exId];
+  if (!exDef) return false;
+  const prs = Store.getPRs();
+  if (!prs[exId]) prs[exId] = {};
+  let isNewPR = false;
+  if (exDef.type === 'duration') {
+    const dur = setData.duration || 0;
+    if (dur > 0 && dur > (prs[exId].maxDuration || 0)) {
+      prs[exId].maxDuration = dur;
+      isNewPR = true;
+    }
+  } else {
+    const w = setData.weight || 0;
+    const r = setData.reps || 0;
+    if (w > 0 && r > 0) {
+      const e1rm = w * (1 + r / 30);
+      if (e1rm > (prs[exId].e1rm || 0)) {
+        prs[exId].e1rm = Math.round(e1rm * 10) / 10;
+        prs[exId].maxWeight = w;
+        prs[exId].maxReps = r;
+        isNewPR = true;
+      }
+    }
+  }
+  if (isNewPR) {
+    Store.savePRs(prs);
+    showPRToast();
+  }
+  return isNewPR;
+}
+
+function showPRToast() {
+  const existing = document.querySelector('.pr-toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = 'pr-toast';
+  toast.textContent = t('pr.new');
+  document.body.appendChild(toast);
+  setTimeout(() => { toast.classList.add('hiding'); }, 1700);
+  setTimeout(() => { toast.remove(); }, 2000);
+}
+
+function getPRDisplay(exId) {
+  const prs = Store.getPRs();
+  const pr = prs[exId];
+  if (!pr) return '';
+  const exDef = EX[exId];
+  if (exDef && exDef.type === 'duration' && pr.maxDuration) {
+    return `🏆 PR: ${pr.maxDuration}${t('common.sec')}`;
+  }
+  if (pr.maxWeight && pr.maxReps) {
+    return `🏆 PR: ${pr.maxWeight}${t('common.kg')} × ${pr.maxReps}`;
+  }
+  return '';
+}
+
+// ==================== EXERCISE HISTORY POPUP ====================
+function showExHistory(exId) {
+  const exDef = EX[exId];
+  if (!exDef) return;
+  const workouts = Store.getWorkouts().filter(w => !w.deleted);
+  const sessions = [];
+  for (const w of workouts) {
+    if (!w.exercises) continue;
+    const ex = w.exercises.find(e => e.exId === exId);
+    if (ex && ex.sets && ex.sets.length) {
+      sessions.push({ date: w.date, sets: ex.sets });
+    }
+    if (sessions.length >= 5) break;
+  }
+
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'exHistoryOverlay';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+
+  let listHtml = '';
+  if (sessions.length === 0) {
+    listHtml = `<p style="color:var(--text3);text-align:center;padding:16px">${t('history.empty')}</p>`;
+  } else {
+    listHtml = `<div class="history-list">`;
+    for (const sess of sessions) {
+      const setsStr = exDef.type === 'duration'
+        ? sess.sets.map(s => s.duration + t('common.sec')).join(', ')
+        : sess.sets.map(s => s.weight > 0 ? s.weight + 'kg × ' + s.reps : s.reps + ' reps').join(', ');
+      listHtml += `<div class="history-session">
+        <div class="history-date">${formatDate(sess.date)}</div>
+        <div class="history-sets">${setsStr}</div>
+      </div>`;
+    }
+    listHtml += `</div>`;
+  }
+
+  overlay.innerHTML = `
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">${t('history.title')}</div>
+      <h3 style="text-align:center;margin-bottom:12px">${tName(exDef.name)}</h3>
+      <p style="font-size:13px;color:var(--text2);text-align:center;margin-bottom:8px">${t('history.sessions')}</p>
+      ${listHtml}
+      <button class="btn btn-secondary btn-block" onclick="document.getElementById('exHistoryOverlay').remove()">${t('settings.close')}</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
+
+// ==================== SATS APP LINK ====================
+function openSatsApp() {
+  const fallback = 'https://apps.apple.com/no/app/sats/id1272653109';
+  const timer = setTimeout(() => { window.location = fallback; }, 1500);
+  window.addEventListener('blur', () => clearTimeout(timer), { once: true });
+  window.location = 'sats://';
 }
 
 // ==================== INIT ====================
