@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>GymTracker</title>
+<meta name="description" content="Personal gym workout tracker">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GymTracker">
+<meta name="theme-color" content="#0a1929">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>🏋️</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%230a1929'/><text x='90' y='130' font-size='100' text-anchor='middle'>🏋️</text></svg>">
+<style>
+:root {
+  --bg: #0a1929;
+  --surface: #0d2134;
+  --surface2: #132d42;
+  --surface3: #1a3a52;
+  --border: #1e4060;
+  --text: #e8edf2;
+  --text2: #8ca0b3;
+  --text3: #5a7a94;
+  --accent: #00b4d8;
+  --accent2: #ff6b35;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #ef4444;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --header-h: 56px;
+  --tab-h: 60px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',system-ui,sans-serif;font-size:16px;line-height:1.5}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;touch-action:manipulation}
+input,select{font:inherit;color:var(--text);background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px}
+
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;padding-top:var(--safe-top);
+  height:calc(var(--header-h) + var(--safe-top));
+  background:var(--surface);border-bottom:1px solid var(--border);
+}
+.header-title{font-size:20px;font-weight:700;letter-spacing:-0.5px}
+.header-title span{color:var(--accent)}
+.header-actions{display:flex;gap:8px;align-items:center}
+.header-btn{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--surface2)}
+.lang-btn{font-size:13px;font-weight:700;padding:6px 10px;border-radius:8px;background:var(--accent);color:var(--bg);min-width:36px;text-align:center}
+
+.content{
+  position:fixed;
+  top:calc(var(--header-h) + var(--safe-top));
+  bottom:calc(var(--tab-h) + var(--safe-bottom));
+  left:0;right:0;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  padding:16px;
+}
+
+.tab-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-around;align-items:center;
+  padding-bottom:var(--safe-bottom);
+  height:calc(var(--tab-h) + var(--safe-bottom));
+  background:var(--surface);border-top:1px solid var(--border);
+}
+.tab{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:8px 0;font-size:10px;color:var(--text3);transition:color .2s;
+}
+.tab.active{color:var(--accent)}
+.tab-icon{font-size:22px;height:26px;display:flex;align-items:center}
+
+/* Plan View */
+.plan-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:16px;margin-bottom:12px;transition:all .2s;
+}
+.plan-card.today{border-color:var(--accent);box-shadow:0 0 20px rgba(0,180,216,.15)}
+.plan-card.today .plan-badge{background:var(--accent);color:var(--bg)}
+.plan-day{font-size:13px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.plan-title{font-size:18px;font-weight:700;margin:4px 0}
+.plan-subtitle{font-size:14px;color:var(--text2)}
+.plan-badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--surface2);margin-top:8px}
+.plan-emoji{font-size:28px;float:right;margin-top:-4px}
+.plan-actions{margin-top:12px;display:flex;gap:8px}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 24px;border-radius:12px;font-weight:600;font-size:15px;
+  transition:all .15s;min-height:48px;
+}
+.btn-primary{background:var(--accent);color:var(--bg)}
+.btn-primary:active{background:#009bb8;transform:scale(.97)}
+.btn-secondary{background:var(--surface2);border:1px solid var(--border)}
+.btn-secondary:active{background:var(--surface3)}
+.btn-success{background:var(--success);color:var(--bg)}
+.btn-success:active{background:#38c96d;transform:scale(.97)}
+.btn-orange{background:var(--accent2);color:#fff}
+.btn-orange:active{background:#e55a28;transform:scale(.97)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-sm{padding:8px 16px;font-size:13px;min-height:36px;border-radius:8px}
+.btn-block{width:100%}
+.btn:disabled{opacity:.4;pointer-events:none}
+
+/* Workout View */
+.workout-header{
+  background:var(--surface);border-radius:16px;padding:16px;margin-bottom:16px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.workout-timer-display{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent)}
+.workout-block{margin-bottom:20px}
+.block-header{
+  display:flex;align-items:center;gap:8px;margin-bottom:10px;
+  padding:8px 12px;border-radius:10px;background:var(--surface2);
+}
+.block-header h3{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;flex:1}
+.block-tag{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--surface3);color:var(--text2)}
+
+.exercise-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:14px;margin-bottom:8px;transition:all .2s;
+}
+.exercise-card.completed{opacity:.6;border-color:var(--success)}
+.exercise-card.active{border-color:var(--accent);box-shadow:0 0 15px rgba(0,180,216,.1)}
+.exercise-num{font-size:12px;color:var(--accent);font-weight:700}
+.exercise-name{font-size:16px;font-weight:700;margin:2px 0}
+.exercise-target{font-size:13px;color:var(--text2)}
+.exercise-instruction{font-size:12px;color:var(--text3);margin-top:4px;font-style:italic}
+.exercise-sets{display:flex;gap:6px;margin-top:8px;align-items:center}
+.set-dot{
+  width:28px;height:28px;border-radius:50%;border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+  transition:all .2s;
+}
+.set-dot.done{background:var(--success);border-color:var(--success);color:var(--bg)}
+.set-dot.current{border-color:var(--accent);color:var(--accent);animation:pulse 1.5s infinite}
+.set-dot.skipped{background:var(--surface3);border-color:var(--surface3);color:var(--text3)}
+.exercise-log-btn{
+  margin-left:auto;padding:8px 16px;border-radius:10px;font-size:13px;font-weight:700;
+  background:var(--accent);color:var(--bg);
+}
+.exercise-last{font-size:11px;color:var(--text3);margin-top:4px}
+
+/* Set Logger Modal */
+.modal-overlay{
+  position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);
+  display:flex;align-items:flex-end;justify-content:center;
+  animation:fadeIn .2s;
+}
+.modal-sheet{
+  width:100%;max-width:420px;background:var(--surface);
+  border-radius:20px 20px 0 0;padding:20px;padding-bottom:calc(20px + var(--safe-bottom));
+  animation:slideUp .3s;max-height:85vh;overflow-y:auto;
+}
+.modal-handle{width:40px;height:4px;border-radius:2px;background:var(--surface3);margin:0 auto 16px}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:16px;text-align:center}
+
+.logger-control{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px 0}
+.logger-label{font-size:13px;color:var(--text2);text-align:center;margin-bottom:4px}
+.logger-value{
+  font-size:36px;font-weight:700;min-width:80px;text-align:center;
+  font-variant-numeric:tabular-nums;
+}
+.logger-unit{font-size:14px;color:var(--text2);margin-left:2px}
+.logger-btn{
+  width:52px;height:52px;border-radius:50%;font-size:24px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--surface2);border:1px solid var(--border);
+}
+.logger-btn:active{background:var(--surface3);transform:scale(.93)}
+
+/* Rest Timer */
+.rest-overlay{
+  position:fixed;inset:0;z-index:300;
+  background:var(--bg);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:20px;
+  animation:fadeIn .3s;
+}
+.rest-time{font-size:80px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent)}
+.rest-label{font-size:18px;color:var(--text2)}
+.rest-ring{position:relative;width:200px;height:200px}
+.rest-ring svg{transform:rotate(-90deg)}
+.rest-ring circle{fill:none;stroke-width:6}
+.rest-ring .bg{stroke:var(--surface3)}
+.rest-ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .3s}
+.rest-next{font-size:14px;color:var(--text3);text-align:center;max-width:250px}
+
+/* Progress View */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.stat-card{background:var(--surface);border-radius:14px;padding:14px;text-align:center}
+.stat-value{font-size:28px;font-weight:700;color:var(--accent)}
+.stat-label{font-size:12px;color:var(--text2);margin-top:2px}
+.progress-section{margin-bottom:24px}
+.progress-section h3{font-size:15px;font-weight:700;margin-bottom:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+.log-item{
+  background:var(--surface);border-radius:12px;padding:12px 14px;margin-bottom:8px;
+  display:flex;align-items:center;gap:12px;
+}
+.log-emoji{font-size:24px}
+.log-info{flex:1}
+.log-title{font-size:14px;font-weight:600}
+.log-meta{font-size:12px;color:var(--text2)}
+.log-cals{font-size:13px;font-weight:600;color:var(--accent2)}
+
+.weight-chart{background:var(--surface);border-radius:14px;padding:16px;margin-bottom:16px}
+.weight-chart svg{width:100%;height:120px}
+.weight-current{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.weight-big{font-size:32px;font-weight:700}
+.weight-goal{font-size:14px;color:var(--text2)}
+.bmi-badge{font-size:12px;padding:4px 10px;border-radius:6px;background:var(--surface2)}
+
+.freq-bars{display:flex;gap:3px;align-items:flex-end;height:60px;margin-top:8px}
+.freq-bar{flex:1;border-radius:3px 3px 0 0;background:var(--surface3);min-height:4px;transition:height .3s}
+.freq-bar.hit{background:var(--accent)}
+.freq-bar.miss{background:var(--danger);opacity:.4}
+.freq-labels{display:flex;gap:3px;margin-top:4px}
+.freq-labels span{flex:1;text-align:center;font-size:9px;color:var(--text3)}
+
+/* Goals */
+.goal-card{background:var(--surface);border-radius:14px;padding:14px;margin-bottom:10px}
+.goal-name{font-size:14px;font-weight:600;margin-bottom:6px}
+.goal-bar-bg{height:10px;border-radius:5px;background:var(--surface3);overflow:hidden;margin-bottom:4px}
+.goal-bar-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent),var(--success));transition:width .5s}
+.goal-values{display:flex;justify-content:space-between;font-size:11px;color:var(--text2)}
+
+/* Schedule View */
+.schedule-filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.filter-chip{
+  padding:8px 14px;border-radius:20px;font-size:13px;font-weight:600;
+  background:var(--surface2);border:1px solid var(--border);transition:all .2s;
+}
+.filter-chip.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.schedule-card{
+  background:var(--surface);border-radius:12px;padding:12px 14px;margin-bottom:8px;
+  display:flex;align-items:center;gap:12px;
+}
+.sched-time{font-size:15px;font-weight:700;min-width:50px;color:var(--accent)}
+.sched-info{flex:1}
+.sched-name{font-size:14px;font-weight:600}
+.sched-meta{font-size:12px;color:var(--text2)}
+.sched-dur{font-size:12px;color:var(--text3);padding:4px 8px;border-radius:6px;background:var(--surface2)}
+.schedule-updated{font-size:12px;color:var(--text3);text-align:center;margin-top:16px}
+
+/* Settings */
+.settings-section{margin-bottom:24px}
+.settings-section h3{font-size:14px;font-weight:700;color:var(--text2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
+.setting-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px;background:var(--surface);border-radius:12px;margin-bottom:8px;
+}
+.setting-label{font-size:15px}
+.setting-value{display:flex;align-items:center;gap:8px}
+
+/* Celebration */
+.celebration{
+  position:fixed;inset:0;z-index:400;background:rgba(10,25,41,.95);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;animation:fadeIn .5s;padding:20px;text-align:center;
+}
+.celebration-emoji{font-size:80px;animation:bounce 1s infinite}
+.celebration h2{font-size:24px;font-weight:700}
+.celebration-stats{display:flex;gap:20px;margin:16px 0}
+.celebration-stat{text-align:center}
+.celebration-stat .val{font-size:28px;font-weight:700;color:var(--accent)}
+.celebration-stat .lbl{font-size:12px;color:var(--text2)}
+
+/* Quick Log */
+.quick-log{padding:8px 0}
+.quick-log select,.quick-log input{width:100%;margin-bottom:12px;padding:12px;border-radius:10px}
+
+/* Profile */
+.injury-card{background:var(--danger);background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:12px;margin-bottom:8px;font-size:13px}
+.injury-card strong{color:var(--danger)}
+
+.hidden{display:none!important}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+@keyframes setComplete{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="header" id="header"></header>
+  <main class="content" id="content"></main>
+  <nav class="tab-bar" id="tabBar"></nav>
+</div>
+
+<script>
+'use strict';
+
+// ==================== TRANSLATIONS ====================
+const LANG = {
+en: {
+  'app.name': 'GymTracker',
+  'tab.plan': 'Plan', 'tab.workout': 'Workout', 'tab.progress': 'Progress', 'tab.schedule': 'Schedule',
+  'day.0': 'Sunday', 'day.1': 'Monday', 'day.2': 'Tuesday', 'day.3': 'Wednesday', 'day.4': 'Thursday', 'day.5': 'Friday', 'day.6': 'Saturday',
+  'day.short.0': 'Sun', 'day.short.1': 'Mon', 'day.short.2': 'Tue', 'day.short.3': 'Wed', 'day.short.4': 'Thu', 'day.short.5': 'Fri', 'day.short.6': 'Sat',
+  'plan.today': 'TODAY', 'plan.rest': 'Rest', 'plan.optional': 'Optional solo weights', 'plan.with_friend': 'With friend',
+  'plan.start_solo': 'Start Solo Workout', 'plan.quick_log': 'Log Class', 'plan.at': 'at',
+  'workout.start': 'Start Workout', 'workout.end': 'End Workout', 'workout.cancel': 'Cancel',
+  'workout.elapsed': 'Elapsed', 'workout.sets': 'sets', 'workout.set': 'Set',
+  'workout.log_set': 'Log Set', 'workout.complete_set': '✓ Done', 'workout.skip': 'Skip',
+  'workout.complete_block': 'Block Complete!', 'workout.complete_warmup': 'Mark Done',
+  'workout.weight': 'Weight', 'workout.reps': 'Reps', 'workout.duration': 'Duration',
+  'workout.previous': 'Last time', 'workout.no_active': 'No active workout',
+  'workout.no_active_desc': 'Go to the Plan tab and tap a workout day to start.',
+  'workout.superset': 'Superset', 'workout.circuit': 'Circuit',
+  'workout.solo': 'Solo Strength', 'workout.cycling': 'Cycling', 'workout.strength_class': 'Strength Class',
+  'rest.title': 'REST', 'rest.skip': 'Skip Rest', 'rest.next': 'Next up',
+  'progress.title': 'Progress', 'progress.workouts': 'Workouts', 'progress.this_week': 'This Week',
+  'progress.streak': 'Streak', 'progress.weeks': 'weeks', 'progress.week': 'week',
+  'progress.total': 'Total', 'progress.avg_week': 'Avg/Week',
+  'progress.body_weight': 'Body Weight', 'progress.current': 'Current', 'progress.goal': 'Goal',
+  'progress.add_weight': 'Log Weight', 'progress.history': 'Workout History', 'progress.empty': 'No workouts yet!',
+  'progress.frequency': 'Weekly Frequency', 'progress.target': 'Target: 3×/week',
+  'progress.calories': 'cal', 'progress.minutes': 'min',
+  'goals.title': 'Goals', 'goals.current': 'Current', 'goals.target': '3-month goal',
+  'schedule.title': 'SATS Schedule', 'schedule.cycling': 'Cycling', 'schedule.strength': 'Strength',
+  'schedule.all': 'All', 'schedule.langnes': 'Langnes', 'schedule.tromso': 'Tromsø',
+  'schedule.updated': 'Schedule last updated', 'schedule.instructor': 'Instructor',
+  'settings.title': 'Settings', 'settings.language': 'Language', 'settings.rest_timer': 'Rest Timer (sec)',
+  'settings.profile': 'Profile', 'settings.injuries': 'Injuries & Limitations',
+  'settings.achilles': 'Achilles tendon — torn 5 years ago. NO running. Use elliptical, stepper, or bike.',
+  'settings.back': 'Lower back pain — intermittent. Core strengthening is primary treatment. Avoid spine flexion under load.',
+  'settings.data': 'Data', 'settings.sync': 'Sync to Cloud', 'settings.synced': 'Last synced',
+  'settings.never': 'Never', 'settings.export': 'Export Data', 'settings.clear': 'Clear All Data',
+  'settings.clear_confirm': 'Are you sure? This will delete all local data.',
+  'settings.close': 'Close',
+  'celebrate.title': 'Workout Complete!', 'celebrate.great': 'Great work! 💪',
+  'celebrate.duration': 'Duration', 'celebrate.sets_done': 'Sets Done', 'celebrate.calories': 'Est. Calories',
+  'celebrate.done': 'Done',
+  'quicklog.title': 'Log Group Class', 'quicklog.type': 'Class Type', 'quicklog.duration': 'Duration (min)',
+  'quicklog.notes': 'Notes (optional)', 'quicklog.save': 'Save',
+  'weight.title': 'Log Body Weight', 'weight.placeholder': 'Weight in kg', 'weight.save': 'Save',
+  'common.kg': 'kg', 'common.sec': 'sec', 'common.min': 'min', 'common.per_side': '/side',
+  'common.cancel': 'Cancel', 'common.save': 'Save', 'common.delete': 'Delete',
+},
+no: {
+  'app.name': 'GymTracker',
+  'tab.plan': 'Plan', 'tab.workout': 'Trening', 'tab.progress': 'Fremgang', 'tab.schedule': 'Timeplan',
+  'day.0': 'Søndag', 'day.1': 'Mandag', 'day.2': 'Tirsdag', 'day.3': 'Onsdag', 'day.4': 'Torsdag', 'day.5': 'Fredag', 'day.6': 'Lørdag',
+  'day.short.0': 'Søn', 'day.short.1': 'Man', 'day.short.2': 'Tir', 'day.short.3': 'Ons', 'day.short.4': 'Tor', 'day.short.5': 'Fre', 'day.short.6': 'Lør',
+  'plan.today': 'I DAG', 'plan.rest': 'Hvile', 'plan.optional': 'Valgfri solostyrke', 'plan.with_friend': 'Med kompis',
+  'plan.start_solo': 'Start solotrening', 'plan.quick_log': 'Logg time', 'plan.at': 'på',
+  'workout.start': 'Start trening', 'workout.end': 'Avslutt trening', 'workout.cancel': 'Avbryt',
+  'workout.elapsed': 'Tid', 'workout.sets': 'sett', 'workout.set': 'Sett',
+  'workout.log_set': 'Logg sett', 'workout.complete_set': '✓ Ferdig', 'workout.skip': 'Hopp over',
+  'workout.complete_block': 'Blokk ferdig!', 'workout.complete_warmup': 'Merk ferdig',
+  'workout.weight': 'Vekt', 'workout.reps': 'Reps', 'workout.duration': 'Varighet',
+  'workout.previous': 'Sist gang', 'workout.no_active': 'Ingen aktiv trening',
+  'workout.no_active_desc': 'Gå til Plan-fanen og trykk på en treningsdag for å starte.',
+  'workout.superset': 'Supersett', 'workout.circuit': 'Sirkel',
+  'workout.solo': 'Solostyrke', 'workout.cycling': 'Sykling', 'workout.strength_class': 'Styrketimer',
+  'rest.title': 'PAUSE', 'rest.skip': 'Hopp over pause', 'rest.next': 'Neste',
+  'progress.title': 'Fremgang', 'progress.workouts': 'Treninger', 'progress.this_week': 'Denne uken',
+  'progress.streak': 'Rekke', 'progress.weeks': 'uker', 'progress.week': 'uke',
+  'progress.total': 'Totalt', 'progress.avg_week': 'Snitt/uke',
+  'progress.body_weight': 'Kroppsvekt', 'progress.current': 'Nå', 'progress.goal': 'Mål',
+  'progress.add_weight': 'Logg vekt', 'progress.history': 'Treningshistorikk', 'progress.empty': 'Ingen treninger ennå!',
+  'progress.frequency': 'Treningsfrekvens', 'progress.target': 'Mål: 3×/uke',
+  'progress.calories': 'kal', 'progress.minutes': 'min',
+  'goals.title': 'Mål', 'goals.current': 'Nå', 'goals.target': '3-månedersmål',
+  'schedule.title': 'SATS Timeplan', 'schedule.cycling': 'Sykling', 'schedule.strength': 'Styrke',
+  'schedule.all': 'Alle', 'schedule.langnes': 'Langnes', 'schedule.tromso': 'Tromsø',
+  'schedule.updated': 'Timeplan sist oppdatert', 'schedule.instructor': 'Instruktør',
+  'settings.title': 'Innstillinger', 'settings.language': 'Språk', 'settings.rest_timer': 'Pausetid (sek)',
+  'settings.profile': 'Profil', 'settings.injuries': 'Skader og begrensninger',
+  'settings.achilles': 'Akillessene — røket for 5 år siden. INGEN løping. Bruk ellipsemaskin, stepmaskin eller sykkel.',
+  'settings.back': 'Korsryggsmerter — periodisk. Kjernestyrkende er hovedbehandling. Unngå belastning med bøyd rygg.',
+  'settings.data': 'Data', 'settings.sync': 'Synkroniser til sky', 'settings.synced': 'Sist synkronisert',
+  'settings.never': 'Aldri', 'settings.export': 'Eksporter data', 'settings.clear': 'Slett alle data',
+  'settings.clear_confirm': 'Er du sikker? Dette sletter alle lokale data.',
+  'settings.close': 'Lukk',
+  'celebrate.title': 'Trening fullført!', 'celebrate.great': 'Bra jobba! 💪',
+  'celebrate.duration': 'Varighet', 'celebrate.sets_done': 'Sett utført', 'celebrate.calories': 'Est. kalorier',
+  'celebrate.done': 'Ferdig',
+  'quicklog.title': 'Logg gruppetime', 'quicklog.type': 'Timetype', 'quicklog.duration': 'Varighet (min)',
+  'quicklog.notes': 'Notater (valgfritt)', 'quicklog.save': 'Lagre',
+  'weight.title': 'Logg kroppsvekt', 'weight.placeholder': 'Vekt i kg', 'weight.save': 'Lagre',
+  'common.kg': 'kg', 'common.sec': 'sek', 'common.min': 'min', 'common.per_side': '/side',
+  'common.cancel': 'Avbryt', 'common.save': 'Lagre', 'common.delete': 'Slett',
+}
+};
+
+function t(key) { return LANG[state.lang]?.[key] || LANG.en[key] || key; }
+function tName(obj) { return obj?.[state.lang] || obj?.en || ''; }
+
+// ==================== EXERCISE DATABASE ====================
+const EX = {
+  'warmup-cardio': { name: { en: 'Elliptical / Stepper / Bike', no: 'Ellipsemaskin / Stepmaskin / Sykkel' }, instruction: { en: '5–7 min. NO running (achilles injury)', no: '5–7 min. INGEN løping (akillesskade)' }, type: 'duration', defaultDuration: 360 },
+  'warmup-bands': { name: { en: 'Band Pull-aparts + Arm Circles', no: 'Båndstrekk + Armsirkler' }, instruction: { en: '2–3 min mobility work', no: '2–3 min mobilitet' }, type: 'duration', defaultDuration: 150 },
+  'dead-bug': { name: { en: 'Dead Bug', no: 'Død bille' }, instruction: { en: 'Press lower back into floor, slow and controlled', no: 'Press korsryggen mot gulvet, rolig og kontrollert' }, type: 'reps', defaultReps: 8, perSide: true, defaultWeight: 0 },
+  'pallof-press': { name: { en: 'Pallof Press', no: 'Pallof-press' }, instruction: { en: 'Anti-rotation, hold 2 sec (cable/band)', no: 'Anti-rotasjon, hold 2 sek (kabel/strikk)' }, type: 'reps', defaultReps: 10, perSide: true, defaultWeight: 5 },
+  'plank': { name: { en: 'Plank', no: 'Planke' }, instruction: { en: 'Squeeze glutes, don\'t sag', no: 'Klem rumpa, ikke synk' }, type: 'duration', defaultDuration: 30 },
+  'side-plank': { name: { en: 'Side Plank', no: 'Sideplanke' }, instruction: { en: 'Critical for lower back protection', no: 'Viktig for korsryggbeskyttelse' }, type: 'duration', defaultDuration: 20, perSide: true },
+  'db-chest-press': { name: { en: 'Dumbbell Chest Press', no: 'Brystpress med manualer' }, instruction: { en: 'Flat or slight incline, 3 sec negative', no: 'Flat eller lett skrå, 3 sek negativ' }, type: 'reps', defaultReps: 10, defaultWeight: 14 },
+  'dips': { name: { en: 'Dips', no: 'Dips' }, instruction: { en: 'Assisted if needed, lean forward for chest', no: 'Assistert om nødvendig, len fremover for bryst' }, type: 'reps', defaultReps: 8, defaultWeight: 0 },
+  'db-shoulder-press': { name: { en: 'Dumbbell Shoulder Press', no: 'Skulderpress med manualer' }, instruction: { en: 'Seated, don\'t arch back', no: 'Sittende, ikke svai ryggen' }, type: 'reps', defaultReps: 10, defaultWeight: 10 },
+  'triceps-pushdown': { name: { en: 'Triceps Pushdown', no: 'Triceps nedtrekk' }, instruction: { en: 'Cable, full extension', no: 'Kabel, full strekk' }, type: 'reps', defaultReps: 12, defaultWeight: 15 },
+  'lat-pulldown': { name: { en: 'Lat Pulldown', no: 'Nedtrekk' }, instruction: { en: 'Wide grip, squeeze shoulder blades', no: 'Bredt grep, klem skulderbladene' }, type: 'reps', defaultReps: 10, defaultWeight: 40 },
+  'bicep-curls': { name: { en: 'Bicep Curls', no: 'Bicepscurl' }, instruction: { en: 'Dumbbells, controlled', no: 'Manualer, kontrollert' }, type: 'reps', defaultReps: 12, defaultWeight: 8 },
+  'assisted-pullups': { name: { en: 'Assisted Pull-ups', no: 'Assisterte pull-ups' }, instruction: { en: 'Reduce assistance over time', no: 'Reduser assistanse over tid' }, type: 'reps', defaultReps: 6, defaultWeight: 0 },
+  'back-raises': { name: { en: 'Back Raises', no: 'Ryggstrekk' }, instruction: { en: 'Hyperextension bench', no: 'Ryggstrekkbenk' }, type: 'reps', defaultReps: 12, defaultWeight: 0 },
+  'bicycle-crunches': { name: { en: 'Bicycle Crunches', no: 'Sykkelcrunch' }, instruction: { en: 'Slow, 2 sec per rep', no: 'Rolig, 2 sek per rep' }, type: 'reps', defaultReps: 15, perSide: true, defaultWeight: 0 },
+  'reverse-crunch': { name: { en: 'Reverse Crunch', no: 'Omvendt crunch' }, instruction: { en: 'Lift hips off bench', no: 'Løft hoftene fra benken' }, type: 'reps', defaultReps: 12, defaultWeight: 0 },
+  'plank-shoulder-taps': { name: { en: 'Plank Shoulder Taps', no: 'Planke skuldertapp' }, instruction: { en: 'Keep hips square', no: 'Hold hoftene stille' }, type: 'reps', defaultReps: 10, perSide: true, defaultWeight: 0 },
+};
+
+// ==================== SOLO WORKOUT PROGRAM ====================
+const SOLO_PROGRAM = [
+  {
+    id: 'warmup', name: { en: 'Warmup', no: 'Oppvarming' }, duration: 10, type: 'warmup', emoji: '🔥',
+    exercises: [
+      { exId: 'warmup-cardio', sets: 1 },
+      { exId: 'warmup-bands', sets: 1 },
+    ]
+  },
+  {
+    id: 'core', name: { en: 'Block 1 — Core', no: 'Blokk 1 — Core' }, duration: 12, type: 'superset', emoji: '🎯',
+    note: { en: 'Do core FIRST while fresh — this is the priority', no: 'Kjør core FØRST mens du er uthvilt — dette er prioriteten' },
+    pairs: [
+      { a: { exId: 'dead-bug', num: '1a', sets: 3 }, b: { exId: 'pallof-press', num: '1b', sets: 3 } },
+      { a: { exId: 'plank', num: '2a', sets: 3 }, b: { exId: 'side-plank', num: '2b', sets: 3 } },
+    ]
+  },
+  {
+    id: 'push', name: { en: 'Block 2 — Push', no: 'Blokk 2 — Push' }, duration: 12, type: 'superset', emoji: '💥',
+    note: { en: 'Superset pairs, 60 sec rest between rounds', no: 'Supersett-par, 60 sek pause mellom runder' },
+    pairs: [
+      { a: { exId: 'db-chest-press', num: '3a', sets: 3 }, b: { exId: 'dips', num: '3b', sets: 3 } },
+      { a: { exId: 'db-shoulder-press', num: '4a', sets: 3 }, b: { exId: 'triceps-pushdown', num: '4b', sets: 3 } },
+    ]
+  },
+  {
+    id: 'pull', name: { en: 'Block 3 — Pull', no: 'Blokk 3 — Pull' }, duration: 12, type: 'superset', emoji: '🏗️',
+    note: { en: 'Superset pairs, 60 sec rest between rounds', no: 'Supersett-par, 60 sek pause mellom runder' },
+    pairs: [
+      { a: { exId: 'lat-pulldown', num: '5a', sets: 3 }, b: { exId: 'bicep-curls', num: '5b', sets: 3 } },
+      { a: { exId: 'assisted-pullups', num: '6a', sets: 3 }, b: { exId: 'back-raises', num: '6b', sets: 3 } },
+    ]
+  },
+  {
+    id: 'finisher', name: { en: 'Finisher — Core Circuit', no: 'Avslutter — Core-sirkel' }, duration: 5, type: 'circuit', emoji: '🔥',
+    note: { en: 'No rest between exercises, 30 sec between rounds. 2 rounds.', no: 'Ingen pause mellom øvelser, 30 sek mellom runder. 2 runder.' },
+    rounds: 2, restBetweenRounds: 30,
+    exercises: [
+      { exId: 'bicycle-crunches', num: '7a', sets: 2 },
+      { exId: 'reverse-crunch', num: '7b', sets: 2 },
+      { exId: 'plank-shoulder-taps', num: '7c', sets: 2 },
+    ]
+  },
+];
+
+// ==================== SATS SCHEDULE DATA ====================
+const SATS_SCHEDULE = {
+  updated: '2026-04-29',
+  cycling: [
+    { day: 1, time: '09:30', name: 'Cycling', duration: 60, instructor: 'Erin Chavanne', location: 'Langnes' },
+    { day: 1, time: '19:00', name: 'Cycling Interval', duration: 60, instructor: 'Einar Bjørn', location: 'Langnes' },
+    { day: 2, time: '09:30', name: 'Cycling Interval', duration: 60, instructor: 'Lene Vestgård', location: 'Langnes' },
+    { day: 2, time: '18:30', name: 'Cycling Interval', duration: 60, instructor: 'Roy-Helge Jenssen', location: 'Langnes' },
+    { day: 3, time: '10:00', name: 'Senior Cycling', duration: 45, instructor: 'Thea Strifeldt', location: 'Langnes' },
+    { day: 3, time: '19:00', name: 'Cycling', duration: 60, instructor: 'Dagfinn Paulsen', location: 'Langnes' },
+    { day: 4, time: '09:30', name: 'Cycling', duration: 60, instructor: 'Liv Tone Paulsen', location: 'Langnes' },
+    { day: 5, time: '09:30', name: 'Cycling Interval', duration: 60, instructor: 'Grete Irtun', location: 'Langnes' },
+    { day: 6, time: '10:00', name: 'Cycling', duration: 60, instructor: 'Turi Kristin Hauan', location: 'Langnes' },
+    { day: 0, time: '10:30', name: 'Cycling', duration: 60, instructor: 'varies', location: 'Langnes' },
+  ],
+  strength: [
+    { day: 1, time: '15:30', name: 'Perf. Hyrox', duration: 60, instructor: '', location: 'Langnes' },
+    { day: 1, time: '17:30', name: 'Perf. Strength (PT)', duration: 60, instructor: '', location: 'Langnes' },
+    { day: 1, time: '17:30', name: 'Pure Strength', duration: 45, instructor: '', location: 'Tromsø' },
+    { day: 1, time: '18:15', name: 'Shape Up', duration: 45, instructor: '', location: 'Langnes' },
+    { day: 2, time: '17:00', name: 'Pure Strength', duration: 45, instructor: '', location: 'Langnes' },
+    { day: 2, time: '17:30', name: 'Crosstraining', duration: 60, instructor: '', location: 'Tromsø' },
+    { day: 3, time: '15:30', name: 'Perf. Hyrox', duration: 60, instructor: '', location: 'Langnes' },
+    { day: 3, time: '17:15', name: 'Core', duration: 30, instructor: '', location: 'Langnes' },
+    { day: 3, time: '17:30', name: 'Pilates HIIT', duration: 60, instructor: '', location: 'Langnes' },
+    { day: 3, time: '18:00', name: 'Crosstraining', duration: 60, instructor: '', location: 'Langnes' },
+    { day: 3, time: '19:15', name: 'Pure Strength', duration: 45, instructor: '', location: 'Langnes' },
+    { day: 4, time: '17:00', name: 'Pure Strength', duration: 45, instructor: '', location: 'Langnes' },
+    { day: 4, time: '17:00', name: 'ABSolution', duration: 30, instructor: '', location: 'Langnes' },
+    { day: 4, time: '18:00', name: 'Shape Up', duration: 45, instructor: '', location: 'Langnes' },
+    { day: 4, time: '18:00', name: 'Pilates HIIT', duration: 45, instructor: '', location: 'Tromsø' },
+    { day: 4, time: '18:30', name: 'Perf. Strength', duration: 60, instructor: '', location: 'Langnes' },
+    { day: 0, time: '18:00', name: 'Perf. Strength', duration: 60, instructor: '', location: 'Langnes' },
+  ],
+};
+
+// ==================== WEEKLY PLAN ====================
+const WEEK = [
+  { day: 1, emoji: '😴', type: 'rest', title: { en: 'Rest', no: 'Hvile' }, subtitle: { en: 'Optional solo weights', no: 'Valgfri solostyrke' }, canSolo: true },
+  { day: 2, emoji: '🚴', type: 'cycling', title: { en: 'Cycling Interval', no: 'Cycling Interval' }, time: '18:30', location: 'SATS Langnes', subtitle: { en: 'With friend', no: 'Med kompis' } },
+  { day: 3, emoji: '😴', type: 'rest', title: { en: 'Rest', no: 'Hvile' }, subtitle: { en: 'Optional solo weights', no: 'Valgfri solostyrke' }, canSolo: true },
+  { day: 4, emoji: '💪', type: 'strength_class', title: { en: 'Pure Strength', no: 'Pure Strength' }, time: '17:00', location: 'SATS Langnes', subtitle: { en: "During daughter's practice", no: 'Mens datteren trener' } },
+  { day: 5, emoji: '😴', type: 'rest', title: { en: 'Rest', no: 'Hvile' }, subtitle: { en: 'Optional solo weights', no: 'Valgfri solostyrke' }, canSolo: true },
+  { day: 6, emoji: '🚴', type: 'cycling', title: { en: 'Cycling', no: 'Cycling' }, time: '10:00', location: 'SATS Langnes', subtitle: { en: 'Before family wakes up', no: 'Før familien våkner' } },
+  { day: 0, emoji: '😴', type: 'rest', title: { en: 'Rest', no: 'Hvile' } },
+];
+
+// ==================== PROGRESSION GOALS ====================
+const GOALS = [
+  { id: 'plank', name: { en: 'Plank', no: 'Planke' }, unit: 'sec', current: 30, target: 60 },
+  { id: 'side-plank', name: { en: 'Side Plank', no: 'Sideplanke' }, unit: 'sec/side', current: 15, target: 30 },
+  { id: 'assisted-pullups', name: { en: 'Assisted Pull-ups', no: 'Assisterte pull-ups' }, unit: 'reps', current: 6, target: 10, note: { en: 'heavy assist → light assist', no: 'tung assistanse → lett assistanse' } },
+  { id: 'dead-bug', name: { en: 'Dead Bug', no: 'Død bille' }, unit: 'reps/side', current: 6, target: 12 },
+  { id: 'dips', name: { en: 'Dips', no: 'Dips' }, unit: 'reps', current: 8, target: 12, note: { en: 'assisted → bodyweight', no: 'assistert → kroppsvekt' } },
+];
+
+// ==================== DATA STORE ====================
+function uuid() { return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); }); }
+
+const Store = {
+  get(key, fallback) { try { const v = localStorage.getItem('gym_' + key); return v ? JSON.parse(v) : fallback; } catch { return fallback; } },
+  set(key, value) { try { localStorage.setItem('gym_' + key, JSON.stringify(value)); } catch (e) { console.warn('Storage write failed:', e); } },
+
+  getWorkouts() { return this.get('workouts', []); },
+  saveWorkout(w) {
+    w._dirty = true;
+    const all = this.getWorkouts();
+    const idx = all.findIndex(x => x.id === w.id);
+    if (idx >= 0) all[idx] = w; else all.unshift(w);
+    this.set('workouts', all);
+    this.syncSoon();
+  },
+
+  getBodyWeight() { return this.get('bodyweight', []); },
+  saveBodyWeight(entry) {
+    entry._dirty = true;
+    const all = this.getBodyWeight();
+    const idx = all.findIndex(x => x.id === entry.id);
+    if (idx >= 0) all[idx] = entry; else all.unshift(entry);
+    this.set('bodyweight', all);
+    this.syncSoon();
+  },
+
+  getSettings() { return this.get('settings', { lang: 'no', restTimer: 60, deviceId: uuid() }); },
+  saveSettings(s) { this.set('settings', s); },
+
+  getGoalProgress() { return this.get('goal_progress', {}); },
+  saveGoalProgress(g) { this.set('goal_progress', g); },
+
+  _syncTimeout: null,
+  syncSoon() { clearTimeout(this._syncTimeout); this._syncTimeout = setTimeout(() => syncToServer(), 3000); },
+};
+
+// ==================== SYNC ENGINE ====================
+async function syncToServer() {
+  const deviceId = state.settings.deviceId;
+  if (!deviceId) return;
+  const headers = { 'Content-Type': 'application/json', 'X-Device-Id': deviceId };
+  try {
+    // Push dirty workouts
+    const workouts = Store.getWorkouts().filter(w => w._dirty);
+    if (workouts.length) {
+      const payload = workouts.map(w => ({
+        id: w.id, workout_date: w.date, workout_type: w.type,
+        duration_minutes: w.duration, notes: w.notes || '',
+        exercises_json: JSON.stringify(w.exercises || []), deleted: !!w.deleted,
+      }));
+      const resp = await fetch('/api/gym-workouts', { method: 'POST', headers, body: JSON.stringify(payload) });
+      if (resp.ok) {
+        const all = Store.getWorkouts();
+        all.forEach(w => { delete w._dirty; });
+        Store.set('workouts', all);
+      }
+    }
+    // Push dirty body weight
+    const bw = Store.getBodyWeight().filter(e => e._dirty);
+    if (bw.length) {
+      const payload = bw.map(e => ({ id: e.id, measured_date: e.date, weight_kg: e.weight, deleted: !!e.deleted }));
+      const resp = await fetch('/api/gym-bodyweight', { method: 'POST', headers, body: JSON.stringify(payload) });
+      if (resp.ok) {
+        const all = Store.getBodyWeight();
+        all.forEach(e => { delete e._dirty; });
+        Store.set('bodyweight', all);
+      }
+    }
+    // Push settings
+    await fetch('/api/gym-settings', { method: 'PUT', headers, body: JSON.stringify(state.settings) });
+
+    // Pull server workouts
+    const since = Store.get('sync_ts', '1970-01-01T00:00:00Z');
+    const serverWorkouts = await (await fetch('/api/gym-workouts?since=' + encodeURIComponent(since), { headers })).json();
+    if (Array.isArray(serverWorkouts) && serverWorkouts.length) {
+      const local = Store.getWorkouts();
+      for (const sw of serverWorkouts) {
+        const idx = local.findIndex(l => l.id === sw.id);
+        const merged = {
+          id: sw.id, date: sw.workout_date, type: sw.workout_type,
+          duration: sw.duration_minutes, notes: sw.notes,
+          exercises: typeof sw.exercises_json === 'string' ? JSON.parse(sw.exercises_json || '[]') : (sw.exercises_json || []),
+          deleted: sw.deleted,
+        };
+        if (idx >= 0) local[idx] = { ...local[idx], ...merged, _dirty: false };
+        else local.push({ ...merged, _dirty: false });
+      }
+      Store.set('workouts', local.filter(w => !w.deleted));
+    }
+
+    Store.set('sync_ts', new Date().toISOString());
+    state.lastSync = new Date().toISOString();
+    console.log('Sync complete');
+  } catch (e) {
+    console.log('Sync failed (DB may be paused):', e.message);
+  }
+}
+
+// ==================== APP STATE ====================
+const state = {
+  lang: 'no',
+  tab: 'plan',
+  settings: {},
+  activeWorkout: null,
+  restTimer: { endsAt: null, duration: 60, exerciseName: '' },
+  wakeLock: null,
+  lastSync: null,
+  elapsedInterval: null,
+  scheduleFilter: { type: 'all', location: 'all' },
+};
+
+// ==================== UTILITY ====================
+function $(id) { return document.getElementById(id); }
+function dayOfWeek() { return new Date().getDay(); }
+function formatDate(d) { const dt = new Date(d); return dt.toLocaleDateString(state.lang === 'no' ? 'nb-NO' : 'en-GB', { day: 'numeric', month: 'short' }); }
+function formatTime(sec) { const m = Math.floor(sec / 60); const s = sec % 60; return `${m}:${s.toString().padStart(2, '0')}`; }
+function estimateCalories(type, durationMin) {
+  const weight = 90; // user's approximate weight
+  const mets = { solo: 4, cycling: 8, strength_class: 5 };
+  return Math.round((mets[type] || 4) * weight * (durationMin / 60));
+}
+function getLastExerciseData(exId) {
+  const workouts = Store.getWorkouts();
+  for (const w of workouts) {
+    if (!w.exercises) continue;
+    const ex = w.exercises.find(e => e.exId === exId);
+    if (ex && ex.sets && ex.sets.length) return ex;
+  }
+  return null;
+}
+function vibrate(ms) { try { navigator.vibrate?.(ms); } catch {} }
+
+// ==================== WAKE LOCK ====================
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      state.wakeLock = await navigator.wakeLock.request('screen');
+      state.wakeLock.addEventListener('release', () => { state.wakeLock = null; });
+    }
+  } catch {}
+}
+function releaseWakeLock() { state.wakeLock?.release(); state.wakeLock = null; }
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && state.activeWorkout) requestWakeLock();
+});
+
+// ==================== RENDER HEADER ====================
+function renderHeader() {
+  $('header').innerHTML = `
+    <div class="header-title"><span>🏋️</span> ${t('app.name')}</div>
+    <div class="header-actions">
+      <button class="lang-btn" onclick="toggleLang()">${state.lang.toUpperCase()}</button>
+      <button class="header-btn" onclick="showSettings()">⚙️</button>
+    </div>
+  `;
+}
+
+// ==================== RENDER TABS ====================
+function renderTabs() {
+  const tabs = [
+    { id: 'plan', icon: '📅', label: 'tab.plan' },
+    { id: 'workout', icon: '🏋️', label: 'tab.workout' },
+    { id: 'progress', icon: '📊', label: 'tab.progress' },
+    { id: 'schedule', icon: '⏰', label: 'tab.schedule' },
+  ];
+  $('tabBar').innerHTML = tabs.map(tb => `
+    <button class="tab ${state.tab === tb.id ? 'active' : ''}" onclick="switchTab('${tb.id}')">
+      <span class="tab-icon">${tb.icon}</span>
+      ${t(tb.label)}
+    </button>
+  `).join('');
+}
+
+function switchTab(tab) {
+  state.tab = tab;
+  renderTabs();
+  renderContent();
+}
+
+function toggleLang() {
+  state.lang = state.lang === 'en' ? 'no' : 'en';
+  state.settings.lang = state.lang;
+  Store.saveSettings(state.settings);
+  renderAll();
+}
+
+// ==================== RENDER CONTENT ====================
+function renderContent() {
+  const c = $('content');
+  switch (state.tab) {
+    case 'plan': c.innerHTML = renderPlan(); break;
+    case 'workout': c.innerHTML = renderWorkout(); break;
+    case 'progress': c.innerHTML = renderProgress(); break;
+    case 'schedule': c.innerHTML = renderSchedule(); break;
+  }
+}
+
+function renderAll() { renderHeader(); renderTabs(); renderContent(); }
+
+// ==================== PLAN VIEW ====================
+function renderPlan() {
+  const today = dayOfWeek();
+  return WEEK.map(w => {
+    const isToday = w.day === today;
+    const todayBadge = isToday ? `<span class="plan-badge">${t('plan.today')}</span>` : '';
+    let actions = '';
+    if (w.canSolo) {
+      actions = `<div class="plan-actions">
+        <button class="btn btn-primary btn-sm" onclick="startSoloWorkout()">${t('plan.start_solo')}</button>
+      </div>`;
+    } else if (w.type === 'cycling' || w.type === 'strength_class') {
+      actions = `<div class="plan-actions">
+        <button class="btn btn-orange btn-sm" onclick="showQuickLog('${w.type}', ${w.day})">${t('plan.quick_log')}</button>
+      </div>`;
+    }
+    const timeStr = w.time ? `<span style="color:var(--accent)">${w.time}</span> ${t('plan.at')} ${w.location}` : '';
+    return `
+      <div class="plan-card ${isToday ? 'today' : ''}">
+        <span class="plan-emoji">${w.emoji}</span>
+        <div class="plan-day">${t('day.' + w.day)} ${todayBadge}</div>
+        <div class="plan-title">${tName(w.title)}</div>
+        <div class="plan-subtitle">${timeStr || tName(w.subtitle) || ''}</div>
+        ${tName(w.subtitle) && timeStr ? `<div class="plan-subtitle" style="margin-top:2px">${tName(w.subtitle)}</div>` : ''}
+        ${actions}
+      </div>
+    `;
+  }).join('');
+}
+
+// ==================== WORKOUT VIEW ====================
+function renderWorkout() {
+  if (!state.activeWorkout) {
+    return `
+      <div style="text-align:center;padding:60px 20px">
+        <div style="font-size:64px;margin-bottom:16px">🏋️</div>
+        <h2 style="margin-bottom:8px">${t('workout.no_active')}</h2>
+        <p style="color:var(--text2);margin-bottom:24px">${t('workout.no_active_desc')}</p>
+        <button class="btn btn-primary btn-block" onclick="startSoloWorkout()">${t('plan.start_solo')}</button>
+      </div>
+    `;
+  }
+
+  const w = state.activeWorkout;
+  const elapsed = Math.floor((Date.now() - w.startedAt) / 1000);
+  let html = `
+    <div class="workout-header">
+      <div>
+        <div style="font-size:15px;font-weight:700">${t('workout.' + w.type)}</div>
+        <div style="font-size:12px;color:var(--text2)">${t('workout.elapsed')}</div>
+      </div>
+      <div class="workout-timer-display" id="workoutElapsed">${formatTime(elapsed)}</div>
+      <button class="btn btn-danger btn-sm" onclick="endWorkout()">${t('workout.end')}</button>
+    </div>
+  `;
+
+  for (const block of w.blocks) {
+    html += `<div class="workout-block">`;
+    html += `<div class="block-header">
+      <span>${block.emoji}</span>
+      <h3>${tName(block.name)}</h3>
+      <span class="block-tag">~${block.duration} ${t('common.min')}</span>
+    </div>`;
+    if (block.note) html += `<p style="font-size:12px;color:var(--text3);margin:-4px 0 8px 12px;font-style:italic">${tName(block.note)}</p>`;
+
+    for (const ex of block.exerciseList) {
+      const exDef = EX[ex.exId];
+      const allDone = ex.loggedSets.filter(s => s.completed).length >= ex.totalSets;
+      const currentSet = ex.loggedSets.filter(s => s.completed).length;
+      const isActive = !allDone;
+      const lastData = getLastExerciseData(ex.exId);
+      const lastInfo = lastData ? `${t('workout.previous')}: ${lastData.sets.map(s => s.weight > 0 ? s.weight + 'kg×' + s.reps : s.reps + (s.duration ? 's' : '')).join(', ')}` : '';
+
+      let targetStr = '';
+      if (exDef.type === 'duration') {
+        targetStr = `${ex.totalSets}× ${exDef.defaultDuration}${t('common.sec')}${exDef.perSide ? t('common.per_side') : ''}`;
+      } else {
+        targetStr = `${ex.totalSets}× ${exDef.defaultReps}${exDef.perSide ? t('common.per_side') : ''}`;
+      }
+
+      const setDots = Array.from({ length: ex.totalSets }, (_, i) => {
+        const s = ex.loggedSets[i];
+        if (s && s.completed) return `<span class="set-dot done">✓</span>`;
+        if (i === currentSet && isActive) return `<span class="set-dot current">${i + 1}</span>`;
+        return `<span class="set-dot">${i + 1}</span>`;
+      }).join('');
+
+      html += `
+        <div class="exercise-card ${allDone ? 'completed' : ''} ${isActive && currentSet < ex.totalSets ? 'active' : ''}">
+          <div style="display:flex;justify-content:space-between;align-items:start">
+            <div>
+              <span class="exercise-num">${ex.num}</span>
+              <span class="exercise-name">${tName(exDef.name)}</span>
+            </div>
+          </div>
+          <div class="exercise-target">${targetStr}</div>
+          <div class="exercise-instruction">${tName(exDef.instruction)}</div>
+          ${lastInfo ? `<div class="exercise-last">📋 ${lastInfo}</div>` : ''}
+          <div class="exercise-sets">
+            ${setDots}
+            ${!allDone && block.type !== 'warmup' ? `<button class="exercise-log-btn" onclick="openSetLogger('${block.id}','${ex.exId}',${currentSet})">${t('workout.log_set')}</button>` : ''}
+            ${!allDone && block.type === 'warmup' ? `<button class="exercise-log-btn" onclick="completeWarmupEx('${block.id}','${ex.exId}')">${t('workout.complete_warmup')}</button>` : ''}
+          </div>
+        </div>
+      `;
+    }
+    html += `</div>`;
+  }
+
+  return html;
+}
+
+function updateElapsed() {
+  if (!state.activeWorkout) return;
+  const el = $('workoutElapsed');
+  if (el) {
+    const elapsed = Math.floor((Date.now() - state.activeWorkout.startedAt) / 1000);
+    el.textContent = formatTime(elapsed);
+  }
+}
+
+// ==================== WORKOUT ENGINE ====================
+function startSoloWorkout() {
+  const blocks = SOLO_PROGRAM.map(block => {
+    const exerciseList = [];
+    if (block.type === 'warmup' || block.type === 'circuit') {
+      for (const ex of block.exercises) {
+        exerciseList.push({
+          exId: ex.exId, num: ex.num || '', totalSets: ex.sets,
+          loggedSets: Array.from({ length: ex.sets }, () => ({ completed: false, weight: 0, reps: 0, duration: 0 })),
+        });
+      }
+    } else if (block.type === 'superset') {
+      for (const pair of block.pairs) {
+        exerciseList.push({
+          exId: pair.a.exId, num: pair.a.num, totalSets: pair.a.sets, pairWith: pair.b.exId,
+          loggedSets: Array.from({ length: pair.a.sets }, () => ({ completed: false, weight: 0, reps: 0, duration: 0 })),
+        });
+        exerciseList.push({
+          exId: pair.b.exId, num: pair.b.num, totalSets: pair.b.sets, pairWith: pair.a.exId,
+          loggedSets: Array.from({ length: pair.b.sets }, () => ({ completed: false, weight: 0, reps: 0, duration: 0 })),
+        });
+      }
+    }
+    return { ...block, exerciseList };
+  });
+
+  state.activeWorkout = {
+    id: uuid(), type: 'solo', startedAt: Date.now(), blocks,
+  };
+  requestWakeLock();
+  state.elapsedInterval = setInterval(updateElapsed, 1000);
+  switchTab('workout');
+}
+
+function completeWarmupEx(blockId, exId) {
+  const block = state.activeWorkout.blocks.find(b => b.id === blockId);
+  const ex = block.exerciseList.find(e => e.exId === exId);
+  ex.loggedSets.forEach(s => { s.completed = true; s.duration = EX[exId].defaultDuration || 0; });
+  vibrate(50);
+  renderContent();
+}
+
+function openSetLogger(blockId, exId, setIndex) {
+  const exDef = EX[exId];
+  const block = state.activeWorkout.blocks.find(b => b.id === blockId);
+  const ex = block.exerciseList.find(e => e.exId === exId);
+
+  // Get defaults from last workout or exercise definition
+  const lastData = getLastExerciseData(exId);
+  let defWeight = exDef.defaultWeight || 0;
+  let defReps = exDef.defaultReps || 0;
+  let defDuration = exDef.defaultDuration || 30;
+
+  if (lastData && lastData.sets[setIndex]) {
+    defWeight = lastData.sets[setIndex].weight || defWeight;
+    defReps = lastData.sets[setIndex].reps || defReps;
+    defDuration = lastData.sets[setIndex].duration || defDuration;
+  } else if (setIndex > 0 && ex.loggedSets[setIndex - 1].completed) {
+    defWeight = ex.loggedSets[setIndex - 1].weight || defWeight;
+    defReps = ex.loggedSets[setIndex - 1].reps || defReps;
+    defDuration = ex.loggedSets[setIndex - 1].duration || defDuration;
+  }
+
+  const isTimeBased = exDef.type === 'duration';
+  const sideStr = exDef.perSide ? ` ${t('common.per_side')}` : '';
+
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'setLoggerOverlay';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+
+  overlay.innerHTML = `
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">${tName(exDef.name)} — ${t('workout.set')} ${setIndex + 1}/${ex.totalSets}</div>
+      ${!isTimeBased ? `
+        <div class="logger-label">${t('workout.weight')} (${t('common.kg')})</div>
+        <div class="logger-control">
+          <button class="logger-btn" onclick="adjustLogger('weight', -2.5)">−</button>
+          <span class="logger-value" id="logWeight">${defWeight}</span>
+          <button class="logger-btn" onclick="adjustLogger('weight', 2.5)">+</button>
+        </div>
+        <div class="logger-label">${t('workout.reps')}${sideStr}</div>
+        <div class="logger-control">
+          <button class="logger-btn" onclick="adjustLogger('reps', -1)">−</button>
+          <span class="logger-value" id="logReps">${defReps}</span>
+          <button class="logger-btn" onclick="adjustLogger('reps', 1)">+</button>
+        </div>
+      ` : `
+        <div class="logger-label">${t('workout.duration')} (${t('common.sec')})${sideStr}</div>
+        <div class="logger-control">
+          <button class="logger-btn" onclick="adjustLogger('duration', -5)">−</button>
+          <span class="logger-value" id="logDuration">${defDuration}</span>
+          <button class="logger-btn" onclick="adjustLogger('duration', 5)">+</button>
+        </div>
+      `}
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button class="btn btn-secondary btn-block" onclick="document.getElementById('setLoggerOverlay').remove()">${t('common.cancel')}</button>
+        <button class="btn btn-success btn-block" onclick="confirmLogSet('${blockId}','${exId}',${setIndex},${isTimeBased})">${t('workout.complete_set')}</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
+
+function adjustLogger(field, delta) {
+  const el = $(field === 'weight' ? 'logWeight' : field === 'reps' ? 'logReps' : 'logDuration');
+  if (!el) return;
+  let val = parseFloat(el.textContent) + delta;
+  if (val < 0) val = 0;
+  el.textContent = field === 'weight' ? val : Math.round(val);
+}
+
+function confirmLogSet(blockId, exId, setIndex, isTimeBased) {
+  const block = state.activeWorkout.blocks.find(b => b.id === blockId);
+  const ex = block.exerciseList.find(e => e.exId === exId);
+
+  if (isTimeBased) {
+    const dur = parseInt($('logDuration')?.textContent || '30');
+    ex.loggedSets[setIndex] = { completed: true, weight: 0, reps: 0, duration: dur };
+  } else {
+    const w = parseFloat($('logWeight')?.textContent || '0');
+    const r = parseInt($('logReps')?.textContent || '0');
+    ex.loggedSets[setIndex] = { completed: true, weight: w, reps: r, duration: 0 };
+  }
+
+  document.getElementById('setLoggerOverlay')?.remove();
+  vibrate([50, 30, 50]);
+
+  // Determine if we should show rest timer
+  const exDef = EX[exId];
+  const allDone = ex.loggedSets.filter(s => s.completed).length >= ex.totalSets;
+  let shouldRest = true;
+  let restDuration = state.settings.restTimer || 60;
+  let nextExName = '';
+
+  // In superset: after 'a' exercise, go to 'b' with minimal/no rest
+  if (ex.pairWith) {
+    const partner = block.exerciseList.find(e => e.exId === ex.pairWith);
+    const partnerDone = partner ? partner.loggedSets.filter(s => s.completed).length >= partner.totalSets : true;
+    const currentNum = ex.num || '';
+    if (currentNum.endsWith('a') && !partnerDone) {
+      shouldRest = false;
+      nextExName = tName(EX[ex.pairWith].name);
+    } else if (currentNum.endsWith('b')) {
+      nextExName = tName(EX[ex.pairWith]?.name || exDef.name);
+    }
+  }
+
+  // Circuit: no rest between exercises, rest between rounds
+  if (block.type === 'circuit') {
+    const exIdx = block.exerciseList.indexOf(ex);
+    const nextEx = block.exerciseList[exIdx + 1];
+    if (nextEx && !nextEx.loggedSets.every(s => s.completed)) {
+      shouldRest = false;
+      nextExName = tName(EX[nextEx.exId].name);
+    } else {
+      restDuration = block.restBetweenRounds || 30;
+    }
+  }
+
+  renderContent();
+
+  if (shouldRest && !allDone) {
+    showRestTimer(restDuration, nextExName);
+  }
+
+  // Check if entire workout is done
+  checkWorkoutComplete();
+}
+
+function checkWorkoutComplete() {
+  if (!state.activeWorkout) return;
+  const allBlocks = state.activeWorkout.blocks;
+  const allDone = allBlocks.every(b => b.exerciseList.every(e => e.loggedSets.filter(s => s.completed).length >= e.totalSets));
+  if (allDone) {
+    setTimeout(() => showCelebration(), 500);
+  }
+}
+
+function endWorkout() {
+  if (!state.activeWorkout) return;
+  showCelebration();
+}
+
+function showCelebration() {
+  const w = state.activeWorkout;
+  if (!w) return;
+  clearInterval(state.elapsedInterval);
+  const duration = Math.round((Date.now() - w.startedAt) / 60000);
+  let totalSets = 0;
+  const exerciseData = [];
+  for (const block of w.blocks) {
+    for (const ex of block.exerciseList) {
+      const logged = ex.loggedSets.filter(s => s.completed);
+      totalSets += logged.length;
+      if (logged.length) exerciseData.push({ exId: ex.exId, sets: logged });
+    }
+  }
+  const calories = estimateCalories(w.type, duration);
+
+  // Save workout
+  Store.saveWorkout({
+    id: w.id, date: new Date().toISOString(), type: w.type,
+    duration, exercises: exerciseData, notes: '',
+  });
+
+  // Update goal progress from logged data
+  updateGoalProgress(exerciseData);
+
+  const overlay = document.createElement('div');
+  overlay.className = 'celebration';
+  overlay.id = 'celebrationOverlay';
+  overlay.innerHTML = `
+    <div class="celebration-emoji">🎉</div>
+    <h2>${t('celebrate.title')}</h2>
+    <p style="color:var(--text2)">${t('celebrate.great')}</p>
+    <div class="celebration-stats">
+      <div class="celebration-stat"><div class="val">${duration}</div><div class="lbl">${t('common.min')}</div></div>
+      <div class="celebration-stat"><div class="val">${totalSets}</div><div class="lbl">${t('celebrate.sets_done')}</div></div>
+      <div class="celebration-stat"><div class="val">~${calories}</div><div class="lbl">${t('progress.calories')}</div></div>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="closeCelebration()">${t('celebrate.done')}</button>
+  `;
+  document.body.appendChild(overlay);
+}
+
+function closeCelebration() {
+  document.getElementById('celebrationOverlay')?.remove();
+  state.activeWorkout = null;
+  releaseWakeLock();
+  switchTab('progress');
+}
+
+function updateGoalProgress(exerciseData) {
+  const progress = Store.getGoalProgress();
+  for (const ex of exerciseData) {
+    for (const goal of GOALS) {
+      if (goal.id === ex.exId || (goal.id === 'plank' && ex.exId === 'plank') || (goal.id === 'side-plank' && ex.exId === 'side-plank')) {
+        const bestSet = ex.sets.reduce((best, s) => {
+          const val = s.duration || s.reps || 0;
+          return val > (best.duration || best.reps || 0) ? s : best;
+        }, ex.sets[0]);
+        const bestVal = bestSet.duration || bestSet.reps || 0;
+        if (!progress[goal.id] || bestVal > progress[goal.id]) {
+          progress[goal.id] = bestVal;
+        }
+      }
+    }
+  }
+  Store.saveGoalProgress(progress);
+}
+
+// ==================== REST TIMER ====================
+function showRestTimer(duration, nextExName) {
+  state.restTimer = { endsAt: Date.now() + duration * 1000, duration, exerciseName: nextExName };
+  const overlay = document.createElement('div');
+  overlay.className = 'rest-overlay';
+  overlay.id = 'restOverlay';
+
+  const circumference = 2 * Math.PI * 90;
+  overlay.innerHTML = `
+    <div class="rest-label">${t('rest.title')}</div>
+    <div class="rest-ring">
+      <svg viewBox="0 0 200 200">
+        <circle class="bg" cx="100" cy="100" r="90"/>
+        <circle class="fg" id="restRingFg" cx="100" cy="100" r="90"
+          stroke-dasharray="${circumference}" stroke-dashoffset="0"/>
+      </svg>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+        <span class="rest-time" id="restTimeDisplay">${duration}</span>
+      </div>
+    </div>
+    ${nextExName ? `<div class="rest-next">${t('rest.next')}: ${nextExName}</div>` : ''}
+    <button class="btn btn-secondary" onclick="skipRest()">${t('rest.skip')}</button>
+  `;
+  document.body.appendChild(overlay);
+  requestAnimationFrame(tickRestTimer);
+}
+
+function tickRestTimer() {
+  const rt = state.restTimer;
+  if (!rt.endsAt) return;
+  const remaining = Math.max(0, Math.ceil((rt.endsAt - Date.now()) / 1000));
+  const el = $('restTimeDisplay');
+  const ring = $('restRingFg');
+  if (el) el.textContent = remaining;
+  if (ring) {
+    const circumference = 2 * Math.PI * 90;
+    const progress = 1 - remaining / rt.duration;
+    ring.setAttribute('stroke-dashoffset', circumference * progress);
+  }
+  if (remaining <= 0) {
+    vibrate([100, 50, 100, 50, 100]);
+    skipRest();
+    return;
+  }
+  requestAnimationFrame(tickRestTimer);
+}
+
+function skipRest() {
+  state.restTimer = { endsAt: null, duration: 60, exerciseName: '' };
+  document.getElementById('restOverlay')?.remove();
+}
+
+// ==================== PROGRESS VIEW ====================
+function renderProgress() {
+  const workouts = Store.getWorkouts().filter(w => !w.deleted);
+  const bodyweight = Store.getBodyWeight().filter(e => !e.deleted);
+  const goalProgress = Store.getGoalProgress();
+
+  // Stats
+  const now = new Date();
+  const weekStart = new Date(now); weekStart.setDate(now.getDate() - now.getDay() + 1); weekStart.setHours(0, 0, 0, 0);
+  const thisWeek = workouts.filter(w => new Date(w.date) >= weekStart).length;
+  const streak = calcStreak(workouts);
+  const totalWorkouts = workouts.length;
+
+  // Body weight
+  const latestWeight = bodyweight.length ? bodyweight[0].weight : 90;
+  const bmi = (latestWeight / (1.85 * 1.85)).toFixed(1);
+
+  let html = `
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-value">${thisWeek}</div>
+        <div class="stat-label">${t('progress.this_week')}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${streak}</div>
+        <div class="stat-label">${t('progress.streak')} (${t('progress.weeks')})</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${totalWorkouts}</div>
+        <div class="stat-label">${t('progress.total')}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${totalWorkouts > 0 ? (totalWorkouts / Math.max(1, calcWeeksActive(workouts))).toFixed(1) : '0'}</div>
+        <div class="stat-label">${t('progress.avg_week')}</div>
+      </div>
+    </div>
+  `;
+
+  // Body Weight
+  html += `
+    <div class="progress-section">
+      <h3>${t('progress.body_weight')}</h3>
+      <div class="weight-chart">
+        <div class="weight-current">
+          <div><span class="weight-big">${latestWeight}</span> <span style="color:var(--text2)">${t('common.kg')}</span></div>
+          <div class="weight-goal">${t('progress.goal')}: 82 ${t('common.kg')}</div>
+        </div>
+        <div class="bmi-badge">BMI: ${bmi} · 185 cm · 48 ${state.lang === 'no' ? 'år' : 'yrs'}</div>
+        ${renderWeightChart(bodyweight)}
+        <button class="btn btn-secondary btn-sm btn-block" style="margin-top:12px" onclick="showWeightModal()">${t('progress.add_weight')}</button>
+      </div>
+    </div>
+  `;
+
+  // Goals
+  html += `<div class="progress-section"><h3>${t('goals.title')}</h3>`;
+  for (const goal of GOALS) {
+    const current = goalProgress[goal.id] || goal.current;
+    const pct = Math.min(100, Math.round((current / goal.target) * 100));
+    html += `
+      <div class="goal-card">
+        <div class="goal-name">${tName(goal.name)} ${goal.note ? `<span style="font-size:11px;color:var(--text3)">(${tName(goal.note)})</span>` : ''}</div>
+        <div class="goal-bar-bg"><div class="goal-bar-fill" style="width:${pct}%"></div></div>
+        <div class="goal-values">
+          <span>${t('goals.current')}: ${current} ${goal.unit}</span>
+          <span>${t('goals.target')}: ${goal.target} ${goal.unit}</span>
+        </div>
+      </div>
+    `;
+  }
+  html += `</div>`;
+
+  // Weekly Frequency
+  html += `<div class="progress-section"><h3>${t('progress.frequency')}</h3>`;
+  html += `<p style="font-size:12px;color:var(--text3);margin-bottom:8px">${t('progress.target')}</p>`;
+  html += renderFrequencyBars(workouts);
+  html += `</div>`;
+
+  // Workout History
+  html += `<div class="progress-section"><h3>${t('progress.history')}</h3>`;
+  if (workouts.length === 0) {
+    html += `<p style="color:var(--text3);text-align:center;padding:20px">${t('progress.empty')}</p>`;
+  } else {
+    for (const w of workouts.slice(0, 20)) {
+      const typeEmoji = w.type === 'cycling' ? '🚴' : w.type === 'strength_class' ? '💪' : '🏋️';
+      const cals = estimateCalories(w.type, w.duration);
+      html += `
+        <div class="log-item">
+          <span class="log-emoji">${typeEmoji}</span>
+          <div class="log-info">
+            <div class="log-title">${t('workout.' + w.type)}</div>
+            <div class="log-meta">${formatDate(w.date)} · ${w.duration} ${t('common.min')}</div>
+          </div>
+          <span class="log-cals">~${cals} ${t('progress.calories')}</span>
+        </div>
+      `;
+    }
+  }
+  html += `</div>`;
+
+  return html;
+}
+
+function renderWeightChart(data) {
+  if (data.length < 2) return '<div style="height:60px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px">' + (state.lang === 'no' ? 'Logg vekt for å se graf' : 'Log weight to see chart') + '</div>';
+  const sorted = [...data].sort((a, b) => new Date(a.date) - new Date(b.date)).slice(-30);
+  const weights = sorted.map(e => e.weight);
+  const min = Math.min(...weights, 82) - 1;
+  const max = Math.max(...weights) + 1;
+  const w = 300, h = 100;
+  const points = sorted.map((e, i) => {
+    const x = (i / (sorted.length - 1)) * w;
+    const y = h - ((e.weight - min) / (max - min)) * h;
+    return `${x},${y}`;
+  });
+  const goalY = h - ((82 - min) / (max - min)) * h;
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:80px;margin-top:8px">
+    <line x1="0" y1="${goalY}" x2="${w}" y2="${goalY}" stroke="var(--success)" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+    <polyline points="${points.join(' ')}" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    ${sorted.map((e, i) => {
+      const x = (i / (sorted.length - 1)) * w;
+      const y = h - ((e.weight - min) / (max - min)) * h;
+      return `<circle cx="${x}" cy="${y}" r="3" fill="var(--accent)"/>`;
+    }).join('')}
+  </svg>`;
+}
+
+function renderFrequencyBars(workouts) {
+  const weeks = [];
+  for (let i = 7; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - d.getDay() + 1 - i * 7);
+    const weekEnd = new Date(d); weekEnd.setDate(d.getDate() + 7);
+    const count = workouts.filter(w => { const wd = new Date(w.date); return wd >= d && wd < weekEnd; }).length;
+    weeks.push({ count, label: `${d.getDate()}/${d.getMonth() + 1}` });
+  }
+  const maxCount = Math.max(5, ...weeks.map(w => w.count));
+  return `
+    <div class="freq-bars">${weeks.map(w =>
+      `<div class="freq-bar ${w.count >= 3 ? 'hit' : w.count > 0 ? '' : 'miss'}" style="height:${Math.max(4, (w.count / maxCount) * 60)}px"></div>`
+    ).join('')}</div>
+    <div class="freq-labels">${weeks.map(w => `<span>${w.label}</span>`).join('')}</div>
+  `;
+}
+
+function calcStreak(workouts) {
+  if (!workouts.length) return 0;
+  let streak = 0;
+  const now = new Date();
+  for (let i = 0; i < 52; i++) {
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - now.getDay() + 1 - i * 7);
+    const weekEnd = new Date(weekStart); weekEnd.setDate(weekStart.getDate() + 7);
+    const count = workouts.filter(w => { const d = new Date(w.date); return d >= weekStart && d < weekEnd; }).length;
+    if (count >= 2) streak++;
+    else if (i > 0) break; // allow current week to be partial
+  }
+  return streak;
+}
+
+function calcWeeksActive(workouts) {
+  if (!workouts.length) return 1;
+  const first = new Date(workouts[workouts.length - 1].date);
+  return Math.max(1, Math.ceil((Date.now() - first.getTime()) / (7 * 86400000)));
+}
+
+// ==================== SCHEDULE VIEW ====================
+function renderSchedule() {
+  const f = state.scheduleFilter;
+  let html = `<h2 style="margin-bottom:12px">${t('schedule.title')}</h2>`;
+
+  // Type filter
+  html += `<div class="schedule-filters">
+    ${['all', 'cycling', 'strength'].map(type =>
+      `<button class="filter-chip ${f.type === type ? 'active' : ''}" onclick="setScheduleFilter('type','${type}')">${t('schedule.' + type)}</button>`
+    ).join('')}
+  </div>`;
+
+  // Location filter
+  html += `<div class="schedule-filters">
+    ${['all', 'langnes', 'tromso'].map(loc =>
+      `<button class="filter-chip ${f.location === loc ? 'active' : ''}" onclick="setScheduleFilter('location','${loc}')">${t('schedule.' + loc)}</button>`
+    ).join('')}
+  </div>`;
+
+  // Classes
+  let classes = [];
+  if (f.type === 'all' || f.type === 'cycling') classes = classes.concat(SATS_SCHEDULE.cycling.map(c => ({ ...c, category: 'cycling' })));
+  if (f.type === 'all' || f.type === 'strength') classes = classes.concat(SATS_SCHEDULE.strength.map(c => ({ ...c, category: 'strength' })));
+
+  if (f.location !== 'all') {
+    const locName = f.location === 'tromso' ? 'Tromsø' : 'Langnes';
+    classes = classes.filter(c => c.location === locName);
+  }
+
+  // Sort by day then time
+  const dayOrder = [1, 2, 3, 4, 5, 6, 0];
+  classes.sort((a, b) => {
+    const da = dayOrder.indexOf(a.day), db = dayOrder.indexOf(b.day);
+    if (da !== db) return da - db;
+    return a.time.localeCompare(b.time);
+  });
+
+  // Group by day
+  let lastDay = -1;
+  for (const cls of classes) {
+    if (cls.day !== lastDay) {
+      lastDay = cls.day;
+      html += `<div style="font-size:13px;font-weight:700;color:var(--text2);margin:16px 0 8px;text-transform:uppercase">${t('day.' + cls.day)}</div>`;
+    }
+    const emoji = cls.category === 'cycling' ? '🚴' : '💪';
+    html += `
+      <div class="schedule-card">
+        <span class="sched-time">${cls.time}</span>
+        <div class="sched-info">
+          <div class="sched-name">${emoji} ${cls.name}</div>
+          <div class="sched-meta">${cls.location}${cls.instructor ? ` · ${cls.instructor}` : ''}</div>
+        </div>
+        <span class="sched-dur">${cls.duration} ${t('common.min')}</span>
+      </div>
+    `;
+  }
+
+  html += `<div class="schedule-updated">${t('schedule.updated')}: ${SATS_SCHEDULE.updated}</div>`;
+  return html;
+}
+
+function setScheduleFilter(key, value) {
+  state.scheduleFilter[key === 'type' ? 'type' : 'location'] = value;
+  renderContent();
+}
+
+// ==================== MODALS ====================
+function showQuickLog(type, day) {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'quickLogOverlay';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+
+  const durations = type === 'cycling' ? [45, 60] : [30, 45, 60];
+  overlay.innerHTML = `
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">${t('quicklog.title')}</div>
+      <div class="quick-log">
+        <label style="font-size:13px;color:var(--text2)">${t('quicklog.type')}</label>
+        <input id="qlType" value="${type === 'cycling' ? 'Cycling Interval' : 'Pure Strength'}" style="margin-bottom:12px">
+        <label style="font-size:13px;color:var(--text2)">${t('quicklog.duration')}</label>
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          ${durations.map(d => `<button class="btn btn-secondary btn-sm" onclick="document.getElementById('qlDuration').value=${d}">${d}</button>`).join('')}
+        </div>
+        <input id="qlDuration" type="number" value="${type === 'cycling' ? 60 : 45}" style="margin-bottom:12px">
+        <label style="font-size:13px;color:var(--text2)">${t('quicklog.notes')}</label>
+        <input id="qlNotes" placeholder="${t('quicklog.notes')}" style="margin-bottom:16px">
+        <button class="btn btn-success btn-block" onclick="saveQuickLog('${type}')">${t('quicklog.save')}</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
+
+function saveQuickLog(type) {
+  const duration = parseInt($('qlDuration')?.value || '60');
+  const notes = $('qlNotes')?.value || '';
+  const className = $('qlType')?.value || '';
+  Store.saveWorkout({
+    id: uuid(), date: new Date().toISOString(), type,
+    duration, notes: className + (notes ? ' — ' + notes : ''), exercises: [],
+  });
+  document.getElementById('quickLogOverlay')?.remove();
+  vibrate(50);
+  switchTab('progress');
+}
+
+function showWeightModal() {
+  const latest = Store.getBodyWeight()[0];
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'weightOverlay';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+
+  overlay.innerHTML = `
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">${t('weight.title')}</div>
+      <div class="logger-control">
+        <button class="logger-btn" onclick="adjustLogger('bodyWeight', -0.1)">−</button>
+        <span class="logger-value" id="logBodyWeight">${latest ? latest.weight : 90.0}</span>
+        <button class="logger-btn" onclick="adjustLogger('bodyWeight', 0.1)">+</button>
+      </div>
+      <div style="text-align:center;color:var(--text3);font-size:13px;margin-bottom:16px">${t('common.kg')}</div>
+      <button class="btn btn-success btn-block" onclick="saveWeight()">${t('weight.save')}</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
+
+function adjustLoggerBodyWeight() {} // handled by generic adjustLogger
+// Override adjustLogger to handle bodyWeight
+const _origAdjust = adjustLogger;
+adjustLogger = function(field, delta) {
+  if (field === 'bodyWeight') {
+    const el = $('logBodyWeight');
+    if (!el) return;
+    let val = parseFloat(el.textContent) + delta;
+    if (val < 40) val = 40;
+    el.textContent = val.toFixed(1);
+    return;
+  }
+  _origAdjust(field, delta);
+};
+
+function saveWeight() {
+  const weight = parseFloat($('logBodyWeight')?.textContent || '90');
+  Store.saveBodyWeight({
+    id: uuid(), date: new Date().toISOString(), weight,
+  });
+  document.getElementById('weightOverlay')?.remove();
+  vibrate(50);
+  renderContent();
+}
+
+// ==================== SETTINGS ====================
+function showSettings() {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'settingsOverlay';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+
+  const syncTime = state.lastSync ? new Date(state.lastSync).toLocaleString() : t('settings.never');
+
+  overlay.innerHTML = `
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">${t('settings.title')}</div>
+
+      <div class="settings-section">
+        <div class="setting-row">
+          <span class="setting-label">${t('settings.language')}</span>
+          <button class="lang-btn" onclick="toggleLang();showSettings()">${state.lang.toUpperCase()}</button>
+        </div>
+        <div class="setting-row">
+          <span class="setting-label">${t('settings.rest_timer')}</span>
+          <div class="setting-value">
+            <button class="btn btn-sm btn-secondary" onclick="adjustRestTimer(-5)">−</button>
+            <span id="settingsRestTimer" style="min-width:40px;text-align:center;font-weight:700">${state.settings.restTimer || 60}</span>
+            <button class="btn btn-sm btn-secondary" onclick="adjustRestTimer(5)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3>${t('settings.injuries')}</h3>
+        <div class="injury-card">⚠️ <strong>${state.lang === 'no' ? 'Akilles' : 'Achilles'}:</strong> ${t('settings.achilles')}</div>
+        <div class="injury-card">⚠️ <strong>${state.lang === 'no' ? 'Korsrygg' : 'Lower back'}:</strong> ${t('settings.back')}</div>
+      </div>
+
+      <div class="settings-section">
+        <h3>${t('settings.data')}</h3>
+        <div class="setting-row">
+          <span class="setting-label">${t('settings.synced')}</span>
+          <span style="font-size:13px;color:var(--text2)">${syncTime}</span>
+        </div>
+        <button class="btn btn-primary btn-block btn-sm" style="margin-bottom:8px" onclick="syncToServer().then(()=>showSettings())">${t('settings.sync')}</button>
+        <button class="btn btn-danger btn-block btn-sm" onclick="clearAllData()">${t('settings.clear')}</button>
+      </div>
+
+      <button class="btn btn-secondary btn-block" style="margin-top:16px" onclick="document.getElementById('settingsOverlay').remove()">${t('settings.close')}</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
+
+function adjustRestTimer(delta) {
+  let val = (state.settings.restTimer || 60) + delta;
+  if (val < 10) val = 10;
+  if (val > 180) val = 180;
+  state.settings.restTimer = val;
+  Store.saveSettings(state.settings);
+  const el = $('settingsRestTimer');
+  if (el) el.textContent = val;
+}
+
+function clearAllData() {
+  if (confirm(t('settings.clear_confirm'))) {
+    ['gym_workouts', 'gym_bodyweight', 'gym_settings', 'gym_goal_progress', 'gym_sync_ts'].forEach(k => localStorage.removeItem(k));
+    location.reload();
+  }
+}
+
+// ==================== INIT ====================
+function init() {
+  // Load settings
+  state.settings = Store.getSettings();
+  state.lang = state.settings.lang || 'no';
+  state.lastSync = Store.get('sync_ts', null);
+
+  renderAll();
+
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+
+  // Background sync on load
+  setTimeout(() => syncToServer(), 2000);
+
+  // Sync on visibility change
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      syncToServer();
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
