@@ -360,6 +360,88 @@ input,select{font:inherit;color:var(--text);background:var(--surface2);border:1p
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
 @keyframes setComplete{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+
+/* Snack Card (Plan view) */
+.snack-card{
+  background:linear-gradient(135deg,rgba(0,180,216,.12),rgba(0,180,216,.04));
+  border:1px solid rgba(0,180,216,.3);border-radius:16px;
+  padding:16px;margin-bottom:16px;
+}
+.snack-card-title{font-size:18px;font-weight:700;margin-bottom:8px}
+.snack-counter{font-size:14px;color:var(--text2);margin-bottom:12px}
+.snack-chips-label{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.snack-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.snack-chip{
+  padding:6px 12px;border-radius:16px;font-size:12px;font-weight:600;
+  background:var(--surface2);border:1px solid var(--border);cursor:pointer;
+  transition:all .2s;white-space:nowrap;
+}
+.snack-chip:active{transform:scale(.95)}
+.snack-chip-loc{border-color:rgba(0,180,216,.3);color:var(--accent)}
+.snack-chip-pur{border-color:rgba(255,107,53,.3);color:var(--accent2)}
+.snack-surprise{
+  margin-top:4px;width:100%;padding:10px;border-radius:12px;
+  font-size:14px;font-weight:700;
+  background:linear-gradient(135deg,var(--accent),#0090b0);color:#fff;
+  border:none;cursor:pointer;
+}
+.snack-surprise:active{transform:scale(.97);opacity:.9}
+
+/* Snack Session Overlay */
+.snack-overlay{
+  position:fixed;inset:0;z-index:200;background:var(--bg);
+  display:flex;flex-direction:column;
+  animation:fadeIn .3s;
+}
+.snack-overlay-header{
+  position:sticky;top:0;z-index:1;
+  padding:16px;padding-top:calc(16px + var(--safe-top));
+  background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.snack-overlay-title{font-size:17px;font-weight:700;flex:1}
+.snack-body{padding:16px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.snack-ex-item{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:14px;margin-bottom:10px;transition:all .2s;
+}
+.snack-ex-item.active{border-color:var(--accent);box-shadow:0 0 15px rgba(0,180,216,.15)}
+.snack-ex-item.done{opacity:.5;border-color:var(--success)}
+.snack-ex-item.skipped{opacity:.35}
+.snack-ex-icon{font-size:24px;float:right}
+.snack-ex-name{font-size:16px;font-weight:700;margin-bottom:2px}
+.snack-ex-instr{font-size:12px;color:var(--text2);margin-bottom:6px}
+.snack-ex-target{font-size:13px;color:var(--accent);font-weight:600}
+.snack-timer-wrap{display:flex;flex-direction:column;align-items:center;margin:16px 0}
+.snack-timer-ring{position:relative;width:140px;height:140px}
+.snack-timer-ring svg{transform:rotate(-90deg);width:100%;height:100%}
+.snack-timer-ring circle{fill:none;stroke-width:6}
+.snack-timer-ring .bg{stroke:var(--surface3)}
+.snack-timer-ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .25s}
+.snack-timer-ring.done .fg{stroke:var(--success)}
+.snack-timer-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.snack-timer-time{font-size:40px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent)}
+.snack-timer-ring.done .snack-timer-time{color:var(--success)}
+.snack-timer-state{font-size:12px;color:var(--text2);margin-top:2px}
+.snack-actions{display:flex;gap:10px;justify-content:center;margin-top:12px;padding-bottom:calc(16px + var(--safe-bottom))}
+.snack-reps-display{font-size:48px;font-weight:700;color:var(--accent);text-align:center;margin:20px 0}
+.snack-complete{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 20px;text-align:center;min-height:60vh;
+}
+.snack-complete-emoji{font-size:64px;margin-bottom:16px;animation:bounce 1s infinite}
+.snack-complete h2{font-size:22px;font-weight:700;margin-bottom:8px}
+.snack-complete-time{font-size:16px;color:var(--text2);margin-bottom:24px}
+.snack-progress-section{
+  background:linear-gradient(135deg,rgba(0,180,216,.08),rgba(0,180,216,.03));
+  border:1px solid rgba(0,180,216,.2);border-radius:14px;
+  padding:14px;margin-bottom:16px;
+}
+.snack-progress-title{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:10px}
+.snack-progress-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.snack-progress-stat{text-align:center}
+.snack-progress-stat .val{font-size:22px;font-weight:700;color:var(--accent)}
+.snack-progress-stat .lbl{font-size:11px;color:var(--text2)}
 </style>
 </head>
 <body>
@@ -427,6 +509,31 @@ en: {
   'exercise.formTips': 'How to do it', 'exercise.muscles': 'Muscles', 'exercise.alternative': '💡 Feeling self-conscious? Try instead:', 'exercise.altWhy': 'Why this works:', 'exercise.detail': 'Exercise Details', 'exercise.loading': 'Loading...',
   'sats.open': 'Open SATS App',
   'celebrate.volume': 'Total Volume',
+  'snack.title': 'Exercise Snacks',
+  'snack.today_count': 'snacks today',
+  'snack.surprise': 'Surprise me',
+  'snack.start': 'Start',
+  'snack.skip': 'Skip',
+  'snack.done': 'Done',
+  'snack.complete': 'Snack complete!',
+  'snack.abort': 'End',
+  'snack.exercise_of': 'of',
+  'snack.loc.desk': 'At desk',
+  'snack.loc.meeting': 'Meeting room',
+  'snack.loc.private': 'Private space',
+  'snack.loc.pullup': 'Pull-up bar',
+  'snack.loc.stairs': 'Stairs',
+  'snack.loc.eyes': 'Eye relief',
+  'snack.pur.energy': 'Energy',
+  'snack.pur.back': 'Back',
+  'snack.pur.focus': 'Focus',
+  'snack.pur.stress': 'Stress',
+  'snack.pur.eyes': 'Eyes',
+  'snack.progress_title': 'Exercise Snacks',
+  'snack.weekly': 'This week',
+  'snack.monthly': 'This month',
+  'snack.fav_loc': 'Fav spot',
+  'snack.none_yet': 'None yet',
 },
 no: {
   'app.name': 'GymTracker',
@@ -481,6 +588,31 @@ no: {
   'exercise.formTips': 'Slik gjør du det', 'exercise.muscles': 'Muskler', 'exercise.alternative': '💡 Føler du deg usikker? Prøv dette istedet:', 'exercise.altWhy': 'Hvorfor dette fungerer:', 'exercise.detail': 'Øvelsesdetaljer', 'exercise.loading': 'Laster...',
   'sats.open': 'Åpne SATS-appen',
   'celebrate.volume': 'Totalvolum',
+  'snack.title': 'Treningssnacks',
+  'snack.today_count': 'snacks i dag',
+  'snack.surprise': 'Overrask meg',
+  'snack.start': 'Start',
+  'snack.skip': 'Hopp over',
+  'snack.done': 'Ferdig',
+  'snack.complete': 'Snack fullført!',
+  'snack.abort': 'Avslutt',
+  'snack.exercise_of': 'av',
+  'snack.loc.desk': 'Ved pulten',
+  'snack.loc.meeting': 'Møterom',
+  'snack.loc.private': 'Privat rom',
+  'snack.loc.pullup': 'Pull-up stang',
+  'snack.loc.stairs': 'Trapper',
+  'snack.loc.eyes': 'Øyetrening',
+  'snack.pur.energy': 'Energi',
+  'snack.pur.back': 'Rygg',
+  'snack.pur.focus': 'Fokus',
+  'snack.pur.stress': 'Stress',
+  'snack.pur.eyes': 'Øyne',
+  'snack.progress_title': 'Treningssnacks',
+  'snack.weekly': 'Denne uken',
+  'snack.monthly': 'Denne måneden',
+  'snack.fav_loc': 'Favorittplass',
+  'snack.none_yet': 'Ingen ennå',
 }
 };
 
@@ -507,6 +639,71 @@ const EX = {
   'reverse-crunch': { name: { en: 'Reverse Crunch', no: 'Omvendt crunch' }, instruction: { en: 'Lift hips off bench', no: 'Løft hoftene fra benken' }, type: 'reps', defaultReps: 12, defaultWeight: 0, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Reverse-Crunch-1.gif', formTips: { en: 'Lie on back or bench. Knees bent, feet off floor. Curl hips up toward chest, lifting hips off surface. Lower with control. Focus on lower abs.', no: 'Ligg på rygg eller benk. Knær bøyd, føtter fra gulvet. Curl hoftene opp mot brystet, løft hoftene fra underlaget. Senk kontrollert. Fokus på nedre mage.' }, muscles: { en: 'Lower abdominals', no: 'Nedre bukmuskel' }, alt: { id: 'leg-raise', name: { en: 'Lying Leg Raise', no: 'Liggende beinløft' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Raise.gif', why: { en: 'Same position, simpler motion — just raise straight legs up and down', no: 'Samme posisjon, enklere bevegelse — bare løft rette bein opp og ned' } } },
   'plank-shoulder-taps': { name: { en: 'Plank Shoulder Taps', no: 'Planke skuldertapp' }, instruction: { en: 'Keep hips square', no: 'Hold hoftene stille' }, type: 'reps', defaultReps: 10, perSide: true, defaultWeight: 0, gif: 'https://fitnessprogramer.com/wp-content/uploads/2022/08/Shoulder-Tap-Push-up.gif', formTips: { en: 'High plank position on hands. Tap opposite shoulder with one hand while keeping hips square — don\'t rotate. Wide feet helps stability.', no: 'Høy plankeposisjon på hendene. Tapp motsatt skulder med en hånd mens du holder hoftene stille — ikke roter. Brede føtter hjelper stabiliteten.' }, muscles: { en: 'Core (anti-rotation), shoulders', no: 'Core (anti-rotasjon), skuldre' }, alt: { id: 'mountain-climber', name: { en: 'Mountain Climbers', no: 'Fjellklatrere' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-climber.gif', why: { en: 'Same plank base but with running motion — more dynamic, looks like you\'re doing cardio', no: 'Samme planke-base men med løpebevegelse — mer dynamisk, ser ut som du gjør kondisjon' } } },
 };
+
+
+// ==================== MICRO EXERCISE CATALOG (Snacks) ====================
+const MICRO_EX = {
+  // === Desk (discreet) ===
+  'desk-calf-raises': { name: { en: 'Standing Calf Raises', no: 'Stående tåhev' }, instruction: { en: 'Rise onto toes under your desk, hold 1 sec, lower slowly', no: 'Reis deg på tærne under pulten, hold 1 sek, senk sakte' }, type: 'reps', default: 20, icon: '🦶', purposes: ['energy', 'back'], contra: [], location: 'desk', pattern: 'mobility' },
+  'desk-seated-leg-raise': { name: { en: 'Seated Leg Raises', no: 'Sittende beinløft' }, instruction: { en: 'Lift one leg straight under desk, hold 2 sec, alternate', no: 'Løft ett bein rett ut under pulten, hold 2 sek, veksle' }, type: 'reps', default: 15, icon: '🦵', purposes: ['energy', 'focus'], contra: [], location: 'desk', pattern: 'push', perSide: true },
+  'desk-shoulder-shrug': { name: { en: 'Shoulder Shrugs', no: 'Skuldertrekk' }, instruction: { en: 'Raise shoulders to ears, hold 2 sec, release', no: 'Trekk skuldrene til ørene, hold 2 sek, slipp' }, type: 'reps', default: 15, icon: '🧘', purposes: ['stress', 'back'], contra: [], location: 'desk', pattern: 'mobility' },
+  'desk-neck-rolls': { name: { en: 'Neck Rolls', no: 'Nakkerulling' }, instruction: { en: 'Slow circles with your head, 5 each direction', no: 'Sakte sirkler med hodet, 5 hver retning' }, type: 'time', default: 30, icon: '🔄', purposes: ['stress', 'focus'], contra: [], location: 'desk', pattern: 'mobility' },
+  'desk-wrist-circles': { name: { en: 'Wrist Circles', no: 'Håndleddsirkler' }, instruction: { en: 'Rotate wrists slowly, 10 each direction', no: 'Roter håndleddene sakte, 10 hver retning' }, type: 'time', default: 20, icon: '✋', purposes: ['stress', 'focus'], contra: [], location: 'desk', pattern: 'mobility' },
+  'desk-glute-squeeze': { name: { en: 'Seated Glute Squeezes', no: 'Sittende rumpeknip' }, instruction: { en: 'Squeeze glutes hard, hold 3 sec, release. Nobody notices!', no: 'Knip rumpa hardt, hold 3 sek, slipp. Ingen merker det!' }, type: 'reps', default: 20, icon: '🍑', purposes: ['energy', 'back'], contra: [], location: 'desk', pattern: 'hold' },
+  'desk-ankle-circles': { name: { en: 'Ankle Circles', no: 'Ankelsirkler' }, instruction: { en: 'Rotate each ankle slowly, 10 circles each way', no: 'Roter hver ankel sakte, 10 sirkler hver vei' }, type: 'time', default: 40, icon: '🦶', purposes: ['back'], contra: [], location: 'desk', pattern: 'mobility' },
+  'desk-deep-breath': { name: { en: 'Box Breathing', no: 'Boks-pust' }, instruction: { en: 'Breathe in 4s, hold 4s, out 4s, hold 4s. Repeat.', no: 'Pust inn 4s, hold 4s, ut 4s, hold 4s. Gjenta.' }, type: 'time', default: 60, icon: '🌬️', purposes: ['stress', 'focus'], contra: [], location: 'desk', pattern: 'breathing' },
+
+  // === Meeting room (door closed) ===
+  'meet-wall-pushup': { name: { en: 'Wall Push-ups', no: 'Vegg-pushups' }, instruction: { en: 'Hands on wall, shoulder width. Push away and return.', no: 'Hender på veggen, skulderbredde. Press fra og tilbake.' }, type: 'reps', default: 12, icon: '🧑', purposes: ['energy'], contra: [], location: 'meeting', pattern: 'push' },
+  'meet-chair-dip': { name: { en: 'Chair Dips', no: 'Stol-dips' }, instruction: { en: 'Hands on chair edge, lower and push up', no: 'Hender på stolkanten, senk deg og press opp' }, type: 'reps', default: 10, icon: '🪑', purposes: ['energy'], contra: [], location: 'meeting', pattern: 'push' },
+  'meet-wall-sit': { name: { en: 'Wall Sit', no: 'Vegg-sitt' }, instruction: { en: 'Back against wall, thighs parallel. Hold!', no: 'Rygg mot veggen, lår parallelle. Hold!' }, type: 'time', default: 30, icon: '🧘', purposes: ['energy', 'back'], contra: [], location: 'meeting', pattern: 'hold' },
+  'meet-lunge': { name: { en: 'Slow Walking Lunges', no: 'Sakte utfall' }, instruction: { en: 'Slow and controlled, no jumping. Gentle on achilles.', no: 'Sakte og kontrollert, ingen hopp. Skånsomt for akilles.' }, type: 'reps', default: 8, icon: '🦵', purposes: ['energy'], contra: ['achilles'], location: 'meeting', pattern: 'push', perSide: true },
+  'meet-standing-deadbug': { name: { en: 'Standing Dead Bug', no: 'Stående død bille' }, instruction: { en: 'March: lift opposite knee and arm simultaneously', no: 'Marsj: løft motsatt kne og arm samtidig' }, type: 'reps', default: 10, icon: '🐛', purposes: ['back', 'focus'], contra: [], location: 'meeting', pattern: 'mobility', perSide: true },
+  'meet-chair-squat': { name: { en: 'Chair-assisted Squats', no: 'Stolassisterte knebøy' }, instruction: { en: 'Squat down to touch chair, stand back up', no: 'Knebøy ned til stolen, reis deg opp igjen' }, type: 'reps', default: 12, icon: '🧑', purposes: ['energy'], contra: [], location: 'meeting', pattern: 'push' },
+
+  // === Private space (bathroom) ===
+  'priv-plank': { name: { en: 'Plank', no: 'Planke' }, instruction: { en: 'Forearms on floor, body straight. Squeeze everything.', no: 'Underarmer på gulvet, kroppen rett. Klem alt.' }, type: 'time', default: 30, icon: '🧘', purposes: ['back', 'energy'], contra: [], location: 'private', pattern: 'hold' },
+  'priv-side-plank': { name: { en: 'Side Plank', no: 'Sideplanke' }, instruction: { en: 'Forearm on floor, hips up. 20 sec each side.', no: 'Underarm på gulvet, hoftene opp. 20 sek hver side.' }, type: 'time', default: 20, icon: '🧘', purposes: ['back'], contra: [], location: 'private', pattern: 'hold', perSide: true },
+  'priv-pushup': { name: { en: 'Push-ups', no: 'Push-ups' }, instruction: { en: 'Full push-ups or knee push-ups', no: 'Fulle push-ups eller kne-pushups' }, type: 'reps', default: 10, icon: '💪', purposes: ['energy'], contra: [], location: 'private', pattern: 'push' },
+  'priv-squat': { name: { en: 'Bodyweight Squats', no: 'Kroppsvektknebøy' }, instruction: { en: 'Full depth squats, arms forward for balance', no: 'Fulle knebøy, armer frem for balanse' }, type: 'reps', default: 15, icon: '🦵', purposes: ['energy'], contra: [], location: 'private', pattern: 'push' },
+  'priv-dead-bug': { name: { en: 'Dead Bug', no: 'Død bille' }, instruction: { en: 'Lie on back, extend opposite arm/leg. Keep back flat.', no: 'Ligg på rygg, strekk motsatt arm/bein. Hold ryggen flat.' }, type: 'reps', default: 8, icon: '🐛', purposes: ['back', 'focus'], contra: [], location: 'private', pattern: 'mobility', perSide: true },
+  'priv-hip-flexor-stretch': { name: { en: 'Hip Flexor Stretch', no: 'Hoftestrekkstretch' }, instruction: { en: 'Lunge position, push hips forward. 30 sec per side.', no: 'Utfallsposisjon, skyv hoftene frem. 30 sek per side.' }, type: 'time', default: 30, icon: '🧘', purposes: ['back', 'stress'], contra: [], location: 'private', pattern: 'mobility', perSide: true },
+
+  // === Pull-up bar ===
+  'bar-dead-hang': { name: { en: 'Dead Hang', no: 'Dødheng' }, instruction: { en: 'Just hang! Decompresses spine. Amazing for back.', no: 'Bare heng! Dekomprimerer ryggraden. Fantastisk for ryggen.' }, type: 'time', default: 25, icon: '🧗', purposes: ['back', 'stress'], contra: [], location: 'pullup', pattern: 'hold' },
+  'bar-pullup': { name: { en: 'Pull-ups', no: 'Pull-ups' }, instruction: { en: 'Full or assisted pull-ups', no: 'Fulle eller assisterte pull-ups' }, type: 'reps', default: 5, icon: '💪', purposes: ['energy'], contra: [], location: 'pullup', pattern: 'pull' },
+  'bar-chin-up': { name: { en: 'Chin-ups', no: 'Chin-ups' }, instruction: { en: 'Underhand grip, pull chin above bar', no: 'Underhåndsgrep, trekk haken over stangen' }, type: 'reps', default: 5, icon: '💪', purposes: ['energy'], contra: [], location: 'pullup', pattern: 'pull' },
+  'bar-scapular-pull': { name: { en: 'Scapular Pulls', no: 'Skulderbladstrekk' }, instruction: { en: 'Hang, then pull shoulder blades down and together', no: 'Heng, trekk deretter skulderbladene ned og sammen' }, type: 'reps', default: 8, icon: '🧘', purposes: ['back'], contra: [], location: 'pullup', pattern: 'pull' },
+  'bar-knee-raise': { name: { en: 'Hanging Knee Raises', no: 'Hengende kneløft' }, instruction: { en: 'Hang, bring knees to chest. Control the swing.', no: 'Heng, før knærne til brystet. Kontroller svingen.' }, type: 'reps', default: 8, icon: '🦵', purposes: ['back', 'energy'], contra: [], location: 'pullup', pattern: 'push' },
+
+  // === Stairs ===
+  'stair-climb': { name: { en: 'Brisk Stair Climb (5 floors)', no: 'Rask trappegange (5 etasjer)' }, instruction: { en: 'Walk briskly up 5 floors. NO running!', no: 'Gå raskt opp 5 etasjer. INGEN løping!' }, type: 'reps', default: 1, icon: '🏢', purposes: ['energy'], contra: [], location: 'stairs', pattern: 'push' },
+  'stair-calf-raise': { name: { en: 'Stair Calf Raises', no: 'Trapp-tåhev' }, instruction: { en: 'Stand on step edge, rise and lower heels slowly', no: 'Stå på trinnkanten, hev og senk hælene sakte' }, type: 'reps', default: 15, icon: '🦶', purposes: ['energy', 'back'], contra: [], location: 'stairs', pattern: 'push' },
+  'stair-step-up': { name: { en: 'Single-leg Step-ups', no: 'Ett-beins oppsteg' }, instruction: { en: 'Step up on one leg, control the descent', no: 'Steg opp på ett bein, kontroller nedsteg' }, type: 'reps', default: 10, icon: '🦵', purposes: ['energy'], contra: [], location: 'stairs', pattern: 'push', perSide: true },
+  'stair-pyramid': { name: { en: 'Stair Pyramid', no: 'Trappepyramide' }, instruction: { en: '1 floor up/down, 2 up/down, 3 up/down. Walk only!', no: '1 etasje opp/ned, 2 opp/ned, 3 opp/ned. Bare gå!' }, type: 'reps', default: 1, icon: '📈', purposes: ['energy'], contra: [], location: 'stairs', pattern: 'push' },
+
+  // === Eye strain (invisible) ===
+  'eyes-2020': { name: { en: '20-20-20 Rule', no: '20-20-20 Regelen' }, instruction: { en: 'Look at something 20 feet away for 20 seconds', no: 'Se på noe 6 meter unna i 20 sekunder' }, type: 'time', default: 20, icon: '👁️', purposes: ['eyes', 'focus'], contra: [], location: 'eyes', pattern: 'mobility' },
+  'eyes-circles': { name: { en: 'Eye Circles', no: 'Øyesirkler' }, instruction: { en: 'Roll eyes slowly in circles, 10 each direction', no: 'Rull øynene sakte i sirkler, 10 hver retning' }, type: 'reps', default: 10, icon: '👀', purposes: ['eyes'], contra: [], location: 'eyes', pattern: 'mobility' },
+  'eyes-palming': { name: { en: 'Eye Palming', no: 'Øyepalming' }, instruction: { en: 'Cup palms over closed eyes, relax. Total darkness.', no: 'Kopp håndflatene over lukkede øyne, slapp av. Totalt mørke.' }, type: 'time', default: 30, icon: '🧘', purposes: ['eyes', 'stress'], contra: [], location: 'eyes', pattern: 'breathing' },
+  'eyes-focus-shift': { name: { en: 'Near/Far Focus Shift', no: 'Nær/fjern fokusskifte' }, instruction: { en: 'Focus on finger close up, then far wall. Alternate.', no: 'Fokuser på finger nærme, så fjern vegg. Veksle.' }, type: 'reps', default: 10, icon: '🔍', purposes: ['eyes', 'focus'], contra: [], location: 'eyes', pattern: 'mobility' },
+};
+
+const SNACK_LOCATIONS = [
+  { id: 'desk', chipClass: 'snack-chip-loc', emoji: '💻' },
+  { id: 'meeting', chipClass: 'snack-chip-loc', emoji: '🚪' },
+  { id: 'private', chipClass: 'snack-chip-loc', emoji: '🚿' },
+  { id: 'pullup', chipClass: 'snack-chip-loc', emoji: '💪' },
+  { id: 'stairs', chipClass: 'snack-chip-loc', emoji: '🏢' },
+  { id: 'eyes', chipClass: 'snack-chip-loc', emoji: '👀' },
+];
+const SNACK_PURPOSES = [
+  { id: 'energy', chipClass: 'snack-chip-pur', emoji: '⚡' },
+  { id: 'back', chipClass: 'snack-chip-pur', emoji: '🧘' },
+  { id: 'focus', chipClass: 'snack-chip-pur', emoji: '🎯' },
+  { id: 'stress', chipClass: 'snack-chip-pur', emoji: '🌬️' },
+  { id: 'eyes', chipClass: 'snack-chip-pur', emoji: '👁️' },
+];
 
 // ==================== SOLO WORKOUT PROGRAM ====================
 const SOLO_PROGRAM = [
@@ -645,6 +842,14 @@ const Store = {
   getPRs() { return this.get('prs', {}); },
   savePRs(p) { this.set('prs', p); },
 
+  getSnacks() { return this.get('snacks', []); },
+  saveSnack(s) {
+    s._dirty = true;
+    const all = this.getSnacks();
+    all.unshift(s);
+    this.set('snacks', all);
+  },
+
   _syncTimeout: null,
   syncSoon() { clearTimeout(this._syncTimeout); this._syncTimeout = setTimeout(() => syncToServer(), 3000); },
 };
@@ -722,6 +927,8 @@ const state = {
   wakeLock: null,
   lastSync: null,
   elapsedInterval: null,
+  snackSession: null,
+  snackTimer: { endsAt: null, duration: 0, startedAt: null, running: false },
   scheduleFilter: { type: 'all', location: 'all' },
 };
 
@@ -866,6 +1073,7 @@ function renderPlan() {
     `;
   }
 
+  html += renderSnackCard();
   html += todayAndFuture.map(renderCard).join('');
 
   if (past.length > 0) {
@@ -1444,6 +1652,9 @@ function renderProgress() {
     </div>
   `;
 
+    // Snack stats
+    html += renderSnackProgress();
+
   // Body Weight
   html += `
     <div class="progress-section">
@@ -1801,7 +2012,7 @@ function adjustRestTimer(delta) {
 
 function clearAllData() {
   if (confirm(t('settings.clear_confirm'))) {
-    ['gym_workouts', 'gym_bodyweight', 'gym_settings', 'gym_goal_progress', 'gym_prs', 'gym_sync_ts'].forEach(k => localStorage.removeItem(k));
+    ['gym_workouts', 'gym_bodyweight', 'gym_settings', 'gym_goal_progress', 'gym_prs', 'gym_sync_ts', 'gym_snacks'].forEach(k => localStorage.removeItem(k));
     location.reload();
   }
 }
@@ -1959,6 +2170,457 @@ function showExHistory(exId) {
     </div>
   `;
   document.body.appendChild(overlay);
+}
+
+
+// ==================== TRENINGSSNACKS ====================
+function renderSnackCard() {
+  const today = new Date().toISOString().slice(0, 10);
+  const snacks = Store.getSnacks().filter(s => s.dateKey === today && s.status === 'completed');
+  const count = snacks.length;
+  const fire = count >= 2 ? ' \u{1F525}' : '';
+
+  let html = '<div class="snack-card">';
+  html += '<div class="snack-card-title">\u26A1 ' + t('snack.title') + '</div>';
+  html += '<div class="snack-counter">' + count + ' ' + t('snack.today_count') + fire + '</div>';
+  html += '<div class="snack-chips-label">' + (state.lang === 'no' ? 'Sted' : 'Location') + '</div>';
+  html += '<div class="snack-chips">';
+  for (const loc of SNACK_LOCATIONS) {
+    html += '<button class="snack-chip snack-chip-loc" onclick="openSnackByLocation(\'' + loc.id + '\')">' + loc.emoji + ' ' + t('snack.loc.' + loc.id) + '</button>';
+  }
+  html += '</div>';
+  html += '<div class="snack-chips-label">' + (state.lang === 'no' ? 'Form\u00e5l' : 'Purpose') + '</div>';
+  html += '<div class="snack-chips">';
+  for (const pur of SNACK_PURPOSES) {
+    html += '<button class="snack-chip snack-chip-pur" onclick="openSnackByPurpose(\'' + pur.id + '\')">' + pur.emoji + ' ' + t('snack.pur.' + pur.id) + '</button>';
+  }
+  html += '</div>';
+  html += '<button class="snack-surprise" onclick="openSnackSurprise()">\u{1F3B2} ' + t('snack.surprise') + '</button>';
+  html += '</div>';
+  return html;
+}
+
+function getSnackExercisesForLocation(locationId) {
+  return Object.entries(MICRO_EX)
+    .filter(([_, ex]) => ex.location === locationId)
+    .map(([id, ex]) => ({ id, ...ex }));
+}
+
+function getSnackExercisesForPurpose(purposeId) {
+  return Object.entries(MICRO_EX)
+    .filter(([_, ex]) => ex.purposes.includes(purposeId))
+    .map(([id, ex]) => ({ id, ...ex }));
+}
+
+function generateSnackRoutine(pool, options) {
+  options = options || {};
+  // Filter out contra exercises (user has achilles + lower_back)
+  let filtered = pool.filter(ex => {
+    if (ex.contra && ex.contra.length) {
+      for (const c of ex.contra) {
+        if (c === 'achilles' || c === 'lower_back') return false;
+      }
+    }
+    return true;
+  });
+  if (filtered.length === 0) filtered = pool;
+
+  // Shuffle
+  filtered = filtered.sort(() => Math.random() - 0.5);
+
+  // Pick 3-5 exercises with diversity rules
+  const picked = [];
+  const patterns = new Set();
+  let isometricStreak = 0;
+
+  for (const ex of filtered) {
+    if (picked.length >= 5) break;
+    const isHold = ex.pattern === 'hold';
+    if (isHold && isometricStreak >= 2) continue;
+    picked.push(ex);
+    patterns.add(ex.pattern);
+    isometricStreak = isHold ? isometricStreak + 1 : 0;
+  }
+
+  // Ensure at least 3
+  while (picked.length < 3 && filtered.length > picked.length) {
+    const remaining = filtered.filter(e => !picked.includes(e));
+    if (remaining.length) picked.push(remaining[0]);
+    else break;
+  }
+
+  // Ensure at least 2 different movement patterns
+  if (patterns.size < 2 && filtered.length > picked.length) {
+    const remaining = filtered.filter(e => !picked.includes(e) && !patterns.has(e.pattern));
+    if (remaining.length) {
+      if (picked.length >= 5) picked.pop();
+      picked.push(remaining[0]);
+    }
+  }
+
+  // If purpose is stress or focus, end with breathing
+  if (options.purpose === 'stress' || options.purpose === 'focus') {
+    const hasBreathing = picked.some(e => e.pattern === 'breathing');
+    if (!hasBreathing) {
+      const breathers = filtered.filter(e => e.pattern === 'breathing' && !picked.includes(e));
+      if (breathers.length) {
+        if (picked.length >= 5) picked.pop();
+        picked.push(breathers[0]);
+      }
+    }
+    const bIdx = picked.findIndex(e => e.pattern === 'breathing');
+    if (bIdx >= 0 && bIdx !== picked.length - 1) {
+      const [b] = picked.splice(bIdx, 1);
+      picked.push(b);
+    }
+  }
+
+  return picked;
+}
+
+function openSnackByLocation(locationId) {
+  const pool = getSnackExercisesForLocation(locationId);
+  const routine = generateSnackRoutine(pool);
+  startSnackSession(routine, 'loc', locationId);
+}
+
+function openSnackByPurpose(purposeId) {
+  const pool = getSnackExercisesForPurpose(purposeId);
+  // Prefer discreet locations
+  const locOrder = { desk: 0, eyes: 1, meeting: 2, stairs: 3, pullup: 4, private: 5 };
+  pool.sort((a, b) => (locOrder[a.location] || 9) - (locOrder[b.location] || 9));
+  const routine = generateSnackRoutine(pool, { purpose: purposeId });
+  startSnackSession(routine, 'pur', purposeId);
+}
+
+function openSnackSurprise() {
+  const discreetLocs = ['desk', 'meeting', 'eyes'];
+  const allLocs = ['desk', 'meeting', 'eyes', 'private', 'pullup', 'stairs'];
+  const chosen = Math.random() < 0.7
+    ? discreetLocs[Math.floor(Math.random() * discreetLocs.length)]
+    : allLocs[Math.floor(Math.random() * allLocs.length)];
+  openSnackByLocation(chosen);
+}
+
+function startSnackSession(routine, filterType, filterId) {
+  const exercises = routine.map(ex => ({
+    exId: ex.id,
+    type: ex.type,
+    target: ex.default,
+    actual: 0,
+    completed: false,
+    skipped: false,
+  }));
+
+  state.snackSession = {
+    id: uuid(),
+    dateKey: new Date().toISOString().slice(0, 10),
+    startedAt: Date.now(),
+    completedAt: null,
+    status: 'active',
+    locationId: filterType === 'loc' ? filterId : routine[0]?.location || 'desk',
+    purposeId: filterType === 'pur' ? filterId : null,
+    routine: exercises,
+    currentIndex: -1,
+    totalSeconds: 0,
+  };
+
+  renderSnackOverlay();
+}
+
+function renderSnackOverlay() {
+  const ss = state.snackSession;
+  if (!ss) return;
+
+  document.getElementById('snackOverlay')?.remove();
+
+  const overlay = document.createElement('div');
+  overlay.className = 'snack-overlay';
+  overlay.id = 'snackOverlay';
+
+  const filterLabel = ss.purposeId
+    ? t('snack.pur.' + ss.purposeId)
+    : t('snack.loc.' + ss.locationId);
+
+  if (ss.status === 'completed' || ss.status === 'aborted') {
+    const totalSec = Math.round((ss.completedAt - ss.startedAt) / 1000);
+    const completed = ss.routine.filter(e => e.completed).length;
+    overlay.innerHTML = '<div class="snack-overlay-header">'
+      + '<div class="snack-overlay-title">\u26A1 ' + t('snack.title') + '</div>'
+      + '</div>'
+      + '<div class="snack-body">'
+      + '<div class="snack-complete">'
+      + '<div class="snack-complete-emoji">\u{1F389}</div>'
+      + '<h2>' + t('snack.complete') + '</h2>'
+      + '<div class="snack-complete-time">' + completed + '/' + ss.routine.length + ' \u00B7 ' + formatTime(totalSec) + '</div>'
+      + '<button class="btn btn-primary btn-block" onclick="closeSnackOverlay()">' + t('snack.done') + '</button>'
+      + '</div></div>';
+    document.body.appendChild(overlay);
+    return;
+  }
+
+  const isRunning = ss.currentIndex >= 0;
+  let bodyHtml = '';
+
+  for (let i = 0; i < ss.routine.length; i++) {
+    const exEntry = ss.routine[i];
+    const ex = MICRO_EX[exEntry.exId];
+    const isActive = i === ss.currentIndex;
+    const isDone = exEntry.completed;
+    const isSkipped = exEntry.skipped;
+    const cls = isActive ? 'active' : isDone ? 'done' : isSkipped ? 'skipped' : '';
+    const sideStr = ex.perSide ? ' ' + t('common.per_side') : '';
+    const targetStr = ex.type === 'time'
+      ? exEntry.target + t('common.sec') + sideStr
+      : exEntry.target + ' reps' + sideStr;
+    const prefix = isDone ? '\u2713 ' : isSkipped ? '\u2014 ' : '';
+
+    bodyHtml += '<div class="snack-ex-item ' + cls + '">'
+      + '<span class="snack-ex-icon">' + ex.icon + '</span>'
+      + '<div class="snack-ex-name">' + tName(ex.name) + '</div>'
+      + '<div class="snack-ex-instr">' + tName(ex.instruction) + '</div>'
+      + '<div class="snack-ex-target">' + prefix + targetStr + '</div>'
+      + '</div>';
+  }
+
+  // Timer/counter for active exercise
+  let activeHtml = '';
+  if (isRunning && ss.currentIndex < ss.routine.length) {
+    const exEntry = ss.routine[ss.currentIndex];
+    const ex = MICRO_EX[exEntry.exId];
+    if (ex.type === 'time') {
+      const circ = 2 * Math.PI * 62;
+      const remaining = state.snackTimer.running
+        ? Math.max(0, Math.ceil((state.snackTimer.endsAt - Date.now()) / 1000))
+        : exEntry.target;
+      activeHtml = '<div class="snack-timer-wrap">'
+        + '<div class="snack-timer-ring" id="snackTimerRing">'
+        + '<svg viewBox="0 0 140 140">'
+        + '<circle class="bg" cx="70" cy="70" r="62"/>'
+        + '<circle class="fg" id="snackTimerFg" cx="70" cy="70" r="62" stroke-dasharray="' + circ + '" stroke-dashoffset="0"/>'
+        + '</svg>'
+        + '<div class="snack-timer-center">'
+        + '<span class="snack-timer-time" id="snackTimerDisplay">' + remaining + '</span>'
+        + '<span class="snack-timer-state" id="snackTimerState">' + (state.snackTimer.running ? t('timer.hold') : t('timer.ready')) + '</span>'
+        + '</div></div></div>'
+        + '<div class="snack-actions">'
+        + '<button class="btn btn-secondary btn-sm" onclick="snackSkipExercise()">' + t('snack.skip') + '</button>';
+      if (!state.snackTimer.running) {
+        activeHtml += '<button class="btn btn-primary" onclick="startSnackTimer()" id="snackTimerBtn">\u25B6 ' + t('snack.start') + '</button>';
+      } else {
+        activeHtml += '<button class="btn btn-orange" onclick="stopSnackTimer(false)" id="snackTimerBtn">\u25A0 ' + t('timer.stop') + '</button>';
+      }
+      activeHtml += '<button class="btn btn-success btn-sm" onclick="snackCompleteExercise()">' + t('snack.done') + '</button>'
+        + '</div>';
+    } else {
+      const sideStr = ex.perSide ? ' ' + t('common.per_side') : '';
+      activeHtml = '<div class="snack-reps-display">' + exEntry.target + ' reps' + sideStr + '</div>'
+        + '<div class="snack-actions">'
+        + '<button class="btn btn-secondary btn-sm" onclick="snackSkipExercise()">' + t('snack.skip') + '</button>'
+        + '<button class="btn btn-success" onclick="snackCompleteExercise()">\u2713 ' + t('snack.done') + '</button>'
+        + '</div>';
+    }
+  }
+
+  // Start button if not started
+  let startBtn = '';
+  if (!isRunning) {
+    startBtn = '<div class="snack-actions"><button class="btn btn-primary btn-block" onclick="snackAdvance()">\u25B6 ' + t('snack.start') + '</button></div>';
+  }
+
+  const progress = isRunning ? (ss.currentIndex + 1) + ' ' + t('snack.exercise_of') + ' ' + ss.routine.length : '';
+  const progressSpan = progress ? ' <span style="font-size:13px;color:var(--text2);margin-left:8px">' + progress + '</span>' : '';
+
+  overlay.innerHTML = '<div class="snack-overlay-header">'
+    + '<div class="snack-overlay-title">\u26A1 ' + filterLabel + progressSpan + '</div>'
+    + '<button class="btn btn-secondary btn-sm" onclick="abortSnackSession()">' + t('snack.abort') + '</button>'
+    + '</div>'
+    + '<div class="snack-body">' + bodyHtml + activeHtml + startBtn + '</div>';
+  document.body.appendChild(overlay);
+
+  // Scroll active into view
+  if (isRunning) {
+    setTimeout(function() {
+      const activeEl = overlay.querySelector('.snack-ex-item.active');
+      if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+  }
+}
+
+function snackAdvance() {
+  const ss = state.snackSession;
+  if (!ss) return;
+
+  let next = ss.currentIndex + 1;
+  while (next < ss.routine.length && (ss.routine[next].completed || ss.routine[next].skipped)) {
+    next++;
+  }
+
+  if (next >= ss.routine.length) {
+    finishSnackSession('completed');
+    return;
+  }
+
+  ss.currentIndex = next;
+  state.snackTimer = { endsAt: null, duration: 0, startedAt: null, running: false };
+  renderSnackOverlay();
+}
+
+function snackCompleteExercise() {
+  const ss = state.snackSession;
+  if (!ss || ss.currentIndex < 0) return;
+
+  state.snackTimer.running = false;
+  const exEntry = ss.routine[ss.currentIndex];
+  const ex = MICRO_EX[exEntry.exId];
+  exEntry.completed = true;
+
+  if (ex.type === 'time' && state.snackTimer.startedAt) {
+    exEntry.actual = Math.round((Date.now() - state.snackTimer.startedAt) / 1000);
+  } else {
+    exEntry.actual = exEntry.target;
+  }
+
+  vibrate(50);
+  renderSnackOverlay();
+  setTimeout(function() { snackAdvance(); }, 800);
+}
+
+function snackSkipExercise() {
+  const ss = state.snackSession;
+  if (!ss || ss.currentIndex < 0) return;
+
+  state.snackTimer.running = false;
+  ss.routine[ss.currentIndex].skipped = true;
+  ss.routine[ss.currentIndex].actual = 0;
+
+  renderSnackOverlay();
+  setTimeout(function() { snackAdvance(); }, 300);
+}
+
+function startSnackTimer() {
+  const ss = state.snackSession;
+  if (!ss || ss.currentIndex < 0) return;
+  const exEntry = ss.routine[ss.currentIndex];
+  const dur = exEntry.target;
+  if (dur <= 0) return;
+
+  state.snackTimer = { endsAt: Date.now() + dur * 1000, duration: dur, startedAt: Date.now(), running: true };
+  renderSnackOverlay();
+  requestAnimationFrame(tickSnackTimer);
+}
+
+function stopSnackTimer(completed) {
+  const st = state.snackTimer;
+  state.snackTimer = { endsAt: null, duration: 0, startedAt: null, running: false };
+
+  if (completed) {
+    vibrate([100, 50, 100]);
+    snackCompleteExercise();
+  } else {
+    renderSnackOverlay();
+  }
+}
+
+function tickSnackTimer() {
+  const st = state.snackTimer;
+  if (!st.running) return;
+
+  const remaining = Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000));
+  const disp = $('snackTimerDisplay');
+  const ring = $('snackTimerFg');
+  const stateEl = $('snackTimerState');
+
+  if (disp) disp.textContent = remaining;
+  if (stateEl) stateEl.textContent = t('timer.hold');
+  if (ring) {
+    const circ = 2 * Math.PI * 62;
+    const progress = 1 - remaining / st.duration;
+    ring.setAttribute('stroke-dashoffset', circ * progress);
+  }
+
+  if (remaining <= 0) {
+    stopSnackTimer(true);
+    return;
+  }
+  requestAnimationFrame(tickSnackTimer);
+}
+
+function finishSnackSession(status) {
+  const ss = state.snackSession;
+  if (!ss) return;
+
+  state.snackTimer = { endsAt: null, duration: 0, startedAt: null, running: false };
+  ss.completedAt = Date.now();
+  ss.status = status;
+  ss.totalSeconds = Math.round((ss.completedAt - ss.startedAt) / 1000);
+
+  Store.saveSnack({
+    id: ss.id,
+    dateKey: ss.dateKey,
+    startedAt: ss.startedAt,
+    completedAt: ss.completedAt,
+    status: ss.status,
+    locationId: ss.locationId,
+    purposeId: ss.purposeId,
+    routine: ss.routine.map(function(r) {
+      return { exId: r.exId, type: r.type, target: r.target, actual: r.actual, completed: r.completed };
+    }),
+    totalSeconds: ss.totalSeconds,
+  });
+
+  vibrate([100, 50, 100, 50, 200]);
+  renderSnackOverlay();
+}
+
+function abortSnackSession() {
+  const ss = state.snackSession;
+  if (!ss) return;
+
+  if (ss.routine.some(function(e) { return e.completed; })) {
+    finishSnackSession('aborted');
+  } else {
+    state.snackSession = null;
+    state.snackTimer = { endsAt: null, duration: 0, startedAt: null, running: false };
+    document.getElementById('snackOverlay')?.remove();
+  }
+}
+
+function closeSnackOverlay() {
+  state.snackSession = null;
+  document.getElementById('snackOverlay')?.remove();
+  renderContent();
+}
+
+function renderSnackProgress() {
+  const snacks = Store.getSnacks().filter(function(s) { return s.status === 'completed'; });
+  if (snacks.length === 0) return '';
+
+  const now = new Date();
+  const weekStart = new Date(now);
+  weekStart.setDate(now.getDate() - now.getDay() + 1);
+  weekStart.setHours(0, 0, 0, 0);
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  const thisWeek = snacks.filter(function(s) { return new Date(s.startedAt) >= weekStart; }).length;
+  const thisMonth = snacks.filter(function(s) { return new Date(s.startedAt) >= monthStart; }).length;
+
+  // Favorite location
+  const locCounts = {};
+  for (const s of snacks) {
+    locCounts[s.locationId] = (locCounts[s.locationId] || 0) + 1;
+  }
+  const favEntries = Object.entries(locCounts).sort(function(a, b) { return b[1] - a[1]; });
+  const favLocLabel = favEntries.length ? t('snack.loc.' + favEntries[0][0]) : t('snack.none_yet');
+
+  let html = '<div class="snack-progress-section">';
+  html += '<div class="snack-progress-title">\u26A1 ' + t('snack.progress_title') + '</div>';
+  html += '<div class="snack-progress-grid">';
+  html += '<div class="snack-progress-stat"><div class="val">' + thisWeek + '</div><div class="lbl">' + t('snack.weekly') + '</div></div>';
+  html += '<div class="snack-progress-stat"><div class="val">' + thisMonth + '</div><div class="lbl">' + t('snack.monthly') + '</div></div>';
+  html += '<div class="snack-progress-stat"><div class="val" style="font-size:14px">' + favLocLabel + '</div><div class="lbl">' + t('snack.fav_loc') + '</div></div>';
+  html += '</div></div>';
+  return html;
 }
 
 // ==================== SATS APP LINK ====================
