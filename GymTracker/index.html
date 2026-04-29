@@ -190,6 +190,28 @@ input,select{font:inherit;color:var(--text);background:var(--surface2);border:1p
 .rest-ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .3s}
 .rest-next{font-size:14px;color:var(--text3);text-align:center;max-width:250px}
 
+/* Exercise Countdown Timer (inside set logger) */
+.ex-timer-wrap{display:flex;flex-direction:column;align-items:center;margin:16px 0}
+.ex-timer-ring{position:relative;width:160px;height:160px}
+.ex-timer-ring svg{transform:rotate(-90deg);width:100%;height:100%}
+.ex-timer-ring circle{fill:none;stroke-width:6}
+.ex-timer-ring .bg{stroke:var(--surface3)}
+.ex-timer-ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .25s}
+.ex-timer-ring.done .fg{stroke:var(--success)}
+.ex-timer-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ex-timer-time{font-size:48px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent)}
+.ex-timer-ring.done .ex-timer-time{color:var(--success)}
+.ex-timer-state{font-size:12px;color:var(--text2);margin-top:2px}
+.ex-timer-start{
+  width:64px;height:64px;border-radius:50%;font-size:28px;
+  background:var(--accent);color:#fff;border:none;
+  display:flex;align-items:center;justify-content:center;margin-top:12px;
+  box-shadow:0 4px 16px rgba(0,180,216,.4);
+}
+.ex-timer-start:active{transform:scale(.92)}
+.ex-timer-start.running{background:var(--accent2)}
+.ex-timer-done-badge{font-size:13px;color:var(--success);font-weight:600;margin-top:8px}
+
 /* Progress View */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
 .stat-card{background:var(--surface);border-radius:14px;padding:14px;text-align:center}
@@ -340,6 +362,8 @@ en: {
   'quicklog.title': 'Log Group Class', 'quicklog.type': 'Class Type', 'quicklog.duration': 'Duration (min)',
   'quicklog.notes': 'Notes (optional)', 'quicklog.save': 'Save',
   'weight.title': 'Log Body Weight', 'weight.placeholder': 'Weight in kg', 'weight.save': 'Save',
+  'timer.start': 'Start', 'timer.stop': 'Stop', 'timer.done': '✓ Done!', 'timer.ready': 'Ready',
+  'timer.hold': 'HOLD', 'timer.tap_start': 'Tap to start timer', 'timer.actual': 'Actual',
   'common.kg': 'kg', 'common.sec': 'sec', 'common.min': 'min', 'common.per_side': '/side',
   'common.cancel': 'Cancel', 'common.save': 'Save', 'common.delete': 'Delete',
 },
@@ -385,6 +409,8 @@ no: {
   'quicklog.title': 'Logg gruppetime', 'quicklog.type': 'Timetype', 'quicklog.duration': 'Varighet (min)',
   'quicklog.notes': 'Notater (valgfritt)', 'quicklog.save': 'Lagre',
   'weight.title': 'Logg kroppsvekt', 'weight.placeholder': 'Vekt i kg', 'weight.save': 'Lagre',
+  'timer.start': 'Start', 'timer.stop': 'Stopp', 'timer.done': '✓ Ferdig!', 'timer.ready': 'Klar',
+  'timer.hold': 'HOLD', 'timer.tap_start': 'Trykk for å starte nedtelling', 'timer.actual': 'Faktisk',
   'common.kg': 'kg', 'common.sec': 'sek', 'common.min': 'min', 'common.per_side': '/side',
   'common.cancel': 'Avbryt', 'common.save': 'Lagre', 'common.delete': 'Slett',
 }
@@ -621,6 +647,7 @@ const state = {
   settings: {},
   activeWorkout: null,
   restTimer: { endsAt: null, duration: 60, exerciseName: '' },
+  exTimer: { endsAt: null, duration: 0, startedAt: null, running: false },
   wakeLock: null,
   lastSync: null,
   elapsedInterval: null,
@@ -905,8 +932,7 @@ function openSetLogger(blockId, exId, setIndex) {
   const overlay = document.createElement('div');
   overlay.className = 'modal-overlay';
   overlay.id = 'setLoggerOverlay';
-  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
-
+  overlay.onclick = (e) => { if (e.target === overlay) { state.exTimer.running = false; overlay.remove(); } };
   overlay.innerHTML = `
     <div class="modal-sheet">
       <div class="modal-handle"></div>
@@ -931,9 +957,24 @@ function openSetLogger(blockId, exId, setIndex) {
           <span class="logger-value" id="logDuration">${defDuration}</span>
           <button class="logger-btn" onclick="adjustLogger('duration', 5)">+</button>
         </div>
+        <div class="ex-timer-wrap">
+          <div class="ex-timer-ring" id="exTimerRing">
+            <svg viewBox="0 0 160 160">
+              <circle class="bg" cx="80" cy="80" r="72"/>
+              <circle class="fg" id="exTimerFg" cx="80" cy="80" r="72"
+                stroke-dasharray="${2 * Math.PI * 72}" stroke-dashoffset="0"/>
+            </svg>
+            <div class="ex-timer-center">
+              <span class="ex-timer-time" id="exTimerDisplay">${defDuration}</span>
+              <span class="ex-timer-state" id="exTimerState">${t('timer.ready')}</span>
+            </div>
+          </div>
+          <button class="ex-timer-start" id="exTimerBtn" onclick="toggleExTimer()">▶</button>
+          <div style="font-size:12px;color:var(--text3);margin-top:6px" id="exTimerHint">${t('timer.tap_start')}</div>
+        </div>
       `}
       <div style="display:flex;gap:10px;margin-top:20px">
-        <button class="btn btn-secondary btn-block" onclick="document.getElementById('setLoggerOverlay').remove()">${t('common.cancel')}</button>
+        <button class="btn btn-secondary btn-block" onclick="state.exTimer.running=false;document.getElementById('setLoggerOverlay').remove()">${t('common.cancel')}</button>
         <button class="btn btn-success btn-block" onclick="confirmLogSet('${blockId}','${exId}',${setIndex},${isTimeBased})">${t('workout.complete_set')}</button>
       </div>
     </div>
@@ -947,6 +988,89 @@ function adjustLogger(field, delta) {
   let val = parseFloat(el.textContent) + delta;
   if (val < 0) val = 0;
   el.textContent = field === 'weight' ? val : Math.round(val);
+  // Sync the exercise countdown display when not running
+  if (field === 'duration' && !state.exTimer.running) {
+    const disp = $('exTimerDisplay');
+    if (disp) disp.textContent = Math.round(val);
+  }
+}
+
+function toggleExTimer() {
+  if (state.exTimer.running) {
+    stopExTimer(false);
+  } else {
+    startExTimer();
+  }
+}
+
+function startExTimer() {
+  const dur = parseInt($('logDuration')?.textContent || '30');
+  if (dur <= 0) return;
+  state.exTimer = { endsAt: Date.now() + dur * 1000, duration: dur, startedAt: Date.now(), running: true };
+  const btn = $('exTimerBtn');
+  if (btn) { btn.textContent = '■'; btn.classList.add('running'); }
+  const hint = $('exTimerHint');
+  if (hint) hint.textContent = t('timer.hold');
+  const stateEl = $('exTimerState');
+  if (stateEl) stateEl.textContent = t('timer.hold');
+  // Disable +/- while running
+  document.querySelectorAll('#setLoggerOverlay .logger-btn').forEach(b => { b.disabled = true; b.style.opacity = '0.3'; });
+  requestAnimationFrame(tickExTimer);
+}
+
+function tickExTimer() {
+  const et = state.exTimer;
+  if (!et.running) return;
+  const remaining = Math.max(0, Math.ceil((et.endsAt - Date.now()) / 1000));
+  const disp = $('exTimerDisplay');
+  const ring = $('exTimerFg');
+  if (disp) disp.textContent = remaining;
+  if (ring) {
+    const circ = 2 * Math.PI * 72;
+    const progress = 1 - remaining / et.duration;
+    ring.setAttribute('stroke-dashoffset', circ * progress);
+  }
+  if (remaining <= 0) {
+    stopExTimer(true);
+    return;
+  }
+  requestAnimationFrame(tickExTimer);
+}
+
+function stopExTimer(completed) {
+  const et = state.exTimer;
+  const elapsed = Math.round((Date.now() - et.startedAt) / 1000);
+  state.exTimer = { endsAt: null, duration: 0, startedAt: null, running: false };
+
+  // Update the duration field with actual time held
+  const durEl = $('logDuration');
+  if (durEl) durEl.textContent = elapsed;
+
+  const btn = $('exTimerBtn');
+  if (btn) { btn.textContent = '▶'; btn.classList.remove('running'); }
+
+  const ringWrap = $('exTimerRing');
+  const disp = $('exTimerDisplay');
+  const stateEl = $('exTimerState');
+  const hint = $('exTimerHint');
+
+  if (completed) {
+    // Timer ran to 0 — success
+    vibrate([100, 50, 100, 50, 200]);
+    if (ringWrap) ringWrap.classList.add('done');
+    if (disp) disp.textContent = '✓';
+    if (stateEl) stateEl.textContent = t('timer.done');
+    if (hint) hint.textContent = `${t('timer.actual')}: ${elapsed}${t('common.sec')}`;
+  } else {
+    // Stopped early
+    vibrate(50);
+    if (disp) disp.textContent = elapsed;
+    if (stateEl) stateEl.textContent = `${elapsed}${t('common.sec')}`;
+    if (hint) hint.textContent = `${t('timer.actual')}: ${elapsed}${t('common.sec')}`;
+  }
+
+  // Re-enable +/- buttons
+  document.querySelectorAll('#setLoggerOverlay .logger-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
 }
 
 function confirmLogSet(blockId, exId, setIndex, isTimeBased) {
