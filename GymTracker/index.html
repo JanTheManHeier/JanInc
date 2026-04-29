@@ -32,6 +32,21 @@
   --header-h: 56px;
   --tab-h: 60px;
 }
+html.light {
+  --bg: #f0f4f8;
+  --surface: #ffffff;
+  --surface2: #e8eef4;
+  --surface3: #dce4ec;
+  --border: #c8d6e0;
+  --text: #1a2a3a;
+  --text2: #506878;
+  --text3: #7a94a8;
+  --accent: #0090b0;
+  --accent2: #e05520;
+  --success: #22a355;
+  --warning: #d4a010;
+  --danger: #d93030;
+}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',system-ui,sans-serif;font-size:16px;line-height:1.5}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;touch-action:manipulation}
@@ -518,6 +533,7 @@ en: {
   'schedule.all': 'All', 'schedule.langnes': 'Langnes', 'schedule.tromso': 'Tromsø',
   'schedule.updated': 'Schedule last updated', 'schedule.instructor': 'Instructor',
   'settings.title': 'Settings', 'settings.language': 'Language', 'settings.rest_timer': 'Rest Timer (sec)',
+  'settings.theme': 'Theme', 'settings.theme_dark': 'Dark', 'settings.theme_light': 'Light',
   'settings.profile': 'Profile', 'settings.injuries': 'Injuries & Limitations',
   'settings.achilles': 'Achilles tendon — torn 5 years ago. NO running. Use elliptical, stepper, or bike.',
   'settings.back': 'Lower back pain — intermittent. Core strengthening is primary treatment. Avoid spine flexion under load.',
@@ -603,6 +619,7 @@ no: {
   'schedule.all': 'Alle', 'schedule.langnes': 'Langnes', 'schedule.tromso': 'Tromsø',
   'schedule.updated': 'Timeplan sist oppdatert', 'schedule.instructor': 'Instruktør',
   'settings.title': 'Innstillinger', 'settings.language': 'Språk', 'settings.rest_timer': 'Pausetid (sek)',
+  'settings.theme': 'Tema', 'settings.theme_dark': 'Mørk', 'settings.theme_light': 'Lys',
   'settings.profile': 'Profil', 'settings.injuries': 'Skader og begrensninger',
   'settings.achilles': 'Akillessene — røket for 5 år siden. INGEN løping. Bruk ellipsemaskin, stepmaskin eller sykkel.',
   'settings.back': 'Korsryggsmerter — periodisk. Kjernestyrkende er hovedbehandling. Unngå belastning med bøyd rygg.',
@@ -1023,7 +1040,7 @@ async function requestWakeLock() {
 }
 function releaseWakeLock() { state.wakeLock?.release(); state.wakeLock = null; }
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && state.activeWorkout) requestWakeLock();
+  if (document.visibilityState === 'visible' && (state.activeWorkout || state.snackSession)) requestWakeLock();
 });
 
 // ==================== RENDER HEADER ====================
@@ -2006,6 +2023,10 @@ function showSettings() {
           <button class="lang-btn" onclick="toggleLang();showSettings()">${state.lang === 'no' ? '🇳🇴' : '🇬🇧'}</button>
         </div>
         <div class="setting-row">
+          <span class="setting-label">${t('settings.theme')}</span>
+          <button class="btn btn-sm btn-secondary" onclick="toggleTheme();showSettings()" style="min-width:80px;font-weight:700">${state.settings.theme === 'light' ? '☀️ ' + t('settings.theme_light') : '🌙 ' + t('settings.theme_dark')}</button>
+        </div>
+        <div class="setting-row">
           <span class="setting-label">${t('settings.rest_timer')}</span>
           <div class="setting-value">
             <button class="btn btn-sm btn-secondary" onclick="adjustRestTimer(-5)">−</button>
@@ -2053,6 +2074,19 @@ function adjustRestTimer(delta) {
   Store.saveSettings(state.settings);
   const el = $('settingsRestTimer');
   if (el) el.textContent = val;
+}
+
+function toggleTheme() {
+  state.settings.theme = state.settings.theme === 'light' ? 'dark' : 'light';
+  applyTheme();
+  Store.saveSettings(state.settings);
+}
+
+function applyTheme() {
+  const isLight = state.settings.theme === 'light';
+  document.documentElement.classList.toggle('light', isLight);
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', isLight ? '#f0f4f8' : '#0a1929');
 }
 
 function clearAllData() {
@@ -2381,6 +2415,7 @@ function startSnackSession(routine, filterType, filterId) {
     totalSeconds: 0,
   };
 
+  requestWakeLock();
   renderSnackOverlay();
 }
 
@@ -2773,12 +2808,14 @@ function abortSnackSession() {
     state.snackTimer = { endsAt: null, duration: 0, startedAt: null, running: false };
     if (state.snackBreathInterval) { clearInterval(state.snackBreathInterval); state.snackBreathInterval = null; }
     document.getElementById('snackOverlay')?.remove();
+    releaseWakeLock();
   }
 }
 
 function closeSnackOverlay() {
   state.snackSession = null;
   document.getElementById('snackOverlay')?.remove();
+  releaseWakeLock();
   renderContent();
 }
 
@@ -2828,6 +2865,7 @@ function init() {
   state.lang = state.settings.lang || 'no';
   state.lastSync = Store.get('sync_ts', null);
 
+  applyTheme();
   renderAll();
 
   // Register service worker
