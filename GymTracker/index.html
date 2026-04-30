@@ -24,6 +24,7 @@
   --text3: #5a7a94;
   --accent: #00b4d8;
   --accent2: #ff6b35;
+  --accent3: #9c27b0;
   --success: #4ade80;
   --warning: #fbbf24;
   --danger: #ef4444;
@@ -43,6 +44,7 @@ html.light {
   --text3: #7a94a8;
   --accent: #0090b0;
   --accent2: #e05520;
+  --accent3: #7b1fa2;
   --success: #22a355;
   --warning: #d4a010;
   --danger: #d93030;
@@ -530,7 +532,7 @@ en: {
   'day.0': 'Sunday', 'day.1': 'Monday', 'day.2': 'Tuesday', 'day.3': 'Wednesday', 'day.4': 'Thursday', 'day.5': 'Friday', 'day.6': 'Saturday',
   'day.short.0': 'Sun', 'day.short.1': 'Mon', 'day.short.2': 'Tue', 'day.short.3': 'Wed', 'day.short.4': 'Thu', 'day.short.5': 'Fri', 'day.short.6': 'Sat',
   'plan.today': 'TODAY', 'plan.rest': 'Rest', 'plan.optional': 'Optional solo weights', 'plan.with_friend': 'With friend',
-  'plan.start_solo': 'Start Solo Workout', 'plan.start_legs': 'Legs & Achilles', 'plan.quick_log': 'Log Class', 'plan.at': 'at', 'plan.earlier': 'Earlier this week',
+  'plan.start_solo': 'Start Solo Workout', 'plan.start_legs': 'Legs & Achilles', 'plan.start_core': 'Core (15 min)', 'plan.quick_log': 'Log Class', 'plan.at': 'at', 'plan.earlier': 'Earlier this week',
   'workout.start': 'Start Workout', 'workout.end': 'End Workout', 'workout.cancel': 'Cancel',
   'workout.elapsed': 'Elapsed', 'workout.sets': 'sets', 'workout.set': 'Set',
   'workout.log_set': 'Log Set', 'workout.complete_set': '✓ Done', 'workout.skip': 'Skip', 'workout.undo': 'Undo', 'workout.set_logged': 'Set logged',
@@ -616,7 +618,7 @@ no: {
   'day.0': 'Søndag', 'day.1': 'Mandag', 'day.2': 'Tirsdag', 'day.3': 'Onsdag', 'day.4': 'Torsdag', 'day.5': 'Fredag', 'day.6': 'Lørdag',
   'day.short.0': 'Søn', 'day.short.1': 'Man', 'day.short.2': 'Tir', 'day.short.3': 'Ons', 'day.short.4': 'Tor', 'day.short.5': 'Fre', 'day.short.6': 'Lør',
   'plan.today': 'I DAG', 'plan.rest': 'Hvile', 'plan.optional': 'Valgfri solostyrke', 'plan.with_friend': 'Med kompis',
-  'plan.start_solo': 'Start solotrening', 'plan.start_legs': 'Bein & Akilles', 'plan.quick_log': 'Logg time', 'plan.at': 'på', 'plan.earlier': 'Tidligere denne uken',
+  'plan.start_solo': 'Start solotrening', 'plan.start_legs': 'Bein & Akilles', 'plan.start_core': 'Core (15 min)', 'plan.quick_log': 'Logg time', 'plan.at': 'på', 'plan.earlier': 'Tidligere denne uken',
   'workout.start': 'Start trening', 'workout.end': 'Avslutt trening', 'workout.cancel': 'Avbryt',
   'workout.elapsed': 'Tid', 'workout.sets': 'sett', 'workout.set': 'Sett',
   'workout.log_set': 'Logg sett', 'workout.complete_set': '✓ Ferdig', 'workout.skip': 'Hopp over', 'workout.undo': 'Angre', 'workout.set_logged': 'Sett logget',
@@ -732,7 +734,12 @@ const EX = {
   'leg-curl': { name: { en: 'Lying Leg Curl', no: 'Liggende beinbøy' }, instruction: { en: 'Slow and controlled', no: 'Sakte og kontrollert' }, type: 'reps', defaultReps: 12, defaultWeight: 25, gif: null, video: '3sAqxcw7doQ', videoCredit: 'prehabtrening.no', videoPage: 'https://prehabtrening.no/ovelser/hamstring/', formTips: { en: 'Lie face down on leg curl machine. Curl heels toward glutes, squeeze hamstrings at top. Lower with control over 3 seconds. Don\'t lift hips off pad.', no: 'Ligg med ansiktet ned på beinbøy-maskin. Curl hælene mot rumpa, klem hamstrings øverst. Senk kontrollert over 3 sekunder. Ikke løft hoftene fra puten.' }, muscles: { en: 'Hamstrings', no: 'Hamstrings' }, alt: null },
   'leg-extension': { name: { en: 'Leg Extension', no: 'Beinekstensjon' }, instruction: { en: 'Slow on the way down', no: 'Sakte på vei ned' }, type: 'reps', defaultReps: 12, defaultWeight: 30, gif: null, video: 'CCoe2EH8nGU', videoCredit: 'prehabtrening.no', videoPage: 'https://prehabtrening.no/ovelser/quadriceps/', formTips: { en: 'Sit in leg extension machine. Extend legs fully, squeeze quads at top. Lower SLOWLY over 3 seconds. Don\'t lock knees forcefully. Keep back against seat.', no: 'Sitt i beinekstensjon-maskin. Strekk beina helt, klem lårene øverst. Senk SAKTE over 3 sekunder. Ikke lås knærne med kraft. Hold ryggen mot setet.' }, muscles: { en: 'Quadriceps', no: 'Lår foran (quadriceps)' }, alt: null },
   'glute-bridge': { name: { en: 'Glute Bridge', no: 'Glutealbro' }, instruction: { en: 'Squeeze glutes at top, hold 2 sec', no: 'Klem rumpa øverst, hold 2 sek' }, type: 'reps', defaultReps: 12, defaultWeight: 0, gif: null, video: 'K6VUdz2oui4', videoCredit: 'prehabtrening.no', videoPage: 'https://prehabtrening.no/ovelser/glute-bridge-ett-og-to-bein/', formTips: { en: 'Lie on back, feet flat, knees bent. Drive through heels, lift hips up squeezing glutes hard at top. Hold 2 seconds. Lower with control. Can progress to single-leg.', no: 'Ligg på rygg, føtter flatt, knær bøyd. Press gjennom hælene, løft hoftene og klem rumpa hardt øverst. Hold 2 sekunder. Senk kontrollert. Kan utvikles til ettbens.' }, muscles: { en: 'Glutes, hamstrings, lower back', no: 'Rumpe, hamstrings, korsrygg' }, alt: null },
-  'calf-stretch': { name: { en: 'Calf/Achilles Stretch', no: 'Legg/akilles-tøyning' }, instruction: { en: 'Hold 30 sec each position', no: 'Hold 30 sek i hver posisjon' }, type: 'duration', defaultDuration: 60, gif: null, formTips: { en: 'Wall stretch: 1) Straight back leg (gastrocnemius) 30 sec each side. 2) Bent back leg (soleus/Achilles) 30 sec each side. Gentle — never push into pain.', no: 'Veggtøyning: 1) Strak bakre legg (gastrocnemius) 30 sek per side. 2) Bøyd bakre legg (soleus/akilles) 30 sek per side. Forsiktig — aldri press inn i smerte.' }, muscles: { en: 'Gastrocnemius, soleus, Achilles tendon', no: 'Gastrocnemius, soleus, akillessenen' }, alt: null },
+  'calf-stretch': { name: { en: 'Calf/Achilles Stretch', no: 'Legg/akilles-tøyning' }, instruction: { en: 'Hold 30 sec each position', no: 'Hold 30 sek i hver posisjon' }, type: 'duration', defaultDuration: 60, gif: null, formTips: { en: 'Wall stretch: 1) Straight back leg (gastrocnemius) 30 sec each side. 2) Bent back leg (soleus/Achilles) 30 sec each side. Gentle — never push into pain.', no: 'Veggtøyning: 1) Strak bakre legg (gastrocnemius) 30 sek per side. 2) Bøyd bakre legg (soleus/akilles) 30 sek per side. Forsiktig — aldri press inn i smerte.' }, muscles: { en: 'Gastrocnemius, soleus, akillessenen' }, alt: null },
+  // === CORE EXERCISES (Jon-Kristian's program) ===
+  'flutter-kicks': { name: { en: 'Flutter Kicks', no: 'Flutter kicks' }, instruction: { en: '45 sec — lean back, straight legs', no: '45 sek — len deg tilbake, strake ben' }, type: 'duration', defaultDuration: 45, gif: null, video: 'GvC-yW-qiws', formTips: { en: 'Lean back, the further back the harder. Keep legs straight, kick alternating like swimming. Don\'t let lower back arch off floor.', no: 'Len deg tilbake, jo lenger bak jo mer utfordrende. Strake ben, spark vekselvis som i svømming. Ikke la korsryggen løfte fra gulvet.' }, muscles: { en: 'Lower abs, hip flexors', no: 'Nedre mage, hofteleddsbøyere' }, alt: null },
+  'pendulum-legs': { name: { en: 'Pendulum Legs', no: 'Pendelbein' }, instruction: { en: '20 reps — lower legs side to side', no: '20 reps — senk bena fra side til side' }, type: 'reps', defaultReps: 20, defaultWeight: 0, gif: null, video: 'OBKq9x7QGE8', formTips: { en: 'Lie flat, legs straight up. Lower legs together to one side, stop 10 cm before floor, reverse. The slower you lower, the harder. Arms out for stability.', no: 'Ligg flatt, strake ben rett opp. Senk bena samlet til en side, stopp 10 cm før gulvet, snu. Jo saktere du senker, jo tyngre. Armer ut for stabilitet.' }, muscles: { en: 'Obliques, lower abs', no: 'Skråmuskler, nedre mage' }, alt: null },
+  'plank-leg-lifts': { name: { en: 'Plank Alternating Leg Lifts', no: 'Planke med beinløft' }, instruction: { en: '30 sec per side — low plank, lift one foot', no: '30 sek per side — lav planke, løft en fot' }, type: 'duration', defaultDuration: 30, perSide: true, gif: null, video: 'NYz98sV5Nxg', formTips: { en: 'Low plank on forearms. Lift one foot off ground and hold 30 sec, then switch. Keep hips level, don\'t rotate. Engage glutes.', no: 'Lav planke på underarmene. Løft en fot fra gulvet og hold 30 sek, bytt. Hold hoftene i vater, ikke roter. Aktiver rumpa.' }, muscles: { en: 'Core, glutes, lower back', no: 'Core, rumpe, korsrygg' }, alt: null },
+  'bird-dogs': { name: { en: 'Bird Dogs', no: 'Diagonalstrekk' }, instruction: { en: '20 reps — opposite arm and leg', no: '20 reps — motsatt arm og ben' }, type: 'reps', defaultReps: 20, perSide: true, defaultWeight: 0, gif: null, video: 'tjbjHzBoM6I', formTips: { en: 'All fours — extend opposite arm forward and leg back simultaneously. Straight line through body. Engage hamstrings and glutes. Return and switch sides.', no: 'Alle fire — strekk motsatt arm frem og ben bak samtidig. Rett linje gjennom kroppen. Aktiver hamstrings og setemuskulatur. Tilbake og bytt side.' }, muscles: { en: 'Core stability, hamstrings, glutes', no: 'Kjernemuskulatur, hamstrings, rumpe' }, alt: null },
 };
 
 
@@ -880,6 +887,22 @@ const LEGS_PROGRAM = [
       { exId: 'glute-bridge', num: '4a', sets: 2 },
       { exId: 'walking-lunge', num: '4b', sets: 2 },
       { exId: 'calf-stretch', num: '4c', sets: 2 },
+    ]
+  },
+];
+
+// ==================== CORE PROGRAM (Jon-Kristian's ~15 min circuit) ====================
+const CORE_PROGRAM = [
+  {
+    id: 'core-circuit', name: { en: 'Core Circuit (3 rounds)', no: 'Core-sirkel (3 runder)' }, duration: 15, type: 'circuit', emoji: '🧘',
+    note: { en: 'Run through all 5 exercises, then start over. 3 total rounds — ~15 min.', no: 'Kjør gjennom alle 5 øvelsene, start på nytt. 3 runder totalt — ~15 min.' },
+    rounds: 3, restBetweenRounds: 30,
+    exercises: [
+      { exId: 'flutter-kicks', num: '1', sets: 3 },
+      { exId: 'plank-shoulder-taps', num: '2', sets: 3 },
+      { exId: 'pendulum-legs', num: '3', sets: 3 },
+      { exId: 'plank-leg-lifts', num: '4', sets: 3 },
+      { exId: 'bird-dogs', num: '5', sets: 3 },
     ]
   },
 ];
@@ -1202,6 +1225,7 @@ function renderPlan() {
       actions = `<div class="plan-actions" style="display:flex;gap:6px;flex-wrap:wrap">
         <button class="btn btn-primary btn-sm" onclick="startSoloWorkout('upper')" style="flex:1">💪 ${t('plan.start_solo')}</button>
         <button class="btn btn-primary btn-sm" onclick="startSoloWorkout('legs')" style="flex:1;background:var(--accent2)">🦵 ${t('plan.start_legs')}</button>
+        <button class="btn btn-primary btn-sm" onclick="startSoloWorkout('core')" style="flex:1;background:var(--accent3,#9c27b0)">🧘 ${t('plan.start_core')}</button>
       </div>`;
     } else if (w.type === 'cycling' || w.type === 'strength_class') {
       actions = `<div class="plan-actions">
@@ -1243,7 +1267,8 @@ function renderWorkout() {
         <h2 style="margin-bottom:8px">${t('workout.no_active')}</h2>
         <p style="color:var(--text2);margin-bottom:24px">${t('workout.no_active_desc')}</p>
         <button class="btn btn-primary btn-block" onclick="startSoloWorkout('upper')" style="margin-bottom:8px">💪 ${t('plan.start_solo')}</button>
-        <button class="btn btn-primary btn-block" onclick="startSoloWorkout('legs')" style="background:var(--accent2)">🦵 ${t('plan.start_legs')}</button>
+        <button class="btn btn-primary btn-block" onclick="startSoloWorkout('legs')" style="background:var(--accent2);margin-bottom:8px">🦵 ${t('plan.start_legs')}</button>
+        <button class="btn btn-primary btn-block" onclick="startSoloWorkout('core')" style="background:var(--accent3,#9c27b0)">🧘 ${t('plan.start_core')}</button>
       </div>
     `;
   }
@@ -1329,7 +1354,7 @@ function updateElapsed() {
 
 // ==================== WORKOUT ENGINE ====================
 function startSoloWorkout(programType) {
-  const program = programType === 'legs' ? LEGS_PROGRAM : SOLO_PROGRAM;
+  const program = programType === 'legs' ? LEGS_PROGRAM : programType === 'core' ? CORE_PROGRAM : SOLO_PROGRAM;
   const blocks = program.map(block => {
     const exerciseList = [];
     if (block.type === 'warmup' || block.type === 'circuit') {
@@ -1355,7 +1380,7 @@ function startSoloWorkout(programType) {
   });
 
   state.activeWorkout = {
-    id: uuid(), type: programType === 'legs' ? 'solo-legs' : 'solo', startedAt: Date.now(), blocks,
+    id: uuid(), type: programType === 'legs' ? 'solo-legs' : programType === 'core' ? 'solo-core' : 'solo', startedAt: Date.now(), blocks,
   };
   document.body.classList.add('workout-active');
   requestWakeLock();
