@@ -368,9 +368,9 @@ input,select{font:inherit;color:var(--text);background:var(--surface2);border:1p
 .exercise-gif-loading .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .exercise-gif-placeholder{display:flex;align-items:center;justify-content:center;height:80px;color:var(--text3);font-size:32px}
-.muscles-badge{display:inline-block;background:rgba(0,180,216,.15);color:var(--accent);border:1px solid rgba(0,180,216,.3);border-radius:20px;padding:3px 12px;font-size:12px;font-weight:600;margin:8px auto;text-align:center}
-.form-tips{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin:10px 0 14px;font-size:13px;line-height:1.6;color:var(--text2)}
-.form-tips-label{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px}
+.muscles-badge{display:inline-block;background:rgba(0,180,216,.15);color:var(--accent);border:1px solid rgba(0,180,216,.3);border-radius:20px;padding:4px 14px;font-size:15px;font-weight:600;margin:8px auto;text-align:center}
+.form-tips{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:10px 0 14px;font-size:16px;line-height:1.7;color:var(--text2)}
+.form-tips-label{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px}
 .alt-exercise{background:linear-gradient(135deg,rgba(0,180,216,.08),rgba(0,180,216,.03));border:1px solid rgba(0,180,216,.2);border-radius:14px;padding:14px;margin:14px 0}
 .alt-exercise-header{font-size:13px;font-weight:600;margin-bottom:10px;color:var(--warning)}
 .alt-exercise-name{font-size:15px;font-weight:700;margin-bottom:8px}
@@ -2313,7 +2313,7 @@ function showExHistory(exId) {
       <div class="modal-handle"></div>
       <div class="modal-title">${t('exercise.detail')}</div>
       ${gifHtml}
-      <h3 style="text-align:center;margin-bottom:4px">${tName(exDef.name)}</h3>
+      <h3 style="text-align:center;margin-bottom:4px;font-size:20px">${tName(exDef.name)}</h3>
       ${musclesHtml}
       ${formTipsHtml}
       ${prHtml}
