@@ -986,9 +986,23 @@ async function syncToServer() {
       Store.set('workouts', local.filter(w => !w.deleted));
     }
 
+    // Pull body weight from server
+    const serverBW = await (await fetch('/api/gym-bodyweight', { headers })).json();
+    if (Array.isArray(serverBW) && serverBW.length) {
+      const localBW = Store.getBodyWeight();
+      for (const entry of serverBW) {
+        const idx = localBW.findIndex(l => l.id === entry.id);
+        const merged = { id: entry.id, date: entry.measured_date, weight: entry.weight_kg, _dirty: false };
+        if (idx >= 0) localBW[idx] = { ...localBW[idx], ...merged };
+        else localBW.push(merged);
+      }
+      Store.set('bodyweight', localBW.filter(e => !e.deleted));
+    }
+
     Store.set('sync_ts', new Date().toISOString());
     state.lastSync = new Date().toISOString();
     console.log('Sync complete');
+    renderContent();
   } catch (e) {
     console.log('Sync failed (DB may be paused):', e.message);
   }
