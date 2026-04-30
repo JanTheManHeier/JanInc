@@ -225,6 +225,7 @@ input,select{font:inherit;color:var(--text);background:var(--surface2);border:1p
 .ex-timer-ring .bg{stroke:var(--surface3)}
 .ex-timer-ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .25s}
 .ex-timer-ring.done .fg{stroke:var(--success)}
+.ex-timer-ring.done{cursor:pointer;animation:pulse 1.5s infinite}
 .ex-timer-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .ex-timer-time{font-size:48px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent)}
 .ex-timer-ring.done .ex-timer-time{color:var(--success)}
@@ -1351,7 +1352,7 @@ function openSetLogger(blockId, exId, setIndex) {
           <button class="logger-btn" onclick="adjustLogger('duration', 5)">+</button>
         </div>
         <div class="ex-timer-wrap">
-          <div class="ex-timer-ring" id="exTimerRing" onclick="if(state.exTimer.running)stopExTimer(true)">
+          <div class="ex-timer-ring" id="exTimerRing" onclick="handleTimerRingTap('${blockId}','${exId}',${setIndex},${isTimeBased})">
             <svg viewBox="0 0 160 160">
               <circle class="bg" cx="80" cy="80" r="72"/>
               <circle class="fg" id="exTimerFg" cx="80" cy="80" r="72"
@@ -1385,6 +1386,16 @@ function adjustLogger(field, delta) {
   if (field === 'duration' && !state.exTimer.running) {
     const disp = $('exTimerDisplay');
     if (disp) disp.textContent = Math.round(val);
+  }
+}
+
+function handleTimerRingTap(blockId, exId, setIndex, isTimeBased) {
+  if (state.exTimer.running) {
+    // Timer is running — stop it (complete early)
+    stopExTimer(true);
+  } else if ($('exTimerDisplay')?.textContent === '✓') {
+    // Timer already done — tapping ring completes the set
+    confirmLogSet(blockId, exId, setIndex, isTimeBased);
   }
 }
 
