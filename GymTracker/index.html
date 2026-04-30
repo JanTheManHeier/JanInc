@@ -151,17 +151,24 @@ input,select{font:inherit;color:var(--text);background:var(--surface2);border:1p
 .exercise-name{font-size:16px;font-weight:700;margin:2px 0}
 .exercise-target{font-size:13px;color:var(--text2)}
 .exercise-instruction{font-size:12px;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* Large workout mode — bigger text and targets during active workout */
+.workout-active .exercise-name{font-size:20px}
+.workout-active .exercise-target{font-size:16px}
+.workout-active .exercise-instruction{font-size:15px}
+.workout-active .exercise-num{font-size:14px}
 .exercise-sets{display:flex;gap:6px;margin-top:8px;align-items:center}
 .set-dot{
   width:28px;height:28px;border-radius:50%;border:2px solid var(--border);
   display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
   transition:all .2s;
 }
+.workout-active .set-dot{width:36px;height:36px;font-size:13px}
 .set-dot.done{background:var(--success);border-color:var(--success);color:var(--bg)}
 .set-dot.current{border-color:var(--accent);color:var(--accent);animation:pulse 1.5s infinite}
 .set-dot.skipped{background:var(--surface3);border-color:var(--surface3);color:var(--text3)}
 .exercise-log-btn{
-  margin-left:auto;padding:8px 16px;border-radius:10px;font-size:13px;font-weight:700;
+  margin-left:auto;padding:10px 20px;border-radius:10px;font-size:15px;font-weight:700;
   background:var(--accent);color:var(--bg);
 }
 .exercise-last{font-size:11px;color:var(--text3);margin-top:4px}
@@ -223,13 +230,24 @@ input,select{font:inherit;color:var(--text);background:var(--surface2);border:1p
 .ex-timer-ring.done .ex-timer-time{color:var(--success)}
 .ex-timer-state{font-size:12px;color:var(--text2);margin-top:2px}
 .ex-timer-start{
-  width:64px;height:64px;border-radius:50%;font-size:28px;
+  width:100%;height:56px;border-radius:14px;font-size:18px;font-weight:700;
   background:var(--accent);color:#fff;border:none;
-  display:flex;align-items:center;justify-content:center;margin-top:12px;
+  display:flex;align-items:center;justify-content:center;margin-top:12px;gap:8px;
   box-shadow:0 4px 16px rgba(0,180,216,.4);
 }
-.ex-timer-start:active{transform:scale(.92)}
+.ex-timer-start:active{transform:scale(.97)}
 .ex-timer-start.running{background:var(--accent2)}
+
+/* Undo snackbar */
+.undo-snackbar{
+  position:fixed;bottom:calc(var(--tab-h) + var(--safe-bottom) + 12px);left:16px;right:16px;z-index:350;
+  background:var(--surface2);border:1px solid var(--border);border-radius:12px;
+  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
+  animation:slideUp .3s;box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.undo-snackbar-text{font-size:14px;color:var(--text)}
+.undo-snackbar-btn{padding:8px 16px;border-radius:8px;font-size:14px;font-weight:700;background:var(--accent);color:var(--bg)}
+.undo-snackbar.hiding{animation:undoFadeOut .3s ease-in forwards}
 .ex-timer-done-badge{font-size:13px;color:var(--success);font-weight:600;margin-top:8px}
 
 /* Progress View */
@@ -372,6 +390,7 @@ input,select{font:inherit;color:var(--text);background:var(--surface2);border:1p
 
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes undoFadeOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(20px)}}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
 @keyframes setComplete{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
@@ -513,7 +532,7 @@ en: {
   'plan.start_solo': 'Start Solo Workout', 'plan.quick_log': 'Log Class', 'plan.at': 'at', 'plan.earlier': 'Earlier this week',
   'workout.start': 'Start Workout', 'workout.end': 'End Workout', 'workout.cancel': 'Cancel',
   'workout.elapsed': 'Elapsed', 'workout.sets': 'sets', 'workout.set': 'Set',
-  'workout.log_set': 'Log Set', 'workout.complete_set': '✓ Done', 'workout.skip': 'Skip',
+  'workout.log_set': 'Log Set', 'workout.complete_set': '✓ Done', 'workout.skip': 'Skip', 'workout.undo': 'Undo', 'workout.set_logged': 'Set logged',
   'workout.complete_block': 'Block Complete!', 'workout.complete_warmup': 'Mark Done',
   'workout.weight': 'Weight', 'workout.reps': 'Reps', 'workout.duration': 'Duration',
   'workout.previous': 'Last time', 'workout.no_active': 'No active workout',
@@ -550,7 +569,7 @@ en: {
   'quicklog.notes': 'Notes (optional)', 'quicklog.save': 'Save',
   'weight.title': 'Log Body Weight', 'weight.placeholder': 'Weight in kg', 'weight.save': 'Save',
   'timer.start': 'Start', 'timer.stop': 'Stop', 'timer.done': '✓ Done!', 'timer.ready': 'Ready',
-  'timer.hold': 'HOLD', 'timer.tap_start': 'Tap to start timer', 'timer.actual': 'Actual',
+  'timer.hold': 'HOLD', 'timer.tap_start': 'Tap to start timer', 'timer.tap_ring_done': 'Tap circle to complete during countdown', 'timer.actual': 'Actual',
   'common.kg': 'kg', 'common.sec': 'sec', 'common.min': 'min', 'common.per_side': '/side',
   'common.cancel': 'Cancel', 'common.save': 'Save', 'common.delete': 'Delete',
   'pr.new': '🏆 New PR!', 'pr.title': 'Personal Record', 'pr.count': 'New PRs',
@@ -599,7 +618,7 @@ no: {
   'plan.start_solo': 'Start solotrening', 'plan.quick_log': 'Logg time', 'plan.at': 'på', 'plan.earlier': 'Tidligere denne uken',
   'workout.start': 'Start trening', 'workout.end': 'Avslutt trening', 'workout.cancel': 'Avbryt',
   'workout.elapsed': 'Tid', 'workout.sets': 'sett', 'workout.set': 'Sett',
-  'workout.log_set': 'Logg sett', 'workout.complete_set': '✓ Ferdig', 'workout.skip': 'Hopp over',
+  'workout.log_set': 'Logg sett', 'workout.complete_set': '✓ Ferdig', 'workout.skip': 'Hopp over', 'workout.undo': 'Angre', 'workout.set_logged': 'Sett logget',
   'workout.complete_block': 'Blokk ferdig!', 'workout.complete_warmup': 'Merk ferdig',
   'workout.weight': 'Vekt', 'workout.reps': 'Reps', 'workout.duration': 'Varighet',
   'workout.previous': 'Sist gang', 'workout.no_active': 'Ingen aktiv trening',
@@ -636,7 +655,7 @@ no: {
   'quicklog.notes': 'Notater (valgfritt)', 'quicklog.save': 'Lagre',
   'weight.title': 'Logg kroppsvekt', 'weight.placeholder': 'Vekt i kg', 'weight.save': 'Lagre',
   'timer.start': 'Start', 'timer.stop': 'Stopp', 'timer.done': '✓ Ferdig!', 'timer.ready': 'Klar',
-  'timer.hold': 'HOLD', 'timer.tap_start': 'Trykk for å starte nedtelling', 'timer.actual': 'Faktisk',
+  'timer.hold': 'HOLD', 'timer.tap_start': 'Trykk for å starte nedtelling', 'timer.tap_ring_done': 'Trykk på sirkelen for å fullføre under nedtelling', 'timer.actual': 'Faktisk',
   'common.kg': 'kg', 'common.sec': 'sek', 'common.min': 'min', 'common.per_side': '/side',
   'common.cancel': 'Avbryt', 'common.save': 'Lagre', 'common.delete': 'Slett',
   'pr.new': '🏆 Ny rekord!', 'pr.title': 'Personlig rekord', 'pr.count': 'Nye rekorder',
@@ -684,22 +703,22 @@ function tName(obj) { return obj?.[state.lang] || obj?.en || ''; }
 // ==================== EXERCISE DATABASE ====================
 const EX = {
   'warmup-cardio': { name: { en: 'Elliptical / Stepper / Bike', no: 'Ellipsemaskin / Stepmaskin / Sykkel' }, instruction: { en: '5–7 min. NO running (achilles injury)', no: '5–7 min. INGEN løping (akillesskade)' }, type: 'duration', defaultDuration: 360, gif: null, formTips: { en: 'Choose elliptical, stepper, or bike. Keep heart rate moderate. Avoid running — achilles protection.', no: 'Velg ellipsemaskin, stepmaskin eller sykkel. Hold moderat puls. Unngå løping — akillesbeskyttelse.' }, muscles: { en: 'Full body cardio', no: 'Helkropps kondisjon' }, alt: null },
-  'warmup-bands': { name: { en: 'Band Pull-aparts + Arm Circles', no: 'Båndstrekk + Armsirkler' }, instruction: { en: '2–3 min mobility work', no: '2–3 min mobilitet' }, type: 'duration', defaultDuration: 150, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Band-pull-apart.gif', formTips: { en: 'Band pull-aparts: hold band at chest height, pull apart squeezing shoulder blades. Arm circles: 15 forward, 15 backward.', no: 'Båndstrekk: hold strikk i brysthøyde, trekk fra hverandre og klem skulderbladene. Armsirkler: 15 fremover, 15 bakover.' }, muscles: { en: 'Shoulders, upper back', no: 'Skuldre, øvre rygg' }, alt: null },
-  'dead-bug': { name: { en: 'Dead Bug', no: 'Død bille' }, instruction: { en: 'Press lower back into floor, slow and controlled', no: 'Press korsryggen mot gulvet, rolig og kontrollert' }, type: 'reps', defaultReps: 8, perSide: true, defaultWeight: 0, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/05/Dead-Bug.gif', formTips: { en: 'Lie on back, arms up, knees at 90°. Extend opposite arm and leg while pressing lower back firmly into the floor. Return slowly. Keep core braced throughout.', no: 'Ligg på rygg, armer opp, knær i 90°. Strekk ut motsatt arm og bein mens du presser korsryggen fast mot gulvet. Gå sakte tilbake. Hold core spent hele tiden.' }, muscles: { en: 'Deep core, transverse abdominis', no: 'Dyp core, tverrgående bukmuskel' }, alt: { id: 'bird-dog', name: { en: 'Bird Dog', no: 'Fugelhund' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2022/07/Bird-Dog.gif', why: { en: 'On all fours — looks natural, easy to do in a quiet corner', no: 'På alle fire — ser naturlig ut, lett å gjøre i et stille hjørne' } } },
-  'pallof-press': { name: { en: 'Pallof Press', no: 'Pallof-press' }, instruction: { en: 'Anti-rotation, hold 2 sec (cable/band)', no: 'Anti-rotasjon, hold 2 sek (kabel/strikk)' }, type: 'reps', defaultReps: 10, perSide: true, defaultWeight: 5, gif: 'https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Half-Kneeling-Pallof-Press.gif', formTips: { en: 'Stand sideways to cable/band anchor. Hold at chest, press straight out, hold 2 sec. Resist rotation — your core does the work. Keep hips square.', no: 'Stå sidelengs mot kabel/strikk-feste. Hold ved brystet, press rett ut, hold 2 sek. Motstå rotasjon — core gjør jobben. Hold hoftene stille.' }, muscles: { en: 'Obliques, deep core (anti-rotation)', no: 'Skråmuskler, dyp core (anti-rotasjon)' }, alt: { id: 'bird-dog-alt', name: { en: 'Dead Bug (no equipment)', no: 'Død bille (uten utstyr)' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/05/Dead-Bug.gif', why: { en: 'No cable needed — just lie on a mat in a corner. Same anti-rotation core work.', no: 'Ingen kabel nødvendig — bare ligg på en matte i et hjørne. Samme anti-rotasjons core-arbeid.' } } },
-  'plank': { name: { en: 'Plank', no: 'Planke' }, instruction: { en: 'Squeeze glutes, don\'t sag', no: 'Klem rumpa, ikke synk' }, type: 'duration', defaultDuration: 30, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/plank.gif', formTips: { en: 'Forearms on floor, body straight like a board. Squeeze glutes, brace core, breathe steadily. Don\'t let hips sag or pike up. Look at floor.', no: 'Underarmer på gulvet, kroppen rett som et brett. Klem rumpa, spenn core, pust jevnt. Ikke la hoftene synke eller stikke opp. Se mot gulvet.' }, muscles: { en: 'Core, shoulders, glutes', no: 'Core, skuldre, rumpe' }, alt: null },
-  'side-plank': { name: { en: 'Side Plank', no: 'Sideplanke' }, instruction: { en: 'Critical for lower back protection', no: 'Viktig for korsryggbeskyttelse' }, type: 'duration', defaultDuration: 20, perSide: true, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/05/Side-Bridge.gif', formTips: { en: 'Forearm on floor, body in a straight line from head to feet. Stack or stagger feet. Lift hips, squeeze obliques. Critical for lower back protection.', no: 'Underarm på gulvet, kroppen i rett linje fra hode til føtter. Stable eller forskyvde føtter. Løft hoftene, klem skråmusklene. Viktig for korsryggbeskyttelse.' }, muscles: { en: 'Obliques, core, hip stabilizers', no: 'Skråmuskler, core, hoftestabilisatorer' }, alt: null },
-  'db-chest-press': { name: { en: 'Dumbbell Chest Press', no: 'Brystpress med manualer' }, instruction: { en: 'Flat or slight incline, 3 sec negative', no: 'Flat eller lett skrå, 3 sek negativ' }, type: 'reps', defaultReps: 10, defaultWeight: 14, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Press-1.gif', formTips: { en: 'Lie on bench, dumbbells at chest level. Press up, lower with 3-sec negative. Feet flat on floor, slight arch in lower back is OK. Don\'t flare elbows too wide.', no: 'Ligg på benk, manualer ved brysthøyde. Press opp, senk med 3 sek negativ. Føtter flatt på gulvet, lett svai i korsryggen er OK. Ikke spre albuene for mye.' }, muscles: { en: 'Chest, front shoulders, triceps', no: 'Bryst, fremre skuldre, triceps' }, alt: { id: 'machine-chest-press', name: { en: 'Chest Press Machine', no: 'Brystpress-maskin' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Chest-Press-Machine.gif', why: { en: 'Machine guides the movement — no balance needed, feels more private and controlled', no: 'Maskinen styrer bevegelsen — ingen balanse nødvendig, føles mer privat og kontrollert' } } },
-  'dips': { name: { en: 'Dips', no: 'Dips' }, instruction: { en: 'Assisted if needed, lean forward for chest', no: 'Assistert om nødvendig, len fremover for bryst' }, type: 'reps', defaultReps: 8, defaultWeight: 0, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Chest-Dips.gif', formTips: { en: 'Use assisted dip machine if needed. Lean slightly forward for chest emphasis. Lower until upper arms parallel to floor, push back up. Control the movement.', no: 'Bruk assistert dip-maskin om nødvendig. Len deg litt fremover for brystfokus. Senk til overarmene er parallelle med gulvet, press opp. Kontroller bevegelsen.' }, muscles: { en: 'Chest, triceps, front shoulders', no: 'Bryst, triceps, fremre skuldre' }, alt: { id: 'bench-dips', name: { en: 'Bench Dips', no: 'Benk-dips' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Bench-Dips.gif', why: { en: 'Just need a bench — less exposed than the dip station, easy to do in any corner', no: 'Trenger bare en benk — mindre eksponert enn dip-stasjonen, lett å gjøre i et hjørne' } } },
-  'db-shoulder-press': { name: { en: 'Dumbbell Shoulder Press', no: 'Skulderpress med manualer' }, instruction: { en: 'Seated, don\'t arch back', no: 'Sittende, ikke svai ryggen' }, type: 'reps', defaultReps: 10, defaultWeight: 10, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Shoulder-Press.gif', formTips: { en: 'Sit on bench with back support. Press dumbbells overhead, lower to ear level. Keep core tight, don\'t arch back. Seated protects your lower back.', no: 'Sitt på benk med ryggstøtte. Press manualer over hodet, senk til ørehøyde. Hold core spent, ikke svai ryggen. Sittende beskytter korsryggen.' }, muscles: { en: 'Shoulders (all heads), triceps', no: 'Skuldre (alle hoder), triceps' }, alt: { id: 'machine-shoulder-press', name: { en: 'Shoulder Press Machine', no: 'Skulderpress-maskin' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/Lever-Shoulder-Press.gif', why: { en: 'Machine does the stabilizing — sit down, push, done. No wobbling dumbbells.', no: 'Maskinen stabiliserer — sett deg, press, ferdig. Ingen vaklende manualer.' } } },
-  'triceps-pushdown': { name: { en: 'Triceps Pushdown', no: 'Triceps nedtrekk' }, instruction: { en: 'Cable, full extension', no: 'Kabel, full strekk' }, type: 'reps', defaultReps: 12, defaultWeight: 15, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Pushdown.gif', formTips: { en: 'Stand at cable machine, grip bar/rope. Pin elbows to sides, extend arms fully down. Squeeze at bottom. Control the return — don\'t let the weight yank your arms up.', no: 'Stå ved kabelmaskinen, grip stang/tau. Fest albuene til sidene, strekk armene helt ned. Klem nederst. Kontroller returen — ikke la vekten rykke armene opp.' }, muscles: { en: 'Triceps', no: 'Triceps' }, alt: { id: 'db-triceps-ext', name: { en: 'Seated DB Triceps Extension', no: 'Sittende triceps-ekstensjon' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Dumbbell-Triceps-Extension.gif', why: { en: 'Just sit with one dumbbell — no cable machine needed, can do anywhere there\'s a bench', no: 'Bare sitt med én manual — ingen kabelmaskin nødvendig, kan gjøres hvor som helst med en benk' } } },
-  'lat-pulldown': { name: { en: 'Lat Pulldown', no: 'Nedtrekk' }, instruction: { en: 'Wide grip, squeeze shoulder blades', no: 'Bredt grep, klem skulderbladene' }, type: 'reps', defaultReps: 10, defaultWeight: 40, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Lat-Pulldown.gif', formTips: { en: 'Sit with thighs locked under pad. Wide overhand grip. Pull bar to upper chest, squeezing shoulder blades together. Lean back slightly. Control the release.', no: 'Sitt med lårene låst under puten. Bredt overhåndsgrep. Trekk stangen til øvre bryst, klem skulderbladene sammen. Len deg litt bakover. Kontroller oppover.' }, muscles: { en: 'Lats, biceps, upper back', no: 'Latissimus, biceps, øvre rygg' }, alt: { id: 'seated-cable-row', name: { en: 'Seated Cable Row', no: 'Sittende kabelroing' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Cable-Row.gif', why: { en: 'Seated position feels more natural and less exposed than pulling overhead', no: 'Sittende posisjon føles mer naturlig og mindre eksponert enn å trekke over hodet' } } },
-  'bicep-curls': { name: { en: 'Bicep Curls', no: 'Bicepscurl' }, instruction: { en: 'Dumbbells, controlled', no: 'Manualer, kontrollert' }, type: 'reps', defaultReps: 12, defaultWeight: 8, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Curl.gif', formTips: { en: 'Stand with dumbbells at sides, palms forward. Curl up keeping elbows pinned to sides. Squeeze at top, lower with control. Don\'t swing the body.', no: 'Stå med manualer langs sidene, håndflatene fremover. Curl opp, hold albuene inntil sidene. Klem øverst, senk kontrollert. Ikke sving kroppen.' }, muscles: { en: 'Biceps, forearms', no: 'Biceps, underarmer' }, alt: { id: 'hammer-curl', name: { en: 'Hammer Curl', no: 'Hammercurl' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Hammer-Curl.gif', why: { en: 'Neutral grip feels more natural and easier on wrists — less "gym bro" look', no: 'Nøytralt grep føles mer naturlig og lettere for håndleddene — mindre «gym bro»-utseende' } } },
-  'assisted-pullups': { name: { en: 'Assisted Pull-ups', no: 'Assisterte pull-ups' }, instruction: { en: 'Reduce assistance over time', no: 'Reduser assistanse over tid' }, type: 'reps', defaultReps: 6, defaultWeight: 0, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/04/Assisted-Pull-up.gif', formTips: { en: 'Use assisted machine — set counterweight to reduce your body weight. Full hang at bottom, pull chin above bar. Reduce assistance over weeks.', no: 'Bruk assistert maskin — sett motvekt for å redusere kroppsvekten. Fullt heng nederst, trekk haken over stangen. Reduser assistanse over uker.' }, muscles: { en: 'Lats, biceps, core', no: 'Latissimus, biceps, core' }, alt: { id: 'close-grip-pulldown', name: { en: 'Close-Grip Lat Pulldown', no: 'Smalt grep nedtrekk' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/06/Close-Grip-Lat-Pulldown.gif', why: { en: 'Same muscles but seated at a machine — no one watching you struggle on the pull-up bar', no: 'Samme muskler men sittende ved en maskin — ingen som ser deg slite på pull-up-stangen' } } },
-  'back-raises': { name: { en: 'Back Raises', no: 'Ryggstrekk' }, instruction: { en: 'Hyperextension bench', no: 'Ryggstrekkbenk' }, type: 'reps', defaultReps: 12, defaultWeight: 0, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/hyperextension.gif', formTips: { en: 'Lock feet, lean over pad at hip level. Lower upper body, then raise to body-straight position. Don\'t hyperextend past straight. Hands behind head or crossed on chest.', no: 'Lås føttene, len deg over puten i hoftehøyde. Senk overkroppen, løft til kroppen er rett. Ikke strekk forbi rett linje. Hender bak hodet eller krysset på brystet.' }, muscles: { en: 'Lower back, glutes, hamstrings', no: 'Korsrygg, rumpe, hamstrings' }, alt: { id: 'superman', name: { en: 'Superman', no: 'Supermann' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman-exercise.gif', why: { en: 'Lie on a mat — no machine needed, just find a quiet spot on the floor', no: 'Ligg på en matte — ingen maskin nødvendig, bare finn et stille sted på gulvet' } } },
-  'bicycle-crunches': { name: { en: 'Bicycle Crunches', no: 'Sykkelcrunch' }, instruction: { en: 'Slow, 2 sec per rep', no: 'Rolig, 2 sek per rep' }, type: 'reps', defaultReps: 15, perSide: true, defaultWeight: 0, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Bicycle-Crunch.gif', formTips: { en: 'Lie on back, hands behind head. Bring opposite elbow to knee, extending other leg. Slow and controlled — 2 seconds per rep. Don\'t pull on neck.', no: 'Ligg på rygg, hender bak hodet. Før motsatt albue mot kne, strekk ut det andre beinet. Rolig og kontrollert — 2 sekunder per rep. Ikke dra i nakken.' }, muscles: { en: 'Obliques, rectus abdominis', no: 'Skråmuskler, rette bukmuskel' }, alt: { id: 'crunch', name: { en: 'Basic Crunch', no: 'Vanlig crunch' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2015/11/Crunch.gif', why: { en: 'Simpler movement, less coordination needed — just curl up and down', no: 'Enklere bevegelse, mindre koordinasjon nødvendig — bare curl opp og ned' } } },
-  'reverse-crunch': { name: { en: 'Reverse Crunch', no: 'Omvendt crunch' }, instruction: { en: 'Lift hips off bench', no: 'Løft hoftene fra benken' }, type: 'reps', defaultReps: 12, defaultWeight: 0, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Reverse-Crunch-1.gif', formTips: { en: 'Lie on back or bench. Knees bent, feet off floor. Curl hips up toward chest, lifting hips off surface. Lower with control. Focus on lower abs.', no: 'Ligg på rygg eller benk. Knær bøyd, føtter fra gulvet. Curl hoftene opp mot brystet, løft hoftene fra underlaget. Senk kontrollert. Fokus på nedre mage.' }, muscles: { en: 'Lower abdominals', no: 'Nedre bukmuskel' }, alt: { id: 'leg-raise', name: { en: 'Lying Leg Raise', no: 'Liggende beinløft' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Lying-Leg-Raise.gif', why: { en: 'Same position, simpler motion — just raise straight legs up and down', no: 'Samme posisjon, enklere bevegelse — bare løft rette bein opp og ned' } } },
-  'plank-shoulder-taps': { name: { en: 'Plank Shoulder Taps', no: 'Planke skuldertapp' }, instruction: { en: 'Keep hips square', no: 'Hold hoftene stille' }, type: 'reps', defaultReps: 10, perSide: true, defaultWeight: 0, gif: 'https://fitnessprogramer.com/wp-content/uploads/2022/08/Shoulder-Tap-Push-up.gif', formTips: { en: 'High plank position on hands. Tap opposite shoulder with one hand while keeping hips square — don\'t rotate. Wide feet helps stability.', no: 'Høy plankeposisjon på hendene. Tapp motsatt skulder med en hånd mens du holder hoftene stille — ikke roter. Brede føtter hjelper stabiliteten.' }, muscles: { en: 'Core (anti-rotation), shoulders', no: 'Core (anti-rotasjon), skuldre' }, alt: { id: 'mountain-climber', name: { en: 'Mountain Climbers', no: 'Fjellklatrere' }, gif: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-climber.gif', why: { en: 'Same plank base but with running motion — more dynamic, looks like you\'re doing cardio', no: 'Samme planke-base men med løpebevegelse — mer dynamisk, ser ut som du gjør kondisjon' } } },
+  'warmup-bands': { name: { en: 'Band Pull-aparts + Arm Circles', no: 'Båndstrekk + Armsirkler' }, instruction: { en: '2–3 min mobility work', no: '2–3 min mobilitet' }, type: 'duration', defaultDuration: 150, gif: null, video: 'O-PtR_JMdnc', formTips: { en: 'Band pull-aparts: hold band at chest height, pull apart squeezing shoulder blades. Arm circles: 15 forward, 15 backward. Ask a trainer for help with bands if unsure.', no: 'Båndstrekk: hold strikk i brysthøyde, trekk fra hverandre og klem skulderbladene. Armsirkler: 15 fremover, 15 bakover. Spør en trener om hjelp med strikken om du er usikker.' }, muscles: { en: 'Shoulders, upper back', no: 'Skuldre, øvre rygg' }, alt: null },
+  'dead-bug': { name: { en: 'Dead Bug', no: 'Død bille' }, instruction: { en: 'Press lower back into floor, slow and controlled', no: 'Press korsryggen mot gulvet, rolig og kontrollert' }, type: 'reps', defaultReps: 8, perSide: true, defaultWeight: 0, gif: null, video: '31MyQr0zSwU', videoCredit: 'prehabtrening.no', formTips: { en: 'Lie on back, arms up, knees at 90°. Extend opposite arm and leg while pressing lower back firmly into the floor. Return slowly. Keep core braced throughout.', no: 'Ligg på rygg, armer opp, knær i 90°. Strekk ut motsatt arm og bein mens du presser korsryggen fast mot gulvet. Gå sakte tilbake. Hold core spent hele tiden.' }, muscles: { en: 'Deep core, transverse abdominis', no: 'Dyp core, tverrgående bukmuskel' }, alt: { id: 'bird-dog', name: { en: 'Bird Dog', no: 'Fugelhund' }, gif: null, why: { en: 'On all fours — looks natural, easy to do in a quiet corner', no: 'På alle fire — ser naturlig ut, lett å gjøre i et stille hjørne' } } },
+  'pallof-press': { name: { en: 'Pallof Press', no: 'Pallof-press' }, instruction: { en: 'Anti-rotation, hold 2 sec (cable/band)', no: 'Anti-rotasjon, hold 2 sek (kabel/strikk)' }, type: 'reps', defaultReps: 10, perSide: true, defaultWeight: 5, gif: null, video: 'aZVHmHLzDc8', videoCredit: 'prehabtrening.no', formTips: { en: 'Stand sideways to cable/band anchor. Hold at chest, press straight out, hold 2 sec. Resist rotation — your core does the work. Keep hips square.', no: 'Stå sidelengs mot kabel/strikk-feste. Hold ved brystet, press rett ut, hold 2 sek. Motstå rotasjon — core gjør jobben. Hold hoftene stille.' }, muscles: { en: 'Obliques, deep core (anti-rotation)', no: 'Skråmuskler, dyp core (anti-rotasjon)' }, alt: { id: 'bird-dog-alt', name: { en: 'Dead Bug (no equipment)', no: 'Død bille (uten utstyr)' }, gif: null, why: { en: 'No cable needed — just lie on a mat in a corner. Same anti-rotation core work.', no: 'Ingen kabel nødvendig — bare ligg på en matte i et hjørne. Samme anti-rotasjons core-arbeid.' } } },
+  'plank': { name: { en: 'Plank', no: 'Planke' }, instruction: { en: 'Squeeze glutes, don\'t sag', no: 'Klem rumpa, ikke synk' }, type: 'duration', defaultDuration: 30, gif: null, video: 'fwAn4aFgnuw', videoCredit: 'prehabtrening.no', formTips: { en: 'Forearms on floor, body straight like a board. Squeeze glutes, brace core, breathe steadily. Don\'t let hips sag or pike up. Look at floor.', no: 'Underarmer på gulvet, kroppen rett som et brett. Klem rumpa, spenn core, pust jevnt. Ikke la hoftene synke eller stikke opp. Se mot gulvet.' }, muscles: { en: 'Core, shoulders, glutes', no: 'Core, skuldre, rumpe' }, alt: null },
+  'side-plank': { name: { en: 'Side Plank', no: 'Sideplanke' }, instruction: { en: 'Critical for lower back protection', no: 'Viktig for korsryggbeskyttelse' }, type: 'duration', defaultDuration: 20, perSide: true, gif: null, video: 'xAiDebnSczA', videoCredit: 'prehabtrening.no', formTips: { en: 'Forearm on floor, body in a straight line from head to feet. Stack or stagger feet. Lift hips, squeeze obliques. Critical for lower back protection.', no: 'Underarm på gulvet, kroppen i rett linje fra hode til føtter. Stable eller forskyvde føtter. Løft hoftene, klem skråmusklene. Viktig for korsryggbeskyttelse.' }, muscles: { en: 'Obliques, core, hip stabilizers', no: 'Skråmuskler, core, hoftestabilisatorer' }, alt: null },
+  'db-chest-press': { name: { en: 'Dumbbell Chest Press', no: 'Brystpress med manualer' }, instruction: { en: 'Flat or slight incline, 3 sec negative', no: 'Flat eller lett skrå, 3 sek negativ' }, type: 'reps', defaultReps: 10, defaultWeight: 14, gif: null, video: 'VmB1G1K7v94', formTips: { en: 'Lie on bench, dumbbells at chest level. Press up, lower with 3-sec negative. Feet flat on floor, slight arch in lower back is OK. Don\'t flare elbows too wide. Gym has 1–30 kg dumbbells.', no: 'Ligg på benk, manualer ved brysthøyde. Press opp, senk med 3 sek negativ. Føtter flatt på gulvet, lett svai i korsryggen er OK. Ikke spre albuene for mye. Gymmet har 1–30 kg manualer.' }, muscles: { en: 'Chest, front shoulders, triceps', no: 'Bryst, fremre skuldre, triceps' }, alt: { id: 'machine-chest-press', name: { en: 'Chest Press Machine', no: 'Brystpress-maskin' }, gif: null, why: { en: 'Machine guides the movement — no balance needed, feels more private and controlled', no: 'Maskinen styrer bevegelsen — ingen balanse nødvendig, føles mer privat og kontrollert' } } },
+  'dips': { name: { en: 'Dips', no: 'Dips' }, instruction: { en: 'Assisted if needed, lean forward for chest', no: 'Assistert om nødvendig, len fremover for bryst' }, type: 'reps', defaultReps: 8, defaultWeight: 0, gif: null, formTips: { en: 'Use assisted dip machine if needed. Lean slightly forward for chest emphasis. Lower until upper arms parallel to floor, push back up. Control the movement.', no: 'Bruk assistert dip-maskin om nødvendig. Len deg litt fremover for brystfokus. Senk til overarmene er parallelle med gulvet, press opp. Kontroller bevegelsen.' }, muscles: { en: 'Chest, triceps, front shoulders', no: 'Bryst, triceps, fremre skuldre' }, alt: null },
+  'db-shoulder-press': { name: { en: 'Dumbbell Shoulder Press', no: 'Skulderpress med manualer' }, instruction: { en: 'Seated, don\'t arch back', no: 'Sittende, ikke svai ryggen' }, type: 'reps', defaultReps: 10, defaultWeight: 10, gif: null, formTips: { en: 'Sit on bench with back support. Press dumbbells overhead, lower to ear level. Keep core tight, don\'t arch back. Seated protects your lower back.', no: 'Sitt på benk med ryggstøtte. Press manualer over hodet, senk til ørehøyde. Hold core spent, ikke svai ryggen. Sittende beskytter korsryggen.' }, muscles: { en: 'Shoulders (all heads), triceps', no: 'Skuldre (alle hoder), triceps' }, alt: null },
+  'triceps-pushdown': { name: { en: 'Triceps Pushdown', no: 'Triceps nedtrekk' }, instruction: { en: 'Cable, full extension', no: 'Kabel, full strekk' }, type: 'reps', defaultReps: 12, defaultWeight: 15, gif: null, video: 'tSJ4fb5cXVo', videoCredit: 'prehabtrening.no', formTips: { en: 'Stand at cable machine, grip bar/rope. Pin elbows to sides, extend arms fully down. Squeeze at bottom. Control the return — don\'t let the weight yank your arms up.', no: 'Stå ved kabelmaskinen, grip stang/tau. Fest albuene til sidene, strekk armene helt ned. Klem nederst. Kontroller returen — ikke la vekten rykke armene opp.' }, muscles: { en: 'Triceps', no: 'Triceps' }, alt: { id: 'db-triceps-ext', name: { en: 'Seated DB Triceps Extension', no: 'Sittende triceps-ekstensjon' }, gif: null, why: { en: 'Just sit with one dumbbell — no cable machine needed, can do anywhere there\'s a bench', no: 'Bare sitt med én manual — ingen kabelmaskin nødvendig, kan gjøres hvor som helst med en benk' } } },
+  'lat-pulldown': { name: { en: 'Lat Pulldown', no: 'Nedtrekk' }, instruction: { en: 'Wide grip, squeeze shoulder blades', no: 'Bredt grep, klem skulderbladene' }, type: 'reps', defaultReps: 10, defaultWeight: 40, gif: null, video: 'A4KwdbrRXSw', videoCredit: 'prehabtrening.no', formTips: { en: 'Sit with thighs locked under pad. Wide overhand grip. Pull bar to upper chest, squeezing shoulder blades together. Lean back slightly. Control the release.', no: 'Sitt med lårene låst under puten. Bredt overhåndsgrep. Trekk stangen til øvre bryst, klem skulderbladene sammen. Len deg litt bakover. Kontroller oppover.' }, muscles: { en: 'Lats, biceps, upper back', no: 'Latissimus, biceps, øvre rygg' }, alt: { id: 'seated-cable-row', name: { en: 'Seated Cable Row', no: 'Sittende kabelroing' }, gif: null, why: { en: 'Seated position feels more natural and less exposed than pulling overhead', no: 'Sittende posisjon føles mer naturlig og mindre eksponert enn å trekke over hodet' } } },
+  'bicep-curls': { name: { en: 'Bicep Curls', no: 'Bicepscurl' }, instruction: { en: 'Barbell or dumbbells, controlled', no: 'Stang eller manualer, kontrollert' }, type: 'reps', defaultReps: 12, defaultWeight: 10, gif: null, video: 'ykJmrZ5v0Oo', formTips: { en: 'Can use barbell (stang) or dumbbells. With barbell: weight = total bar weight. Curl up keeping elbows pinned to sides. Squeeze at top, lower with control. Don\'t swing the body.', no: 'Kan bruke stang eller manualer. Med stang: vekt = total stangvekt. Curl opp, hold albuene inntil sidene. Klem øverst, senk kontrollert. Ikke sving kroppen.' }, muscles: { en: 'Biceps, forearms', no: 'Biceps, underarmer' }, alt: { id: 'hammer-curl', name: { en: 'Hammer Curl', no: 'Hammercurl' }, gif: null, why: { en: 'Neutral grip feels more natural and easier on wrists — less "gym bro" look', no: 'Nøytralt grep føles mer naturlig og lettere for håndleddene — mindre «gym bro»-utseende' } } },
+  'assisted-pullups': { name: { en: 'Assisted Pull-ups', no: 'Assisterte pull-ups' }, instruction: { en: 'Reduce assistance over time', no: 'Reduser assistanse over tid' }, type: 'reps', defaultReps: 6, defaultWeight: 0, gif: null, formTips: { en: 'Use assisted machine — set counterweight to reduce your body weight. Full hang at bottom, pull chin above bar. Reduce assistance over weeks.', no: 'Bruk assistert maskin — sett motvekt for å redusere kroppsvekten. Fullt heng nederst, trekk haken over stangen. Reduser assistanse over uker.' }, muscles: { en: 'Lats, biceps, core', no: 'Latissimus, biceps, core' }, alt: null },
+  'back-raises': { name: { en: 'Back Raises', no: 'Ryggstrekk' }, instruction: { en: 'Hyperextension bench', no: 'Ryggstrekkbenk' }, type: 'reps', defaultReps: 12, defaultWeight: 0, gif: null, formTips: { en: 'Lock feet, lean over pad at hip level. Lower upper body, then raise to body-straight position. Don\'t hyperextend past straight. Hands behind head or crossed on chest.', no: 'Lås føttene, len deg over puten i hoftehøyde. Senk overkroppen, løft til kroppen er rett. Ikke strekk forbi rett linje. Hender bak hodet eller krysset på brystet.' }, muscles: { en: 'Lower back, glutes, hamstrings', no: 'Korsrygg, rumpe, hamstrings' }, alt: null },
+  'bicycle-crunches': { name: { en: 'Bicycle Crunches', no: 'Sykkelcrunch' }, instruction: { en: 'Slow, 2 sec per rep', no: 'Rolig, 2 sek per rep' }, type: 'reps', defaultReps: 15, perSide: true, defaultWeight: 0, gif: null, video: 'cbKIDZ_XgjA', formTips: { en: 'Lie on back, hands behind head. Bring opposite elbow to knee, extending other leg. Slow and controlled — 2 seconds per rep. Don\'t pull on neck.', no: 'Ligg på rygg, hender bak hodet. Før motsatt albue mot kne, strekk ut det andre beinet. Rolig og kontrollert — 2 sekunder per rep. Ikke dra i nakken.' }, muscles: { en: 'Obliques, rectus abdominis', no: 'Skråmuskler, rette bukmuskel' }, alt: { id: 'crunch', name: { en: 'Basic Crunch', no: 'Vanlig crunch' }, gif: null, why: { en: 'Simpler movement, less coordination needed — just curl up and down', no: 'Enklere bevegelse, mindre koordinasjon nødvendig — bare curl opp og ned' } } },
+  'reverse-crunch': { name: { en: 'Reverse Crunch', no: 'Omvendt crunch' }, instruction: { en: 'Lift hips off bench', no: 'Løft hoftene fra benken' }, type: 'reps', defaultReps: 12, defaultWeight: 0, gif: null, formTips: { en: 'Lie on back or bench. Knees bent, feet off floor. Curl hips up toward chest, lifting hips off surface. Lower with control. Focus on lower abs.', no: 'Ligg på rygg eller benk. Knær bøyd, føtter fra gulvet. Curl hoftene opp mot brystet, løft hoftene fra underlaget. Senk kontrollert. Fokus på nedre mage.' }, muscles: { en: 'Lower abdominals', no: 'Nedre bukmuskel' }, alt: null },
+  'plank-shoulder-taps': { name: { en: 'Plank Shoulder Taps', no: 'Planke skuldertapp' }, instruction: { en: 'Keep hips square', no: 'Hold hoftene stille' }, type: 'reps', defaultReps: 10, perSide: true, defaultWeight: 0, gif: null, video: 'LEFtGLSZsYc', formTips: { en: 'High plank position on hands. Tap opposite shoulder with one hand while keeping hips square — don\'t rotate. Wide feet helps stability.', no: 'Høy plankeposisjon på hendene. Tapp motsatt skulder med en hånd mens du holder hoftene stille — ikke roter. Brede føtter hjelper stabiliteten.' }, muscles: { en: 'Core (anti-rotation), shoulders', no: 'Core (anti-rotasjon), skuldre' }, alt: { id: 'mountain-climber', name: { en: 'Mountain Climbers', no: 'Fjellklatrere' }, gif: null, why: { en: 'Same plank base but with running motion — more dynamic, looks like you\'re doing cardio', no: 'Samme planke-base men med løpebevegelse — mer dynamisk, ser ut som du gjør kondisjon' } } },
 };
 
 
@@ -785,19 +804,17 @@ const SOLO_PROGRAM = [
     ]
   },
   {
-    id: 'push', name: { en: 'Block 2 — Push', no: 'Blokk 2 — Push' }, duration: 12, type: 'superset', emoji: '💥',
-    note: { en: 'Superset pairs, 60 sec rest between rounds', no: 'Supersett-par, 60 sek pause mellom runder' },
+    id: 'push', name: { en: 'Block 2 — Push', no: 'Blokk 2 — Push' }, duration: 10, type: 'superset', emoji: '💥',
+    note: { en: 'Superset pair, 60 sec rest between rounds', no: 'Supersett-par, 60 sek pause mellom runder' },
     pairs: [
-      { a: { exId: 'db-chest-press', num: '3a', sets: 3 }, b: { exId: 'dips', num: '3b', sets: 3 } },
-      { a: { exId: 'db-shoulder-press', num: '4a', sets: 3 }, b: { exId: 'triceps-pushdown', num: '4b', sets: 3 } },
+      { a: { exId: 'db-chest-press', num: '3a', sets: 3 }, b: { exId: 'triceps-pushdown', num: '3b', sets: 3 } },
     ]
   },
   {
-    id: 'pull', name: { en: 'Block 3 — Pull', no: 'Blokk 3 — Pull' }, duration: 12, type: 'superset', emoji: '🏗️',
-    note: { en: 'Superset pairs, 60 sec rest between rounds', no: 'Supersett-par, 60 sek pause mellom runder' },
+    id: 'pull', name: { en: 'Block 3 — Pull', no: 'Blokk 3 — Pull' }, duration: 10, type: 'superset', emoji: '🏗️',
+    note: { en: 'Superset pair, 60 sec rest between rounds', no: 'Supersett-par, 60 sek pause mellom runder' },
     pairs: [
-      { a: { exId: 'lat-pulldown', num: '5a', sets: 3 }, b: { exId: 'bicep-curls', num: '5b', sets: 3 } },
-      { a: { exId: 'assisted-pullups', num: '6a', sets: 3 }, b: { exId: 'back-raises', num: '6b', sets: 3 } },
+      { a: { exId: 'lat-pulldown', num: '4a', sets: 3 }, b: { exId: 'bicep-curls', num: '4b', sets: 3 } },
     ]
   },
   {
@@ -805,9 +822,8 @@ const SOLO_PROGRAM = [
     note: { en: 'No rest between exercises, 30 sec between rounds. 2 rounds.', no: 'Ingen pause mellom øvelser, 30 sek mellom runder. 2 runder.' },
     rounds: 2, restBetweenRounds: 30,
     exercises: [
-      { exId: 'bicycle-crunches', num: '7a', sets: 2 },
-      { exId: 'reverse-crunch', num: '7b', sets: 2 },
-      { exId: 'plank-shoulder-taps', num: '7c', sets: 2 },
+      { exId: 'bicycle-crunches', num: '5a', sets: 2 },
+      { exId: 'plank-shoulder-taps', num: '5b', sets: 2 },
     ]
   },
 ];
@@ -863,9 +879,8 @@ const WEEK = [
 const GOALS = [
   { id: 'plank', name: { en: 'Plank', no: 'Planke' }, unit: 'sec', current: 30, target: 60 },
   { id: 'side-plank', name: { en: 'Side Plank', no: 'Sideplanke' }, unit: 'sec/side', current: 15, target: 30 },
-  { id: 'assisted-pullups', name: { en: 'Assisted Pull-ups', no: 'Assisterte pull-ups' }, unit: 'reps', current: 6, target: 10, note: { en: 'heavy assist → light assist', no: 'tung assistanse → lett assistanse' } },
-  { id: 'dead-bug', name: { en: 'Dead Bug', no: 'Død bille' }, unit: 'reps/side', current: 6, target: 12 },
-  { id: 'dips', name: { en: 'Dips', no: 'Dips' }, unit: 'reps', current: 8, target: 12, note: { en: 'assisted → bodyweight', no: 'assistert → kroppsvekt' } },
+  { id: 'pullups', name: { en: 'Unassisted Pull-ups', no: 'Pull-ups uten assistanse' }, unit: 'reps', current: 2, target: 8, note: { en: 'Long-term goal — currently 2 reps', no: 'Langsiktig mål — nå 2 reps' } },
+  { id: 'dead-bug', name: { en: 'Dead Bug', no: 'Død bille' }, unit: 'reps/side', current: 8, target: 12 },
 ];
 
 // ==================== DATA STORE ====================
@@ -1269,6 +1284,7 @@ function startSoloWorkout() {
   state.activeWorkout = {
     id: uuid(), type: 'solo', startedAt: Date.now(), blocks,
   };
+  document.body.classList.add('workout-active');
   requestWakeLock();
   state.elapsedInterval = setInterval(updateElapsed, 1000);
   switchTab('workout');
@@ -1335,7 +1351,7 @@ function openSetLogger(blockId, exId, setIndex) {
           <button class="logger-btn" onclick="adjustLogger('duration', 5)">+</button>
         </div>
         <div class="ex-timer-wrap">
-          <div class="ex-timer-ring" id="exTimerRing">
+          <div class="ex-timer-ring" id="exTimerRing" onclick="if(state.exTimer.running)stopExTimer(true)">
             <svg viewBox="0 0 160 160">
               <circle class="bg" cx="80" cy="80" r="72"/>
               <circle class="fg" id="exTimerFg" cx="80" cy="80" r="72"
@@ -1346,13 +1362,13 @@ function openSetLogger(blockId, exId, setIndex) {
               <span class="ex-timer-state" id="exTimerState">${t('timer.ready')}</span>
             </div>
           </div>
-          <button class="ex-timer-start" id="exTimerBtn" onclick="toggleExTimer()">▶</button>
-          <div style="font-size:12px;color:var(--text3);margin-top:6px" id="exTimerHint">${t('timer.tap_start')}</div>
+          <button class="ex-timer-start" id="exTimerBtn" onclick="toggleExTimer()">▶ ${t('timer.tap_start')}</button>
+          <div style="font-size:12px;color:var(--text3);margin-top:6px" id="exTimerHint">${t('timer.tap_ring_done')}</div>
         </div>
       `}
       <div style="display:flex;gap:10px;margin-top:20px">
         <button class="btn btn-secondary btn-block" onclick="state.exTimer.running=false;document.getElementById('setLoggerOverlay').remove()">${t('common.cancel')}</button>
-        <button class="btn btn-success btn-block" onclick="confirmLogSet('${blockId}','${exId}',${setIndex},${isTimeBased})">${t('workout.complete_set')}</button>
+        <button class="btn btn-success btn-block" id="setLoggerDoneBtn" onclick="confirmLogSet('${blockId}','${exId}',${setIndex},${isTimeBased})">${t('workout.complete_set')}</button>
       </div>
     </div>
   `;
@@ -1385,11 +1401,14 @@ function startExTimer() {
   if (dur <= 0) return;
   state.exTimer = { endsAt: Date.now() + dur * 1000, duration: dur, startedAt: Date.now(), running: true };
   const btn = $('exTimerBtn');
-  if (btn) { btn.textContent = '■'; btn.classList.add('running'); }
+  if (btn) { btn.innerHTML = '■ ' + t('timer.hold'); btn.classList.add('running'); }
   const hint = $('exTimerHint');
-  if (hint) hint.textContent = t('timer.hold');
+  if (hint) hint.textContent = t('timer.tap_ring_done');
   const stateEl = $('exTimerState');
   if (stateEl) stateEl.textContent = t('timer.hold');
+  // Hide Done button to prevent accidental taps
+  const doneBtn = $('setLoggerDoneBtn');
+  if (doneBtn) doneBtn.style.display = 'none';
   // Disable +/- while running
   document.querySelectorAll('#setLoggerOverlay .logger-btn').forEach(b => { b.disabled = true; b.style.opacity = '0.3'; });
   requestAnimationFrame(tickExTimer);
@@ -1424,7 +1443,16 @@ function stopExTimer(completed) {
   if (durEl) durEl.textContent = elapsed;
 
   const btn = $('exTimerBtn');
-  if (btn) { btn.textContent = '▶'; btn.classList.remove('running'); }
+  if (btn) { btn.innerHTML = '▶ ' + t('timer.tap_start'); btn.classList.remove('running'); }
+
+  // Show Done button again
+  const doneBtn = $('setLoggerDoneBtn');
+  if (doneBtn) doneBtn.style.display = '';
+
+  const ringWrap = $('exTimerRing');
+  const disp = $('exTimerDisplay');
+  const stateEl = $('exTimerState');
+  const hint = $('exTimerHint');
 
   const ringWrap = $('exTimerRing');
   const disp = $('exTimerDisplay');
@@ -1448,6 +1476,18 @@ function stopExTimer(completed) {
 
   // Re-enable +/- buttons
   document.querySelectorAll('#setLoggerOverlay .logger-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
+}
+
+function showUndoSnackbar(message, undoFn) {
+  document.getElementById('undoSnackbar')?.remove();
+  const el = document.createElement('div');
+  el.id = 'undoSnackbar';
+  el.className = 'undo-snackbar';
+  el.innerHTML = `<span class="undo-snackbar-text">${message}</span><button class="undo-snackbar-btn" id="undoSnackbarBtn">${t('workout.undo')}</button>`;
+  document.body.appendChild(el);
+  const btn = document.getElementById('undoSnackbarBtn');
+  btn.onclick = () => { undoFn(); el.remove(); };
+  setTimeout(() => { if (document.getElementById('undoSnackbar')) { el.classList.add('hiding'); setTimeout(() => el.remove(), 300); } }, 5000);
 }
 
 function confirmLogSet(blockId, exId, setIndex, isTimeBased) {
@@ -1474,6 +1514,12 @@ function confirmLogSet(blockId, exId, setIndex, isTimeBased) {
 
   document.getElementById('setLoggerOverlay')?.remove();
   vibrate([50, 30, 50]);
+
+  // Show undo snackbar
+  showUndoSnackbar(t('workout.set_logged'), () => {
+    ex.loggedSets[setIndex] = { completed: false, weight: 0, reps: 0, duration: 0 };
+    renderContent();
+  });
 
   // Determine if we should show rest timer
   const exDef = EX[exId];
@@ -1588,6 +1634,7 @@ function showCelebration() {
 function closeCelebration() {
   document.getElementById('celebrationOverlay')?.remove();
   state.activeWorkout = null;
+  document.body.classList.remove('workout-active');
   releaseWakeLock();
   switchTab('progress');
 }
@@ -2174,9 +2221,24 @@ function showExHistory(exId) {
   overlay.id = 'exHistoryOverlay';
   overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
 
-  // GIF section
+  // Video/GIF section
   let gifHtml = '';
-  if (exDef.gif) {
+  if (exDef.video) {
+    const thumbUrl = `https://img.youtube.com/vi/${exDef.video}/mqdefault.jpg`;
+    const videoUrl = `https://www.youtube.com/watch?v=${exDef.video}`;
+    const credit = exDef.videoCredit ? `<div style="font-size:11px;color:var(--text3);text-align:center;margin-top:4px">📹 ${exDef.videoCredit}</div>` : '';
+    gifHtml = `<div class="exercise-gif-wrap">
+      <a href="${videoUrl}" target="_blank" rel="noopener" style="display:block;position:relative;text-decoration:none">
+        <img class="exercise-gif" src="${thumbUrl}" alt="${tName(exDef.name)}" style="display:block">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+          <div style="width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center">
+            <span style="color:#fff;font-size:20px;margin-left:3px">▶</span>
+          </div>
+        </div>
+      </a>
+      ${credit}
+    </div>`;
+  } else if (exDef.gif) {
     const gifId = 'exgif-' + exId;
     gifHtml = `<div class="exercise-gif-wrap">
       <div class="exercise-gif-loading" id="${gifId}-loading"><div class="spinner"></div> ${t('exercise.loading')}</div>
@@ -2220,16 +2282,33 @@ function showExHistory(exId) {
   let altHtml = '';
   if (exDef.alt) {
     const alt = exDef.alt;
-    const altGifId = 'altgif-' + alt.id;
-    altHtml = `<div class="alt-exercise">
-      <div class="alt-exercise-header">${t('exercise.alternative')}</div>
-      <div class="alt-exercise-name">${tName(alt.name)}</div>
-      ${alt.gif ? `<div style="text-align:center;position:relative;min-height:60px">
+    let altMediaHtml = '';
+    if (alt.video) {
+      const altThumb = `https://img.youtube.com/vi/${alt.video}/mqdefault.jpg`;
+      const altVideoUrl = `https://www.youtube.com/watch?v=${alt.video}`;
+      altMediaHtml = `<div style="text-align:center;position:relative">
+        <a href="${altVideoUrl}" target="_blank" rel="noopener" style="display:block;position:relative;text-decoration:none">
+          <img class="alt-exercise-gif" src="${altThumb}" alt="${tName(alt.name)}" style="display:block">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center">
+              <span style="color:#fff;font-size:14px;margin-left:2px">▶</span>
+            </div>
+          </div>
+        </a>
+      </div>`;
+    } else if (alt.gif) {
+      const altGifId = 'altgif-' + alt.id;
+      altMediaHtml = `<div style="text-align:center;position:relative;min-height:60px">
         <div class="exercise-gif-loading" id="${altGifId}-loading" style="height:80px"><div class="spinner"></div></div>
         <img class="alt-exercise-gif" id="${altGifId}" src="${alt.gif}" loading="lazy" alt="${tName(alt.name)}" style="display:none"
           onload="this.style.display='block';document.getElementById('${altGifId}-loading').style.display='none'"
           onerror="this.style.display='none';document.getElementById('${altGifId}-loading').innerHTML='🏋️';document.getElementById('${altGifId}-loading').className='exercise-gif-placeholder'">
-      </div>` : ''}
+      </div>`;
+    }
+    altHtml = `<div class="alt-exercise">
+      <div class="alt-exercise-header">${t('exercise.alternative')}</div>
+      <div class="alt-exercise-name">${tName(alt.name)}</div>
+      ${altMediaHtml}
       <div class="alt-exercise-why"><strong>${t('exercise.altWhy')}</strong> ${tName(alt.why)}</div>
     </div>`;
   }
