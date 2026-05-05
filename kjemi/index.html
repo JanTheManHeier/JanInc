@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Kjemi 2 – Pugging</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚗️</text></svg>">
+</head>
+<body>
+    <div id="app">
+        <!-- Startskjerm -->
+        <div id="view-home" class="view active">
+            <header>
+                <h1>⚗️ Kjemi 2</h1>
+                <p class="subtitle">Eksamen REA3046 – 12. mai 2026</p>
+            </header>
+            <div class="chapter-select">
+                <h2>Velg kapittel</h2>
+                <div id="chapter-list"></div>
+            </div>
+        </div>
+
+        <!-- Modus-valg -->
+        <div id="view-mode" class="view">
+            <header>
+                <button class="btn-back" onclick="app.showHome()">← Tilbake</button>
+                <h1 id="chapter-title"></h1>
+            </header>
+            <div class="mode-grid">
+                <button class="mode-card" onclick="app.startMode('quiz')">
+                    <span class="mode-icon">📝</span>
+                    <span class="mode-name">Flervalg</span>
+                    <span class="mode-desc">Velg riktig svar</span>
+                </button>
+                <button class="mode-card" onclick="app.startMode('flashcards')">
+                    <span class="mode-icon">🃏</span>
+                    <span class="mode-name">Flashcards</span>
+                    <span class="mode-desc">Flip og lær</span>
+                </button>
+                <button class="mode-card" onclick="app.startMode('truefalse')">
+                    <span class="mode-icon">✅</span>
+                    <span class="mode-name">Sant/Usant</span>
+                    <span class="mode-desc">Vurder påstander</span>
+                </button>
+                <button class="mode-card" onclick="app.startMode('review')">
+                    <span class="mode-icon">🔄</span>
+                    <span class="mode-name">Øv på feil</span>
+                    <span class="mode-desc" id="review-count">Ingen feil ennå</span>
+                </button>
+            </div>
+            <div class="round-select">
+                <label>Antall per runde:</label>
+                <div class="round-options">
+                    <button class="round-btn active" onclick="app.setRoundSize(10)">10</button>
+                    <button class="round-btn" onclick="app.setRoundSize(15)">15</button>
+                    <button class="round-btn" onclick="app.setRoundSize(0)">Alle</button>
+                </div>
+            </div>
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="stat-value" id="stat-correct">0</span>
+                    <span class="stat-label">Riktige</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="stat-wrong">0</span>
+                    <span class="stat-label">Feil</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="stat-streak">0</span>
+                    <span class="stat-label">Streak</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flervalg-quiz -->
+        <div id="view-quiz" class="view">
+            <header>
+                <button class="btn-back" onclick="app.showModeSelect()">← Tilbake</button>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="quiz-progress"></div>
+                </div>
+                <span class="progress-text" id="quiz-progress-text"></span>
+            </header>
+            <div class="quiz-content">
+                <div class="question-card">
+                    <p class="question-text" id="quiz-question"></p>
+                </div>
+                <div class="options-list" id="quiz-options"></div>
+                <div class="feedback-card hidden" id="quiz-feedback">
+                    <p class="feedback-text" id="quiz-feedback-text"></p>
+                    <button class="btn-next" id="quiz-next" onclick="app.nextQuestion()">Neste →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flashcards -->
+        <div id="view-flashcards" class="view">
+            <header>
+                <button class="btn-back" onclick="app.showModeSelect()">← Tilbake</button>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="flash-progress"></div>
+                </div>
+                <span class="progress-text" id="flash-progress-text"></span>
+            </header>
+            <div class="flashcard-content">
+                <div class="flashcard" id="flashcard" onclick="app.flipCard()">
+                    <div class="flashcard-inner" id="flashcard-inner">
+                        <div class="flashcard-front">
+                            <p id="flash-front"></p>
+                        </div>
+                        <div class="flashcard-back">
+                            <p id="flash-back"></p>
+                        </div>
+                    </div>
+                </div>
+                <p class="flip-hint" id="flip-hint">Trykk for å snu</p>
+                <div class="flashcard-actions hidden" id="flash-actions">
+                    <button class="btn-knew" onclick="app.flashcardResult(true)">✓ Kunne</button>
+                    <button class="btn-learn" onclick="app.flashcardResult(false)">✗ Øv mer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sant/Usant -->
+        <div id="view-truefalse" class="view">
+            <header>
+                <button class="btn-back" onclick="app.showModeSelect()">← Tilbake</button>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="tf-progress"></div>
+                </div>
+                <span class="progress-text" id="tf-progress-text"></span>
+            </header>
+            <div class="tf-content">
+                <div class="question-card">
+                    <p class="question-text" id="tf-statement"></p>
+                </div>
+                <div class="tf-buttons" id="tf-buttons">
+                    <button class="btn-true" onclick="app.answerTF(true)">Sant</button>
+                    <button class="btn-false" onclick="app.answerTF(false)">Usant</button>
+                </div>
+                <div class="feedback-card hidden" id="tf-feedback">
+                    <p class="feedback-text" id="tf-feedback-text"></p>
+                    <button class="btn-next" onclick="app.nextTF()">Neste →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultater -->
+        <div id="view-results" class="view">
+            <header>
+                <h1>Resultater</h1>
+            </header>
+            <div class="results-content">
+                <div class="results-circle">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        <path class="circle" id="results-circle-path" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                    </svg>
+                    <span class="results-percent" id="results-percent">0%</span>
+                </div>
+                <p class="results-summary" id="results-summary"></p>
+                <div class="results-actions">
+                    <button class="btn-primary" onclick="app.showModeSelect()">Velg ny modus</button>
+                    <button class="btn-secondary" onclick="app.restartMode()">Prøv igjen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data/syrer-og-baser.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
