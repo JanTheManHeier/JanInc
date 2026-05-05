@@ -4,6 +4,23 @@
 (function() {
   'use strict';
 
+  // Usage tracking
+  const API_BASE = '/api';
+  let sessionStartTime = Date.now();
+
+  function trackEvent(event, data = {}) {
+    try {
+      const payload = { event, ...data };
+      navigator.sendBeacon(
+        `${API_BASE}/kjemi-usage`,
+        new Blob([JSON.stringify(payload)], { type: 'application/json' })
+      );
+    } catch (e) { /* silent fail */ }
+  }
+
+  // Track session start
+  trackEvent('session_start');
+
   // Registrerte kapitler
   const chapters = [];
 
@@ -13,6 +30,13 @@
 
   // Registrer tilgjengelige kapitler
   if (window.SYRER_OG_BASER) registerChapter(window.SYRER_OG_BASER);
+  if (window.LIKEVEKTER) registerChapter(window.LIKEVEKTER);
+  if (window.REDOKS) registerChapter(window.REDOKS);
+  if (window.ENTROPI_ENTALPI) registerChapter(window.ENTROPI_ENTALPI);
+  if (window.ORGANISK) registerChapter(window.ORGANISK);
+  if (window.LOSELIGHET) registerChapter(window.LOSELIGHET);
+  if (window.KATALYSE_SYNTESE) registerChapter(window.KATALYSE_SYNTESE);
+  if (window.MAKROMOLEKYLER) registerChapter(window.MAKROMOLEKYLER);
 
   // State
   const state = {
@@ -440,6 +464,17 @@
     else msg = '💪 Ikke gi opp! Les teorien og prøv igjen.';
 
     $('results-summary').textContent = `${state.score} av ${state.total} riktig. ${msg}`;
+
+    // Track round completion
+    const duration = Math.round((Date.now() - sessionStartTime) / 1000);
+    trackEvent('round_complete', {
+      chapter: state.currentChapter ? state.currentChapter.id : null,
+      mode: state.currentMode,
+      score: state.score,
+      total: state.total,
+      duration
+    });
+    sessionStartTime = Date.now();
 
     updateStats();
     updateReviewCount();

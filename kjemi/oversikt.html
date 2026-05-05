@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kjemi 2 – Oversikt</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9; color: #1e293b; min-height: 100dvh; padding: 1rem;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        h1 { font-size: 1.5rem; text-align: center; margin-bottom: 0.5rem; }
+        .subtitle { text-align: center; color: #64748b; font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .card {
+            background: #fff; border-radius: 16px; padding: 1.25rem;
+            margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .card h2 { font-size: 1rem; color: #64748b; margin-bottom: 0.75rem; font-weight: 500; }
+        .stats-grid {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem;
+        }
+        .stat-box { text-align: center; padding: 0.75rem; background: #f8fafc; border-radius: 12px; }
+        .stat-box .value { font-size: 1.5rem; font-weight: 700; color: #2563eb; }
+        .stat-box .label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; margin-top: 0.25rem; }
+        .status-indicator {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 1rem; border-radius: 12px; font-weight: 600; font-size: 1.1rem;
+        }
+        .status-active { background: #dcfce7; color: #16a34a; }
+        .status-inactive { background: #fee2e2; color: #dc2626; }
+        .status-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .status-active .status-dot { background: #16a34a; animation: pulse 2s infinite; }
+        .status-inactive .status-dot { background: #dc2626; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .day-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 0; border-bottom: 1px solid #f1f5f9;
+        }
+        .day-row:last-child { border-bottom: none; }
+        .day-name { font-weight: 600; }
+        .day-stats { display: flex; gap: 1rem; font-size: 0.85rem; color: #64748b; }
+        .day-stats span { display: flex; align-items: center; gap: 0.25rem; }
+        .score-badge {
+            background: #dbeafe; color: #2563eb; padding: 0.2rem 0.5rem;
+            border-radius: 6px; font-weight: 600; font-size: 0.8rem;
+        }
+        .event-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.5rem 0; border-bottom: 1px solid #f8fafc; font-size: 0.85rem;
+        }
+        .event-time { color: #64748b; font-size: 0.8rem; }
+        .event-detail { font-weight: 500; }
+        .loading { text-align: center; padding: 2rem; color: #64748b; }
+        .error { text-align: center; padding: 2rem; color: #dc2626; }
+        .refresh-btn {
+            display: block; margin: 1rem auto; padding: 0.75rem 2rem;
+            background: #2563eb; color: white; border: none; border-radius: 12px;
+            font-size: 1rem; font-weight: 600; cursor: pointer;
+        }
+        .no-data { text-align: center; color: #64748b; padding: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Kjemi 2 – Oversikt</h1>
+        <p class="subtitle">Bruksstatistikk siste 7 dager</p>
+
+        <div id="content">
+            <div class="loading">⏳ Henter data...</div>
+        </div>
+
+        <button class="refresh-btn" onclick="loadStats()">🔄 Oppdater</button>
+    </div>
+
+    <script>
+        const DAYS_NO = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];
+
+        async function loadStats() {
+            const el = document.getElementById('content');
+            el.innerHTML = '<div class="loading">⏳ Henter data...</div>';
+
+            try {
+                const resp = await fetch('/api/kjemi-stats');
+                if (!resp.ok) throw new Error('Kunne ikke hente data');
+                const data = await resp.json();
+                render(data);
+            } catch (err) {
+                el.innerHTML = `<div class="error">❌ ${err.message}<br><small>Prøv å oppdatere om litt.</small></div>`;
+            }
+        }
+
+        function render(data) {
+            const { summary, daily, recentEvents } = data;
+            const el = document.getElementById('content');
+
+            const lastActivity = summary.last_activity ? new Date(summary.last_activity) : null;
+            const minutesAgo = lastActivity ? Math.floor((Date.now() - lastActivity.getTime()) / 60000) : null;
+            const isActive = minutesAgo !== null && minutesAgo < 10;
+
+            let statusHtml = '';
+            if (lastActivity) {
+                const timeStr = formatTimeAgo(minutesAgo);
+                statusHtml = `
+                    <div class="card">
+                        <div class="status-indicator ${isActive ? 'status-active' : 'status-inactive'}">
+                            <div class="status-dot"></div>
+                            ${isActive ? 'Aktiv nå' : `Sist aktiv: ${timeStr}`}
+                        </div>
+                    </div>`;
+            }
+
+            const avgScore = summary.avg_score_pct != null ? Math.round(summary.avg_score_pct) : '–';
+            const totalMin = summary.total_seconds ? Math.round(summary.total_seconds / 60) : 0;
+
+            let dailyHtml = '';
+            if (daily && daily.length > 0) {
+                dailyHtml = daily.map(d => {
+                    const date = new Date(d.day);
+                    const dayName = DAYS_NO[date.getDay()];
+                    const dateStr = `${date.getDate()}.${date.getMonth() + 1}`;
+                    const min = d.seconds ? Math.round(d.seconds / 60) : 0;
+                    const score = d.avg_score != null ? Math.round(d.avg_score) : '–';
+                    return `
+                        <div class="day-row">
+                            <span class="day-name">${dayName} ${dateStr}</span>
+                            <div class="day-stats">
+                                <span>📝 ${d.rounds} runder</span>
+                                <span>⏱ ${min} min</span>
+                                <span class="score-badge">${score}%</span>
+                            </div>
+                        </div>`;
+                }).join('');
+            } else {
+                dailyHtml = '<div class="no-data">Ingen aktivitet ennå</div>';
+            }
+
+            let eventsHtml = '';
+            if (recentEvents && recentEvents.length > 0) {
+                eventsHtml = recentEvents.slice(0, 15).map(e => {
+                    const time = new Date(e.created_at);
+                    const timeStr = `${time.getHours().toString().padStart(2,'0')}:${time.getMinutes().toString().padStart(2,'0')}`;
+                    let detail = '';
+                    if (e.event_type === 'session_start') detail = '🟢 Åpnet appen';
+                    else if (e.event_type === 'round_complete') {
+                        const pct = e.total > 0 ? Math.round(e.score / e.total * 100) : 0;
+                        detail = `✅ ${e.mode || ''} – ${e.score}/${e.total} (${pct}%)`;
+                    } else detail = e.event_type;
+                    return `
+                        <div class="event-row">
+                            <span class="event-detail">${detail}</span>
+                            <span class="event-time">${timeStr}</span>
+                        </div>`;
+                }).join('');
+            }
+
+            el.innerHTML = `
+                ${statusHtml}
+                <div class="card">
+                    <h2>Denne uken</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="value">${summary.rounds_completed || 0}</div>
+                            <div class="label">Runder</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="value">${totalMin}</div>
+                            <div class="label">Minutter</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="value">${avgScore}%</div>
+                            <div class="label">Snittpoeng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>I dag</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="value">${summary.sessions_today || 0}</div>
+                            <div class="label">Økter</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="value">${summary.rounds_today || 0}</div>
+                            <div class="label">Runder</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>Per dag</h2>
+                    ${dailyHtml}
+                </div>
+                ${eventsHtml ? `<div class="card"><h2>Siste aktiviteter</h2>${eventsHtml}</div>` : ''}
+            `;
+        }
+
+        function formatTimeAgo(minutes) {
+            if (minutes < 1) return 'akkurat nå';
+            if (minutes < 60) return `${minutes} min siden`;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours} timer siden`;
+            const days = Math.floor(hours / 24);
+            return `${days} dag${days > 1 ? 'er' : ''} siden`;
+        }
+
+        loadStats();
+        // Auto-refresh every 30 seconds
+        setInterval(loadStats, 30000);
+    </script>
+</body>
+</html>
