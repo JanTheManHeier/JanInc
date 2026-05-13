@@ -374,40 +374,35 @@ const GJESTER = [
   }
 ];
 
-const SANGER_LYRICS = `🎵 ENDELIG VOKSEN (KANSKJE) — Thomas på Femti 🎵
-(melodi: inspirert av nordnorske viser)
+const SANGER_LYRICS = `🎵 HURRA FOR THOMAS 🎵
 
-Vers 1:
-Han kom fra nord der fjordene er dype,
-der havet synger stille mot et skjær.
-Thomas — danseløva med blikk som ingen griper,
-nå er det femti år som er hans her.
+[Verse 1]
+Han kom innj i rommet med et smil på sin munnj
+Femti år gammel, men ung som en hunnj
+Danseløva fra Tromsø, han stikk aldri av
+Han e' han vi vil ha med oss, fra vogga te' grav
 
-Refreng:
-Thomas på femti, Thomas på femti!
-Kjekkeste karen fra Tromsø by!
-Badstue og hav og venner som er glade —
-femti er bare starten, se deg ikke tilbake!
+[Chorus]
+Hurra for Thomas — vi digger dæ!
+Du e' kul, du e' best, og en hælvetes go' fyr
+Hurra for Thomas — vi heie på dæ!
+Skål for danseløva — kveldens villaste dyr!
 
-Vers 2:
-Han bader på Pust, ler av kulda litt,
-og smiler bredt mot Tromsøysundets glans.
-Kystens Hus i hjertet, fest i hvert et blikk —
-vi heier på deg, Thomas — ta en dans!
+[Verse 2]
+Han danse heile natta, han gir sæ aldri ned
+Når Thomas e' på byen så e' det fest med
+Et hjerte stort som havet, en latter som et brak
+Vi e' her for å feire dæ — kom igjen, ta et tak!
 
-(Refreng)
+[Chorus]
+Hurra for Thomas — vi digger dæ!
+Du e' kul, du e' best, og en hælvetes go' fyr
+Hurra for Thomas — vi heie på dæ!
+Skål for danseløva — kveldens villaste dyr!
 
-Vers 3:
-På Bakrommet svinger vi til Aggie Frost,
-til klokka går mot to og enda mer.
-Fra badstue til scene, fra glass til toast —
-en kveld for danseløva, det er det vi feirer!
-
-(Refreng)
-
-Outro:
-Skål for Thomas, skål for femti år!
-🥂🌊❤️🎉
+[Outro – chant]
+Tho-mas! Tho-mas! Tho-mas!
+Hurra! Hurra! Hurra! 🎉🥂🦁
 `;
 
 // Quiz: "Hvor godt kjenner du Thomas?" — fasit-spørsmål med svar
