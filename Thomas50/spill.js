@@ -34,8 +34,9 @@
   function resize() {
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
-    bredde = rect.width;
-    hoyde = rect.height;
+    // Fall tilbake til canvas-attributter når elementet er skjult (rect = 0)
+    bredde = rect.width || canvas.clientWidth || parseInt(canvas.getAttribute('width'), 10) || 380;
+    hoyde = rect.height || canvas.clientHeight || parseInt(canvas.getAttribute('height'), 10) || 240;
     canvas.width = bredde * dpr;
     canvas.height = hoyde * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -43,6 +44,8 @@
   }
 
   function start() {
+    // Canvas kan ha vært skjult under init — sørg for korrekt størrelse nå
+    resize();
     score = 0;
     liv = 3;
     items = [];
