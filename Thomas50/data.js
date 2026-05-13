@@ -230,9 +230,7 @@ const GJESTER = [
     navn: "Mats Sæverud",
     bord: 3,
     bordType: 10,
-    relasjon: "Mann til Nina Wilhelmsen",
-    fbUrl: "https://www.facebook.com/profile.php",
-    bildeFil: "images/gjester/mats-saeverud.jpg"
+    relasjon: "Mann til Nina Wilhelmsen"
   },
   {
     navn: "Nina Wilhelmsen",
@@ -676,9 +674,7 @@ const GJESTER = [
     bord: 9,
     bordType: 10,
     pust: true,
-    relasjon: "Venn",
-    fbUrl: "https://www.facebook.com/profile.php",
-    bildeFil: "images/gjester/christine-strom.jpg"
+    relasjon: "Venn"
   },
   {
     navn: "Eirik Torbergsen",
@@ -803,9 +799,7 @@ const GJESTER = [
     navn: "Lena Schøning",
     bord: 10,
     bordType: 8,
-    relasjon: "Venn",
-    fbUrl: "https://www.facebook.com/profile.php",
-    bildeFil: "images/gjester/lena-schoning.jpg"
+    relasjon: "Venn"
   },
   {
     navn: "Marianne Bille",
@@ -914,9 +908,7 @@ const GJESTER = [
     bordType: 8,
     pust: true,
     bio: "Klar for damp og dans.",
-    fbUrl: "https://www.facebook.com/profile.php",
-    relasjon: "Venn",
-    bildeFil: "images/gjester/ole-herman-stormmesen.jpg"
+    relasjon: "Venn"
   }
 ];
 
