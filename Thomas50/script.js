@@ -238,6 +238,7 @@
           <div class="gjest-bio">${esc(g.bio)}</div>
           ${g.liBio ? `<div class="gjest-fbbio">💼 ${esc(g.liBio)}</div>` : ''}
           ${g.fbBio ? `<div class="gjest-fbbio">${esc(g.fbBio)}</div>` : ''}
+          ${g.extraBio ? `<div class="gjest-extra">✨ ${esc(g.extraBio)}</div>` : ''}
           ${g.folge ? `<div class="gjest-bio" style="color:#7A8FA8">Følge: ${esc(g.folge)}</div>` : ''}
           ${tag}
           <div class="gjest-lenker">

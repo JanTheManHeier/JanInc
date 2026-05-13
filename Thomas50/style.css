@@ -266,6 +266,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
 .gjest-navn { font-size: 13px; font-weight: bold; color: #E8E0D4; text-align: center; }
 .gjest-bio { font-size: 11px; color: #9BAABB; line-height: 1.4; text-align: center; }
 .gjest-fbbio { font-size: 10px; color: #7A8FA8; line-height: 1.4; text-align: center; padding: 4px 6px; background: rgba(255,255,255,0.03); border-radius: 6px; margin-top: 4px; }
+.gjest-extra { font-size: 11px; color: #D4A853; line-height: 1.4; text-align: center; padding: 4px 6px; background: rgba(212,168,83,0.12); border-radius: 6px; margin-top: 4px; font-weight: bold; }
 .gjest-fb-link { font-size: 10px; color: #7EB8D4; text-decoration: none; text-align: center; margin-top: 4px; }
 .gjest-fb-link:hover { color: #B0D8E8; }
 .gjest-tag {

@@ -196,7 +196,8 @@ const GJESTER = [
     plus: 1,
     bio: "Pust med +1.",
     fbBio: "📍 Tromsø, Norway",
-    fbUrl: "https://www.facebook.com/marit.osima"
+    fbUrl: "https://www.facebook.com/marit.osima",
+    extraBio: "👩‍⚕️ Allmennlegespesialist og fastlege"
   },
   {
     navn: "Nina Bjæring Brox",
@@ -247,7 +248,8 @@ const GJESTER = [
     rolle: "Toastmaster",
     liBio: "Assisterende partisekretær i Arbeiderpartiet · 📍 Oslo, Oslo, Norway",
     bildeFil: "images/gjester/marianne-wilhelmsen.jpg",
-    liUrl: "https://www.linkedin.com/in/marianne-wilhelmsen-/"
+    liUrl: "https://www.linkedin.com/in/marianne-wilhelmsen-/",
+    extraBio: "🌟 Statssekretær i regjeringen — utnevnt i statsråd"
   },
   {
     navn: "Ronny André",
@@ -350,7 +352,8 @@ const GJESTER = [
     plus: 0,
     bio: "Sammen med Nina på Pust.",
     fbBio: "📍 Tromsø, Norway",
-    fbUrl: "https://www.facebook.com/hans.t.brox"
+    fbUrl: "https://www.facebook.com/hans.t.brox",
+    extraBio: "🦷 Oralkirurg"
   },
   {
     navn: "Line Myreng",
