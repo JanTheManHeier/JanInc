@@ -151,21 +151,7 @@
     oppdater();
     setInterval(oppdater, 60000);
 
-    // Karriere
-    const k = document.getElementById('karriere-liste');
-    if (k && OM_THOMAS && OM_THOMAS.jobber) {
-      k.innerHTML = OM_THOMAS.jobber.map(j => `
-        <div class="karriere-item">
-          <div class="tittel">${esc(j.tittel)}</div>
-          <div class="selskap">${esc(j.selskap)}</div>
-          <div class="periode">${esc(j.periode)}</div>
-        </div>`).join('');
-    }
-    // Fun facts
-    const f = document.getElementById('fun-facts');
-    if (f && OM_THOMAS && OM_THOMAS.fun_facts) {
-      f.innerHTML = OM_THOMAS.fun_facts.map(x => `<div>${esc(x)}</div>`).join('');
-    }
+    // Karriere og fun-facts er fjernet fra hjem-siden for å ikke spoile quiz-svarene
   }
 
   // ============ Program ============
