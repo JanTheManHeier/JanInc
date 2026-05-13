@@ -424,7 +424,7 @@ const GJESTER = [
     bord: 6,
     bordType: 8,
     pust: true,
-    bio: "Pust og spleis-deltaker.",
+    bio: "Pust-deltaker.",
     fbUrl: "https://www.facebook.com/arne.aarhus.7",
     relasjon: "Venn",
     bildeFil: "images/gjester/arne-aarhus.jpg"
@@ -434,7 +434,7 @@ const GJESTER = [
     bord: 6,
     bordType: 8,
     pust: true,
-    bio: "Initiativtaker for spleis. Pust med +1 hvis følget puster.",
+    bio: "Pust med +1 hvis følget puster.",
     fbUrl: "https://www.facebook.com/bjarte.kristoffersen",
     liBio: "Økonomisjef · 📍 Tromsø, Troms og Finnmark, Norway",
     liUrl: "https://www.linkedin.com/in/bjarte-kristoffersen-444a6813/",
