@@ -242,6 +242,12 @@
       grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#7A8FA8;padding:20px">Ingen avbud — nice! 🎉</div>`;
       return;
     }
+    // Sortering: jubilanten først, så alfabetisk på fornavn
+    liste.sort((a, b) => {
+      if (a.jubilant && !b.jubilant) return -1;
+      if (b.jubilant && !a.jubilant) return 1;
+      return a.navn.localeCompare(b.navn, 'no');
+    });
     if (liste.length === 0) {
       grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#7A8FA8;padding:20px">Ingen treff for "${esc(gjesterSok)}"</div>`;
       return;
