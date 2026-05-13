@@ -48,6 +48,7 @@ const GJESTER = [
   {
     navn: "Adele Kjær",
     bord: 1,
+    sete: 5,
     bordType: 8,
     relasjon: "Kjæreste til yngste sønn",
     fbUrl: "N/A"
@@ -55,6 +56,7 @@ const GJESTER = [
   {
     navn: "Birk H Wilhelmsen",
     bord: 1,
+    sete: 4,
     bordType: 8,
     relasjon: "Yngste sønn",
     fbUrl: "https://www.facebook.com/birk.wilhelmsen",
@@ -63,6 +65,7 @@ const GJESTER = [
   {
     navn: "Inger Johanne Sumstad",
     bord: 1,
+    sete: 8,
     bordType: 8,
     relasjon: "Mor",
     fbUrl: "https://www.facebook.com/inger.johanne.sumstad",
@@ -71,6 +74,7 @@ const GJESTER = [
   {
     navn: "Maja Wilhelmsen",
     bord: 1,
+    sete: 2,
     bordType: 8,
     pust: true,
     bio: "Pust 💦",
@@ -82,6 +86,7 @@ const GJESTER = [
   {
     navn: "Marianne Wilhelmsen",
     bord: 1,
+    sete: 6,
     bordType: 8,
     rolle: "TOASTMASTER",
     bio: "🎤 Toastmaster sammen med Ronny André. Send mail til ronnyandre@gmail.com hvis du vil holde tale!",
@@ -96,6 +101,7 @@ const GJESTER = [
   {
     navn: "Ronny Andre Bendiksen",
     bord: 1,
+    sete: 7,
     bordType: 8,
     rolle: "TOASTMASTER",
     bio: "🎤 Toastmaster sammen med Marianne. Kontakt: ronnyandre@gmail.com",
@@ -106,6 +112,7 @@ const GJESTER = [
   {
     navn: "Snorre H Wilhelmsen",
     bord: 1,
+    sete: 3,
     bordType: 8,
     relasjon: "Eldste sønn",
     fbUrl: "https://www.facebook.com/snorre.wilhelmsen",
@@ -115,6 +122,7 @@ const GJESTER = [
   {
     navn: "Thomas Hansen",
     bord: 1,
+    sete: 1,
     bordType: 8,
     pust: true,
     fbUrl: "https://www.facebook.com/2mashh",
@@ -124,6 +132,7 @@ const GJESTER = [
   {
     navn: "Anita Sivertsen",
     bord: 2,
+    sete: 8,
     bordType: 8,
     fbUrl: "https://www.facebook.com/anita.sivertsen.14",
     relasjon: "Samboer til Åge hansen",
@@ -133,6 +142,7 @@ const GJESTER = [
   {
     navn: "Helge Hansen",
     bord: 2,
+    sete: 1,
     bordType: 8,
     relasjon: "Far",
     fbUrl: "https://www.facebook.com/helge.hansen.140",
@@ -142,6 +152,7 @@ const GJESTER = [
   {
     navn: "Iris Wikmark",
     bord: 2,
+    sete: 4,
     bordType: 8,
     relasjon: "Konen til Trond Vidar Hansen",
     fbUrl: "N/A"
@@ -149,6 +160,7 @@ const GJESTER = [
   {
     navn: "Jakob B Hansen",
     bord: 2,
+    sete: 5,
     bordType: 8,
     relasjon: "Bror",
     fbUrl: "https://www.facebook.com/jakob.hansen.17",
@@ -158,6 +170,7 @@ const GJESTER = [
   {
     navn: "Kathrine B Hansen",
     bord: 2,
+    sete: 2,
     bordType: 8,
     relasjon: "Søster",
     fbUrl: "https://www.facebook.com/kathrine.hansen.71",
@@ -167,6 +180,7 @@ const GJESTER = [
   {
     navn: "Marte Lysnes Kristoffersen",
     bord: 2,
+    sete: 6,
     bordType: 8,
     relasjon: "Samboer til Jakob B Hansen",
     fbUrl: "https://www.facebook.com/marte.lysnes",
@@ -176,6 +190,7 @@ const GJESTER = [
   {
     navn: "Trond Vidar Hansen",
     bord: 2,
+    sete: 3,
     bordType: 8,
     relasjon: "Søskendebarn",
     fbUrl: "https://www.facebook.com/trond.v.hansen.1",
@@ -185,6 +200,7 @@ const GJESTER = [
   {
     navn: "Åge Hansen",
     bord: 2,
+    sete: 7,
     bordType: 8,
     fbUrl: "https://www.facebook.com/age.hansen.56",
     relasjon: "Onkel",
@@ -194,6 +210,7 @@ const GJESTER = [
   {
     navn: "Anne Marit Bjørnflaten",
     bord: 3,
+    sete: 2,
     bordType: 10,
     relasjon: "konen til svigerfar",
     fbUrl: "https://www.facebook.com/ambjornflaten",
@@ -203,6 +220,7 @@ const GJESTER = [
   {
     navn: "Gunnar Wilhelmsen",
     bord: 3,
+    sete: 1,
     bordType: 10,
     relasjon: "Svigerfar",
     fbUrl: "https://www.facebook.com/gwilhelmsen",
@@ -212,6 +230,7 @@ const GJESTER = [
   {
     navn: "Jacob Wilhelmsen",
     bord: 3,
+    sete: 9,
     bordType: 10,
     relasjon: "Sønn til Nina og Mats",
     fbUrl: "https://www.facebook.com/jacob.wilhelmsen",
@@ -221,6 +240,7 @@ const GJESTER = [
   {
     navn: "Jørgen Wilhelmsen",
     bord: 3,
+    sete: 6,
     bordType: 10,
     relasjon: "Sønn til Nina og Mats",
     fbUrl: "https://www.facebook.com/profile.php?id=1013976800",
@@ -229,6 +249,7 @@ const GJESTER = [
   {
     navn: "Mats Sæverud",
     bord: 3,
+    sete: 5,
     bordType: 10,
     relasjon: "Mann til Nina Wilhelmsen",
     fbUrl: "https://www.facebook.com/profile.php?id=751660085",
@@ -237,6 +258,7 @@ const GJESTER = [
   {
     navn: "Nina Wilhelmsen",
     bord: 3,
+    sete: 4,
     bordType: 10,
     relasjon: "Sviger søster",
     fbUrl: "https://www.facebook.com/nina.wilhelmsen.18",
@@ -246,6 +268,7 @@ const GJESTER = [
   {
     navn: "Odne Stunes",
     bord: 3,
+    sete: 8,
     bordType: 10,
     fbUrl: "https://www.facebook.com/odne.stunes",
     bildeFil: "images/gjester/odne-stunes.jpg",
@@ -254,6 +277,7 @@ const GJESTER = [
   {
     navn: "Ragnhild Wilhelmsen",
     bord: 3,
+    sete: 3,
     bordType: 10,
     relasjon: "Svigermor",
     fbUrl: "N/A"
@@ -261,6 +285,7 @@ const GJESTER = [
   {
     navn: "Renate Larsen",
     bord: 3,
+    sete: 7,
     bordType: 10,
     fbUrl: "https://www.facebook.com/renate.larsen.12",
     bildeFil: "images/gjester/renate-larsen.jpg",
@@ -270,6 +295,7 @@ const GJESTER = [
   {
     navn: "Heidi Lekang",
     bord: 4,
+    sete: 3,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/heidi.lekang",
@@ -279,6 +305,7 @@ const GJESTER = [
   {
     navn: "Jan Erik Olsen",
     bord: 4,
+    sete: 5,
     bordType: 8,
     bio: "Bekreftet på event-posten.",
     fbBio: "📍 Tromsø, Norway",
@@ -291,6 +318,7 @@ const GJESTER = [
   {
     navn: "Lise Benjaminsen",
     bord: 4,
+    sete: 1,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/lise.hilmarsdatterstrand",
@@ -301,6 +329,7 @@ const GJESTER = [
   {
     navn: "Marita Mokkelbost",
     bord: 4,
+    sete: 8,
     bordType: 8,
     fbUrl: "https://www.facebook.com/marita.mokkelbost",
     relasjon: "Venn",
@@ -309,6 +338,7 @@ const GJESTER = [
   {
     navn: "Morten Gammelgård",
     bord: 4,
+    sete: 2,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/morten.gammelgaard.pedersen",
@@ -318,6 +348,7 @@ const GJESTER = [
   {
     navn: "Ole Lekang",
     bord: 4,
+    sete: 4,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "N/A"
@@ -325,6 +356,7 @@ const GJESTER = [
   {
     navn: "Ranveig Langseth",
     bord: 4,
+    sete: 6,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "N/A"
@@ -332,6 +364,7 @@ const GJESTER = [
   {
     navn: "Ståle Søfting",
     bord: 4,
+    sete: 7,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/stale.softing",
@@ -341,6 +374,7 @@ const GJESTER = [
   {
     navn: "Anneli Drecker",
     bord: 5,
+    sete: 5,
     bordType: 8,
     pust: true,
     relasjon: "Venn og nabo",
@@ -351,6 +385,7 @@ const GJESTER = [
   {
     navn: "Hans Thomas Brox",
     bord: 5,
+    sete: 7,
     bordType: 8,
     pust: true,
     bio: "Sammen med Nina på Pust.",
@@ -363,6 +398,7 @@ const GJESTER = [
   {
     navn: "Hege Blikfeldt",
     bord: 5,
+    sete: 1,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/hege.blikfeldt",
@@ -372,6 +408,7 @@ const GJESTER = [
   {
     navn: "Hårek Guneriussen",
     bord: 5,
+    sete: 2,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/Keraah",
@@ -380,6 +417,7 @@ const GJESTER = [
   {
     navn: "Jon Marius Aareskjold",
     bord: 5,
+    sete: 6,
     bordType: 8,
     pust: true,
     bio: "Pust!! +1 — detta blir stas!",
@@ -390,6 +428,7 @@ const GJESTER = [
   {
     navn: "Lena Nymark",
     bord: 5,
+    sete: 3,
     bordType: 8,
     pust: true,
     bio: "Bekreftet på event-posten.",
@@ -401,6 +440,7 @@ const GJESTER = [
   {
     navn: "Nina Brox",
     bord: 5,
+    sete: 8,
     bordType: 8,
     pust: true,
     bio: "Pust pluss 1 (Hans Thomas).",
@@ -413,6 +453,7 @@ const GJESTER = [
   {
     navn: "Terje Nymark",
     bord: 5,
+    sete: 4,
     bordType: 8,
     relasjon: "Venn og nabo",
     fbUrl: "https://www.facebook.com/terje.a.nymark",
@@ -422,6 +463,7 @@ const GJESTER = [
   {
     navn: "Arne Aarhus",
     bord: 6,
+    sete: 7,
     bordType: 8,
     pust: true,
     bio: "Pust-deltaker.",
@@ -432,6 +474,7 @@ const GJESTER = [
   {
     navn: "Bjarte Kristoffersen",
     bord: 6,
+    sete: 4,
     bordType: 8,
     pust: true,
     bio: "Pust med +1 hvis følget puster.",
@@ -444,6 +487,7 @@ const GJESTER = [
   {
     navn: "Gina Bjørnstrøm",
     bord: 6,
+    sete: 3,
     bordType: 8,
     pust: true,
     relasjon: "Venn",
@@ -453,6 +497,7 @@ const GJESTER = [
   {
     navn: "Hilde Sander Meling",
     bord: 6,
+    sete: 6,
     bordType: 8,
     pust: true,
     bio: "Pust for både Ivar og henne selv.",
@@ -465,6 +510,7 @@ const GJESTER = [
   {
     navn: "Ingelill Kleivnes",
     bord: 6,
+    sete: 8,
     bordType: 8,
     pust: true,
     bio: "Pust 😍",
@@ -476,6 +522,7 @@ const GJESTER = [
   {
     navn: "Ivar Wullf",
     bord: 6,
+    sete: 5,
     bordType: 8,
     pust: true,
     bio: "Sammen med Hilde på Pust.",
@@ -488,6 +535,7 @@ const GJESTER = [
   {
     navn: "Jon Steinar Engenes",
     bord: 6,
+    sete: 2,
     bordType: 8,
     pust: true,
     bio: "Pust! ❄️",
@@ -501,6 +549,7 @@ const GJESTER = [
   {
     navn: "Odd Gunnar Ingebritsen",
     bord: 6,
+    sete: 1,
     bordType: 8,
     fbBio: "Universitetssykehuset Nord-Norge HF · 📚 Melbu videregående skole · 📍 Tromsø, Norway",
     fbUrl: "https://www.facebook.com/odd.g.ingebrigtsen",
@@ -512,6 +561,7 @@ const GJESTER = [
   {
     navn: "Andreas Willumsen",
     bord: 7,
+    sete: 7,
     bordType: 8,
     pust: true,
     bio: "Pust 🔥",
@@ -523,6 +573,7 @@ const GJESTER = [
   {
     navn: "Jan Heier Johansen",
     bord: 7,
+    sete: 2,
     bordType: 8,
     pust: true,
     bio: "Bursdagsapp-bygger og venn av Thomas. Sammen med Kristina.",
@@ -534,6 +585,7 @@ const GJESTER = [
   {
     navn: "Kristina Kantola",
     bord: 7,
+    sete: 1,
     bordType: 8,
     pust: true,
     bio: "Sammen med Jan på fest og Pust.",
@@ -544,6 +596,7 @@ const GJESTER = [
   {
     navn: "Line Myreng",
     bord: 7,
+    sete: 4,
     bordType: 8,
     pust: true,
     bio: "Sammen med Rune på Pust.",
@@ -555,6 +608,7 @@ const GJESTER = [
   {
     navn: "Maria Christina Edwall",
     bord: 7,
+    sete: 6,
     bordType: 8,
     pust: true,
     bio: "Klar for Pust 💦",
@@ -566,6 +620,7 @@ const GJESTER = [
   {
     navn: "Marius Furnes",
     bord: 7,
+    sete: 8,
     bordType: 8,
     bio: "Bekreftet på event-posten.",
     fbUrl: "https://www.facebook.com/furnesmarius",
@@ -576,6 +631,7 @@ const GJESTER = [
   {
     navn: "Rune Myreng",
     bord: 7,
+    sete: 3,
     bordType: 8,
     pust: true,
     bio: "Sammen med Line på Pust og fest.",
@@ -588,6 +644,7 @@ const GJESTER = [
   {
     navn: "Ørjan Berg Karlsen",
     bord: 7,
+    sete: 5,
     bordType: 8,
     pust: true,
     bio: "Pust 😍",
@@ -599,6 +656,7 @@ const GJESTER = [
   {
     navn: "Cathrine Marie Gi'ver",
     bord: 8,
+    sete: 3,
     bordType: 8,
     bio: "Terningkast 6 for tidlig beskjed — gleder seg!",
     fbBio: "Macks Ølbryggeri AS · 📚 BI Norwegian Business School · 📍 Tromsø, Norway · 💕 Gift med Lasse Lauritz Pettersen",
@@ -608,6 +666,7 @@ const GJESTER = [
   {
     navn: "Einar Nilsen",
     bord: 8,
+    sete: 5,
     bordType: 8,
     fbBio: "📚 University of Tromsø · 📍 Molde, Norway",
     fbUrl: "https://www.facebook.com/einar.nilsen.5",
@@ -617,6 +676,7 @@ const GJESTER = [
   {
     navn: "Erin Hald",
     bord: 8,
+    sete: 2,
     bordType: 8,
     bio: "Bekreftet på event-posten.",
     fbBio: "Universitetssykehuset Nord-Norge HF · 📚 UiT Norges arktiske universitet · 📍 Tromsø, Norway",
@@ -627,6 +687,7 @@ const GJESTER = [
   {
     navn: "Lasse Pettersen",
     bord: 8,
+    sete: 4,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/lasselauritz",
@@ -637,6 +698,7 @@ const GJESTER = [
   {
     navn: "Marit Bratrud Nilsen",
     bord: 8,
+    sete: 6,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/marit.b.nilsen.1",
@@ -646,6 +708,7 @@ const GJESTER = [
   {
     navn: "Marit Osima",
     bord: 8,
+    sete: 7,
     bordType: 8,
     bio: "Pust med +1.",
     fbBio: "📍 Tromsø, Norway",
@@ -657,6 +720,7 @@ const GJESTER = [
   {
     navn: "Stig Tennås",
     bord: 8,
+    sete: 1,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/stig.tennas",
@@ -665,6 +729,7 @@ const GJESTER = [
   {
     navn: "Øyvind Nordgård",
     bord: 8,
+    sete: 8,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "N/A"
@@ -672,6 +737,7 @@ const GJESTER = [
   {
     navn: "Christine Strøm",
     bord: 9,
+    sete: 8,
     bordType: 10,
     pust: true,
     relasjon: "Venn",
@@ -681,6 +747,7 @@ const GJESTER = [
   {
     navn: "Eirik Torbergsen",
     bord: 9,
+    sete: 4,
     bordType: 10,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/eirik.torbergsen",
@@ -690,6 +757,7 @@ const GJESTER = [
   {
     navn: "Ellen Eliassen",
     bord: 9,
+    sete: 5,
     bordType: 10,
     bio: "Bekreftet på event-posten.",
     fbBio: "📍 Tromsø, Norway",
@@ -700,6 +768,7 @@ const GJESTER = [
   {
     navn: "Erik Josefsen",
     bord: 9,
+    sete: 2,
     bordType: 10,
     relasjon: "Venn",
     fbUrl: "N/A"
@@ -707,6 +776,7 @@ const GJESTER = [
   {
     navn: "Geir Olav Skogstad",
     bord: 9,
+    sete: 7,
     bordType: 10,
     pust: true,
     bio: "Pust x 2 — kommer med følge.",
@@ -717,6 +787,7 @@ const GJESTER = [
   {
     navn: "Magnus Seppola",
     bord: 9,
+    sete: 6,
     bordType: 10,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/magnus.seppola",
@@ -725,6 +796,7 @@ const GJESTER = [
   {
     navn: "Silje Ingebrigtsen",
     bord: 9,
+    sete: 9,
     bordType: 10,
     pust: true,
     bio: "Klar for badstue og fest.",
@@ -736,6 +808,7 @@ const GJESTER = [
   {
     navn: "Siw Cathrine  Torbergsen",
     bord: 9,
+    sete: 3,
     bordType: 10,
     relasjon: "Venn",
     fbUrl: "N/A"
@@ -743,6 +816,7 @@ const GJESTER = [
   {
     navn: "Synne Guldbrandsen",
     bord: 9,
+    sete: 1,
     bordType: 10,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/synne.guldbrandsen",
@@ -752,6 +826,7 @@ const GJESTER = [
   {
     navn: "Terje Karlsen",
     bord: 9,
+    sete: 10,
     bordType: 10,
     pust: true,
     relasjon: "Venn",
@@ -762,6 +837,7 @@ const GJESTER = [
   {
     navn: "Erlend Hagan",
     bord: 10,
+    sete: 1,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/erlend.hagan",
@@ -771,6 +847,7 @@ const GJESTER = [
   {
     navn: "Gro-Hilde Severinsen",
     bord: 10,
+    sete: 8,
     bordType: 8,
     pust: true,
     relasjon: "Venn"
@@ -778,6 +855,7 @@ const GJESTER = [
   {
     navn: "Kjell Roger Andersen",
     bord: 10,
+    sete: 7,
     bordType: 8,
     pust: true,
     fbBio: "📍 Balsfjord",
@@ -788,6 +866,7 @@ const GJESTER = [
   {
     navn: "Lars Hadsen Hansen",
     bord: 10,
+    sete: 5,
     bordType: 8,
     pust: true,
     bio: "Skal gjøre alt han kan for å komme på feiringa.",
@@ -799,6 +878,7 @@ const GJESTER = [
   {
     navn: "Lena Schøning",
     bord: 10,
+    sete: 2,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/profile.php?id=596541244",
@@ -807,6 +887,7 @@ const GJESTER = [
   {
     navn: "Marianne Bille",
     bord: 10,
+    sete: 4,
     bordType: 8,
     pust: true,
     bio: "Pust for Øyvind og henne selv — gleder seg!",
@@ -820,6 +901,7 @@ const GJESTER = [
   {
     navn: "Marianne Svorken",
     bord: 10,
+    sete: 6,
     bordType: 8,
     bio: "Klar for Pust og fest.",
     fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Anders Mo Hanssen",
@@ -830,6 +912,7 @@ const GJESTER = [
   {
     navn: "Øyvind Grinde",
     bord: 10,
+    sete: 3,
     bordType: 8,
     pust: true,
     bio: "Sammen med Marianne Bille på Pust.",
@@ -841,6 +924,7 @@ const GJESTER = [
   {
     navn: "Anne Marvik",
     bord: 11,
+    sete: 4,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/annekristine.marvik",
@@ -850,6 +934,7 @@ const GJESTER = [
   {
     navn: "Gaute Marvik",
     bord: 11,
+    sete: 3,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/gmarvik",
@@ -860,6 +945,7 @@ const GJESTER = [
   {
     navn: "Geir Helge Valle",
     bord: 11,
+    sete: 1,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/geirhelge.valle",
@@ -869,6 +955,7 @@ const GJESTER = [
   {
     navn: "Kenneth Mikkelsen",
     bord: 11,
+    sete: 5,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/kenneth.mikkelsen.921",
@@ -878,6 +965,7 @@ const GJESTER = [
   {
     navn: "Lars Gaute Jørgensen",
     bord: 11,
+    sete: 8,
     bordType: 8,
     pust: true,
     relasjon: "Venn",
@@ -889,6 +977,7 @@ const GJESTER = [
   {
     navn: "Lise Valle",
     bord: 11,
+    sete: 2,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/lise.fransiska.valle",
@@ -898,6 +987,7 @@ const GJESTER = [
   {
     navn: "Nina Mikkelsen",
     bord: 11,
+    sete: 6,
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/nina.mikkelsen.5",
@@ -908,6 +998,7 @@ const GJESTER = [
   {
     navn: "Ole Herman Størmmesen",
     bord: 11,
+    sete: 7,
     bordType: 8,
     pust: true,
     bio: "Klar for damp og dans.",

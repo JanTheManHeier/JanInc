@@ -675,6 +675,7 @@
 
   // ============ Bord ============
   let bordSok = '';
+  let bordGjesterFlat = [];
   function initBord() {
     const inp = document.getElementById('bord-sok');
     if (!inp) return;
@@ -692,23 +693,32 @@
       if (!bordMap[g.bord]) bordMap[g.bord] = { type: g.bordType || 8, gjester: [] };
       bordMap[g.bord].gjester.push(g);
     });
+    // Sorter gjester innenfor hvert bord etter setnummer
+    Object.values(bordMap).forEach(b => {
+      b.gjester.sort((a, c) => (a.sete || 999) - (c.sete || 999));
+    });
     const bordNumre = Object.keys(bordMap).map(n => +n).sort((a,b) => a - b);
 
     let html = '';
+    // Lagre flat liste for modal-oppslag
+    bordGjesterFlat = [];
     for (const nr of bordNumre) {
       const b = bordMap[nr];
       const matchSok = bordSok && b.gjester.some(g => g.navn.toLowerCase().includes(bordSok));
       const utheve = matchSok ? ' bord-treff' : '';
       html += `<div class="bord-kort${utheve}" id="bord-${nr}">
         <div class="bord-header">
-          <span class="bord-nr">Bord ${nr}</span>
-          <span class="bord-info">${b.type}-mannsbord · ${b.gjester.length} gjester</span>
+          <span class="bord-nr">🪑 Bord ${nr}</span>
+          <span class="bord-info">${b.gjester.length} gjester</span>
         </div>
         <div class="bord-gjester">`;
       for (const g of b.gjester) {
         const treff = bordSok && g.navn.toLowerCase().includes(bordSok);
         const init = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
-        html += `<div class="bord-gjest${treff ? ' bord-gjest-treff' : ''}">
+        const idx = bordGjesterFlat.length;
+        bordGjesterFlat.push(g);
+        html += `<div class="bord-gjest${treff ? ' bord-gjest-treff' : ''}" data-bord-idx="${idx}">
+          <span class="bord-sete">${g.sete || '?'}</span>
           ${g.bildeFil ? `<img class="bord-avatar" src="${esc(g.bildeFil)}" alt="" />` : `<div class="bord-avatar bord-init">${esc(init)}</div>`}
           <span class="bord-navn">${esc(g.navn)}</span>
           ${g.relasjon ? `<span class="bord-rel">${esc(g.relasjon)}</span>` : ''}
@@ -718,6 +728,14 @@
       html += '</div></div>';
     }
     liste.innerHTML = html;
+
+    // Klikk på rad åpner gjest-modal
+    liste.querySelectorAll('.bord-gjest').forEach(el => {
+      el.addEventListener('click', () => {
+        const i = parseInt(el.dataset.bordIdx, 10);
+        visGjestModal(bordGjesterFlat[i]);
+      });
+    });
 
     // Scroll til treff hvis sokt
     if (bordSok) {
