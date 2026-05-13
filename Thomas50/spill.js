@@ -208,10 +208,13 @@
     ctx.fillStyle = '#D4A853';
     ctx.fillRect(0, bakkeY, bredde, 3);
 
-    // Thomas
+    // Thomas (speilet horisontalt så han løper mot høyre)
     ctx.font = '32px Arial';
     ctx.textBaseline = 'top';
-    ctx.fillText(thomas.grunn ? '🏃' : '🤸', thomas.x, thomas.y);
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.fillText(thomas.grunn ? '🏃' : '🤸', -thomas.x - thomas.w, thomas.y);
+    ctx.restore();
 
     // Items
     ctx.font = '22px Arial';
