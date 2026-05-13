@@ -236,7 +236,8 @@ const GJESTER = [
     bordType: 10,
     relasjon: "Sviger søster",
     fbUrl: "https://www.facebook.com/nina.wilhelmsen.18",
-    bildeFil: "images/gjester/nina-wilhelmsen.jpg"
+    bildeFil: "images/gjester/nina-wilhelmsen.jpg",
+    liBio: "IBM Executive · 📍 Oslo, Oslo, Norway"
   },
   {
     navn: "Odne Stunes",
@@ -259,7 +260,8 @@ const GJESTER = [
     bordType: 10,
     fbUrl: "https://www.facebook.com/renate.larsen.12",
     bildeFil: "images/gjester/renate-larsen.jpg",
-    fbBio: "📍 Tromsø, Norway"
+    fbBio: "📍 Tromsø, Norway",
+    liBio: "Styrearbeid og gründervirksomhet · 📍 Tromsø, Troms og Finnmark, Norway"
   },
   {
     navn: "Heidi Lekang",
@@ -289,7 +291,8 @@ const GJESTER = [
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/lise.hilmarsdatterstrand",
     bildeFil: "images/gjester/lise-benjaminsen.jpg",
-    fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Morten Gammelgård Pedersen"
+    fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Morten Gammelgård Pedersen",
+    liBio: "Teamleder salg, publikum og marked hos Arktisk Filharmoni AS · 📍 Tromsø, Troms og Finnmark, Norway"
   },
   {
     navn: "Marita Mokkelbost",
@@ -327,7 +330,8 @@ const GJESTER = [
     bordType: 8,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/stale.softing",
-    bildeFil: "images/gjester/stale-softing.jpg"
+    bildeFil: "images/gjester/stale-softing.jpg",
+    liBio: "Sales & Marketing Director at GC Rieber VivoMega AS · 📍 Kristiansund, Møre og Romsdal, Norway"
   },
   {
     navn: "Anneli Drecker",
@@ -560,7 +564,8 @@ const GJESTER = [
     bio: "Bekreftet på event-posten.",
     fbUrl: "https://www.facebook.com/furnesmarius",
     relasjon: "Venn",
-    bildeFil: "images/gjester/marius-furnes.jpg"
+    bildeFil: "images/gjester/marius-furnes.jpg",
+    extraBio: "Jobber hos SK Gruppen AS"
   },
   {
     navn: "Rune Myreng",
@@ -621,7 +626,8 @@ const GJESTER = [
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/lasselauritz",
     bildeFil: "images/gjester/lasse-pettersen.jpg",
-    fbBio: "📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 Gift med Cathrine Marie Giæver"
+    fbBio: "📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 Gift med Cathrine Marie Giæver",
+    liBio: "Section Manager, Customer Experience · 📍 Tromsø, Troms og Finnmark, Norway"
   },
   {
     navn: "Marit Bratrud Nilsen",
@@ -840,7 +846,8 @@ const GJESTER = [
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/gmarvik",
     bildeFil: "images/gjester/gaute-marvik.jpg",
-    fbBio: "📍 Tromsø, Norway · 💕 Gift med Anne Kristine Marvik"
+    fbBio: "📍 Tromsø, Norway · 💕 Gift med Anne Kristine Marvik",
+    liBio: "Helse Nord IKT · 📍 Tromsø, Troms og Finnmark, Norway"
   },
   {
     navn: "Geir Helge Valle",
@@ -868,7 +875,8 @@ const GJESTER = [
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/larsgaute",
     bildeFil: "images/gjester/lars-gaute-jorgensen.jpg",
-    fbBio: "PHARMAQ AS · 📍 Tromsø, Norway"
+    fbBio: "PHARMAQ AS · 📍 Tromsø, Norway",
+    liBio: "Area Sales Manager Norway and Nordics at PHARMAQ · 📍 Tromsø, Troms og Finnmark, Norway"
   },
   {
     navn: "Lise Valle",
@@ -886,7 +894,8 @@ const GJESTER = [
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/nina.mikkelsen.5",
     bildeFil: "images/gjester/nina-mikkelsen.jpg",
-    fbBio: "Akvaplan-niva AS · 📍 Tromsø, Norway"
+    fbBio: "Akvaplan-niva AS · 📍 Tromsø, Norway",
+    liBio: "Senior researcher, Environmental impact assessments and monitoring · 📍 Tromsø, Troms og Finnmark, Norway"
   },
   {
     navn: "Ole Herman Størmmesen",
