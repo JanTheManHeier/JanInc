@@ -411,8 +411,14 @@
     document.getElementById('quiz-q').textContent = q.spm;
     const opts = document.getElementById('quiz-options');
     const fasit = document.getElementById('quiz-fasit');
+    const nextBtn = document.getElementById('quiz-next');
+    const prevBtn = document.getElementById('quiz-prev');
     fasit.hidden = true;
-    document.getElementById('quiz-next').textContent = quizIdx === SPILL_QUIZ.length - 1 ? '🏁 Ferdig' : 'Neste →';
+    nextBtn.textContent = quizIdx === SPILL_QUIZ.length - 1 ? '🏁 Ferdig' : 'Neste →';
+    nextBtn.disabled = true;
+    nextBtn.style.opacity = '0.5';
+    prevBtn.disabled = quizIdx === 0;
+    prevBtn.style.opacity = quizIdx === 0 ? '0.5' : '1';
     opts.innerHTML = q.valg.map((v, i) => `<button class="quiz-opt" data-i="${i}">${esc(v)}</button>`).join('');
     opts.querySelectorAll('.quiz-opt').forEach(b => {
       b.onclick = () => svarKlikket(b, q);
@@ -421,7 +427,7 @@
 
   function svarKlikket(btn, q) {
     const opts = document.getElementById('quiz-options');
-    if (opts.querySelector('.disabled')) return; // already answered
+    if (opts.querySelector('.disabled')) return;
     const i = +btn.dataset.i;
     opts.querySelectorAll('.quiz-opt').forEach(x => x.classList.add('disabled'));
     quizSvart++;
@@ -439,6 +445,10 @@
     document.getElementById('quiz-fasit').textContent = q.fasit;
     document.getElementById('quiz-fasit').hidden = false;
     document.getElementById('quiz-spill-status').textContent = `Score: ${quizScore} / ${quizSvart}`;
+    // Aktiver Neste-knappen
+    const nextBtn = document.getElementById('quiz-next');
+    nextBtn.disabled = false;
+    nextBtn.style.opacity = '1';
   }
 
   function visResultat() {
