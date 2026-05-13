@@ -555,6 +555,30 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
 }
 #mario-hopp-btn[hidden] { display: none; }
 
+/* Bord */
+.bord-kort {
+  margin: 0 16px 16px;
+  padding: 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+}
+.bord-kort.bord-treff {
+  border-color: #D4A853;
+  background: rgba(212,168,83,0.1);
+  box-shadow: 0 0 24px rgba(212,168,83,0.3);
+}
+.bord-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(212,168,83,0.2); }
+.bord-nr { font-size: 18px; color: #D4A853; font-weight: bold; }
+.bord-info { font-size: 11px; color: #9BAABB; }
+.bord-gjester { display: flex; flex-direction: column; gap: 6px; }
+.bord-gjest { display: flex; align-items: center; gap: 10px; padding: 6px 8px; border-radius: 8px; }
+.bord-gjest-treff { background: rgba(212,168,83,0.2); }
+.bord-avatar { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; }
+.bord-avatar.bord-init { background: linear-gradient(135deg, #D4A853, #C4943A); color: #0D1B2A; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; }
+.bord-navn { flex: 1; font-size: 14px; color: #E8E0D4; }
+.bord-tag { font-size: 10px; background: rgba(200,160,216,0.2); color: #C8A0D8; padding: 2px 6px; border-radius: 8px; }
+
 /* Hjelp-side */
 .hjelp-seksjon {
   margin: 0 16px 16px;

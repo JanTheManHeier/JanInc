@@ -33,6 +33,7 @@
     initMinnebok();
     initOverlay();
     initMario();
+    initBord();
     sporBesok('hjem');
   });
 
@@ -135,6 +136,7 @@
     if (id === 'hilsener') lastHilsener();
     if (id === 'gjester') renderGjester();
     if (id === 'mario') lastMarioTopp();
+    if (id === 'bord') renderBord();
     sporBesok(id);
   }
 
@@ -606,7 +608,57 @@
     });
   }
 
-  // ============ Mario-spill ============
+  // ============ Bord ============
+  let bordSok = '';
+  function initBord() {
+    const inp = document.getElementById('bord-sok');
+    if (!inp) return;
+    inp.oninput = () => { bordSok = inp.value.trim().toLowerCase(); renderBord(); };
+  }
+
+  function renderBord() {
+    const liste = document.getElementById('bord-liste');
+    if (!liste) return;
+    // Grupper gjester per bord
+    const bordMap = {};
+    GJESTER.forEach(g => {
+      if (g.avbud) return;
+      if (!g.bord) return;
+      if (!bordMap[g.bord]) bordMap[g.bord] = { type: g.bordType || 8, gjester: [] };
+      bordMap[g.bord].gjester.push(g);
+    });
+    const bordNumre = Object.keys(bordMap).map(n => +n).sort((a,b) => a - b);
+
+    let html = '';
+    for (const nr of bordNumre) {
+      const b = bordMap[nr];
+      const matchSok = bordSok && b.gjester.some(g => g.navn.toLowerCase().includes(bordSok));
+      const utheve = matchSok ? ' bord-treff' : '';
+      html += `<div class="bord-kort${utheve}" id="bord-${nr}">
+        <div class="bord-header">
+          <span class="bord-nr">Bord ${nr}</span>
+          <span class="bord-info">${b.type}-mannsbord · ${b.gjester.length} gjester</span>
+        </div>
+        <div class="bord-gjester">`;
+      for (const g of b.gjester) {
+        const treff = bordSok && g.navn.toLowerCase().includes(bordSok);
+        const init = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
+        html += `<div class="bord-gjest${treff ? ' bord-gjest-treff' : ''}">
+          ${g.bildeFil ? `<img class="bord-avatar" src="${esc(g.bildeFil)}" alt="" />` : `<div class="bord-avatar bord-init">${esc(init)}</div>`}
+          <span class="bord-navn">${esc(g.navn)}</span>
+          ${g.rolle ? `<span class="bord-tag">${esc(g.rolle)}</span>` : ''}
+        </div>`;
+      }
+      html += '</div></div>';
+    }
+    liste.innerHTML = html;
+
+    // Scroll til treff hvis sokt
+    if (bordSok) {
+      const t = liste.querySelector('.bord-treff');
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
   function initMario() {
     const canvas = document.getElementById('mario-canvas');
     const startScr = document.getElementById('mario-start');
