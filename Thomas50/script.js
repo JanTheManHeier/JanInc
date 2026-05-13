@@ -249,6 +249,7 @@
           <div class="gjest-bio">${esc(g.bio)}</div>
           ${g.liBio ? `<div class="gjest-fbbio">💼 ${esc(g.liBio)}</div>` : ''}
           ${g.fbBio ? `<div class="gjest-fbbio">${esc(g.fbBio)}</div>` : ''}
+          ${g.relasjon ? `<div class="gjest-rel">👨‍👩‍👧 ${esc(g.relasjon)}</div>` : ''}
           ${g.extraBio ? `<div class="gjest-extra">✨ ${esc(g.extraBio)}</div>` : ''}
           ${g.folge ? `<div class="gjest-bio" style="color:#7A8FA8">Følge: ${esc(g.folge)}</div>` : ''}
           ${tag}
@@ -655,6 +656,7 @@
         html += `<div class="bord-gjest${treff ? ' bord-gjest-treff' : ''}">
           ${g.bildeFil ? `<img class="bord-avatar" src="${esc(g.bildeFil)}" alt="" />` : `<div class="bord-avatar bord-init">${esc(init)}</div>`}
           <span class="bord-navn">${esc(g.navn)}</span>
+          ${g.relasjon ? `<span class="bord-rel">${esc(g.relasjon)}</span>` : ''}
           ${g.rolle ? `<span class="bord-tag">${esc(g.rolle)}</span>` : ''}
         </div>`;
       }
