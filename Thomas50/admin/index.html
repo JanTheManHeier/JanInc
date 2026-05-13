@@ -52,7 +52,7 @@ function render(d) {
     <div class="stat-card"><div class="stat-num">${d.totalt}</div><div class="stat-label">Totale besøk</div></div>
     <div class="stat-card"><div class="stat-num">${d.unikeNavn}</div><div class="stat-label">Unike personer</div></div>
     <div class="stat-card"><div class="stat-num">${d.hilsener.length}</div><div class="stat-label">Hilsener</div></div>
-    <div class="stat-card"><div class="stat-num">${d.taler.length}</div><div class="stat-label">Talemeldinger</div></div>
+    <div class="stat-card"><div class="stat-num">${d.taler.length}</div><div class="stat-label">Taleforespørsler</div></div>
     <div class="stat-card"><div class="stat-num">${d.highscore ? d.highscore.length : 0}</div><div class="stat-label">Quiz-spillere</div></div>
   </div>`;
 
@@ -73,7 +73,7 @@ function render(d) {
   h += d.perSide.map(r => `<tr><td>${esc(r.side)}</td><td>${r.antall}</td></tr>`).join('');
   h += '</table>';
 
-  h += '<h2>🎤 Talemeldinger til toastmasterne</h2>';
+  h += '<h2>🎤 Taleforespørsler til toastmasterne</h2>';
   if (d.taler.length) {
     h += '<table><tr><th>Navn</th><th>E-post</th><th>Tema</th><th>Melding</th><th>Tid</th></tr>';
     h += d.taler.map(t => `<tr>

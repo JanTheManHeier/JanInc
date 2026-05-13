@@ -378,7 +378,7 @@
       });
       if (!res.ok) throw new Error('API feil');
       status.textContent = '';
-      toast('🎤 Talemelding sendt til Ronny og Marianne!');
+      toast('🎤 Talen er meldt inn til Ronny og Marianne!');
       document.getElementById('toast-tema').value = '';
       document.getElementById('toast-melding').value = '';
     } catch (e) {

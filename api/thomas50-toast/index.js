@@ -22,12 +22,12 @@ function escHtml(s) {
 }
 
 function lagMail({ navn, epost, tema, melding }) {
-    const subject = `🎤 Ny talemelding til Thomas 50 — fra ${navn}`;
+    const subject = `🎤 Ny taleforespørsel til Thomas 50 — fra ${navn}`;
     const epostLinje = epost || '(ikke oppgitt)';
     const temaLinje = tema || '(ikke oppgitt)';
     const text = `Hei Ronny og Marianne!
 
-Det har kommet inn en ny talemelding til Thomas sin 50-årsfeiring 30. mai 2026.
+Det er noen som ønsker å holde tale i Thomas sin 50-årsfeiring 30. mai 2026.
 
 Navn:    ${navn}
 E-post:  ${epostLinje}
@@ -44,7 +44,7 @@ Jans agent 🤖
 
     const html = `
 <p>Hei Ronny og Marianne!</p>
-<p>Det har kommet inn en ny talemelding til Thomas sin 50-årsfeiring 30. mai 2026.</p>
+<p>Det er noen som ønsker å holde tale i Thomas sin 50-årsfeiring 30. mai 2026.</p>
 <table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">
   <tr><td style="padding:6px 12px 6px 0;color:#888"><strong>Navn</strong></td><td style="padding:6px 0">${escHtml(navn)}</td></tr>
   <tr><td style="padding:6px 12px 6px 0;color:#888"><strong>E-post</strong></td><td style="padding:6px 0">${epost ? `<a href="mailto:${escHtml(epost)}">${escHtml(epost)}</a>` : '<em>(ikke oppgitt)</em>'}</td></tr>
