@@ -225,7 +225,7 @@
     const grid = document.getElementById('gjester-grid');
     let liste = GJESTER.slice();
     if (gjesterFilter === 'pust') liste = liste.filter(g => g.pust);
-    else if (gjesterFilter === 'toast') liste = liste.filter(g => g.rolle === 'Toastmaster');
+    else if (gjesterFilter === 'toast') liste = liste.filter(g => (g.rolle || '').toLowerCase() === 'toastmaster');
     else if (gjesterFilter === 'avbud') liste = liste.filter(g => g.avbud);
     else liste = liste.filter(g => !g.avbud); // alle = ikke vis avbud
     if (gjesterFilter === 'avbud' && liste.length === 0) {
@@ -235,10 +235,11 @@
     grid.innerHTML = liste.map((g, idx) => {
       const init = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
       const klasser = ['gjest-kort'];
-      if (g.rolle === 'Toastmaster') klasser.push('toast');
+      const erToast = (g.rolle || '').toLowerCase() === 'toastmaster';
+      if (erToast) klasser.push('toast');
       if (g.avbud) klasser.push('avbud');
       let tag = '';
-      if (g.rolle === 'Toastmaster') tag = `<span class="gjest-tag toast">🎤 Toastmaster</span>`;
+      if (erToast) tag = `<span class="gjest-tag toast">🎤 Toastmaster</span>`;
       else if (g.avbud) tag = `<span class="gjest-tag avbud">Avbud</span>`;
       else if (g.pust) tag = `<span class="gjest-tag">🧖 Pust${g.plus ? ` +${g.plus}` : ''}</span>`;
       else if (g.plus) tag = `<span class="gjest-tag">+${g.plus} følge</span>`;
@@ -269,7 +270,7 @@
     const init = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
     const innhold = document.getElementById('gjest-modal-innhold');
     let tag = '';
-    if (g.rolle === 'Toastmaster') tag = `<span class="gjest-tag toast">🎤 Toastmaster</span>`;
+    if ((g.rolle || '').toLowerCase() === 'toastmaster') tag = `<span class="gjest-tag toast">🎤 Toastmaster</span>`;
     else if (g.avbud) tag = `<span class="gjest-tag avbud">Avbud</span>`;
     else if (g.pust) tag = `<span class="gjest-tag">🧖 På Pust${g.plus ? ` +${g.plus}` : ''}</span>`;
     else if (g.plus) tag = `<span class="gjest-tag">+${g.plus} følge</span>`;
