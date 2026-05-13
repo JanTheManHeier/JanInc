@@ -57,7 +57,8 @@ const GJESTER = [
     bord: 1,
     bordType: 8,
     relasjon: "Yngste sønn",
-    fbUrl: "https://www.facebook.com/birk.wilhelmsen"
+    fbUrl: "https://www.facebook.com/birk.wilhelmsen",
+    bildeFil: "images/gjester/birk-h-wilhelmsen.jpg"
   },
   {
     navn: "Inger Johanne Sumstad",
@@ -151,7 +152,8 @@ const GJESTER = [
     bordType: 8,
     relasjon: "Bror",
     fbUrl: "https://www.facebook.com/jakob.hansen.17",
-    fbBio: "📚 UiT Norges arktiske universitet · 📍 Tromsø, Norway"
+    fbBio: "📚 UiT Norges arktiske universitet · 📍 Tromsø, Norway",
+    bildeFil: "images/gjester/jakob-b-hansen.jpg"
   },
   {
     navn: "Kathrine B Hansen",
@@ -213,14 +215,16 @@ const GJESTER = [
     bordType: 10,
     relasjon: "Sønn til Nina og Mats",
     fbUrl: "https://www.facebook.com/jacob.wilhelmsen",
-    fbBio: "🏠 Utdanning · 💕 Singel"
+    fbBio: "🏠 Utdanning · 💕 Singel",
+    bildeFil: "images/gjester/jacob-wilhelmsen.jpg"
   },
   {
     navn: "Jørgen Wilhelmsen",
     bord: 3,
     bordType: 10,
     relasjon: "Sønn til Nina og Mats",
-    fbUrl: "https://www.facebook.com/profile.php?id=1013976800"
+    fbUrl: "https://www.facebook.com/profile.php?id=1013976800",
+    bildeFil: "images/gjester/jorgen-wilhelmsen.jpg"
   },
   {
     navn: "Mats Sæverud",
@@ -299,7 +303,8 @@ const GJESTER = [
     bord: 4,
     bordType: 8,
     fbUrl: "https://www.facebook.com/marita.mokkelbost",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/marita-mokkelbost.jpg"
   },
   {
     navn: "Morten Gammelgård",
@@ -402,7 +407,8 @@ const GJESTER = [
     fbBio: "Universitetssykehuset Nord-Norge HF · 📚 Universitetet i Oslo (UiO) · 📍 Tromsø, Norway",
     fbUrl: "https://www.facebook.com/broxene",
     folge: "Hans Thomas Brox",
-    relasjon: "Venn og nabo"
+    relasjon: "Venn og nabo",
+    bildeFil: "images/gjester/nina-brox.jpg"
   },
   {
     navn: "Terje Nymark",
@@ -420,7 +426,8 @@ const GJESTER = [
     pust: true,
     bio: "Pust og spleis-deltaker.",
     fbUrl: "https://www.facebook.com/arne.aarhus.7",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/arne-aarhus.jpg"
   },
   {
     navn: "Bjarte Kristoffersen",
@@ -475,7 +482,7 @@ const GJESTER = [
     fbUrl: "https://www.facebook.com/ivar.wulff",
     liBio: "COO VAP S&D · 📍 Norway",
     liUrl: "https://www.linkedin.com/in/ivarwulff/",
-    bildeFil: "images/gjester/ivar-wulff.jpg",
+    bildeFil: "images/gjester/ivar-wullf.jpg",
     relasjon: "Venn"
   },
   {
@@ -500,7 +507,7 @@ const GJESTER = [
     fbUrl: "https://www.facebook.com/odd.g.ingebrigtsen",
     liBio: "Ønsker du markedets mest komplette datasikkerhetsløsning? · 📍 Tromsø, Troms og Finnmark, Norway",
     liUrl: "https://www.linkedin.com/in/oddgunnaringebrigtsen/",
-    bildeFil: "images/gjester/odd-gunnar-ingebrigtsen.jpg",
+    bildeFil: "images/gjester/odd-gunnar-ingebritsen.jpg",
     relasjon: "Venn"
   },
   {
@@ -689,7 +696,8 @@ const GJESTER = [
     bio: "Bekreftet på event-posten.",
     fbBio: "📍 Tromsø, Norway",
     fbUrl: "https://www.facebook.com/ellendeliassen",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/ellen-eliassen.jpg"
   },
   {
     navn: "Erik Josefsen",
@@ -713,7 +721,8 @@ const GJESTER = [
     bord: 9,
     bordType: 10,
     relasjon: "Venn",
-    fbUrl: "https://www.facebook.com/magnus.seppola"
+    fbUrl: "https://www.facebook.com/magnus.seppola",
+    bildeFil: "images/gjester/magnus-seppola.jpg"
   },
   {
     navn: "Silje Ingebrigtsen",
@@ -739,7 +748,8 @@ const GJESTER = [
     bordType: 10,
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/synne.guldbrandsen",
-    fbBio: "📚 Norges Fiskerihøgskole"
+    fbBio: "📚 Norges Fiskerihøgskole",
+    bildeFil: "images/gjester/synne-guldbrandsen.jpg"
   },
   {
     navn: "Terje Karlsen",
@@ -828,7 +838,8 @@ const GJESTER = [
     bio: "Sammen med Marianne Bille på Pust.",
     fbBio: "📍 Oslo, Norge",
     fbUrl: "https://www.facebook.com/ogrinde",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/oyvind-grinde.jpg"
   },
   {
     navn: "Anne Marvik",
