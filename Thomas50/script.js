@@ -127,10 +127,19 @@
       b.addEventListener('click', () => visSide(b.dataset.go));
     });
   }
+  // Sammenslåtte sider: sub-side → forelder-knapp i hovedmenyen
+  const NAV_GROUP = {
+    bord: 'gjester',
+    toastmaster: 'hilsener',
+    mario: 'spill',
+  };
+
   function visSide(id) {
     aktivSide = id;
     document.querySelectorAll('.page').forEach(p => p.hidden = (p.dataset.page !== id));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.go === id));
+    const navParent = NAV_GROUP[id] || id;
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.go === navParent));
+    document.querySelectorAll('.sub-tab').forEach(t => t.classList.toggle('active', t.dataset.go === id));
     window.scrollTo(0, 0);
     if (id === 'program') setTimeout(initMap, 100);
     if (id === 'hilsener') lastHilsener();
