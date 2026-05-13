@@ -147,16 +147,20 @@
 
     <div class="sang-card">
       <div class="sang-icon">🎶</div>
-      <h3 class="sang-title">Endelig voksen (kanskje)</h3>
-      <p class="sang-sub">Melodi: nordnorsk folkevisestil<br />Tekst: venner og familie</p>
+      <h3 class="sang-title">Hurra for Thomas</h3>
+      <p class="sang-sub">Bursdagssang for danseløva på 50</p>
+      <audio id="sang-player" controls preload="metadata" style="width:100%;margin-top:14px;border-radius:8px">
+        <source src="audio/hurra-for-thomas.mp3" type="audio/mpeg" />
+        Nettleseren din støtter ikke audio-avspilling.
+      </audio>
     </div>
 
     <button id="vis-lyrics" class="btn-primary">📜 Vis sangtekst</button>
     <div id="lyrics" class="lyrics" hidden><pre id="lyrics-text"></pre></div>
 
     <div class="section">
-      <h3 class="section-title">🎧 Lag sangen med Suno</h3>
-      <p class="lead">Kopier teksten over og lim inn på <strong>suno.com</strong> for å generere en ekte sang. Spill den under middagen!</p>
+      <h3 class="section-title">🎧 Lag din egen versjon med Suno</h3>
+      <p class="lead">Vil du lage en ny versjon? Kopier teksten under og lim inn på <strong>suno.com</strong> for å generere en alternativ sang.</p>
       <a href="https://suno.com" target="_blank" rel="noopener" class="btn-link-box">🎤 Åpne Suno.com →</a>
       <button id="kopier-tekst" class="btn-secondary">📋 Kopier sangtekst</button>
     </div>
