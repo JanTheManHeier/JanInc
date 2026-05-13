@@ -18,6 +18,10 @@
   td.tekst { white-space: pre-wrap; }
   .muted { color: #7A8FA8; font-size: 12px; }
   button { background: #D4A853; color: #0D1B2A; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  button.danger { background: #C04040; color: #fff; }
+  button.danger:hover { background: #E05050; }
+  button.tiny { padding: 4px 10px; font-size: 12px; }
+  .admin-aksjoner { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
   .err { color: #E08080; padding: 16px; background: rgba(192,64,64,0.1); border-radius: 8px; margin: 12px 0; }
   a { color: #D4A853; }
 </style>
@@ -29,6 +33,53 @@
 <div id="content">Laster...</div>
 
 <script>
+let adminKey = sessionStorage.getItem('thomas50-admin-key') || '';
+
+function settAdminKey() {
+  const k = prompt('Skriv inn admin-nøkkel (lagres i denne fanen):', adminKey);
+  if (k != null) {
+    adminKey = k;
+    sessionStorage.setItem('thomas50-admin-key', k);
+  }
+  return adminKey;
+}
+
+async function adminPost(url, body) {
+  if (!adminKey) settAdminKey();
+  if (!adminKey) return null;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...body, key: adminKey }),
+  });
+  if (res.status === 401) {
+    alert('Feil admin-nøkkel — prøv igjen');
+    sessionStorage.removeItem('thomas50-admin-key');
+    adminKey = '';
+    return null;
+  }
+  if (!res.ok) {
+    const t = await res.text().catch(() => '');
+    alert('Feil: ' + res.status + ' ' + t);
+    return null;
+  }
+  return res.json();
+}
+
+async function resetScores(type, label) {
+  if (!confirm(`Er du sikker på at du vil slette ALLE ${label}? Dette kan ikke angres.`)) return;
+  const r = await adminPost('/api/thomas50-admin-reset', { type });
+  if (r && r.success) {
+    alert(`✅ ${label} er slettet`);
+    last();
+  }
+}
+
+async function slettHilsen(id, navn) {
+  if (!confirm(`Slette hilsen fra "${navn}"?`)) return;
+  const r = await adminPost('/api/thomas50-admin-delete-greeting', { id });
+  if (r && r.success) last();
+}
 async function last() {
   const c = document.getElementById('content');
   c.innerHTML = 'Laster...';
@@ -57,9 +108,25 @@ function render(d) {
   </div>`;
 
   if (d.highscore && d.highscore.length) {
-    h += '<h2>🏆 Quiz topp 10</h2><table><tr><th>#</th><th>Navn</th><th>Score</th><th>Forsøk</th><th>Sist</th></tr>';
+    h += '<h2>🏆 Quiz topp 10</h2>';
+    h += '<div class="admin-aksjoner"><button class="danger tiny" onclick="resetScores(\'quiz\', \'Quiz-scores\')">🗑️ Reset quiz-scores</button></div>';
+    h += '<table><tr><th>#</th><th>Navn</th><th>Score</th><th>Forsøk</th><th>Sist</th></tr>';
     h += d.highscore.map((r, i) => `<tr><td>${['🥇','🥈','🥉'][i]||(i+1)}</td><td><strong>${esc(r.navn)}</strong></td><td>${r.score}/${r.antall}</td><td>${r.forsok}</td><td class="muted">${dt(r.sist)}</td></tr>`).join('');
     h += '</table>';
+  } else {
+    h += '<h2>🏆 Quiz topp 10</h2>';
+    h += '<div class="admin-aksjoner"><button class="danger tiny" onclick="resetScores(\'quiz\', \'Quiz-scores\')">🗑️ Reset quiz-scores</button></div>';
+    h += '<p class="muted">Ingen scores ennå.</p>';
+  }
+
+  h += '<h2>🎮 Spill topp 10 (Thomas til Festen)</h2>';
+  h += '<div class="admin-aksjoner"><button class="danger tiny" onclick="resetScores(\'spill\', \'Spill-scores\')">🗑️ Reset spill-scores</button></div>';
+  if (d.spillTopp && d.spillTopp.length) {
+    h += '<table><tr><th>#</th><th>Navn</th><th>Score</th><th>Sist</th></tr>';
+    h += d.spillTopp.map((r, i) => `<tr><td>${['🥇','🥈','🥉'][i]||(i+1)}</td><td><strong>${esc(r.navn)}</strong></td><td>${r.score}</td><td class="muted">${dt(r.sist)}</td></tr>`).join('');
+    h += '</table>';
+  } else {
+    h += '<p class="muted">Ingen scores ennå.</p>';
   }
 
   h += '<h2>👥 Hvem har vært inne?</h2>';
@@ -88,11 +155,12 @@ function render(d) {
 
   h += '<h2>💌 Hilsener til Thomas</h2>';
   if (d.hilsener.length) {
-    h += '<table><tr><th>Navn</th><th>Hilsen</th><th>Tid</th></tr>';
+    h += '<table><tr><th>Navn</th><th>Hilsen</th><th>Tid</th><th></th></tr>';
     h += d.hilsener.map(t => `<tr>
       <td><strong>${esc(t.navn)}</strong></td>
       <td class="tekst">${esc(t.tekst)}</td>
       <td class="muted">${dt(t.opprettet)}</td>
+      <td><button class="danger tiny" onclick="slettHilsen(${t.id}, '${esc(t.navn).replace(/'/g, '&#39;')}')">🗑️</button></td>
     </tr>`).join('');
     h += '</table>';
   } else h += '<p class="muted">Ingen hilsener ennå.</p>';

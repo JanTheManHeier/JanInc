@@ -36,6 +36,12 @@ module.exports = async function (context, req) {
                 SELECT TOP 20 navn, MAX(score) AS score, MAX(antall) AS antall, COUNT(*) AS forsok, MAX(opprettet) AS sist
                 FROM Thomas50_Highscore GROUP BY navn ORDER BY score DESC, sist ASC`);
         } catch {}
+        let spillTopp = [];
+        try {
+            spillTopp = await executeQuery(connection, `
+                SELECT TOP 20 navn, MAX(score) AS score, MAX(opprettet) AS sist
+                FROM Thomas50_Spillscore GROUP BY navn ORDER BY score DESC, sist ASC`);
+        } catch {}
 
         context.res = {
             status: 200, headers,
@@ -48,6 +54,7 @@ module.exports = async function (context, req) {
                 hilsener,
                 taler,
                 highscore,
+                spillTopp,
                 generertAt: new Date().toISOString()
             }
         };
