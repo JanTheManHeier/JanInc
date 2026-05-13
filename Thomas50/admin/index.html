@@ -83,25 +83,27 @@ async function slettHilsen(id, navn) {
 
 // Geo-cache i sessionStorage så vi ikke spør om samme IP flere ganger
 const geoCache = JSON.parse(sessionStorage.getItem('thomas50-geo') || '{}');
+// Rydd ut tidligere feilede oppslag
+Object.keys(geoCache).forEach(k => { if (!geoCache[k] || geoCache[k].startsWith('?')) delete geoCache[k]; });
 function lagreGeoCache() { sessionStorage.setItem('thomas50-geo', JSON.stringify(geoCache)); }
 
 async function slaaOppGeo(ip) {
   if (!ip) return null;
   if (geoCache[ip]) return geoCache[ip];
   try {
-    const r = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}?fields=success,city,region,country,country_code,flag.emoji`);
+    const r = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}`);
     const d = await r.json();
     if (d && d.success) {
       const flagg = (d.flag && d.flag.emoji) || '';
       const sted = d.city || d.region || '';
       const land = d.country || '';
-      const tekst = sted && land ? `${flagg} ${sted}, ${land}` : (sted || land || '?');
+      const tekst = sted && land ? `${flagg} ${sted}, ${land}` : (flagg + ' ' + (sted || land || '?')).trim();
       geoCache[ip] = tekst;
     } else {
-      geoCache[ip] = '?';
+      geoCache[ip] = '? ' + (d && d.message ? d.message : '');
     }
-  } catch {
-    geoCache[ip] = '?';
+  } catch (e) {
+    geoCache[ip] = '? (' + (e.message || 'feil') + ')';
   }
   lagreGeoCache();
   return geoCache[ip];
