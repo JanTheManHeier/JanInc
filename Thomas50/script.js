@@ -613,11 +613,19 @@
     const startBtn = document.getElementById('mario-start-btn');
     const restartBtn = document.getElementById('mario-restart-btn');
     const seToppBtn = document.getElementById('mario-se-topp-btn');
+    const hoppBtn = document.getElementById('mario-hopp-btn');
 
     if (!canvas || !window.ThomasSpill) return;
 
+    if (hoppBtn) {
+      const trigger = (e) => { e.preventDefault(); ThomasSpill.hopp(); };
+      hoppBtn.addEventListener('touchstart', trigger, { passive: false });
+      hoppBtn.addEventListener('mousedown', trigger);
+    }
+
     ThomasSpill.init(canvas, async (score) => {
       canvas.hidden = true;
+      if (hoppBtn) hoppBtn.hidden = true;
       resScr.hidden = false;
       let tittel = `Du tok ${score} poeng!`;
       let tekst = '';
@@ -666,6 +674,7 @@
       startScr.hidden = true;
       resScr.hidden = true;
       canvas.hidden = false;
+      if (hoppBtn) hoppBtn.hidden = false;
       const form = document.getElementById('mario-navn-form');
       if (form) form.remove();
       // Wait for layout, then start
