@@ -91,22 +91,27 @@ async function slaaOppGeo(ip) {
   if (!ip) return null;
   if (geoCache[ip]) return geoCache[ip];
   try {
-    const r = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}`);
+    const r = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/json/`);
     const d = await r.json();
-    if (d && d.success) {
-      const flagg = (d.flag && d.flag.emoji) || '';
+    if (d && !d.error) {
       const sted = d.city || d.region || '';
-      const land = d.country || '';
+      const land = d.country_name || d.country || '';
+      const flagg = landTilFlagg(d.country_code || d.country);
       const tekst = sted && land ? `${flagg} ${sted}, ${land}` : (flagg + ' ' + (sted || land || '?')).trim();
       geoCache[ip] = tekst;
     } else {
-      geoCache[ip] = '? ' + (d && d.message ? d.message : '');
+      geoCache[ip] = '? ' + (d && d.reason ? d.reason : '');
     }
   } catch (e) {
     geoCache[ip] = '? (' + (e.message || 'feil') + ')';
   }
   lagreGeoCache();
   return geoCache[ip];
+}
+
+function landTilFlagg(kode) {
+  if (!kode || kode.length !== 2) return '';
+  return String.fromCodePoint(...[...kode.toUpperCase()].map(c => 0x1F1E6 - 65 + c.charCodeAt(0)));
 }
 
 async function berikGeo() {
