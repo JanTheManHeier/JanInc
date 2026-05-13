@@ -254,6 +254,15 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
   font-size: 20px;
   margin: 0 auto 4px;
 }
+.gjest-bilde {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #D4A853;
+  margin: 0 auto 4px;
+  display: block;
+}
+.gjest-lenker { display: flex; gap: 8px; justify-content: center; margin-top: 4px; }
 .gjest-navn { font-size: 13px; font-weight: bold; color: #E8E0D4; text-align: center; }
 .gjest-bio { font-size: 11px; color: #9BAABB; line-height: 1.4; text-align: center; }
 .gjest-fbbio { font-size: 10px; color: #7A8FA8; line-height: 1.4; text-align: center; padding: 4px 6px; background: rgba(255,255,255,0.03); border-radius: 6px; margin-top: 4px; }

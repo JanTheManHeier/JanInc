@@ -233,13 +233,17 @@
       else if (g.plus) tag = `<span class="gjest-tag">+${g.plus} følge</span>`;
       return `
         <div class="${klasser.join(' ')}">
-          <div class="gjest-avatar">${esc(init)}</div>
+          ${g.bildeFil ? `<img class="gjest-bilde" src="${esc(g.bildeFil)}" alt="${esc(g.navn)}" />` : `<div class="gjest-avatar">${esc(init)}</div>`}
           <div class="gjest-navn">${esc(g.navn)}</div>
           <div class="gjest-bio">${esc(g.bio)}</div>
+          ${g.liBio ? `<div class="gjest-fbbio">💼 ${esc(g.liBio)}</div>` : ''}
           ${g.fbBio ? `<div class="gjest-fbbio">${esc(g.fbBio)}</div>` : ''}
           ${g.folge ? `<div class="gjest-bio" style="color:#7A8FA8">Følge: ${esc(g.folge)}</div>` : ''}
           ${tag}
-          ${g.fbUrl ? `<a class="gjest-fb-link" href="${esc(g.fbUrl)}" target="_blank" rel="noopener">facebook</a>` : ''}
+          <div class="gjest-lenker">
+            ${g.fbUrl ? `<a class="gjest-fb-link" href="${esc(g.fbUrl)}" target="_blank" rel="noopener">facebook</a>` : ''}
+            ${g.liUrl ? `<a class="gjest-fb-link" href="${esc(g.liUrl)}" target="_blank" rel="noopener">linkedin</a>` : ''}
+          </div>
         </div>`;
     }).join('');
   }

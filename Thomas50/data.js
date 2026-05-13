@@ -76,7 +76,10 @@ const GJESTER = [
     plus: 0,
     bio: "Klar for badstue og fest.",
     fbBio: "Sykehusinnkjøp HF · 📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 I et forhold med Terje Karlstad",
-    fbUrl: "https://www.facebook.com/silje.ingebrigtsen.75"
+    fbUrl: "https://www.facebook.com/silje.ingebrigtsen.75",
+    liBio: "Principal Consultant HWE at Equinor · 📍 Norway",
+    bildeFil: "images/gjester/silje-ingebrigtsen.jpg",
+    liUrl: "https://www.linkedin.com/in/silje-ingebrigtsen-9467095a/"
   },
   {
     navn: "Ole-Herman Strømmesen",
@@ -91,7 +94,10 @@ const GJESTER = [
     plus: 1,
     bio: "Pust for Øyvind og henne selv — gleder seg!",
     fbUrl: "https://www.facebook.com/marianne.bille.1",
-    folge: "Øyvind Grinde"
+    folge: "Øyvind Grinde",
+    liBio: "Seniorrådgiver OU og kompetanse hos Statnett · 📍 Oslo, Oslo, Norway",
+    bildeFil: "images/gjester/marianne-bille.jpg",
+    liUrl: "https://www.linkedin.com/in/marianne-bille-8b9b1911/"
   },
   {
     navn: "Kristina Garfjell Kantola",
@@ -106,7 +112,10 @@ const GJESTER = [
     plus: 0,
     bio: "Pust 🔥",
     fbBio: "📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 I et forhold med Oddrun Halvorsen",
-    fbUrl: "https://www.facebook.com/andreas.willumsen"
+    fbUrl: "https://www.facebook.com/andreas.willumsen",
+    liBio: "Partner - Erhvervsmægler - CPH Erhverv · 📍 Copenhagen, Capital Region of Denmark, Denmark",
+    bildeFil: "images/gjester/andreas-willumsen.jpg",
+    liUrl: "https://www.linkedin.com/in/andreaswillumsen/"
   },
   {
     navn: "Jan Heier Johansen",
@@ -128,14 +137,20 @@ const GJESTER = [
     plus: 1,
     bio: "Nydelig initiativ — er med! Kommer kanskje med Silje.",
     fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Silje Ingebrigtsen",
-    fbUrl: "https://www.facebook.com/terje.karlstad.1"
+    fbUrl: "https://www.facebook.com/terje.karlstad.1",
+    liBio: "Head of IR/Portfolio Manager at SpareBank 1 Nord-Norge · 📍 Tromsø, Troms og Finnmark, Norway",
+    bildeFil: "images/gjester/terje-karlstad.jpg",
+    liUrl: "https://www.linkedin.com/in/terje-karlstad-3232343/"
   },
   {
     navn: "Bjarte Kristoffersen",
     pust: true,
     plus: 1,
     bio: "Initiativtaker for spleis. Pust med +1 hvis følget puster.",
-    fbUrl: "https://www.facebook.com/bjarte.kristoffersen"
+    fbUrl: "https://www.facebook.com/bjarte.kristoffersen",
+    liBio: "Økonomisjef · 📍 Tromsø, Troms og Finnmark, Norway",
+    bildeFil: "images/gjester/bjarte-kristoffersen.jpg",
+    liUrl: "https://www.linkedin.com/in/bjarte-kristoffersen-444a6813/"
   },
   {
     navn: "Maria Christina Edwall",
@@ -151,7 +166,10 @@ const GJESTER = [
     plus: 0,
     bio: "Pust! ❄️",
     fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Kirsten Buck Rustad",
-    fbUrl: "https://www.facebook.com/jon.engenes"
+    fbUrl: "https://www.facebook.com/jon.engenes",
+    liBio: "Head of Communications · 📍 Tromsø Region",
+    bildeFil: "images/gjester/jon-steinar-engenes.jpg",
+    liUrl: "https://www.linkedin.com/in/jonengenes/"
   },
   {
     navn: "Rune Myreng",
@@ -160,7 +178,10 @@ const GJESTER = [
     bio: "Sammen med Line på Pust og fest.",
     fbBio: "Bailbrook College, Bath UK · 📍 Tromsø, Norway · 💕 Gift med Line Myreng",
     fbUrl: "https://www.facebook.com/rune.myreng",
-    folge: "Line Myreng"
+    folge: "Line Myreng",
+    liBio: "Mekaniker i Hesselberg · 📍 Storsteinnes, Troms og Finnmark, Norway",
+    bildeFil: "images/gjester/rune-myreng.jpg",
+    liUrl: "https://www.linkedin.com/in/rune-myreng-819163337/"
   },
   {
     navn: "Ørjan Berg Karlsen",
@@ -176,7 +197,10 @@ const GJESTER = [
     plus: 0,
     bio: "Klar for Pust og fest.",
     fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Anders Mo Hanssen",
-    fbUrl: "https://www.facebook.com/marianne.svorken"
+    fbUrl: "https://www.facebook.com/marianne.svorken",
+    liBio: "Finansrådgiver at DnB NOR · 📍 Tromsø, Troms og Finnmark, Norway",
+    bildeFil: "images/gjester/marianne-svorken.jpg",
+    liUrl: "https://www.linkedin.com/in/marianne-svorken-5081ab7/"
   },
   {
     navn: "Marit Osima",
@@ -232,7 +256,10 @@ const GJESTER = [
     bio: "🎤 Toastmaster sammen med Ronny André. Send mail til ronnyandre@gmail.com hvis du vil holde tale!",
     fbBio: "📚 Høgskolen i Buskerud, Hønefoss · 📍 Oslo, Norge",
     fbUrl: "https://www.facebook.com/supermarianne",
-    rolle: "Toastmaster"
+    rolle: "Toastmaster",
+    liBio: "Assisterende partisekretær i Arbeiderpartiet · 📍 Oslo, Oslo, Norway",
+    bildeFil: "images/gjester/marianne-wilhelmsen.jpg",
+    liUrl: "https://www.linkedin.com/in/marianne-wilhelmsen-/"
   },
   {
     navn: "Ronny André",
@@ -272,14 +299,20 @@ const GJESTER = [
     plus: 0,
     bio: "Bekreftet på event-posten.",
     fbBio: "📍 Tromsø, Norway",
-    fbUrl: "https://www.facebook.com/jan.e.olsen.777"
+    fbUrl: "https://www.facebook.com/jan.e.olsen.777",
+    liBio: "Research Director Marine Biotechnology at Nofima · 📍 Tromsø, Troms og Finnmark, Norway",
+    bildeFil: "images/gjester/jan-erik-olsen.jpg",
+    liUrl: "https://www.linkedin.com/in/jan-erik-olsen-70b0a33/"
   },
   {
     navn: "Marius Furnes",
     pust: false,
     plus: 0,
     bio: "Bekreftet på event-posten.",
-    fbUrl: "https://www.facebook.com/furnesmarius"
+    fbUrl: "https://www.facebook.com/furnesmarius",
+    liBio: "Paramedisiner og sykepleier · 📍 Ålesund, Møre og Romsdal, Norway",
+    bildeFil: "images/gjester/marius-furnes.jpg",
+    liUrl: "https://www.linkedin.com/in/marius-furnes-859967106/"
   },
   {
     navn: "Kjell Roger Andersen",
@@ -303,14 +336,20 @@ const GJESTER = [
     plus: 0,
     bio: "Med på spleisen til Thomas.",
     fbBio: "Universitetssykehuset Nord-Norge HF · 📚 Melbu videregående skole · 📍 Tromsø, Norway",
-    fbUrl: "https://www.facebook.com/odd.g.ingebrigtsen"
+    fbUrl: "https://www.facebook.com/odd.g.ingebrigtsen",
+    liBio: "Ønsker du markedets mest komplette datasikkerhetsløsning? · 📍 Tromsø, Troms og Finnmark, Norway",
+    bildeFil: "images/gjester/odd-gunnar-ingebrigtsen.jpg",
+    liUrl: "https://www.linkedin.com/in/oddgunnaringebrigtsen/"
   },
   {
     navn: "Ivar Wulff",
     pust: true,
     plus: 0,
     bio: "Sammen med Hilde på Pust.",
-    fbUrl: "https://www.facebook.com/ivar.wulff"
+    fbUrl: "https://www.facebook.com/ivar.wulff",
+    liBio: "COO VAP S&D · 📍 Norway",
+    bildeFil: "images/gjester/ivar-wulff.jpg",
+    liUrl: "https://www.linkedin.com/in/ivarwulff/"
   },
   {
     navn: "Øyvind Grinde",
