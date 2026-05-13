@@ -284,6 +284,108 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
 .gjest-tag.toast { background: rgba(200,160,216,0.2); color: #C8A0D8; }
 .gjest-tag.avbud { background: rgba(192,64,64,0.2); color: #E08080; }
 
+.gjest-kort { cursor: pointer; transition: transform 0.12s, border-color 0.12s; }
+.gjest-kort:active { transform: scale(0.97); }
+.gjest-kort:hover { border-color: rgba(212,168,83,0.4); }
+
+.gjest-bord-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(212,168,83,0.18);
+  color: #D4A853;
+  padding: 3px 10px;
+  border-radius: 10px;
+  margin-top: 4px;
+  align-self: center;
+  border: 1px solid rgba(212,168,83,0.35);
+}
+
+/* Gjest-modal (forstørret kontaktkort) */
+.gjest-modal-card {
+  max-width: 420px;
+  width: calc(100% - 32px);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px 24px 24px;
+  position: relative;
+  text-align: center;
+}
+.gjest-modal-close {
+  position: absolute;
+  top: 8px; right: 12px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #E8E0D4;
+  font-size: 18px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: 1;
+}
+.gjest-modal-close:hover { background: rgba(192,64,64,0.4); }
+.gjest-modal-bilde {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #D4A853;
+  margin: 0 auto 12px;
+  display: block;
+}
+.gjest-modal-avatar {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #D4A853, #C4943A);
+  color: #0D1B2A;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: bold;
+  font-size: 42px;
+  margin: 0 auto 12px;
+}
+.gjest-modal-navn {
+  font-size: 22px;
+  color: #E8E0D4;
+  margin-bottom: 8px;
+}
+.gjest-modal-bord {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  background: rgba(212,168,83,0.2);
+  color: #D4A853;
+  padding: 6px 16px;
+  border-radius: 14px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(212,168,83,0.4);
+}
+.gjest-modal-bio {
+  font-size: 14px;
+  color: #C8D8E8;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.gjest-modal-felt {
+  font-size: 13px;
+  color: #9BAABB;
+  line-height: 1.5;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  text-align: left;
+}
+.gjest-modal-felt.gjest-modal-extra {
+  background: rgba(212,168,83,0.12);
+  color: #D4A853;
+  font-weight: 600;
+}
+.gjest-modal-tags { margin: 10px 0; }
+.gjest-modal-lenker {
+  display: flex; gap: 14px; justify-content: center;
+  margin-top: 10px;
+}
+
 /* Form / hilsener */
 .form { padding: 0 16px; }
 .form input, .form textarea {

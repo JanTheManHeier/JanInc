@@ -232,7 +232,7 @@
       grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#7A8FA8;padding:20px">Ingen avbud — nice! 🎉</div>`;
       return;
     }
-    grid.innerHTML = liste.map(g => {
+    grid.innerHTML = liste.map((g, idx) => {
       const init = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
       const klasser = ['gjest-kort'];
       if (g.rolle === 'Toastmaster') klasser.push('toast');
@@ -242,23 +242,55 @@
       else if (g.avbud) tag = `<span class="gjest-tag avbud">Avbud</span>`;
       else if (g.pust) tag = `<span class="gjest-tag">🧖 Pust${g.plus ? ` +${g.plus}` : ''}</span>`;
       else if (g.plus) tag = `<span class="gjest-tag">+${g.plus} følge</span>`;
+      const bordTag = g.bord && !g.avbud ? `<span class="gjest-bord-tag">🪑 Bord ${esc(String(g.bord))}</span>` : '';
       return `
-        <div class="${klasser.join(' ')}">
+        <div class="${klasser.join(' ')}" data-gjest-idx="${idx}">
           ${g.bildeFil ? `<img class="gjest-bilde" src="${esc(g.bildeFil)}" alt="${esc(g.navn)}" />` : `<div class="gjest-avatar">${esc(init)}</div>`}
           <div class="gjest-navn">${esc(g.navn)}</div>
           <div class="gjest-bio">${esc(g.bio)}</div>
-          ${g.liBio ? `<div class="gjest-fbbio">💼 ${esc(g.liBio)}</div>` : ''}
-          ${g.fbBio ? `<div class="gjest-fbbio">${esc(g.fbBio)}</div>` : ''}
-          ${g.relasjon ? `<div class="gjest-rel">👨‍👩‍👧 ${esc(g.relasjon)}</div>` : ''}
-          ${g.extraBio ? `<div class="gjest-extra">✨ ${esc(g.extraBio)}</div>` : ''}
-          ${g.folge ? `<div class="gjest-bio" style="color:#7A8FA8">Følge: ${esc(g.folge)}</div>` : ''}
+          ${bordTag}
           ${tag}
-          <div class="gjest-lenker">
-            ${g.fbUrl ? `<a class="gjest-fb-link" href="${esc(g.fbUrl)}" target="_blank" rel="noopener">facebook</a>` : ''}
-            ${g.liUrl ? `<a class="gjest-fb-link" href="${esc(g.liUrl)}" target="_blank" rel="noopener">linkedin</a>` : ''}
-          </div>
         </div>`;
     }).join('');
+    // Lagre filtrert liste for modal-oppslag
+    sistGjesterListe = liste;
+    grid.querySelectorAll('.gjest-kort').forEach(el => {
+      el.addEventListener('click', () => {
+        const i = parseInt(el.dataset.gjestIdx, 10);
+        visGjestModal(sistGjesterListe[i]);
+      });
+    });
+  }
+
+  let sistGjesterListe = [];
+
+  function visGjestModal(g) {
+    if (!g) return;
+    const init = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
+    const innhold = document.getElementById('gjest-modal-innhold');
+    let tag = '';
+    if (g.rolle === 'Toastmaster') tag = `<span class="gjest-tag toast">🎤 Toastmaster</span>`;
+    else if (g.avbud) tag = `<span class="gjest-tag avbud">Avbud</span>`;
+    else if (g.pust) tag = `<span class="gjest-tag">🧖 På Pust${g.plus ? ` +${g.plus}` : ''}</span>`;
+    else if (g.plus) tag = `<span class="gjest-tag">+${g.plus} følge</span>`;
+    innhold.innerHTML = `
+      ${g.bildeFil
+        ? `<img class="gjest-modal-bilde" src="${esc(g.bildeFil)}" alt="${esc(g.navn)}" />`
+        : `<div class="gjest-modal-avatar">${esc(init)}</div>`}
+      <h2 class="gjest-modal-navn">${esc(g.navn)}</h2>
+      ${g.bord && !g.avbud ? `<div class="gjest-modal-bord">🪑 Bord ${esc(String(g.bord))}</div>` : ''}
+      <div class="gjest-modal-bio">${esc(g.bio)}</div>
+      ${g.liBio ? `<div class="gjest-modal-felt">💼 ${esc(g.liBio)}</div>` : ''}
+      ${g.fbBio ? `<div class="gjest-modal-felt">${esc(g.fbBio)}</div>` : ''}
+      ${g.relasjon ? `<div class="gjest-modal-felt">👨‍👩‍👧 ${esc(g.relasjon)}</div>` : ''}
+      ${g.extraBio ? `<div class="gjest-modal-felt gjest-modal-extra">✨ ${esc(g.extraBio)}</div>` : ''}
+      ${g.folge ? `<div class="gjest-modal-felt">Følge: ${esc(g.folge)}</div>` : ''}
+      <div class="gjest-modal-tags">${tag}</div>
+      <div class="gjest-modal-lenker">
+        ${g.fbUrl ? `<a class="gjest-fb-link" href="${esc(g.fbUrl)}" target="_blank" rel="noopener">facebook</a>` : ''}
+        ${g.liUrl ? `<a class="gjest-fb-link" href="${esc(g.liUrl)}" target="_blank" rel="noopener">linkedin</a>` : ''}
+      </div>`;
+    document.getElementById('gjest-modal').hidden = false;
   }
 
   // ============ Hilsener ============
@@ -616,6 +648,14 @@
     document.getElementById('overlay').addEventListener('click', e => {
       if (e.target.id === 'overlay') document.getElementById('overlay').hidden = true;
     });
+    const gm = document.getElementById('gjest-modal');
+    if (gm) {
+      gm.addEventListener('click', e => {
+        if (e.target.id === 'gjest-modal') gm.hidden = true;
+      });
+      const closeBtn = document.getElementById('gjest-modal-close');
+      if (closeBtn) closeBtn.onclick = () => { gm.hidden = true; };
+    }
   }
 
   // ============ Bord ============
