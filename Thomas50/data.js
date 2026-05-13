@@ -49,19 +49,23 @@ const GJESTER = [
     navn: "Adele Kjær",
     bord: 1,
     bordType: 8,
-    relasjon: "Kjæreste til yngste sønn"
+    relasjon: "Kjæreste til yngste sønn",
+    fbUrl: "N/A"
   },
   {
     navn: "Birk H Wilhelmsen",
     bord: 1,
     bordType: 8,
-    relasjon: "Yngste sønn"
+    relasjon: "Yngste sønn",
+    fbUrl: "https://www.facebook.com/birk.wilhelmsen"
   },
   {
     navn: "Inger Johanne Sumstad",
     bord: 1,
     bordType: 8,
-    relasjon: "Mor"
+    relasjon: "Mor",
+    fbUrl: "https://www.facebook.com/inger.johanne.sumstad",
+    bildeFil: "images/gjester/inger-johanne-sumstad.jpg"
   },
   {
     navn: "Maja Wilhelmsen",
@@ -71,7 +75,8 @@ const GJESTER = [
     bio: "Pust 💦",
     fbBio: "Universitetssykehuset Nord-Norge HF · 📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 Gift med Thomas Helge Hansen",
     fbUrl: "https://www.facebook.com/majawilhelmsen",
-    relasjon: "Kone"
+    relasjon: "Kone",
+    bildeFil: "images/gjester/maja-wilhelmsen.jpg"
   },
   {
     navn: "Marianne Wilhelmsen",
@@ -94,123 +99,176 @@ const GJESTER = [
     rolle: "TOASTMASTER",
     bio: "🎤 Toastmaster sammen med Marianne. Kontakt: ronnyandre@gmail.com",
     fbUrl: "https://www.facebook.com/ronnyandre",
-    relasjon: "Mannen til søster til hans kone"
+    relasjon: "Mannen til søster til hans kone",
+    bildeFil: "images/gjester/ronny-andre-bendiksen.jpg"
   },
   {
     navn: "Snorre H Wilhelmsen",
     bord: 1,
     bordType: 8,
-    relasjon: "Eldste sønn"
+    relasjon: "Eldste sønn",
+    fbUrl: "https://www.facebook.com/snorre.wilhelmsen",
+    bildeFil: "images/gjester/snorre-h-wilhelmsen.jpg",
+    fbBio: "📍 Tromsø, Norway"
   },
   {
     navn: "Thomas Hansen",
     bord: 1,
     bordType: 8,
-    pust: true
+    pust: true,
+    fbUrl: "https://www.facebook.com/2mashh",
+    bildeFil: "images/gjester/thomas-hansen.jpg",
+    fbBio: "📍 Tromsø, Norway · 💕 Gift med Maja Wilhelmsen"
   },
   {
     navn: "Anita Sivertsen",
     bord: 2,
-    bordType: 8
+    bordType: 8,
+    fbUrl: "https://www.facebook.com/anita.sivertsen.14",
+    relasjon: "Samboer til Åge hansen",
+    bildeFil: "images/gjester/anita-sivertsen.jpg",
+    fbBio: "📍 Tromsø, Norway"
   },
   {
     navn: "Helge Hansen",
     bord: 2,
     bordType: 8,
-    relasjon: "Far"
+    relasjon: "Far",
+    fbUrl: "https://www.facebook.com/helge.hansen.140",
+    bildeFil: "images/gjester/helge-hansen.jpg",
+    fbBio: "📚 NKI Ingeniørhøgskole · 📍 Skøelv, Troms, Norway"
   },
   {
     navn: "Iris Wikmark",
     bord: 2,
     bordType: 8,
-    relasjon: "Konen til Trond Vidar Hansen"
+    relasjon: "Konen til Trond Vidar Hansen",
+    fbUrl: "N/A"
   },
   {
     navn: "Jakob B Hansen",
     bord: 2,
     bordType: 8,
-    relasjon: "Bror"
+    relasjon: "Bror",
+    fbUrl: "https://www.facebook.com/jakob.hansen.17",
+    fbBio: "📚 UiT Norges arktiske universitet · 📍 Tromsø, Norway"
   },
   {
     navn: "Kathrine B Hansen",
     bord: 2,
     bordType: 8,
-    relasjon: "Søster"
+    relasjon: "Søster",
+    fbUrl: "https://www.facebook.com/kathrine.hansen.71",
+    bildeFil: "images/gjester/kathrine-b-hansen.jpg",
+    fbBio: "BioMar AS, Myre · 📚 Finnfjordbotn Vidaregåande Skole · 📍 Myre, Nordland, Norway"
   },
   {
     navn: "Marte Lysnes Kristoffersen",
     bord: 2,
     bordType: 8,
-    relasjon: "Konen til Jakob B Hansen"
+    relasjon: "Samboer til Jakob B Hansen",
+    fbUrl: "https://www.facebook.com/marte.lysnes",
+    bildeFil: "images/gjester/marte-lysnes-kristoffersen.jpg",
+    fbBio: "📍 Tromsø, Norway"
   },
   {
     navn: "Trond Vidar Hansen",
     bord: 2,
     bordType: 8,
-    relasjon: "Søskendebarn"
+    relasjon: "Søskendebarn",
+    fbUrl: "https://www.facebook.com/trond.v.hansen.1",
+    bildeFil: "images/gjester/trond-vidar-hansen.jpg",
+    fbBio: "📚 Kvaløya Videregående Skole"
   },
   {
     navn: "Åge Hansen",
     bord: 2,
-    bordType: 8
+    bordType: 8,
+    fbUrl: "https://www.facebook.com/age.hansen.56",
+    relasjon: "Onkel",
+    bildeFil: "images/gjester/age-hansen.jpg",
+    fbBio: "📚 Finnfjordbotn Vidaregåande Skole · 📍 Tromsø, Norway"
   },
   {
     navn: "Anne Marit Bjørnflaten",
     bord: 3,
     bordType: 10,
-    relasjon: "konen til svigerfar"
+    relasjon: "konen til svigerfar",
+    fbUrl: "https://www.facebook.com/ambjornflaten",
+    bildeFil: "images/gjester/anne-marit-bjornflaten.jpg",
+    fbBio: "📍 Tromsø, Norway"
   },
   {
     navn: "Gunnar Wilhelmsen",
     bord: 3,
     bordType: 10,
-    relasjon: "Svigerfar"
+    relasjon: "Svigerfar",
+    fbUrl: "https://www.facebook.com/gwilhelmsen",
+    bildeFil: "images/gjester/gunnar-wilhelmsen.jpg",
+    fbBio: "📍 Tromsø, Norway"
   },
   {
     navn: "Jacob Wilhelmsen",
     bord: 3,
     bordType: 10,
-    relasjon: "Sønn til Nina og Mats"
+    relasjon: "Sønn til Nina og Mats",
+    fbUrl: "https://www.facebook.com/jacob.wilhelmsen",
+    fbBio: "🏠 Utdanning · 💕 Singel"
   },
   {
     navn: "Jørgen Wilhelmsen",
     bord: 3,
     bordType: 10,
-    relasjon: "Sønn til Nina og Mats"
+    relasjon: "Sønn til Nina og Mats",
+    fbUrl: "https://www.facebook.com/profile.php?id=1013976800"
   },
   {
     navn: "Mats Sæverud",
     bord: 3,
     bordType: 10,
-    relasjon: "Mann til Nina Wilhelmsen"
+    relasjon: "Mann til Nina Wilhelmsen",
+    fbUrl: "https://www.facebook.com/profile.php",
+    bildeFil: "images/gjester/mats-saeverud.jpg"
   },
   {
     navn: "Nina Wilhelmsen",
     bord: 3,
     bordType: 10,
-    relasjon: "Sviger søster"
+    relasjon: "Sviger søster",
+    fbUrl: "https://www.facebook.com/nina.wilhelmsen.18",
+    bildeFil: "images/gjester/nina-wilhelmsen.jpg"
   },
   {
     navn: "Odne Stunes",
     bord: 3,
-    bordType: 10
+    bordType: 10,
+    fbUrl: "https://www.facebook.com/odne.stunes",
+    bildeFil: "images/gjester/odne-stunes.jpg",
+    fbBio: "📍 Tromsø, Norway"
   },
   {
     navn: "Ragnhild Wilhelmsen",
     bord: 3,
     bordType: 10,
-    relasjon: "Svigermor"
+    relasjon: "Svigermor",
+    fbUrl: "N/A"
   },
   {
     navn: "Renate Larsen",
     bord: 3,
-    bordType: 10
+    bordType: 10,
+    fbUrl: "https://www.facebook.com/renate.larsen.12",
+    bildeFil: "images/gjester/renate-larsen.jpg",
+    fbBio: "📍 Tromsø, Norway"
   },
   {
     navn: "Heidi Lekang",
     bord: 4,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/heidi.lekang",
+    bildeFil: "images/gjester/heidi-lekang.jpg",
+    fbBio: "📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 Gift med Ole-Morten Indigo Lekang"
   },
   {
     navn: "Jan Erik Olsen",
@@ -228,43 +286,58 @@ const GJESTER = [
     navn: "Lise Benjaminsen",
     bord: 4,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/lise.hilmarsdatterstrand",
+    bildeFil: "images/gjester/lise-benjaminsen.jpg",
+    fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Morten Gammelgård Pedersen"
   },
   {
     navn: "Marita Mokkelbost",
     bord: 4,
-    bordType: 8
+    bordType: 8,
+    fbUrl: "https://www.facebook.com/marita.mokkelbost",
+    relasjon: "Venn"
   },
   {
     navn: "Morten Gammelgård",
     bord: 4,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/morten.gammelgaard.pedersen",
+    bildeFil: "images/gjester/morten-gammelgard.jpg",
+    fbBio: "📍 Tromsø, Norway"
   },
   {
     navn: "Ole Lekang",
     bord: 4,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "N/A"
   },
   {
     navn: "Ranveig Langseth",
     bord: 4,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "N/A"
   },
   {
     navn: "Ståle Søfting",
     bord: 4,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/stale.softing",
+    bildeFil: "images/gjester/stale-softing.jpg"
   },
   {
     navn: "Anneli Drecker",
     bord: 5,
     bordType: 8,
     pust: true,
-    relasjon: "Venn og nabo"
+    relasjon: "Venn og nabo",
+    fbUrl: "https://www.facebook.com/ho.anneli",
+    bildeFil: "images/gjester/anneli-drecker.jpg",
+    fbBio: "📍 Tromsø, Norway · 💕 Gift med Jon Marius Aareskjold"
   },
   {
     navn: "Hans Thomas Brox",
@@ -275,19 +348,25 @@ const GJESTER = [
     fbBio: "📍 Tromsø, Norway",
     fbUrl: "https://www.facebook.com/hans.t.brox",
     extraBio: "🦷 Oralkirurg",
-    relasjon: "Venn og nabo"
+    relasjon: "Venn og nabo",
+    bildeFil: "images/gjester/hans-thomas-brox.jpg"
   },
   {
     navn: "Hege Blikfeldt",
     bord: 5,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/hege.blikfeldt",
+    bildeFil: "images/gjester/hege-blikfeldt.jpg",
+    fbBio: "📍 Tromsø, Norway · 💕 Gift med Hårek Guneriussen"
   },
   {
     navn: "Hårek Guneriussen",
     bord: 5,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/Keraah",
+    bildeFil: "images/gjester/harek-guneriussen.jpg"
   },
   {
     navn: "Jon Marius Aareskjold",
@@ -296,7 +375,8 @@ const GJESTER = [
     pust: true,
     bio: "Pust!! +1 — detta blir stas!",
     fbUrl: "https://www.facebook.com/jonmariusaareskjold",
-    relasjon: "Venn og nabo"
+    relasjon: "Venn og nabo",
+    bildeFil: "images/gjester/jon-marius-aareskjold.jpg"
   },
   {
     navn: "Lena Nymark",
@@ -306,7 +386,8 @@ const GJESTER = [
     bio: "Bekreftet på event-posten.",
     fbBio: "📍 Tromsø, Norway · 💕 Gift med Terje André",
     fbUrl: "https://www.facebook.com/lena.g.nymark",
-    relasjon: "Venn og nabo"
+    relasjon: "Venn og nabo",
+    bildeFil: "images/gjester/lena-nymark.jpg"
   },
   {
     navn: "Nina Brox",
@@ -323,7 +404,10 @@ const GJESTER = [
     navn: "Terje Nymark",
     bord: 5,
     bordType: 8,
-    relasjon: "Venn og nabo"
+    relasjon: "Venn og nabo",
+    fbUrl: "https://www.facebook.com/terje.a.nymark",
+    bildeFil: "images/gjester/terje-nymark.jpg",
+    fbBio: "📚 Tvibit"
   },
   {
     navn: "Arne Aarhus",
@@ -351,7 +435,9 @@ const GJESTER = [
     bord: 6,
     bordType: 8,
     pust: true,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/Livligina",
+    bildeFil: "images/gjester/gina-bjornstrom.jpg"
   },
   {
     navn: "Hilde Sander Meling",
@@ -362,7 +448,8 @@ const GJESTER = [
     fbBio: "📚 Haukeland universitetssjukehus · 📍 Bergen, Hordaland",
     fbUrl: "https://www.facebook.com/litlo",
     folge: "Ivar Wulff",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/hilde-sander-meling.jpg"
   },
   {
     navn: "Ingelill Kleivnes",
@@ -372,7 +459,8 @@ const GJESTER = [
     bio: "Pust 😍",
     fbBio: "📚 University of Tromso · 💕 Gift med Arne Aarhus",
     fbUrl: "https://www.facebook.com/ingelill.kleivnes",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/ingelill-kleivnes.jpg"
   },
   {
     navn: "Ivar Wullf",
@@ -419,7 +507,8 @@ const GJESTER = [
     bio: "Pust 🔥",
     fbBio: "📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 I et forhold med Oddrun Halvorsen",
     fbUrl: "https://www.facebook.com/andreas.willumsen",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/andreas-willumsen.jpg"
   },
   {
     navn: "Jan Heier Johansen",
@@ -428,7 +517,9 @@ const GJESTER = [
     pust: true,
     bio: "Bursdagsapp-bygger og venn av Thomas. Sammen med Kristina.",
     folge: "Kristina",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/janheierjohansen",
+    bildeFil: "images/gjester/jan-heier-johansen.jpg"
   },
   {
     navn: "Kristina Kantola",
@@ -437,7 +528,8 @@ const GJESTER = [
     pust: true,
     bio: "Sammen med Jan på fest og Pust.",
     fbUrl: "https://www.facebook.com/kristina.kantola.90",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/kristina-kantola.jpg"
   },
   {
     navn: "Line Myreng",
@@ -447,7 +539,8 @@ const GJESTER = [
     bio: "Sammen med Rune på Pust.",
     fbBio: "📚 Universitetet i tromsø · 📍 Tromsø, Norway · 💕 Gift med Rune Myreng",
     fbUrl: "https://www.facebook.com/line.myreng",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/line-myreng.jpg"
   },
   {
     navn: "Maria Christina Edwall",
@@ -457,7 +550,8 @@ const GJESTER = [
     bio: "Klar for Pust 💦",
     fbBio: "📚 UiT Norges arktiske universitet · 📍 Tromsø, Norway · 💕 I et forhold med Ørjan Berg Karlsen",
     fbUrl: "https://www.facebook.com/maria.c.edwall",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/maria-christina-edwall.jpg"
   },
   {
     navn: "Marius Furnes",
@@ -465,7 +559,8 @@ const GJESTER = [
     bordType: 8,
     bio: "Bekreftet på event-posten.",
     fbUrl: "https://www.facebook.com/furnesmarius",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/marius-furnes.jpg"
   },
   {
     navn: "Rune Myreng",
@@ -476,7 +571,8 @@ const GJESTER = [
     fbBio: "Bailbrook College, Bath UK · 📍 Tromsø, Norway · 💕 Gift med Line Myreng",
     fbUrl: "https://www.facebook.com/rune.myreng",
     folge: "Line Myreng",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/rune-myreng.jpg"
   },
   {
     navn: "Ørjan Berg Karlsen",
@@ -486,7 +582,8 @@ const GJESTER = [
     bio: "Pust 😍",
     fbBio: "📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 I et forhold med Maria Christina Edwall",
     fbUrl: "https://www.facebook.com/orjanbk",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/orjan-berg-karlsen.jpg"
   },
   {
     navn: "Cathrine Marie Gi'ver",
@@ -504,7 +601,8 @@ const GJESTER = [
     bio: "Med på spleisen til Thomas.",
     fbBio: "📚 University of Tromsø · 📍 Molde, Norway",
     fbUrl: "https://www.facebook.com/einar.nilsen.5",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/einar-nilsen.jpg"
   },
   {
     navn: "Erin Hald",
@@ -513,19 +611,26 @@ const GJESTER = [
     bio: "Bekreftet på event-posten.",
     fbBio: "Universitetssykehuset Nord-Norge HF · 📚 UiT Norges arktiske universitet · 📍 Tromsø, Norway",
     fbUrl: "https://www.facebook.com/erin.hald",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/erin-hald.jpg"
   },
   {
     navn: "Lasse Pettersen",
     bord: 8,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/lasselauritz",
+    bildeFil: "images/gjester/lasse-pettersen.jpg",
+    fbBio: "📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 Gift med Cathrine Marie Giæver"
   },
   {
     navn: "Marit Bratrud Nilsen",
     bord: 8,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/marit.b.nilsen.1",
+    bildeFil: "images/gjester/marit-bratrud-nilsen.jpg",
+    fbBio: "📍 Molde, Norway"
   },
   {
     navn: "Marit Osima",
@@ -535,32 +640,41 @@ const GJESTER = [
     fbBio: "📍 Tromsø, Norway",
     fbUrl: "https://www.facebook.com/marit.osima",
     extraBio: "👩‍⚕️ Allmennlegespesialist og fastlege",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/marit-osima.jpg"
   },
   {
     navn: "Stig Tennås",
     bord: 8,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/stig.tennas",
+    bildeFil: "images/gjester/stig-tennas.jpg"
   },
   {
     navn: "Øyvind Nordgård",
     bord: 8,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "N/A"
   },
   {
     navn: "Christine Strøm",
     bord: 9,
     bordType: 10,
     pust: true,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/profile.php",
+    bildeFil: "images/gjester/christine-strom.jpg"
   },
   {
     navn: "Eirik Torbergsen",
     bord: 9,
     bordType: 10,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/eirik.torbergsen",
+    bildeFil: "images/gjester/eirik-torbergsen.jpg",
+    fbBio: "📚 Hammerfest Videregående Skole · 📍 Tromsø, Norway"
   },
   {
     navn: "Ellen Eliassen",
@@ -575,7 +689,8 @@ const GJESTER = [
     navn: "Erik Josefsen",
     bord: 9,
     bordType: 10,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "N/A"
   },
   {
     navn: "Geir Olav Skogstad",
@@ -584,13 +699,15 @@ const GJESTER = [
     pust: true,
     bio: "Pust x 2 — kommer med følge.",
     fbUrl: "https://www.facebook.com/geirolav.skogstad",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/geir-olav-skogstad.jpg"
   },
   {
     navn: "Magnus Seppola",
     bord: 9,
     bordType: 10,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/magnus.seppola"
   },
   {
     navn: "Silje Ingebrigtsen",
@@ -600,32 +717,42 @@ const GJESTER = [
     bio: "Klar for badstue og fest.",
     fbBio: "Sykehusinnkjøp HF · 📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 I et forhold med Terje Karlstad",
     fbUrl: "https://www.facebook.com/silje.ingebrigtsen.75",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/silje-ingebrigtsen.jpg"
   },
   {
     navn: "Siw Cathrine  Torbergsen",
     bord: 9,
     bordType: 10,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "N/A"
   },
   {
     navn: "Synne Guldbrandsen",
     bord: 9,
     bordType: 10,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/synne.guldbrandsen",
+    fbBio: "📚 Norges Fiskerihøgskole"
   },
   {
     navn: "Terje Karlsen",
     bord: 9,
     bordType: 10,
     pust: true,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/terje.karlstad.1",
+    bildeFil: "images/gjester/terje-karlsen.jpg",
+    fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Silje Ingebrigtsen"
   },
   {
     navn: "Erlend Hagan",
     bord: 10,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/erlend.hagan",
+    bildeFil: "images/gjester/erlend-hagan.jpg",
+    fbBio: "💕 Gift med Lena Schøning"
   },
   {
     navn: "Gro-Hilde Severinsen",
@@ -642,7 +769,8 @@ const GJESTER = [
     bio: "Med på spleisen til Thomas.",
     fbBio: "📍 Balsfjord",
     fbUrl: "https://www.facebook.com/kjellra",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/kjell-roger-andersen.jpg"
   },
   {
     navn: "Lars Hadsen Hansen",
@@ -652,13 +780,16 @@ const GJESTER = [
     bio: "Skal gjøre alt han kan for å komme på feiringa.",
     fbBio: "St. Olavs Hospital Trondheim · 📚 University Of Pécs · 📍 Trondheim, Norway · 💕 I et forhold med Oda Bolkan Fugelsnes",
     fbUrl: "https://www.facebook.com/fiskarlars",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/lars-hadsen-hansen.jpg"
   },
   {
     navn: "Lena Schøning",
     bord: 10,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/profile.php",
+    bildeFil: "images/gjester/lena-schoning.jpg"
   },
   {
     navn: "Marianne Bille",
@@ -680,7 +811,8 @@ const GJESTER = [
     bio: "Klar for Pust og fest.",
     fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Anders Mo Hanssen",
     fbUrl: "https://www.facebook.com/marianne.svorken",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/marianne-svorken.jpg"
   },
   {
     navn: "Øyvind Grinde",
@@ -696,44 +828,65 @@ const GJESTER = [
     navn: "Anne Marvik",
     bord: 11,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/annekristine.marvik",
+    bildeFil: "images/gjester/anne-marvik.jpg",
+    fbBio: "Aleris - sykehus & medisinske sentre · 📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 Gift med Gaute Marvik"
   },
   {
     navn: "Gaute Marvik",
     bord: 11,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/gmarvik",
+    bildeFil: "images/gjester/gaute-marvik.jpg",
+    fbBio: "📍 Tromsø, Norway · 💕 Gift med Anne Kristine Marvik"
   },
   {
     navn: "Geir Helge Valle",
     bord: 11,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/geirhelge.valle",
+    bildeFil: "images/gjester/geir-helge-valle.jpg",
+    fbBio: "📚 Kongsbakken Videregående Skole"
   },
   {
     navn: "Kenneth Mikkelsen",
     bord: 11,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/kenneth.mikkelsen.921",
+    bildeFil: "images/gjester/kenneth-mikkelsen.jpg",
+    fbBio: "📚 Universitetet i tromsø · 📍 Tromsø, Norway · 💕 Gift med Nina Mikkelsen"
   },
   {
     navn: "Lars Gaute Jørgensen",
     bord: 11,
     bordType: 8,
     pust: true,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/larsgaute",
+    bildeFil: "images/gjester/lars-gaute-jorgensen.jpg",
+    fbBio: "PHARMAQ AS · 📍 Tromsø, Norway"
   },
   {
     navn: "Lise Valle",
     bord: 11,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/lise.fransiska.valle",
+    bildeFil: "images/gjester/lise-valle.jpg",
+    fbBio: "📚 BI Norwegian Business School"
   },
   {
     navn: "Nina Mikkelsen",
     bord: 11,
     bordType: 8,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/nina.mikkelsen.5",
+    bildeFil: "images/gjester/nina-mikkelsen.jpg",
+    fbBio: "Akvaplan-niva AS · 📍 Tromsø, Norway"
   },
   {
     navn: "Ole Herman Størmmesen",
@@ -742,7 +895,8 @@ const GJESTER = [
     pust: true,
     bio: "Klar for damp og dans.",
     fbUrl: "https://www.facebook.com/profile.php",
-    relasjon: "Venn"
+    relasjon: "Venn",
+    bildeFil: "images/gjester/ole-herman-stormmesen.jpg"
   }
 ];
 
