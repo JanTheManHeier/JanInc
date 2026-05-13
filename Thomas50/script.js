@@ -252,12 +252,19 @@
       const erToast = (g.rolle || '').toLowerCase() === 'toastmaster';
       if (erToast) klasser.push('toast');
       if (g.avbud) klasser.push('avbud');
+      if (g.jubilant) klasser.push('jubilant');
       let tag = '';
-      if (erToast) tag = `<span class="gjest-tag toast">🎤 Toastmaster</span>`;
+      if (g.jubilant) tag = `<span class="gjest-tag jubilant">🦁 Danseløva</span>`;
+      else if (erToast) tag = `<span class="gjest-tag toast">🎤 Toastmaster</span>`;
       else if (g.avbud) tag = `<span class="gjest-tag avbud">Avbud</span>`;
       else if (g.pust) tag = `<span class="gjest-tag">🧖 Pust${g.plus ? ` +${g.plus}` : ''}</span>`;
       else if (g.plus) tag = `<span class="gjest-tag">+${g.plus} følge</span>`;
-      const bordTag = g.bord && !g.avbud ? `<span class="gjest-bord-tag">🪑 Bord ${esc(String(g.bord))}</span>` : '';
+      const bordTag = g.bord && !g.avbud ? (() => {
+        const t = (typeof BORD_TEMA !== 'undefined' && BORD_TEMA[g.bord]) || null;
+        return t
+          ? `<span class="gjest-bord-tag" style="background:${t.farge}33;border-color:${t.farge}AA;color:${t.farge}">🪑 Bord ${esc(String(g.bord))} · 🏔️ ${esc(t.fjell)}</span>`
+          : `<span class="gjest-bord-tag">🪑 Bord ${esc(String(g.bord))}</span>`;
+      })() : '';
       return `
         <div class="${klasser.join(' ')}" data-gjest-idx="${idx}">
           ${g.bildeFil ? `<img class="gjest-bilde" src="${esc(g.bildeFil)}" alt="${esc(g.navn)}" />` : `<div class="gjest-avatar">${esc(init)}</div>`}
@@ -284,7 +291,8 @@
     const init = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
     const innhold = document.getElementById('gjest-modal-innhold');
     let tag = '';
-    if ((g.rolle || '').toLowerCase() === 'toastmaster') tag = `<span class="gjest-tag toast">🎤 Toastmaster</span>`;
+    if (g.jubilant) tag = `<span class="gjest-tag jubilant">🦁 Danseløva — Jubilanten</span>`;
+    else if ((g.rolle || '').toLowerCase() === 'toastmaster') tag = `<span class="gjest-tag toast">🎤 Toastmaster</span>`;
     else if (g.avbud) tag = `<span class="gjest-tag avbud">Avbud</span>`;
     else if (g.pust) tag = `<span class="gjest-tag">🧖 På Pust${g.plus ? ` +${g.plus}` : ''}</span>`;
     else if (g.plus) tag = `<span class="gjest-tag">+${g.plus} følge</span>`;
@@ -293,7 +301,12 @@
         ? `<img class="gjest-modal-bilde" src="${esc(g.bildeFil)}" alt="${esc(g.navn)}" />`
         : `<div class="gjest-modal-avatar">${esc(init)}</div>`}
       <h2 class="gjest-modal-navn">${esc(g.navn)}</h2>
-      ${g.bord && !g.avbud ? `<div class="gjest-modal-bord">🪑 Bord ${esc(String(g.bord))}</div>` : ''}
+      ${g.bord && !g.avbud ? (() => {
+        const t = (typeof BORD_TEMA !== 'undefined' && BORD_TEMA[g.bord]) || null;
+        return t
+          ? `<div class="gjest-modal-bord" style="background:${t.farge}33;border-color:${t.farge}AA;color:${t.farge}">🪑 Bord ${esc(String(g.bord))} — 🏔️ ${esc(t.fjell)}</div>`
+          : `<div class="gjest-modal-bord">🪑 Bord ${esc(String(g.bord))}</div>`;
+      })() : ''}
       <div class="gjest-modal-bio">${esc(g.bio)}</div>
       ${g.liBio ? `<div class="gjest-modal-felt">💼 ${esc(g.liBio)}</div>` : ''}
       ${g.fbBio ? `<div class="gjest-modal-felt">${esc(g.fbBio)}</div>` : ''}
@@ -700,16 +713,23 @@
     const bordNumre = Object.keys(bordMap).map(n => +n).sort((a,b) => a - b);
 
     let html = '';
-    // Lagre flat liste for modal-oppslag
     bordGjesterFlat = [];
     for (const nr of bordNumre) {
       const b = bordMap[nr];
+      const tema = (typeof BORD_TEMA !== 'undefined' && BORD_TEMA[nr]) || null;
+      const farge = tema ? tema.farge : '#D4A853';
       const matchSok = bordSok && b.gjester.some(g => g.navn.toLowerCase().includes(bordSok));
       const utheve = matchSok ? ' bord-treff' : '';
-      html += `<div class="bord-kort${utheve}" id="bord-${nr}">
+      const tittel = tema
+        ? `<span class="bord-fjell">🏔️ ${esc(tema.fjell)}</span><span class="bord-fjell-meta">${tema.hoyde} m · ${esc(tema.hvor)}</span>`
+        : `<span class="bord-fjell">Bord ${nr}</span>`;
+      html += `<div class="bord-kort${utheve}" id="bord-${nr}" style="--bord-farge:${farge}">
         <div class="bord-header">
-          <span class="bord-nr">🪑 Bord ${nr}</span>
-          <span class="bord-info">${b.gjester.length} gjester</span>
+          <div class="bord-tittel">
+            <span class="bord-nr-mini">Bord ${nr}</span>
+            ${tittel}
+          </div>
+          <span class="bord-info">${b.gjester.length} 🪑</span>
         </div>
         <div class="bord-gjester">`;
       for (const g of b.gjester) {
@@ -717,10 +737,11 @@
         const init = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
         const idx = bordGjesterFlat.length;
         bordGjesterFlat.push(g);
-        html += `<div class="bord-gjest${treff ? ' bord-gjest-treff' : ''}" data-bord-idx="${idx}">
+        const navnTag = g.jubilant ? `<span class="jubilant-tag">🦁 Danseløva</span>` : '';
+        html += `<div class="bord-gjest${treff ? ' bord-gjest-treff' : ''}${g.jubilant ? ' bord-gjest-jubilant' : ''}" data-bord-idx="${idx}">
           <span class="bord-sete">${g.sete || '?'}</span>
           ${g.bildeFil ? `<img class="bord-avatar" src="${esc(g.bildeFil)}" alt="" />` : `<div class="bord-avatar bord-init">${esc(init)}</div>`}
-          <span class="bord-navn">${esc(g.navn)}</span>
+          <span class="bord-navn">${esc(g.navn)} ${navnTag}</span>
           ${g.relasjon ? `<span class="bord-rel">${esc(g.relasjon)}</span>` : ''}
           ${g.rolle ? `<span class="bord-tag">${esc(g.rolle)}</span>` : ''}
         </div>`;

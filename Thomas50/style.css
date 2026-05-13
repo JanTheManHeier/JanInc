@@ -664,17 +664,48 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
   margin: 0 16px 16px;
   padding: 14px;
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid var(--bord-farge, rgba(255,255,255,0.08));
+  border-left: 4px solid var(--bord-farge, #D4A853);
   border-radius: 12px;
+  position: relative;
 }
 .bord-kort.bord-treff {
   border-color: #D4A853;
   background: rgba(212,168,83,0.1);
   box-shadow: 0 0 24px rgba(212,168,83,0.3);
 }
-.bord-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(212,168,83,0.2); }
-.bord-nr { font-size: 18px; color: #D4A853; font-weight: bold; }
-.bord-info { font-size: 11px; color: #9BAABB; }
+.bord-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(212,168,83,0.2); gap: 12px; }
+.bord-tittel { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.bord-nr-mini { font-size: 10px; color: #7A8FA8; text-transform: uppercase; letter-spacing: 0.5px; }
+.bord-fjell { font-size: 18px; color: var(--bord-farge, #D4A853); font-weight: bold; }
+.bord-fjell-meta { font-size: 11px; color: #9BAABB; }
+.bord-info { font-size: 13px; color: #D4A853; padding-top: 4px; }
+.bord-gjest-jubilant {
+  background: linear-gradient(90deg, rgba(212,168,83,0.18), transparent);
+  border-left: 3px solid #D4A853;
+  padding-left: 6px !important;
+}
+.jubilant-tag {
+  display: inline-block;
+  font-size: 10px;
+  background: linear-gradient(135deg, #D4A853, #C4943A);
+  color: #0D1B2A;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.gjest-tag.jubilant {
+  background: linear-gradient(135deg, #D4A853, #C4943A);
+  color: #0D1B2A;
+  font-weight: 700;
+}
+.gjest-kort.jubilant {
+  border-color: #D4A853;
+  background: rgba(212,168,83,0.12);
+  box-shadow: 0 0 16px rgba(212,168,83,0.25);
+}
 .bord-gjester { display: flex; flex-direction: column; gap: 6px; }
 .bord-gjest {
   display: flex;
