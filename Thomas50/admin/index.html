@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thomas50 — Admin</title>
+<style>
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; background: #0D1B2A; color: #E8E0D4; margin: 0; padding: 24px; max-width: 1100px; margin: 0 auto; }
+  h1 { color: #D4A853; }
+  h2 { color: #D4A853; border-bottom: 1px solid rgba(212,168,83,0.3); padding-bottom: 6px; margin-top: 32px; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0; }
+  .stat-card { background: rgba(212,168,83,0.1); border: 1px solid rgba(212,168,83,0.3); border-radius: 12px; padding: 16px; text-align: center; }
+  .stat-num { font-size: 32px; color: #D4A853; font-weight: bold; }
+  .stat-label { font-size: 13px; color: #B0C4D8; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; background: rgba(255,255,255,0.04); border-radius: 8px; overflow: hidden; }
+  th { text-align: left; background: rgba(212,168,83,0.15); padding: 10px; color: #D4A853; font-size: 13px; }
+  td { padding: 10px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 13px; color: #C8D8E8; }
+  td.tekst { white-space: pre-wrap; }
+  .muted { color: #7A8FA8; font-size: 12px; }
+  button { background: #D4A853; color: #0D1B2A; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  .err { color: #E08080; padding: 16px; background: rgba(192,64,64,0.1); border-radius: 8px; margin: 12px 0; }
+  a { color: #D4A853; }
+</style>
+</head>
+<body>
+<h1>🎂 Thomas50 — Admin</h1>
+<p><button onclick="last()">🔄 Last på nytt</button> <span class="muted" id="generert"></span></p>
+
+<div id="content">Laster...</div>
+
+<script>
+async function last() {
+  const c = document.getElementById('content');
+  c.innerHTML = 'Laster...';
+  try {
+    const res = await fetch('/api/thomas50-stats');
+    if (!res.ok) throw new Error('Status ' + res.status);
+    const d = await res.json();
+    document.getElementById('generert').textContent = 'Generert ' + new Date(d.generertAt).toLocaleString('nb-NO');
+    c.innerHTML = render(d);
+  } catch (e) {
+    c.innerHTML = '<div class="err">Kunne ikke hente statistikk: ' + (e.message || e) + '</div>';
+  }
+}
+
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function dt(s) { try { return new Date(s).toLocaleString('nb-NO'); } catch { return ''; } }
+
+function render(d) {
+  let h = '';
+  h += `<div class="stats-row">
+    <div class="stat-card"><div class="stat-num">${d.totalt}</div><div class="stat-label">Totale besøk</div></div>
+    <div class="stat-card"><div class="stat-num">${d.unikeNavn}</div><div class="stat-label">Unike personer</div></div>
+    <div class="stat-card"><div class="stat-num">${d.hilsener.length}</div><div class="stat-label">Hilsener</div></div>
+    <div class="stat-card"><div class="stat-num">${d.taler.length}</div><div class="stat-label">Talemeldinger</div></div>
+  </div>`;
+
+  h += '<h2>👥 Hvem har vært inne?</h2>';
+  if (d.perNavn.length) {
+    h += '<table><tr><th>Navn</th><th>Besøk</th><th>Sist</th></tr>';
+    h += d.perNavn.map(r => `<tr><td>${esc(r.navn)}</td><td>${r.besok}</td><td>${dt(r.sist)}</td></tr>`).join('');
+    h += '</table>';
+  } else h += '<p class="muted">Ingen ennå.</p>';
+
+  h += '<h2>📊 Per side</h2><table><tr><th>Side</th><th>Antall</th></tr>';
+  h += d.perSide.map(r => `<tr><td>${esc(r.side)}</td><td>${r.antall}</td></tr>`).join('');
+  h += '</table>';
+
+  h += '<h2>🎤 Talemeldinger til toastmasterne</h2>';
+  if (d.taler.length) {
+    h += '<table><tr><th>Navn</th><th>E-post</th><th>Tema</th><th>Melding</th><th>Tid</th></tr>';
+    h += d.taler.map(t => `<tr>
+      <td><strong>${esc(t.navn)}</strong></td>
+      <td>${t.epost ? `<a href="mailto:${esc(t.epost)}">${esc(t.epost)}</a>` : '<span class="muted">—</span>'}</td>
+      <td>${esc(t.tema || '')}</td>
+      <td class="tekst">${esc(t.melding)}</td>
+      <td class="muted">${dt(t.opprettet)}</td>
+    </tr>`).join('');
+    h += '</table>';
+  } else h += '<p class="muted">Ingen taler meldt ennå.</p>';
+
+  h += '<h2>💌 Hilsener til Thomas</h2>';
+  if (d.hilsener.length) {
+    h += '<table><tr><th>Navn</th><th>Hilsen</th><th>Tid</th></tr>';
+    h += d.hilsener.map(t => `<tr>
+      <td><strong>${esc(t.navn)}</strong></td>
+      <td class="tekst">${esc(t.tekst)}</td>
+      <td class="muted">${dt(t.opprettet)}</td>
+    </tr>`).join('');
+    h += '</table>';
+  } else h += '<p class="muted">Ingen hilsener ennå.</p>';
+
+  h += '<h2>🕒 Siste 50 besøk</h2><table><tr><th>Navn</th><th>Side</th><th>Tid</th></tr>';
+  h += d.sisteBesok.map(r => `<tr><td>${esc(r.navn || '—')}</td><td>${esc(r.side || '')}</td><td class="muted">${dt(r.opprettet)}</td></tr>`).join('');
+  h += '</table>';
+
+  return h;
+}
+
+last();
+</script>
+</body>
+</html>

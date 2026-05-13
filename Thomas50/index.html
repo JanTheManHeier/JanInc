@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Thomas 50 — Endelig voksen (kanskje)</title>
+<meta name="description" content="Bursdagsapp for Thomas Helge Hansen — 50 år, 30. mai 2026, Kystens Hus i Tromsø." />
+<meta name="theme-color" content="#0D1B2A" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="toast" class="toast" hidden></div>
+
+<div id="overlay" class="overlay" hidden>
+  <img id="overlay-img" alt="" />
+  <button id="overlay-close" class="btn-danger">Lukk</button>
+</div>
+
+<div id="navn-modal" class="modal" hidden>
+  <div class="modal-card">
+    <h2>Velkommen!</h2>
+    <p>Skriv navnet ditt så toastmasterne og Jan vet hvem som har vært innom appen.</p>
+    <input id="navn-input" type="text" placeholder="Ditt navn" autocomplete="name" />
+    <button id="navn-lagre" class="btn-primary">Sett i gang 🎉</button>
+    <button id="navn-skip" class="btn-link">Hopp over</button>
+  </div>
+</div>
+
+<main id="app">
+  <!-- HJEM -->
+  <section class="page" data-page="hjem">
+    <div class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-inner">
+        <img src="images/thomas.jpg" alt="Thomas" class="hero-photo" />
+        <div class="age-bubble">50</div>
+        <h1 class="hero-name">Thomas</h1>
+        <p class="hero-nick">— Danseløva 🦁 —</p>
+        <p class="hero-date">🎉 Endelig voksen (kanskje) 🎉</p>
+        <p class="hero-sub">Lørdag 30. mai 2026 — Kystens Hus, Tromsø</p>
+        <div class="countdown" id="countdown"></div>
+      </div>
+    </div>
+
+    <div class="card-row">
+      <button class="mini-card" data-go="program"><div class="mini-icon">🧖</div><div class="mini-title">Pust</div><div class="mini-sub">14:30</div></button>
+      <button class="mini-card" data-go="program"><div class="mini-icon">🥂</div><div class="mini-title">Kystens Hus</div><div class="mini-sub">18:00</div></button>
+      <button class="mini-card" data-go="program"><div class="mini-icon">🎶</div><div class="mini-title">Bakrommet</div><div class="mini-sub">22:00</div></button>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Om kvelden</h2>
+      <p class="lead">Thomas fyller 50 og vi feirer det stort — fra dampende badstue på Pust kl 14:30, via 3-retters middag på Kystens Hus, til natten danses inn på Bakrommet med Aggie Frost. Velkommen til en kveld danseløva aldri vil glemme!</p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Om Thomas</h2>
+      <div class="om-card">
+        <div class="om-row"><span>👔</span><div><strong>Sales Manager</strong> ved <strong>GC Rieber VivoMega AS</strong> — Omega-3 til Nord-Amerika og Europa</div></div>
+        <div class="om-row"><span>🎓</span><div>Utdannet ved <strong>UiT — The Arctic University of Norway</strong></div></div>
+        <div class="om-row"><span>🌍</span><div>Reiser i 2026: 🇨🇦 Canada · 🇺🇸 USA · 🇫🇷 Frankrike · 🇪🇸 Spania · 🇨🇭 Sveits · 🇵🇱 Polen</div></div>
+        <div class="om-row"><span>🏠</span><div>Tromsø-mann gjennom og gjennom — nordlys, hav og badstue</div></div>
+      </div>
+      <h3 class="section-title small-title">Karriere</h3>
+      <div id="karriere-liste" class="karriere"></div>
+      <h3 class="section-title small-title">Fun facts</h3>
+      <div id="fun-facts" class="info-box" style="margin:0"></div>
+    </div>
+
+    <div class="section center">
+      <button class="btn-primary" data-go="hilsener">💌 Skriv en hilsen til Thomas</button>
+      <button class="btn-secondary" data-go="toastmaster">🎤 Meld tale til toastmasterne</button>
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section class="page" data-page="program" hidden>
+    <h2 class="page-title">📍 Dagens program</h2>
+    <p class="muted">Trykk på et stopp for kart og detaljer</p>
+
+    <div id="program-list"></div>
+
+    <div class="section">
+      <h3 class="section-title">🗺️ Kart over stedene</h3>
+      <div id="map"></div>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Praktisk info</h3>
+      <div class="info-box">
+        <div>🧖 Ta med badetøy og håndkle til Pust</div>
+        <div>🧥 Kle deg varmt mellom stedene</div>
+        <div>🥂 Velkomstdrink + 3-retters middag på Kystens Hus</div>
+        <div>🎶 Aggie Frost spiller på Bakrommet — vi har lokalet til ca 02:30</div>
+        <div>📸 Ta bilder — last dem opp i Minneboken!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GJESTER -->
+  <section class="page" data-page="gjester" hidden>
+    <h2 class="page-title">👥 Gjester</h2>
+    <p class="muted">De som feirer Thomas på 50-årsdagen</p>
+
+    <div class="gjester-stats" id="gjester-stats"></div>
+
+    <div class="filter-row">
+      <button class="chip active" data-filter="alle">Alle</button>
+      <button class="chip" data-filter="pust">På Pust</button>
+      <button class="chip" data-filter="toast">Toastmaster</button>
+      <button class="chip" data-filter="avbud">Avbud</button>
+    </div>
+
+    <div id="gjester-grid" class="gjester-grid"></div>
+  </section>
+
+  <!-- HILSENER -->
+  <section class="page" data-page="hilsener" hidden>
+    <h2 class="page-title">💌 Hilsener til Thomas</h2>
+    <p class="muted">Skriv en hilsen — alle gjester ser dem her</p>
+
+    <div class="form">
+      <input id="hilsen-navn" type="text" placeholder="Ditt navn" />
+      <textarea id="hilsen-tekst" rows="4" placeholder="Skriv din hilsen til Thomas her... 🎉"></textarea>
+      <button id="hilsen-lagre" class="btn-primary">💌 Send hilsen</button>
+    </div>
+
+    <div id="hilsen-status" class="muted small"></div>
+    <div id="hilsen-liste" class="hilsen-list"></div>
+  </section>
+
+  <!-- TOASTMASTER -->
+  <section class="page" data-page="toastmaster" hidden>
+    <h2 class="page-title">🎤 Hold en tale</h2>
+    <p class="muted">Vil du holde tale? Toastmasterne <strong>Ronny André</strong> og <strong>Marianne Wilhelmsen</strong> setter deg på lista.</p>
+
+    <div class="info-box">
+      <div>📧 E-post toastmaster: <a href="mailto:ronnyandre@gmail.com">ronnyandre@gmail.com</a></div>
+      <div>💡 Tips: Hold den kort, varm og morsom. Maks 5 minutter.</div>
+    </div>
+
+    <div class="form">
+      <input id="toast-navn" type="text" placeholder="Ditt navn *" />
+      <input id="toast-epost" type="email" placeholder="Din e-post (så toastmasterne kan svare)" />
+      <input id="toast-tema" type="text" placeholder="Tema for talen (kort)" />
+      <textarea id="toast-melding" rows="5" placeholder="Kort beskrivelse av talen — hvor lang, hva handler den om, har du behov for mikrofon, lerret, etc."></textarea>
+      <button id="toast-lagre" class="btn-primary">🎤 Meld tale</button>
+    </div>
+
+    <div id="toast-status" class="muted small"></div>
+  </section>
+
+  <!-- SANG -->
+  <section class="page" data-page="sang" hidden>
+    <h2 class="page-title">🎵 Bursdagssang</h2>
+    <p class="muted">En nordnorsk vise for danseløva på femti</p>
+
+    <div class="sang-card">
+      <div class="sang-icon">🎶</div>
+      <h3 class="sang-title">Endelig voksen (kanskje)</h3>
+      <p class="sang-sub">Melodi: nordnorsk folkevisestil<br />Tekst: venner og familie</p>
+    </div>
+
+    <button id="vis-lyrics" class="btn-primary">📜 Vis sangtekst</button>
+    <div id="lyrics" class="lyrics" hidden><pre id="lyrics-text"></pre></div>
+
+    <div class="section">
+      <h3 class="section-title">🎧 Lag sangen med Suno</h3>
+      <p class="lead">Kopier teksten over og lim inn på <strong>suno.com</strong> for å generere en ekte sang. Spill den under middagen!</p>
+      <a href="https://suno.com" target="_blank" rel="noopener" class="btn-link-box">🎤 Åpne Suno.com →</a>
+      <button id="kopier-tekst" class="btn-secondary">📋 Kopier sangtekst</button>
+    </div>
+  </section>
+
+  <!-- SPILL -->
+  <section class="page" data-page="spill" hidden>
+    <h2 class="page-title">🎲 Hvor godt kjenner du Thomas?</h2>
+    <p class="muted">Quiz og partyspill for bordet</p>
+
+    <div class="tabs">
+      <button class="tab active" data-spill="quiz">Quiz</button>
+      <button class="tab" data-spill="diskusjon">Diskusjon</button>
+      <button class="tab" data-spill="regler">Drikkeregler</button>
+    </div>
+
+    <div id="quiz-view">
+      <div class="quiz-card">
+        <div class="quiz-num" id="quiz-num"></div>
+        <div class="quiz-q" id="quiz-q"></div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div class="quiz-fasit" id="quiz-fasit" hidden></div>
+        <div class="row">
+          <button id="quiz-prev" class="btn-secondary">← Forrige</button>
+          <button id="quiz-next" class="btn-primary">Neste →</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="diskusjon-view" hidden>
+      <div class="quiz-card">
+        <div class="quiz-num" id="disk-num"></div>
+        <div class="quiz-q" id="disk-q"></div>
+        <div class="row">
+          <button id="disk-next" class="btn-primary" style="flex:1">Neste →</button>
+          <button id="disk-rand" class="btn-secondary" style="flex:1">🎲 Tilfeldig</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="regler-view" hidden>
+      <div class="info-box">
+        <div>🥃 Feil svar → ta en slurk!</div>
+        <div>🏆 Beste svar → Thomas bestemmer straffen</div>
+        <div>🥂 Alle riktig → Thomas tar en skål</div>
+        <div>🦁 Sier "danseløva" 5 ganger → bonus-shot</div>
+        <div>🚽 Sovner du på do → hele bordet skåler for deg</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINNEBOK -->
+  <section class="page" data-page="minnebok" hidden>
+    <h2 class="page-title">📸 Minnebok</h2>
+    <p class="muted">Last opp bilder fra feiringen — lagres lokalt på din enhet</p>
+
+    <button id="last-opp" class="btn-primary">📷 Last opp bilder</button>
+    <input id="file-input" type="file" accept="image/*" multiple hidden />
+
+    <div id="minnebok-tom" class="empty-state" hidden>
+      <div class="empty-icon">📷</div>
+      <div>Ingen bilder ennå — vær den første!</div>
+    </div>
+
+    <div id="bilde-grid" class="bilde-grid"></div>
+  </section>
+</main>
+
+<nav class="nav">
+  <button class="nav-btn active" data-go="hjem"><span class="nav-icon">🎂</span><span class="nav-label">Hjem</span></button>
+  <button class="nav-btn" data-go="program"><span class="nav-icon">📍</span><span class="nav-label">Program</span></button>
+  <button class="nav-btn" data-go="gjester"><span class="nav-icon">👥</span><span class="nav-label">Gjester</span></button>
+  <button class="nav-btn" data-go="hilsener"><span class="nav-icon">💌</span><span class="nav-label">Hilsener</span></button>
+  <button class="nav-btn" data-go="toastmaster"><span class="nav-icon">🎤</span><span class="nav-label">Tale</span></button>
+  <button class="nav-btn" data-go="sang"><span class="nav-icon">🎵</span><span class="nav-label">Sang</span></button>
+  <button class="nav-btn" data-go="spill"><span class="nav-icon">🎲</span><span class="nav-label">Spill</span></button>
+  <button class="nav-btn" data-go="minnebok"><span class="nav-icon">📸</span><span class="nav-label">Minner</span></button>
+</nav>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
