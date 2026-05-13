@@ -45,47 +45,306 @@ const PROGRAM = [
 // Gjester hentet fra FB-event-kommentarer + Messenger-spleisegruppe
 // Kort biografi er placeholder — kan oppdateres manuelt eller via LinkedIn-søk
 const GJESTER = [
-  // Pust + fest (kommentert "Pust" på badstue-posten)
-  { navn: "Lars Hadsel Hansen", pust: true, plus: 0, bio: "Skal gjøre alt han kan for å komme på feiringa." },
-  { navn: "Cathrine Marie Giæver", pust: true, plus: 0, bio: "Terningkast 6 for tidlig beskjed — gleder seg!" },
-  { navn: "Hilde Sander Meling", pust: true, plus: 1, bio: "Pust for både Ivar og henne selv.", folge: "Ivar Wulff" },
-  { navn: "Silje Ingebrigtsen", pust: true, plus: 0, bio: "Klar for badstue og fest." },
-  { navn: "Ole-Herman Strømmesen", pust: true, plus: 0, bio: "Klar for damp og dans." },
-  { navn: "Marianne Bille", pust: true, plus: 1, bio: "Pust for Øyvind og henne selv — gleder seg!", folge: "Øyvind Grinde" },
-  { navn: "Kristina Garfjell Kantola", pust: true, plus: 0, bio: "Sammen med Jan på fest og Pust." },
-  { navn: "Andreas Willumsen", pust: true, plus: 0, bio: "Pust 🔥" },
-  { navn: "Jan Heier Johansen", pust: true, plus: 1, bio: "Bursdagsapp-bygger og venn av Thomas. Sammen med Kristina.", folge: "Kristina" },
-  { navn: "Geir-Olav Skogstad", pust: true, plus: 1, bio: "Pust x 2 — kommer med følge." },
-  { navn: "Terje Karlstad", pust: true, plus: 1, bio: "Nydelig initiativ — er med! Kommer kanskje med Silje." },
-  { navn: "Bjarte Kristoffersen", pust: true, plus: 1, bio: "Initiativtaker for spleis. Pust med +1 hvis følget puster." },
-  { navn: "Maria Christina Edwall", pust: true, plus: 0, bio: "Klar for Pust 💦" },
-  { navn: "Jon Steinar Engenes", pust: true, plus: 0, bio: "Pust! ❄️" },
-  { navn: "Rune Myreng", pust: true, plus: 1, bio: "Sammen med Line på Pust og fest.", folge: "Line Myreng" },
-  { navn: "Ørjan Berg Karlsen", pust: true, plus: 0, bio: "Pust 😍" },
-  { navn: "Marianne Svorken", pust: true, plus: 0, bio: "Klar for Pust og fest." },
-  { navn: "Marit Osima", pust: true, plus: 1, bio: "Pust med +1." },
-  { navn: "Nina Bjæring Brox", pust: true, plus: 1, bio: "Pust pluss 1 (Hans Thomas).", folge: "Hans Thomas Brox" },
-  { navn: "Jon Marius Aareskjold", pust: true, plus: 1, bio: "Pust!! +1 — detta blir stas!" },
-  { navn: "Arne Aarhus", pust: true, plus: 0, bio: "Pust og spleis-deltaker." },
-  { navn: "Ingelill Kleivnes", pust: true, plus: 0, bio: "Pust 😍" },
-  { navn: "Maja Wilhelmsen", pust: true, plus: 0, bio: "Pust 💦" },
-  { navn: "Marianne Wilhelmsen", pust: false, plus: 0, bio: "🎤 Toastmaster sammen med Ronny André. Send mail til ronnyandre@gmail.com hvis du vil holde tale!", rolle: "Toastmaster" },
-  { navn: "Ronny André", pust: false, plus: 0, bio: "🎤 Toastmaster sammen med Marianne. Kontakt: ronnyandre@gmail.com", rolle: "Toastmaster" },
-
-  // Bekreftet på event-post (likes/kommentarer)
-  { navn: "Lena Gustavsen Nymark", pust: false, plus: 0, bio: "Bekreftet på event-posten." },
-  { navn: "Erin Mathiesen Hald", pust: false, plus: 0, bio: "Bekreftet på event-posten." },
-  { navn: "Ellen Dølvik Eliassen", pust: false, plus: 0, bio: "Bekreftet på event-posten." },
-  { navn: "Jan Erik Olsen", pust: false, plus: 0, bio: "Bekreftet på event-posten." },
-  { navn: "Marius Furnes", pust: false, plus: 0, bio: "Bekreftet på event-posten." },
-
-  // Spleisegruppen (festen)
-  { navn: "Kjell Roger Andersen", pust: false, plus: 0, bio: "Med på spleisen til Thomas." },
-  { navn: "Einar Nilsen", pust: false, plus: 0, bio: "Med på spleisen til Thomas." },
-  { navn: "Odd Gunnar Ingebrigtsen", pust: false, plus: 0, bio: "Med på spleisen til Thomas." },
-
-  // Avbud
-  { navn: "Kirsten Buck Rustad", pust: false, plus: 0, bio: "Dessverre avbud — bortreist. Håper på å få feire ved en seinere anledning!", avbud: true },
+  {
+    navn: "Lars Hadsel Hansen",
+    pust: true,
+    plus: 0,
+    bio: "Skal gjøre alt han kan for å komme på feiringa.",
+    fbBio: "St. Olavs Hospital Trondheim · 📚 University Of Pécs · 📍 Trondheim, Norway · 💕 I et forhold med Oda Bolkan Fugelsnes",
+    fbUrl: "https://www.facebook.com/fiskarlars"
+  },
+  {
+    navn: "Cathrine Marie Giæver",
+    pust: true,
+    plus: 0,
+    bio: "Terningkast 6 for tidlig beskjed — gleder seg!",
+    fbBio: "Macks Ølbryggeri AS · 📚 BI Norwegian Business School · 📍 Tromsø, Norway · 💕 Gift med Lasse Lauritz Pettersen",
+    fbUrl: "https://www.facebook.com/cathrine.giaever"
+  },
+  {
+    navn: "Hilde Sander Meling",
+    pust: true,
+    plus: 1,
+    bio: "Pust for både Ivar og henne selv.",
+    fbBio: "📚 Haukeland universitetssjukehus · 📍 Bergen, Hordaland",
+    fbUrl: "https://www.facebook.com/litlo",
+    folge: "Ivar Wulff"
+  },
+  {
+    navn: "Silje Ingebrigtsen",
+    pust: true,
+    plus: 0,
+    bio: "Klar for badstue og fest.",
+    fbBio: "Sykehusinnkjøp HF · 📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 I et forhold med Terje Karlstad",
+    fbUrl: "https://www.facebook.com/silje.ingebrigtsen.75"
+  },
+  {
+    navn: "Ole-Herman Strømmesen",
+    pust: true,
+    plus: 0,
+    bio: "Klar for damp og dans.",
+    fbUrl: "https://www.facebook.com/profile.php"
+  },
+  {
+    navn: "Marianne Bille",
+    pust: true,
+    plus: 1,
+    bio: "Pust for Øyvind og henne selv — gleder seg!",
+    fbUrl: "https://www.facebook.com/marianne.bille.1",
+    folge: "Øyvind Grinde"
+  },
+  {
+    navn: "Kristina Garfjell Kantola",
+    pust: true,
+    plus: 0,
+    bio: "Sammen med Jan på fest og Pust.",
+    fbUrl: "https://www.facebook.com/kristina.kantola.90"
+  },
+  {
+    navn: "Andreas Willumsen",
+    pust: true,
+    plus: 0,
+    bio: "Pust 🔥",
+    fbBio: "📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 I et forhold med Oddrun Halvorsen",
+    fbUrl: "https://www.facebook.com/andreas.willumsen"
+  },
+  {
+    navn: "Jan Heier Johansen",
+    pust: true,
+    plus: 1,
+    bio: "Bursdagsapp-bygger og venn av Thomas. Sammen med Kristina.",
+    folge: "Kristina"
+  },
+  {
+    navn: "Geir-Olav Skogstad",
+    pust: true,
+    plus: 1,
+    bio: "Pust x 2 — kommer med følge.",
+    fbUrl: "https://www.facebook.com/geirolav.skogstad"
+  },
+  {
+    navn: "Terje Karlstad",
+    pust: true,
+    plus: 1,
+    bio: "Nydelig initiativ — er med! Kommer kanskje med Silje.",
+    fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Silje Ingebrigtsen",
+    fbUrl: "https://www.facebook.com/terje.karlstad.1"
+  },
+  {
+    navn: "Bjarte Kristoffersen",
+    pust: true,
+    plus: 1,
+    bio: "Initiativtaker for spleis. Pust med +1 hvis følget puster.",
+    fbUrl: "https://www.facebook.com/bjarte.kristoffersen"
+  },
+  {
+    navn: "Maria Christina Edwall",
+    pust: true,
+    plus: 0,
+    bio: "Klar for Pust 💦",
+    fbBio: "📚 UiT Norges arktiske universitet · 📍 Tromsø, Norway · 💕 I et forhold med Ørjan Berg Karlsen",
+    fbUrl: "https://www.facebook.com/maria.c.edwall"
+  },
+  {
+    navn: "Jon Steinar Engenes",
+    pust: true,
+    plus: 0,
+    bio: "Pust! ❄️",
+    fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Kirsten Buck Rustad",
+    fbUrl: "https://www.facebook.com/jon.engenes"
+  },
+  {
+    navn: "Rune Myreng",
+    pust: true,
+    plus: 1,
+    bio: "Sammen med Line på Pust og fest.",
+    fbBio: "Bailbrook College, Bath UK · 📍 Tromsø, Norway · 💕 Gift med Line Myreng",
+    fbUrl: "https://www.facebook.com/rune.myreng",
+    folge: "Line Myreng"
+  },
+  {
+    navn: "Ørjan Berg Karlsen",
+    pust: true,
+    plus: 0,
+    bio: "Pust 😍",
+    fbBio: "📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 I et forhold med Maria Christina Edwall",
+    fbUrl: "https://www.facebook.com/orjanbk"
+  },
+  {
+    navn: "Marianne Svorken",
+    pust: true,
+    plus: 0,
+    bio: "Klar for Pust og fest.",
+    fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Anders Mo Hanssen",
+    fbUrl: "https://www.facebook.com/marianne.svorken"
+  },
+  {
+    navn: "Marit Osima",
+    pust: true,
+    plus: 1,
+    bio: "Pust med +1.",
+    fbBio: "📍 Tromsø, Norway",
+    fbUrl: "https://www.facebook.com/marit.osima"
+  },
+  {
+    navn: "Nina Bjæring Brox",
+    pust: true,
+    plus: 1,
+    bio: "Pust pluss 1 (Hans Thomas).",
+    fbBio: "Universitetssykehuset Nord-Norge HF · 📚 Universitetet i Oslo (UiO) · 📍 Tromsø, Norway",
+    fbUrl: "https://www.facebook.com/broxene",
+    folge: "Hans Thomas Brox"
+  },
+  {
+    navn: "Jon Marius Aareskjold",
+    pust: true,
+    plus: 1,
+    bio: "Pust!! +1 — detta blir stas!",
+    fbUrl: "https://www.facebook.com/jonmariusaareskjold"
+  },
+  {
+    navn: "Arne Aarhus",
+    pust: true,
+    plus: 0,
+    bio: "Pust og spleis-deltaker.",
+    fbUrl: "https://www.facebook.com/arne.aarhus.7"
+  },
+  {
+    navn: "Ingelill Kleivnes",
+    pust: true,
+    plus: 0,
+    bio: "Pust 😍",
+    fbBio: "📚 University of Tromso · 💕 Gift med Arne Aarhus",
+    fbUrl: "https://www.facebook.com/ingelill.kleivnes"
+  },
+  {
+    navn: "Maja Wilhelmsen",
+    pust: true,
+    plus: 0,
+    bio: "Pust 💦",
+    fbBio: "Universitetssykehuset Nord-Norge HF · 📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 Gift med Thomas Helge Hansen",
+    fbUrl: "https://www.facebook.com/majawilhelmsen"
+  },
+  {
+    navn: "Marianne Wilhelmsen",
+    pust: false,
+    plus: 0,
+    bio: "🎤 Toastmaster sammen med Ronny André. Send mail til ronnyandre@gmail.com hvis du vil holde tale!",
+    fbBio: "📚 Høgskolen i Buskerud, Hønefoss · 📍 Oslo, Norge",
+    fbUrl: "https://www.facebook.com/supermarianne",
+    rolle: "Toastmaster"
+  },
+  {
+    navn: "Ronny André",
+    pust: false,
+    plus: 0,
+    bio: "🎤 Toastmaster sammen med Marianne. Kontakt: ronnyandre@gmail.com",
+    fbUrl: "https://www.facebook.com/ronnyandre",
+    rolle: "Toastmaster"
+  },
+  {
+    navn: "Lena Gustavsen Nymark",
+    pust: false,
+    plus: 0,
+    bio: "Bekreftet på event-posten.",
+    fbBio: "📍 Tromsø, Norway · 💕 Gift med Terje André",
+    fbUrl: "https://www.facebook.com/lena.g.nymark"
+  },
+  {
+    navn: "Erin Mathiesen Hald",
+    pust: false,
+    plus: 0,
+    bio: "Bekreftet på event-posten.",
+    fbBio: "Universitetssykehuset Nord-Norge HF · 📚 UiT Norges arktiske universitet · 📍 Tromsø, Norway",
+    fbUrl: "https://www.facebook.com/erin.hald"
+  },
+  {
+    navn: "Ellen Dølvik Eliassen",
+    pust: false,
+    plus: 0,
+    bio: "Bekreftet på event-posten.",
+    fbBio: "📍 Tromsø, Norway",
+    fbUrl: "https://www.facebook.com/ellendeliassen"
+  },
+  {
+    navn: "Jan Erik Olsen",
+    pust: false,
+    plus: 0,
+    bio: "Bekreftet på event-posten.",
+    fbBio: "📍 Tromsø, Norway",
+    fbUrl: "https://www.facebook.com/jan.e.olsen.777"
+  },
+  {
+    navn: "Marius Furnes",
+    pust: false,
+    plus: 0,
+    bio: "Bekreftet på event-posten.",
+    fbUrl: "https://www.facebook.com/furnesmarius"
+  },
+  {
+    navn: "Kjell Roger Andersen",
+    pust: false,
+    plus: 0,
+    bio: "Med på spleisen til Thomas.",
+    fbBio: "📍 Balsfjord",
+    fbUrl: "https://www.facebook.com/kjellra"
+  },
+  {
+    navn: "Einar Nilsen",
+    pust: false,
+    plus: 0,
+    bio: "Med på spleisen til Thomas.",
+    fbBio: "📚 University of Tromsø · 📍 Molde, Norway",
+    fbUrl: "https://www.facebook.com/einar.nilsen.5"
+  },
+  {
+    navn: "Odd Gunnar Ingebrigtsen",
+    pust: false,
+    plus: 0,
+    bio: "Med på spleisen til Thomas.",
+    fbBio: "Universitetssykehuset Nord-Norge HF · 📚 Melbu videregående skole · 📍 Tromsø, Norway",
+    fbUrl: "https://www.facebook.com/odd.g.ingebrigtsen"
+  },
+  {
+    navn: "Ivar Wulff",
+    pust: true,
+    plus: 0,
+    bio: "Sammen med Hilde på Pust.",
+    fbUrl: "https://www.facebook.com/ivar.wulff"
+  },
+  {
+    navn: "Øyvind Grinde",
+    pust: true,
+    plus: 0,
+    bio: "Sammen med Marianne Bille på Pust.",
+    fbBio: "📍 Oslo, Norge",
+    fbUrl: "https://www.facebook.com/ogrinde"
+  },
+  {
+    navn: "Hans Thomas Brox",
+    pust: true,
+    plus: 0,
+    bio: "Sammen med Nina på Pust.",
+    fbBio: "📍 Tromsø, Norway",
+    fbUrl: "https://www.facebook.com/hans.t.brox"
+  },
+  {
+    navn: "Line Myreng",
+    pust: true,
+    plus: 0,
+    bio: "Sammen med Rune på Pust.",
+    fbBio: "📚 Universitetet i tromsø · 📍 Tromsø, Norway · 💕 Gift med Rune Myreng",
+    fbUrl: "https://www.facebook.com/line.myreng"
+  },
+  {
+    navn: "Kirsten Buck Rustad",
+    pust: false,
+    plus: 0,
+    bio: "Dessverre avbud — bortreist. Håper på å få feire ved en seinere anledning!",
+    fbBio: "💕 I et forhold med Jon Steinar Engenes",
+    fbUrl: "https://www.facebook.com/kirsten.rustad",
+    avbud: true
+  }
 ];
 
 const SANGER_LYRICS = `🎵 ENDELIG VOKSEN (KANSKJE) — Thomas på Femti 🎵

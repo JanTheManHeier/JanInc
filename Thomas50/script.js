@@ -183,8 +183,10 @@
           <div class="gjest-avatar">${esc(init)}</div>
           <div class="gjest-navn">${esc(g.navn)}</div>
           <div class="gjest-bio">${esc(g.bio)}</div>
+          ${g.fbBio ? `<div class="gjest-fbbio">${esc(g.fbBio)}</div>` : ''}
           ${g.folge ? `<div class="gjest-bio" style="color:#7A8FA8">Følge: ${esc(g.folge)}</div>` : ''}
           ${tag}
+          ${g.fbUrl ? `<a class="gjest-fb-link" href="${esc(g.fbUrl)}" target="_blank" rel="noopener">facebook</a>` : ''}
         </div>`;
     }).join('');
   }
