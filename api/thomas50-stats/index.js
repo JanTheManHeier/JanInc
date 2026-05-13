@@ -20,14 +20,15 @@ module.exports = async function (context, req) {
         const unike = await executeQuery(connection, "SELECT COUNT(DISTINCT navn) AS unike FROM Thomas50_Besok WHERE navn IS NOT NULL AND navn <> 'anonym'");
         const perSide = await executeQuery(connection, "SELECT side, COUNT(*) AS antall FROM Thomas50_Besok GROUP BY side ORDER BY antall DESC");
         const perNavn = await executeQuery(connection, `
-            SELECT navn,
+            SELECT b.navn,
                    COUNT(*) AS besok,
-                   MAX(opprettet) AS sist
-            FROM Thomas50_Besok
-            WHERE navn IS NOT NULL AND navn <> 'anonym'
-            GROUP BY navn
+                   MAX(b.opprettet) AS sist,
+                   (SELECT TOP 1 ip FROM Thomas50_Besok WHERE navn = b.navn AND ip IS NOT NULL ORDER BY opprettet DESC) AS ip
+            FROM Thomas50_Besok b
+            WHERE b.navn IS NOT NULL AND b.navn <> 'anonym'
+            GROUP BY b.navn
             ORDER BY sist DESC`);
-        const sisteBesok = await executeQuery(connection, "SELECT TOP 50 navn, side, opprettet FROM Thomas50_Besok ORDER BY opprettet DESC");
+        const sisteBesok = await executeQuery(connection, "SELECT TOP 50 navn, side, ip, opprettet FROM Thomas50_Besok ORDER BY opprettet DESC");
         const hilsener = await executeQuery(connection, "SELECT id, navn, tekst, opprettet FROM Thomas50_Hilsener ORDER BY opprettet DESC");
         const taler = await executeQuery(connection, "SELECT id, navn, epost, tema, melding, opprettet FROM Thomas50_Toaster ORDER BY opprettet DESC");
         let highscore = [];

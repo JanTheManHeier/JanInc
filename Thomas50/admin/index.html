@@ -80,6 +80,51 @@ async function slettHilsen(id, navn) {
   const r = await adminPost('/api/thomas50-admin-delete-greeting', { id });
   if (r && r.success) last();
 }
+
+// Geo-cache i sessionStorage så vi ikke spør om samme IP flere ganger
+const geoCache = JSON.parse(sessionStorage.getItem('thomas50-geo') || '{}');
+function lagreGeoCache() { sessionStorage.setItem('thomas50-geo', JSON.stringify(geoCache)); }
+
+async function slaaOppGeo(ip) {
+  if (!ip) return null;
+  if (geoCache[ip]) return geoCache[ip];
+  try {
+    const r = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}?fields=success,city,region,country,country_code,flag.emoji`);
+    const d = await r.json();
+    if (d && d.success) {
+      const flagg = (d.flag && d.flag.emoji) || '';
+      const sted = d.city || d.region || '';
+      const land = d.country || '';
+      const tekst = sted && land ? `${flagg} ${sted}, ${land}` : (sted || land || '?');
+      geoCache[ip] = tekst;
+    } else {
+      geoCache[ip] = '?';
+    }
+  } catch {
+    geoCache[ip] = '?';
+  }
+  lagreGeoCache();
+  return geoCache[ip];
+}
+
+async function berikGeo() {
+  const celler = document.querySelectorAll('[data-geo-ip]');
+  // Saml unike IP-er
+  const ips = [...new Set([...celler].map(c => c.dataset.geoIp).filter(Boolean))];
+  // Begrens parallellitet til 5 om gangen
+  const kø = ips.slice();
+  async function arbeider() {
+    while (kø.length) {
+      const ip = kø.shift();
+      await slaaOppGeo(ip);
+    }
+  }
+  await Promise.all(Array.from({ length: 5 }, arbeider));
+  celler.forEach(c => {
+    const ip = c.dataset.geoIp;
+    c.textContent = ip ? (geoCache[ip] || '?') : '';
+  });
+}
 async function last() {
   const c = document.getElementById('content');
   c.innerHTML = 'Laster...';
@@ -89,6 +134,7 @@ async function last() {
     const d = await res.json();
     document.getElementById('generert').textContent = 'Generert ' + new Date(d.generertAt).toLocaleString('nb-NO');
     c.innerHTML = render(d);
+    berikGeo();
   } catch (e) {
     c.innerHTML = '<div class="err">Kunne ikke hente statistikk: ' + (e.message || e) + '</div>';
   }
@@ -131,8 +177,14 @@ function render(d) {
 
   h += '<h2>👥 Hvem har vært inne?</h2>';
   if (d.perNavn.length) {
-    h += '<table><tr><th>Navn</th><th>Besøk</th><th>Sist</th></tr>';
-    h += d.perNavn.map(r => `<tr><td>${esc(r.navn)}</td><td>${r.besok}</td><td>${dt(r.sist)}</td></tr>`).join('');
+    h += '<table><tr><th>Navn</th><th>Sted</th><th>IP</th><th>Besøk</th><th>Sist</th></tr>';
+    h += d.perNavn.map(r => `<tr>
+      <td>${esc(r.navn)}</td>
+      <td><span data-geo-ip="${esc(r.ip || '')}" class="muted">${r.ip ? '...' : ''}</span></td>
+      <td class="muted">${esc(r.ip || '—')}</td>
+      <td>${r.besok}</td>
+      <td>${dt(r.sist)}</td>
+    </tr>`).join('');
     h += '</table>';
   } else h += '<p class="muted">Ingen ennå.</p>';
 
@@ -165,8 +217,14 @@ function render(d) {
     h += '</table>';
   } else h += '<p class="muted">Ingen hilsener ennå.</p>';
 
-  h += '<h2>🕒 Siste 50 besøk</h2><table><tr><th>Navn</th><th>Side</th><th>Tid</th></tr>';
-  h += d.sisteBesok.map(r => `<tr><td>${esc(r.navn || '—')}</td><td>${esc(r.side || '')}</td><td class="muted">${dt(r.opprettet)}</td></tr>`).join('');
+  h += '<h2>🕒 Siste 50 besøk</h2><table><tr><th>Navn</th><th>Side</th><th>Sted</th><th>IP</th><th>Tid</th></tr>';
+  h += d.sisteBesok.map(r => `<tr>
+    <td>${esc(r.navn || '—')}</td>
+    <td>${esc(r.side || '')}</td>
+    <td><span data-geo-ip="${esc(r.ip || '')}" class="muted">${r.ip ? '...' : ''}</span></td>
+    <td class="muted">${esc(r.ip || '—')}</td>
+    <td class="muted">${dt(r.opprettet)}</td>
+  </tr>`).join('');
   h += '</table>';
 
   return h;
