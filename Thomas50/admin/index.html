@@ -187,7 +187,7 @@ function render(d) {
     h += '<table><tr><th>Navn</th><th>Sted</th><th>IP</th><th>Besøk</th><th>Sist</th></tr>';
     h += d.perNavn.map(r => `<tr>
       <td>${esc(r.navn)}</td>
-      <td><span data-geo-ip="${esc(r.ip || '')}" class="muted">${r.ip ? '...' : ''}</span></td>
+      <td class="muted">${esc(r.sted || '')}</td>
       <td class="muted">${esc(r.ip || '—')}</td>
       <td>${r.besok}</td>
       <td>${dt(r.sist)}</td>
@@ -228,7 +228,7 @@ function render(d) {
   h += d.sisteBesok.map(r => `<tr>
     <td>${esc(r.navn || '—')}</td>
     <td>${esc(r.side || '')}</td>
-    <td><span data-geo-ip="${esc(r.ip || '')}" class="muted">${r.ip ? '...' : ''}</span></td>
+    <td class="muted">${esc(r.sted || '')}</td>
     <td class="muted">${esc(r.ip || '—')}</td>
     <td class="muted">${dt(r.opprettet)}</td>
   </tr>`).join('');

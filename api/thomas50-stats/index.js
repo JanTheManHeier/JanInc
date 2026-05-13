@@ -1,4 +1,37 @@
 const { getConnection, executeQuery } = require('../shared/db');
+const https = require('https');
+
+// In-memory cache i function-instansen — varer så lenge functionen er varm
+const geoCache = {};
+
+function slaaOppGeo(ip) {
+    return new Promise((resolve) => {
+        if (!ip || ip === '127.0.0.1' || ip === '::1' || ip.startsWith('10.') || ip.startsWith('192.168.')) {
+            return resolve({ ip, sted: '🏠 Lokalt' });
+        }
+        if (geoCache[ip]) return resolve(geoCache[ip]);
+        https.get(`https://ipwho.is/${encodeURIComponent(ip)}`, { timeout: 3000 }, (res) => {
+            let body = '';
+            res.on('data', d => body += d);
+            res.on('end', () => {
+                try {
+                    const d = JSON.parse(body);
+                    if (d && d.success !== false) {
+                        const sted = d.city || d.region || '';
+                        const land = d.country || '';
+                        const flagg = d.flag && d.flag.emoji ? d.flag.emoji : '';
+                        const tekst = sted && land ? `${flagg} ${sted}, ${land}` : (flagg + ' ' + (sted || land || '?')).trim();
+                        const result = { ip, sted: tekst };
+                        geoCache[ip] = result;
+                        resolve(result);
+                    } else {
+                        resolve({ ip, sted: '?' });
+                    }
+                } catch { resolve({ ip, sted: '?' }); }
+            });
+        }).on('error', () => resolve({ ip, sted: '?' })).on('timeout', function() { this.destroy(); resolve({ ip, sted: '?' }); });
+    });
+}
 
 const ENSURE_TABLES_SQL = `
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Thomas50_Hilsener')
@@ -45,6 +78,17 @@ module.exports = async function (context, req) {
                 SELECT TOP 20 navn, MAX(score) AS score, MAX(opprettet) AS sist
                 FROM Thomas50_Spillscore GROUP BY navn ORDER BY score DESC, sist ASC`);
         } catch {}
+
+        // Berik med geo-info (server-side, ingen CORS-problem)
+        const alleIp = [...new Set([
+            ...perNavn.map(r => r.ip).filter(Boolean),
+            ...sisteBesok.map(r => r.ip).filter(Boolean)
+        ])];
+        const geoResultater = await Promise.all(alleIp.map(slaaOppGeo));
+        const geoMap = {};
+        geoResultater.forEach(g => { geoMap[g.ip] = g.sted; });
+        perNavn.forEach(r => { r.sted = r.ip ? (geoMap[r.ip] || '?') : ''; });
+        sisteBesok.forEach(r => { r.sted = r.ip ? (geoMap[r.ip] || '?') : ''; });
 
         context.res = {
             status: 200, headers,
