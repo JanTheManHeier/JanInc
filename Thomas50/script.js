@@ -32,6 +32,7 @@
     initSpill();
     initMinnebok();
     initOverlay();
+    initMario();
     sporBesok('hjem');
   });
 
@@ -133,6 +134,7 @@
     if (id === 'program') setTimeout(initMap, 100);
     if (id === 'hilsener') lastHilsener();
     if (id === 'gjester') renderGjester();
+    if (id === 'mario') lastMarioTopp();
     sporBesok(id);
   }
 
@@ -597,6 +599,117 @@
     document.getElementById('overlay').addEventListener('click', e => {
       if (e.target.id === 'overlay') document.getElementById('overlay').hidden = true;
     });
+  }
+
+  // ============ Mario-spill ============
+  function initMario() {
+    const canvas = document.getElementById('mario-canvas');
+    const startScr = document.getElementById('mario-start');
+    const resScr = document.getElementById('mario-resultat');
+    const startBtn = document.getElementById('mario-start-btn');
+    const restartBtn = document.getElementById('mario-restart-btn');
+    const seToppBtn = document.getElementById('mario-se-topp-btn');
+
+    if (!canvas || !window.ThomasSpill) return;
+
+    ThomasSpill.init(canvas, async (score) => {
+      canvas.hidden = true;
+      resScr.hidden = false;
+      let tittel = `Du tok ${score} poeng!`;
+      let tekst = '';
+      if (score >= 50) tekst = '🥇 Helt sykt! Du er en ekte runner.';
+      else if (score >= 30) tekst = '🥈 Imponerende! Du kommer trygt til festen.';
+      else if (score >= 15) tekst = '🥉 Bra jobbet! Litt øl underveis.';
+      else if (score > 0) tekst = '🍺 Du fikk noen øl, men hadde litt trøbbel.';
+      else tekst = '😅 Pust dypt og prøv igjen!';
+      document.getElementById('mario-resultat-tittel').textContent = tittel;
+      document.getElementById('mario-resultat-tekst').textContent = tekst;
+
+      // Eksisterende navn-input fjernes hvis allerede der
+      const eks = document.getElementById('mario-navn-form');
+      if (eks) eks.remove();
+
+      if (!mittNavn) {
+        const form = document.createElement('div');
+        form.id = 'mario-navn-form';
+        form.style.marginTop = '16px';
+        form.innerHTML = `
+          <p style="font-size:13px;color:#D4A853">🏆 Skriv navnet ditt for å komme på topp 10!</p>
+          <input id="mario-navn-input" type="text" placeholder="Ditt navn"
+            style="display:block;width:100%;padding:10px;margin:8px 0;background:rgba(255,255,255,0.07);
+            border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#E8E0D4;font-size:15px;
+            box-sizing:border-box;font-family:inherit" />
+          <button id="mario-navn-lagre" class="btn-primary" style="margin:0">💾 Lagre score</button>`;
+        document.getElementById('mario-resultat-tekst').after(form);
+        const inp = form.querySelector('#mario-navn-input');
+        setTimeout(() => inp.focus(), 100);
+        form.querySelector('#mario-navn-lagre').onclick = async () => {
+          const n = inp.value.trim();
+          if (!n) { inp.focus(); return; }
+          settNavn(n);
+          await sendMarioScore(n, score);
+          form.remove();
+          toast('🏆 Score lagret!');
+          lastMarioTopp();
+        };
+        inp.addEventListener('keydown', e => { if (e.key === 'Enter') form.querySelector('#mario-navn-lagre').click(); });
+      } else {
+        sendMarioScore(mittNavn, score).then(() => { toast('🏆 Score lagret!'); lastMarioTopp(); });
+      }
+    });
+
+    function startSpill() {
+      startScr.hidden = true;
+      resScr.hidden = true;
+      canvas.hidden = false;
+      const form = document.getElementById('mario-navn-form');
+      if (form) form.remove();
+      // Wait for layout, then start
+      setTimeout(() => ThomasSpill.start(), 50);
+    }
+
+    startBtn.onclick = startSpill;
+    restartBtn.onclick = startSpill;
+    seToppBtn.onclick = () => {
+      resScr.scrollIntoView({ behavior: 'smooth' });
+      lastMarioTopp();
+    };
+
+    lastMarioTopp();
+  }
+
+  async function sendMarioScore(navn, score) {
+    try {
+      await fetch(`${API_BASE}/thomas50-spillscore`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ navn, score }),
+      });
+    } catch {}
+  }
+
+  async function lastMarioTopp() {
+    const liste = document.getElementById('mario-topp');
+    if (!liste) return;
+    liste.innerHTML = '<p class="muted" style="text-align:center;padding:14px">Henter topp 10...</p>';
+    try {
+      const r = await fetch(`${API_BASE}/thomas50-spillscore`);
+      const data = await r.json();
+      if (!data.length) {
+        liste.innerHTML = '<div class="empty-state"><div class="empty-icon">🎮</div><div>Ingen scores ennå — bli den første!</div></div>';
+        return;
+      }
+      liste.innerHTML = '<div class="topp-liste">' + data.map((d, i) => {
+        const medalje = ['🥇', '🥈', '🥉'][i] || `${i+1}.`;
+        return `<div class="topp-rad">
+          <span class="topp-medalje">${medalje}</span>
+          <span class="topp-navn">${esc(d.navn)}</span>
+          <span class="topp-score">${d.score} poeng</span>
+        </div>`;
+      }).join('') + '</div>';
+    } catch {
+      liste.innerHTML = '<p class="muted" style="text-align:center;padding:14px">Kunne ikke hente topp-listen.</p>';
+    }
   }
 
   // ============ Brukerstatistikk ============

@@ -240,7 +240,39 @@
     <div id="bilde-grid" class="bilde-grid"></div>
   </section>
 
-  <!-- HJELP -->
+  <!-- MARIO-SPILL -->
+  <section class="page" data-page="mario" hidden>
+    <h2 class="page-title">🎮 Thomas til Festen</h2>
+    <p class="muted">Hjelp Thomas komme seg til Kystens Hus! Tap = hopp · 60 sek</p>
+
+    <div id="mario-start" class="mario-start">
+      <div style="text-align:center;padding:20px">
+        <div style="font-size:48px;margin-bottom:8px">🏃🍺</div>
+        <p style="font-size:13px;color:#B0C4D8;line-height:1.6;margin-bottom:14px">
+          <strong>Tap skjermen</strong> for å hoppe.<br/>
+          Samle 🍺 (1 poeng) og 🥃 (5 poeng).<br/>
+          Unngå hindringer — du har 3 ❤️.<br/>
+          Du har 60 sekunder til festen!
+        </p>
+        <button id="mario-start-btn" class="btn-primary" style="margin:0">▶️ Start spillet</button>
+      </div>
+    </div>
+
+    <canvas id="mario-canvas" width="380" height="240" hidden></canvas>
+
+    <div id="mario-resultat" hidden style="text-align:center;padding:16px">
+      <div style="font-size:48px">🏆</div>
+      <h3 id="mario-resultat-tittel" style="color:#D4A853"></h3>
+      <p id="mario-resultat-tekst" style="color:#B0C4D8;font-size:14px"></p>
+      <button id="mario-restart-btn" class="btn-primary">🔁 Spill igjen</button>
+      <button id="mario-se-topp-btn" class="btn-secondary">🏆 Se topp 10</button>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title small-title">🏆 Topp 10 — beste runner</h3>
+      <div id="mario-topp"></div>
+    </div>
+  </section>
   <section class="page" data-page="hjelp" hidden>
     <h2 class="page-title">❓ Brukerveiledning</h2>
     <p class="muted">Slik bruker du Thomas50-appen</p>
@@ -276,10 +308,13 @@
     </div>
 
     <div class="hjelp-seksjon">
-      <h3>🎲 Spill</h3>
-      <p><strong>Quiz:</strong> 15 spørsmål om Thomas — svar rett, og navnet ditt havner på Topp 10!<br />
-      <strong>Diskusjon:</strong> Åpne spørsmål for bordet.<br />
-      <strong>Drikkeregler:</strong> Festregler for kvelden 🥃</p>
+      <h3>🎲 Quiz</h3>
+      <p>15+ spørsmål om Thomas — svar rett, og navnet ditt havner på Topp 10!</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>🎮 Thomas til Festen</h3>
+      <p>Hjelp Thomas løpe gjennom Tromsø-gatene til Kystens Hus! Tap skjermen for å hoppe over hindringer og samle 🍺 og 🥃. Du har 60 sekunder og 3 liv. Topp 10 lagres så hele festen kan konkurrere.</p>
     </div>
 
     <div class="hjelp-seksjon">
@@ -306,13 +341,15 @@
   <button class="nav-btn" data-go="hilsener"><span class="nav-icon">💌</span><span class="nav-label">Hilsener</span></button>
   <button class="nav-btn" data-go="toastmaster"><span class="nav-icon">🎤</span><span class="nav-label">Tale</span></button>
   <button class="nav-btn" data-go="sang"><span class="nav-icon">🎵</span><span class="nav-label">Sang</span></button>
-  <button class="nav-btn" data-go="spill"><span class="nav-icon">🎲</span><span class="nav-label">Spill</span></button>
+  <button class="nav-btn" data-go="spill"><span class="nav-icon">🎲</span><span class="nav-label">Quiz</span></button>
+  <button class="nav-btn" data-go="mario"><span class="nav-icon">🎮</span><span class="nav-label">Spill</span></button>
   <button class="nav-btn" data-go="minnebok"><span class="nav-icon">📸</span><span class="nav-label">Minner</span></button>
   <button class="nav-btn" data-go="hjelp"><span class="nav-icon">❓</span><span class="nav-label">Hjelp</span></button>
 </nav>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="data.js"></script>
+<script src="spill.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
