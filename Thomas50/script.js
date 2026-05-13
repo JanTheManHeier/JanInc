@@ -230,9 +230,20 @@
     if (gjesterFilter === 'pust') liste = liste.filter(g => g.pust);
     else if (gjesterFilter === 'toast') liste = liste.filter(g => (g.rolle || '').toLowerCase() === 'toastmaster');
     else if (gjesterFilter === 'avbud') liste = liste.filter(g => g.avbud);
-    else liste = liste.filter(g => !g.avbud); // alle = ikke vis avbud
+    else liste = liste.filter(g => !g.avbud);
+    if (gjesterSok) {
+      liste = liste.filter(g => {
+        const tekst = [g.navn, g.bio, g.fbBio, g.liBio, g.relasjon, g.extraBio, g.folge, 'bord ' + g.bord]
+          .filter(Boolean).join(' ').toLowerCase();
+        return tekst.includes(gjesterSok);
+      });
+    }
     if (gjesterFilter === 'avbud' && liste.length === 0) {
       grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#7A8FA8;padding:20px">Ingen avbud — nice! 🎉</div>`;
+      return;
+    }
+    if (liste.length === 0) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#7A8FA8;padding:20px">Ingen treff for "${esc(gjesterSok)}"</div>`;
       return;
     }
     grid.innerHTML = liste.map((g, idx) => {
