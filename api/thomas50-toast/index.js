@@ -13,7 +13,7 @@ CREATE TABLE Thomas50_Toaster (
 );`;
 
 const TOAST_TO = process.env.TOAST_NOTIFY_TO || 'ronnyandre@gmail.com';
-const TOAST_CC = process.env.TOAST_NOTIFY_CC || 'janheier@gmail.com';
+const TOAST_CC = process.env.TOAST_NOTIFY_CC || '';
 
 function escHtml(s) {
     return String(s == null ? '' : s)
@@ -40,7 +40,7 @@ Svar gjerne direkte til avsenderen for å avtale plass i programmet.
 
 Hilsen
 Jans agent 🤖
-(Automatisk varsel fra Thomas50-appen på janinc.no)`;
+(Automatisk varsel fra Thomas50-appen på https://janinc.no/Thomas50/)`;
 
     const html = `
 <p>Hei Ronny og Marianne!</p>
@@ -53,7 +53,7 @@ Jans agent 🤖
 <p style="margin-top:14px"><strong>Melding:</strong></p>
 <blockquote style="border-left:3px solid #D4A853;padding:8px 14px;color:#333;background:#fafafa;white-space:pre-wrap;font-family:sans-serif;font-size:14px">${escHtml(melding)}</blockquote>
 <p>Svar gjerne direkte til avsenderen for å avtale plass i programmet.</p>
-<p style="color:#888;font-size:13px;margin-top:24px">Hilsen<br/>Jans agent 🤖<br/><em>Automatisk varsel fra Thomas50-appen på janinc.no</em></p>`;
+<p style="color:#888;font-size:13px;margin-top:24px">Hilsen<br/>Jans agent 🤖<br/><em>Automatisk varsel fra <a href="https://janinc.no/Thomas50/">Thomas50-appen</a></em></p>`;
 
     return { subject, text, html };
 }
@@ -95,7 +95,7 @@ module.exports = async function (context, req) {
         const mail = lagMail({ navn: navnRen, epost: epostRen, tema: temaRen, melding: meldingRen });
         const mailRes = await sendMail({
             to: TOAST_TO,
-            cc: TOAST_CC,
+            cc: TOAST_CC || undefined,
             subject: mail.subject,
             text: mail.text,
             html: mail.html,
