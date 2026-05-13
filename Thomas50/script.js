@@ -11,6 +11,7 @@
   let hilsener = [];
   let bilder = JSON.parse(localStorage.getItem(STORAGE_BILDER) || '[]');
   let gjesterFilter = 'alle';
+  let gjesterSok = '';
   let quizIdx = 0;
   let diskIdx = 0;
   let quizScore = 0;       // antall riktige
@@ -218,6 +219,8 @@
         renderGjester();
       });
     });
+    const sokInp = document.getElementById('gjester-sok');
+    if (sokInp) sokInp.oninput = () => { gjesterSok = sokInp.value.trim().toLowerCase(); renderGjester(); };
     renderGjester();
   }
 
