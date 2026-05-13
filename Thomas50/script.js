@@ -13,10 +13,15 @@
   let gjesterFilter = 'alle';
   let quizIdx = 0;
   let diskIdx = 0;
+  let quizScore = 0;       // antall riktige
+  let quizSvart = 0;       // antall besvart
+  let quizFerdig = false;
+  let aktivSpillTab = 'quiz';
 
   // ============ Init ============
   document.addEventListener('DOMContentLoaded', () => {
     initNavnModal();
+    initNavnPille();
     initNavigasjon();
     initHjem();
     initProgram();
@@ -30,28 +35,88 @@
     sporBesok('hjem');
   });
 
+  // ============ Navn-pille (vises hvis anonym) ============
+  function initNavnPille() {
+    const p = document.getElementById('navn-pille');
+    if (!p) return;
+    function oppdater() {
+      p.hidden = !!mittNavn;
+      p.style.display = mittNavn ? 'none' : '';
+    }
+    oppdater();
+    p.onclick = () => {
+      const modal = document.getElementById('navn-modal');
+      modal.hidden = false;
+      modal.style.display = '';
+      setTimeout(() => document.getElementById('navn-input').focus(), 200);
+    };
+    window._oppdaterNavnPille = oppdater;
+  }
+  function settNavn(n) {
+    if (!n || mittNavn === n) return;
+    mittNavn = n;
+    localStorage.setItem(STORAGE_NAVN, n);
+    if (window._oppdaterNavnPille) window._oppdaterNavnPille();
+  }
+
   // ============ Navn-modal ============
   function initNavnModal() {
     const modal = document.getElementById('navn-modal');
+    function lukk() {
+      modal.hidden = true;
+      modal.style.display = 'none';
+      sporBesok('hjem');
+    }
     if (!mittNavn) {
       modal.hidden = false;
+      modal.style.display = '';
       const inp = document.getElementById('navn-input');
-      inp.focus();
+      setTimeout(() => inp.focus(), 200);
       document.getElementById('navn-lagre').onclick = () => {
         const n = inp.value.trim();
         if (n) {
           mittNavn = n;
           localStorage.setItem(STORAGE_NAVN, n);
-          modal.hidden = true;
+          lukk();
           toast(`Velkommen, ${n}! 🎉`);
-          sporBesok('hjem');
         } else {
           inp.focus();
         }
       };
-      document.getElementById('navn-skip').onclick = () => { modal.hidden = true; };
+      document.getElementById('navn-skip').onclick = lukk;
       inp.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('navn-lagre').click(); });
+    } else {
+      modal.hidden = true;
+      modal.style.display = 'none';
     }
+  }
+
+  // ============ Device fingerprint ============
+  // Lager en stabil, lesbar enhet-ID per nettleser/enhet
+  function deviceId() {
+    let id = localStorage.getItem('thomas50-device');
+    if (id) return id;
+    const ua = navigator.userAgent;
+    let device = 'Ukjent';
+    if (/iPhone/.test(ua)) device = 'iPhone';
+    else if (/iPad/.test(ua)) device = 'iPad';
+    else if (/Android/.test(ua)) device = 'Android';
+    else if (/Macintosh/.test(ua)) device = 'Mac';
+    else if (/Windows/.test(ua)) device = 'Windows';
+    else if (/Linux/.test(ua)) device = 'Linux';
+    let browser = 'Browser';
+    if (/Edg\//.test(ua)) browser = 'Edge';
+    else if (/Chrome\//.test(ua)) browser = 'Chrome';
+    else if (/Firefox\//.test(ua)) browser = 'Firefox';
+    else if (/Safari\//.test(ua)) browser = 'Safari';
+    // Hash av UA + screen + tz for unik ID
+    const fp = ua + '|' + screen.width + 'x' + screen.height + '|' + (Intl.DateTimeFormat().resolvedOptions().timeZone || '');
+    let hash = 0;
+    for (let i = 0; i < fp.length; i++) hash = ((hash << 5) - hash + fp.charCodeAt(i)) | 0;
+    const short = Math.abs(hash).toString(36).substring(0, 5).toUpperCase();
+    id = `${device}/${browser} #${short}`;
+    localStorage.setItem('thomas50-device', id);
+    return id;
   }
 
   // ============ Navigasjon ============
@@ -248,10 +313,7 @@
       toast('Hilsen lagret lokalt (sendes når du er online)');
     }
     document.getElementById('hilsen-tekst').value = '';
-    if (!mittNavn) {
-      mittNavn = navn;
-      localStorage.setItem(STORAGE_NAVN, navn);
-    }
+    if (!mittNavn) settNavn(navn);
     lastHilsener();
   }
 
@@ -285,6 +347,7 @@
     } catch (e) {
       status.textContent = 'Kunne ikke sende — prøv igjen senere eller send mail direkte til ronnyandre@gmail.com';
     }
+    if (data.navn) settNavn(data.navn);
   }
 
   // ============ Sang ============
@@ -312,45 +375,170 @@
       t.addEventListener('click', () => {
         document.querySelectorAll('.tab[data-spill]').forEach(x => x.classList.toggle('active', x === t));
         const v = t.dataset.spill;
+        aktivSpillTab = v;
         document.getElementById('quiz-view').hidden = v !== 'quiz';
+        document.getElementById('topp-view').hidden = v !== 'topp';
         document.getElementById('diskusjon-view').hidden = v !== 'diskusjon';
         document.getElementById('regler-view').hidden = v !== 'regler';
+        if (v === 'topp') lastTopp();
       });
     });
 
+    nullstillQuiz();
     renderQuiz();
-    document.getElementById('quiz-prev').onclick = () => { quizIdx = (quizIdx - 1 + SPILL_QUIZ.length) % SPILL_QUIZ.length; renderQuiz(); };
-    document.getElementById('quiz-next').onclick = () => { quizIdx = (quizIdx + 1) % SPILL_QUIZ.length; renderQuiz(); };
+    document.getElementById('quiz-prev').onclick = () => {
+      if (quizFerdig) return;
+      quizIdx = (quizIdx - 1 + SPILL_QUIZ.length) % SPILL_QUIZ.length;
+      renderQuiz();
+    };
+    document.getElementById('quiz-next').onclick = neste;
+    document.getElementById('quiz-restart').onclick = () => { nullstillQuiz(); renderQuiz(); };
+    document.getElementById('quiz-se-topp').onclick = () => {
+      document.querySelector('.tab[data-spill="topp"]').click();
+    };
 
     renderDiskusjon();
     document.getElementById('disk-next').onclick = () => { diskIdx = (diskIdx + 1) % SPILL_SPØRSMÅL.length; renderDiskusjon(); };
     document.getElementById('disk-rand').onclick = () => { diskIdx = Math.floor(Math.random() * SPILL_SPØRSMÅL.length); renderDiskusjon(); };
   }
 
+  function nullstillQuiz() {
+    quizIdx = 0; quizScore = 0; quizSvart = 0; quizFerdig = false;
+    document.getElementById('quiz-resultat').hidden = true;
+    document.querySelector('#quiz-view .quiz-card').hidden = false;
+    document.getElementById('quiz-spill-status').hidden = false;
+  }
+
+  function neste() {
+    if (quizIdx < SPILL_QUIZ.length - 1) {
+      quizIdx++;
+      renderQuiz();
+    } else {
+      visResultat();
+    }
+  }
+
   function renderQuiz() {
     const q = SPILL_QUIZ[quizIdx];
+    document.getElementById('quiz-spill-status').textContent = `Score: ${quizScore} / ${quizSvart}`;
     document.getElementById('quiz-num').textContent = `Spørsmål ${quizIdx + 1} / ${SPILL_QUIZ.length}`;
     document.getElementById('quiz-q').textContent = q.spm;
     const opts = document.getElementById('quiz-options');
     const fasit = document.getElementById('quiz-fasit');
     fasit.hidden = true;
+    document.getElementById('quiz-next').textContent = quizIdx === SPILL_QUIZ.length - 1 ? '🏁 Ferdig' : 'Neste →';
     opts.innerHTML = q.valg.map((v, i) => `<button class="quiz-opt" data-i="${i}">${esc(v)}</button>`).join('');
     opts.querySelectorAll('.quiz-opt').forEach(b => {
-      b.onclick = () => {
-        const i = +b.dataset.i;
-        opts.querySelectorAll('.quiz-opt').forEach(x => x.classList.add('disabled'));
-        if (q.svar === null) {
-          b.classList.add('korrekt');
-        } else if (i === q.svar) {
-          b.classList.add('korrekt');
-        } else {
-          b.classList.add('feil');
-          opts.querySelector(`[data-i="${q.svar}"]`).classList.add('korrekt');
-        }
-        fasit.textContent = q.fasit;
-        fasit.hidden = false;
-      };
+      b.onclick = () => svarKlikket(b, q);
     });
+  }
+
+  function svarKlikket(btn, q) {
+    const opts = document.getElementById('quiz-options');
+    if (opts.querySelector('.disabled')) return; // already answered
+    const i = +btn.dataset.i;
+    opts.querySelectorAll('.quiz-opt').forEach(x => x.classList.add('disabled'));
+    quizSvart++;
+    if (q.svar === null) {
+      btn.classList.add('korrekt');
+      quizScore++;
+    } else if (i === q.svar) {
+      btn.classList.add('korrekt');
+      quizScore++;
+    } else {
+      btn.classList.add('feil');
+      const k = opts.querySelector(`[data-i="${q.svar}"]`);
+      if (k) k.classList.add('korrekt');
+    }
+    document.getElementById('quiz-fasit').textContent = q.fasit;
+    document.getElementById('quiz-fasit').hidden = false;
+    document.getElementById('quiz-spill-status').textContent = `Score: ${quizScore} / ${quizSvart}`;
+  }
+
+  function visResultat() {
+    quizFerdig = true;
+    document.querySelector('#quiz-view .quiz-card').hidden = true;
+    document.getElementById('quiz-spill-status').hidden = true;
+    document.getElementById('quiz-resultat').hidden = false;
+
+    const prosent = Math.round((quizScore / SPILL_QUIZ.length) * 100);
+    let tittel = `${quizScore} av ${SPILL_QUIZ.length} riktig!`;
+    let tekst = '';
+    if (prosent === 100) tekst = 'Perfekt! Du må kjenne Thomas usedvanlig godt 🥇';
+    else if (prosent >= 80) tekst = 'Imponerende! Du er definitivt en ekte venn 🥈';
+    else if (prosent >= 60) tekst = 'Bra! Du kjenner Thomas godt 🥉';
+    else if (prosent >= 40) tekst = 'OK — kanskje du lærer mer i kveld 🍻';
+    else tekst = 'Hm... Kanskje på tide å bli bedre kjent? 😉';
+    document.getElementById('quiz-resultat-tittel').textContent = tittel;
+    document.getElementById('quiz-resultat-tekst').textContent = tekst;
+
+    // Hvis ingen navn: vis input
+    const tekstEl = document.getElementById('quiz-resultat-tekst');
+    const eksisterende = document.getElementById('quiz-navn-form');
+    if (eksisterende) eksisterende.remove();
+
+    if (!mittNavn) {
+      const form = document.createElement('div');
+      form.id = 'quiz-navn-form';
+      form.style.marginTop = '16px';
+      form.innerHTML = `
+        <p style="font-size:13px;color:#D4A853">🏆 Du kommer på topp 10! Skriv navnet ditt:</p>
+        <input id="quiz-navn-input" type="text" placeholder="Ditt navn" 
+          style="display:block;width:100%;padding:10px;margin:8px 0;background:rgba(255,255,255,0.07);
+          border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#E8E0D4;font-size:15px;
+          box-sizing:border-box;font-family:inherit" />
+        <button id="quiz-navn-lagre" class="btn-primary" style="margin:0">💾 Lagre score</button>`;
+      tekstEl.after(form);
+      const inp = form.querySelector('#quiz-navn-input');
+      setTimeout(() => inp.focus(), 100);
+      form.querySelector('#quiz-navn-lagre').onclick = async () => {
+        const n = inp.value.trim();
+        if (!n) { inp.focus(); return; }
+        settNavn(n);
+        await sendHighscore(n, quizScore, SPILL_QUIZ.length);
+        form.remove();
+        toast('🏆 Score lagret!');
+        lastTopp();
+      };
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter') form.querySelector('#quiz-navn-lagre').click(); });
+    } else {
+      // Auto-lagre
+      sendHighscore(mittNavn, quizScore, SPILL_QUIZ.length).then(() => toast('🏆 Score lagret!'));
+    }
+  }
+
+  async function sendHighscore(navn, score, antall) {
+    try {
+      await fetch(`${API_BASE}/thomas50-highscore`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ navn, score, antall }),
+      });
+    } catch {}
+  }
+
+  async function lastTopp() {
+    const liste = document.getElementById('topp-liste');
+    liste.innerHTML = '<p class="muted" style="text-align:center;padding:20px">Henter topp 10...</p>';
+    try {
+      const r = await fetch(`${API_BASE}/thomas50-highscore`);
+      const data = await r.json();
+      if (!data.length) {
+        liste.innerHTML = '<div class="empty-state"><div class="empty-icon">🏆</div><div>Ingen scores ennå — bli den første!</div></div>';
+        return;
+      }
+      liste.innerHTML = '<div class="topp-liste">' + data.map((d, i) => {
+        const medalje = ['🥇', '🥈', '🥉'][i] || `${i+1}.`;
+        const prosent = Math.round((d.score / d.antall) * 100);
+        return `<div class="topp-rad">
+          <span class="topp-medalje">${medalje}</span>
+          <span class="topp-navn">${esc(d.navn)}</span>
+          <span class="topp-score">${d.score}/${d.antall} (${prosent}%)</span>
+        </div>`;
+      }).join('') + '</div>';
+    } catch {
+      liste.innerHTML = '<p class="muted" style="text-align:center;padding:20px">Kunne ikke hente topp-listen.</p>';
+    }
   }
 
   function renderDiskusjon() {
@@ -418,11 +606,12 @@
   // ============ Brukerstatistikk ============
   async function sporBesok(side) {
     try {
+      const navnTilSporing = mittNavn || `(anon) ${deviceId()}`;
       await fetch(`${API_BASE}/thomas50-track`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          navn: mittNavn || 'anonym',
+          navn: navnTilSporing,
           side,
           tidspunkt: new Date().toISOString(),
           ua: navigator.userAgent.substring(0, 200),

@@ -13,6 +13,8 @@
 
 <div id="toast" class="toast" hidden></div>
 
+<button id="navn-pille" class="navn-pille" hidden>👋 Hvem er du?</button>
+
 <div id="overlay" class="overlay" hidden>
   <img id="overlay-img" alt="" />
   <button id="overlay-close" class="btn-danger">Lukk</button>
@@ -181,21 +183,37 @@
 
     <div class="tabs">
       <button class="tab active" data-spill="quiz">Quiz</button>
+      <button class="tab" data-spill="topp">🏆 Topp 10</button>
       <button class="tab" data-spill="diskusjon">Diskusjon</button>
       <button class="tab" data-spill="regler">Drikkeregler</button>
     </div>
 
     <div id="quiz-view">
+      <div id="quiz-spill-status" class="quiz-status"></div>
       <div class="quiz-card">
         <div class="quiz-num" id="quiz-num"></div>
         <div class="quiz-q" id="quiz-q"></div>
         <div class="quiz-options" id="quiz-options"></div>
         <div class="quiz-fasit" id="quiz-fasit" hidden></div>
-        <div class="row">
+        <div class="row" id="quiz-row">
           <button id="quiz-prev" class="btn-secondary">← Forrige</button>
           <button id="quiz-next" class="btn-primary">Neste →</button>
         </div>
       </div>
+      <div id="quiz-resultat" hidden>
+        <div class="quiz-card" style="text-align:center">
+          <div style="font-size:48px">🏆</div>
+          <h3 id="quiz-resultat-tittel" style="color:#D4A853"></h3>
+          <p id="quiz-resultat-tekst" style="font-size:16px;color:#B0C4D8"></p>
+          <button id="quiz-restart" class="btn-primary">🔁 Spill igjen</button>
+          <button id="quiz-se-topp" class="btn-secondary">🏆 Se topp 10</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="topp-view" hidden>
+      <p class="muted">Topp 10 — best score over 100% gir høyest plass</p>
+      <div id="topp-liste"></div>
     </div>
 
     <div id="diskusjon-view" hidden>
@@ -235,6 +253,64 @@
 
     <div id="bilde-grid" class="bilde-grid"></div>
   </section>
+
+  <!-- HJELP -->
+  <section class="page" data-page="hjelp" hidden>
+    <h2 class="page-title">❓ Brukerveiledning</h2>
+    <p class="muted">Slik bruker du Thomas50-appen</p>
+
+    <div class="hjelp-seksjon">
+      <h3>🎂 Hjem</h3>
+      <p>Velkomstside med Thomas-bilde, nedtelling til festen, og oversikt over kvelden. Bla nedover for å se "Om Thomas"-seksjonen med karriere og fun facts.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>📍 Program</h3>
+      <p>Tre stopp: Pust badstue (14:30), Kystens Hus (18:00) og Bakrommet på Amtmandens (22:00). Klikk "Åpne i Google Maps" for veibeskrivelse, eller bruk det interaktive kartet nederst.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>👥 Gjester</h3>
+      <p>Se ~30 inviterte gjester med kort om hver person. Bruk filterknappene øverst for å vise kun gjester på Pust, toastmasterne, eller avbud.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>💌 Hilsener</h3>
+      <p>Skriv en hilsen til Thomas — alle gjester ser dem. Du må fylle inn navnet ditt og selve hilsenen.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>🎤 Tale</h3>
+      <p>Vil du holde tale i festen? Send en kort beskrivelse til toastmasterne <strong>Ronny André</strong> og <strong>Marianne Wilhelmsen</strong>. De kontakter deg via e-post for å sette deg på programmet.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>🎵 Sang</h3>
+      <p>Bursdagssangen "Endelig voksen (kanskje)" med tekst. Trykk "Vis sangtekst" for å se hele teksten, eller "Kopier sangtekst" for å lime den inn på <a href="https://suno.com" target="_blank" rel="noopener">suno.com</a> og generere en ekte sang!</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>🎲 Spill</h3>
+      <p><strong>Quiz:</strong> 15 spørsmål om Thomas — svar rett, og navnet ditt havner på Topp 10!<br />
+      <strong>Diskusjon:</strong> Åpne spørsmål for bordet.<br />
+      <strong>Drikkeregler:</strong> Festregler for kvelden 🥃</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>📸 Minner</h3>
+      <p>Last opp dine egne bilder fra kvelden. Bildene lagres kun lokalt i din nettleser. Trykk på et bilde for å forstørre eller slette.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>👋 Personvern</h3>
+      <p>Vi lagrer navnet ditt (hvis du oppgir det), hilsener og talemeldinger. Bilder ligger kun på din enhet. Vi bruker ikke informasjonen til noe annet enn å gjøre festen finere for Thomas. ❤️</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>🛟 Hjelp meg!</h3>
+      <p>Spørsmål om appen? Snakk med <strong>Jan Heier Johansen</strong> i festen, eller send en mail til <a href="mailto:janhj@hotmail.com">janhj@hotmail.com</a>.</p>
+    </div>
+  </section>
 </main>
 
 <nav class="nav">
@@ -246,6 +322,7 @@
   <button class="nav-btn" data-go="sang"><span class="nav-icon">🎵</span><span class="nav-label">Sang</span></button>
   <button class="nav-btn" data-go="spill"><span class="nav-icon">🎲</span><span class="nav-label">Spill</span></button>
   <button class="nav-btn" data-go="minnebok"><span class="nav-icon">📸</span><span class="nav-label">Minner</span></button>
+  <button class="nav-btn" data-go="hjelp"><span class="nav-icon">❓</span><span class="nav-label">Hjelp</span></button>
 </nav>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>

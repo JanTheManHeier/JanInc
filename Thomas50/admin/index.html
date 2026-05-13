@@ -53,7 +53,14 @@ function render(d) {
     <div class="stat-card"><div class="stat-num">${d.unikeNavn}</div><div class="stat-label">Unike personer</div></div>
     <div class="stat-card"><div class="stat-num">${d.hilsener.length}</div><div class="stat-label">Hilsener</div></div>
     <div class="stat-card"><div class="stat-num">${d.taler.length}</div><div class="stat-label">Talemeldinger</div></div>
+    <div class="stat-card"><div class="stat-num">${d.highscore ? d.highscore.length : 0}</div><div class="stat-label">Quiz-spillere</div></div>
   </div>`;
+
+  if (d.highscore && d.highscore.length) {
+    h += '<h2>🏆 Quiz topp 10</h2><table><tr><th>#</th><th>Navn</th><th>Score</th><th>Forsøk</th><th>Sist</th></tr>';
+    h += d.highscore.map((r, i) => `<tr><td>${['🥇','🥈','🥉'][i]||(i+1)}</td><td><strong>${esc(r.navn)}</strong></td><td>${r.score}/${r.antall}</td><td>${r.forsok}</td><td class="muted">${dt(r.sist)}</td></tr>`).join('');
+    h += '</table>';
+  }
 
   h += '<h2>👥 Hvem har vært inne?</h2>';
   if (d.perNavn.length) {
