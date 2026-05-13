@@ -125,7 +125,7 @@
     <p class="muted">Skriv en hilsen — alle gjester ser dem her</p>
 
     <div class="form">
-      <input id="hilsen-navn" type="text" placeholder="Ditt navn" />
+      <input id="hilsen-navn" type="text" placeholder="Ditt navn" autocomplete="name" />
       <textarea id="hilsen-tekst" rows="4" placeholder="Skriv din hilsen til Thomas her... 🎉"></textarea>
       <button id="hilsen-lagre" class="btn-primary">💌 Send hilsen</button>
     </div>
@@ -149,9 +149,9 @@
     </div>
 
     <div class="form">
-      <input id="toast-navn" type="text" placeholder="Ditt navn *" />
-      <input id="toast-epost" type="email" placeholder="Din e-post (så toastmasterne kan svare)" />
-      <input id="toast-tema" type="text" placeholder="Tema for talen (kort)" />
+      <input id="toast-navn" type="text" placeholder="Ditt navn *" autocomplete="name" />
+      <input id="toast-epost" type="email" placeholder="Din e-post (så toastmasterne kan svare)" autocomplete="email" inputmode="email" />
+      <input id="toast-tema" type="text" placeholder="Tema for talen (kort)" autocomplete="off" />
       <textarea id="toast-melding" rows="5" placeholder="Kort beskrivelse av talen — hvor lang, hva handler den om, har du behov for mikrofon, lerret, etc."></textarea>
       <button id="toast-lagre" class="btn-primary">🎤 Meld tale</button>
     </div>
