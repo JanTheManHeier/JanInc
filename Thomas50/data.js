@@ -77,9 +77,6 @@ const GJESTER = [
     bio: "Klar for badstue og fest.",
     fbBio: "Sykehusinnkjøp HF · 📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 I et forhold med Terje Karlstad",
     fbUrl: "https://www.facebook.com/silje.ingebrigtsen.75",
-    liBio: "Principal Consultant HWE at Equinor · 📍 Norway",
-    bildeFil: "images/gjester/silje-ingebrigtsen.jpg",
-    liUrl: "https://www.linkedin.com/in/silje-ingebrigtsen-9467095a/"
   },
   {
     navn: "Ole-Herman Strømmesen",
@@ -113,9 +110,6 @@ const GJESTER = [
     bio: "Pust 🔥",
     fbBio: "📚 Kongsbakken Videregående Skole · 📍 Tromsø, Norway · 💕 I et forhold med Oddrun Halvorsen",
     fbUrl: "https://www.facebook.com/andreas.willumsen",
-    liBio: "Partner - Erhvervsmægler - CPH Erhverv · 📍 Copenhagen, Capital Region of Denmark, Denmark",
-    bildeFil: "images/gjester/andreas-willumsen.jpg",
-    liUrl: "https://www.linkedin.com/in/andreaswillumsen/"
   },
   {
     navn: "Jan Heier Johansen",
@@ -179,9 +173,6 @@ const GJESTER = [
     fbBio: "Bailbrook College, Bath UK · 📍 Tromsø, Norway · 💕 Gift med Line Myreng",
     fbUrl: "https://www.facebook.com/rune.myreng",
     folge: "Line Myreng",
-    liBio: "Mekaniker i Hesselberg · 📍 Storsteinnes, Troms og Finnmark, Norway",
-    bildeFil: "images/gjester/rune-myreng.jpg",
-    liUrl: "https://www.linkedin.com/in/rune-myreng-819163337/"
   },
   {
     navn: "Ørjan Berg Karlsen",
@@ -198,9 +189,6 @@ const GJESTER = [
     bio: "Klar for Pust og fest.",
     fbBio: "📍 Tromsø, Norway · 💕 I et forhold med Anders Mo Hanssen",
     fbUrl: "https://www.facebook.com/marianne.svorken",
-    liBio: "Finansrådgiver at DnB NOR · 📍 Tromsø, Troms og Finnmark, Norway",
-    bildeFil: "images/gjester/marianne-svorken.jpg",
-    liUrl: "https://www.linkedin.com/in/marianne-svorken-5081ab7/"
   },
   {
     navn: "Marit Osima",
@@ -310,9 +298,6 @@ const GJESTER = [
     plus: 0,
     bio: "Bekreftet på event-posten.",
     fbUrl: "https://www.facebook.com/furnesmarius",
-    liBio: "Paramedisiner og sykepleier · 📍 Ålesund, Møre og Romsdal, Norway",
-    bildeFil: "images/gjester/marius-furnes.jpg",
-    liUrl: "https://www.linkedin.com/in/marius-furnes-859967106/"
   },
   {
     navn: "Kjell Roger Andersen",
