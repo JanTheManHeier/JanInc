@@ -64,7 +64,7 @@
     invuln = 0;
     blinkTid = 0;
     bakkeOffset = 0;
-    festX = 0;
+    festX = 99999; // utenfor — settes inn først nær slutten
     kommetFram = false;
     starttid = performance.now();
     sisteFrame = starttid;
@@ -179,11 +179,10 @@
     snofnugg.forEach(s => { s.y += s.vy; s.x += s.vx - hastighet * 0.2; });
 
     // Festlokalet kommer til syne fra fase > 0.85, scroller sakte inn fra høyre
-    if (fase > 0.85 && !kommetFram) {
-      const festFase = (fase - 0.85) / 0.15;
-      // Mål-x: midten av canvas
+    if (fase > 0.85) {
+      const festFase = Math.min(1, (fase - 0.85) / 0.15);
+      // Mål-x: ~midten av canvas, start utenfor høyre
       festX = bredde + 100 - festFase * (bredde * 0.55 + 100);
-      if (festFase >= 1) festX = bredde * 0.45;
     }
 
     // Wrap fjell
@@ -414,31 +413,50 @@
       }
     });
 
-    // Måker (luft-hindringer) — animerte vinger
+    // Måker (luft-hindringer) — animerte vinger med tydelig mørk kontur
     maker.forEach(m => {
       const cx = m.x + m.w / 2;
       const cy = m.y + m.h / 2;
       const ving = Math.sin(m.vingFase) * 8;
-      ctx.strokeStyle = '#E8E0D4';
-      ctx.fillStyle = '#E8E0D4';
-      ctx.lineWidth = 2.5;
-      // Kropp
+      // Kropp — hvit fyll med mørk kontur for kontrast mot lys himmel
+      ctx.fillStyle = '#FFFFFF';
+      ctx.strokeStyle = '#0D1B2A';
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.ellipse(cx, cy, 8, 4, 0, 0, Math.PI * 2);
+      ctx.ellipse(cx, cy, 9, 5, 0, 0, Math.PI * 2);
       ctx.fill();
-      // Vinger (M-form med Sin-bølge)
+      ctx.stroke();
+      // Vinger — tykkere mørke streker
+      ctx.strokeStyle = '#0D1B2A';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(cx - 20, cy + ving);
+      ctx.quadraticCurveTo(cx - 10, cy - 9 - ving, cx, cy - 1);
+      ctx.quadraticCurveTo(cx + 10, cy - 9 - ving, cx + 20, cy + ving);
+      ctx.stroke();
+      // Indre vinge-fyll (hvitt)
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.moveTo(cx - 18, cy + ving);
-      ctx.quadraticCurveTo(cx - 9, cy - 6 - ving, cx, cy);
-      ctx.quadraticCurveTo(cx + 9, cy - 6 - ving, cx + 18, cy + ving);
+      ctx.quadraticCurveTo(cx - 9, cy - 7 - ving, cx, cy);
+      ctx.quadraticCurveTo(cx + 9, cy - 7 - ving, cx + 18, cy + ving);
       ctx.stroke();
       // Hode/nebb
       ctx.fillStyle = '#FFC93C';
+      ctx.strokeStyle = '#0D1B2A';
+      ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.moveTo(cx + 8, cy - 1);
-      ctx.lineTo(cx + 14, cy);
-      ctx.lineTo(cx + 8, cy + 1);
+      ctx.moveTo(cx + 9, cy - 1);
+      ctx.lineTo(cx + 16, cy);
+      ctx.lineTo(cx + 9, cy + 1);
       ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      // Øye
+      ctx.fillStyle = '#0D1B2A';
+      ctx.beginPath();
+      ctx.arc(cx + 5, cy - 1, 1.2, 0, Math.PI * 2);
       ctx.fill();
     });
 
