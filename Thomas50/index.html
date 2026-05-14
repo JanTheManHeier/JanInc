@@ -85,6 +85,10 @@
 
   <!-- PROGRAM -->
   <section class="page" data-page="program" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab active" data-go="program">📍 Program</button>
+      <button class="sub-tab" data-go="meny">🍽️ Meny</button>
+    </div>
     <h2 class="page-title">📍 Dagens program</h2>
     <p class="muted">Trykk på et stopp for kart og detaljer</p>
 
@@ -284,17 +288,6 @@
     </div>
 
     <div class="section">
-      <h3 class="section-title small-title">🎞️ Forhåndsvisning</h3>
-      <iframe src="https://photos.app.goo.gl/8fMmTPqd2LGJ2i1X6"
-        style="width:calc(100% - 32px);margin:0 16px;height:380px;border:1px solid rgba(212,168,83,0.2);border-radius:12px;background:#0D1B2A"
-        loading="lazy"
-        sandbox="allow-scripts allow-same-origin allow-popups"
-        referrerpolicy="no-referrer"
-        onerror="this.style.display='none'"></iframe>
-      <p class="muted small">Hvis forhåndsvisning ikke laster — bruk lenken over for å åpne i Google Photos-app eller nettleser.</p>
-    </div>
-
-    <div class="section">
       <h3 class="section-title small-title">📱 Last opp lokalt (private bilder)</h3>
       <p class="lead">Vil du beholde bilder kun på din enhet? Last opp her — de lagres lokalt og deles ikke.</p>
       <button id="last-opp" class="btn-secondary">📷 Last opp lokalt</button>
@@ -348,6 +341,10 @@
 
   <!-- MENY -->
   <section class="page" data-page="meny" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="program">📍 Program</button>
+      <button class="sub-tab active" data-go="meny">🍽️ Meny</button>
+    </div>
     <h2 class="page-title">🍽️ Kveldens meny</h2>
     <p class="muted">3-retters middag med drikke-pairing — Kystens Hus, kl 18:00</p>
 
@@ -476,7 +473,6 @@
 <nav class="nav">
   <button class="nav-btn active" data-go="hjem"><span class="nav-icon">🎂</span><span class="nav-label">Hjem</span></button>
   <button class="nav-btn" data-go="program"><span class="nav-icon">📍</span><span class="nav-label">Program</span></button>
-  <button class="nav-btn" data-go="meny"><span class="nav-icon">🍽️</span><span class="nav-label">Meny</span></button>
   <button class="nav-btn" data-go="gjester"><span class="nav-icon">👥</span><span class="nav-label">Gjester</span></button>
   <button class="nav-btn" data-go="hilsener"><span class="nav-icon">💌</span><span class="nav-label">Bidra</span></button>
   <button class="nav-btn" data-go="sang"><span class="nav-icon">🎵</span><span class="nav-label">Sang</span></button>
@@ -486,7 +482,7 @@
 </nav>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/easyqrcodejs@4.6.2/dist/easy.qrcode.min.js"></script>
 <script src="data.js"></script>
 <script src="spill.js"></script>
 <script src="script.js"></script>

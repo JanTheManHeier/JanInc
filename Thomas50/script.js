@@ -183,42 +183,27 @@
     oppdater();
     setInterval(oppdater, 60000);
 
-    // QR-kode med Thomas-bilde i midten
+    // QR-kode med Thomas-bilde i midten (easyqrcodejs)
     const qrEl = document.getElementById('qr-kode');
     if (qrEl && window.QRCode) {
       try {
-        QRCode.toCanvas('https://janinc.no/Thomas50/', {
+        qrEl.innerHTML = '';
+        new QRCode(qrEl, {
+          text: 'https://janinc.no/Thomas50/',
           width: 220,
-          margin: 1,
-          errorCorrectionLevel: 'H',
-          color: { dark: '#0D1B2A', light: '#E8E0D4' }
-        }, (err, canvas) => {
-          if (err) { qrEl.innerHTML = '<p class="muted">Kunne ikke generere QR</p>'; return; }
-          qrEl.innerHTML = '';
-          qrEl.appendChild(canvas);
-          const img = new Image();
-          img.onload = () => {
-            const ctx = canvas.getContext('2d');
-            const sz = canvas.width * 0.22;
-            const x = (canvas.width - sz) / 2;
-            const y = (canvas.height - sz) / 2;
-            ctx.fillStyle = '#E8E0D4';
-            ctx.fillRect(x - 4, y - 4, sz + 8, sz + 8);
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(canvas.width/2, canvas.height/2, sz/2, 0, Math.PI*2);
-            ctx.clip();
-            ctx.drawImage(img, x, y, sz, sz);
-            ctx.restore();
-            ctx.strokeStyle = '#D4A853';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.arc(canvas.width/2, canvas.height/2, sz/2 + 2, 0, Math.PI*2);
-            ctx.stroke();
-          };
-          img.src = 'images/thomas.jpg';
+          height: 220,
+          colorDark: '#0D1B2A',
+          colorLight: '#E8E0D4',
+          correctLevel: QRCode.CorrectLevel.H,
+          logo: 'images/thomas.jpg',
+          logoWidth: 56,
+          logoHeight: 56,
+          logoBackgroundColor: '#E8E0D4',
+          logoBackgroundTransparent: false,
         });
-      } catch {}
+      } catch (e) {
+        qrEl.innerHTML = '<p class="muted">Kunne ikke generere QR: ' + e.message + '</p>';
+      }
     }
   }
 
