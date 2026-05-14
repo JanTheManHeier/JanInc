@@ -3,11 +3,8 @@
 // === Tema-init: kjøres umiddelbart for å unngå flash ===
 (function temaInit() {
   const KEY = 'thomas50-tema';
-  let tema = localStorage.getItem(KEY);
-  if (!tema) {
-    tema = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
-      ? 'light' : 'dark';
-  }
+  // Default mørkt — kun bruk lagret valg, ignorer prefers-color-scheme
+  const tema = localStorage.getItem(KEY) || 'dark';
   document.documentElement.setAttribute('data-theme', tema);
 })();
 
@@ -177,6 +174,19 @@
       localStorage.setItem(STORAGE_TEMA, nav);
       oppdaterKnapp();
     };
+
+    const refreshBtn = document.getElementById('refresh-btn');
+    if (refreshBtn) {
+      refreshBtn.onclick = () => {
+        // Tving full reload — bypass cache for service worker / nettleser
+        if ('caches' in window) {
+          caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))))
+            .finally(() => location.reload());
+        } else {
+          location.reload();
+        }
+      };
+    }
   }
 
   // ============ Navigasjon ============
