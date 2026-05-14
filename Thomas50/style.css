@@ -847,7 +847,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
 .sub-nav {
   display: flex;
   gap: 6px;
-  padding: 8px 16px 12px;
+  padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px 12px;
 }
 .sub-tab {
   flex: 1;
