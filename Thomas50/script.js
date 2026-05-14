@@ -151,6 +151,7 @@
     bord: 'gjester',
     toastmaster: 'hilsener',
     mario: 'spill',
+    meny: 'program',
   };
 
   function visSide(id) {
