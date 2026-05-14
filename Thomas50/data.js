@@ -655,7 +655,7 @@ const GJESTER = [
     bildeFil: "images/gjester/orjan-berg-karlsen.jpg"
   },
   {
-    navn: "Cathrine Marie Gi'ver",
+    navn: "Cathrine Marie Giæver",
     bord: 8,
     sete: 3,
     bordType: 8,
