@@ -143,7 +143,7 @@
     if (elapsed > nesteMakeSpawn && elapsed < varighet - 8000) {
       maker.push({
         x: bredde + 30,
-        y: bakkeY - 90 - Math.random() * 30,
+        y: bakkeY - 90 - Math.random() * 80,
         w: 38, h: 22,
         vingFase: Math.random() * Math.PI * 2,
       });

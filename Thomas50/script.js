@@ -921,12 +921,15 @@
           settNavn(n);
           await sendMarioScore(n, score);
           form.remove();
-          toast('🏆 Score lagret!');
+          toast(`🏆 Lagret: ${score} poeng for ${n}`);
           lastMarioTopp();
         };
         inp.addEventListener('keydown', e => { if (e.key === 'Enter') form.querySelector('#mario-navn-lagre').click(); });
       } else {
-        sendMarioScore(mittNavn, score).then(() => { toast('🏆 Score lagret!'); lastMarioTopp(); });
+        sendMarioScore(mittNavn, score).then(() => {
+          toast(`🏆 Lagret: ${score} poeng for ${mittNavn}`);
+          lastMarioTopp();
+        });
       }
     });
 
