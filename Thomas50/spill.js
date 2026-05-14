@@ -11,10 +11,12 @@
   let thomas;
   let items = [];
   let hindringer = [];
+  let maker = [];        // måker som flyr i luften
   let fjellFar = [];   // langt bak
   let fjellNer = [];   // nærmere
   let snofnugg = [];
   let nesteSpawn = 0;
+  let nesteMakeSpawn = 0;
   let hastighet = 4;
   let dt = 0, sisteFrame = 0;
   let rafId = null;
@@ -22,6 +24,8 @@
   let invuln = 0;       // ms igjen av usårbarhet etter treff
   let blinkTid = 0;     // for rød blink
   let bakkeOffset = 0;  // for rullende bakke
+  let festX = 0;        // posisjon til festlokalet (utenfor høyre i starten)
+  let kommetFram = false; // satt når Thomas når festen
 
   function init(canvasEl, ferdigCallback) {
     canvas = canvasEl;
@@ -50,14 +54,18 @@
     liv = 3;
     items = [];
     hindringer = [];
+    maker = [];
     fjellFar = [];
     fjellNer = [];
     snofnugg = [];
     hastighet = 4;
     nesteSpawn = 0;
+    nesteMakeSpawn = 2000;
     invuln = 0;
     blinkTid = 0;
     bakkeOffset = 0;
+    festX = 0;
+    kommetFram = false;
     starttid = performance.now();
     sisteFrame = starttid;
     thomas = {
@@ -107,7 +115,7 @@
     if (blinkTid > 0) blinkTid = Math.max(0, blinkTid - dt);
     bakkeOffset = (bakkeOffset + hastighet) % 40;
 
-    // Spawn
+    // Spawn øl/sjokk + bakke-hindringer
     if (elapsed > nesteSpawn) {
       const r = Math.random();
       if (r < 0.55) {
@@ -128,6 +136,18 @@
         });
       }
       nesteSpawn = elapsed + 600 + Math.random() * 600;
+    }
+
+    // Spawn måker (luft-hindringer) — på høyde der hopp = kollisjon
+    // Stopp spawn de siste 8 sekunder slik at festen er fri å nå
+    if (elapsed > nesteMakeSpawn && elapsed < varighet - 8000) {
+      maker.push({
+        x: bredde + 30,
+        y: bakkeY - 90 - Math.random() * 30,
+        w: 38, h: 22,
+        vingFase: Math.random() * Math.PI * 2,
+      });
+      nesteMakeSpawn = elapsed + 2200 + Math.random() * 2000;
     }
 
     // Spawn snøfnugg på natta
@@ -153,9 +173,18 @@
     // Beveg verden
     items.forEach(i => i.x -= hastighet);
     hindringer.forEach(h => h.x -= hastighet);
+    maker.forEach(m => { m.x -= hastighet * 1.15; m.vingFase += 0.25; });
     fjellFar.forEach(m => m.x -= hastighet * 0.15);
     fjellNer.forEach(m => m.x -= hastighet * 0.4);
     snofnugg.forEach(s => { s.y += s.vy; s.x += s.vx - hastighet * 0.2; });
+
+    // Festlokalet kommer til syne fra fase > 0.85, scroller sakte inn fra høyre
+    if (fase > 0.85 && !kommetFram) {
+      const festFase = (fase - 0.85) / 0.15;
+      // Mål-x: midten av canvas
+      festX = bredde + 100 - festFase * (bredde * 0.55 + 100);
+      if (festFase >= 1) festX = bredde * 0.45;
+    }
 
     // Wrap fjell
     if (fjellFar[0] && fjellFar[0].x + fjellFar[0].w < 0) {
@@ -198,7 +227,22 @@
     });
     hindringer = hindringer.filter(h => h.x + h.w > -10);
 
-    if (elapsed >= varighet) { ferdig(); return; }
+    // Kollisjoner — måker (luft)
+    maker.forEach(m => {
+      if (m.truffet || invuln > 0) return;
+      if (kollider(thomas, m)) {
+        m.truffet = true;
+        liv--;
+        invuln = 1000;
+        blinkTid = 400;
+        thomas.vy = 4;  // dyttet ned
+        spillLyd('hit');
+        if (liv <= 0) { ferdig(); return; }
+      }
+    });
+    maker = maker.filter(m => m.x + m.w > -10);
+
+    if (elapsed >= varighet) { kommetFram = true; ferdig(); return; }
 
     tegn(tid, fase);
     rafId = requestAnimationFrame(loop);
@@ -370,6 +414,39 @@
       }
     });
 
+    // Måker (luft-hindringer) — animerte vinger
+    maker.forEach(m => {
+      const cx = m.x + m.w / 2;
+      const cy = m.y + m.h / 2;
+      const ving = Math.sin(m.vingFase) * 8;
+      ctx.strokeStyle = '#E8E0D4';
+      ctx.fillStyle = '#E8E0D4';
+      ctx.lineWidth = 2.5;
+      // Kropp
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, 8, 4, 0, 0, Math.PI * 2);
+      ctx.fill();
+      // Vinger (M-form med Sin-bølge)
+      ctx.beginPath();
+      ctx.moveTo(cx - 18, cy + ving);
+      ctx.quadraticCurveTo(cx - 9, cy - 6 - ving, cx, cy);
+      ctx.quadraticCurveTo(cx + 9, cy - 6 - ving, cx + 18, cy + ving);
+      ctx.stroke();
+      // Hode/nebb
+      ctx.fillStyle = '#FFC93C';
+      ctx.beginPath();
+      ctx.moveTo(cx + 8, cy - 1);
+      ctx.lineTo(cx + 14, cy);
+      ctx.lineTo(cx + 8, cy + 1);
+      ctx.closePath();
+      ctx.fill();
+    });
+
+    // Festlokalet — stort hus med varmt lys og folk i vinduet
+    if (festX < bredde + 20) {
+      tegnFestlokale(festX, fase);
+    }
+
     // Thomas — speilet horisontalt + blink ved treff
     ctx.font = '40px Arial';
     ctx.textBaseline = 'top';
@@ -387,20 +464,124 @@
       ctx.fillRect(0, 0, bredde, hoyde);
     }
 
-    // HUD
-    ctx.fillStyle = '#0D1B2A';
-    ctx.globalAlpha = 0.45;
-    ctx.fillRect(6, 6, bredde - 12, 32);
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = '#D4A853';
-    ctx.font = 'bold 18px sans-serif';
+    // HUD — store, godt synlige pillere
+    const pillH = 36;
+    const pillY = 10;
+    function pille(x, w, farge, tekst) {
+      ctx.fillStyle = 'rgba(13,27,42,0.78)';
+      ctx.beginPath();
+      ctx.roundRect ? ctx.roundRect(x, pillY, w, pillH, pillH/2) :
+        ctx.rect(x, pillY, w, pillH);
+      ctx.fill();
+      ctx.strokeStyle = farge;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = farge;
+      ctx.font = 'bold 20px sans-serif';
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'center';
+      ctx.fillText(tekst, x + w/2, pillY + pillH/2 + 1);
+    }
+    pille(10, 110, '#FFD75A', '🍺 ' + score);
+    pille(130, 90, '#FF6B6B', '❤️ ' + liv);
+    // Timer høyre — rød når < 10 sek
+    const timerFarge = tid <= 10 ? '#FF4040' : '#9BD4FF';
+    pille(bredde - 110, 100, timerFarge, '⏱️ ' + tid + 's');
+    ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
+  }
+
+  function tegnFestlokale(x, fase) {
+    const husB = 220, husH = 150;
+    const y = bakkeY - husH;
+    // Skygge
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
+    ctx.beginPath();
+    ctx.ellipse(x + husB/2, bakkeY + 4, husB/2 + 10, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+    // Grunnmur (husfarge — varm rød/burgunder)
+    ctx.fillStyle = '#8B3A3A';
+    ctx.fillRect(x, y, husB, husH);
+    // Tak
+    ctx.fillStyle = '#3A2418';
+    ctx.beginPath();
+    ctx.moveTo(x - 12, y);
+    ctx.lineTo(x + husB/2, y - 50);
+    ctx.lineTo(x + husB + 12, y);
+    ctx.closePath();
+    ctx.fill();
+    // Snø på taket
+    ctx.fillStyle = '#F8FCFF';
+    ctx.beginPath();
+    ctx.moveTo(x - 8, y - 2);
+    ctx.lineTo(x + husB/2, y - 44);
+    ctx.lineTo(x + husB + 8, y - 2);
+    ctx.lineTo(x + husB - 6, y + 4);
+    ctx.lineTo(x + 6, y + 4);
+    ctx.closePath();
+    ctx.fill();
+    // Vindu med varmt lys
+    const vindB = 130, vindH = 70;
+    const vindX = x + (husB - vindB) / 2;
+    const vindY = y + 30;
+    // Glød
+    const glow = ctx.createRadialGradient(vindX + vindB/2, vindY + vindH/2, 10,
+                                           vindX + vindB/2, vindY + vindH/2, 130);
+    glow.addColorStop(0, 'rgba(255,210,120,0.8)');
+    glow.addColorStop(1, 'rgba(255,210,120,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(vindX - 60, vindY - 40, vindB + 120, vindH + 80);
+    // Selve vinduet
+    ctx.fillStyle = '#FFD27A';
+    ctx.fillRect(vindX, vindY, vindB, vindH);
+    ctx.strokeStyle = '#3A2418';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(vindX, vindY, vindB, vindH);
+    // Vindu-kors
+    ctx.beginPath();
+    ctx.moveTo(vindX + vindB/2, vindY);
+    ctx.lineTo(vindX + vindB/2, vindY + vindH);
+    ctx.moveTo(vindX, vindY + vindH/2);
+    ctx.lineTo(vindX + vindB, vindY + vindH/2);
+    ctx.stroke();
+    // Folk i vinduet (silhuetter med vinkende armer)
+    const folk = ['🥳', '🎉', '🍾', '🦁'];
+    ctx.font = '22px Arial';
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    folk.forEach((emoji, i) => {
+      const fx = vindX + 16 + (i * (vindB - 32) / (folk.length - 1));
+      const bob = Math.sin(performance.now() / 200 + i) * 3;
+      ctx.fillText(emoji, fx, vindY + vindH/2 + bob);
+    });
     ctx.textAlign = 'left';
-    ctx.fillText('🍺 ' + score, 16, 12);
-    ctx.fillText('❤️ ' + liv, 110, 12);
-    ctx.textAlign = 'right';
-    ctx.fillText('⏱️ ' + tid + 's', bredde - 16, 12);
+    // Dør
+    ctx.fillStyle = '#3A2418';
+    ctx.fillRect(x + husB/2 - 18, y + husH - 50, 36, 50);
+    ctx.fillStyle = '#D4A853';
+    ctx.beginPath();
+    ctx.arc(x + husB/2 + 12, y + husH - 25, 2, 0, Math.PI * 2);
+    ctx.fill();
+    // Skilt over døra
+    ctx.fillStyle = '#0D1B2A';
+    ctx.fillRect(x + husB/2 - 56, y + 6, 112, 22);
+    ctx.fillStyle = '#FFD75A';
+    ctx.font = 'bold 13px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('THOMAS 50!', x + husB/2, y + 17);
     ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    // Konfetti rundt huset i sluttfase
+    if (fase > 0.92) {
+      const t = performance.now();
+      ctx.font = '14px Arial';
+      for (let i = 0; i < 8; i++) {
+        const px = x + (i * 27 + (t / 30) % 27) % husB;
+        const py = y - 30 + Math.sin(t / 200 + i) * 20;
+        ctx.fillText('✨', px, py);
+      }
+    }
   }
 
   function tegnFjell(liste, fase, fjern) {
