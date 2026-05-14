@@ -1,0 +1,17 @@
+{
+  "name": "thomas50",
+  "version": "1.0.0",
+  "description": "Thomas 50 — bursdagsapp",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "serve": "node tests/serve.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "jsdom": "^29.1.1",
+    "vitest": "^4.1.6"
+  }
+}

@@ -867,3 +867,415 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
   border-color: rgba(212,168,83,0.5);
   color: #D4A853;
 }
+
+
+/* =============================================================
+   TEMA-TOGGLE — knapp under QR-koden
+   ============================================================= */
+.tema-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 18px;
+  background: rgba(212,168,83,0.12);
+  border: 1px solid rgba(212,168,83,0.4);
+  border-radius: 22px;
+  color: #D4A853;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.1s;
+}
+.tema-toggle:hover { background: rgba(212,168,83,0.22); border-color: #D4A853; }
+.tema-toggle:active { transform: scale(0.97); }
+.tema-toggle .tema-ikon { font-size: 16px; line-height: 1; }
+
+/* =============================================================
+   LYST TEMA — varm crème palett, mørk navy tekst, bevarte gull-aksenter
+   Aktiveres via [data-theme="light"] på <html>
+   ============================================================= */
+[data-theme="light"] {
+  color-scheme: light;
+}
+[data-theme="light"] html,
+html[data-theme="light"],
+html[data-theme="light"] body {
+  background: #FAF6EE;
+  color: #1A2C3F;
+}
+[data-theme="light"] body { background: #FAF6EE; color: #1A2C3F; }
+
+/* Tekst-baseklasser */
+[data-theme="light"] .muted { color: #6B7A8C; }
+[data-theme="light"] .lead { color: #3A4A5C; }
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder { color: #A8B4C2; }
+
+/* HERO — varmt morgenlys, daggry på Tromsøya */
+[data-theme="light"] .hero-bg {
+  background: linear-gradient(135deg, #FFF4E0 0%, #FFE0C8 30%, #F8D8E8 60%, #E8DCFF 100%);
+}
+@keyframes nordlys-lys {
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  100% { filter: hue-rotate(-12deg) brightness(1.05); }
+}
+[data-theme="light"] .hero-bg { animation: nordlys-lys 18s ease-in-out infinite alternate; }
+[data-theme="light"] .hero-photo {
+  border-color: #B8893C;
+  box-shadow: 0 8px 28px rgba(184,137,60,0.35);
+}
+[data-theme="light"] .age-bubble {
+  background: linear-gradient(135deg, #B8893C, #D4A853);
+  color: #FFF8EC;
+  box-shadow: 0 4px 18px rgba(184,137,60,0.45);
+}
+[data-theme="light"] .hero-name {
+  color: #8A6420;
+  text-shadow: 0 2px 14px rgba(184,137,60,0.25);
+}
+[data-theme="light"] .hero-nick { color: #7A5090; }
+[data-theme="light"] .hero-date { color: #8A6420; }
+[data-theme="light"] .hero-sub { color: #3A4A5C; }
+[data-theme="light"] .countdown {
+  background: rgba(184,137,60,0.12);
+  border-color: rgba(184,137,60,0.35);
+  color: #1A2C3F;
+}
+
+/* Mini-kort */
+[data-theme="light"] .mini-card {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.25);
+  box-shadow: 0 2px 8px rgba(26,44,63,0.06);
+  color: #1A2C3F;
+}
+[data-theme="light"] .mini-title { color: #8A6420; }
+[data-theme="light"] .mini-sub { color: #5C6B7C; }
+
+/* Sections / titler */
+[data-theme="light"] .section-title { color: #8A6420; }
+[data-theme="light"] .page-title { color: #1A2C3F; }
+
+/* Om / karriere */
+[data-theme="light"] .om-card {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.2);
+  box-shadow: 0 2px 8px rgba(26,44,63,0.05);
+}
+[data-theme="light"] .karriere-item {
+  background: #FFFAF0;
+  border-color: rgba(184,137,60,0.15);
+}
+[data-theme="light"] .karriere-item .tittel { color: #1A2C3F; }
+[data-theme="light"] .karriere-item .selskap { color: #5C6B7C; }
+[data-theme="light"] .karriere-item .periode { color: #8995A4; }
+
+/* Knapper */
+[data-theme="light"] .btn-primary {
+  background: linear-gradient(135deg, #D4A853, #B8893C);
+  color: #1A2C3F;
+  box-shadow: 0 2px 10px rgba(184,137,60,0.3);
+}
+[data-theme="light"] .btn-secondary {
+  background: #FFFFFF;
+  color: #1A2C3F;
+  border: 1px solid rgba(26,44,63,0.18);
+  box-shadow: 0 2px 6px rgba(26,44,63,0.06);
+}
+[data-theme="light"] .btn-link { color: #5C6B7C; }
+[data-theme="light"] .btn-link-box {
+  background: rgba(184,137,60,0.1);
+  border-color: rgba(184,137,60,0.4);
+  color: #8A6420;
+}
+
+/* Program */
+[data-theme="light"] .program-kort {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.18);
+  box-shadow: 0 2px 8px rgba(26,44,63,0.05);
+}
+[data-theme="light"] .program-tid { color: #8A6420; }
+[data-theme="light"] .program-info .sted { color: #1A2C3F; }
+[data-theme="light"] .program-info .beskrivelse { color: #5C6B7C; }
+[data-theme="light"] .program-info .adresse { color: #6B7A8C; }
+[data-theme="light"] .kart-link { color: #8A6420; }
+
+[data-theme="light"] .info-box {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.18);
+  color: #1A2C3F;
+}
+[data-theme="light"] .info-box a { color: #8A6420; }
+
+/* Gjester */
+[data-theme="light"] .gjester-stats {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.18);
+  color: #1A2C3F;
+}
+[data-theme="light"] .gjester-stats strong { color: #8A6420; }
+[data-theme="light"] .chip {
+  background: #FFFFFF;
+  border: 1px solid rgba(26,44,63,0.15);
+  color: #3A4A5C;
+}
+[data-theme="light"] .chip.active {
+  background: rgba(184,137,60,0.15);
+  border-color: #B8893C;
+  color: #8A6420;
+}
+[data-theme="light"] .gjest-kort {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.15);
+  box-shadow: 0 2px 6px rgba(26,44,63,0.05);
+}
+[data-theme="light"] .gjest-kort:hover { border-color: rgba(184,137,60,0.5); }
+[data-theme="light"] .gjest-kort.toast {
+  border-color: rgba(133,80,160,0.4);
+  background: rgba(232,210,255,0.4);
+}
+[data-theme="light"] .gjest-navn { color: #1A2C3F; }
+[data-theme="light"] .gjest-bio { color: #5C6B7C; }
+[data-theme="light"] .gjest-fbbio {
+  color: #6B7A8C;
+  background: rgba(26,44,63,0.04);
+}
+[data-theme="light"] .gjest-extra {
+  color: #8A6420;
+  background: rgba(184,137,60,0.12);
+}
+[data-theme="light"] .gjest-rel { color: #7A5090; }
+[data-theme="light"] .bord-rel { color: #7A5090; }
+[data-theme="light"] .gjest-fb-link { color: #4A8AB8; }
+[data-theme="light"] .gjest-fb-link:hover { color: #2A6090; }
+[data-theme="light"] .gjest-tag {
+  background: rgba(184,137,60,0.15);
+  color: #8A6420;
+}
+[data-theme="light"] .gjest-tag.toast {
+  background: rgba(133,80,160,0.18);
+  color: #7A5090;
+}
+[data-theme="light"] .gjest-tag.avbud {
+  background: rgba(192,64,64,0.15);
+  color: #B04040;
+}
+
+/* Modal — gjest-popup hvit på lyst */
+[data-theme="light"] .modal { background: rgba(26,44,63,0.45); }
+[data-theme="light"] .modal-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(184,137,60,0.25);
+  box-shadow: 0 12px 40px rgba(26,44,63,0.2);
+  color: #1A2C3F;
+}
+[data-theme="light"] .modal-card h2 { color: #8A6420; }
+[data-theme="light"] .modal-card p { color: #3A4A5C; }
+[data-theme="light"] .modal-card input {
+  background: #FAF6EE;
+  border-color: rgba(26,44,63,0.18);
+  color: #1A2C3F;
+}
+[data-theme="light"] .gjest-modal-close {
+  background: rgba(26,44,63,0.08);
+  color: #1A2C3F;
+}
+[data-theme="light"] .gjest-modal-close:hover { background: rgba(192,64,64,0.25); color: #B04040; }
+[data-theme="light"] .gjest-modal-navn { color: #1A2C3F; }
+[data-theme="light"] .gjest-modal-bio { color: #3A4A5C; }
+[data-theme="light"] .gjest-modal-felt { color: #5C6B7C; }
+[data-theme="light"] .gjest-modal-felt.gjest-modal-extra {
+  background: rgba(184,137,60,0.12);
+  color: #8A6420;
+}
+[data-theme="light"] .gjest-modal-bilde { border-color: #B8893C; }
+[data-theme="light"] .gjest-modal-avatar {
+  background: linear-gradient(135deg, #B8893C, #D4A853);
+  color: #FFF8EC;
+}
+
+/* Skjemaer / hilsen */
+[data-theme="light"] .form input,
+[data-theme="light"] .form textarea {
+  background: #FFFFFF;
+  border-color: rgba(26,44,63,0.18);
+  color: #1A2C3F;
+}
+[data-theme="light"] .hilsen-kort {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.2);
+  box-shadow: 0 2px 6px rgba(26,44,63,0.05);
+}
+[data-theme="light"] .hilsen-navn { color: #8A6420; }
+[data-theme="light"] .hilsen-tekst { color: #3A4A5C; }
+[data-theme="light"] .hilsen-tid { color: #8995A4; }
+
+/* Sang */
+[data-theme="light"] .sang-card {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.2);
+  box-shadow: 0 2px 8px rgba(26,44,63,0.05);
+}
+[data-theme="light"] .sang-title { color: #8A6420; }
+[data-theme="light"] .sang-sub { color: #5C6B7C; }
+[data-theme="light"] .lyrics {
+  background: #FFFAF0;
+  border-color: rgba(184,137,60,0.2);
+}
+[data-theme="light"] .lyrics pre { color: #1A2C3F; }
+
+/* Quiz / spill */
+[data-theme="light"] .tab {
+  background: #FFFFFF;
+  border-color: rgba(26,44,63,0.15);
+  color: #5C6B7C;
+}
+[data-theme="light"] .tab.active {
+  background: rgba(184,137,60,0.15);
+  color: #8A6420;
+}
+[data-theme="light"] .quiz-card {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.2);
+  box-shadow: 0 2px 8px rgba(26,44,63,0.05);
+}
+[data-theme="light"] .quiz-num { color: #7A5090; }
+[data-theme="light"] .quiz-q { color: #1A2C3F; }
+[data-theme="light"] .quiz-opt {
+  background: #FAF6EE;
+  border-color: rgba(26,44,63,0.15);
+  color: #1A2C3F;
+}
+[data-theme="light"] .quiz-opt:hover { background: #F0E8D8; }
+[data-theme="light"] .quiz-opt.korrekt {
+  background: rgba(80,180,100,0.18);
+  border-color: #50B464;
+}
+[data-theme="light"] .quiz-opt.feil {
+  background: rgba(192,64,64,0.18);
+  border-color: #C85050;
+}
+[data-theme="light"] .quiz-fasit {
+  background: rgba(184,137,60,0.1);
+  color: #1A2C3F;
+}
+[data-theme="light"] .quiz-status { color: #5C6B7C; }
+[data-theme="light"] .topp-rad {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.18);
+}
+[data-theme="light"] .topp-rad:nth-child(1) {
+  background: rgba(184,137,60,0.15);
+  border-color: rgba(184,137,60,0.4);
+}
+[data-theme="light"] .topp-navn { color: #1A2C3F; }
+[data-theme="light"] .topp-score { color: #5C6B7C; }
+
+/* Mario */
+[data-theme="light"] .mario-start {
+  background: linear-gradient(135deg, rgba(255,240,210,0.9), rgba(220,232,255,0.85));
+  border-color: rgba(184,137,60,0.3);
+}
+[data-theme="light"] #mario-canvas { border-color: #B8893C; }
+
+/* Bord */
+[data-theme="light"] .bord-kort {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.18);
+  box-shadow: 0 2px 8px rgba(26,44,63,0.05);
+}
+[data-theme="light"] .bord-header { border-bottom-color: rgba(184,137,60,0.2); }
+[data-theme="light"] .bord-nr-mini { color: #6B7A8C; }
+[data-theme="light"] .bord-fjell-meta { color: #5C6B7C; }
+[data-theme="light"] .bord-info { color: #8A6420; }
+[data-theme="light"] .bord-gjest { background: #FFFAF0; }
+[data-theme="light"] .bord-gjest:hover { background: rgba(184,137,60,0.1); }
+[data-theme="light"] .bord-sete { background: rgba(184,137,60,0.18); color: #8A6420; }
+[data-theme="light"] .bord-navn { color: #1A2C3F; }
+[data-theme="light"] .bord-tag {
+  background: rgba(133,80,160,0.18);
+  color: #7A5090;
+}
+
+/* Meny */
+[data-theme="light"] .meny-rett {
+  background: #FFFFFF;
+  border-color: rgba(184,137,60,0.2);
+  box-shadow: 0 2px 8px rgba(26,44,63,0.05);
+}
+[data-theme="light"] .meny-tag {
+  background: rgba(184,137,60,0.15);
+  color: #8A6420;
+}
+[data-theme="light"] .meny-tittel { color: #8A6420; }
+[data-theme="light"] .meny-beskrivelse { color: #3A4A5C; }
+[data-theme="light"] .meny-drikke { background: #FFFAF0; }
+[data-theme="light"] .meny-drikke strong { color: #8A6420; }
+[data-theme="light"] .meny-drikke em { color: #5C6B7C; }
+
+/* QR */
+[data-theme="light"] .qr-wrap {
+  background: #FFFFFF;
+  border: 1px solid rgba(184,137,60,0.25);
+  box-shadow: 0 4px 16px rgba(26,44,63,0.08);
+}
+
+/* Hjelp */
+[data-theme="light"] .hjelp-seksjon {
+  background: rgba(184,137,60,0.06);
+  border-color: rgba(184,137,60,0.2);
+}
+[data-theme="light"] .hjelp-seksjon h3 { color: #8A6420; }
+[data-theme="light"] .hjelp-seksjon p { color: #3A4A5C; }
+[data-theme="light"] .hjelp-seksjon a { color: #8A6420; }
+
+/* Bottom nav */
+[data-theme="light"] .nav {
+  background: rgba(255,250,240,0.97);
+  border-top-color: rgba(184,137,60,0.25);
+  box-shadow: 0 -2px 12px rgba(26,44,63,0.08);
+}
+[data-theme="light"] .nav-btn { color: #5C6B7C; }
+[data-theme="light"] .nav-btn.active {
+  color: #8A6420;
+  background: rgba(184,137,60,0.12);
+}
+[data-theme="light"] .sub-nav { background: transparent; }
+[data-theme="light"] .sub-tab {
+  background: #FFFFFF;
+  border-color: rgba(26,44,63,0.15);
+  color: #5C6B7C;
+}
+[data-theme="light"] .sub-tab.active {
+  background: rgba(184,137,60,0.15);
+  border-color: rgba(184,137,60,0.5);
+  color: #8A6420;
+}
+
+/* Tema-toggle på lyst tema */
+[data-theme="light"] .tema-toggle {
+  background: rgba(184,137,60,0.1);
+  border-color: rgba(184,137,60,0.4);
+  color: #8A6420;
+}
+[data-theme="light"] .tema-toggle:hover { background: rgba(184,137,60,0.2); border-color: #B8893C; }
+
+/* Toast og navn-pille */
+[data-theme="light"] #toast {
+  background: #1A2C3F;
+  color: #FAF6EE;
+  border: 1px solid rgba(184,137,60,0.4);
+}
+[data-theme="light"] .navn-pille {
+  background: linear-gradient(135deg, #D4A853, #B8893C);
+  color: #1A2C3F;
+}
+
+/* Diverse felles korrigeringer */
+[data-theme="light"] .gjest-bord-tag { /* bord-emoji-pille på gjester-grid */
+  /* lar fargen settes inline fra JS — inget override her */
+}
+

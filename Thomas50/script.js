@@ -1,8 +1,21 @@
 // Thomas50 — hovedlogikk
+
+// === Tema-init: kjøres umiddelbart for å unngå flash ===
+(function temaInit() {
+  const KEY = 'thomas50-tema';
+  let tema = localStorage.getItem(KEY);
+  if (!tema) {
+    tema = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
+      ? 'light' : 'dark';
+  }
+  document.documentElement.setAttribute('data-theme', tema);
+})();
+
 (function () {
   const STORAGE_NAVN = 'thomas50-navn';
   const STORAGE_BILDER = 'thomas50-bilder';
   const STORAGE_HILSEN_LOKAL = 'thomas50-hilsener-lokal';
+  const STORAGE_TEMA = 'thomas50-tema';
   const API_BASE = '/api';
 
   let mittNavn = localStorage.getItem(STORAGE_NAVN) || '';
@@ -23,6 +36,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     initNavnPille();
     initNavnModal();
+    initTema();
     initNavigasjon();
     lastGjesteEdits().then(() => {
       initHjem();
@@ -138,6 +152,31 @@
     id = `${device}/${browser} #${short}`;
     localStorage.setItem('thomas50-device', id);
     return id;
+  }
+
+  // ============ Tema (lyst/mørkt) ============
+  function initTema() {
+    const btn = document.getElementById('tema-toggle');
+    if (!btn) return;
+    const oppdaterKnapp = () => {
+      const tema = document.documentElement.getAttribute('data-theme') || 'dark';
+      const ikon = btn.querySelector('.tema-ikon');
+      const tekst = btn.querySelector('.tema-tekst');
+      if (tema === 'light') {
+        if (ikon) ikon.textContent = '🌙';
+        if (tekst) tekst.textContent = 'Mørkt tema';
+      } else {
+        if (ikon) ikon.textContent = '☀️';
+        if (tekst) tekst.textContent = 'Lyst tema';
+      }
+    };
+    oppdaterKnapp();
+    btn.onclick = () => {
+      const nav = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', nav);
+      localStorage.setItem(STORAGE_TEMA, nav);
+      oppdaterKnapp();
+    };
   }
 
   // ============ Navigasjon ============
@@ -364,7 +403,9 @@
         ${g.fbUrl ? `<a class="gjest-fb-link" href="${esc(g.fbUrl)}" target="_blank" rel="noopener">facebook</a>` : ''}
         ${g.liUrl ? `<a class="gjest-fb-link" href="${esc(g.liUrl)}" target="_blank" rel="noopener">linkedin</a>` : ''}
       </div>`;
-    document.getElementById('gjest-modal').hidden = false;
+    const gjestModal = document.getElementById('gjest-modal');
+    gjestModal.hidden = false;
+    gjestModal.style.display = '';
   }
 
   // ============ Hilsener ============
@@ -669,9 +710,13 @@
 
   // ============ Minnebok ============
   function initMinnebok() {
-    document.getElementById('last-opp').onclick = () => document.getElementById('file-input').click();
-    document.getElementById('file-input').onchange = lastOpp;
-    renderBilder();
+    const lastOppBtn = document.getElementById('last-opp');
+    const fileInput = document.getElementById('file-input');
+    if (lastOppBtn && fileInput) {
+      lastOppBtn.onclick = () => fileInput.click();
+      fileInput.onchange = lastOpp;
+      renderBilder();
+    }
   }
 
   function lastOpp(e) {
@@ -724,11 +769,12 @@
     });
     const gm = document.getElementById('gjest-modal');
     if (gm) {
+      const lukk = () => { gm.hidden = true; gm.style.display = 'none'; };
       gm.addEventListener('click', e => {
-        if (e.target.id === 'gjest-modal') gm.hidden = true;
+        if (e.target.id === 'gjest-modal') lukk();
       });
       const closeBtn = document.getElementById('gjest-modal-close');
-      if (closeBtn) closeBtn.onclick = () => { gm.hidden = true; };
+      if (closeBtn) closeBtn.onclick = lukk;
     }
   }
 
