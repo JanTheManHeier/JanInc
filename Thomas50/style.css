@@ -741,6 +741,55 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
 .bord-navn { flex: 1; font-size: 14px; color: #E8E0D4; }
 .bord-tag { font-size: 10px; background: rgba(200,160,216,0.2); color: #C8A0D8; padding: 2px 6px; border-radius: 8px; }
 
+/* Meny */
+.meny-rett {
+  margin: 0 16px 16px;
+  padding: 18px;
+  background: linear-gradient(135deg, rgba(40,30,20,0.7), rgba(20,40,60,0.5));
+  border: 1px solid rgba(212,168,83,0.25);
+  border-radius: 16px;
+}
+.meny-tag {
+  display: inline-block;
+  background: rgba(212,168,83,0.2);
+  color: #D4A853;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+.meny-ikon { font-size: 32px; margin-bottom: 4px; }
+.meny-tittel { font-size: 18px; color: #E8C87A; margin-bottom: 8px; font-style: italic; }
+.meny-beskrivelse { font-size: 14px; color: #C8D8E8; line-height: 1.6; margin-bottom: 14px; }
+.meny-drikke {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #B0C4D8;
+  line-height: 1.5;
+}
+.meny-drikke span:first-child { font-size: 22px; flex-shrink: 0; }
+.meny-drikke strong { color: #D4A853; }
+.meny-drikke em { color: #9BAABB; font-size: 12px; }
+
+/* QR-kode */
+.qr-seksjon { padding: 24px 16px; }
+.qr-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 12px auto;
+  padding: 12px;
+  background: #E8E0D4;
+  border-radius: 16px;
+  width: fit-content;
+}
+.qr-wrap canvas { display: block; }
+
 /* Hjelp-side */
 .hjelp-seksjon {
   margin: 0 16px 16px;

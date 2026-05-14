@@ -21,22 +21,41 @@
 
   // ============ Init ============
   document.addEventListener('DOMContentLoaded', () => {
-    initNavnModal();
     initNavnPille();
+    initNavnModal();
     initNavigasjon();
-    initHjem();
-    initProgram();
-    initGjester();
-    initHilsener();
-    initToastmaster();
-    initSang();
-    initSpill();
-    initMinnebok();
-    initOverlay();
-    initMario();
-    initBord();
-    sporBesok('hjem');
+    lastGjesteEdits().then(() => {
+      initHjem();
+      initProgram();
+      initGjester();
+      initHilsener();
+      initToastmaster();
+      initSang();
+      initSpill();
+      initMinnebok();
+      initOverlay();
+      initMario();
+      initBord();
+      sporBesok('hjem');
+    });
   });
+
+  // Henter overstyrt info som Thomas har redigert i admin
+  async function lastGjesteEdits() {
+    try {
+      const r = await fetch(`${API_BASE}/thomas50-gjest-edit`);
+      if (!r.ok) return;
+      const data = await r.json();
+      data.forEach(d => {
+        const g = GJESTER.find(x => x.navn === d.navn);
+        if (g) {
+          if (d.bio !== null && d.bio !== undefined) g.bio = d.bio;
+          if (d.relasjon !== null && d.relasjon !== undefined) g.relasjon = d.relasjon;
+          if (d.extraBio !== null && d.extraBio !== undefined) g.extraBio = d.extraBio;
+        }
+      });
+    } catch {}
+  }
 
   // ============ Navn-pille (vises hvis anonym) ============
   function initNavnPille() {
@@ -78,8 +97,7 @@
       document.getElementById('navn-lagre').onclick = () => {
         const n = inp.value.trim();
         if (n) {
-          mittNavn = n;
-          localStorage.setItem(STORAGE_NAVN, n);
+          settNavn(n); // oppdaterer mittNavn + localStorage + pille
           lukk();
           toast(`Velkommen, ${n}! 🎉`);
         } else {
@@ -165,7 +183,43 @@
     oppdater();
     setInterval(oppdater, 60000);
 
-    // Karriere og fun-facts er fjernet fra hjem-siden for å ikke spoile quiz-svarene
+    // QR-kode med Thomas-bilde i midten
+    const qrEl = document.getElementById('qr-kode');
+    if (qrEl && window.QRCode) {
+      try {
+        QRCode.toCanvas('https://janinc.no/Thomas50/', {
+          width: 220,
+          margin: 1,
+          errorCorrectionLevel: 'H',
+          color: { dark: '#0D1B2A', light: '#E8E0D4' }
+        }, (err, canvas) => {
+          if (err) { qrEl.innerHTML = '<p class="muted">Kunne ikke generere QR</p>'; return; }
+          qrEl.innerHTML = '';
+          qrEl.appendChild(canvas);
+          const img = new Image();
+          img.onload = () => {
+            const ctx = canvas.getContext('2d');
+            const sz = canvas.width * 0.22;
+            const x = (canvas.width - sz) / 2;
+            const y = (canvas.height - sz) / 2;
+            ctx.fillStyle = '#E8E0D4';
+            ctx.fillRect(x - 4, y - 4, sz + 8, sz + 8);
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(canvas.width/2, canvas.height/2, sz/2, 0, Math.PI*2);
+            ctx.clip();
+            ctx.drawImage(img, x, y, sz, sz);
+            ctx.restore();
+            ctx.strokeStyle = '#D4A853';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(canvas.width/2, canvas.height/2, sz/2 + 2, 0, Math.PI*2);
+            ctx.stroke();
+          };
+          img.src = 'images/thomas.jpg';
+        });
+      } catch {}
+    }
   }
 
   // ============ Program ============

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thomas50 — Rediger gjester</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; background: #0D1B2A; color: #E8E0D4; margin: 0 auto; padding: 20px; max-width: 1100px; }
+  h1 { color: #D4A853; }
+  h2 { color: #D4A853; border-bottom: 1px solid rgba(212,168,83,0.3); padding-bottom: 6px; margin-top: 24px; font-size: 18px; }
+  .info { background: rgba(212,168,83,0.1); border: 1px solid rgba(212,168,83,0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 13px; }
+  .gjest-rad {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .gjest-rad.endret { border-color: #D4A853; background: rgba(212,168,83,0.08); }
+  .avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
+  .avatar-init { background: linear-gradient(135deg, #D4A853, #C4943A); color: #0D1B2A; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; }
+  .navn { font-size: 15px; color: #E8C87A; font-weight: bold; margin-bottom: 6px; }
+  .meta { font-size: 11px; color: #7A8FA8; margin-bottom: 8px; }
+  .felt { display: grid; grid-template-columns: 100px 1fr; gap: 8px; margin-bottom: 6px; align-items: start; }
+  .felt label { font-size: 12px; color: #9BAABB; padding-top: 6px; }
+  .felt input, .felt textarea {
+    width: 100%; padding: 6px 10px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    color: #E8E0D4;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .felt textarea { resize: vertical; min-height: 36px; }
+  .felt input:focus, .felt textarea:focus { outline: none; border-color: #D4A853; }
+  .knapper { display: flex; gap: 8px; margin-top: 8px; }
+  button { background: #D4A853; color: #0D1B2A; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
+  button.muted { background: rgba(255,255,255,0.1); color: #B0C4D8; }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .status { font-size: 11px; color: #50B464; padding: 4px 0; }
+  .filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-row input { flex: 1; min-width: 200px; padding: 8px 12px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #E8E0D4; font-size: 14px; }
+  .nav-link { display: inline-block; margin-right: 12px; color: #D4A853; text-decoration: none; font-size: 13px; }
+  .nav-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<p>
+  <a class="nav-link" href="/Thomas50/admin/">← Tilbake til admin</a>
+  <a class="nav-link" href="/Thomas50/">Til appen</a>
+</p>
+<h1>👥 Rediger gjester</h1>
+<div class="info">
+  Endre relasjon, kort bio, eller spesielle facts om hver gjest. Endringer vises i appen umiddelbart (overstyrer det som er hardkodet i data.js).
+</div>
+
+<div class="filter-row">
+  <input id="sok" type="text" placeholder="🔍 Søk navn..." />
+</div>
+
+<div id="liste">Laster...</div>
+
+<script src="../data.js"></script>
+<script>
+const STAT = {};
+
+async function lastEditer() {
+  try {
+    const r = await fetch('/api/thomas50-gjest-edit');
+    const data = await r.json();
+    data.forEach(d => { STAT[d.navn] = d; });
+  } catch (e) {
+    console.warn('Ingen edits hentet', e);
+  }
+}
+
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function slug(s) {
+  return s.toLowerCase().replace(/æ/g,'ae').replace(/ø/g,'o').replace(/å/g,'a').replace(/'/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+}
+
+let sok = '';
+function render() {
+  const liste = document.getElementById('liste');
+  let arr = GJESTER.slice();
+  if (sok) arr = arr.filter(g => (g.navn || '').toLowerCase().includes(sok));
+  arr.sort((a, b) => (a.bord || 99) - (b.bord || 99) || a.navn.localeCompare(b.navn));
+
+  liste.innerHTML = arr.map((g, i) => {
+    const e = STAT[g.navn] || {};
+    const bio = e.bio ?? g.bio ?? '';
+    const rel = e.relasjon ?? g.relasjon ?? '';
+    const xb = e.extraBio ?? g.extraBio ?? '';
+    const init = (g.navn || '').split(' ').map(s => s[0]).slice(0, 2).join('');
+    const avatar = g.bildeFil
+      ? `<img class="avatar" src="../${esc(g.bildeFil)}" alt="" />`
+      : `<div class="avatar avatar-init">${esc(init)}</div>`;
+    return `
+      <div class="gjest-rad" data-navn="${esc(g.navn)}">
+        ${avatar}
+        <div>
+          <div class="navn">${esc(g.navn)}</div>
+          <div class="meta">Bord ${g.bord || '?'} · ${g.bordType || 8}-mannsbord ${g.fbUrl ? `· <a href="${esc(g.fbUrl)}" target="_blank" style="color:#7EB8D4">FB</a>` : ''} ${g.liUrl ? `· <a href="${esc(g.liUrl)}" target="_blank" style="color:#7EB8D4">LI</a>` : ''}</div>
+          <div class="felt">
+            <label>Relasjon:</label>
+            <input data-felt="relasjon" value="${esc(rel)}" placeholder="f.eks. Søster, Venn, Kollega" />
+          </div>
+          <div class="felt">
+            <label>Bio:</label>
+            <textarea data-felt="bio" placeholder="Kort beskrivelse...">${esc(bio)}</textarea>
+          </div>
+          <div class="felt">
+            <label>Ekstra (gull):</label>
+            <input data-felt="extraBio" value="${esc(xb)}" placeholder="f.eks. Statssekretær, Maraton-løper" />
+          </div>
+          <div class="knapper">
+            <button onclick="lagre('${esc(g.navn).replace(/'/g, '&#39;')}')">💾 Lagre</button>
+            <button class="muted" onclick="tilbakestill('${esc(g.navn).replace(/'/g, '&#39;')}')">↩️ Original</button>
+            <span class="status" data-status="${esc(g.navn)}"></span>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+async function lagre(navn) {
+  const rad = document.querySelector(`.gjest-rad[data-navn="${navn.replace(/"/g, '\\"')}"]`);
+  if (!rad) return;
+  const data = { navn };
+  rad.querySelectorAll('[data-felt]').forEach(el => { data[el.dataset.felt] = el.value; });
+  const status = rad.querySelector('.status');
+  status.textContent = 'Lagrer...';
+  try {
+    const r = await fetch('/api/thomas50-gjest-edit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!r.ok) throw new Error(r.status);
+    STAT[navn] = data;
+    rad.classList.add('endret');
+    status.textContent = '✓ Lagret ' + new Date().toLocaleTimeString('nb-NO');
+    setTimeout(() => { status.textContent = ''; }, 4000);
+  } catch (e) {
+    status.textContent = 'Feil: ' + e.message;
+    status.style.color = '#E08080';
+  }
+}
+
+function tilbakestill(navn) {
+  const rad = document.querySelector(`.gjest-rad[data-navn="${navn.replace(/"/g, '\\"')}"]`);
+  const g = GJESTER.find(x => x.navn === navn);
+  if (!rad || !g) return;
+  rad.querySelector('[data-felt="bio"]').value = g.bio || '';
+  rad.querySelector('[data-felt="relasjon"]').value = g.relasjon || '';
+  rad.querySelector('[data-felt="extraBio"]').value = g.extraBio || '';
+  delete STAT[navn];
+  rad.classList.remove('endret');
+}
+
+document.getElementById('sok').oninput = e => { sok = e.target.value.trim().toLowerCase(); render(); };
+
+(async () => {
+  await lastEditer();
+  render();
+})();
+</script>
+</body>
+</html>

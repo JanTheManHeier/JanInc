@@ -6,6 +6,12 @@
 <title>Thomas 50 — Endelig voksen (kanskje)</title>
 <meta name="description" content="Bursdagsapp for Thomas Helge Hansen — 50 år, 30. mai 2026, Kystens Hus i Tromsø." />
 <meta name="theme-color" content="#0D1B2A" />
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="images/icon-180.png" />
+<link rel="manifest" href="manifest.json" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Thomas 50" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <link rel="stylesheet" href="style.css" />
 </head>
@@ -67,6 +73,13 @@
     <div class="section center">
       <button class="btn-primary" data-go="hilsener">💌 Skriv en hilsen til Thomas</button>
       <button class="btn-secondary" data-go="toastmaster">🎤 Meld tale til toastmasterne</button>
+    </div>
+
+    <div class="section center qr-seksjon">
+      <h3 class="section-title">📲 Del appen</h3>
+      <p class="lead">Vis QR-koden til andre gjester for rask tilgang</p>
+      <div id="qr-kode" class="qr-wrap"></div>
+      <p class="muted small">janinc.no/Thomas50</p>
     </div>
   </section>
 
@@ -259,17 +272,39 @@
   <!-- MINNEBOK -->
   <section class="page" data-page="minnebok" hidden>
     <h2 class="page-title">📸 Minnebok</h2>
-    <p class="muted">Last opp bilder fra feiringen — lagres lokalt på din enhet</p>
+    <p class="muted">Del bilder fra kvelden — alle gjester ser dem!</p>
 
-    <button id="last-opp" class="btn-primary">📷 Last opp bilder</button>
-    <input id="file-input" type="file" accept="image/*" multiple hidden />
-
-    <div id="minnebok-tom" class="empty-state" hidden>
-      <div class="empty-icon">📷</div>
-      <div>Ingen bilder ennå — vær den første!</div>
+    <div class="meny-rett" style="margin-top:0">
+      <div class="meny-tag">DELT ALBUM</div>
+      <div class="meny-ikon">🖼️</div>
+      <h3 class="meny-tittel">Thomas50 — Felles bildealbum</h3>
+      <p class="meny-beskrivelse">Vi samler alle bilder fra feiringen i et felles Google Photos-album. Last opp dine egne — eller bla gjennom det andre har delt!</p>
+      <a href="https://photos.app.goo.gl/8fMmTPqd2LGJ2i1X6" target="_blank" rel="noopener" class="btn-primary" style="margin:0;display:block;text-align:center">📷 Åpne Google Photos-album →</a>
+      <p class="muted small" style="margin-top:10px;text-align:center">Du må ha en Google-konto for å laste opp. Klikk lenken og deretter "Bli med".</p>
     </div>
 
-    <div id="bilde-grid" class="bilde-grid"></div>
+    <div class="section">
+      <h3 class="section-title small-title">🎞️ Forhåndsvisning</h3>
+      <iframe src="https://photos.app.goo.gl/8fMmTPqd2LGJ2i1X6"
+        style="width:calc(100% - 32px);margin:0 16px;height:380px;border:1px solid rgba(212,168,83,0.2);border-radius:12px;background:#0D1B2A"
+        loading="lazy"
+        sandbox="allow-scripts allow-same-origin allow-popups"
+        referrerpolicy="no-referrer"
+        onerror="this.style.display='none'"></iframe>
+      <p class="muted small">Hvis forhåndsvisning ikke laster — bruk lenken over for å åpne i Google Photos-app eller nettleser.</p>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title small-title">📱 Last opp lokalt (private bilder)</h3>
+      <p class="lead">Vil du beholde bilder kun på din enhet? Last opp her — de lagres lokalt og deles ikke.</p>
+      <button id="last-opp" class="btn-secondary">📷 Last opp lokalt</button>
+      <input id="file-input" type="file" accept="image/*" multiple hidden />
+      <div id="minnebok-tom" class="empty-state" hidden>
+        <div class="empty-icon">📷</div>
+        <div>Ingen lokale bilder ennå</div>
+      </div>
+      <div id="bilde-grid" class="bilde-grid"></div>
+    </div>
   </section>
 
   <!-- MARIO-SPILL -->
@@ -308,6 +343,46 @@
     <div class="section">
       <h3 class="section-title small-title">🏆 Topp 10 — beste runner</h3>
       <div id="mario-topp"></div>
+    </div>
+  </section>
+
+  <!-- MENY -->
+  <section class="page" data-page="meny" hidden>
+    <h2 class="page-title">🍽️ Kveldens meny</h2>
+    <p class="muted">3-retters middag med drikke-pairing — Kystens Hus, kl 18:00</p>
+
+    <div class="meny-rett">
+      <div class="meny-tag">FORRETT</div>
+      <div class="meny-ikon">🦐</div>
+      <h3 class="meny-tittel">Pepper-glasert kongekrabbe</h3>
+      <p class="meny-beskrivelse">Tromsø-kongekrabbe sautert i smør og rosa pepper, servert med fennikel-citrussalat, sprø quinoa og kremet avokado-emulsjon.</p>
+      <div class="meny-drikke"><span>🍷</span><div><strong>Riesling Spätlese</strong> — Mosel, Tyskland<br/><em>Frukten balanserer pepperet, syren kutter krabbens fett.</em></div></div>
+      <div class="meny-drikke"><span>🍺</span><div><strong>Mack Bayer</strong> — Tromsø<br/><em>Maltsødme komplementerer krabbens søthet.</em></div></div>
+    </div>
+
+    <div class="meny-rett">
+      <div class="meny-tag">HOVEDRETT</div>
+      <div class="meny-ikon">🦌</div>
+      <h3 class="meny-tittel">Saltbakt reinsdyrfilet</h3>
+      <p class="meny-beskrivelse">Senja-rein, hyllet inn i grovsalt og einer, tilberedt sous-vide og finishet på grill. Servert med rotgrønnsaks-purée, syltet sjøsmoll, jordskokk-chips og rødvinssaus med blåbær.</p>
+      <div class="meny-drikke"><span>🍷</span><div><strong>Barbera d'Asti DOCG</strong> — Piemonte<br/><em>Mørke kirsebær og krydder møter viltsmaken perfekt.</em></div></div>
+      <div class="meny-drikke"><span>🍺</span><div><strong>Mack Arctic Beer Tromsø IPA</strong><br/><em>Bitterhet kutter rikt kjøtt, sitrus løfter blåbærsausen.</em></div></div>
+    </div>
+
+    <div class="meny-rett">
+      <div class="meny-tag">DESSERT</div>
+      <div class="meny-ikon">🍫</div>
+      <h3 class="meny-tittel">Mørk sjokolade-fondant med multesorbé</h3>
+      <p class="meny-beskrivelse">Smeltende 70%-sjokoladefondant, hjemmelaget multesorbé, sprø havreblader, brent karamell og en knivspiss bjørkesalt.</p>
+      <div class="meny-drikke"><span>🍷</span><div><strong>Sauternes Château Suduiraut</strong><br/><em>Honning og aprikos balanserer sjokoladens bitterhet og multens syre.</em></div></div>
+      <div class="meny-drikke"><span>☕</span><div><strong>Kaffe + cognac VSOP</strong><br/><em>Klassisk avslutning før vi går til Bakrommet 🎶</em></div></div>
+    </div>
+
+    <div class="info-box" style="margin-top:16px">
+      <div>🥂 <strong>Velkomstdrink:</strong> Tromsø Spritz — Aquavit, prosecco, sitron, einerbær</div>
+      <div>🥃 <strong>Avec til middagen:</strong> Linie Aquavit & lokale håndverksøl fra Mack</div>
+      <div>💧 Vann til alle bord, alkoholfritt på forespørsel</div>
+      <div>🌿 Allergener? Si fra til toastmasterne før første rett serveres</div>
     </div>
   </section>
 
@@ -383,6 +458,14 @@
     </div>
 
     <div class="hjelp-seksjon">
+      <h3>🚕 Hjem etter festen?</h3>
+      <p><strong>Tromsø Taxi</strong> kjører hele natta. Bestill via:</p>
+      <p>📞 Ring <a href="tel:+4703003" style="font-size:18px;font-weight:bold">03003</a></p>
+      <p>📱 Last ned <a href="https://www.tromsotaxi.no/taxifix" target="_blank" rel="noopener">Taxifix-appen</a> for forhåndsbestilling og betaling i appen</p>
+      <p class="muted small">Tips: Bestill taxi i god tid hvis du er på Bakrommet — det blir trafikk når flokken drar hjem.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
       <h3>🛟 Hjelp meg!</h3>
       <p>Spørsmål om appen? Snakk med <strong>Jan Heier Johansen</strong> i festen, eller send en mail til <a href="mailto:janheier@gmail.com">janheier@gmail.com</a>.</p>
     </div>
@@ -393,6 +476,7 @@
 <nav class="nav">
   <button class="nav-btn active" data-go="hjem"><span class="nav-icon">🎂</span><span class="nav-label">Hjem</span></button>
   <button class="nav-btn" data-go="program"><span class="nav-icon">📍</span><span class="nav-label">Program</span></button>
+  <button class="nav-btn" data-go="meny"><span class="nav-icon">🍽️</span><span class="nav-label">Meny</span></button>
   <button class="nav-btn" data-go="gjester"><span class="nav-icon">👥</span><span class="nav-label">Gjester</span></button>
   <button class="nav-btn" data-go="hilsener"><span class="nav-icon">💌</span><span class="nav-label">Bidra</span></button>
   <button class="nav-btn" data-go="sang"><span class="nav-icon">🎵</span><span class="nav-label">Sang</span></button>
@@ -402,6 +486,7 @@
 </nav>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script src="data.js"></script>
 <script src="spill.js"></script>
 <script src="script.js"></script>
