@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daltinden 1531 moh – Lyngen, fredag 16. mai 2026</title>
+<meta name="description" content="Turplan Daltinden via Lyngsdalen, Furuflaten – randonée fra Tromsø">
+<style>
+  :root {
+    --bg: #0e1a2b;
+    --panel: #15263d;
+    --panel-2: #1c2f4a;
+    --accent: #4fc3f7;
+    --accent-2: #7be4a3;
+    --warn: #ffb74d;
+    --danger: #ff7066;
+    --text: #e8eef5;
+    --muted: #9fb0c5;
+    --border: #2a3e5c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(180deg, #0a1322 0%, #0e1a2b 100%);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  header {
+    background: linear-gradient(135deg, #1a3556 0%, #0e1a2b 100%);
+    padding: 2.5rem 1.5rem;
+    border-bottom: 2px solid var(--accent);
+    text-align: center;
+  }
+  header h1 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+  header .subtitle {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  header .meta {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+  .badge {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  .badge.warn { border-color: var(--warn); color: var(--warn); }
+  .badge.ok { border-color: var(--accent-2); color: var(--accent-2); }
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+  section {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  section h2 {
+    margin: 0 0 1rem;
+    color: var(--accent);
+    font-size: 1.4rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  section h3 {
+    color: var(--accent-2);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+  }
+  th, td {
+    padding: 0.6rem 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    color: var(--accent);
+    font-weight: 600;
+    background: var(--panel-2);
+  }
+  td.time {
+    font-variant-numeric: tabular-nums;
+    color: var(--accent-2);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin-bottom: 0.4rem; }
+  ul.checklist { list-style: none; padding-left: 0; }
+  ul.checklist li {
+    padding: 0.4rem 0 0.4rem 1.8rem;
+    position: relative;
+    border-bottom: 1px dashed var(--border);
+  }
+  ul.checklist li::before {
+    content: "☐";
+    position: absolute;
+    left: 0;
+    top: 0.4rem;
+    color: var(--accent);
+    font-size: 1.2rem;
+  }
+  ul.checklist li.critical::before { content: "⚠"; color: var(--warn); }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  @media (max-width: 700px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+  .callout {
+    background: var(--panel-2);
+    border-left: 4px solid var(--accent);
+    padding: 0.9rem 1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+  }
+  .callout.warn { border-left-color: var(--warn); }
+  .callout.danger { border-left-color: var(--danger); }
+  .callout strong { color: var(--accent); }
+  .callout.warn strong { color: var(--warn); }
+  .callout.danger strong { color: var(--danger); }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent);
+  }
+  a:hover { color: var(--accent-2); border-bottom-color: var(--accent-2); }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+  .stat {
+    background: var(--panel-2);
+    padding: 0.9rem;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .stat .num {
+    font-size: 1.5rem;
+    color: var(--accent);
+    font-weight: 700;
+    display: block;
+  }
+  .stat .lbl {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .icon { font-size: 1.3rem; }
+  @media print {
+    body { background: white; color: black; }
+    header { background: white; color: black; }
+    section { background: white; border: 1px solid #ccc; box-shadow: none; }
+    section h2, header h1 { color: #1a3556; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏔️ Daltinden 1531 moh</h1>
+  <p class="subtitle">Randonée via Lyngsdalen · Furuflaten, Lyngen</p>
+  <p class="subtitle"><strong>Fredag 16. mai 2026</strong></p>
+  <div class="meta">
+    <span class="badge">2–3 personer · personbil fra Tromsø</span>
+    <span class="badge ok">Heldagstur</span>
+    <span class="badge warn">Faregrad 2 – Moderat (sjekk på nytt)</span>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <h2><span class="icon">📊</span> Turdata</h2>
+  <div class="stats">
+    <div class="stat"><span class="num">1531</span><span class="lbl">moh topp</span></div>
+    <div class="stat"><span class="num">~1577</span><span class="lbl">høydemeter</span></div>
+    <div class="stat"><span class="num">~18 km</span><span class="lbl">total distanse</span></div>
+    <div class="stat"><span class="num">~7 t</span><span class="lbl">i fjellet</span></div>
+    <div class="stat"><span class="num">N</span><span class="lbl">eksponering nedkjøring</span></div>
+    <div class="stat"><span class="num">~30°</span><span class="lbl">bratteste parti</span></div>
+  </div>
+  <p>Klassisk Lyngen-tur fra havnivå (5 moh) i Furuflaten. Lang slak anmarsj 4,5 km gjennom Lyngsdalen, deretter slak stigning til 700 moh, så ca. 30° bratt opp til 1400 moh. Nordvendt toppheng holder snø langt ut i juni.</p>
+  <p>Referanse: <a href="https://kugo.no/2010/03/daltinden1533/" target="_blank">kugo.no – Daltinden (1533)</a></p>
+</section>
+
+<section>
+  <h2><span class="icon">⏰</span> Tidsplan</h2>
+  <table>
+    <thead><tr><th>Klokkeslett</th><th>Etappe</th><th>Varighet</th></tr></thead>
+    <tbody>
+      <tr><td class="time">05:30</td><td>Avreise Tromsø (privatbil)</td><td>1 t 45 min kjøring</td></tr>
+      <tr><td class="time">07:15</td><td>Ankomst parkering Grønvollveien, Furuflaten</td><td>—</td></tr>
+      <tr><td class="time">07:30</td><td>Klar til avgang – ned til lysløypa</td><td>—</td></tr>
+      <tr><td class="time">09:00</td><td>Anmarsj 4,5 km Lyngsdalen til Varas (240 moh)</td><td>1 t 30 min</td></tr>
+      <tr><td class="time">10:00</td><td>Slak stigning 240 → 700 moh</td><td>1 t</td></tr>
+      <tr><td class="time">12:00</td><td>Bratt parti 700 → 1531 moh (30°)</td><td>2 t</td></tr>
+      <tr><td class="time">12:30</td><td>Pause / lunsj på toppen ☀️</td><td>30 min</td></tr>
+      <tr><td class="time">13:00</td><td>Nedkjøring topp → ~600 moh (1300 hm fin pudder/firn)</td><td>30 min</td></tr>
+      <tr><td class="time">14:15</td><td>Staking/skyving tilbake gjennom Lyngsdalen</td><td>1 t 15 min</td></tr>
+      <tr><td class="time">14:30</td><td>Siste 30 hm opp til bil 😤</td><td>15 min</td></tr>
+      <tr><td class="time">15:00</td><td>Avreise Furuflaten</td><td>—</td></tr>
+      <tr><td class="time">17:30</td><td><strong>Hjemme i Tromsø</strong> (m/kafestopp Nordkjosbotn)</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <strong>Hvorfor ikke tidligere start?</strong> Toppfeltet er nordvendt og holder kald snø lenge. Vi vil faktisk ha <em>litt</em> dagsoppvarming i toppen så øverste skarelaget mykner akkurat passe – ellers blir det isete. Slipper også å være ute i kalde morgentimer.
+  </div>
+</section>
+
+<section>
+  <h2><span class="icon">🚗</span> Kjøring og parkering</h2>
+  <ul>
+    <li><strong>Rute:</strong> Tromsø → E8 → Nordkjosbotn → E6 → Oteren → E8 nordover langs Storfjorden til Furuflaten (~115 km)</li>
+    <li><strong>Parkering:</strong> Kjør <strong>Grønvollveien</strong> like sør for butikken i Furuflaten, helt til veien tar slutt. Parkeringsplasser der.</li>
+    <li><strong>Drivstoff:</strong> Fyll i Tromsø. Neste pålitelige stasjon er Nordkjosbotn / Skibotn.</li>
+    <li><strong>Forfrisking på vei hjem:</strong> Veikroa Nordkjosbotn eller Olderelv Camping kafé.</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="icon">🥪</span> Mat og drikke (per person)</h2>
+  <p>Heldagstur, ~7 t aktivitet, 1500 hm = 3500–4500 kcal. Spis godt før avgang.</p>
+  <ul>
+    <li>2 store matpakker / wraps (skinke, ost, egg)</li>
+    <li>4–6 energibarer / Snickers / sjokolade</li>
+    <li>1 pose nøtter + rosiner</li>
+    <li>1 banan + 1 eple</li>
+    <li><strong>1,5–2 liter drikke</strong> – varm i termos + ekstra vann med pulver/saft</li>
+  </ul>
+  <h3>Pausestopp underveis</h3>
+  <ol>
+    <li><strong>Frokost i bilen</strong> – Circle K Nordkjosbotn (åpent døgnet rundt)</li>
+    <li><strong>Snack ved snøgrensa</strong> – etter bæringa, før felling</li>
+    <li><strong>Energibar hver 45–60 min</strong> i stigningen</li>
+    <li><strong>Hovedmåltid på toppen</strong> (eller i le like under)</li>
+    <li><strong>Kaffe/vaffel hjem</strong> – Veikroa Nordkjosbotn</li>
+  </ol>
+</section>
+
+<section>
+  <h2><span class="icon">🌤️</span> Vær (yr.no, oppdatert 15.05 morgen)</h2>
+  <p>Furuflaten fredag 16.05: <strong>Klarvær hele dagen, 0 mm nedbør, vind ca. 10 m/s</strong>. Ser strålende ut!</p>
+  <div class="callout warn">
+    <strong>Sjekk på nytt torsdag kveld:</strong> <a href="https://www.yr.no/nb/værvarsel/daglig-tabell/2-6301710/Norge/Troms/Lyngen/Furuflaten" target="_blank">yr.no Furuflaten</a> – spesielt vind på 1500 moh.
+  </div>
+</section>
+
+<section>
+  <h2><span class="icon">⚠️</span> Snøskredvarsel (varsom.no, region Lyngen)</h2>
+  <p><strong>Per 15.05:</strong> Faregrad 2 – Moderat. Hovedproblem: <em>våte løssnøskred i bratt solvendt terreng</em>.</p>
+  <div class="callout danger">
+    <strong>Relevant for vår nordvendte rute:</strong> Mindre fare for våte løssnøskred (det er primært solvendt). <strong>Større fare for flakskred i skyggevendt, lagdelt snø høyt oppe</strong> – varsom nevner eksplisitt at "høyt til fjells kan også lagdelt, skyggevendt snø svekkes". Vær spesielt oppmerksom i bratt parti 800–1300 moh.
+  </div>
+  <ul class="checklist">
+    <li class="critical"><strong>Sjekk varsom torsdag kveld kl. ~17</strong> – nytt varsel for fredag publiseres da: <a href="https://www.varsom.no/snoskredvarsling/varsel/Lyngen/" target="_blank">varsom.no Lyngen</a></li>
+    <li class="critical">Sjekk <a href="https://www.regobs.no" target="_blank">regobs.no</a> for ferske observasjoner spesifikt fra Daltind/Lyngsdalen</li>
+    <li>Hold avstand fra skavler på toppryggen (bruddsone øst/nordøst)</li>
+    <li>Følg samme spor opp og ned – ikke stol på snøbroer over Lyngsdalselva</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="icon">🎒</span> Pakkeliste</h2>
+
+  <div class="grid-2">
+    <div>
+      <h3>Sikkerhet (obligatorisk)</h3>
+      <ul class="checklist">
+        <li class="critical">Skredsender (sjekk batteri!)</li>
+        <li class="critical">Spade</li>
+        <li class="critical">Søkestang</li>
+        <li>Førstehjelpspakke</li>
+        <li>Vindsekk / biothane</li>
+        <li>Hodelykt + ekstra batteri</li>
+        <li>Mobil fullt oppladet + powerbank</li>
+        <li>Kart Lyngen 1:50 000 + kompass</li>
+        <li>GPS-spor lastet ned offline (Gaia/Norgeskart)</li>
+        <li>Turplan sendt til kontaktperson hjemme</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Ski / utstyr</h3>
+      <ul class="checklist">
+        <li>Randonéeski + feller (test feste – varmt vær!)</li>
+        <li>Staver</li>
+        <li class="critical">Harscheisen / skarejern (kald hard snø)</li>
+        <li class="critical">Stegjern + lett isøks (bratt nordvendt kan være isete)</li>
+        <li>Hjelm</li>
+        <li>Glidvoks</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Klær (lag på lag)</h3>
+      <ul class="checklist">
+        <li>Tynn ull innerst</li>
+        <li>Tynn fleece / ullgenser</li>
+        <li>Skalljakke + skallbukse</li>
+        <li>Lett dunjakke / primaloft for pauser</li>
+        <li>2 par hansker (tynne + varme)</li>
+        <li>Lue + caps + buff</li>
+        <li class="critical">Solbriller (kategori 4!)</li>
+        <li>Skibriller (reserve)</li>
+        <li class="critical">Solkrem faktor 50 + leppepomade m/UV</li>
+        <li class="critical">Gamasjer (våt vårsnø)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Annet</h3>
+      <ul class="checklist">
+        <li class="critical">Lette joggesko / tursko (lang bæring!)</li>
+        <li>Lett pose for å gjemme joggeskoene ved snøgrensa</li>
+        <li>Skift undertøy + sokker til bilen hjem</li>
+        <li>Søppelpose</li>
+        <li>Termos + vannflaske(r)</li>
+        <li>All maten (se egen seksjon)</li>
+        <li>Kontanter / kort til kafestopp</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="icon">💡</span> Ting å huske / lett glemt</h2>
+  <ul>
+    <li><strong>Hold dere på sørsiden av elva</strong> hele veien. Snøbroer er upålitelige i mai.</li>
+    <li><strong>30 hm motbakke som siste etappe</strong> – fra elva opp til parkeringen. Spar litt energi til slutten.</li>
+    <li><strong>Last ned GPX-spor i kveld</strong> mens du har wifi: <a href="http://www.gps3d.no/plot/plot.html?gpxfile=genref56f42537ceef1" target="_blank">GPS-plot fra kugo.no</a></li>
+    <li><strong>Bilnøkkel:</strong> ekstra-nøkkel hos en av de andre eller magnetboks under bilen</li>
+    <li><strong>Mobildekning</strong> er flekkete oppe i fjellet</li>
+    <li><strong>Toppryggen:</strong> vurder å gå siste biten uten ski hvis isete</li>
+    <li><strong>Drone/kamera</strong> – utsikten over Storfjorden mot Jiehkkevarri, Kveita, Bredalsfjellet er noe av det fineste i Lyngen 📸</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="icon">✅</span> Sjekkliste torsdag kveld (15.05)</h2>
+  <ul class="checklist">
+    <li class="critical">Sjekk nytt skredvarsel kl. ~17 på <a href="https://www.varsom.no/snoskredvarsling/varsel/Lyngen/" target="_blank">varsom.no</a></li>
+    <li class="critical">Sjekk siste observasjoner på <a href="https://www.regobs.no" target="_blank">regobs.no</a></li>
+    <li>Sjekk yr.no på nytt for vind på 1500 moh</li>
+    <li>Last ned GPX-spor offline</li>
+    <li>Sjekk batterier i skredsendere</li>
+    <li>Pakk sekken og legg klart i gangen</li>
+    <li>Avtale med kontaktperson hjemme – forventet retur kl. 17:30</li>
+    <li>Sett vekkerklokka 04:45</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <p>Turplan generert 15.05.2026 · Basert på <a href="https://kugo.no/2010/03/daltinden1533/" target="_blank">kugo.no</a>, <a href="https://www.varsom.no" target="_blank">varsom.no</a> og <a href="https://www.yr.no" target="_blank">yr.no</a></p>
+  <p>God tur! 🎿☀️❄️</p>
+</footer>
+
+</body>
+</html>
