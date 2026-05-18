@@ -35,26 +35,50 @@
     initNavnModal();
     initTema();
     initNavigasjon();
+    // Init kjøres umiddelbart — DB-avhengige kall venter ikke på SQL-vekking
+    initHjem();
+    initProgram();
+    initGjester();
+    initHilsener();
+    initToastmaster();
+    initSang();
+    initSpill();
+    initMinnebok();
+    initOverlay();
+    initMario();
+    initBord();
+    sporBesok('hjem');
+    // Wake-up + admin-overstyringer hentes parallelt, blokkerer ikke UI
+    vekkDb();
     lastGjesteEdits().then(() => {
-      initHjem();
-      initProgram();
-      initGjester();
-      initHilsener();
-      initToastmaster();
-      initSang();
-      initSpill();
-      initMinnebok();
-      initOverlay();
-      initMario();
-      initBord();
-      sporBesok('hjem');
+      // Re-render gjester med eventuelle admin-overstyringer
+      if (typeof renderGjester === 'function') renderGjester();
     });
   });
+
+  // Vekk Azure SQL Free-tier som auto-pauser etter 60 min inaktivitet.
+  // Vi gjør et lett kall så DB kan starte å våkne mens brukeren leser velkomstskjermen.
+  async function vekkDb() {
+    try {
+      await fetchMedTimeout(`${API_BASE}/thomas50-greetings`, {}, 30000);
+    } catch {}
+  }
+
+  // Hjelper: fetch med timeout (default 10 sek)
+  async function fetchMedTimeout(url, opts = {}, ms = 10000) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), ms);
+    try {
+      return await fetch(url, { ...opts, signal: ctrl.signal });
+    } finally {
+      clearTimeout(timer);
+    }
+  }
 
   // Henter overstyrt info som Thomas har redigert i admin
   async function lastGjesteEdits() {
     try {
-      const r = await fetch(`${API_BASE}/thomas50-gjest-edit`);
+      const r = await fetchMedTimeout(`${API_BASE}/thomas50-gjest-edit`, {}, 60000);
       if (!r.ok) return;
       const data = await r.json();
       data.forEach(d => {
@@ -426,9 +450,9 @@
 
   async function lastHilsener() {
     const status = document.getElementById('hilsen-status');
-    status.textContent = 'Henter hilsener...';
+    status.innerHTML = '⏳ Henter hilsener... (databasen kan trenge inntil 60 sek på å våkne første gang)';
     try {
-      const res = await fetch(`${API_BASE}/thomas50-greetings`);
+      const res = await fetchMedTimeout(`${API_BASE}/thomas50-greetings`, {}, 60000);
       if (!res.ok) throw new Error('API feil');
       hilsener = await res.json();
       status.textContent = '';
@@ -691,9 +715,9 @@
 
   async function lastTopp() {
     const liste = document.getElementById('topp-liste');
-    liste.innerHTML = '<p class="muted" style="text-align:center;padding:20px">Henter topp 10...</p>';
+    liste.innerHTML = '<p class="muted" style="text-align:center;padding:20px">⏳ Henter topp 10... (databasen kan trenge inntil 60 sek på å våkne)</p>';
     try {
-      const r = await fetch(`${API_BASE}/thomas50-highscore`);
+      const r = await fetchMedTimeout(`${API_BASE}/thomas50-highscore`, {}, 60000);
       const data = await r.json();
       if (!data.length) {
         liste.innerHTML = '<div class="empty-state"><div class="empty-icon">🏆</div><div>Ingen scores ennå — bli den første!</div></div>';
@@ -967,9 +991,9 @@
   async function lastMarioTopp() {
     const liste = document.getElementById('mario-topp');
     if (!liste) return;
-    liste.innerHTML = '<p class="muted" style="text-align:center;padding:14px">Henter topp 10...</p>';
+    liste.innerHTML = '<p class="muted" style="text-align:center;padding:14px">⏳ Henter topp 10...</p>';
     try {
-      const r = await fetch(`${API_BASE}/thomas50-spillscore`);
+      const r = await fetchMedTimeout(`${API_BASE}/thomas50-spillscore`, {}, 60000);
       const data = await r.json();
       if (!data.length) {
         liste.innerHTML = '<div class="empty-state"><div class="empty-icon">🎮</div><div>Ingen scores ennå — bli den første!</div></div>';
@@ -992,7 +1016,7 @@
   async function sporBesok(side) {
     try {
       const navnTilSporing = mittNavn || `(anon) ${deviceId()}`;
-      await fetch(`${API_BASE}/thomas50-track`, {
+      await fetchMedTimeout(`${API_BASE}/thomas50-track`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1001,7 +1025,7 @@
           tidspunkt: new Date().toISOString(),
           ua: navigator.userAgent.substring(0, 200),
         }),
-      });
+      }, 60000);
     } catch { /* stille */ }
   }
 
