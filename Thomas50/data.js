@@ -851,7 +851,8 @@ const GJESTER = [
     sete: 8,
     bordType: 8,
     pust: true,
-    relasjon: "Venn"
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/share/1BtYwPzsD8/"
   },
   {
     navn: "Kjell Roger Andersen",
