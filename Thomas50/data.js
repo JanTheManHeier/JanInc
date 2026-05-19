@@ -1045,14 +1045,14 @@ const BORD_TEMA = {
   1:  { fjell: 'Hamperokken',     hoyde: 1404, hvor: 'Ullsfjorden',  farge: '#D4A853' },
   2:  { fjell: 'Tromsdalstinden', hoyde: 1238, hvor: 'Tromsdalen',   farge: '#4A6FA5' },
   3:  { fjell: 'Fløya',            hoyde: 671,  hvor: 'Tromsøya',     farge: '#C97B4F' },
-  4:  { fjell: 'Steinskartinden',  hoyde: 421,  hvor: 'Fjellheisen',  farge: '#6B8AA0' },
+  4:  { fjell: 'Steinskartinden',  hoyde: 817,  hvor: 'Tromsø-området',  farge: '#6B8AA0' },
   5:  { fjell: 'Blåmannen',        hoyde: 1044, hvor: 'Kvaløya',      farge: '#5B7BA8' },
-  6:  { fjell: 'Skamtinden',       hoyde: 700,  hvor: 'Tromsøya',     farge: '#6B9476' },
-  7:  { fjell: 'Daltinden',        hoyde: 1239, hvor: 'Tromsdalen',   farge: '#A55A4A' },
-  8:  { fjell: 'Rema 1000',        hoyde: 728,  hvor: 'Kvaløya',      farge: '#4A7A6F' },
+  6:  { fjell: 'Skamtinden',       hoyde: 884,  hvor: 'Tromsø-området',  farge: '#6B9476' },
+  7:  { fjell: 'Daltinden',        hoyde: 1533, hvor: 'Tromsø-området',  farge: '#A55A4A' },
+  8:  { fjell: 'Rema 1000',        hoyde: 1000, hvor: 'Soltindan N',     farge: '#4A7A6F' },
   9:  { fjell: 'Skittentinden',    hoyde: 705,  hvor: 'Tromsøya',     farge: '#8A6B8A' },
-  10: { fjell: 'Blåskredtinden',   hoyde: 1098, hvor: 'Lyngsalpene',  farge: '#6BA0B0' },
-  11: { fjell: 'Styrmannstinden',  hoyde: 668,  hvor: 'Kvaløya',      farge: '#B07A5A' },
+  10: { fjell: 'Blåskredtinden',   hoyde: 785,  hvor: 'Tromsø-området',  farge: '#6BA0B0' },
+  11: { fjell: 'Styrmannstinden',  hoyde: 955,  hvor: 'Tromsø-området',  farge: '#B07A5A' },
 };
 
 // Quiz: "Hvor godt kjenner du Thomas?" — fasit-spørsmål med svar
