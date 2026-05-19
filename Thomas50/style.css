@@ -679,6 +679,8 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
 .bord-tittel { display: flex; flex-direction: column; gap: 2px; flex: 1; }
 .bord-nr-mini { font-size: 10px; color: #7A8FA8; text-transform: uppercase; letter-spacing: 0.5px; }
 .bord-fjell { font-size: 18px; color: var(--bord-farge, #D4A853); font-weight: bold; }
+.bord-fjell-link { text-decoration: none; }
+.bord-fjell-link:hover .bord-fjell { text-decoration: underline; }
 .bord-fjell-meta { font-size: 11px; color: #9BAABB; }
 .bord-info { font-size: 13px; color: #D4A853; padding-top: 4px; }
 .bord-gjest-jubilant {

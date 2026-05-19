@@ -847,7 +847,7 @@
       const matchSok = bordSok && b.gjester.some(g => g.navn.toLowerCase().includes(bordSok));
       const utheve = matchSok ? ' bord-treff' : '';
       const tittel = tema
-        ? `<span class="bord-fjell">🏔️ ${esc(tema.fjell)}</span><span class="bord-fjell-meta">${tema.hoyde} m · ${esc(tema.hvor)}</span>`
+        ? `${tema.url ? `<a class="bord-fjell-link" href="${esc(tema.url)}" target="_blank" rel="noopener"><span class="bord-fjell">🏔️ ${esc(tema.fjell)}</span></a>` : `<span class="bord-fjell">🏔️ ${esc(tema.fjell)}</span>`}<span class="bord-fjell-meta">${tema.hoyde} m · ${esc(tema.hvor)}</span>`
         : `<span class="bord-fjell">Bord ${nr}</span>`;
       html += `<div class="bord-kort${utheve}" id="bord-${nr}" style="--bord-farge:${farge}">
         <div class="bord-header">

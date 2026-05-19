@@ -1042,17 +1042,17 @@ Hurra! Hurra! Hurra! 🎉🥂🦁
 
 // Bord-tema: hvert bord får navn og farge etter en fjelltopp rundt Tromsø
 const BORD_TEMA = {
-  1:  { fjell: 'Hamperokken',     hoyde: 1404, hvor: 'Ullsfjorden',  farge: '#D4A853' },
-  2:  { fjell: 'Tromsdalstinden', hoyde: 1238, hvor: 'Tromsdalen',   farge: '#4A6FA5' },
-  3:  { fjell: 'Fløya',            hoyde: 671,  hvor: 'Tromsøya',     farge: '#C97B4F' },
-  4:  { fjell: 'Steinskartinden',  hoyde: 817,  hvor: 'Tromsø-området',  farge: '#6B8AA0' },
-  5:  { fjell: 'Blåmannen',        hoyde: 1044, hvor: 'Kvaløya',      farge: '#5B7BA8' },
-  6:  { fjell: 'Skamtinden',       hoyde: 884,  hvor: 'Tromsø-området',  farge: '#6B9476' },
-  7:  { fjell: 'Daltinden',        hoyde: 1533, hvor: 'Tromsø-området',  farge: '#A55A4A' },
-  8:  { fjell: 'Rema 1000',        hoyde: 1000, hvor: 'Soltindan N',     farge: '#4A7A6F' },
-  9:  { fjell: 'Skittentinden',    hoyde: 705,  hvor: 'Tromsøya',     farge: '#8A6B8A' },
-  10: { fjell: 'Blåskredtinden',   hoyde: 785,  hvor: 'Tromsø-området',  farge: '#6BA0B0' },
-  11: { fjell: 'Styrmannstinden',  hoyde: 955,  hvor: 'Tromsø-området',  farge: '#B07A5A' },
+  1:  { fjell: 'Hamperokken',     hoyde: 1404, hvor: 'Ullsfjorden',  farge: '#D4A853', url: 'https://kugo.no/?s=Hamperokken' },
+  2:  { fjell: 'Tromsdalstinden', hoyde: 1238, hvor: 'Tromsdalen',   farge: '#4A6FA5', url: 'https://kugo.no/?s=Tromsdalstinden' },
+  3:  { fjell: 'Fløya',            hoyde: 671,  hvor: 'Tromsøya',     farge: '#C97B4F', url: 'https://kugo.no/?s=Fl%C3%B8ya' },
+  4:  { fjell: 'Steinskartinden',  hoyde: 817,  hvor: 'Kvaløya, Kattfjordeidet', farge: '#6B8AA0', url: 'https://kugo.no/2020/05/steinskartinden-817-moh/' },
+  5:  { fjell: 'Blåmannen',        hoyde: 1044, hvor: 'Kvaløya',      farge: '#5B7BA8', url: 'https://kugo.no/?s=Bl%C3%A5mannen' },
+  6:  { fjell: 'Skamtinden',       hoyde: 884,  hvor: 'Kvaløya, Ersfjorden', farge: '#6B9476', url: 'https://kugo.no/2012/10/skamtinden-884-moh/' },
+  7:  { fjell: 'Daltinden',        hoyde: 1533, hvor: 'Lyngsalpene, Furuflaten', farge: '#A55A4A', url: 'https://kugo.no/2010/03/daltinden1533/' },
+  8:  { fjell: 'Rema 1000',        hoyde: 1000, hvor: 'Ringvassøya (Soltindan N)', farge: '#4A7A6F', url: 'https://kugo.no/2009/10/massiv-nord-av-soltindan-1000-moh-2/' },
+  9:  { fjell: 'Skittentinden',    hoyde: 705,  hvor: 'Tromsøya',     farge: '#8A6B8A', url: 'https://kugo.no/?s=Skittentinden' },
+  10: { fjell: 'Blåskredtinden',   hoyde: 785,  hvor: 'Kvaløya, Nordfjordbotn', farge: '#6BA0B0', url: 'https://kugo.no/2012/10/blaskredtinden-785-moh/' },
+  11: { fjell: 'Styrmannstinden',  hoyde: 955,  hvor: 'Kvaløya, Vågbotn', farge: '#B07A5A', url: 'https://kugo.no/2014/06/styrmannstinden-955-moh-2/' },
 };
 
 // Quiz: "Hvor godt kjenner du Thomas?" — fasit-spørsmål med svar
