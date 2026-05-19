@@ -352,7 +352,7 @@ const GJESTER = [
     sete: 4,
     bordType: 8,
     relasjon: "Venn",
-    fbUrl: "N/A"
+    fbUrl: "https://www.facebook.com/share/18poiFnhFe/"
   },
   {
     navn: "Ranveig Langseth",
@@ -360,7 +360,7 @@ const GJESTER = [
     sete: 6,
     bordType: 8,
     relasjon: "Venn",
-    fbUrl: "N/A"
+    fbUrl: "https://www.facebook.com/share/1byzjK5n42/"
   },
   {
     navn: "Ståle Søfting",
