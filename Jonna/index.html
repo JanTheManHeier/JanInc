@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jonna er hel ved – Bursdagssang til Jon-Kristian</title>
+  <meta name="description" content="Bursdagssang til Jon-Kristian 'Jonna' Keinänen fra Trekløveret." />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #ff2d95;
+      --purple: #8a2be2;
+      --cyan: #00e5ff;
+      --yellow: #ffd60a;
+      --deep: #0a0033;
+      --soft: #fff5fa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: linear-gradient(180deg, var(--deep) 0%, #1a0044 50%, var(--purple) 100%);
+      color: white;
+      min-height: 100vh;
+      padding: 24px 16px 60px;
+      overflow-x: hidden;
+    }
+    .stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        radial-gradient(2px 2px at 20% 30%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, var(--cyan), transparent),
+        radial-gradient(2px 2px at 60% 70%, var(--yellow), transparent),
+        radial-gradient(1px 1px at 30% 80%, var(--pink), transparent),
+        radial-gradient(1px 1px at 90% 50%, white, transparent),
+        radial-gradient(2px 2px at 10% 60%, var(--yellow), transparent);
+      background-size: 100% 100%;
+      opacity: 0.7;
+    }
+    .container {
+      max-width: 720px; margin: 0 auto; position: relative; z-index: 1;
+    }
+    header { text-align: center; padding: 20px 0 30px; }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 7vw, 3.6rem);
+      background: linear-gradient(135deg, var(--yellow) 0%, var(--pink) 50%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      text-shadow: 0 0 40px rgba(255, 45, 149, 0.3);
+    }
+    .subtitle {
+      color: var(--cyan);
+      font-size: 1.1rem;
+      margin-top: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .hero-img {
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto 30px;
+      display: block;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(255, 45, 149, 0.3), 0 0 0 2px var(--pink);
+    }
+    .player-card {
+      background: rgba(26, 0, 68, 0.85);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--pink);
+      border-radius: 20px;
+      padding: 28px 24px;
+      margin: 0 auto 30px;
+      box-shadow: 0 0 30px rgba(255, 45, 149, 0.25);
+    }
+    .track-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--yellow);
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .track-artist {
+      text-align: center;
+      color: var(--cyan);
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    audio {
+      width: 100%;
+      margin: 10px 0;
+      border-radius: 30px;
+    }
+    .actions {
+      display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 20px;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid var(--cyan);
+      color: var(--cyan);
+      background: transparent;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s, color 0.15s;
+      font-size: 1rem;
+    }
+    .btn:hover { transform: translateY(-2px); background: var(--cyan); color: var(--deep); }
+    .btn.primary {
+      background: var(--pink); border-color: var(--pink); color: white;
+    }
+    .btn.primary:hover { background: var(--yellow); border-color: var(--yellow); color: var(--deep); }
+    .lyrics {
+      background: rgba(255, 245, 250, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 28px;
+      white-space: pre-wrap;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      color: #f0e0ff;
+    }
+    .lyrics h2 {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--yellow);
+      margin-bottom: 16px;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+    .section-tag {
+      color: var(--pink);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+    footer a { color: var(--cyan); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="container">
+    <header>
+      <h1>JONNA ER HEL VED</h1>
+      <div class="subtitle">★ Bursdagshymne ★ Trekløveret Productions ★</div>
+    </header>
+
+    <img class="hero-img" src="trekloveret.png" alt="Trekløveret på Casa Inferno" />
+
+    <div class="player-card">
+      <div class="track-title">Jonna er hel ved</div>
+      <div class="track-artist">Trekløveret feat. Suno · 2026</div>
+      <audio controls preload="metadata">
+        <source src="jonna-er-hel-ved.mp3" type="audio/mpeg">
+        Nettleseren din støtter ikke avspilling av lyd.
+      </audio>
+      <div class="actions">
+        <a class="btn primary" href="jonna-er-hel-ved.mp3" download="Jonna er hel ved.mp3">⬇ Last ned MP3</a>
+        <a class="btn" href="#lyrics">♫ Se tekst</a>
+      </div>
+    </div>
+
+    <div class="lyrics" id="lyrics">
+      <h2>♫ Tekst ♫</h2><span class="section-tag">[Verse 1]</span>
+Soloppgang over Røstbakktoppen i dag
+Søndagsmiddag hos Guri, og vi synge vår sang
+Fra Tråkk 9000 te Madagaskar med kvitsekk
+Du e mannen, du e konge, du e hel ved
+
+<span class="section-tag">[Pre-Chorus]</span>
+Trekløveret e samla, Jan og Marius her
+Vi planlegg neste tur – kor skal vi dra?
+Du svare som du alltid gjør, med et smil og et ja
+Jonna, du e turen sin beste dag
+
+<span class="section-tag">[Chorus]</span>
+Jonna, Jonna – du e stjerna vår
+Sprek og sterk, du løpe som en hjort i mars
+Jonna, Jonna – omtenksom og snill
+Holde oss trygg når fjellet det vil
+Halleluja, MGP, du e magisk
+Gratulere med dagen, Jonna fantastisk!
+
+<span class="section-tag">[Verse 2]</span>
+Bananarama på øret, Madonna i 89
+Du danse gjennom livet med et glimt i ditt sinn
+Kameraet i hånda, hver tur blir til kunst
+205 poster med soloppgang og fjell og dunst
+
+<span class="section-tag">[Pre-Chorus]</span>
+Du e en av gjengen, du e en av oss
+Samme kor vi går, du e den vi ikkje vil miss'
+Stolt som du e, det e DU som lyse opp
+Fra Tromsø-bakka til Madagaskar-topp
+
+<span class="section-tag">[Chorus]</span>
+Jonna, Jonna – du e stjerna vår
+Sprek og sterk, du løpe som en hjort i mars
+Jonna, Jonna – omtenksom og snill
+Holde oss trygg når fjellet det vil
+Halleluja, MGP, du e magisk
+Gratulere med dagen, Jonna fantastisk!
+
+<span class="section-tag">[Bridge]</span>
+<em>(Key change! Vocoder + choir)</em>
+<em>Do you believe</em> i bursdag etter regn?
+Kickoff hvert år, du e vert med stil
+Du sprer glede kor du går, en heil mil
+I kveld det e Casa Inferno, Tromsø by
+Aperol og Peroni, pizza under nordlig sky
+Here comes the sun – og han heter Jonna i dag
+Et glass for vår venn, for en ekte kar!
+
+<span class="section-tag">[Final Chorus]</span>
+Jonna, Jonna – du e stjerna vår!
+Sprek og sterk, du løpe som en hjort i mars!
+Jonna, Jonna – omtenksom og snill!
+Holde oss trygg når fjellet det vil!
+Halleluja, MGP, du e magisk!
+Gratulere med dagen, Jonna fantastisk!
+
+<span class="section-tag">[Outro]</span>
+(Hel ved... hel ved... Jonnaaaa!)
+Gratulere med dagen!
+    </div>
+
+    <footer>
+      Laga med kjærlighet av Marius &amp; Jan · 19. mai 2026<br>
+      <a href="https://janinc.no">janinc.no</a>
+    </footer>
+  </div>
+</body>
+</html>
