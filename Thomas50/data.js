@@ -21,7 +21,7 @@ const PROGRAM = [
     tid: "18:00",
     sted: "Kystens Hus — Festen begynner!",
     ikon: "🥂",
-    beskrivelse: "Velkomstdrink, deretter 3-retters middag i kantinen i 2. etasje. For de ekstra tørste — bar i lokalet.",
+    beskrivelse: "Velkomst med prosecco, deretter middag med blinis, bacalao-buffet og kakebord. Baren er åpen hele kvelden.",
     adresse: "Havnegata 1A, 9008 Tromsø",
     kart: "https://maps.google.com/?q=Kystens+Hus+Tromsø",
     farge: "#7EB8D4",
