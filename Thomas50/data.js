@@ -51,7 +51,9 @@ const GJESTER = [
     sete: 5,
     bordType: 8,
     relasjon: "Kjæreste til yngste sønn",
-    fbUrl: "N/A"
+    fbUrl: "https://www.facebook.com/share/1CjWbh1Fyq/",
+    igUrl: "https://www.instagram.com/adelekjar/",
+    bildeFil: "images/gjester/adele-kjar.jpg"
   },
   {
     navn: "Birk H Wilhelmsen",
@@ -156,7 +158,8 @@ const GJESTER = [
     sete: 4,
     bordType: 8,
     relasjon: "Konen til Trond Vidar Hansen",
-    fbUrl: "https://www.facebook.com/share/18rq2pcN4u/"
+    fbUrl: "https://www.facebook.com/share/18rq2pcN4u/",
+    bildeFil: "images/gjester/iris-wikmark.jpg"
   },
   {
     navn: "Jakob B Hansen",
@@ -281,7 +284,8 @@ const GJESTER = [
     sete: 3,
     bordType: 10,
     relasjon: "Svigermor",
-    fbUrl: "N/A"
+    fbUrl: "N/A",
+    bildeFil: "images/gjester/ragnhild-wilhelmsen.jpg"
   },
   {
     navn: "Renate Larsen",
@@ -352,7 +356,8 @@ const GJESTER = [
     sete: 4,
     bordType: 8,
     relasjon: "Venn",
-    fbUrl: "https://www.facebook.com/share/18poiFnhFe/"
+    fbUrl: "https://www.facebook.com/share/18poiFnhFe/",
+    bildeFil: "images/gjester/ole-lekang.jpg"
   },
   {
     navn: "Ranveig Langseth",
@@ -662,6 +667,7 @@ const GJESTER = [
     bio: "Terningkast 6 for tidlig beskjed — gleder seg!",
     fbBio: "Macks Ølbryggeri AS · 📚 BI Norwegian Business School · 📍 Tromsø, Norway · 💕 Gift med Lasse Lauritz Pettersen",
     fbUrl: "https://www.facebook.com/cathrine.giaever",
+    bildeFil: "images/gjester/cathrine-marie-giaever.jpg",
     relasjon: "Venn"
   },
   {
@@ -733,7 +739,8 @@ const GJESTER = [
     sete: 8,
     bordType: 8,
     relasjon: "Venn",
-    fbUrl: "N/A"
+    fbUrl: "N/A",
+    bildeFil: "images/gjester/oyvind-nordgard.png"
   },
   {
     navn: "Christine Strøm",
@@ -772,7 +779,8 @@ const GJESTER = [
     sete: 2,
     bordType: 10,
     relasjon: "Venn",
-    fbUrl: "N/A"
+    fbUrl: "N/A",
+    bildeFil: "images/gjester/erik-josefsen.jpg"
   },
   {
     navn: "Geir Olav Skogstad",
@@ -812,7 +820,8 @@ const GJESTER = [
     sete: 3,
     bordType: 10,
     relasjon: "Venn",
-    fbUrl: "https://www.facebook.com/share/1EiMmN7x2J/"
+    fbUrl: "https://www.facebook.com/share/1EiMmN7x2J/",
+    bildeFil: "images/gjester/siv-cathrine-torbergsen.jpg"
   },
   {
     navn: "Synne Guldbrandsen",
@@ -852,7 +861,8 @@ const GJESTER = [
     bordType: 8,
     pust: true,
     relasjon: "Venn",
-    fbUrl: "https://www.facebook.com/share/1BtYwPzsD8/"
+    fbUrl: "https://www.facebook.com/share/1BtYwPzsD8/",
+    bildeFil: "images/gjester/gro-hilde-severinsen.jpg"
   },
   {
     navn: "Kjell Roger Andersen",

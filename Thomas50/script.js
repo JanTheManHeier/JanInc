@@ -434,8 +434,9 @@
       ${g.folge ? `<div class="gjest-modal-felt">Følge: ${esc(g.folge)}</div>` : ''}
       <div class="gjest-modal-tags">${tag}</div>
       <div class="gjest-modal-lenker">
-        ${g.fbUrl ? `<a class="gjest-fb-link" href="${esc(g.fbUrl)}" target="_blank" rel="noopener">facebook</a>` : ''}
+        ${g.fbUrl && g.fbUrl !== 'N/A' ? `<a class="gjest-fb-link" href="${esc(g.fbUrl)}" target="_blank" rel="noopener">facebook</a>` : ''}
         ${g.liUrl ? `<a class="gjest-fb-link" href="${esc(g.liUrl)}" target="_blank" rel="noopener">linkedin</a>` : ''}
+        ${g.igUrl ? `<a class="gjest-fb-link" href="${esc(g.igUrl)}" target="_blank" rel="noopener">instagram</a>` : ''}
       </div>`;
     const gjestModal = document.getElementById('gjest-modal');
     gjestModal.hidden = false;
