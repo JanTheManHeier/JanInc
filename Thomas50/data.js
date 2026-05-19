@@ -1042,15 +1042,15 @@ Hurra! Hurra! Hurra! 🎉🥂🦁
 
 // Bord-tema: hvert bord får navn og farge etter en fjelltopp rundt Tromsø
 const BORD_TEMA = {
-  1:  { fjell: 'Hamperokken',     hoyde: 1404, hvor: 'Ullsfjorden',  farge: '#D4A853', url: 'https://kugo.no/?s=Hamperokken' },
-  2:  { fjell: 'Tromsdalstinden', hoyde: 1238, hvor: 'Tromsdalen',   farge: '#4A6FA5', url: 'https://kugo.no/?s=Tromsdalstinden' },
-  3:  { fjell: 'Fløya',            hoyde: 671,  hvor: 'Tromsøya',     farge: '#C97B4F', url: 'https://kugo.no/?s=Fl%C3%B8ya' },
+  1:  { fjell: 'Hamperokken',     hoyde: 1404, hvor: 'Ullsfjorden',  farge: '#D4A853', url: 'https://kugo.no/2011/07/hamperokken-1404-moh/' },
+  2:  { fjell: 'Tromsdalstinden', hoyde: 1238, hvor: 'Tromsdalen',   farge: '#4A6FA5', url: 'https://kugo.no/2015/04/tromsdalstinden-1238-moh-3/' },
+  3:  { fjell: 'Fløya',            hoyde: 671,  hvor: 'Tromsøya (Sherpatrappa)', farge: '#C97B4F', url: 'https://kugo.no/2022/11/floya-671-sherpatrappa/' },
   4:  { fjell: 'Steinskartinden',  hoyde: 817,  hvor: 'Kvaløya, Kattfjordeidet', farge: '#6B8AA0', url: 'https://kugo.no/2020/05/steinskartinden-817-moh/' },
-  5:  { fjell: 'Blåmannen',        hoyde: 1044, hvor: 'Kvaløya',      farge: '#5B7BA8', url: 'https://kugo.no/?s=Bl%C3%A5mannen' },
+  5:  { fjell: 'Store Blåmann',    hoyde: 1044, hvor: 'Kvaløya',      farge: '#5B7BA8', url: 'https://kugo.no/2011/09/store-blamann-1044-moh/' },
   6:  { fjell: 'Skamtinden',       hoyde: 884,  hvor: 'Kvaløya, Ersfjorden', farge: '#6B9476', url: 'https://kugo.no/2012/10/skamtinden-884-moh/' },
   7:  { fjell: 'Daltinden',        hoyde: 1533, hvor: 'Lyngsalpene, Furuflaten', farge: '#A55A4A', url: 'https://kugo.no/2010/03/daltinden1533/' },
   8:  { fjell: 'Rema 1000',        hoyde: 1000, hvor: 'Ringvassøya (Soltindan N)', farge: '#4A7A6F', url: 'https://kugo.no/2009/10/massiv-nord-av-soltindan-1000-moh-2/' },
-  9:  { fjell: 'Skittentinden',    hoyde: 705,  hvor: 'Tromsøya',     farge: '#8A6B8A', url: 'https://kugo.no/?s=Skittentinden' },
+  9:  { fjell: 'Skitntinden',      hoyde: 1042, hvor: 'Kvaløya, Kattfjordeidet', farge: '#8A6B8A', url: 'https://kugo.no/2011/04/skitntinden-1042-moh/' },
   10: { fjell: 'Blåskredtinden',   hoyde: 785,  hvor: 'Kvaløya, Nordfjordbotn', farge: '#6BA0B0', url: 'https://kugo.no/2012/10/blaskredtinden-785-moh/' },
   11: { fjell: 'Styrmannstinden',  hoyde: 955,  hvor: 'Kvaløya, Vågbotn', farge: '#B07A5A', url: 'https://kugo.no/2014/06/styrmannstinden-955-moh-2/' },
 };
