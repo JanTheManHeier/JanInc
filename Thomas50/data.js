@@ -156,7 +156,7 @@ const GJESTER = [
     sete: 4,
     bordType: 8,
     relasjon: "Konen til Trond Vidar Hansen",
-    fbUrl: "N/A"
+    fbUrl: "https://www.facebook.com/share/18rq2pcN4u/"
   },
   {
     navn: "Jakob B Hansen",
