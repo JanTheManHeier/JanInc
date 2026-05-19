@@ -807,12 +807,12 @@ const GJESTER = [
     bildeFil: "images/gjester/silje-ingebrigtsen.jpg"
   },
   {
-    navn: "Siw Cathrine  Torbergsen",
+    navn: "Siv-Cathrine Torbergsen",
     bord: 9,
     sete: 3,
     bordType: 10,
     relasjon: "Venn",
-    fbUrl: "N/A"
+    fbUrl: "https://www.facebook.com/share/1EiMmN7x2J/"
   },
   {
     navn: "Synne Guldbrandsen",
