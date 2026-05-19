@@ -365,7 +365,8 @@ const GJESTER = [
     sete: 6,
     bordType: 8,
     relasjon: "Venn",
-    fbUrl: "https://www.facebook.com/share/1byzjK5n42/"
+    fbUrl: "https://www.facebook.com/share/1byzjK5n42/",
+    bildeFil: "images/gjester/ranveig-langseth.jpg"
   },
   {
     navn: "Ståle Søfting",
