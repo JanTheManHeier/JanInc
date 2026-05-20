@@ -661,6 +661,72 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
 #mario-hopp-btn[hidden] { display: none; }
 
 /* Bestevenn-orakel */
+.bv-samme-bord-info {
+  margin: 0 16px 14px;
+  padding: 10px 14px;
+  background: rgba(120,100,180,0.1);
+  border-left: 3px solid #C8A0E8;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #C8D8E8;
+  line-height: 1.5;
+}
+
+/* PWA install popup */
+.install-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 16px;
+  backdrop-filter: blur(8px);
+}
+.install-popup[hidden] { display: none; }
+.install-card {
+  background: linear-gradient(135deg, #1A2A3E, #0D1B2A);
+  border: 1px solid rgba(212,168,83,0.4);
+  border-radius: 18px;
+  max-width: 380px;
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.install-lukk {
+  position: absolute;
+  top: 10px; right: 12px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #E8E0D4;
+  font-size: 16px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.install-emoji { font-size: 48px; margin-bottom: 8px; }
+.install-tittel { color: #D4A853; font-size: 22px; margin-bottom: 8px; }
+.install-tekst { color: #C8D8E8; font-size: 14px; line-height: 1.5; margin-bottom: 16px; }
+.install-instr {
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: left;
+  margin-bottom: 12px;
+}
+.install-instr h4 { color: #D4A853; font-size: 14px; margin-bottom: 8px; }
+.install-instr ol {
+  padding-left: 20px;
+  color: #C8D8E8;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.install-instr li { margin-bottom: 4px; }
+
+/* Bestevenn-orakel */
 .bv-velg-boks { padding: 0 16px 16px; }
 .bv-search-wrap { position: relative; }
 .bv-search-wrap input {

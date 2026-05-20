@@ -1,4 +1,5 @@
 const { getConnection, executeQuery, TYPES } = require('../shared/db');
+const { sjekkRate } = require('../shared/ratelimit');
 
 const ENSURE_TABLE_SQL = `
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Thomas50_Hilsener')
@@ -24,6 +25,11 @@ module.exports = async function (context, req) {
         }
 
         if (req.method === 'POST') {
+            const rl = sjekkRate(req, 'greetings', 5);
+            if (!rl.ok) {
+                context.res = { status: 429, headers, body: { error: `For mange forespørsler. Prøv igjen om ${rl.gjenstaar} sek.` } };
+                return;
+            }
             const { navn, tekst } = req.body || {};
             if (!navn || !tekst) {
                 context.res = { status: 400, headers, body: { error: 'navn og tekst påkrevd' } };

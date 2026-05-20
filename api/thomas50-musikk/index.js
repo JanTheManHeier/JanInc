@@ -1,5 +1,6 @@
 const { getConnection, executeQuery, TYPES } = require('../shared/db');
 const { sendMail } = require('../shared/mailer');
+const { sjekkRate } = require('../shared/ratelimit');
 
 const ENSURE_TABLE_SQL = `
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Thomas50_Musikkonske')
@@ -54,6 +55,11 @@ module.exports = async function (context, req) {
     const headers = { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' };
     let connection;
     try {
+        const rl = sjekkRate(req, 'musikk', 5);
+        if (!rl.ok) {
+            context.res = { status: 429, headers, body: { error: `For mange musikkønsker. Prøv igjen om ${rl.gjenstaar} sek.` } };
+            return;
+        }
         connection = await getConnection();
         await executeQuery(connection, ENSURE_TABLE_SQL);
 

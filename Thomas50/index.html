@@ -17,6 +17,35 @@
 </head>
 <body>
 
+<div id="install-popup" class="install-popup" hidden>
+  <div class="install-card">
+    <button id="install-lukk" class="install-lukk" aria-label="Lukk">✕</button>
+    <div class="install-emoji">📲</div>
+    <h3 class="install-tittel">Legg til som app!</h3>
+    <p class="install-tekst">Få Thomas50 som en ekte app på telefonen — raskere tilgang og ingen nettleser-rot.</p>
+    <div id="install-instr-ios" class="install-instr" hidden>
+      <h4>🍎 På iPhone:</h4>
+      <ol>
+        <li>Trykk <strong>Del-knappen</strong> <span style="font-size:20px">⬆️</span> nederst i nettleseren</li>
+        <li>Bla ned og velg <strong>«Legg til på Hjem-skjerm»</strong></li>
+        <li>Trykk <strong>Legg til</strong></li>
+      </ol>
+    </div>
+    <div id="install-instr-android" class="install-instr" hidden>
+      <h4>🤖 På Android:</h4>
+      <ol>
+        <li>Trykk <strong>⋮-menyen</strong> øverst til høyre</li>
+        <li>Velg <strong>«Legg til på startskjerm»</strong></li>
+        <li>Trykk <strong>Legg til</strong></li>
+      </ol>
+    </div>
+    <div id="install-instr-other" class="install-instr" hidden>
+      <p style="font-size:13px;color:#9BAABB">Bruk «legg til på hjem-skjerm» eller «installer» i nettleseren din.</p>
+    </div>
+    <button id="install-ok" class="btn-primary" style="margin-top:14px">Ok, skjønner!</button>
+  </div>
+</div>
+
 <div id="toast" class="toast" hidden></div>
 
 <button id="navn-pille" class="navn-pille" hidden>👋 Hvem er du?</button>

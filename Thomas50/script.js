@@ -49,6 +49,7 @@
     initMario();
     initBord();
     initBestevenn();
+    initInstallPopup();
     sporBesok('hjem');
     // Wake-up + admin-overstyringer hentes parallelt, blokkerer ikke UI
     vekkDb();
@@ -492,6 +493,11 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(ny),
       });
+      if (res.status === 429) {
+        const d = await res.json().catch(() => ({}));
+        toast(d.error || 'For mange hilsener på kort tid — vent litt');
+        return;
+      }
       if (!res.ok) throw new Error('API feil');
       toast('Hilsen sendt! 🎉');
     } catch (e) {
@@ -528,6 +534,11 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
+      if (res.status === 429) {
+        const d = await res.json().catch(() => ({}));
+        status.textContent = d.error || 'For mange taleforespørsler — vent litt';
+        return;
+      }
       if (!res.ok) throw new Error('API feil');
       status.textContent = '';
       toast('🎤 Talen er meldt inn til Ronny og Marianne!');
@@ -564,6 +575,11 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       }, 60000);
+      if (res.status === 429) {
+        const d = await res.json().catch(() => ({}));
+        status.textContent = d.error || 'For mange musikkønsker — vent litt';
+        return;
+      }
       if (!res.ok) throw new Error('API feil');
       status.textContent = '';
       toast('🎵 Musikkønsket er sendt til Aggie!');
@@ -1123,6 +1139,35 @@
     });
   }
 
+  // ============ PWA Install Popup ============
+  function initInstallPopup() {
+    const popup = document.getElementById('install-popup');
+    if (!popup) return;
+    // Allerede installert som PWA
+    const erStandalone = window.matchMedia('(display-mode: standalone)').matches
+      || window.navigator.standalone === true;
+    if (erStandalone) return;
+    // Allerede avvist
+    if (localStorage.getItem('thomas50-install-dismissed') === '1') return;
+    // Detect plattform
+    const ua = navigator.userAgent;
+    const erIos = /iPad|iPhone|iPod/.test(ua);
+    const erAndroid = /Android/.test(ua);
+    document.getElementById('install-instr-ios').hidden = !erIos;
+    document.getElementById('install-instr-android').hidden = !erAndroid;
+    document.getElementById('install-instr-other').hidden = (erIos || erAndroid);
+    // Vis etter 4 sek så brukeren rekker å orientere seg
+    setTimeout(() => { popup.hidden = false; }, 4000);
+    // Lukk-handlers
+    const lukk = () => {
+      popup.hidden = true;
+      localStorage.setItem('thomas50-install-dismissed', '1');
+    };
+    document.getElementById('install-lukk').onclick = lukk;
+    document.getElementById('install-ok').onclick = lukk;
+    popup.addEventListener('click', e => { if (e.target === popup) lukk(); });
+  }
+
   function visBvDropdown(sok) {
     const dd = document.getElementById('bv-dropdown');
     const q = (sok || '').toLowerCase().trim();
@@ -1215,6 +1260,9 @@
     }).join('');
 
     ut.innerHTML = `
+      <div class="bv-samme-bord-info">
+        💡 <strong>Vi viser kun matches fra andre bord</strong> — folk på <strong>ditt eget bord</strong> har du allerede hele kvelden!
+      </div>
       ${matchKort}
       <div class="bv-allianse-kort">
         <div class="bv-allianse-emoji">${allianseInfo.emoji}</div>
