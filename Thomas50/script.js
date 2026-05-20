@@ -319,11 +319,9 @@
     const stats = document.getElementById('gjester-stats');
     const totalt = GJESTER.filter(g => !g.avbud).length;
     const pust = GJESTER.filter(g => g.pust && !g.avbud).length;
-    const folge = GJESTER.filter(g => g.plus > 0).reduce((a, g) => a + g.plus, 0);
     stats.innerHTML = `
       <div><strong>${totalt}</strong>Bekreftet</div>
-      <div><strong>${pust}</strong>På Pust</div>
-      <div><strong>${folge}</strong>Følge</div>`;
+      <div><strong>${pust}</strong>På Pust</div>`;
 
     document.querySelectorAll('.chip[data-filter]').forEach(c => {
       c.addEventListener('click', () => {
