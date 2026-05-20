@@ -51,13 +51,13 @@
       },
       {
         "rank": 2,
-        "match_navn": "Marit Bratrud Nilsen",
+        "match_navn": "Marita Mokkelbost",
         "match_grunner": [
-          "Begge lever for turn",
-          "Klatre- og turnmamma-energi",
-          "Sterke kropper"
+          "Ny festkamerat å bli kjent med",
+          "Fra forskjellige bord",
+          "Felles festglede"
         ],
-        "samtale_starter": "Diskuter hvilket element foreldre filmer altfor mye."
+        "samtale_starter": "Introduser dere og finn ut hva dere har til felles!"
       },
       {
         "rank": 3,
@@ -133,13 +133,13 @@
       },
       {
         "rank": 3,
-        "match_navn": "Marit Bratrud Nilsen",
+        "match_navn": "Øyvind Nordgård",
         "match_grunner": [
-          "Begge er helsefolk med barn",
-          "Lege møter fysio",
-          "Holder familien gående"
+          "Ny festkamerat å bli kjent med",
+          "Fra forskjellige bord",
+          "Felles festglede"
         ],
-        "samtale_starter": "Diskuter hvilken kropp som klager mest etter en helg på fjellet."
+        "samtale_starter": "Introduser dere og finn ut hva dere har til felles!"
       }
     ]
   },
@@ -375,13 +375,13 @@
       },
       {
         "rank": 2,
-        "match_navn": "Marit Bratrud Nilsen",
+        "match_navn": "Birk H Wilhelmsen",
         "match_grunner": [
-          "Begge er turn- og fysio-glade",
-          "Sterke kvinner i hallen",
-          "Hold-deg-i-form-vibes"
+          "Ny festkamerat å bli kjent med",
+          "Fra forskjellige bord",
+          "Felles festglede"
         ],
-        "samtale_starter": "Spør Marit om beste fotomodell-historie fra før fysio-yrket."
+        "samtale_starter": "Introduser dere og finn ut hva dere har til felles!"
       },
       {
         "rank": 3,
@@ -493,13 +493,13 @@
       },
       {
         "rank": 3,
-        "match_navn": "Marit Bratrud Nilsen",
+        "match_navn": "Ronny Andre Bendiksen",
         "match_grunner": [
-          "Begge er fysioterapeuter",
-          "Helse og bevegelse",
-          "Sporty kvinner"
+          "Ny festkamerat å bli kjent med",
+          "Fra forskjellige bord",
+          "Felles festglede"
         ],
-        "samtale_starter": "Spør Marit om beste øvelse mot dårlig kontorholdning."
+        "samtale_starter": "Introduser dere og finn ut hva dere har til felles!"
       }
     ]
   },
@@ -1625,13 +1625,13 @@
     "matches": [
       {
         "rank": 1,
-        "match_navn": "Marit Bratrud Nilsen",
+        "match_navn": "Birk H Wilhelmsen",
         "match_grunner": [
-          "Begge er fagperson som holder ut",
-          "Farmasi møter fysio",
-          "Sterke kvinner i bakgrunnen"
+          "Ny festkamerat å bli kjent med",
+          "Fra forskjellige bord",
+          "Felles festglede"
         ],
-        "samtale_starter": "Sammenlign hvilken kropp som klager mest etter en helg på fjellet."
+        "samtale_starter": "Introduser dere og finn ut hva dere har til felles!"
       },
       {
         "rank": 2,
@@ -1861,13 +1861,13 @@
       },
       {
         "rank": 3,
-        "match_navn": "Marit Bratrud Nilsen",
+        "match_navn": "Ronny Andre Bendiksen",
         "match_grunner": [
-          "Begge er turn/klatre-mammaer",
-          "Tannlege møter fysio",
-          "Fart og familie"
+          "Ny festkamerat å bli kjent med",
+          "Fra forskjellige bord",
+          "Felles festglede"
         ],
-        "samtale_starter": "Bytt verste hentebommert fra trening eller skole."
+        "samtale_starter": "Introduser dere og finn ut hva dere har til felles!"
       }
     ]
   },
@@ -1887,13 +1887,13 @@
       },
       {
         "rank": 2,
-        "match_navn": "Marit Bratrud Nilsen",
+        "match_navn": "Marita Mokkelbost",
         "match_grunner": [
-          "Begge er helsefolk med småbarn",
-          "Sykepleier møter fysio",
-          "Familieliv i skift"
+          "Ny festkamerat å bli kjent med",
+          "Fra forskjellige bord",
+          "Felles festglede"
         ],
-        "samtale_starter": "Sammenlign verste «mamma kan ikke»-historie."
+        "samtale_starter": "Introduser dere og finn ut hva dere har til felles!"
       },
       {
         "rank": 3,
@@ -2192,42 +2192,6 @@
           "Tromsø-scenen banker"
         ],
         "samtale_starter": "Plan en konsertkveld — hvem booker, hvem mikser drinker?"
-      }
-    ]
-  },
-  {
-    "navn": "Marit Bratrud Nilsen",
-    "allianse": "Fjellfolket",
-    "matches": [
-      {
-        "rank": 1,
-        "match_navn": "Anne Marvik",
-        "match_grunner": [
-          "Begge er turn- og klatremammaer",
-          "Fysio møter Aleris",
-          "Sterke kvinner i hallen"
-        ],
-        "samtale_starter": "Diskuter hvilket apparat foreldre bør slutte å filme."
-      },
-      {
-        "rank": 2,
-        "match_navn": "Marte Lysnes Kristoffersen",
-        "match_grunner": [
-          "Begge er fysioterapeuter",
-          "Helse og bevegelse",
-          "Sporty fra Senja og Molde"
-        ],
-        "samtale_starter": "Bytt beste øvelse mot dårlig kontorholdning."
-      },
-      {
-        "rank": 3,
-        "match_navn": "Kristina Kantola",
-        "match_grunner": [
-          "Begge er turn- og hundemammaer",
-          "Fysio møter tannlege",
-          "Familiens støttepunkt"
-        ],
-        "samtale_starter": "Bytt verste hentebommert fra trening eller skole."
       }
     ]
   },
@@ -3003,13 +2967,13 @@
       },
       {
         "rank": 2,
-        "match_navn": "Marit Bratrud Nilsen",
+        "match_navn": "Øyvind Nordgård",
         "match_grunner": [
-          "Begge er turn- og klatremammaer",
-          "Aleris møter fysio",
-          "Sterke kvinner i hallen"
+          "Ny festkamerat å bli kjent med",
+          "Fra forskjellige bord",
+          "Felles festglede"
         ],
-        "samtale_starter": "Diskuter hvilket apparat foreldre bør slutte å filme."
+        "samtale_starter": "Introduser dere og finn ut hva dere har til felles!"
       },
       {
         "rank": 3,

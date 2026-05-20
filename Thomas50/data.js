@@ -704,16 +704,6 @@ const GJESTER = [
     liBio: "Section Manager, Customer Experience · 📍 Tromsø, Troms og Finnmark, Norway"
   },
   {
-    navn: "Marit Bratrud Nilsen",
-    bord: 8,
-    sete: 6,
-    bordType: 8,
-    relasjon: "Venn",
-    fbUrl: "https://www.facebook.com/marit.b.nilsen.1",
-    bildeFil: "images/gjester/marit-bratrud-nilsen.jpg",
-    fbBio: "📍 Molde, Norway"
-  },
-  {
     navn: "Marit Osima",
     bord: 8,
     sete: 7,
