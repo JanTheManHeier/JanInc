@@ -562,7 +562,7 @@ const GJESTER = [
     fbUrl: "https://www.facebook.com/odd.g.ingebrigtsen",
     liBio: "Ønsker du markedets mest komplette datasikkerhetsløsning? · 📍 Tromsø, Troms og Finnmark, Norway",
     liUrl: "https://www.linkedin.com/in/oddgunnaringebrigtsen/",
-    bildeFil: "images/gjester/odd-gunnar-ingebritsen.jpg",
+    bildeFil: "images/gjester/odd-gunnar-ingebrigtsen.jpg",
     relasjon: "Venn"
   },
   {
