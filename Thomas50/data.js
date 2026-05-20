@@ -62,7 +62,7 @@ const GJESTER = [
     bordType: 8,
     relasjon: "Yngste sønn",
     fbUrl: "https://www.facebook.com/birk.wilhelmsen",
-    bildeFil: "images/gjester/birk-h-wilhelmsen.jpg"
+    bildeFil: "images/gjester/birk-h-wilhelmsen.png"
   },
   {
     navn: "Inger Johanne Sumstad",
