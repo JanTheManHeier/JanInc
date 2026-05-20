@@ -55,7 +55,7 @@ const data = [
   { navn: "Thomas Hansen", allianse: "Mikrofon-kapererne",
     r: [
       ["Jan Heier Johansen", ["Begge er Yes-menn med FOMO","Bursdagsapp-makker","Topptur og festkompis"], "Velg neste topptur i Alpene sammen — hvilken uke i 2026 passer?"],
-      ["Odd Gunnar Ingebritsen", ["Reist verden sammen","Fallskjerm til munk-tilværelse","Eventyrkompis nummer én"], "Hent fram beste tur-historie — taperen tar runden!"],
+      ["Odd Gunnar Ingebrigtsen", ["Reist verden sammen","Fallskjerm til munk-tilværelse","Eventyrkompis nummer én"], "Hent fram beste tur-historie — taperen tar runden!"],
       ["Kjell Roger Andersen", ["Tallrike telttur og topptur","Løvens Hule-alumni","Sprek og turklar"], "Plan neste fjelltur — Balsfjord eller Lyngen først?"],
     ] },
 
@@ -225,7 +225,7 @@ const data = [
   { navn: "Hans Thomas Brox", allianse: "Fjellfolket",
     r: [
       ["Arne Aarhus", ["Begge er fallskjerm-veteraner","Eventyr i blodet","Historier på lager"], "Bytt skrekkhistorie fra siste hopp — eller verste flytur."],
-      ["Odd Gunnar Ingebritsen", ["Begge er fallskjerm-hoppere","Eventyr-typer på alle nivå","Rolig under press"], "Spør Odd Gunnar om munke-tilværelsen — er fallskjerm med?"],
+      ["Odd Gunnar Ingebrigtsen", ["Begge er fallskjerm-hoppere","Eventyr-typer på alle nivå","Rolig under press"], "Spør Odd Gunnar om munke-tilværelsen — er fallskjerm med?"],
       ["Ivar Wullf", ["Begge er fallskjermklubb-veteraner","Uredde sjeler","Tar ledelse uten å rope"], "Bytt favoritt-landing — verste eller mest elegante?"],
     ] },
   { navn: "Hege Blikfeldt", allianse: "De vise",
@@ -308,7 +308,7 @@ const data = [
       ["Ørjan Berg Karlsen", ["Begge har reise-livsstil","Apollo møter dyre vaner","Trives med opplevelser"], "Bytt favoritt-destinasjon som ikke står i Lonely Planet."],
       ["Geir Olav Skogstad", ["Begge er livsnytende ledere","Apollo-veteran møter rederi-sjef","Reise og rom for fest"], "Plan en charter-helg — hvilken destinasjon og hvem booker baren?"],
     ] },
-  { navn: "Odd Gunnar Ingebritsen", allianse: "Fjellfolket",
+  { navn: "Odd Gunnar Ingebrigtsen", allianse: "Fjellfolket",
     r: [
       ["Hårek Guneriussen", ["Begge er Mirage-veteraner","Fallskjerm og fest","Eventyrere på alle plan"], "Hvem hopper først hvis dere får sjansen igjen? Bestem nå."],
       ["Geir Helge Valle", ["Begge er HV-veteraner","Militær møter Lombola-hytte","Uredd og sporty"], "Bytt verste øvelse-historie — hvem hostet mest under tåregassen?"],
@@ -538,11 +538,11 @@ const data = [
     r: [
       ["Kjell Roger Andersen", ["Begge bodde i Løvens Hule","Rødekors og HV","Klassiske kollektiv-alumni"], "Spør Gaute hvor mye han egentlig gråt under sin egen bryllupstale."],
       ["Cathrine Marie Giæver", ["Begge jobber i Helse Nord IKT","Teknikk møter komm","Kollegaer på tvers av bord"], "Bytt verste sak fra kantina — uten å nevne navn."],
-      ["Odd Gunnar Ingebritsen", ["Begge er HV-veteraner","Løvens Hule møter FN-soldat","Sporty og rolig"], "Plan en gjenforenings-tur — hvem booker hytta?"],
+      ["Odd Gunnar Ingebrigtsen", ["Begge er HV-veteraner","Løvens Hule møter FN-soldat","Sporty og rolig"], "Plan en gjenforenings-tur — hvem booker hytta?"],
     ] },
   { navn: "Geir Helge Valle", allianse: "Fjellfolket",
     r: [
-      ["Odd Gunnar Ingebritsen", ["Begge er HV/FN-veteraner","Tåregass og fallskjerm","Uredde turkamerater"], "Bytt verste øvelse-historie — hvem hostet mest under tåregassen?"],
+      ["Odd Gunnar Ingebrigtsen", ["Begge er HV/FN-veteraner","Tåregass og fallskjerm","Uredde turkamerater"], "Bytt verste øvelse-historie — hvem hostet mest under tåregassen?"],
       ["Kjell Roger Andersen", ["Begge er Løvens Hule-veteraner","HV møter Rødekors","Sporty og turklar"], "Spør Kjell Roger om favoritt-tur fra Balsfjorden."],
       ["Helge Hansen", ["Begge er sporty distriktsfolk","Lombola-hytte møter Sørreisa","Tør å gå ut i alt vær"], "Bytt favoritt-hyttebok eller beste fiskestang-tips."],
     ] },

@@ -554,7 +554,7 @@ const GJESTER = [
     relasjon: "Venn"
   },
   {
-    navn: "Odd Gunnar Ingebritsen",
+    navn: "Odd Gunnar Ingebrigtsen",
     bord: 6,
     sete: 1,
     bordType: 8,
