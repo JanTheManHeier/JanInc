@@ -73,6 +73,7 @@
     <div class="section center">
       <button class="btn-primary" data-go="hilsener">💌 Skriv en hilsen til Thomas</button>
       <button class="btn-secondary" data-go="toastmaster">🎤 Meld tale til toastmasterne</button>
+      <button class="btn-secondary" data-go="musikk">🎵 Musikkønske til DJ Aggie</button>
     </div>
 
     <div class="section center qr-seksjon">
@@ -148,6 +149,7 @@
     <div class="sub-nav">
       <button class="sub-tab" data-go="hilsener">💌 Hilsen</button>
       <button class="sub-tab" data-go="toastmaster">🎤 Tale</button>
+      <button class="sub-tab" data-go="musikk">🎵 Musikk</button>
     </div>
     <h2 class="page-title">💌 Hilsener til Thomas</h2>
     <p class="muted">Skriv en hilsen — alle gjester ser dem her</p>
@@ -167,6 +169,7 @@
     <div class="sub-nav">
       <button class="sub-tab" data-go="hilsener">💌 Hilsen</button>
       <button class="sub-tab" data-go="toastmaster">🎤 Tale</button>
+      <button class="sub-tab" data-go="musikk">🎵 Musikk</button>
     </div>
     <h2 class="page-title">🎤 Hold en tale</h2>
     <p class="muted">Vil du holde tale? Toastmasterne <strong>Ronny André</strong> og <strong>Marianne Wilhelmsen</strong> setter deg på lista.</p>
@@ -185,6 +188,33 @@
     </div>
 
     <div id="toast-status" class="muted small"></div>
+  </section>
+
+  <!-- MUSIKKØNSKE -->
+  <section class="page" data-page="musikk" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="hilsener">💌 Hilsen</button>
+      <button class="sub-tab" data-go="toastmaster">🎤 Tale</button>
+      <button class="sub-tab" data-go="musikk">🎵 Musikk</button>
+    </div>
+    <h2 class="page-title">🎵 Musikkønske til DJ Aggie</h2>
+    <p class="muted">DJ <strong>Aggie Frost (Peterson)</strong> spinner på Bakrommet — har du en låt du må høre?</p>
+
+    <div class="info-box">
+      <div>📅 <strong>Frist:</strong> fredag 29. mai</div>
+      <div>🎧 Aggie kan ikke garantere alle ønsker — kunstnerisk frihet er konge</div>
+      <div>⏱️ Ingen ønsker på selve kvelden (send i god tid!)</div>
+    </div>
+
+    <div class="form">
+      <input id="musikk-navn" type="text" placeholder="Ditt navn *" autocomplete="name" />
+      <input id="musikk-artist" type="text" placeholder="Artist / band" autocomplete="off" />
+      <input id="musikk-laat" type="text" placeholder="Låt-tittel" autocomplete="off" />
+      <textarea id="musikk-melding" rows="3" placeholder="Kort melding til Aggie (valgfritt) — f.eks. 'spesielt for Thomas' eller 'spilles helst etter midnatt'"></textarea>
+      <button id="musikk-lagre" class="btn-primary">🎵 Send musikkønske</button>
+    </div>
+
+    <div id="musikk-status" class="muted small"></div>
   </section>
 
   <!-- SANG -->

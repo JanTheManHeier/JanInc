@@ -41,6 +41,7 @@
     initGjester();
     initHilsener();
     initToastmaster();
+    initMusikk();
     initSang();
     initSpill();
     initMinnebok();
@@ -223,6 +224,7 @@
   const NAV_GROUP = {
     bord: 'gjester',
     toastmaster: 'hilsener',
+    musikk: 'hilsener',
     mario: 'spill',
     meny: 'program',
   };
@@ -531,6 +533,43 @@
       document.getElementById('toast-melding').value = '';
     } catch (e) {
       status.textContent = 'Kunne ikke sende — prøv igjen senere eller send mail direkte til ronnyandre@gmail.com';
+    }
+    if (data.navn) settNavn(data.navn);
+  }
+
+  // ============ Musikkønske til Aggie ============
+  function initMusikk() {
+    const lagre = document.getElementById('musikk-lagre');
+    if (!lagre) return;
+    if (mittNavn) document.getElementById('musikk-navn').value = mittNavn;
+    lagre.onclick = sendMusikk;
+  }
+
+  async function sendMusikk() {
+    const data = {
+      navn: document.getElementById('musikk-navn').value.trim(),
+      artist: document.getElementById('musikk-artist').value.trim(),
+      laat: document.getElementById('musikk-laat').value.trim(),
+      melding: document.getElementById('musikk-melding').value.trim(),
+    };
+    if (!data.navn) { toast('Skriv inn ditt navn'); return; }
+    if (!data.artist && !data.laat) { toast('Skriv inn artist eller låt'); return; }
+    const status = document.getElementById('musikk-status');
+    status.textContent = 'Sender...';
+    try {
+      const res = await fetchMedTimeout(`${API_BASE}/thomas50-musikk`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      }, 60000);
+      if (!res.ok) throw new Error('API feil');
+      status.textContent = '';
+      toast('🎵 Musikkønsket er sendt til Aggie!');
+      document.getElementById('musikk-artist').value = '';
+      document.getElementById('musikk-laat').value = '';
+      document.getElementById('musikk-melding').value = '';
+    } catch (e) {
+      status.textContent = 'Kunne ikke sende — prøv igjen senere';
     }
     if (data.navn) settNavn(data.navn);
   }
