@@ -1178,37 +1178,44 @@
       return;
     }
     const m = matches.find(x => x.navn === navn);
-    if (!m) {
+    if (!m || !m.matches || !m.matches.length) {
       ut.innerHTML = '<div class="bv-resultat-kort"><p class="muted" style="padding:10px">Fant ikke deg i matrisen — prøv en annen.</p></div>';
       return;
     }
-    const matchGjest = GJESTER.find(g => g.navn === m.match_navn) || {};
-    const init = (matchGjest.navn || m.match_navn).split(' ').map(s => s[0]).slice(0, 2).join('');
-    const bilde = matchGjest.bildeFil
-      ? `<img class="bv-resultat-bilde" src="${esc(matchGjest.bildeFil)}" alt="" />`
-      : `<div class="bv-resultat-bilde" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#D4A853,#C4943A);color:#0D1B2A;font-size:36px;font-weight:bold">${esc(init)}</div>`;
+
     const allianseInfo = ALLIANSER[m.allianse] || { emoji: '🎉', beskr: '' };
-    // Andre på samme allianse (ekskl. selv)
     const allianseMedlemmer = matches
       .filter(x => x.allianse === m.allianse && x.navn !== navn)
       .map(x => GJESTER.find(g => g.navn === x.navn))
       .filter(Boolean)
       .slice(0, 12);
 
+    const matchKort = m.matches.map((mt, idx) => {
+      const matchGjest = GJESTER.find(g => g.navn === mt.match_navn) || {};
+      const init = (matchGjest.navn || mt.match_navn).split(' ').map(s => s[0]).slice(0, 2).join('');
+      const bilde = matchGjest.bildeFil
+        ? `<img class="bv-resultat-bilde" src="${esc(matchGjest.bildeFil)}" alt="" />`
+        : `<div class="bv-resultat-bilde" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#D4A853,#C4943A);color:#0D1B2A;font-size:36px;font-weight:bold">${esc(init)}</div>`;
+      const medalje = ['🥇 Din nye bestevenn', '🥈 Andre-bestevenn', '🥉 Tredje-bestevenn'][idx] || `#${mt.rank}`;
+      const klass = idx === 0 ? 'bv-resultat-kort bv-rank-1' : 'bv-resultat-kort bv-rank-' + (idx + 1);
+      return `
+        <div class="${klass}">
+          <div class="bv-resultat-tittel">${medalje}</div>
+          ${bilde}
+          <div class="bv-resultat-navn">${esc(mt.match_navn)}</div>
+          <div class="bv-resultat-bord">Bord ${matchGjest.bord || '?'}${matchGjest.relasjon ? ' · ' + esc(matchGjest.relasjon) : ''}</div>
+          <div class="bv-grunner">
+            <div class="bv-grunner-tittel">Dere har til felles</div>
+            ${(mt.match_grunner || []).map(g => `<div class="bv-grunne">🤝 ${esc(g)}</div>`).join('')}
+          </div>
+          <div class="bv-samtale">
+            <strong>💬 Konversasjon-starter:</strong><br/>${esc(mt.samtale_starter || '')}
+          </div>
+        </div>`;
+    }).join('');
+
     ut.innerHTML = `
-      <div class="bv-resultat-kort">
-        <div class="bv-resultat-tittel">🔮 Din nye bestevenn for kvelden</div>
-        ${bilde}
-        <div class="bv-resultat-navn">${esc(m.match_navn)}</div>
-        <div class="bv-resultat-bord">Bord ${matchGjest.bord || '?'}${matchGjest.relasjon ? ' · ' + esc(matchGjest.relasjon) : ''}</div>
-        <div class="bv-grunner">
-          <div class="bv-grunner-tittel">Dere har til felles</div>
-          ${(m.match_grunner || []).map(g => `<div class="bv-grunne">🤝 ${esc(g)}</div>`).join('')}
-        </div>
-        <div class="bv-samtale">
-          <strong>💬 Konversasjon-starter:</strong><br/>${esc(m.samtale_starter || '')}
-        </div>
-      </div>
+      ${matchKort}
       <div class="bv-allianse-kort">
         <div class="bv-allianse-emoji">${allianseInfo.emoji}</div>
         <div class="bv-allianse-navn">${esc(m.allianse || '')}</div>

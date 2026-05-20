@@ -1,1014 +1,3314 @@
 [
   {
     "navn": "Adele Kjær-Appelbom",
-    "match_navn": "Lotte Møller",
-    "match_grunner": [
-      "Begge er hundeglade turjenter",
-      "Snille sjeler fra Tromsø",
-      "Elsker dyr og frisk luft"
-    ],
-    "samtale_starter": "Spør Lotte om hun har sett kolibri på fuglebrettet — det har Adele!",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lotte Møller",
+        "match_grunner": [
+          "Begge er hundeglade turjenter",
+          "Snille sjeler fra Tromsø",
+          "Elsker dyr og frisk luft"
+        ],
+        "samtale_starter": "Spør Lotte om hun har sett kolibri på fuglebrettet — det har Adele!"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Kristina Kantola",
+        "match_grunner": [
+          "Begge er hundemammaer",
+          "Snille dyrevenner",
+          "Kongsbakken-til-tannlege-vibes"
+        ],
+        "samtale_starter": "Bytt verste hundetriks og beste valpe-knep."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Hege Blikfeldt",
+        "match_grunner": [
+          "Begge gir verdens beste klemmer",
+          "Snille som lam",
+          "Tromsø-jenter med hjerte"
+        ],
+        "samtale_starter": "Hvem klemmer hardest — utfordring i kveld!"
+      }
+    ]
   },
   {
     "navn": "Birk H Wilhelmsen",
-    "match_navn": "Anne Marvik",
-    "match_grunner": [
-      "Begge har bakgrunn fra turn",
-      "Sterke, sporty Tromsø-folk",
-      "Vokst opp i hallene"
-    ],
-    "samtale_starter": "Sammenlign favorittapparat — Birk var nordnorsk beste på flere!",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Anne Marvik",
+        "match_grunner": [
+          "Begge har bakgrunn fra turn",
+          "Sterke, sporty Tromsø-folk",
+          "Vokst opp i hallene"
+        ],
+        "samtale_starter": "Sammenlign favorittapparat — Birk var nordnorsk beste på flere!"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marit Bratrud Nilsen",
+        "match_grunner": [
+          "Begge lever for turn",
+          "Klatre- og turnmamma-energi",
+          "Sterke kropper"
+        ],
+        "samtale_starter": "Diskuter hvilket element foreldre filmer altfor mye."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Bjarte Kristoffersen",
+        "match_grunner": [
+          "Begge er NM-nivå sport",
+          "Turn møter svømming",
+          "Stålvilje i kroppen"
+        ],
+        "samtale_starter": "Battle: hvem hadde slått hvem — turnmatte mot bassengkant?"
+      }
+    ]
   },
   {
     "navn": "Inger Johanne Sumstad",
-    "match_navn": "Ellen Eliassen",
-    "match_grunner": [
-      "Begge er drømmelærere",
-      "Kjent av tusenvis av elever",
-      "Varme klasseromsmagikere"
-    ],
-    "samtale_starter": "Bytt beste «frøken-historie» — hvem har flest gamle elever som hilser i butikken?",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Ellen Eliassen",
+        "match_grunner": [
+          "Begge er drømmelærere",
+          "Kjent av tusenvis av elever",
+          "Varme klasseromsmagikere"
+        ],
+        "samtale_starter": "Bytt beste «frøken-historie» — hvem har flest gamle elever som hilser i butikken?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Hege Blikfeldt",
+        "match_grunner": [
+          "Begge er lærere med klem",
+          "Elsker elevene sine",
+          "Tromsø-skolen banker"
+        ],
+        "samtale_starter": "Bytt favoritt-knep for å roe en bråkete klasse."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ragnhild Wilhelmsen",
+        "match_grunner": [
+          "Begge er hjertet i familien",
+          "Bestemødre-energi",
+          "Henter folk hjem på middag"
+        ],
+        "samtale_starter": "Sammenlign favorittoppskrift som barnebarna alltid spør om."
+      }
+    ]
   },
   {
     "navn": "Maja Wilhelmsen",
-    "match_navn": "Nina Brox",
-    "match_grunner": [
-      "Begge jobber på UNN",
-      "Helsehelter i hverdagen",
-      "Tromsø-naboer i ånden"
-    ],
-    "samtale_starter": "Sammenlign verste vaktrapport — hvem har den villeste UNN-natta?",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Nina Brox",
+        "match_grunner": [
+          "Begge jobber på UNN",
+          "Helsehelter i hverdagen",
+          "Tromsø-naboer i ånden"
+        ],
+        "samtale_starter": "Sammenlign verste vaktrapport — hvem har den villeste UNN-natta?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Erin Hald",
+        "match_grunner": [
+          "Begge er UNN-leger",
+          "Forskning møter klinikk",
+          "Tromsø-medisin på toppnivå"
+        ],
+        "samtale_starter": "Bytt rareste blodprøve-historie uten å avsløre noen."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Marit Bratrud Nilsen",
+        "match_grunner": [
+          "Begge er helsefolk med barn",
+          "Lege møter fysio",
+          "Holder familien gående"
+        ],
+        "samtale_starter": "Diskuter hvilken kropp som klager mest etter en helg på fjellet."
+      }
+    ]
   },
   {
     "navn": "Marianne Wilhelmsen",
-    "match_navn": "Anne Marit Bjørnflaten",
-    "match_grunner": [
-      "Begge er sentrale AP-stemmer",
-      "Politikk i blodet",
-      "Bygger Norge fra nord"
-    ],
-    "samtale_starter": "Diskuter hvilken statsråd som har best kakeoppskrift på Stortinget.",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Anne Marit Bjørnflaten",
+        "match_grunner": [
+          "Begge er sentrale AP-stemmer",
+          "Politikk i blodet",
+          "Bygger Norge fra nord"
+        ],
+        "samtale_starter": "Diskuter hvilken statsråd som har best kakeoppskrift på Stortinget."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Odne Stunes",
+        "match_grunner": [
+          "Begge er AP-engasjerte",
+          "Kreftforeningen møter regjering",
+          "Hjerte for samfunnet"
+        ],
+        "samtale_starter": "Spør Odne hvilken sak han ville løftet inn på Stortinget i morgen."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Nina Wilhelmsen",
+        "match_grunner": [
+          "Begge er ledere på toppnivå",
+          "Politikk møter IBM",
+          "Står på, døgnet rundt"
+        ],
+        "samtale_starter": "Bytt verste møte-skrekk — uten å bryte taushetsplikten."
+      }
+    ]
   },
   {
     "navn": "Ronny Andre Bendiksen",
-    "match_navn": "Øyvind Grinde",
-    "match_grunner": [
-      "Begge er tech-hjerner i flokken",
-      "Datakonsulent møter kryptolog",
-      "Familiens IT-support"
-    ],
-    "samtale_starter": "Spør Øyvind hva han ville sikret først hvis han fikk Ronnys familie-nettverk.",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Øyvind Grinde",
+        "match_grunner": [
+          "Begge er tech-hjerner i flokken",
+          "Datakonsulent møter kryptolog",
+          "Familiens IT-support"
+        ],
+        "samtale_starter": "Spør Øyvind hva han ville sikret først hvis han fikk Ronnys familie-nettverk."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Jan Heier Johansen",
+        "match_grunner": [
+          "Begge bygger med kode",
+          "Datakonsulent møter AI-mann",
+          "App-snakk på høyt nivå"
+        ],
+        "samtale_starter": "Spitball: hvilken app skulle vært laget for Thomas50?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Gro-Hilde Severinsen",
+        "match_grunner": [
+          "Begge tenker tech og data",
+          "IT-konsulent møter e-helse",
+          "Framtidas verktøy på agendaen"
+        ],
+        "samtale_starter": "Diskuter hvilken AI-assistent dere ville hatt på jobben i morgen."
+      }
+    ]
   },
   {
     "navn": "Snorre H Wilhelmsen",
-    "match_navn": "Stig Tennås",
-    "match_grunner": [
-      "Begge har vinylspiller",
-      "Strålende musikksmak",
-      "Stille kraftsentre"
-    ],
-    "samtale_starter": "Be Stig anbefale tre LP-er som må stå på hybelen i Trondheim.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Stig Tennås",
+        "match_grunner": [
+          "Begge har vinylspiller",
+          "Strålende musikksmak",
+          "Stille kraftsentre"
+        ],
+        "samtale_starter": "Be Stig anbefale tre LP-er som må stå på hybelen i Trondheim."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Iris Wikmark",
+        "match_grunner": [
+          "Begge er turntalenter",
+          "Nordnorsk turntradisjon",
+          "Apparat-eksperter"
+        ],
+        "samtale_starter": "Bytt favoritt-apparat — hvilket savner dere mest i dag?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Jan Erik Olsen",
+        "match_grunner": [
+          "Begge fordyper seg helt",
+          "FysMat møter forskning",
+          "Intellektuell musikkglede"
+        ],
+        "samtale_starter": "Spør Jan Erik om beste klassisk-gitar-låt for vinylen."
+      }
+    ]
   },
   {
     "navn": "Thomas Hansen",
-    "match_navn": "Jan Heier Johansen",
-    "match_grunner": [
-      "Begge er Yes-menn med FOMO",
-      "Bursdagsapp-makker",
-      "Topptur og festkompis"
-    ],
-    "samtale_starter": "Velg neste topptur i Alpene sammen — hvilken uke i 2026 passer?",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Jan Heier Johansen",
+        "match_grunner": [
+          "Begge er Yes-menn med FOMO",
+          "Bursdagsapp-makker",
+          "Topptur og festkompis"
+        ],
+        "samtale_starter": "Velg neste topptur i Alpene sammen — hvilken uke i 2026 passer?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Odd Gunnar Ingebritsen",
+        "match_grunner": [
+          "Reist verden sammen",
+          "Fallskjerm til munk-tilværelse",
+          "Eventyrkompis nummer én"
+        ],
+        "samtale_starter": "Hent fram beste tur-historie — taperen tar runden!"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Kjell Roger Andersen",
+        "match_grunner": [
+          "Tallrike telttur og topptur",
+          "Løvens Hule-alumni",
+          "Sprek og turklar"
+        ],
+        "samtale_starter": "Plan neste fjelltur — Balsfjord eller Lyngen først?"
+      }
+    ]
   },
   {
     "navn": "Anita Sivertsen",
-    "match_navn": "Erik Josefsen",
-    "match_grunner": [
-      "Begge jobber i bank",
-      "Nord-norske finansfolk",
-      "Stødige hverdagshelter"
-    ],
-    "samtale_starter": "Sammenlign hvem som har best kundehistorie fra fredag ettermiddag.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Erik Josefsen",
+        "match_grunner": [
+          "Begge jobber i bank",
+          "Nord-norske finansfolk",
+          "Stødige hverdagshelter"
+        ],
+        "samtale_starter": "Sammenlign hvem som har best kundehistorie fra fredag ettermiddag."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Terje Karlsen",
+        "match_grunner": [
+          "Begge er bankfolk",
+          "Tromsø-finans i hverdagen",
+          "Service med smil"
+        ],
+        "samtale_starter": "Bytt verste systemkrasj-skrekk fra månedsslutt."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Bjarte Kristoffersen",
+        "match_grunner": [
+          "Begge har orden på tallene",
+          "Bankdame møter økonomisjef",
+          "Hold-hjulene-i-gang-folk"
+        ],
+        "samtale_starter": "Diskuter hvilken Tromsø-bedrift som har sterkest finansiell vekst i 2026."
+      }
+    ]
   },
   {
     "navn": "Helge Hansen",
-    "match_navn": "Kjell Roger Andersen",
-    "match_grunner": [
-      "Begge er friluftsmenn",
-      "Elsker gård og fjord",
-      "Blir bare sprekere"
-    ],
-    "samtale_starter": "Sammenlign favoritt-turmål i Balsfjorden eller Sørreisa.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Kjell Roger Andersen",
+        "match_grunner": [
+          "Begge er friluftsmenn",
+          "Elsker gård og fjord",
+          "Blir bare sprekere"
+        ],
+        "samtale_starter": "Sammenlign favoritt-turmål i Balsfjorden eller Sørreisa."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Arne Aarhus",
+        "match_grunner": [
+          "Begge er eventyr-veteraner",
+          "Sørreisa-energi møter Island",
+          "Historier i bøtter og spann"
+        ],
+        "samtale_starter": "Spør Arne om verste hopp han noensinne har gjort."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Geir Helge Valle",
+        "match_grunner": [
+          "Begge er sporty distrikts-folk",
+          "Hytte-folk med ekte beina",
+          "Tør å gå ut i alt vær"
+        ],
+        "samtale_starter": "Bytt favoritt-hyttebok — eller beste fiskestang-tips."
+      }
+    ]
   },
   {
     "navn": "Iris Wikmark",
-    "match_navn": "Kristina Kantola",
-    "match_grunner": [
-      "Begge har turn i hjertet",
-      "Turnmamma-energi",
-      "Midt-Troms og Tromsø-puls"
-    ],
-    "samtale_starter": "Diskuter hvilket apparat barna gruer seg mest for.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Kristina Kantola",
+        "match_grunner": [
+          "Begge har turn i hjertet",
+          "Turnmamma-energi",
+          "Midt-Troms og Tromsø-puls"
+        ],
+        "samtale_starter": "Diskuter hvilket apparat barna gruer seg mest for."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marit Bratrud Nilsen",
+        "match_grunner": [
+          "Begge er turn- og fysio-glade",
+          "Sterke kvinner i hallen",
+          "Hold-deg-i-form-vibes"
+        ],
+        "samtale_starter": "Sammenlign verste skade-historie fra turnmatta."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Anne Marvik",
+        "match_grunner": [
+          "Begge er nordnorske turntalenter",
+          "RG møter apparat-turn",
+          "Gyllenborg-historien lever"
+        ],
+        "samtale_starter": "Bytt favoritt-element — hvilket hadde dere aldri turt på matta i dag?"
+      }
+    ]
   },
   {
     "navn": "Jakob B Hansen",
-    "match_navn": "Terje Karlsen",
-    "match_grunner": [
-      "Begge elsker fotball og tall",
-      "EY-rådgiver møter banktrener",
-      "Konkurranseinstinkt"
-    ],
-    "samtale_starter": "Tipp neste cupvinner — taperen spanderer cazadores.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Terje Karlsen",
+        "match_grunner": [
+          "Begge elsker fotball og tall",
+          "EY-rådgiver møter banktrener",
+          "Konkurranseinstinkt"
+        ],
+        "samtale_starter": "Tipp neste cupvinner — taperen spanderer cazadores."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marius Furnes",
+        "match_grunner": [
+          "Begge er sporty festløver",
+          "Ung Tromsø-puls",
+          "Aldri nei til afterski"
+        ],
+        "samtale_starter": "Velg neste skihelg — hvem booker hytta?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ståle Søfting",
+        "match_grunner": [
+          "Begge er forretningsfolk",
+          "EY møter Sales Director",
+          "Tar plassen i møterommet"
+        ],
+        "samtale_starter": "Bytt verste pitch-skrekk fra siste kvartalspresentasjon."
+      }
+    ]
   },
   {
     "navn": "Kathrine B Hansen",
-    "match_navn": "Magnus Seppola",
-    "match_grunner": [
-      "Begge er smittende morsomme",
-      "Latterkramper på rekord",
-      "Frekk humor"
-    ],
-    "samtale_starter": "Bytt verste vits fra Myre vs. Tromsø — best vits vinner ølpils.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Magnus Seppola",
+        "match_grunner": [
+          "Begge er smittende morsomme",
+          "Latterkramper på rekord",
+          "Frekk humor"
+        ],
+        "samtale_starter": "Bytt verste vits fra Myre vs. Tromsø — best vits vinner ølpils."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Hårek Guneriussen",
+        "match_grunner": [
+          "Begge har frekk humor",
+          "Latter-magnet i rommet",
+          "Distrikts-stolthet"
+        ],
+        "samtale_starter": "Lag en TikTok sammen — Hårek filmer, Kathrine knekker vitsen."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Andreas Willumsen",
+        "match_grunner": [
+          "Begge løfter stemningen",
+          "Frekk og festglad",
+          "Aldri kjedelig i lag"
+        ],
+        "samtale_starter": "Velg kveldens vorspielsang — bordet bestemmer."
+      }
+    ]
   },
   {
     "navn": "Marte Lysnes Kristoffersen",
-    "match_navn": "Nina Mikkelsen",
-    "match_grunner": [
-      "Begge er NFH-folk",
-      "Fiskeri og forskning",
-      "Senja og gård-vibe"
-    ],
-    "samtale_starter": "Diskuter hvor mye fysio en havforsker egentlig trenger.",
-    "allianse": "Havets folk"
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Nina Mikkelsen",
+        "match_grunner": [
+          "Begge er NFH-folk",
+          "Fiskeri og forskning",
+          "Senja og gård-vibe"
+        ],
+        "samtale_starter": "Diskuter hvor mye fysio en havforsker egentlig trenger."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Synne Guldbrandsen",
+        "match_grunner": [
+          "Begge er NFH-jenter",
+          "Fiskeri-næringa i blodet",
+          "Senja møter Råfisklaget"
+        ],
+        "samtale_starter": "Bytt favoritt-sild-rett som ikke krever bestikk."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Marit Bratrud Nilsen",
+        "match_grunner": [
+          "Begge er fysioterapeuter",
+          "Helse og bevegelse",
+          "Sporty kvinner"
+        ],
+        "samtale_starter": "Spør Marit om beste øvelse mot dårlig kontorholdning."
+      }
+    ]
   },
   {
     "navn": "Trond Vidar Hansen",
-    "match_navn": "Bjarte Kristoffersen",
-    "match_grunner": [
-      "Begge er kompetitive sportsfolk",
-      "Ersfjord og Kvaløya-helter",
-      "Eliteserie møter NM-svømming"
-    ],
-    "samtale_starter": "Krev revansje: golf vs. svømming — hvem ler sist?",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Bjarte Kristoffersen",
+        "match_grunner": [
+          "Begge er kompetitive sportsfolk",
+          "Ersfjord og Kvaløya-helter",
+          "Eliteserie møter NM-svømming"
+        ],
+        "samtale_starter": "Krev revansje: golf vs. svømming — hvem ler sist?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Terje Karlsen",
+        "match_grunner": [
+          "Begge brenner for fotball",
+          "Eliteserie møter trener",
+          "Strava-folk"
+        ],
+        "samtale_starter": "Spå neste TIL-sesong — taperen tar mårrabrødet."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Eirik Torbergsen",
+        "match_grunner": [
+          "Begge løper raskere enn skyggen",
+          "Kompetativ til siste meter",
+          "Knærne holder så lenge de må"
+        ],
+        "samtale_starter": "Velg neste løp — Midnattsola eller Tromsø Skyrace?"
+      }
+    ]
   },
   {
     "navn": "Åge Hansen",
-    "match_navn": "Øyvind Grinde",
-    "match_grunner": [
-      "Begge drømmer om kveite",
-      "Hav, båt og tålmodighet",
-      "Tromsø-kveiten venter"
-    ],
-    "samtale_starter": "Planlegg kveitetur sammen — Åge har båten, Øyvind har tålmodigheten.",
-    "allianse": "Havets folk"
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Geir Olav Skogstad",
+        "match_grunner": [
+          "Begge er sjø- og rederi-folk",
+          "Skibsverft møter rederi",
+          "Saltvann i årene"
+        ],
+        "samtale_starter": "Bytt verste verft-historie og beste sjømann-vise."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Ivar Wullf",
+        "match_grunner": [
+          "Begge bygger sjønæringa",
+          "Skibsverft møter Lerøy",
+          "Lange karrierer på kaikanten"
+        ],
+        "samtale_starter": "Spør Ivar hvilken båt han ville eid hvis han kunne velge fritt."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Renate Larsen",
+        "match_grunner": [
+          "Begge er sjø-mennesker",
+          "Verft møter Ocean Food",
+          "Tromsø-stolthet"
+        ],
+        "samtale_starter": "Diskuter neste store sjømat-eventyr fra nord."
+      }
+    ]
   },
   {
     "navn": "Anne Marit Bjørnflaten",
-    "match_navn": "Marianne Wilhelmsen",
-    "match_grunner": [
-      "Begge er AP-stjerner",
-      "Politikk på toppnivå",
-      "Sterke kvinner i regjeringsapparatet"
-    ],
-    "samtale_starter": "Sammenlign verste valgkamp-historie — Tromsø vs. Oslo.",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Marianne Wilhelmsen",
+        "match_grunner": [
+          "Begge er AP-stjerner",
+          "Politikk på toppnivå",
+          "Sterke kvinner i regjeringsapparatet"
+        ],
+        "samtale_starter": "Sammenlign verste valgkamp-historie — Tromsø vs. Oslo."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Synne Guldbrandsen",
+        "match_grunner": [
+          "Begge jobber med havets ressurser",
+          "Råfisklaget møter sjømat-politikk",
+          "Bygger Norges blå merke"
+        ],
+        "samtale_starter": "Velg neste sjømat-eksportmarked — Sør-Korea eller Brasil?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ivar Wullf",
+        "match_grunner": [
+          "Begge er havbruks-toppfolk",
+          "Politikk møter Lerøy",
+          "Grønt gull fra havet"
+        ],
+        "samtale_starter": "Bytt favoritt-laksefilet og beste tilbehør."
+      }
+    ]
   },
   {
     "navn": "Gunnar Wilhelmsen",
-    "match_navn": "Lasse Pettersen",
-    "match_grunner": [
-      "Begge bygger Tromsø",
-      "Ordfører møter bussjef",
-      "Byutvikling i praksis"
-    ],
-    "samtale_starter": "Diskuter neste rutekart — hvor trengs det en ny holdeplass først?",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lasse Pettersen",
+        "match_grunner": [
+          "Begge bygger Tromsø",
+          "Ordfører møter bussjef",
+          "Byutvikling i praksis"
+        ],
+        "samtale_starter": "Diskuter neste rutekart — hvor trengs det en ny holdeplass først?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Anne Marvik",
+        "match_grunner": [
+          "Begge er Tromsø-ledere",
+          "Aleris møter ordfører",
+          "Bygger byens hverdag"
+        ],
+        "samtale_starter": "Velg hvilken bydel som trenger mer helsetilbud først."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Jon Steinar Engenes",
+        "match_grunner": [
+          "Begge er Tromsø-bygger",
+          "Ordfører møter Head of Comm",
+          "Holder hjul i bevegelse"
+        ],
+        "samtale_starter": "Bytt verste presse-skrekk fra en mandag morgen."
+      }
+    ]
   },
   {
     "navn": "Jacob Wilhelmsen",
-    "match_navn": "Marius Furnes",
-    "match_grunner": [
-      "Begge elsker ski og fotball",
-      "Aldri nei til afterski",
-      "Ung og sporty"
-    ],
-    "samtale_starter": "Hvor er beste afterski-baren i Norge nå? Bestem dere.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Marius Furnes",
+        "match_grunner": [
+          "Begge elsker ski og fotball",
+          "Aldri nei til afterski",
+          "Ung og sporty"
+        ],
+        "samtale_starter": "Hvor er beste afterski-baren i Norge nå? Bestem dere."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Andreas Willumsen",
+        "match_grunner": [
+          "Begge er festglade Tromsø-gutter",
+          "Utelivskonge møter utflytter",
+          "Trives best på dansegulvet"
+        ],
+        "samtale_starter": "Velg kveldens vorspielsang — bordet skal lære den."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Magnus Seppola",
+        "match_grunner": [
+          "Begge er morsomme festløver",
+          "Latter og ølpils",
+          "Bakrom-energi"
+        ],
+        "samtale_starter": "Bytt verste russe-historie — kun lyse minner!"
+      }
+    ]
   },
   {
     "navn": "Jørgen Wilhelmsen",
-    "match_navn": "Erlend Hagan",
-    "match_grunner": [
-      "Begge er NRK-folk",
-      "Språknerder i mikrofonen",
-      "Skifter tonefall som ingen andre"
-    ],
-    "samtale_starter": "Konkurrer: hvem klarer best Kola-russisk og kav tromsøværing i samme setning?",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Erlend Hagan",
+        "match_grunner": [
+          "Begge er NRK-folk",
+          "Språknerder i mikrofonen",
+          "Skifter tonefall som ingen andre"
+        ],
+        "samtale_starter": "Konkurrer: hvem klarer best Kola-russisk og kav tromsøværing i samme setning?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Hilde Sander Meling",
+        "match_grunner": [
+          "Begge er journalister",
+          "Avisa Tromsø møter NRK",
+          "Skriver Tromsø inn i historien"
+        ],
+        "samtale_starter": "Bytt favoritt-intervjuobjekt og verste deadline-skrekk."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Lasse Pettersen",
+        "match_grunner": [
+          "Begge driver Tromsø-mediekultur",
+          "Bukta møter Helgemorgen",
+          "Holder byen på lufta"
+        ],
+        "samtale_starter": "Plan en Bukta-reportasje sammen — hvilken artist åpner?"
+      }
+    ]
   },
   {
     "navn": "Mats Sæverud",
-    "match_navn": "Hårek Guneriussen",
-    "match_grunner": [
-      "Begge underholder hele gjengen",
-      "Gitar møter standup",
-      "Narvik-Tromsø-energi"
-    ],
-    "samtale_starter": "Lag en ti-sekunders TikTok sammen — Hårek filmer, Mats spiller.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Hårek Guneriussen",
+        "match_grunner": [
+          "Begge underholder hele gjengen",
+          "Gitar møter standup",
+          "Narvik-Tromsø-energi"
+        ],
+        "samtale_starter": "Lag en ti-sekunders TikTok sammen — Hårek filmer, Mats spiller."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Anneli Drecker",
+        "match_grunner": [
+          "Begge er allsang-magnetene",
+          "Gitar møter sang",
+          "Får hele rommet med"
+        ],
+        "samtale_starter": "Velg én låt som garantert får bordet til å reise seg."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Jon Marius Aareskjold",
+        "match_grunner": [
+          "Begge er musikknerder",
+          "Gitar møter produsent",
+          "Studio-prat på høyt nivå"
+        ],
+        "samtale_starter": "Plan en jam-session — hvilken låt åpner kvelden?"
+      }
+    ]
   },
   {
     "navn": "Nina Wilhelmsen",
-    "match_navn": "Cathrine Marie Giæver",
-    "match_grunner": [
-      "Begge er ledere med stil",
-      "IBM-exec møter komm-sjef",
-      "Tar styringen elegant"
-    ],
-    "samtale_starter": "Bytt beste tips for å lede møter uten kjedelige PowerPoints.",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Cathrine Marie Giæver",
+        "match_grunner": [
+          "Begge er ledere med stil",
+          "IBM-exec møter komm-sjef",
+          "Tar styringen elegant"
+        ],
+        "samtale_starter": "Bytt beste tips for å lede møter uten kjedelige PowerPoints."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Anne Marvik",
+        "match_grunner": [
+          "Begge er topp-ledere",
+          "IBM møter Aleris",
+          "Tromsø-jenter som styrer"
+        ],
+        "samtale_starter": "Sammenlign beste teknikk for å holde ro i krise-møter."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Lise Valle",
+        "match_grunner": [
+          "Begge er superorganisatorer",
+          "IBM møter sjenkebevilling",
+          "Holder tråden i alt"
+        ],
+        "samtale_starter": "Plan drømmemiddagen — hvem inviterer, hvem lager menyen?"
+      }
+    ]
   },
   {
     "navn": "Odne Stunes",
-    "match_navn": "Jon Marius Aareskjold",
-    "match_grunner": [
-      "Begge er musikere på høyt nivå",
-      "Kontrabass møter produsent",
-      "Tromsø-scenen banker"
-    ],
-    "samtale_starter": "Plan en jam-session — hvilken låt åpner kvelden?",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Jon Marius Aareskjold",
+        "match_grunner": [
+          "Begge er musikere på høyt nivå",
+          "Kontrabass møter produsent",
+          "Tromsø-scenen banker"
+        ],
+        "samtale_starter": "Plan en jam-session — hvilken låt åpner kvelden?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Anne Marvik",
+        "match_grunner": [
+          "Begge brenner for helse og samfunn",
+          "Kreftforeningen møter Aleris",
+          "Stort hjerte for folk"
+        ],
+        "samtale_starter": "Bytt favoritt-sak dere ville løftet i media i morgen."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Erlend Hagan",
+        "match_grunner": [
+          "Begge er kreative kulturfolk",
+          "Kontrabass møter revy",
+          "Kirkenes møter NRK"
+        ],
+        "samtale_starter": "Lag en sketsj sammen — kontrabass som lydeffekt."
+      }
+    ]
   },
   {
     "navn": "Ragnhild Wilhelmsen",
-    "match_navn": "Inger Johanne Sumstad",
-    "match_grunner": [
-      "Begge er hjertet i familien",
-      "Bestemødre-energi",
-      "Inviterer på middag uten varsel"
-    ],
-    "samtale_starter": "Sammenlign favorittoppskrift som barnebarna alltid spør om.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Inger Johanne Sumstad",
+        "match_grunner": [
+          "Begge er hjertet i familien",
+          "Bestemødre-energi",
+          "Inviterer på middag uten varsel"
+        ],
+        "samtale_starter": "Sammenlign favorittoppskrift som barnebarna alltid spør om."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Helge Hansen",
+        "match_grunner": [
+          "Begge er familiens støttepunkt",
+          "Pensjonist-energi med fart",
+          "Tar vare på alle rundt"
+        ],
+        "samtale_starter": "Bytt beste hverdags-tips for å holde seg sprek over 70."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Åge Hansen",
+        "match_grunner": [
+          "Begge er familiens trygge favn",
+          "Onkel og bestemor-energi",
+          "Skaper plass for alle"
+        ],
+        "samtale_starter": "Spør Åge om beste skipper-historie fra 80-tallet."
+      }
+    ]
   },
   {
     "navn": "Renate Larsen",
-    "match_navn": "Ivar Wullf",
-    "match_grunner": [
-      "Begge er sjømat-toppledere",
-      "Styrerom og havbruk",
-      "Bygger Norges blå framtid"
-    ],
-    "samtale_starter": "Diskuter hvilket havbrukseventyr som kommer neste tiår.",
-    "allianse": "Havets folk"
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Ivar Wullf",
+        "match_grunner": [
+          "Begge er sjømat-toppledere",
+          "Styrerom og havbruk",
+          "Bygger Norges blå framtid"
+        ],
+        "samtale_starter": "Diskuter hvilket havbrukseventyr som kommer neste tiår."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Synne Guldbrandsen",
+        "match_grunner": [
+          "Begge er sjømat-dronninger",
+          "Ocean Food møter Råfisklaget",
+          "Tromsø-stolthet på tallerken"
+        ],
+        "samtale_starter": "Bytt favoritt-sild-rett som ikke krever bestikk."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Kenneth Mikkelsen",
+        "match_grunner": [
+          "Begge har sjøen som arbeidsplass",
+          "Styreleder møter fiskerijus",
+          "Næringens stødige ryggrad"
+        ],
+        "samtale_starter": "Spør Kenneth om rareste seilbåt-historie fra Middelhavet."
+      }
+    ]
   },
   {
     "navn": "Heidi Lekang",
-    "match_navn": "Anneli Drecker",
-    "match_grunner": [
-      "Begge lever og ånder musikk",
-      "Filharmoni møter Bel Canto",
-      "Tromsø-kulturen i hjertet"
-    ],
-    "samtale_starter": "Anbefal hverandre én britisk plate som må høres før sommeren.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Anneli Drecker",
+        "match_grunner": [
+          "Begge lever og ånder musikk",
+          "Filharmoni møter Bel Canto",
+          "Tromsø-kulturen i hjertet"
+        ],
+        "samtale_starter": "Anbefal hverandre én britisk plate som må høres før sommeren."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Stig Tennås",
+        "match_grunner": [
+          "Begge har dyp musikkglede",
+          "Filharmoni møter vinyl",
+          "Stille kraftsentre"
+        ],
+        "samtale_starter": "Spør Stig om beste vinyl å høre med god kaffe og bok."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Lena Schøning",
+        "match_grunner": [
+          "Begge er rolige akademikere",
+          "Filharmoni møter Viddeseminar",
+          "Bok og hytte først"
+        ],
+        "samtale_starter": "Bytt favoritt-bok du gjerne leser om igjen."
+      }
+    ]
   },
   {
     "navn": "Jan Erik Olsen",
-    "match_navn": "Marianne Svorken",
-    "match_grunner": [
-      "Begge er Nofima-forskere",
-      "Marin biotek-elskere",
-      "Fordyper seg helt"
-    ],
-    "samtale_starter": "Diskuter neste forskningsprosjekt — kan det involvere japansk seaweed?",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Marianne Svorken",
+        "match_grunner": [
+          "Begge er Nofima-forskere",
+          "Marin biotek-elskere",
+          "Fordyper seg helt"
+        ],
+        "samtale_starter": "Diskuter neste forskningsprosjekt — kan det involvere japansk seaweed?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Erlend Hagan",
+        "match_grunner": [
+          "Begge er språk-nerder",
+          "Japansk møter russisk og samisk",
+          "Lærer for moro skyld"
+        ],
+        "samtale_starter": "Bytt favoritt-frase på hvert deres språk — bordet gjetter betydningen."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Jon Marius Aareskjold",
+        "match_grunner": [
+          "Begge har sterk musikkidentitet",
+          "Klassisk gitar møter studio",
+          "Fordyper seg i lyd"
+        ],
+        "samtale_starter": "Plan en akustisk kveld — hvem leder, hvem produserer?"
+      }
+    ]
   },
   {
     "navn": "Lise Benjaminsen",
-    "match_navn": "Siv-Cathrine Torbergsen",
-    "match_grunner": [
-      "Begge er SATS-faste",
-      "Sprudlende morgenmennesker",
-      "Tromsø-puls i topp"
-    ],
-    "samtale_starter": "Sammenlign favorittime — bodypump eller spinning på mårran?",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Siv-Cathrine Torbergsen",
+        "match_grunner": [
+          "Begge er SATS-faste",
+          "Sprudlende morgenmennesker",
+          "Tromsø-puls i topp"
+        ],
+        "samtale_starter": "Sammenlign favorittime — bodypump eller spinning på mårran?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Anneli Drecker",
+        "match_grunner": [
+          "Begge brenner for sang og scene",
+          "Bel Canto møter Filharmoni",
+          "Tromsø-kulturen lever"
+        ],
+        "samtale_starter": "Velg én sang dere kan synge i kanon ved bordet."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Lise Valle",
+        "match_grunner": [
+          "Begge heter Lise og er sprudlende",
+          "Salg/marked møter sjenkebevilling",
+          "Tromsø-energien banker"
+        ],
+        "samtale_starter": "Hvem er kveldens beste Lise — la bordet bestemme!"
+      }
+    ]
   },
   {
     "navn": "Marita Mokkelbost",
-    "match_navn": "Maria Christina Edwall",
-    "match_grunner": [
-      "Begge er kreative sjeler",
-      "Kunst møter grønne fingre",
-      "Tilflyttere med sansen"
-    ],
-    "samtale_starter": "Tegn drømmehagen sammen — Marita maler, Maria planter.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Maria Christina Edwall",
+        "match_grunner": [
+          "Begge er kreative sjeler",
+          "Kunst møter grønne fingre",
+          "Tilflyttere med sansen"
+        ],
+        "samtale_starter": "Tegn drømmehagen sammen — Marita maler, Maria planter."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Anneli Drecker",
+        "match_grunner": [
+          "Begge er kreative kvinner",
+          "Kunst møter sang",
+          "Lever for det vakre"
+        ],
+        "samtale_starter": "Bytt favoritt-konsert eller utstilling fra siste år."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Marianne Wilhelmsen",
+        "match_grunner": [
+          "Begge elsker kunst",
+          "Investerer møter skaper",
+          "Smykker og lerret"
+        ],
+        "samtale_starter": "Spør Marianne hvilken kunstner hun ville støttet neste."
+      }
+    ]
   },
   {
     "navn": "Morten Gammelgård",
-    "match_navn": "Rune Myreng",
-    "match_grunner": [
-      "Begge er mat-feinschmeckere",
-      "Etikette møter kosthold",
-      "Vet hvilken gaffel"
-    ],
-    "samtale_starter": "Lag dagens meny — Morten setter etiketten, Rune vurderer næringen.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Rune Myreng",
+        "match_grunner": [
+          "Begge er mat-feinschmeckere",
+          "Etikette møter kosthold",
+          "Vet hvilken gaffel"
+        ],
+        "samtale_starter": "Lag dagens meny — Morten setter etiketten, Rune vurderer næringen."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Lars Gaute Jørgensen",
+        "match_grunner": [
+          "Begge er livsnyter-typer",
+          "Badstu og festival",
+          "Tur, mat og uteservering"
+        ],
+        "samtale_starter": "Plan en perfekt lørdag — badstu, mat, øl — i hvilken rekkefølge?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Geir Olav Skogstad",
+        "match_grunner": [
+          "Begge er reise-livsnytere",
+          "Festival møter stamp på hytta",
+          "Synger gjerne høyt"
+        ],
+        "samtale_starter": "Velg favoritt-festival — Bukta, Trænafest eller Roskilde?"
+      }
+    ]
   },
   {
     "navn": "Ole-Morten Indigo Lekang",
-    "match_navn": "Jon Marius Aareskjold",
-    "match_grunner": [
-      "Begge er Tromsø-musikere",
-      "Trommer møter produsent",
-      "Jernbanen-stamgjester"
-    ],
-    "samtale_starter": "Plan en live-kveld på Jernbanen — hvilken sjanger først?",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Jon Marius Aareskjold",
+        "match_grunner": [
+          "Begge er Tromsø-musikere",
+          "Trommer møter produsent",
+          "Jernbanen-stamgjester"
+        ],
+        "samtale_starter": "Plan en live-kveld på Jernbanen — hvilken sjanger først?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Mats Sæverud",
+        "match_grunner": [
+          "Begge spiller og synger",
+          "Trommer møter gitar",
+          "Allsang-garantister"
+        ],
+        "samtale_starter": "Velg én låt dere kan jamme på umiddelbart."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ellen Eliassen",
+        "match_grunner": [
+          "Begge er lærere som elsker jobben",
+          "VGS møter KUS",
+          "Tar elevene på alvor"
+        ],
+        "samtale_starter": "Bytt beste klasseromsanekdote uten å bryte taushetsplikten."
+      }
+    ]
   },
   {
     "navn": "Ranveig Langseth",
-    "match_navn": "Line Myreng",
-    "match_grunner": [
-      "Begge er sykepleiere",
-      "Holder hjul i helsenord",
-      "Tålmodighet på pro-nivå"
-    ],
-    "samtale_starter": "Sammenlign rareste vakt-historie — nyfødt-intensiv vs. allmenn.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Line Myreng",
+        "match_grunner": [
+          "Begge er sykepleiere",
+          "Holder hjul i helsenord",
+          "Tålmodighet på pro-nivå"
+        ],
+        "samtale_starter": "Sammenlign rareste vakt-historie — nyfødt-intensiv vs. allmenn."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Nina Brox",
+        "match_grunner": [
+          "Begge er helsefolk",
+          "Sykepleier møter farmasøyt",
+          "UNN-kollegaer i ånden"
+        ],
+        "samtale_starter": "Bytt verste resept-skrekk eller pasient-overraskelse."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ingelill Kleivnes",
+        "match_grunner": [
+          "Begge er rolige helsehelter",
+          "Sykepleier møter farmasøyt",
+          "Holder ut sterke menn"
+        ],
+        "samtale_starter": "Diskuter hvordan dere overlever ektemennenes store ideer."
+      }
+    ]
   },
   {
     "navn": "Ståle Søfting",
-    "match_navn": "Jakob B Hansen",
-    "match_grunner": [
-      "Begge er forretningsfolk",
-      "Sales Director møter EY",
-      "Stavanger og Tromsø allierer seg"
-    ],
-    "samtale_starter": "Diskuter Tottenham vs. norsk eliteserie — hvem leverer flest skuffelser?",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Jakob B Hansen",
+        "match_grunner": [
+          "Begge er forretningsfolk",
+          "Sales Director møter EY",
+          "Stavanger og Tromsø allierer seg"
+        ],
+        "samtale_starter": "Diskuter Tottenham vs. norsk eliteserie — hvem leverer flest skuffelser?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marius Furnes",
+        "match_grunner": [
+          "Begge er sales- og fest-typer",
+          "SK Gruppen møter GC Rieber",
+          "Ler godt på jobben"
+        ],
+        "samtale_starter": "Bytt verste lunsjmøte-skrekk fra siste konferanse."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ørjan Berg Karlsen",
+        "match_grunner": [
+          "Begge har dyre vaner",
+          "Stavanger møter Tromsø",
+          "Tar en god flaske til middag"
+        ],
+        "samtale_starter": "Velg neste fellestur — vinmarker eller golfbane?"
+      }
+    ]
   },
   {
     "navn": "Anneli Drecker",
-    "match_navn": "Mats Sæverud",
-    "match_grunner": [
-      "Begge er allsang-magnetene",
-      "Sang møter gitar",
-      "Får hele rommet med"
-    ],
-    "samtale_starter": "Velg én låt som garantert får bordet til å reise seg.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Mats Sæverud",
+        "match_grunner": [
+          "Begge er allsang-magnetene",
+          "Sang møter gitar",
+          "Får hele rommet med"
+        ],
+        "samtale_starter": "Velg én låt som alltid funker rundt bålet."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Heidi Lekang",
+        "match_grunner": [
+          "Begge lever for musikk",
+          "Bel Canto møter Filharmoni",
+          "Tromsø-kulturen banker"
+        ],
+        "samtale_starter": "Anbefal hverandre én britisk plate som må høres før sommeren."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Lena Schøning",
+        "match_grunner": [
+          "Begge er rolige akademikere",
+          "Doktorgrad møter førsteamanuensis",
+          "Klatrer høyt"
+        ],
+        "samtale_starter": "Diskuter hva som er hardest: viddeseminar eller live-konsert?"
+      }
+    ]
   },
   {
     "navn": "Hans Thomas Brox",
-    "match_navn": "Arne Aarhus",
-    "match_grunner": [
-      "Begge er fallskjerm-veteraner",
-      "Eventyr i blodet",
-      "Historier på lager"
-    ],
-    "samtale_starter": "Bytt skrekkhistorie fra siste hopp — eller verste flytur.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Arne Aarhus",
+        "match_grunner": [
+          "Begge er fallskjerm-veteraner",
+          "Eventyr i blodet",
+          "Historier på lager"
+        ],
+        "samtale_starter": "Bytt skrekkhistorie fra siste hopp — eller verste flytur."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Odd Gunnar Ingebritsen",
+        "match_grunner": [
+          "Begge er fallskjerm-hoppere",
+          "Eventyr-typer på alle nivå",
+          "Rolig under press"
+        ],
+        "samtale_starter": "Spør Odd Gunnar om munke-tilværelsen — er fallskjerm med?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ivar Wullf",
+        "match_grunner": [
+          "Begge er fallskjermklubb-veteraner",
+          "Uredde sjeler",
+          "Tar ledelse uten å rope"
+        ],
+        "samtale_starter": "Bytt favoritt-landing — verste eller mest elegante?"
+      }
+    ]
   },
   {
     "navn": "Hege Blikfeldt",
-    "match_navn": "Ellen Eliassen",
-    "match_grunner": [
-      "Begge er lærere som elsker",
-      "Klemmer på rekord",
-      "Elevene først"
-    ],
-    "samtale_starter": "Bytt beste klassefavoritt-knep som funker hver gang.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Ellen Eliassen",
+        "match_grunner": [
+          "Begge er lærere som elsker",
+          "Klemmer på rekord",
+          "Elevene først"
+        ],
+        "samtale_starter": "Bytt beste klassefavoritt-knep som funker hver gang."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Inger Johanne Sumstad",
+        "match_grunner": [
+          "Begge er fødte lærere",
+          "Kjent som «frøken»",
+          "Hjerte for elevene"
+        ],
+        "samtale_starter": "Sammenlign nyutdanna møter veteran — hva har endret seg mest?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ragnhild Wilhelmsen",
+        "match_grunner": [
+          "Begge er varme familiehjerter",
+          "Lærer møter middagsvert",
+          "Tar vare på alle"
+        ],
+        "samtale_starter": "Bytt favoritt-middagsrett som alltid samler folket."
+      }
+    ]
   },
   {
     "navn": "Hårek Guneriussen",
-    "match_navn": "Erlend Hagan",
-    "match_grunner": [
-      "Begge er fødte underholdere",
-      "TikTok møter NRK-revy",
-      "Får latteren til å renne"
-    ],
-    "samtale_starter": "Lag en sketsj sammen — Narvik møter Kola-halvøya.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Erlend Hagan",
+        "match_grunner": [
+          "Begge er fødte underholdere",
+          "TikTok møter NRK-revy",
+          "Får latteren til å renne"
+        ],
+        "samtale_starter": "Lag en sketsj sammen — Narvik møter Kola-halvøya."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Magnus Seppola",
+        "match_grunner": [
+          "Begge er morsomme festløver",
+          "Vitser og ølpils",
+          "Får hele rommet med"
+        ],
+        "samtale_starter": "Battle: én tre-liner hver — bordet kårer vinneren."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Andreas Willumsen",
+        "match_grunner": [
+          "Begge er festens midtpunkt",
+          "TikTok møter after-ski",
+          "Sjarmør-energi"
+        ],
+        "samtale_starter": "Plan en festkveld — hvem booker DJ, hvem booker baren?"
+      }
+    ]
   },
   {
     "navn": "Jon Marius Aareskjold",
-    "match_navn": "Ole-Morten Indigo Lekang",
-    "match_grunner": [
-      "Begge er proff-musikere",
-      "Produsent møter trommis",
-      "Tromsø-scenen er hjemmebanen"
-    ],
-    "samtale_starter": "Planlegg en nabolagsdrink-kveld med live-trommer i hagen.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Ole-Morten Indigo Lekang",
+        "match_grunner": [
+          "Begge er proff-musikere",
+          "Produsent møter trommis",
+          "Tromsø-scenen er hjemmebanen"
+        ],
+        "samtale_starter": "Planlegg en nabolagsdrink-kveld med live-trommer i hagen."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Odne Stunes",
+        "match_grunner": [
+          "Begge er musikere med dybde",
+          "Produsent møter kontrabass",
+          "Studio og scene"
+        ],
+        "samtale_starter": "Velg én låt dere kan jamme med kontrabass og synth."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Mats Sæverud",
+        "match_grunner": [
+          "Begge er musikknerder",
+          "Produsent møter gitar",
+          "Allsang-energi i flokk"
+        ],
+        "samtale_starter": "Bytt favoritt-Triko-låt eller -Tromsø-konsert."
+      }
+    ]
   },
   {
     "navn": "Lena Nymark",
-    "match_navn": "Lena Schøning",
-    "match_grunner": [
-      "Begge heter Lena og er gjestfrie",
-      "Tidsoptimister møter jurist",
-      "Lange middager"
-    ],
-    "samtale_starter": "Bestem hvem som er kveldens beste Lena — myntkast?",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lena Schøning",
+        "match_grunner": [
+          "Begge heter Lena og er gjestfrie",
+          "Tidsoptimister møter jurist",
+          "Lange middager"
+        ],
+        "samtale_starter": "Bestem hvem som er kveldens beste Lena — myntkast?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Ragnhild Wilhelmsen",
+        "match_grunner": [
+          "Begge er gjestfrie middagsverter",
+          "Inviterer alltid en til",
+          "Holder familien samlet"
+        ],
+        "samtale_starter": "Bytt favoritt-middagsrett som alltid samler folk."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Anita Sivertsen",
+        "match_grunner": [
+          "Begge er vennlige Tromsø-folk",
+          "Gjestfrie og blide",
+          "Ser folk skikkelig"
+        ],
+        "samtale_starter": "Spør Anita om favoritt-Olivita-trikset for energi."
+      }
+    ]
   },
   {
     "navn": "Nina Brox",
-    "match_navn": "Ingelill Kleivnes",
-    "match_grunner": [
-      "Begge er farmasøyter",
-      "Tromsø via omveier",
-      "Holder ut sterke menn"
-    ],
-    "samtale_starter": "Sammenlign verste resept-skrekk fra ekspedisjonen.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Ingelill Kleivnes",
+        "match_grunner": [
+          "Begge er farmasøyter",
+          "Tromsø via omveier",
+          "Holder ut sterke menn"
+        ],
+        "samtale_starter": "Sammenlign verste resept-skrekk fra ekspedisjonen."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge er UNN-helter",
+          "Farmasi møter klinikk",
+          "Tromsø-helse på topp"
+        ],
+        "samtale_starter": "Bytt favoritt-vaktrutine for å overleve nattevakter."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ranveig Langseth",
+        "match_grunner": [
+          "Begge er rolige helsehelter",
+          "Farmasi møter sykepleier",
+          "Tålmodighet på topp"
+        ],
+        "samtale_starter": "Diskuter hvilke medisinske myter pasientene bringer mest."
+      }
+    ]
   },
   {
     "navn": "Terje Nymark",
-    "match_navn": "Lasse Pettersen",
-    "match_grunner": [
-      "Begge driver Tromsø-kulturen",
-      "Film møter Bukta-festival",
-      "Bygger byens scene"
-    ],
-    "samtale_starter": "Plan en kino-Bukta-kveld — hvilken film åpner festivalen?",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lasse Pettersen",
+        "match_grunner": [
+          "Begge er Tromsø-kultur",
+          "Bukta møter Arktisk Film",
+          "Bygger byens scene"
+        ],
+        "samtale_starter": "Hvem booker neste headliner? Foreslå én artist hver."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Lars Hadsen Hansen",
+        "match_grunner": [
+          "Begge er Melbu-gutter",
+          "Vesterålen-stolthet",
+          "Hjemstedet sitter i blodet"
+        ],
+        "samtale_starter": "Bytt favoritt-Moviebox-film fra 90-tallet."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Erlend Hagan",
+        "match_grunner": [
+          "Begge driver media og scene",
+          "Film møter NRK-revy",
+          "Storyteller-energi"
+        ],
+        "samtale_starter": "Plan en kortfilm-pitch — én setning, én location."
+      }
+    ]
   },
   {
     "navn": "Arne Aarhus",
-    "match_navn": "Erlend Hagan",
-    "match_grunner": [
-      "Begge er reise-eventyrere",
-      "Islending møter Kola-reddet",
-      "Historier uten ende"
-    ],
-    "samtale_starter": "Hvem har det villeste pass-stempelet? Bytt to historier hver.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Erlend Hagan",
+        "match_grunner": [
+          "Begge er reise-eventyrere",
+          "Islending møter Kola-reddet",
+          "Historier uten ende"
+        ],
+        "samtale_starter": "Hvem har det villeste pass-stempelet? Bytt to historier hver."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Hans Thomas Brox",
+        "match_grunner": [
+          "Begge er fallskjerm-veteraner",
+          "Eventyr i blodet",
+          "Tør det meste"
+        ],
+        "samtale_starter": "Bytt skrekkhistorie fra siste hopp — eller verste flytur."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Hårek Guneriussen",
+        "match_grunner": [
+          "Begge er Mirage-fallskjerm-folk",
+          "Eventyr og historier",
+          "Får latteren til å gå"
+        ],
+        "samtale_starter": "Velg verste eventyr-uhell dere har fortalt på TikTok eller scene."
+      }
+    ]
   },
   {
     "navn": "Bjarte Kristoffersen",
-    "match_navn": "Eirik Torbergsen",
-    "match_grunner": [
-      "Begge er løps- og svømmehelter",
-      "Sport på toppnivå",
-      "Knærne holder enda"
-    ],
-    "samtale_starter": "Bestem neste triatlon — Ersfjorden eller Tromsø sentrum?",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Eirik Torbergsen",
+        "match_grunner": [
+          "Begge er løps- og svømmehelter",
+          "Sport på toppnivå",
+          "Knærne holder enda"
+        ],
+        "samtale_starter": "Bestem neste triatlon — Ersfjorden eller Tromsø sentrum?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Trond Vidar Hansen",
+        "match_grunner": [
+          "Begge er kompetative sportsfolk",
+          "Svøm møter fotball",
+          "Konkurranseinstinkt"
+        ],
+        "samtale_starter": "Krev revansje: golf vs. svømming — hvem ler sist?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Terje Karlsen",
+        "match_grunner": [
+          "Begge kombinerer bank og sport",
+          "Økonomi møter Strava",
+          "Disiplin i begge gater"
+        ],
+        "samtale_starter": "Sammenlign favoritt-løype rundt Tromsøya."
+      }
+    ]
   },
   {
     "navn": "Gina Bjørnstrøm",
-    "match_navn": "Marit Osima",
-    "match_grunner": [
-      "Begge er leger fra distriktet",
-      "Sørreisa møter Båtsfjord",
-      "Snille som sommerdag"
-    ],
-    "samtale_starter": "Sammenlign rareste pasient-historie fra hjembygda.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Marit Osima",
+        "match_grunner": [
+          "Begge er leger fra distriktet",
+          "Sørreisa møter Båtsfjord",
+          "Snille som sommerdag"
+        ],
+        "samtale_starter": "Sammenlign rareste pasient-historie fra hjembygda."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Christine Strøm",
+        "match_grunner": [
+          "Begge er leger",
+          "Allmenn møter psykiatri",
+          "Lytter mer enn de snakker"
+        ],
+        "samtale_starter": "Bytt beste reisetips for å koble av etter en vakt."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge er leger med distriktsglede",
+          "Tromsø-base, hjerte for nord",
+          "Familiens huslege"
+        ],
+        "samtale_starter": "Spør Maja om beste skipper-pakke for en sjøsyk turist."
+      }
+    ]
   },
   {
     "navn": "Hilde Sander Meling",
-    "match_navn": "Jørgen Wilhelmsen",
-    "match_grunner": [
-      "Begge er journalister",
-      "Avisa Tromsø møter NRK",
-      "Skriver Tromsø inn i historien"
-    ],
-    "samtale_starter": "Bytt favoritt-intervjuobjekt og verste deadline-skrekk.",
-    "allianse": "Havets folk"
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Jørgen Wilhelmsen",
+        "match_grunner": [
+          "Begge er journalister",
+          "Avisa Tromsø møter NRK",
+          "Skriver Tromsø inn i historien"
+        ],
+        "samtale_starter": "Bytt favoritt-intervjuobjekt og verste deadline-skrekk."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Erlend Hagan",
+        "match_grunner": [
+          "Begge er media-folk",
+          "Bergen-journalistikk møter NRK-revy",
+          "Forteller-stemmer"
+        ],
+        "samtale_starter": "Plan en reportasje fra Andøya — hvilken vinkel åpner?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Christine Strøm",
+        "match_grunner": [
+          "Begge er reisende sjeler",
+          "Vestlandsglede møter reiseorganisator",
+          "Familie-tun og rikt liv"
+        ],
+        "samtale_starter": "Velg drømme-reisemål dere kunne booket i morgen."
+      }
+    ]
   },
   {
     "navn": "Ingelill Kleivnes",
-    "match_navn": "Marit Bratrud Nilsen",
-    "match_grunner": [
-      "Begge er helsefolk fra distriktet",
-      "Farmasøyt møter fysio",
-      "Holder ut Tromsø-menn"
-    ],
-    "samtale_starter": "Sammenlign hvilken kropp som klager mest etter en helg på fjellet.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Marit Bratrud Nilsen",
+        "match_grunner": [
+          "Begge er fagperson som holder ut",
+          "Farmasi møter fysio",
+          "Sterke kvinner i bakgrunnen"
+        ],
+        "samtale_starter": "Sammenlign hvilken kropp som klager mest etter en helg på fjellet."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Nina Brox",
+        "match_grunner": [
+          "Begge er farmasøyter",
+          "Tromsø-kollegaer i ånden",
+          "Tilflyttere som ble"
+        ],
+        "samtale_starter": "Bytt verste resept-skrekk fra ekspedisjonen."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ranveig Langseth",
+        "match_grunner": [
+          "Begge er helsefolk med tålmodighet",
+          "Farmasi møter sykepleie",
+          "Holder ut sterke menn"
+        ],
+        "samtale_starter": "Diskuter hvordan dere overlever ektemennenes store ideer."
+      }
+    ]
   },
   {
     "navn": "Ivar Wullf",
-    "match_navn": "Kenneth Mikkelsen",
-    "match_grunner": [
-      "Begge er sjømat-toppfolk",
-      "Lerøy møter fiskerijus",
-      "Andøya og Middelhav"
-    ],
-    "samtale_starter": "Diskuter beste sjømat-paring til Mack-pils.",
-    "allianse": "Havets folk"
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Kenneth Mikkelsen",
+        "match_grunner": [
+          "Begge er sjømat-toppfolk",
+          "Lerøy møter fiskerijus",
+          "Andøya og Middelhav"
+        ],
+        "samtale_starter": "Diskuter beste sjømat-paring til Mack-pils."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Renate Larsen",
+        "match_grunner": [
+          "Begge er sjømat-toppledere",
+          "Lerøy møter Ocean Food",
+          "Bygger Norges blå framtid"
+        ],
+        "samtale_starter": "Plan neste store havbruks-eventyr — privat eller næring?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ole Herman Strømmesen",
+        "match_grunner": [
+          "Begge er havbruks-veteraner",
+          "Lerøy møter OHS",
+          "Saltvann i blodet"
+        ],
+        "samtale_starter": "Bytt verste storm-historie fra anlegget."
+      }
+    ]
   },
   {
     "navn": "Jon Steinar Engenes",
-    "match_navn": "Cathrine Marie Giæver",
-    "match_grunner": [
-      "Begge styrer kommunikasjonen",
-      "Head of Comm møter komm-sjef",
-      "Tromsø-stemmer ut i verden"
-    ],
-    "samtale_starter": "Velg krisens beste talepunkt: «Vi har full kontroll» eller «Vi vurderer fortløpende».",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Cathrine Marie Giæver",
+        "match_grunner": [
+          "Begge styrer kommunikasjonen",
+          "Head of Comm møter komm-sjef",
+          "Tromsø-stemmer ut i verden"
+        ],
+        "samtale_starter": "Velg krisens beste talepunkt: «Vi har full kontroll» eller «Vi vurderer fortløpende»."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Ørjan Berg Karlsen",
+        "match_grunner": [
+          "Begge har reise-livsstil",
+          "Apollo møter dyre vaner",
+          "Trives med opplevelser"
+        ],
+        "samtale_starter": "Bytt favoritt-destinasjon som ikke står i Lonely Planet."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Geir Olav Skogstad",
+        "match_grunner": [
+          "Begge er livsnytende ledere",
+          "Apollo-veteran møter rederi-sjef",
+          "Reise og rom for fest"
+        ],
+        "samtale_starter": "Plan en charter-helg — hvilken destinasjon og hvem booker baren?"
+      }
+    ]
   },
   {
     "navn": "Odd Gunnar Ingebritsen",
-    "match_navn": "Hårek Guneriussen",
-    "match_grunner": [
-      "Begge er Mirage-veteraner",
-      "Fallskjerm og fest",
-      "Eventyrere på alle plan"
-    ],
-    "samtale_starter": "Hvem hopper først hvis dere får sjansen igjen? Bestem nå.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Hårek Guneriussen",
+        "match_grunner": [
+          "Begge er Mirage-veteraner",
+          "Fallskjerm og fest",
+          "Eventyrere på alle plan"
+        ],
+        "samtale_starter": "Hvem hopper først hvis dere får sjansen igjen? Bestem nå."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Geir Helge Valle",
+        "match_grunner": [
+          "Begge er HV-veteraner",
+          "Militær møter Lombola-hytte",
+          "Uredd og sporty"
+        ],
+        "samtale_starter": "Bytt verste øvelse-historie — hvem hostet mest under tåregassen?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Erik Josefsen",
+        "match_grunner": [
+          "Begge er Indre-Troms-folk",
+          "Jakthund møter fjell-eventyr",
+          "Trives i skogen"
+        ],
+        "samtale_starter": "Plan neste jakttur — rype eller elg?"
+      }
+    ]
   },
   {
     "navn": "Andreas Willumsen",
-    "match_navn": "Geir Olav Skogstad",
-    "match_grunner": [
-      "Begge er livsnytere",
-      "Afterski møter stamp",
-      "Tar plassen kvelden trenger"
-    ],
-    "samtale_starter": "Hvor er beste stamp i Nord-Norge akkurat nå? Bestem dere.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Geir Olav Skogstad",
+        "match_grunner": [
+          "Begge er livsnytere",
+          "Afterski møter stamp",
+          "Tar plassen kvelden trenger"
+        ],
+        "samtale_starter": "Hvor er beste stamp i Nord-Norge akkurat nå? Bestem dere."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Magnus Seppola",
+        "match_grunner": [
+          "Begge er festløver",
+          "Afterski møter mårratoget",
+          "Latter og ølpils"
+        ],
+        "samtale_starter": "Velg kveldens nattmat — kebab eller solbærsuppe på Mack?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Hårek Guneriussen",
+        "match_grunner": [
+          "Begge løfter stemningen",
+          "After-ski møter TikTok-vitser",
+          "Festens midtpunkt"
+        ],
+        "samtale_starter": "Plan en festkveld — hvem booker DJ, hvem booker baren?"
+      }
+    ]
   },
   {
     "navn": "Jan Heier Johansen",
-    "match_navn": "Gro-Hilde Severinsen",
-    "match_grunner": [
-      "Begge er AI-nerder",
-      "App-bygger møter e-helse",
-      "Bygger framtidas helsenorge"
-    ],
-    "samtale_starter": "Planlegg en AI-prototype som hjelper Thomas å huske bursdager.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Gro-Hilde Severinsen",
+        "match_grunner": [
+          "Begge er AI-nerder",
+          "App-bygger møter e-helse",
+          "Bygger framtidas helsenorge"
+        ],
+        "samtale_starter": "Planlegg en AI-prototype som hjelper Thomas å huske bursdager."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Øyvind Grinde",
+        "match_grunner": [
+          "Begge er tech-hjerner",
+          "AI møter kryptolog",
+          "Matte og kode"
+        ],
+        "samtale_starter": "Diskuter neste store sikkerhetshull AI vil utløse."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Kjell Roger Andersen",
+        "match_grunner": [
+          "Begge er toppturkompiser",
+          "Alpene møter Lyngen",
+          "Sprek hele veien"
+        ],
+        "samtale_starter": "Plan neste topptur — hvilken topp i Lyngen er prioritet?"
+      }
+    ]
   },
   {
     "navn": "Kristina Kantola",
-    "match_navn": "Lotte Møller",
-    "match_grunner": [
-      "Begge er tannleger med hund",
-      "Jekta møter klinikk",
-      "Turjenter med fire bein"
-    ],
-    "samtale_starter": "Sammenlign verste tann-historie — pasient eller egen valp?",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lotte Møller",
+        "match_grunner": [
+          "Begge er tannleger med hund",
+          "Jekta møter klinikk",
+          "Turjenter med fire bein"
+        ],
+        "samtale_starter": "Sammenlign verste tann-historie — pasient eller egen valp?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Anne Marvik",
+        "match_grunner": [
+          "Begge har turn i hverdagen",
+          "Turnmamma møter Aleris-leder",
+          "Tromsø-kvinner med fart"
+        ],
+        "samtale_starter": "Diskuter hvilket apparat barna gruer seg mest for."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Marit Bratrud Nilsen",
+        "match_grunner": [
+          "Begge er turn/klatre-mammaer",
+          "Tannlege møter fysio",
+          "Fart og familie"
+        ],
+        "samtale_starter": "Bytt verste hentebommert fra trening eller skole."
+      }
+    ]
   },
   {
     "navn": "Line Myreng",
-    "match_navn": "Ranveig Langseth",
-    "match_grunner": [
-      "Begge er sykepleiere",
-      "Vakter på rotasjon",
-      "Holder helsenord oppe"
-    ],
-    "samtale_starter": "Velg verste turnusuke noensinne — vinn med flest nattevakter.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Ranveig Langseth",
+        "match_grunner": [
+          "Begge er sykepleiere",
+          "Vakter på rotasjon",
+          "Holder helsenord oppe"
+        ],
+        "samtale_starter": "Velg verste turnusuke noensinne — vinn med flest nattevakter."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marit Bratrud Nilsen",
+        "match_grunner": [
+          "Begge er helsefolk med småbarn",
+          "Sykepleier møter fysio",
+          "Familieliv i skift"
+        ],
+        "samtale_starter": "Sammenlign verste «mamma kan ikke»-historie."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Christine Strøm",
+        "match_grunner": [
+          "Begge er helsefolk på reise",
+          "Sykepleier møter lege",
+          "Trives i forskjellige miljøer"
+        ],
+        "samtale_starter": "Bytt beste vakttips — hvordan holde humøret oppe på nattevakter."
+      }
+    ]
   },
   {
     "navn": "Maria Christina Edwall",
-    "match_navn": "Nina Mikkelsen",
-    "match_grunner": [
-      "Begge har grønne fingre",
-      "Gård møter blomstereng",
-      "Naturfolk på Tromsøya"
-    ],
-    "samtale_starter": "Bytt tips: hva tåler å stå ute i Tromsø-mai?",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Nina Mikkelsen",
+        "match_grunner": [
+          "Begge har grønne fingre",
+          "Gård møter blomstereng",
+          "Naturfolk på Tromsøya"
+        ],
+        "samtale_starter": "Bytt tips: hva tåler å stå ute i Tromsø-mai?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Lena Nymark",
+        "match_grunner": [
+          "Begge er gjestfrie sjeler",
+          "Svensk grønn finger møter gjestfri vert",
+          "Holder døra åpen"
+        ],
+        "samtale_starter": "Plan en hagefest sammen — hva planter dere før gjestene kommer?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Marianne Svorken",
+        "match_grunner": [
+          "Begge er natur- og fjellfolk",
+          "Grønne fingre møter klatremus",
+          "Trives ute"
+        ],
+        "samtale_starter": "Bytt favoritt-tur i nærområdet — hvem leder neste søndag?"
+      }
+    ]
   },
   {
     "navn": "Marius Furnes",
-    "match_navn": "Magnus Seppola",
-    "match_grunner": [
-      "Begge er festløver",
-      "Fireball møter ølkonge",
-      "Mårratoget kjenner dem"
-    ],
-    "samtale_starter": "Hvem klarer flest fireballs uten å miste hatten?",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Magnus Seppola",
+        "match_grunner": [
+          "Begge er festløver",
+          "Fireball møter ølkonge",
+          "Mårratoget kjenner dem"
+        ],
+        "samtale_starter": "Hvem klarer flest fireballs uten å miste hatten?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Jacob Wilhelmsen",
+        "match_grunner": [
+          "Begge er sporty festkompiser",
+          "Ski og fotball",
+          "Ung Tromsø-puls"
+        ],
+        "samtale_starter": "Velg neste skihelg — hvem booker hytta?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Hårek Guneriussen",
+        "match_grunner": [
+          "Begge er festens motor",
+          "Fireball møter TikTok",
+          "Latter på rekord"
+        ],
+        "samtale_starter": "Plan en festkveld — hvem booker DJ, hvem booker baren?"
+      }
+    ]
   },
   {
     "navn": "Rune Myreng",
-    "match_navn": "Morten Gammelgård",
-    "match_grunner": [
-      "Begge er mat-eksperter",
-      "Kosthold møter etikette",
-      "Vet hva som skåles med hva"
-    ],
-    "samtale_starter": "Lag drømme-tasting-meny — hvilken vin til hva?",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Morten Gammelgård",
+        "match_grunner": [
+          "Begge er mat-eksperter",
+          "Kosthold møter etikette",
+          "Vet hva som skåles med hva"
+        ],
+        "samtale_starter": "Lag drømme-tasting-meny — hvilken vin til hva?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Ståle Søfting",
+        "match_grunner": [
+          "Begge er voksen-fest-typer",
+          "Kosthold møter glemt middag",
+          "Liker en god flaske"
+        ],
+        "samtale_starter": "Bytt verste matglemming-historie og beste comeback-rett."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Stig Tennås",
+        "match_grunner": [
+          "Begge er rolige feinschmeckere",
+          "Mat møter vinyl",
+          "Tålmodig livsnytelse"
+        ],
+        "samtale_starter": "Velg perfekt parring — hvilken plate til hvilken middag?"
+      }
+    ]
   },
   {
     "navn": "Ørjan Berg Karlsen",
-    "match_navn": "Jon Steinar Engenes",
-    "match_grunner": [
-      "Begge har dyre vaner",
-      "Flyveleder møter Apollo-veteran",
-      "Reise og presisjon"
-    ],
-    "samtale_starter": "Bytt beste reisetips — hvilken destinasjon må bookes nå?",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Jon Steinar Engenes",
+        "match_grunner": [
+          "Begge har dyre vaner",
+          "Flyveleder møter Apollo-veteran",
+          "Reise og presisjon"
+        ],
+        "samtale_starter": "Bytt beste reisetips — hvilken destinasjon må bookes nå?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Ståle Søfting",
+        "match_grunner": [
+          "Begge har dyre vaner og smak",
+          "Flyveleder møter Sales Director",
+          "Forretningsmann-energi"
+        ],
+        "samtale_starter": "Velg neste fellestur — vinmarker eller golfbane?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Geir Helge Valle",
+        "match_grunner": [
+          "Begge er sporty og turglade",
+          "Flyveleder møter Lombola-hytte",
+          "Trives på fjellet"
+        ],
+        "samtale_starter": "Plan en pilote- og hytte-helg — hvem ordner båt?"
+      }
+    ]
   },
   {
     "navn": "Cathrine Marie Giæver",
-    "match_navn": "Gaute Marvik",
-    "match_grunner": [
-      "Begge jobber i Helse Nord IKT",
-      "Komm møter teknikk",
-      "Kollegaer på tvers av bord"
-    ],
-    "samtale_starter": "Bytt verste sak fra kantina — uten å nevne navn.",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Gaute Marvik",
+        "match_grunner": [
+          "Begge jobber i Helse Nord IKT",
+          "Komm møter teknikk",
+          "Kollegaer på tvers av bord"
+        ],
+        "samtale_starter": "Bytt verste sak fra kantina — uten å nevne navn."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Nina Wilhelmsen",
+        "match_grunner": [
+          "Begge er ledere med stil",
+          "Komm-sjef møter IBM-exec",
+          "Tar plassen i møterommet"
+        ],
+        "samtale_starter": "Bytt beste tips for å lede møter uten kjedelige PowerPoints."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Lise Valle",
+        "match_grunner": [
+          "Begge er organisatorer",
+          "Macks-bakgrunn møter sjenkebevilling",
+          "Holder byen i sving"
+        ],
+        "samtale_starter": "Plan drømmemiddagen — hvem inviterer, hvem lager menyen?"
+      }
+    ]
   },
   {
     "navn": "Einar Nilsen",
-    "match_navn": "Christine Strøm",
-    "match_grunner": [
-      "Begge er leger med hjerte",
-      "Molde møter Tromsø",
-      "Allmenn møter psykiatri"
-    ],
-    "samtale_starter": "Spør Christine om beste reise hun har planlagt — Einar tar notater.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Christine Strøm",
+        "match_grunner": [
+          "Begge er leger med hjerte",
+          "Molde møter Tromsø",
+          "Allmenn møter psykiatri"
+        ],
+        "samtale_starter": "Spør Christine om beste reise hun har planlagt — Einar tar notater."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Gina Bjørnstrøm",
+        "match_grunner": [
+          "Begge er leger",
+          "Molde møter Brekka Sørreisa",
+          "Familiær lege-energi"
+        ],
+        "samtale_starter": "Bytt rareste pasient-historie uten å nevne diagnose."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Lars Hadsen Hansen",
+        "match_grunner": [
+          "Begge er leger med distrikt-hjerte",
+          "Molde møter Trondheim",
+          "Trives utenfor by-stresset"
+        ],
+        "samtale_starter": "Sammenlign hvilket distrikt har mest rare hverdagshistorier."
+      }
+    ]
   },
   {
     "navn": "Erin Hald",
-    "match_navn": "Lena Schøning",
-    "match_grunner": [
-      "Begge er akademiske toppfolk",
-      "Blodforsker møter jurist",
-      "Tromsø-elite på UiT"
-    ],
-    "samtale_starter": "Bytt favoritt-felttur — fra Finnmarksvidda til familietun.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lena Schøning",
+        "match_grunner": [
+          "Begge er akademiske toppfolk",
+          "Blodforsker møter jurist",
+          "Tromsø-elite på UiT"
+        ],
+        "samtale_starter": "Bytt favoritt-felttur — fra Finnmarksvidda til familietun."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marianne Svorken",
+        "match_grunner": [
+          "Begge har doktorgrad-energi",
+          "Blodforsker møter Nofima",
+          "Forsker dypt og bredt"
+        ],
+        "samtale_starter": "Diskuter mest undervurderte forskningstema akkurat nå."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Nina Mikkelsen",
+        "match_grunner": [
+          "Begge er forsker-kvinner",
+          "Blod møter hav",
+          "Akademisk hjerte"
+        ],
+        "samtale_starter": "Bytt favoritt-felttur eller laboratorie-historie."
+      }
+    ]
   },
   {
     "navn": "Lasse Pettersen",
-    "match_navn": "Terje Nymark",
-    "match_grunner": [
-      "Begge er Tromsø-kultur",
-      "Bukta møter Arktisk Film",
-      "Bygger byens scene"
-    ],
-    "samtale_starter": "Hvem booker neste headliner? Foreslå én artist hver.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Terje Nymark",
+        "match_grunner": [
+          "Begge er Tromsø-kultur",
+          "Bukta møter Arktisk Film",
+          "Bygger byens scene"
+        ],
+        "samtale_starter": "Hvem booker neste headliner? Foreslå én artist hver."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Gunnar Wilhelmsen",
+        "match_grunner": [
+          "Begge bygger Tromsø",
+          "Bybuss møter ordfører",
+          "Byutvikling i praksis"
+        ],
+        "samtale_starter": "Diskuter neste rutekart — hvor trengs en ny holdeplass først?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Jon Marius Aareskjold",
+        "match_grunner": [
+          "Begge er rocker-typer",
+          "Bukta-styret møter studio",
+          "Tromsø-scenen banker"
+        ],
+        "samtale_starter": "Plan en konsertkveld — hvem booker, hvem mikser drinker?"
+      }
+    ]
   },
   {
     "navn": "Marit Bratrud Nilsen",
-    "match_navn": "Anne Marvik",
-    "match_grunner": [
-      "Begge er turn- og klatremammaer",
-      "Fysio møter Aleris",
-      "Sterke kvinner i hallen"
-    ],
-    "samtale_starter": "Diskuter hvilket apparat foreldre bør slutte å filme.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Anne Marvik",
+        "match_grunner": [
+          "Begge er turn- og klatremammaer",
+          "Fysio møter Aleris",
+          "Sterke kvinner i hallen"
+        ],
+        "samtale_starter": "Diskuter hvilket apparat foreldre bør slutte å filme."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marte Lysnes Kristoffersen",
+        "match_grunner": [
+          "Begge er fysioterapeuter",
+          "Helse og bevegelse",
+          "Sporty fra Senja og Molde"
+        ],
+        "samtale_starter": "Bytt beste øvelse mot dårlig kontorholdning."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Kristina Kantola",
+        "match_grunner": [
+          "Begge er turn- og hundemammaer",
+          "Fysio møter tannlege",
+          "Familiens støttepunkt"
+        ],
+        "samtale_starter": "Bytt verste hentebommert fra trening eller skole."
+      }
+    ]
   },
   {
     "navn": "Marit Osima",
-    "match_navn": "Silje Ingebrigtsen",
-    "match_grunner": [
-      "Begge er Helse-Nord-folk",
-      "Snille kraftsentre",
-      "Ser det positive først"
-    ],
-    "samtale_starter": "Bytt favoritt-helgepause — hva får dagen til å smile?",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Silje Ingebrigtsen",
+        "match_grunner": [
+          "Begge er Helse-Nord-folk",
+          "Snille kraftsentre",
+          "Ser det positive først"
+        ],
+        "samtale_starter": "Bytt favoritt-helgepause — hva får dagen til å smile?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Gina Bjørnstrøm",
+        "match_grunner": [
+          "Begge er distrikts-leger",
+          "Mosjøen møter Brekka",
+          "Snille som sommerdag"
+        ],
+        "samtale_starter": "Sammenlign rareste pasient-historie fra hjembygda."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Lars Hadsen Hansen",
+        "match_grunner": [
+          "Begge er leger med distriktsglede",
+          "Mosjøen møter Trondheim",
+          "Trives utenfor by-stress"
+        ],
+        "samtale_starter": "Bytt favoritt-vaktrutine — hvordan holde humøret oppe."
+      }
+    ]
   },
   {
     "navn": "Stig Tennås",
-    "match_navn": "Snorre H Wilhelmsen",
-    "match_grunner": [
-      "Begge har vinyl-passion",
-      "Strålende musikksmak",
-      "Tålmodige sjeler"
-    ],
-    "samtale_starter": "Anbefal hverandre én plate som forandret livet — uten å gå i forsvar.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Snorre H Wilhelmsen",
+        "match_grunner": [
+          "Begge har vinyl-passion",
+          "Strålende musikksmak",
+          "Tålmodige sjeler"
+        ],
+        "samtale_starter": "Anbefal hverandre én plate som forandret livet."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Christine Strøm",
+        "match_grunner": [
+          "Begge er psyk-mennesker",
+          "Tålmodighet på pro-nivå",
+          "Lytter til alt"
+        ],
+        "samtale_starter": "Bytt verste «kan jeg spørre om en ting»-historie fra venner."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Heidi Lekang",
+        "match_grunner": [
+          "Begge elsker musikk og bok",
+          "Vinyl møter Filharmoni",
+          "Rolige sjeler"
+        ],
+        "samtale_starter": "Velg drømme-soundtrack for en lat søndag."
+      }
+    ]
   },
   {
     "navn": "Øyvind Nordgård",
-    "match_navn": "Geir Olav Skogstad",
-    "match_grunner": [
-      "Begge er hytte- og utfartsfolk",
-      "Scooter møter stamp",
-      "Finnmark og Bjørnfjell"
-    ],
-    "samtale_starter": "Hvor går neste scootertur — Mosjøen eller Bjørnfjell-runden?",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Geir Olav Skogstad",
+        "match_grunner": [
+          "Begge er hytte- og utfartsfolk",
+          "Scooter møter stamp",
+          "Finnmark og Bjørnfjell"
+        ],
+        "samtale_starter": "Hvor går neste scootertur — Mosjøen eller Bjørnfjell-runden?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Erlend Hagan",
+        "match_grunner": [
+          "Begge har Kola-røtter i historien",
+          "Scooter møter russisk",
+          "Finnmark-energi"
+        ],
+        "samtale_starter": "Bytt favoritt-Kola-historie — Powercatch teller."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Erik Josefsen",
+        "match_grunner": [
+          "Begge er Indre-Troms-folk",
+          "Scooter møter jakthund",
+          "Skog og fjell"
+        ],
+        "samtale_starter": "Plan neste jakttur — hvem stiller med hytte?"
+      }
+    ]
   },
   {
     "navn": "Christine Strøm",
-    "match_navn": "Stig Tennås",
-    "match_grunner": [
-      "Begge er psyk-mennesker",
-      "Tålmodighet på pro-nivå",
-      "Lytter til alt"
-    ],
-    "samtale_starter": "Bytt verste «kan jeg spørre om en ting»-historie fra venner.",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Stig Tennås",
+        "match_grunner": [
+          "Begge er psyk-mennesker",
+          "Tålmodighet på pro-nivå",
+          "Lytter til alt"
+        ],
+        "samtale_starter": "Bytt verste «kan jeg spørre om en ting»-historie fra venner."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Einar Nilsen",
+        "match_grunner": [
+          "Begge er leger med reise-genet",
+          "Allmenn møter psykiatri",
+          "Lytter mer enn de snakker"
+        ],
+        "samtale_starter": "Spør Christine om beste reise hun har planlagt — Einar tar notater."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Erin Hald",
+        "match_grunner": [
+          "Begge er leger med rikt liv",
+          "Psykiatri møter blodforsker",
+          "Internasjonal smak"
+        ],
+        "samtale_starter": "Bytt favoritt-reisedestinasjon og verste hotell-historie."
+      }
+    ]
   },
   {
     "navn": "Eirik Torbergsen",
-    "match_navn": "Lars Gaute Jørgensen",
-    "match_grunner": [
-      "Begge er på startstreken",
-      "Løp møter yoga",
-      "Sprek hele veien"
-    ],
-    "samtale_starter": "Velg neste løp — Midnattsola eller Tromsø Skyrace?",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lars Gaute Jørgensen",
+        "match_grunner": [
+          "Begge er på startstreken",
+          "Løp møter yoga",
+          "Sprek hele veien"
+        ],
+        "samtale_starter": "Velg neste løp — Midnattsola eller Tromsø Skyrace?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Bjarte Kristoffersen",
+        "match_grunner": [
+          "Begge er svøm- og løpshelter",
+          "Sport på toppnivå",
+          "Knærne holder enda"
+        ],
+        "samtale_starter": "Bestem neste triatlon — Ersfjorden eller Tromsø sentrum?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Trond Vidar Hansen",
+        "match_grunner": [
+          "Begge er kompetative sportsfolk",
+          "Løp møter eliteserie",
+          "Vinnervilje"
+        ],
+        "samtale_starter": "Krev revansje — løpetur eller fotballkamp?"
+      }
+    ]
   },
   {
     "navn": "Ellen Eliassen",
-    "match_navn": "Hege Blikfeldt",
-    "match_grunner": [
-      "Begge er lærere med klem",
-      "Elever som familie",
-      "Snadder i sekken"
-    ],
-    "samtale_starter": "Bytt favoritt-skoletur — beste minne uten våte sokker.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Hege Blikfeldt",
+        "match_grunner": [
+          "Begge er lærere med klem",
+          "Elever som familie",
+          "Snadder i sekken"
+        ],
+        "samtale_starter": "Bytt favoritt-skoletur — beste minne uten våte sokker."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Inger Johanne Sumstad",
+        "match_grunner": [
+          "Begge er drømmelærere",
+          "Kjent som «frøken»",
+          "Hjerte for elevene"
+        ],
+        "samtale_starter": "Sammenlign nyutdanna møter veteran — hva har endret seg mest?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ole-Morten Indigo Lekang",
+        "match_grunner": [
+          "Begge er VGS-lærere",
+          "KUS møter VGS",
+          "Elsker faget og elevene"
+        ],
+        "samtale_starter": "Bytt beste klasseromsanekdote uten å bryte taushetsplikten."
+      }
+    ]
   },
   {
     "navn": "Erik Josefsen",
-    "match_navn": "Lotte Møller",
-    "match_grunner": [
-      "Begge er hundefolk",
-      "Jakt møter Jekta",
-      "Indre Troms og by-Tromsø"
-    ],
-    "samtale_starter": "Sammenlign rareste hundetriks — Erik har jakthunden, Lotte har valpen.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lotte Møller",
+        "match_grunner": [
+          "Begge er hundefolk",
+          "Jakt møter Jekta",
+          "Indre Troms og by-Tromsø"
+        ],
+        "samtale_starter": "Sammenlign rareste hundetriks — Erik har jakthunden, Lotte har valpen."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Anita Sivertsen",
+        "match_grunner": [
+          "Begge er bank-folk",
+          "Danske Bank møter SNN",
+          "Nord-norske finansfolk"
+        ],
+        "samtale_starter": "Sammenlign hvem som har best kundehistorie fra fredag ettermiddag."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Kjell Roger Andersen",
+        "match_grunner": [
+          "Begge er fjell- og utfartsfolk",
+          "Jakt møter telttur",
+          "Trives best ute"
+        ],
+        "samtale_starter": "Plan neste jakt- eller turhelg — hvem stiller med hytte?"
+      }
+    ]
   },
   {
     "navn": "Geir Olav Skogstad",
-    "match_navn": "Mats Sæverud",
-    "match_grunner": [
-      "Begge er allsang-magnetene",
-      "Synger høyt på tur",
-      "Får hele bussen med"
-    ],
-    "samtale_starter": "Velg én låt som alltid funker rundt bålet.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Mats Sæverud",
+        "match_grunner": [
+          "Begge er allsang-magnetene",
+          "Synger høyt på tur",
+          "Får hele bussen med"
+        ],
+        "samtale_starter": "Velg én låt som alltid funker rundt bålet."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Morten Gammelgård",
+        "match_grunner": [
+          "Begge er livsnytere",
+          "Stamp på hytta møter etikette",
+          "Trives med god mat"
+        ],
+        "samtale_starter": "Plan drømme-helga — stamp, mat og musikk i hvilken rekkefølge?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Andreas Willumsen",
+        "match_grunner": [
+          "Begge er livsnytere",
+          "Stamp møter after-ski",
+          "Ser etter neste fest"
+        ],
+        "samtale_starter": "Hvor er beste stamp i Nord-Norge akkurat nå? Bestem dere."
+      }
+    ]
   },
   {
     "navn": "Magnus Seppola",
-    "match_navn": "Hårek Guneriussen",
-    "match_grunner": [
-      "Begge er fødte komikere",
-      "Får rommet til å brøle",
-      "Frekk humor"
-    ],
-    "samtale_starter": "Battle: én tre-liners hver — best joke vinner runde med Mack.",
-    "allianse": "Bakrommet-stammen"
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Hårek Guneriussen",
+        "match_grunner": [
+          "Begge er fødte komikere",
+          "Får rommet til å brøle",
+          "Frekk humor"
+        ],
+        "samtale_starter": "Battle: én tre-liners hver — best joke vinner runde med Mack."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marius Furnes",
+        "match_grunner": [
+          "Begge er festløver",
+          "Ølkonge møter Fireball",
+          "Mårratoget kjenner dem"
+        ],
+        "samtale_starter": "Hvem klarer flest fireballs uten å miste hatten?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Kathrine B Hansen",
+        "match_grunner": [
+          "Begge har frekk humor",
+          "Latterkramper på rekord",
+          "Får hele bordet med"
+        ],
+        "samtale_starter": "Bytt verste vits — best vits vinner ølpils."
+      }
+    ]
   },
   {
     "navn": "Silje Ingebrigtsen",
-    "match_navn": "Cathrine Marie Giæver",
-    "match_grunner": [
-      "Begge er vennlige kraftsentre",
-      "Ser folk skikkelig",
-      "Helse Nord-kollegaer"
-    ],
-    "samtale_starter": "Bytt verste møte-skrekk uten å nevne avdelingen.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Cathrine Marie Giæver",
+        "match_grunner": [
+          "Begge er vennlige kraftsentre",
+          "Ser folk skikkelig",
+          "Helse Nord-kollegaer"
+        ],
+        "samtale_starter": "Bytt verste møte-skrekk uten å nevne avdelingen."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Lise Benjaminsen",
+        "match_grunner": [
+          "Begge er sprudlende",
+          "Helse Nord møter Filharmoni",
+          "Energi som smitter"
+        ],
+        "samtale_starter": "Plan en SATS-spinning-økt før neste fest."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Anne Marvik",
+        "match_grunner": [
+          "Begge jobber med helse",
+          "Helse Nord møter Aleris",
+          "Bygger Tromsø-helsetilbud"
+        ],
+        "samtale_starter": "Diskuter hvilken bydel som trenger mer helsetilbud først."
+      }
+    ]
   },
   {
     "navn": "Siv-Cathrine Torbergsen",
-    "match_navn": "Lise Benjaminsen",
-    "match_grunner": [
-      "Begge er SATS-rutinemennesker",
-      "Mårran-trening fast",
-      "Energi-bunter"
-    ],
-    "samtale_starter": "Velg neste fellestrening — hvem holder ut lengst på spinning?",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lise Benjaminsen",
+        "match_grunner": [
+          "Begge er SATS-rutinemennesker",
+          "Mårran-trening fast",
+          "Energi-bunter"
+        ],
+        "samtale_starter": "Velg neste fellestrening — hvem holder ut lengst på spinning?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Lars Gaute Jørgensen",
+        "match_grunner": [
+          "Begge er løp- og treningsfolk",
+          "SATS møter yoga",
+          "Sprek i alle ender"
+        ],
+        "samtale_starter": "Bytt favoritt-økt — bodypump eller fjelltur?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Trond Vidar Hansen",
+        "match_grunner": [
+          "Begge er kompetitive sportsfolk",
+          "Coca Cola-jenta møter eliteserien",
+          "Aldri sliten"
+        ],
+        "samtale_starter": "Velg neste konkurranse — løp eller sykkel?"
+      }
+    ]
   },
   {
     "navn": "Synne Guldbrandsen",
-    "match_navn": "Renate Larsen",
-    "match_grunner": [
-      "Begge er sjømat-dronninger",
-      "Råfisklaget møter Ocean Food",
-      "Bygger Norges blå merke"
-    ],
-    "samtale_starter": "Diskuter beste silde-rett som ikke krever bestikk.",
-    "allianse": "Havets folk"
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Renate Larsen",
+        "match_grunner": [
+          "Begge er sjømat-dronninger",
+          "Råfisklaget møter Ocean Food",
+          "Bygger Norges blå merke"
+        ],
+        "samtale_starter": "Diskuter beste silde-rett som ikke krever bestikk."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marte Lysnes Kristoffersen",
+        "match_grunner": [
+          "Begge er NFH-jenter",
+          "Råfisklaget møter fiskeri",
+          "Senja-energi"
+        ],
+        "samtale_starter": "Bytt favoritt-fiskeri-anekdote fra studietiden."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Anne Marit Bjørnflaten",
+        "match_grunner": [
+          "Begge jobber med havets ressurser",
+          "Råfisklaget møter sjømat-politikk",
+          "Bygger Norges blå merke"
+        ],
+        "samtale_starter": "Velg neste sjømat-eksportmarked — Sør-Korea eller Brasil?"
+      }
+    ]
   },
   {
     "navn": "Terje Karlsen",
-    "match_navn": "Jakob B Hansen",
-    "match_grunner": [
-      "Begge er tall- og fotballfolk",
-      "Strava møter EY",
-      "Vinnerinstinkt på Sentrum stadion"
-    ],
-    "samtale_starter": "Spå neste TIL-sesong — taperen tar mårrabrødet.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Jakob B Hansen",
+        "match_grunner": [
+          "Begge er tall- og fotballfolk",
+          "Strava møter EY",
+          "Vinnerinstinkt på Sentrum stadion"
+        ],
+        "samtale_starter": "Spå neste TIL-sesong — taperen tar mårrabrødet."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Lars Gaute Jørgensen",
+        "match_grunner": [
+          "Begge er på startstreken",
+          "Strava møter yoga",
+          "Sprek hele veien"
+        ],
+        "samtale_starter": "Velg neste fjell-løp — taperen baker mårrabrød til hele bordet."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Anita Sivertsen",
+        "match_grunner": [
+          "Begge er bankfolk",
+          "Tromsø-finans i hverdagen",
+          "Service med smil"
+        ],
+        "samtale_starter": "Bytt verste systemkrasj-skrekk fra månedsslutt."
+      }
+    ]
   },
   {
     "navn": "Erlend Hagan",
-    "match_navn": "Jørgen Wilhelmsen",
-    "match_grunner": [
-      "Begge er NRK-stemmer",
-      "Språk-virtuoser",
-      "Dyrevenn møter Helgemorgen"
-    ],
-    "samtale_starter": "Spill «gjett dialekten» — én setning hver, motparten gjetter fylke.",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Jørgen Wilhelmsen",
+        "match_grunner": [
+          "Begge er NRK-stemmer",
+          "Språk-virtuoser",
+          "Dyrevenn møter Helgemorgen"
+        ],
+        "samtale_starter": "Spill «gjett dialekten» — én setning hver, motparten gjetter fylke."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Hårek Guneriussen",
+        "match_grunner": [
+          "Begge er fødte underholdere",
+          "NRK-revy møter TikTok",
+          "Får latteren til å renne"
+        ],
+        "samtale_starter": "Lag en sketsj sammen — Narvik møter Kola-halvøya."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Arne Aarhus",
+        "match_grunner": [
+          "Begge er reise-eventyrere",
+          "Russisk-redder møter Island",
+          "Historier i bøtter"
+        ],
+        "samtale_starter": "Hvem har det villeste pass-stempelet? Bytt to historier hver."
+      }
+    ]
   },
   {
     "navn": "Gro-Hilde Severinsen",
-    "match_navn": "Jan Heier Johansen",
-    "match_grunner": [
-      "Begge bygger AI",
-      "E-helse møter app-utvikling",
-      "Framtidas Tromsø"
-    ],
-    "samtale_starter": "Spitball en idé: en AI-assistent for hytte-pakkeliste.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Jan Heier Johansen",
+        "match_grunner": [
+          "Begge bygger AI",
+          "E-helse møter app-utvikling",
+          "Framtidas Tromsø"
+        ],
+        "samtale_starter": "Spitball en idé: en AI-assistent for hytte-pakkeliste."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Erin Hald",
+        "match_grunner": [
+          "Begge er UiT-forskere",
+          "E-helse møter blodforsker",
+          "Akademisk hjerte"
+        ],
+        "samtale_starter": "Diskuter mest undervurderte forskningstema akkurat nå."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Cathrine Marie Giæver",
+        "match_grunner": [
+          "Begge er Helse Nord-folk",
+          "Forskning møter komm",
+          "Tromsø-helse i sving"
+        ],
+        "samtale_starter": "Bytt favoritt-prosjekt som faktisk endret hverdagen."
+      }
+    ]
   },
   {
     "navn": "Kjell Roger Andersen",
-    "match_navn": "Gaute Marvik",
-    "match_grunner": [
-      "Begge er Løvens Hule-folk",
-      "Rødekors og HV",
-      "Tromsø-kollektiv-alumni"
-    ],
-    "samtale_starter": "Bytt verste «hva skjedde egentlig den kvelden»-historie fra hula.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Gaute Marvik",
+        "match_grunner": [
+          "Begge er Løvens Hule-folk",
+          "Rødekors og HV",
+          "Tromsø-kollektiv-alumni"
+        ],
+        "samtale_starter": "Bytt verste «hva skjedde egentlig den kvelden»-historie fra hula."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Geir Helge Valle",
+        "match_grunner": [
+          "Begge er Løvens Hule-veteraner",
+          "Rødekors møter HV",
+          "Sporty og turglad"
+        ],
+        "samtale_starter": "Spør Geir Helge om favoritt-tur fra Lombola-tiden."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Helge Hansen",
+        "match_grunner": [
+          "Begge er friluftsfolk",
+          "Balsfjord møter Sørreisa",
+          "Sprek og turklar"
+        ],
+        "samtale_starter": "Sammenlign favoritt-turmål i Balsfjorden eller Sørreisa."
+      }
+    ]
   },
   {
     "navn": "Lars Hadsen Hansen",
-    "match_navn": "Terje Nymark",
-    "match_grunner": [
-      "Begge er Melbu-gutter",
-      "Hav, film og barndomsminner",
-      "Vesterålen-stolthet"
-    ],
-    "samtale_starter": "Bytt favoritt-Moviebox-film fra 90-tallet — Lars satser på actiongenre.",
-    "allianse": "Havets folk"
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Terje Nymark",
+        "match_grunner": [
+          "Begge er Melbu-gutter",
+          "Hav, film og barndomsminner",
+          "Vesterålen-stolthet"
+        ],
+        "samtale_starter": "Bytt favoritt-Moviebox-film fra 90-tallet."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Einar Nilsen",
+        "match_grunner": [
+          "Begge er leger",
+          "Trondheim møter Molde",
+          "Distrikt-leger med hjerte"
+        ],
+        "samtale_starter": "Bytt rareste pasient-historie uten å nevne diagnose."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Marit Osima",
+        "match_grunner": [
+          "Begge er leger",
+          "Trondheim møter Mosjøen",
+          "Trives utenfor storby"
+        ],
+        "samtale_starter": "Sammenlign hvilket distrikt har mest rare hverdagshistorier."
+      }
+    ]
   },
   {
     "navn": "Lena Schøning",
-    "match_navn": "Anneli Drecker",
-    "match_grunner": [
-      "Begge har doktorgrad-energi",
-      "Jus møter sang",
-      "UiT-stjerner"
-    ],
-    "samtale_starter": "Diskuter hva som er hardest: viddeseminar eller live-konsert?",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Anneli Drecker",
+        "match_grunner": [
+          "Begge har doktorgrad-energi",
+          "Jus møter sang",
+          "UiT-stjerner"
+        ],
+        "samtale_starter": "Diskuter hva som er hardest: viddeseminar eller live-konsert?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Lena Nymark",
+        "match_grunner": [
+          "Begge heter Lena",
+          "Jurist møter tidsoptimist",
+          "Tromsø-energi"
+        ],
+        "samtale_starter": "Bestem hvem som er kveldens beste Lena — myntkast?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Erin Hald",
+        "match_grunner": [
+          "Begge er UiT-akademikere",
+          "Jurist møter blodforsker",
+          "Forsker og fordyper"
+        ],
+        "samtale_starter": "Bytt favoritt-felttur — fra Finnmarksvidda til familietun."
+      }
+    ]
   },
   {
     "navn": "Marianne Bille",
-    "match_navn": "Lise Valle",
-    "match_grunner": [
-      "Begge er organisatorer",
-      "Statnett møter sjenkebevilling",
-      "Holder tråden"
-    ],
-    "samtale_starter": "Bytt verste logistikk-blooper fra siste store arrangement.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lise Valle",
+        "match_grunner": [
+          "Begge er organisatorer",
+          "Statnett møter sjenkebevilling",
+          "Holder tråden"
+        ],
+        "samtale_starter": "Bytt verste logistikk-blooper fra siste store arrangement."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Nina Wilhelmsen",
+        "match_grunner": [
+          "Begge er Oslo-ledere med Tromsø-røtter",
+          "Statnett møter IBM",
+          "Pendler-energi"
+        ],
+        "samtale_starter": "Bytt favoritt-Tromsø-rutine når dere endelig er på besøk."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ranveig Langseth",
+        "match_grunner": [
+          "Begge holder gjengen samlet",
+          "Statnett møter sykepleier",
+          "Tålmodig logistikk"
+        ],
+        "samtale_starter": "Diskuter hvordan dere overlever ektemennenes store ideer."
+      }
+    ]
   },
   {
     "navn": "Marianne Svorken",
-    "match_navn": "Nina Mikkelsen",
-    "match_grunner": [
-      "Begge er forskere som klatrer",
-      "Nofima møter Akvaplan",
-      "Fjellet er kontoret"
-    ],
-    "samtale_starter": "Velg neste topptur — hvilken egg-tur passer best i juni?",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Nina Mikkelsen",
+        "match_grunner": [
+          "Begge er forskere som klatrer",
+          "Nofima møter Akvaplan",
+          "Fjellet er kontoret"
+        ],
+        "samtale_starter": "Velg neste topptur — hvilken egg-tur passer best i juni?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Jan Erik Olsen",
+        "match_grunner": [
+          "Begge er Nofima-forskere",
+          "Marin biotek-elskere",
+          "Fordyper seg helt"
+        ],
+        "samtale_starter": "Diskuter neste forskningsprosjekt — kan det involvere japansk seaweed?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Erin Hald",
+        "match_grunner": [
+          "Begge er doktorgrad-jenter",
+          "Nofima møter blodforsker",
+          "Forsker dypt"
+        ],
+        "samtale_starter": "Diskuter mest undervurderte forskningstema akkurat nå."
+      }
+    ]
   },
   {
     "navn": "Øyvind Grinde",
-    "match_navn": "Åge Hansen",
-    "match_grunner": [
-      "Begge venter på kveiten",
-      "Hav og tålmodighet",
-      "Tromsø-drømmen ligger fast"
-    ],
-    "samtale_starter": "Plan en kveite-helg sammen — hvem fanger først får skryt resten av året.",
-    "allianse": "De vise"
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Åge Hansen",
+        "match_grunner": [
+          "Begge venter på kveiten",
+          "Hav og tålmodighet",
+          "Tromsø-drømmen ligger fast"
+        ],
+        "samtale_starter": "Plan en kveite-helg sammen — hvem fanger først får skryt resten av året."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Jan Heier Johansen",
+        "match_grunner": [
+          "Begge er smarte tech-hjerner",
+          "Kryptolog møter AI",
+          "Matte og kode"
+        ],
+        "samtale_starter": "Diskuter neste store sikkerhetshull AI vil utløse."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Stig Tennås",
+        "match_grunner": [
+          "Begge er rolige intellektuelle",
+          "Matte/filosofi møter psykiatri",
+          "Tålmodige lyttere"
+        ],
+        "samtale_starter": "Bytt favoritt-bok som forandret tankesett."
+      }
+    ]
   },
   {
     "navn": "Anne Marvik",
-    "match_navn": "Iris Wikmark",
-    "match_grunner": [
-      "Begge er turn-talenter",
-      "RG møter apparat-turn",
-      "Gyllenborg-energi"
-    ],
-    "samtale_starter": "Bytt favoritt-element — hvilket hadde dere aldri turt på matta i dag?",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Iris Wikmark",
+        "match_grunner": [
+          "Begge er turn-talenter",
+          "RG møter apparat-turn",
+          "Gyllenborg-energi"
+        ],
+        "samtale_starter": "Bytt favoritt-element — hvilket hadde dere aldri turt på matta i dag?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marit Bratrud Nilsen",
+        "match_grunner": [
+          "Begge er turn- og klatremammaer",
+          "Aleris møter fysio",
+          "Sterke kvinner i hallen"
+        ],
+        "samtale_starter": "Diskuter hvilket apparat foreldre bør slutte å filme."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Nina Wilhelmsen",
+        "match_grunner": [
+          "Begge er topp-ledere",
+          "Aleris møter IBM",
+          "Tromsø-jenter som styrer"
+        ],
+        "samtale_starter": "Sammenlign beste teknikk for å holde ro i krise-møter."
+      }
+    ]
   },
   {
     "navn": "Gaute Marvik",
-    "match_navn": "Kjell Roger Andersen",
-    "match_grunner": [
-      "Begge bodde i Løvens Hule",
-      "Rødekors og HV",
-      "Klassiske kollektiv-alumni"
-    ],
-    "samtale_starter": "Hvem hadde det rareste rommet i hula? Bestem dere.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Kjell Roger Andersen",
+        "match_grunner": [
+          "Begge bodde i Løvens Hule",
+          "Rødekors og HV",
+          "Klassiske kollektiv-alumni"
+        ],
+        "samtale_starter": "Hvem hadde det rareste rommet i hula? Bestem dere."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Cathrine Marie Giæver",
+        "match_grunner": [
+          "Begge jobber i Helse Nord IKT",
+          "Teknikk møter komm",
+          "Kollegaer på tvers av bord"
+        ],
+        "samtale_starter": "Bytt verste sak fra kantina — uten å nevne navn."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Odd Gunnar Ingebritsen",
+        "match_grunner": [
+          "Begge er HV-veteraner",
+          "Løvens Hule møter FN-soldat",
+          "Sporty og rolig"
+        ],
+        "samtale_starter": "Plan en gjenforenings-tur — hvem booker hytta?"
+      }
+    ]
   },
   {
     "navn": "Geir Helge Valle",
-    "match_navn": "Odd Gunnar Ingebritsen",
-    "match_grunner": [
-      "Begge er HV/FN-veteraner",
-      "Tåregass og fallskjerm",
-      "Uredde turkamerater"
-    ],
-    "samtale_starter": "Bytt verste øvelse-historie — hvem hostet mest under tåregassen?",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Odd Gunnar Ingebritsen",
+        "match_grunner": [
+          "Begge er HV/FN-veteraner",
+          "Tåregass og fallskjerm",
+          "Uredde turkamerater"
+        ],
+        "samtale_starter": "Bytt verste øvelse-historie — hvem hostet mest under tåregassen?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Kjell Roger Andersen",
+        "match_grunner": [
+          "Begge er Løvens Hule-veteraner",
+          "HV møter Rødekors",
+          "Sporty og turklar"
+        ],
+        "samtale_starter": "Spør Kjell Roger om favoritt-tur fra Balsfjorden."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Helge Hansen",
+        "match_grunner": [
+          "Begge er sporty distriktsfolk",
+          "Lombola-hytte møter Sørreisa",
+          "Tør å gå ut i alt vær"
+        ],
+        "samtale_starter": "Bytt favoritt-hyttebok eller beste fiskestang-tips."
+      }
+    ]
   },
   {
     "navn": "Kenneth Mikkelsen",
-    "match_navn": "Ole Herman Strømmesen",
-    "match_grunner": [
-      "Begge lever av sjøen",
-      "Fiskerijus møter havbruk",
-      "Næringens stødige ryggrad"
-    ],
-    "samtale_starter": "Plan en seiltur i Middelhavet — Kenneth har båten, Ole Herman tar dam-besøk.",
-    "allianse": "Havets folk"
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Ole Herman Strømmesen",
+        "match_grunner": [
+          "Begge lever av sjøen",
+          "Fiskerijus møter havbruk",
+          "Næringens stødige ryggrad"
+        ],
+        "samtale_starter": "Plan en seiltur i Middelhavet — Kenneth har båten, Ole Herman tar dam-besøk."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Ivar Wullf",
+        "match_grunner": [
+          "Begge er sjømat-toppfolk",
+          "Fiskerijus møter Lerøy",
+          "Andøya og Middelhav"
+        ],
+        "samtale_starter": "Diskuter beste sjømat-paring til Mack-pils."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Renate Larsen",
+        "match_grunner": [
+          "Begge er styrerom-folk",
+          "Fiskerijus møter Ocean Food",
+          "Næringens stødige ryggrad"
+        ],
+        "samtale_starter": "Spør Renate om neste store oppstarts-eventyr fra nord."
+      }
+    ]
   },
   {
     "navn": "Lars Gaute Jørgensen",
-    "match_navn": "Eirik Torbergsen",
-    "match_grunner": [
-      "Begge er løpsfolk",
-      "Yoga møter sprintløp",
-      "Startstreken er hjemme"
-    ],
-    "samtale_starter": "Velg neste fjell-løp — taperen baker mårrabrød til hele bordet.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Eirik Torbergsen",
+        "match_grunner": [
+          "Begge er løpsfolk",
+          "Yoga møter sprintløp",
+          "Startstreken er hjemme"
+        ],
+        "samtale_starter": "Velg neste fjell-løp — taperen baker mårrabrød til hele bordet."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Terje Karlsen",
+        "match_grunner": [
+          "Begge er Strava-folk",
+          "Yoga møter banker-løper",
+          "Sprek hele veien"
+        ],
+        "samtale_starter": "Bytt favoritt-løype rundt Tromsøya."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siv-Cathrine Torbergsen",
+        "match_grunner": [
+          "Begge er trenings-rutinemennesker",
+          "Yoga møter SATS",
+          "Mårran-energi"
+        ],
+        "samtale_starter": "Bytt favoritt-økt — bodypump eller fjelltur?"
+      }
+    ]
   },
   {
     "navn": "Lise Valle",
-    "match_navn": "Lise Benjaminsen",
-    "match_grunner": [
-      "Begge er sprudlende organisatorer",
-      "Lise møter Lise",
-      "Tromsø-energien banker"
-    ],
-    "samtale_starter": "Hvem er kveldens beste Lise — la bordet bestemme!",
-    "allianse": "Mikrofon-kapererne"
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lise Benjaminsen",
+        "match_grunner": [
+          "Begge er sprudlende organisatorer",
+          "Lise møter Lise",
+          "Tromsø-energien banker"
+        ],
+        "samtale_starter": "Hvem er kveldens beste Lise — la bordet bestemme!"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marianne Bille",
+        "match_grunner": [
+          "Begge er organisatorer",
+          "Sjenkebevilling møter Statnett",
+          "Holder tråden i alt"
+        ],
+        "samtale_starter": "Bytt verste logistikk-blooper fra siste store arrangement."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Cathrine Marie Giæver",
+        "match_grunner": [
+          "Begge er kvinnelige organisator-ledere",
+          "Sjenkebevilling møter komm-sjef",
+          "Holder byen i sving"
+        ],
+        "samtale_starter": "Plan drømmemiddagen — hvem inviterer, hvem lager menyen?"
+      }
+    ]
   },
   {
     "navn": "Nina Mikkelsen",
-    "match_navn": "Marianne Svorken",
-    "match_grunner": [
-      "Begge er forsker-fjellfolk",
-      "Akvaplan møter Nofima",
-      "Gård og klatremus"
-    ],
-    "samtale_starter": "Plan neste vidde-tur — hvem tar med kaffe og hvem tar med kake?",
-    "allianse": "Havets folk"
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Marianne Svorken",
+        "match_grunner": [
+          "Begge er forsker-fjellfolk",
+          "Akvaplan møter Nofima",
+          "Gård og klatremus"
+        ],
+        "samtale_starter": "Plan neste vidde-tur — hvem tar med kaffe og hvem tar med kake?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marte Lysnes Kristoffersen",
+        "match_grunner": [
+          "Begge er NFH-fiskeri-folk",
+          "Havforsker møter fysio-fisker",
+          "Senja og gård"
+        ],
+        "samtale_starter": "Diskuter hvor mye fysio en havforsker egentlig trenger."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Maria Christina Edwall",
+        "match_grunner": [
+          "Begge har grønne fingre",
+          "Gård møter blomstereng",
+          "Naturfolk på Tromsøya"
+        ],
+        "samtale_starter": "Bytt tips: hva tåler å stå ute i Tromsø-mai?"
+      }
+    ]
   },
   {
     "navn": "Ole Herman Strømmesen",
-    "match_navn": "Kenneth Mikkelsen",
-    "match_grunner": [
-      "Begge lever av sjøen",
-      "Oppdrett møter fiskerijus",
-      "Reise og næring"
-    ],
-    "samtale_starter": "Bytt verste tollhistorie — Amerika-koffert vs. Middelhav-seilas.",
-    "allianse": "Havets folk"
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Kenneth Mikkelsen",
+        "match_grunner": [
+          "Begge lever av sjøen",
+          "Oppdrett møter fiskerijus",
+          "Reise og næring"
+        ],
+        "samtale_starter": "Bytt verste tollhistorie — Amerika-koffert vs. Middelhav-seilas."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Ivar Wullf",
+        "match_grunner": [
+          "Begge er havbruks-toppfolk",
+          "OHS møter Lerøy",
+          "Lange karrierer på kaikanten"
+        ],
+        "samtale_starter": "Bytt verste storm-historie fra anlegget."
+      },
+      {
+        "rank": 3,
+        "match_navn": "Åge Hansen",
+        "match_grunner": [
+          "Begge er sjø-veteraner",
+          "Havbruk møter Skibsverft",
+          "Saltvann i blodet"
+        ],
+        "samtale_starter": "Plan en helg på sjøen — Åge tar båten, Ole Herman fisken."
+      }
+    ]
   },
   {
     "navn": "Lotte Møller",
-    "match_navn": "Adele Kjær-Appelbom",
-    "match_grunner": [
-      "Begge er hundeglade turjenter",
-      "Dyr og snill",
-      "Tromsø-puls"
-    ],
-    "samtale_starter": "Bytt favoritt-tursti der hunden får løpe løs.",
-    "allianse": "Fjellfolket"
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Adele Kjær-Appelbom",
+        "match_grunner": [
+          "Begge er hundeglade turjenter",
+          "Dyr og snill",
+          "Tromsø-puls"
+        ],
+        "samtale_starter": "Bytt favoritt-tursti der hunden får løpe løs."
+      },
+      {
+        "rank": 2,
+        "match_navn": "Kristina Kantola",
+        "match_grunner": [
+          "Begge er tannleger med hund",
+          "Jekta møter klinikk",
+          "Turjenter med fire bein"
+        ],
+        "samtale_starter": "Sammenlign verste tann-historie — pasient eller egen valp?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Erik Josefsen",
+        "match_grunner": [
+          "Begge er hundefolk",
+          "Jekta-valp møter jakthund",
+          "Tur og skog"
+        ],
+        "samtale_starter": "Sammenlign rareste hundetriks — Erik har jakthunden, Lotte har valpen."
+      }
+    ]
   }
 ]

@@ -721,6 +721,23 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
   border-radius: 16px;
   text-align: center;
 }
+.bv-resultat-kort.bv-rank-2 {
+  background: linear-gradient(135deg, rgba(180,180,200,0.08), rgba(120,140,170,0.06));
+  border-color: rgba(180,180,200,0.3);
+}
+.bv-resultat-kort.bv-rank-3 {
+  background: linear-gradient(135deg, rgba(200,150,100,0.06), rgba(160,120,90,0.05));
+  border-color: rgba(200,150,100,0.25);
+}
+.bv-resultat-kort.bv-rank-2 .bv-resultat-bilde,
+.bv-resultat-kort.bv-rank-3 .bv-resultat-bilde {
+  width: 88px; height: 88px;
+}
+.bv-resultat-kort.bv-rank-2 .bv-resultat-navn,
+.bv-resultat-kort.bv-rank-3 .bv-resultat-navn {
+  font-size: 20px;
+  color: #C8D8E8;
+}
 .bv-resultat-tittel {
   font-size: 13px;
   color: #9BAABB;
