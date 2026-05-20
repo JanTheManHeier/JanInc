@@ -1033,6 +1033,17 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
 .meny-drikke span:first-child { font-size: 22px; flex-shrink: 0; }
 .meny-drikke strong { color: #D4A853; }
 .meny-drikke em { color: #9BAABB; font-size: 12px; }
+.meny-link {
+  color: #E8C87A;
+  text-decoration: underline;
+  text-decoration-color: rgba(212,168,83,0.4);
+  text-underline-offset: 3px;
+  font-weight: 700;
+}
+.meny-link:hover { color: #FFE9A8; text-decoration-color: #E8C87A; }
+.meny-link:visited { color: #D4A853; }
+[data-theme="light"] .meny-link { color: #8A6420; text-decoration-color: rgba(138,100,32,0.5); }
+[data-theme="light"] .meny-link:hover { color: #5C4416; }
 
 /* QR-kode */
 .qr-seksjon { padding: 24px 16px; }
