@@ -10,7 +10,7 @@ body {
   position: relative;
   overflow-x: hidden;
   padding-top: max(env(safe-area-inset-top, 0px), 10px);
-  padding-bottom: 150px;
+  padding-bottom: 180px;
 }
 
 input, textarea, button { font-family: inherit; }
@@ -1097,19 +1097,19 @@ input:focus, textarea:focus { outline: none; border-color: rgba(212,168,83,0.5) 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 6px 4px;
+  padding: 8px 4px;
   border-radius: 8px;
-  color: #5A7A8A;
+  color: #A0B5CC;
   flex: 0 0 25%;
   min-width: 0;
 }
 .nav-btn.active { color: #D4A853; background: rgba(212,168,83,0.1); }
-.nav-icon { font-size: 18px; }
-.nav-label { font-size: 9px; letter-spacing: 0.3px; }
+.nav-icon { font-size: 22px; }
+.nav-label { font-size: 12px; letter-spacing: 0.2px; font-weight: 500; }
 
 /* Sub-nav (tabs på toppen av sammenslåtte sider) */
 .sub-nav {
