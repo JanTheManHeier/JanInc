@@ -48,6 +48,7 @@
     initOverlay();
     initMario();
     initBord();
+    initBestevenn();
     sporBesok('hjem');
     // Wake-up + admin-overstyringer hentes parallelt, blokkerer ikke UI
     vekkDb();
@@ -226,6 +227,7 @@
     toastmaster: 'hilsener',
     musikk: 'hilsener',
     mario: 'spill',
+    bestevenn: 'spill',
     meny: 'program',
   };
 
@@ -1085,5 +1087,143 @@
     t.hidden = false;
     clearTimeout(window._tT);
     window._tT = setTimeout(() => { t.hidden = true; }, 3200);
+  }
+
+  // ============ Bestevenn-orakel ============
+  let bvMatches = null;          // Hele matrisen lastet fra matches.json
+  let bvValgtNavn = null;
+
+  const ALLIANSER = {
+    'Havets folk':         { emoji: '🌊', beskr: 'Sjø, fiske, kyst — øl og sjømat-elskere' },
+    'Fjellfolket':         { emoji: '🏔️', beskr: 'Turfolk og friluftsmennesker — toppen er målet' },
+    'Bakrommet-stammen':   { emoji: '🎵', beskr: 'Musikk, dans og kreativ energi — der festen lever' },
+    'Mikrofon-kapererne':  { emoji: '🎤', beskr: 'Tar plass i lyset — talere, ledere, scenefolk' },
+    'De vise':             { emoji: '📚', beskr: 'Stille kraftsentre — varme, kloke, tilstedeværende' },
+  };
+
+  function initBestevenn() {
+    const input = document.getElementById('bv-search');
+    const dd = document.getElementById('bv-dropdown');
+    if (!input || !dd) return;
+
+    // Forhåndsfyll med mittNavn hvis det matcher en gjest
+    if (mittNavn) {
+      const g = GJESTER.find(x => x.navn.toLowerCase() === mittNavn.toLowerCase());
+      if (g) {
+        input.value = g.navn;
+        visBestevenn(g.navn);
+      }
+    }
+
+    input.addEventListener('focus', () => visBvDropdown(input.value));
+    input.addEventListener('input', () => visBvDropdown(input.value));
+    input.addEventListener('blur', () => setTimeout(() => { dd.hidden = true; }, 200));
+    document.addEventListener('click', e => {
+      if (!input.contains(e.target) && !dd.contains(e.target)) dd.hidden = true;
+    });
+  }
+
+  function visBvDropdown(sok) {
+    const dd = document.getElementById('bv-dropdown');
+    const q = (sok || '').toLowerCase().trim();
+    const liste = GJESTER
+      .filter(g => !g.avbud && (q === '' || g.navn.toLowerCase().includes(q)))
+      .sort((a, b) => a.navn.localeCompare(b.navn, 'no'))
+      .slice(0, 30);
+    if (!liste.length) { dd.hidden = true; return; }
+    dd.innerHTML = liste.map(g => {
+      const init = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
+      const avatar = g.bildeFil
+        ? `<img class="bv-dropdown-avatar" src="${esc(g.bildeFil)}" alt="" />`
+        : `<div class="bv-dropdown-avatar" style="display:flex;align-items:center;justify-content:center;font-weight:700;color:#0D1B2A;font-size:11px">${esc(init)}</div>`;
+      return `<div class="bv-dropdown-item" data-bv-navn="${esc(g.navn)}">
+        ${avatar}
+        <div class="bv-dropdown-info">
+          <div class="bv-dropdown-navn">${esc(g.navn)}</div>
+          <div class="bv-dropdown-meta">Bord ${g.bord || '?'}${g.relasjon ? ' · ' + esc(g.relasjon) : ''}</div>
+        </div>
+      </div>`;
+    }).join('');
+    dd.hidden = false;
+    dd.querySelectorAll('.bv-dropdown-item').forEach(el => {
+      el.onclick = () => {
+        const navn = el.dataset.bvNavn;
+        document.getElementById('bv-search').value = navn;
+        dd.hidden = true;
+        visBestevenn(navn);
+      };
+    });
+  }
+
+  async function lastMatches() {
+    if (bvMatches) return bvMatches;
+    try {
+      const r = await fetch('matches.json');
+      if (!r.ok) throw new Error('matches.json mangler');
+      bvMatches = await r.json();
+      return bvMatches;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async function visBestevenn(navn) {
+    bvValgtNavn = navn;
+    const ut = document.getElementById('bv-resultat');
+    ut.hidden = false;
+    ut.innerHTML = '<div class="bv-resultat-kort"><div class="bv-resultat-tittel">⏳ Orakelet tenker...</div></div>';
+    const matches = await lastMatches();
+    if (!matches) {
+      ut.innerHTML = '<div class="bv-resultat-kort"><div class="bv-resultat-tittel">Orakelet er ikke klar ennå</div><p class="muted" style="padding:10px">Festkamerat-matchene blir tilgjengelig snart!</p></div>';
+      return;
+    }
+    const m = matches.find(x => x.navn === navn);
+    if (!m) {
+      ut.innerHTML = '<div class="bv-resultat-kort"><p class="muted" style="padding:10px">Fant ikke deg i matrisen — prøv en annen.</p></div>';
+      return;
+    }
+    const matchGjest = GJESTER.find(g => g.navn === m.match_navn) || {};
+    const init = (matchGjest.navn || m.match_navn).split(' ').map(s => s[0]).slice(0, 2).join('');
+    const bilde = matchGjest.bildeFil
+      ? `<img class="bv-resultat-bilde" src="${esc(matchGjest.bildeFil)}" alt="" />`
+      : `<div class="bv-resultat-bilde" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#D4A853,#C4943A);color:#0D1B2A;font-size:36px;font-weight:bold">${esc(init)}</div>`;
+    const allianseInfo = ALLIANSER[m.allianse] || { emoji: '🎉', beskr: '' };
+    // Andre på samme allianse (ekskl. selv)
+    const allianseMedlemmer = matches
+      .filter(x => x.allianse === m.allianse && x.navn !== navn)
+      .map(x => GJESTER.find(g => g.navn === x.navn))
+      .filter(Boolean)
+      .slice(0, 12);
+
+    ut.innerHTML = `
+      <div class="bv-resultat-kort">
+        <div class="bv-resultat-tittel">🔮 Din nye bestevenn for kvelden</div>
+        ${bilde}
+        <div class="bv-resultat-navn">${esc(m.match_navn)}</div>
+        <div class="bv-resultat-bord">Bord ${matchGjest.bord || '?'}${matchGjest.relasjon ? ' · ' + esc(matchGjest.relasjon) : ''}</div>
+        <div class="bv-grunner">
+          <div class="bv-grunner-tittel">Dere har til felles</div>
+          ${(m.match_grunner || []).map(g => `<div class="bv-grunne">🤝 ${esc(g)}</div>`).join('')}
+        </div>
+        <div class="bv-samtale">
+          <strong>💬 Konversasjon-starter:</strong><br/>${esc(m.samtale_starter || '')}
+        </div>
+      </div>
+      <div class="bv-allianse-kort">
+        <div class="bv-allianse-emoji">${allianseInfo.emoji}</div>
+        <div class="bv-allianse-navn">${esc(m.allianse || '')}</div>
+        <div class="bv-allianse-beskr">${esc(allianseInfo.beskr)}</div>
+        ${allianseMedlemmer.length ? `
+          <div class="bv-grunner-tittel" style="margin-top:10px">Andre i alliansen</div>
+          <div class="bv-allianse-medlemmer">
+            ${allianseMedlemmer.map(g => {
+              const i = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
+              const av = g.bildeFil ? `<img src="${esc(g.bildeFil)}" alt="" />` : `<span style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#D4A853,#C4943A);display:inline-flex;align-items:center;justify-content:center;color:#0D1B2A;font-size:9px;font-weight:700">${esc(i)}</span>`;
+              return `<span class="bv-allianse-medlem">${av}${esc(g.navn.split(' ')[0])}</span>`;
+            }).join('')}
+          </div>
+        ` : ''}
+      </div>`;
+    ut.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 })();

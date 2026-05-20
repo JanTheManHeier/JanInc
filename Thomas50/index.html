@@ -248,6 +248,7 @@
     <div class="sub-nav">
       <button class="sub-tab" data-go="spill">🎲 Quiz</button>
       <button class="sub-tab" data-go="mario">🎮 Spill</button>
+      <button class="sub-tab" data-go="bestevenn">🎯 Bestevenn</button>
     </div>
     <h2 class="page-title">🎲 Hvor godt kjenner du Thomas?</h2>
     <p class="muted">Quiz og partyspill for bordet</p>
@@ -329,6 +330,7 @@
     <div class="sub-nav">
       <button class="sub-tab" data-go="spill">🎲 Quiz</button>
       <button class="sub-tab" data-go="mario">🎮 Spill</button>
+      <button class="sub-tab" data-go="bestevenn">🎯 Bestevenn</button>
     </div>
     <h2 class="page-title">🎮 Thomas til Festen</h2>
     <p class="muted">Hjelp Thomas komme seg til Kystens Hus! Tap = hopp · 60 sek</p>
@@ -360,6 +362,33 @@
     <div class="section">
       <h3 class="section-title small-title">🏆 Topp 10 — beste runner</h3>
       <div id="mario-topp"></div>
+    </div>
+  </section>
+
+  <!-- BESTEVENN-ORAKEL -->
+  <section class="page" data-page="bestevenn" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="spill">🎲 Quiz</button>
+      <button class="sub-tab" data-go="mario">🎮 Spill</button>
+      <button class="sub-tab" data-go="bestevenn">🎯 Bestevenn</button>
+    </div>
+    <h2 class="page-title">🎯 Festkamerat-orakelet</h2>
+    <p class="muted">Velg deg selv — så finner orakelet din nye bestevenn for kvelden 🔮</p>
+
+    <div class="bv-velg-boks">
+      <div class="bv-search-wrap">
+        <input id="bv-search" type="text" placeholder="🔍 Søk og velg ditt navn..." autocomplete="off" />
+        <div id="bv-dropdown" class="bv-dropdown" hidden></div>
+      </div>
+    </div>
+
+    <div id="bv-resultat" hidden></div>
+
+    <div class="bv-info-box">
+      <div>🎭 Orakelet matcher deg med <strong>én annen gjest</strong> (fra et annet bord)</div>
+      <div>🤝 Du får 3 ting dere har til felles og en konversasjon-starter</div>
+      <div>🏔️ Du blir også plassert i én av fem <strong>festfaglige allianser</strong></div>
+      <div>🍻 Tør du gå bort og slå av en prat?</div>
     </div>
   </section>
 
