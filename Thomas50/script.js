@@ -1244,7 +1244,7 @@
       const medalje = ['🥇 Din nye bestevenn', '🥈 Andre-bestevenn', '🥉 Tredje-bestevenn'][idx] || `#${mt.rank}`;
       const klass = idx === 0 ? 'bv-resultat-kort bv-rank-1' : 'bv-resultat-kort bv-rank-' + (idx + 1);
       return `
-        <div class="${klass}">
+        <div class="${klass} bv-klikkbar" data-bv-match-navn="${esc(mt.match_navn)}" title="Trykk for å se hele kortet">
           <div class="bv-resultat-tittel">${medalje}</div>
           ${bilde}
           <div class="bv-resultat-navn">${esc(mt.match_navn)}</div>
@@ -1274,11 +1274,19 @@
             ${allianseMedlemmer.map(g => {
               const i = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
               const av = g.bildeFil ? `<img src="${esc(g.bildeFil)}" alt="" />` : `<span style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#D4A853,#C4943A);display:inline-flex;align-items:center;justify-content:center;color:#0D1B2A;font-size:9px;font-weight:700">${esc(i)}</span>`;
-              return `<span class="bv-allianse-medlem">${av}${esc(g.navn.split(' ')[0])}</span>`;
+              return `<span class="bv-allianse-medlem bv-klikkbar" data-bv-match-navn="${esc(g.navn)}">${av}${esc(g.navn.split(' ')[0])}</span>`;
             }).join('')}
           </div>
         ` : ''}
       </div>`;
+    // Klikk på match-kort eller allianse-medlem åpner gjest-modal
+    ut.querySelectorAll('.bv-klikkbar').forEach(el => {
+      el.addEventListener('click', () => {
+        const matchNavn = el.dataset.bvMatchNavn;
+        const g = GJESTER.find(x => x.navn === matchNavn);
+        if (g) visGjestModal(g);
+      });
+    });
     ut.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 })();
