@@ -46,7 +46,7 @@ const PROGRAM = [
 // Kort biografi er placeholder — kan oppdateres manuelt eller via LinkedIn-søk
 const GJESTER = [
   {
-    navn: "Adele Kjær",
+    navn: "Adele Kjær-Appelbom",
     bord: 1,
     sete: 5,
     bordType: 8,
@@ -351,7 +351,7 @@ const GJESTER = [
     fbBio: "📍 Tromsø, Norway"
   },
   {
-    navn: "Ole Lekang",
+    navn: "Ole-Morten Indigo Lekang",
     bord: 4,
     sete: 4,
     bordType: 8,
@@ -1009,15 +1009,24 @@ const GJESTER = [
     liBio: "Senior researcher, Environmental impact assessments and monitoring · 📍 Tromsø, Troms og Finnmark, Norway"
   },
   {
-    navn: "Ole Herman Størmmesen",
-    bord: 11,
-    sete: 7,
-    bordType: 8,
+    navn: "Ole Herman Strømmesen",
+    bord: 3,
+    sete: 10,
+    bordType: 10,
     pust: true,
     bio: "Klar for damp og dans.",
     relasjon: "Venn",
     fbUrl: "https://www.facebook.com/profile.php?id=100095565124276",
     bildeFil: "images/gjester/ole-herman-stormmesen.jpg"
+  },
+  {
+    navn: "Lotte Møller",
+    bord: 11,
+    sete: 7,
+    bordType: 8,
+    relasjon: "Samboer til Lars Gaute Jørgensen",
+    fbUrl: "https://www.facebook.com/share/18UeLmmTmc/",
+    bildeFil: "images/gjester/lotte-moller.jpg"
   }
 ];
 
