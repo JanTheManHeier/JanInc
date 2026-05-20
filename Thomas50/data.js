@@ -877,7 +877,7 @@ const GJESTER = [
     bildeFil: "images/gjester/kjell-roger-andersen.jpg"
   },
   {
-    navn: "Lars Hadsen Hansen",
+    navn: "Lars Hadsel Hansen",
     bord: 10,
     sete: 5,
     bordType: 8,
