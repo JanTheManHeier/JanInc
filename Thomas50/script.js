@@ -25,6 +25,7 @@
   let quizIdx = 0;
   let diskIdx = 0;
   let quizScore = 0;       // antall riktige
+  let quizBesvart = new Set(); // indekser som er besvart
   let quizSvart = 0;       // antall besvart
   let quizFerdig = false;
   let aktivSpillTab = 'quiz';
@@ -645,7 +646,7 @@
   }
 
   function nullstillQuiz() {
-    quizIdx = 0; quizScore = 0; quizSvart = 0; quizFerdig = false;
+    quizIdx = 0; quizScore = 0; quizSvart = 0; quizFerdig = false; quizBesvart = new Set();
     document.getElementById('quiz-resultat').hidden = true;
     document.querySelector('#quiz-view .quiz-card').hidden = false;
     document.getElementById('quiz-spill-status').hidden = false;
@@ -676,19 +677,30 @@
     prevBtn.disabled = quizIdx === 0;
     prevBtn.style.opacity = quizIdx === 0 ? '0.5' : '1';
     opts.innerHTML = q.valg.map((v, i) => `<button class="quiz-opt" data-i="${i}">${esc(v)}</button>`).join('');
-    opts.querySelectorAll('.quiz-opt').forEach(b => {
-      b.onclick = () => svarKlikket(b, q);
-    });
+    if (quizBesvart.has(quizIdx)) {
+      opts.querySelectorAll('.quiz-opt').forEach(x => x.classList.add('disabled'));
+      fasit.textContent = q.fasit;
+      fasit.hidden = false;
+      nextBtn.disabled = false;
+      nextBtn.style.opacity = '1';
+    } else {
+      opts.querySelectorAll('.quiz-opt').forEach(b => {
+        b.onclick = () => svarKlikket(b, q);
+      });
+    }
   }
 
   function svarKlikket(btn, q) {
     const opts = document.getElementById('quiz-options');
     if (opts.querySelector('.disabled')) return;
+    if (quizBesvart.has(quizIdx)) return;
+    quizBesvart.add(quizIdx);
     const i = +btn.dataset.i;
     opts.querySelectorAll('.quiz-opt').forEach(x => x.classList.add('disabled'));
     quizSvart++;
     if (q.svar === null) {
       btn.classList.add('korrekt');
+      quizScore++;
     } else if (i === q.svar) {
       btn.classList.add('korrekt');
       quizScore++;
@@ -712,9 +724,8 @@
     document.getElementById('quiz-spill-status').hidden = true;
     document.getElementById('quiz-resultat').hidden = false;
 
-    const antallPoengSpm = SPILL_QUIZ.filter(q => q.svar !== null).length;
-    const prosent = Math.round((quizScore / antallPoengSpm) * 100);
-    let tittel = `${quizScore} av ${antallPoengSpm} riktig!`;
+    const prosent = Math.round((quizScore / SPILL_QUIZ.length) * 100);
+    let tittel = `${quizScore} av ${SPILL_QUIZ.length} riktig!`;
     let tekst = '';
     if (prosent === 100) tekst = 'Perfekt! Du må kjenne Thomas usedvanlig godt 🥇';
     else if (prosent >= 80) tekst = 'Imponerende! Du er definitivt en ekte venn 🥈';
@@ -747,7 +758,7 @@
         const n = inp.value.trim();
         if (!n) { inp.focus(); return; }
         settNavn(n);
-        await sendHighscore(n, quizScore, antallPoengSpm);
+        await sendHighscore(n, quizScore, SPILL_QUIZ.length);
         form.remove();
         toast('🏆 Score lagret!');
         lastTopp();
@@ -755,7 +766,7 @@
       inp.addEventListener('keydown', e => { if (e.key === 'Enter') form.querySelector('#quiz-navn-lagre').click(); });
     } else {
       // Auto-lagre
-      sendHighscore(mittNavn, quizScore, antallPoengSpm).then(() => toast('🏆 Score lagret!'));
+      sendHighscore(mittNavn, quizScore, SPILL_QUIZ.length).then(() => toast('🏆 Score lagret!'));
     }
   }
 
