@@ -3274,5 +3274,41 @@
         "samtale_starter": "Sammenlign rareste hundetriks — Erik har jakthunden, Lotte har valpen."
       }
     ]
+  },
+  {
+    "navn": "Aggie E Peterson",
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lasse Pettersen",
+        "match_grunner": [
+          "Begge er festens midtpunkt",
+          "Dans og moro hele kvelden",
+          "Tromsø-energi på dansegulvet"
+        ],
+        "samtale_starter": "Hvem holder ut lengst på dansegulvet i kveld?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Marte Lysnes Kristoffersen",
+        "match_grunner": [
+          "Begge elsker Pust-badstua",
+          "Yoga og velvære",
+          "Sporty kvinner med god energi"
+        ],
+        "samtale_starter": "Hva er den beste badstu-økten dere har hatt?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Geir-Olav Skogstad",
+        "match_grunner": [
+          "Begge er sosiale fyrtårn",
+          "Fest og moro-garantister",
+          "Aldri kjedelig selskap"
+        ],
+        "samtale_starter": "Hvilken sang får folk garantert ut på gulvet?"
+      }
+    ]
   }
 ]

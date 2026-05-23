@@ -704,6 +704,16 @@ const GJESTER = [
     liBio: "Section Manager, Customer Experience · 📍 Tromsø, Troms og Finnmark, Norway"
   },
   {
+    navn: "Aggie E Peterson",
+    bord: 8,
+    sete: 6,
+    bordType: 8,
+    bio: "Danseglad venn og kveldens DJ. Hun elsker Pust-badstua, yoga og kebab i fylla🫶",
+    relasjon: "Venn",
+    fbUrl: "https://www.facebook.com/share/1FEk2x7BoW/?mibextid=wwXIfr",
+    bildeFil: "images/gjester/aggie-e-peterson.jpg"
+  },
+  {
     navn: "Marit Osima",
     bord: 8,
     sete: 7,
