@@ -119,7 +119,10 @@
         if (has('liUrl')) g.liUrl = d.liUrl;
         if (has('igUrl')) g.igUrl = d.igUrl;
         if (has('bildeUrl')) g.bildeFil = d.bildeUrl;
-        if (has('nyttNavn')) g.navn = d.nyttNavn;
+        if (has('nyttNavn')) {
+          if (!g.originalNavn) g.originalNavn = g.navn;
+          g.navn = d.nyttNavn;
+        }
       });
       if (skjulte.size) {
         for (let i = GJESTER.length - 1; i >= 0; i--) {
@@ -1169,7 +1172,8 @@
 
     // Forhåndsfyll med mittNavn hvis det matcher en gjest
     if (mittNavn) {
-      const g = GJESTER.find(x => x.navn.toLowerCase() === mittNavn.toLowerCase());
+      const g = GJESTER.find(x => x.navn.toLowerCase() === mittNavn.toLowerCase()
+        || (x.originalNavn && x.originalNavn.toLowerCase() === mittNavn.toLowerCase()));
       if (g) {
         input.value = g.navn;
         visBestevenn(g.navn);
@@ -1257,6 +1261,16 @@
     }
   }
 
+  // Konverter visningsnavn (kan vaere nytt etter rename) til original navn brukt i matches.json
+  function tilOriginalNavn(visningsnavn) {
+    const g = GJESTER.find(x => x.navn === visningsnavn);
+    return g ? (g.originalNavn || g.navn) : visningsnavn;
+  }
+  // Slaa opp gjest fra original navn (som matches.json bruker)
+  function gjestFraOriginalNavn(orig) {
+    return GJESTER.find(x => (x.originalNavn || x.navn) === orig);
+  }
+
   async function visBestevenn(navn) {
     bvValgtNavn = navn;
     const ut = document.getElementById('bv-resultat');
@@ -1267,7 +1281,8 @@
       ut.innerHTML = '<div class="bv-resultat-kort"><div class="bv-resultat-tittel">Orakelet er ikke klar ennå</div><p class="muted" style="padding:10px">Festkamerat-matchene blir tilgjengelig snart!</p></div>';
       return;
     }
-    const m = matches.find(x => x.navn === navn);
+    const origNavn = tilOriginalNavn(navn);
+    const m = matches.find(x => x.navn === origNavn);
     if (!m || !m.matches || !m.matches.length) {
       ut.innerHTML = '<div class="bv-resultat-kort"><p class="muted" style="padding:10px">Fant ikke deg i matrisen — prøv en annen.</p></div>';
       return;
@@ -1275,24 +1290,25 @@
 
     const allianseInfo = ALLIANSER[m.allianse] || { emoji: '🎉', beskr: '' };
     const allianseMedlemmer = matches
-      .filter(x => x.allianse === m.allianse && x.navn !== navn)
-      .map(x => GJESTER.find(g => g.navn === x.navn))
+      .filter(x => x.allianse === m.allianse && x.navn !== origNavn)
+      .map(x => gjestFraOriginalNavn(x.navn))
       .filter(Boolean)
       .slice(0, 12);
 
     const matchKort = m.matches.map((mt, idx) => {
-      const matchGjest = GJESTER.find(g => g.navn === mt.match_navn) || {};
-      const init = (matchGjest.navn || mt.match_navn).split(' ').map(s => s[0]).slice(0, 2).join('');
+      const matchGjest = gjestFraOriginalNavn(mt.match_navn) || {};
+      const visNavn = matchGjest.navn || mt.match_navn;
+      const init = visNavn.split(' ').map(s => s[0]).slice(0, 2).join('');
       const bilde = matchGjest.bildeFil
         ? `<img class="bv-resultat-bilde" src="${esc(matchGjest.bildeFil)}" alt="" />`
         : `<div class="bv-resultat-bilde" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#D4A853,#C4943A);color:#0D1B2A;font-size:36px;font-weight:bold">${esc(init)}</div>`;
       const medalje = ['🥇 Din nye bestevenn', '🥈 Andre-bestevenn', '🥉 Tredje-bestevenn'][idx] || `#${mt.rank}`;
       const klass = idx === 0 ? 'bv-resultat-kort bv-rank-1' : 'bv-resultat-kort bv-rank-' + (idx + 1);
       return `
-        <div class="${klass} bv-klikkbar" data-bv-match-navn="${esc(mt.match_navn)}" title="Trykk for å se hele kortet">
+        <div class="${klass} bv-klikkbar" data-bv-match-navn="${esc(visNavn)}" title="Trykk for å se hele kortet">
           <div class="bv-resultat-tittel">${medalje}</div>
           ${bilde}
-          <div class="bv-resultat-navn">${esc(mt.match_navn)}</div>
+          <div class="bv-resultat-navn">${esc(visNavn)}</div>
           <div class="bv-resultat-bord">Bord ${matchGjest.bord || '?'}${matchGjest.relasjon ? ' · ' + esc(matchGjest.relasjon) : ''}</div>
           <div class="bv-grunner">
             <div class="bv-grunner-tittel">Dere har til felles</div>
