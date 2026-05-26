@@ -85,14 +85,47 @@
       const r = await fetchMedTimeout(`${API_BASE}/thomas50-gjest-edit`, {}, 60000);
       if (!r.ok) return;
       const data = await r.json();
+      const skjulte = new Set();
       data.forEach(d => {
-        const g = GJESTER.find(x => x.navn === d.navn);
-        if (g) {
-          if (d.bio !== null && d.bio !== undefined) g.bio = d.bio;
-          if (d.relasjon !== null && d.relasjon !== undefined) g.relasjon = d.relasjon;
-          if (d.extraBio !== null && d.extraBio !== undefined) g.extraBio = d.extraBio;
+        const has = (k) => d[k] !== null && d[k] !== undefined && d[k] !== '';
+        if (d.nyGjest) {
+          // Ny gjest lagt til av Thomas
+          if (d.skjult) return;
+          const ny = { navn: d.navn, bordType: d.bordType || 8 };
+          if (has('bord')) ny.bord = d.bord;
+          if (has('sete')) ny.sete = d.sete;
+          if (has('fbUrl')) ny.fbUrl = d.fbUrl;
+          if (has('liUrl')) ny.liUrl = d.liUrl;
+          if (has('igUrl')) ny.igUrl = d.igUrl;
+          if (has('bio')) ny.bio = d.bio;
+          if (has('relasjon')) ny.relasjon = d.relasjon;
+          if (has('extraBio')) ny.extraBio = d.extraBio;
+          if (has('jobb')) ny.jobb = d.jobb;
+          if (has('bildeUrl')) ny.bildeFil = d.bildeUrl;
+          if (!GJESTER.find(x => x.navn === ny.navn)) GJESTER.push(ny);
+          return;
         }
+        const g = GJESTER.find(x => x.navn === d.navn);
+        if (!g) return;
+        if (d.skjult) { skjulte.add(d.navn); return; }
+        if (has('bio')) g.bio = d.bio;
+        if (has('relasjon')) g.relasjon = d.relasjon;
+        if (has('extraBio')) g.extraBio = d.extraBio;
+        if (has('jobb')) g.jobb = d.jobb;
+        if (has('bord')) g.bord = d.bord;
+        if (has('sete')) g.sete = d.sete;
+        if (has('bordType')) g.bordType = d.bordType;
+        if (has('fbUrl')) g.fbUrl = d.fbUrl;
+        if (has('liUrl')) g.liUrl = d.liUrl;
+        if (has('igUrl')) g.igUrl = d.igUrl;
+        if (has('bildeUrl')) g.bildeFil = d.bildeUrl;
+        if (has('nyttNavn')) g.navn = d.nyttNavn;
       });
+      if (skjulte.size) {
+        for (let i = GJESTER.length - 1; i >= 0; i--) {
+          if (skjulte.has(GJESTER[i].navn)) GJESTER.splice(i, 1);
+        }
+      }
     } catch {}
   }
 
@@ -431,6 +464,7 @@
           : `<div class="gjest-modal-bord">🪑 Bord ${esc(String(g.bord))}</div>`;
       })() : ''}
       <div class="gjest-modal-bio">${esc(g.bio)}</div>
+      ${g.jobb ? `<div class="gjest-modal-felt">💼 ${esc(g.jobb)}</div>` : ''}
       ${g.liBio ? `<div class="gjest-modal-felt">💼 ${esc(g.liBio)}</div>` : ''}
       ${g.fbBio ? `<div class="gjest-modal-felt">${esc(g.fbBio)}</div>` : ''}
       ${g.relasjon ? `<div class="gjest-modal-felt">👨‍👩‍👧 ${esc(g.relasjon)}</div>` : ''}

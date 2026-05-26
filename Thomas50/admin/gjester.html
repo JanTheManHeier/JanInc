@@ -17,18 +17,23 @@
     padding: 14px;
     margin-bottom: 12px;
     display: grid;
-    grid-template-columns: 56px 1fr;
-    gap: 12px;
+    grid-template-columns: 80px 1fr;
+    gap: 14px;
     align-items: start;
   }
   .gjest-rad.endret { border-color: #D4A853; background: rgba(212,168,83,0.08); }
-  .avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
-  .avatar-init { background: linear-gradient(135deg, #D4A853, #C4943A); color: #0D1B2A; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; }
-  .navn { font-size: 15px; color: #E8C87A; font-weight: bold; margin-bottom: 6px; }
-  .meta { font-size: 11px; color: #7A8FA8; margin-bottom: 8px; }
-  .felt { display: grid; grid-template-columns: 100px 1fr; gap: 8px; margin-bottom: 6px; align-items: start; }
-  .felt label { font-size: 12px; color: #9BAABB; padding-top: 6px; }
-  .felt input, .felt textarea {
+  .gjest-rad.skjult { opacity: 0.5; border-style: dashed; }
+  .gjest-rad.ny { border-color: #50B464; background: rgba(80,180,100,0.08); }
+  .avatar-boks { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: #1a2a3a; }
+  .avatar-init { background: linear-gradient(135deg, #D4A853, #C4943A); color: #0D1B2A; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 22px; }
+  .upload-btn { font-size: 10px; padding: 4px 8px !important; }
+  .navn-rad { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+  .navn-rad input.navn-input { flex: 1; min-width: 200px; font-size: 16px; font-weight: bold; color: #E8C87A; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 8px 10px; }
+  .felt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; margin-bottom: 8px; }
+  .felt { display: flex; flex-direction: column; gap: 3px; }
+  .felt label { font-size: 11px; color: #9BAABB; text-transform: uppercase; letter-spacing: 0.5px; }
+  .felt input, .felt textarea, .felt select {
     width: 100%; padding: 6px 10px;
     background: rgba(0,0,0,0.3);
     border: 1px solid rgba(255,255,255,0.1);
@@ -37,17 +42,26 @@
     font-size: 13px;
     font-family: inherit;
   }
-  .felt textarea { resize: vertical; min-height: 36px; }
-  .felt input:focus, .felt textarea:focus { outline: none; border-color: #D4A853; }
-  .knapper { display: flex; gap: 8px; margin-top: 8px; }
-  button { background: #D4A853; color: #0D1B2A; border: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
+  .felt textarea { resize: vertical; min-height: 50px; }
+  .felt input:focus, .felt textarea:focus, .felt select:focus { outline: none; border-color: #D4A853; }
+  .felt.full { grid-column: 1 / -1; }
+  .knapper { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+  button { background: #D4A853; color: #0D1B2A; border: none; padding: 7px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
+  button:hover { filter: brightness(1.08); }
   button.muted { background: rgba(255,255,255,0.1); color: #B0C4D8; }
+  button.fare { background: #B45050; color: #fff; }
   button:disabled { opacity: 0.4; cursor: not-allowed; }
   .status { font-size: 11px; color: #50B464; padding: 4px 0; }
-  .filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-  .filter-row input { flex: 1; min-width: 200px; padding: 8px 12px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #E8E0D4; font-size: 14px; }
+  .status.feil { color: #E08080; }
+  .filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+  .filter-row input[type=text] { flex: 1; min-width: 200px; padding: 8px 12px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #E8E0D4; font-size: 14px; }
+  .filter-row label { font-size: 13px; color: #B0C4D8; display: flex; align-items: center; gap: 6px; cursor: pointer; }
   .nav-link { display: inline-block; margin-right: 12px; color: #D4A853; text-decoration: none; font-size: 13px; }
   .nav-link:hover { text-decoration: underline; }
+  .skjul-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #B0C4D8; cursor: pointer; padding: 4px 10px; background: rgba(255,255,255,0.05); border-radius: 6px; }
+  .ny-knapp { background: #50B464; color: #fff; padding: 10px 16px; font-size: 14px; }
+  .badge-ny { display: inline-block; background: #50B464; color: #0D1B2A; padding: 1px 6px; border-radius: 4px; font-size: 10px; margin-left: 6px; vertical-align: middle; }
+  .badge-skjult { display: inline-block; background: #B45050; color: #fff; padding: 1px 6px; border-radius: 4px; font-size: 10px; margin-left: 6px; vertical-align: middle; }
 </style>
 </head>
 <body>
@@ -57,11 +71,15 @@
 </p>
 <h1>👥 Rediger gjester</h1>
 <div class="info">
-  Endre relasjon, kort bio, eller spesielle facts om hver gjest. Endringer vises i appen umiddelbart (overstyrer det som er hardkodet i data.js).
+  Du kan endre alt om hver gjest — navn, bord, jobb, sosiale lenker, bilde og bio. Du kan også
+  <strong>legge til nye gjester</strong>, <strong>skjule</strong> dem fra listene, eller helt
+  <strong>nullstille</strong> en redigering. Endringer vises i appen umiddelbart.
 </div>
 
 <div class="filter-row">
-  <input id="sok" type="text" placeholder="🔍 Søk navn..." />
+  <input id="sok" type="text" placeholder="🔍 Søk navn, jobb, bio..." />
+  <label><input id="vis-skjulte" type="checkbox" /> Vis skjulte</label>
+  <button class="ny-knapp" onclick="nyGjest()">➕ Ny gjest</button>
 </div>
 
 <div id="liste">Laster...</div>
@@ -69,6 +87,19 @@
 <script src="/Thomas50/data.js"></script>
 <script>
 const STAT = {};
+let adminKey = sessionStorage.getItem('thomas50-admin-key') || '';
+let sok = '';
+let visSkjulte = false;
+
+function krevAdminKey() {
+  if (adminKey) return adminKey;
+  const k = prompt('Skriv inn admin-nøkkel (lagres i denne fanen):');
+  if (k) {
+    adminKey = k.trim();
+    sessionStorage.setItem('thomas50-admin-key', adminKey);
+  }
+  return adminKey;
+}
 
 async function lastEditer() {
   try {
@@ -81,90 +112,297 @@ async function lastEditer() {
 }
 
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function slug(s) {
-  return s.toLowerCase().replace(/æ/g,'ae').replace(/ø/g,'o').replace(/å/g,'a').replace(/'/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+function attrEsc(s) { return esc(s); }
+
+// Effektiv (merged) verdi: edit overstyrer original
+function eff(navn, felt, original) {
+  const e = STAT[navn];
+  if (e && e[felt] !== null && e[felt] !== undefined && e[felt] !== '') return e[felt];
+  return original ?? '';
 }
 
-let sok = '';
+// Bygg sammen full liste: alle GJESTER + nye gjester fra STAT
+function alleGjester() {
+  const map = new Map();
+  GJESTER.forEach(g => map.set(g.navn, { ...g, _original: true }));
+  Object.values(STAT).forEach(e => {
+    if (e.nyGjest && !map.has(e.navn)) {
+      map.set(e.navn, { navn: e.navn, _ny: true });
+    }
+  });
+  return [...map.values()];
+}
+
 function render() {
   const liste = document.getElementById('liste');
-  let arr = GJESTER.slice();
-  if (sok) arr = arr.filter(g => (g.navn || '').toLowerCase().includes(sok));
-  arr.sort((a, b) => (a.bord || 99) - (b.bord || 99) || a.navn.localeCompare(b.navn));
+  let arr = alleGjester();
 
-  liste.innerHTML = arr.map((g, i) => {
-    const e = STAT[g.navn] || {};
-    const bio = e.bio ?? g.bio ?? '';
-    const rel = e.relasjon ?? g.relasjon ?? '';
-    const xb = e.extraBio ?? g.extraBio ?? '';
-    const init = (g.navn || '').split(' ').map(s => s[0]).slice(0, 2).join('');
-    const avatar = g.bildeFil
-      ? `<img class="avatar" src="../${esc(g.bildeFil)}" alt="" />`
-      : `<div class="avatar avatar-init">${esc(init)}</div>`;
-    return `
-      <div class="gjest-rad" data-navn="${esc(g.navn)}">
-        ${avatar}
-        <div>
-          <div class="navn">${esc(g.navn)}</div>
-          <div class="meta">Bord ${g.bord || '?'} · ${g.bordType || 8}-mannsbord ${g.fbUrl ? `· <a href="${esc(g.fbUrl)}" target="_blank" style="color:#7EB8D4">FB</a>` : ''} ${g.liUrl ? `· <a href="${esc(g.liUrl)}" target="_blank" style="color:#7EB8D4">LI</a>` : ''}</div>
-          <div class="felt">
-            <label>Relasjon:</label>
-            <input data-felt="relasjon" value="${esc(rel)}" placeholder="f.eks. Søster, Venn, Kollega" />
-          </div>
-          <div class="felt">
-            <label>Bio:</label>
-            <textarea data-felt="bio" placeholder="Kort beskrivelse...">${esc(bio)}</textarea>
-          </div>
-          <div class="felt">
-            <label>Ekstra (gull):</label>
-            <input data-felt="extraBio" value="${esc(xb)}" placeholder="f.eks. Statssekretær, Maraton-løper" />
-          </div>
-          <div class="knapper">
-            <button onclick="lagre('${esc(g.navn).replace(/'/g, '&#39;')}')">💾 Lagre</button>
-            <button class="muted" onclick="tilbakestill('${esc(g.navn).replace(/'/g, '&#39;')}')">↩️ Original</button>
-            <span class="status" data-status="${esc(g.navn)}"></span>
-          </div>
-        </div>
-      </div>`;
-  }).join('');
+  if (sok) {
+    const s = sok.toLowerCase();
+    arr = arr.filter(g => {
+      const tekst = [g.navn, eff(g.navn, 'jobb', g.jobb), eff(g.navn, 'bio', g.bio), eff(g.navn, 'relasjon', g.relasjon), eff(g.navn, 'extraBio', g.extraBio)].join(' ').toLowerCase();
+      return tekst.includes(s);
+    });
+  }
+
+  if (!visSkjulte) {
+    arr = arr.filter(g => !(STAT[g.navn] && STAT[g.navn].skjult));
+  }
+
+  arr.sort((a, b) => {
+    const ba = eff(a.navn, 'bord', a.bord) || 99;
+    const bb = eff(b.navn, 'bord', b.bord) || 99;
+    return ba - bb || a.navn.localeCompare(b.navn, 'nb-NO');
+  });
+
+  liste.innerHTML = arr.map(g => radHtml(g)).join('');
+  if (!arr.length) liste.innerHTML = '<p style="color:#9BAABB">Ingen treff.</p>';
 }
 
-async function lagre(navn) {
-  const rad = document.querySelector(`.gjest-rad[data-navn="${navn.replace(/"/g, '\\"')}"]`);
-  if (!rad) return;
-  const data = { navn };
-  rad.querySelectorAll('[data-felt]').forEach(el => { data[el.dataset.felt] = el.value; });
+function radHtml(g) {
+  const e = STAT[g.navn] || {};
+  const erNy = !!e.nyGjest;
+  const erSkjult = !!e.skjult;
+  const erEndret = Object.keys(e).length > 0 && !erNy;
+
+  const navnVis = e.nyttNavn || g.navn;
+  const init = (navnVis || '').split(' ').map(s => s[0]).slice(0, 2).join('').toUpperCase();
+
+  // Bilde: edit > original
+  const bildeKilde = e.bildeUrl || (g.bildeFil ? (g._ny ? g.bildeFil : `../${g.bildeFil}`) : null);
+  const avatar = bildeKilde
+    ? `<img class="avatar" data-rolle="avatar" src="${attrEsc(bildeKilde)}" alt="" />`
+    : `<div class="avatar avatar-init" data-rolle="avatar">${esc(init)}</div>`;
+
+  const v = (felt, original) => attrEsc(eff(g.navn, felt, original));
+
+  const klasser = ['gjest-rad'];
+  if (erEndret) klasser.push('endret');
+  if (erSkjult) klasser.push('skjult');
+  if (erNy) klasser.push('ny');
+
+  return `
+    <div class="${klasser.join(' ')}" data-navn="${attrEsc(g.navn)}">
+      <div class="avatar-boks">
+        ${avatar}
+        <button class="upload-btn muted" onclick="velgBilde(this)">📷 Bilde</button>
+        <input type="file" accept="image/*" style="display:none" data-rolle="filinput" onchange="lastOppBilde(this)" />
+      </div>
+      <div>
+        <div class="navn-rad">
+          <input class="navn-input" data-felt="nyttNavn" value="${attrEsc(navnVis)}" placeholder="Navn" />
+          ${erNy ? '<span class="badge-ny">NY</span>' : ''}
+          ${erSkjult ? '<span class="badge-skjult">SKJULT</span>' : ''}
+        </div>
+        <div class="felt-grid">
+          <div class="felt"><label>Bord</label>
+            <input data-felt="bord" type="number" min="0" value="${v('bord', g.bord)}" />
+          </div>
+          <div class="felt"><label>Sete</label>
+            <input data-felt="sete" type="number" min="0" value="${v('sete', g.sete)}" />
+          </div>
+          <div class="felt"><label>Bordtype</label>
+            <select data-felt="bordType">
+              ${[6,8,10,12].map(n => `<option value="${n}" ${String(eff(g.navn,'bordType',g.bordType||8))==String(n)?'selected':''}>${n}-mannsbord</option>`).join('')}
+            </select>
+          </div>
+          <div class="felt"><label>Jobb / tittel</label>
+            <input data-felt="jobb" value="${v('jobb', g.jobb)}" placeholder="f.eks. Lege, Lærer" />
+          </div>
+          <div class="felt"><label>Relasjon</label>
+            <input data-felt="relasjon" value="${v('relasjon', g.relasjon)}" placeholder="f.eks. Søster" />
+          </div>
+          <div class="felt"><label>Ekstra (gull)</label>
+            <input data-felt="extraBio" value="${v('extraBio', g.extraBio)}" placeholder="f.eks. Statssekretær" />
+          </div>
+          <div class="felt"><label>Facebook URL</label>
+            <input data-felt="fbUrl" value="${v('fbUrl', g.fbUrl)}" placeholder="https://facebook.com/..." />
+          </div>
+          <div class="felt"><label>LinkedIn URL</label>
+            <input data-felt="liUrl" value="${v('liUrl', g.liUrl)}" placeholder="https://linkedin.com/in/..." />
+          </div>
+          <div class="felt"><label>Instagram URL</label>
+            <input data-felt="igUrl" value="${v('igUrl', g.igUrl)}" placeholder="https://instagram.com/..." />
+          </div>
+          <div class="felt full"><label>Bio</label>
+            <textarea data-felt="bio" placeholder="Kort beskrivelse...">${esc(eff(g.navn,'bio',g.bio))}</textarea>
+          </div>
+        </div>
+        <div class="knapper">
+          <button onclick="lagre(this)">💾 Lagre</button>
+          <label class="skjul-pill">
+            <input type="checkbox" data-felt="skjult" ${erSkjult ? 'checked' : ''} />
+            ${erSkjult ? '👁️‍🗨️ Skjult — vis i appen igjen' : '🚫 Skjul fra appen'}
+          </label>
+          <button class="fare" onclick="slettEller(this)">${erNy ? '🗑️ Slett gjest' : '↩️ Nullstill edits'}</button>
+          <span class="status"></span>
+        </div>
+      </div>
+    </div>`;
+}
+
+function velgBilde(btn) {
+  const rad = btn.closest('.gjest-rad');
+  rad.querySelector('[data-rolle="filinput"]').click();
+}
+
+function lastOppBilde(input) {
+  const fil = input.files && input.files[0];
+  if (!fil) return;
+  const rad = input.closest('.gjest-rad');
   const status = rad.querySelector('.status');
+  status.textContent = 'Behandler bilde...';
+  status.classList.remove('feil');
+  const r = new FileReader();
+  r.onload = (ev) => {
+    const img = new Image();
+    img.onload = () => {
+      const maks = 400;
+      let w = img.width, h = img.height;
+      if (w > h) { if (w > maks) { h = h * maks / w; w = maks; } }
+      else      { if (h > maks) { w = w * maks / h; h = maks; } }
+      const c = document.createElement('canvas');
+      c.width = Math.round(w); c.height = Math.round(h);
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#1a2a3a';
+      ctx.fillRect(0, 0, c.width, c.height);
+      ctx.drawImage(img, 0, 0, c.width, c.height);
+      const dataUrl = c.toDataURL('image/jpeg', 0.78);
+      const av = rad.querySelector('[data-rolle="avatar"]');
+      if (av.tagName === 'IMG') {
+        av.src = dataUrl;
+      } else {
+        const ny = document.createElement('img');
+        ny.className = 'avatar';
+        ny.dataset.rolle = 'avatar';
+        ny.src = dataUrl;
+        av.replaceWith(ny);
+      }
+      rad.dataset.nyttBilde = dataUrl;
+      status.textContent = '📷 Bilde klart — husk å lagre';
+    };
+    img.onerror = () => { status.textContent = 'Klarte ikke lese bilde'; status.classList.add('feil'); };
+    img.src = ev.target.result;
+  };
+  r.readAsDataURL(fil);
+}
+
+function lesRad(rad) {
+  const navn = rad.dataset.navn;
+  const data = { navn };
+  rad.querySelectorAll('[data-felt]').forEach(el => {
+    if (el.type === 'checkbox') data[el.dataset.felt] = el.checked;
+    else data[el.dataset.felt] = el.value;
+  });
+  // nyttNavn er nå navn-feltet — hvis uendret fra original, send null
+  const eksisterende = GJESTER.find(g => g.navn === navn);
+  if (eksisterende && data.nyttNavn === navn) data.nyttNavn = null;
+  if (!eksisterende) {
+    // Ny gjest — flytt navnet fra nyttNavn til navn (men beholder DB-key som original first navn)
+    data.navn = data.nyttNavn || navn;
+    data.nyttNavn = null;
+    data.nyGjest = true;
+    // Hvis brukeren ga den nytt PK-navn må vi slette gammel rad og bruke nytt
+    if (data.navn !== navn) data._byttNavnFra = navn;
+  }
+  if (rad.dataset.nyttBilde) data.bildeUrl = rad.dataset.nyttBilde;
+  return data;
+}
+
+async function lagre(btn) {
+  if (!krevAdminKey()) return;
+  const rad = btn.closest('.gjest-rad');
+  const data = lesRad(rad);
+  const status = rad.querySelector('.status');
+  status.classList.remove('feil');
   status.textContent = 'Lagrer...';
   try {
+    // Hvis ny gjest byttet navn — slett gammel rad først
+    if (data._byttNavnFra) {
+      await fetch('/api/thomas50-gjest-edit?navn=' + encodeURIComponent(data._byttNavnFra), {
+        method: 'DELETE',
+        headers: { 'x-admin-key': adminKey },
+      });
+      delete STAT[data._byttNavnFra];
+      delete data._byttNavnFra;
+    }
+    const payload = { ...data, key: adminKey };
     const r = await fetch('/api/thomas50-gjest-edit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
-    if (!r.ok) throw new Error(r.status);
-    STAT[navn] = data;
-    rad.classList.add('endret');
+    if (r.status === 401) {
+      sessionStorage.removeItem('thomas50-admin-key');
+      adminKey = '';
+      throw new Error('Feil admin-key — prøv igjen');
+    }
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    STAT[data.navn] = { ...STAT[data.navn], ...data };
+    delete rad.dataset.nyttBilde;
     status.textContent = '✓ Lagret ' + new Date().toLocaleTimeString('nb-NO');
-    setTimeout(() => { status.textContent = ''; }, 4000);
+    setTimeout(() => render(), 800);
   } catch (e) {
     status.textContent = 'Feil: ' + e.message;
-    status.style.color = '#E08080';
+    status.classList.add('feil');
   }
 }
 
-function tilbakestill(navn) {
-  const rad = document.querySelector(`.gjest-rad[data-navn="${navn.replace(/"/g, '\\"')}"]`);
-  const g = GJESTER.find(x => x.navn === navn);
-  if (!rad || !g) return;
-  rad.querySelector('[data-felt="bio"]').value = g.bio || '';
-  rad.querySelector('[data-felt="relasjon"]').value = g.relasjon || '';
-  rad.querySelector('[data-felt="extraBio"]').value = g.extraBio || '';
-  delete STAT[navn];
-  rad.classList.remove('endret');
+async function slettEller(btn) {
+  if (!krevAdminKey()) return;
+  const rad = btn.closest('.gjest-rad');
+  const navn = rad.dataset.navn;
+  const erNy = STAT[navn] && STAT[navn].nyGjest;
+  const tekst = erNy
+    ? `Slette gjesten "${navn}" helt?`
+    : `Nullstille alle redigeringer for "${navn}"? (Den faller tilbake til originaldata)`;
+  if (!confirm(tekst)) return;
+  const status = rad.querySelector('.status');
+  status.classList.remove('feil');
+  status.textContent = 'Sletter...';
+  try {
+    const r = await fetch('/api/thomas50-gjest-edit?navn=' + encodeURIComponent(navn), {
+      method: 'DELETE',
+      headers: { 'x-admin-key': adminKey },
+    });
+    if (r.status === 401) {
+      sessionStorage.removeItem('thomas50-admin-key');
+      adminKey = '';
+      throw new Error('Feil admin-key');
+    }
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    delete STAT[navn];
+    render();
+  } catch (e) {
+    status.textContent = 'Feil: ' + e.message;
+    status.classList.add('feil');
+  }
 }
 
-document.getElementById('sok').oninput = e => { sok = e.target.value.trim().toLowerCase(); render(); };
+function nyGjest() {
+  const navn = prompt('Navn på ny gjest:');
+  if (!navn || !navn.trim()) return;
+  const n = navn.trim();
+  if (GJESTER.find(g => g.navn === n) || STAT[n]) {
+    alert('En gjest med dette navnet finnes allerede.');
+    return;
+  }
+  // Legg til som lokal stub, render — Thomas må trykke Lagre for å lagre i DB
+  STAT[n] = { navn: n, nyGjest: true, bordType: 8 };
+  render();
+  // Scroll til den nye raden
+  setTimeout(() => {
+    const rad = document.querySelector(`.gjest-rad[data-navn="${n.replace(/"/g,'\\"')}"]`);
+    if (rad) {
+      rad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const status = rad.querySelector('.status');
+      if (status) { status.textContent = 'Ny gjest — fyll ut og trykk Lagre'; }
+    }
+  }, 100);
+}
+
+document.getElementById('sok').oninput = e => { sok = e.target.value.trim(); render(); };
+document.getElementById('vis-skjulte').onchange = e => { visSkjulte = e.target.checked; render(); };
 
 (async () => {
   await lastEditer();

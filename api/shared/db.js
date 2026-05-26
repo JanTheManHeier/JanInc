@@ -40,7 +40,7 @@ function executeQuery(connection, sql, params = []) {
             if (err) reject(err);
             else resolve(rows);
         });
-        params.forEach(p => request.addParameter(p.name, p.type, p.value));
+        params.forEach(p => request.addParameter(p.name, p.type, p.value, p.options));
         request.on('row', columns => {
             const row = {};
             columns.forEach(col => { row[col.metadata.colName] = col.value; });

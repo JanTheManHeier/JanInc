@@ -58,11 +58,12 @@ module.exports = async function (context, req) {
             SELECT b.navn,
                    COUNT(*) AS besok,
                    MAX(b.opprettet) AS sist,
+                   MIN(b.opprettet) AS forste,
                    (SELECT TOP 1 ip FROM Thomas50_Besok WHERE navn = b.navn AND ip IS NOT NULL ORDER BY opprettet DESC) AS ip
             FROM Thomas50_Besok b
             WHERE b.navn IS NOT NULL AND b.navn <> 'anonym'
             GROUP BY b.navn
-            ORDER BY sist DESC`);
+            ORDER BY besok DESC, sist DESC`);
         const sisteBesok = await executeQuery(connection, "SELECT TOP 50 navn, side, ip, opprettet FROM Thomas50_Besok ORDER BY opprettet DESC");
         const hilsener = await executeQuery(connection, "SELECT id, navn, tekst, opprettet FROM Thomas50_Hilsener ORDER BY opprettet DESC");
         const taler = await executeQuery(connection, "SELECT id, navn, epost, tema, melding, opprettet FROM Thomas50_Toaster ORDER BY opprettet DESC");

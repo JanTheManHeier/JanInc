@@ -14,6 +14,11 @@
   .stat-label { font-size: 13px; color: #B0C4D8; margin-top: 4px; }
   table { width: 100%; border-collapse: collapse; margin: 12px 0; background: rgba(255,255,255,0.04); border-radius: 8px; overflow: hidden; }
   th { text-align: left; background: rgba(212,168,83,0.15); padding: 10px; color: #D4A853; font-size: 13px; }
+  th.sortable { cursor: pointer; user-select: none; }
+  th.sortable:hover { background: rgba(212,168,83,0.25); }
+  th.sortable::after { content: ' ⇅'; opacity: 0.4; font-size: 11px; }
+  th.sort-asc::after { content: ' ▲'; opacity: 1; }
+  th.sort-desc::after { content: ' ▼'; opacity: 1; }
   td { padding: 10px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 13px; color: #C8D8E8; }
   td.tekst { white-space: pre-wrap; }
   .muted { color: #7A8FA8; font-size: 12px; }
@@ -137,6 +142,41 @@ async function berikGeo() {
     c.textContent = ip ? (geoCache[ip] || '?') : '';
   });
 }
+function sorterTabell(table, thIdx, dir) {
+  const tbody = table.querySelector('tbody');
+  if (!tbody) return;
+  const ths = table.querySelectorAll('thead th');
+  const type = ths[thIdx]?.dataset.type || 'text';
+  const rader = [...tbody.querySelectorAll('tr')];
+  const verdi = (tr) => {
+    const td = tr.children[thIdx];
+    if (!td) return '';
+    const raw = td.dataset.sort !== undefined ? td.dataset.sort : td.textContent.trim();
+    if (type === 'num') return parseFloat(raw.replace(',', '.')) || 0;
+    if (type === 'date') { const t = Date.parse(raw); return isNaN(t) ? 0 : t; }
+    return raw.toLocaleLowerCase('nb-NO');
+  };
+  rader.sort((a, b) => {
+    const va = verdi(a), vb = verdi(b);
+    if (va < vb) return dir === 'asc' ? -1 : 1;
+    if (va > vb) return dir === 'asc' ? 1 : -1;
+    return 0;
+  });
+  rader.forEach(r => tbody.appendChild(r));
+  ths.forEach(th => th.classList.remove('sort-asc', 'sort-desc'));
+  ths[thIdx].classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
+}
+
+document.addEventListener('click', (e) => {
+  const th = e.target.closest('th.sortable');
+  if (!th) return;
+  const table = th.closest('table');
+  if (!table) return;
+  const thIdx = [...th.parentNode.children].indexOf(th);
+  const dir = th.classList.contains('sort-desc') ? 'asc' : 'desc';
+  sorterTabell(table, thIdx, dir);
+});
+
 async function last() {
   const c = document.getElementById('content');
   c.innerHTML = 'Laster...';
@@ -168,9 +208,9 @@ function render(d) {
   if (d.highscore && d.highscore.length) {
     h += '<h2>🏆 Quiz topp 10</h2>';
     h += '<div class="admin-aksjoner"><button class="danger tiny" onclick="resetScores(\'quiz\', \'Quiz-scores\')">🗑️ Reset quiz-scores</button></div>';
-    h += '<table><tr><th>#</th><th>Navn</th><th>Score</th><th>Forsøk</th><th>Sist</th></tr>';
-    h += d.highscore.map((r, i) => `<tr><td>${['🥇','🥈','🥉'][i]||(i+1)}</td><td><strong>${esc(r.navn)}</strong></td><td>${r.score}/${r.antall}</td><td>${r.forsok}</td><td class="muted">${dt(r.sist)}</td></tr>`).join('');
-    h += '</table>';
+    h += '<table class="sortable-tabell"><thead><tr><th>#</th><th class="sortable" data-type="text">Navn</th><th class="sortable" data-type="num">Score</th><th class="sortable" data-type="num">Forsøk</th><th class="sortable" data-type="date">Sist</th></tr></thead><tbody>';
+    h += d.highscore.map((r, i) => `<tr><td>${['🥇','🥈','🥉'][i]||(i+1)}</td><td><strong>${esc(r.navn)}</strong></td><td data-sort="${r.score}">${r.score}/${r.antall}</td><td>${r.forsok}</td><td class="muted" data-sort="${r.sist||''}">${dt(r.sist)}</td></tr>`).join('');
+    h += '</tbody></table>';
   } else {
     h += '<h2>🏆 Quiz topp 10</h2>';
     h += '<div class="admin-aksjoner"><button class="danger tiny" onclick="resetScores(\'quiz\', \'Quiz-scores\')">🗑️ Reset quiz-scores</button></div>';
@@ -180,29 +220,39 @@ function render(d) {
   h += '<h2>🎮 Spill topp 10 (Thomas til Festen)</h2>';
   h += '<div class="admin-aksjoner"><button class="danger tiny" onclick="resetScores(\'spill\', \'Spill-scores\')">🗑️ Reset spill-scores</button></div>';
   if (d.spillTopp && d.spillTopp.length) {
-    h += '<table><tr><th>#</th><th>Navn</th><th>Score</th><th>Sist</th></tr>';
-    h += d.spillTopp.map((r, i) => `<tr><td>${['🥇','🥈','🥉'][i]||(i+1)}</td><td><strong>${esc(r.navn)}</strong></td><td>${r.score}</td><td class="muted">${dt(r.sist)}</td></tr>`).join('');
-    h += '</table>';
+    h += '<table class="sortable-tabell"><thead><tr><th>#</th><th class="sortable" data-type="text">Navn</th><th class="sortable" data-type="num">Score</th><th class="sortable" data-type="date">Sist</th></tr></thead><tbody>';
+    h += d.spillTopp.map((r, i) => `<tr><td>${['🥇','🥈','🥉'][i]||(i+1)}</td><td><strong>${esc(r.navn)}</strong></td><td>${r.score}</td><td class="muted" data-sort="${r.sist||''}">${dt(r.sist)}</td></tr>`).join('');
+    h += '</tbody></table>';
   } else {
     h += '<p class="muted">Ingen scores ennå.</p>';
   }
 
-  h += '<h2>👥 Hvem har vært inne?</h2>';
+  h += '<h2>👥 Hvem har vært inne? <span class="muted" style="font-size:13px;font-weight:normal">— sortert etter besøk (klikk kolonne for å endre)</span></h2>';
   if (d.perNavn.length) {
-    h += '<table><tr><th>Navn</th><th>Sted</th><th>IP</th><th>Besøk</th><th>Sist</th></tr>';
-    h += d.perNavn.map(r => `<tr>
-      <td>${esc(r.navn)}</td>
-      <td class="muted">${esc(r.sted || '')}</td>
+    h += '<table class="sortable-tabell" data-default-sort="3:desc"><thead><tr>'
+      + '<th class="sortable" data-type="num">#</th>'
+      + '<th class="sortable" data-type="text">Navn</th>'
+      + '<th class="sortable" data-type="text">Sted</th>'
+      + '<th class="sortable" data-type="text">IP</th>'
+      + '<th class="sortable sort-desc" data-type="num">Besøk</th>'
+      + '<th class="sortable" data-type="date">Først sett</th>'
+      + '<th class="sortable" data-type="date">Sist</th>'
+      + '</tr></thead><tbody>';
+    h += d.perNavn.map((r, i) => `<tr>
+      <td class="muted">${i + 1}</td>
+      <td><strong>${esc(r.navn)}</strong></td>
+      <td class="muted" data-geo-ip="${esc(r.ip || '')}">${esc(r.sted || '')}</td>
       <td class="muted">${esc(r.ip || '—')}</td>
-      <td>${r.besok}</td>
-      <td>${dt(r.sist)}</td>
+      <td data-sort="${r.besok}">${r.besok}</td>
+      <td class="muted" data-sort="${r.forste || ''}">${dt(r.forste)}</td>
+      <td data-sort="${r.sist || ''}">${dt(r.sist)}</td>
     </tr>`).join('');
-    h += '</table>';
+    h += '</tbody></table>';
   } else h += '<p class="muted">Ingen ennå.</p>';
 
-  h += '<h2>📊 Per side</h2><table><tr><th>Side</th><th>Antall</th></tr>';
+  h += '<h2>📊 Per side</h2><table class="sortable-tabell"><thead><tr><th class="sortable" data-type="text">Side</th><th class="sortable sort-desc" data-type="num">Antall</th></tr></thead><tbody>';
   h += d.perSide.map(r => `<tr><td>${esc(r.side)}</td><td>${r.antall}</td></tr>`).join('');
-  h += '</table>';
+  h += '</tbody></table>';
 
   h += '<h2>🎤 Taleforespørsler til toastmasterne</h2>';
   if (d.taler.length) {
@@ -229,15 +279,15 @@ function render(d) {
     h += '</table>';
   } else h += '<p class="muted">Ingen hilsener ennå.</p>';
 
-  h += '<h2>🕒 Siste 50 besøk</h2><table><tr><th>Navn</th><th>Side</th><th>Sted</th><th>IP</th><th>Tid</th></tr>';
+  h += '<h2>🕒 Siste 50 besøk</h2><table class="sortable-tabell" data-default-sort="4:desc"><thead><tr><th class="sortable" data-type="text">Navn</th><th class="sortable" data-type="text">Side</th><th class="sortable" data-type="text">Sted</th><th class="sortable" data-type="text">IP</th><th class="sortable sort-desc" data-type="date">Tid</th></tr></thead><tbody>';
   h += d.sisteBesok.map(r => `<tr>
     <td>${esc(r.navn || '—')}</td>
     <td>${esc(r.side || '')}</td>
-    <td class="muted">${esc(r.sted || '')}</td>
+    <td class="muted" data-geo-ip="${esc(r.ip || '')}">${esc(r.sted || '')}</td>
     <td class="muted">${esc(r.ip || '—')}</td>
-    <td class="muted">${dt(r.opprettet)}</td>
+    <td class="muted" data-sort="${r.opprettet || ''}">${dt(r.opprettet)}</td>
   </tr>`).join('');
-  h += '</table>';
+  h += '</tbody></table>';
 
   return h;
 }
