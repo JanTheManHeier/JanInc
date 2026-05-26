@@ -20,6 +20,11 @@
       "statusCode": 301
     },
     {
+      "route": "/Thomas50",
+      "redirect": "/Thomas50/",
+      "statusCode": 301
+    },
+    {
       "route": "/SmartHandel/*",
       "allowedRoles": ["approved"]
     },
