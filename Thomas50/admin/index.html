@@ -186,7 +186,6 @@ async function last() {
     const d = await res.json();
     document.getElementById('generert').textContent = 'Generert ' + new Date(d.generertAt).toLocaleString('nb-NO');
     c.innerHTML = render(d);
-    berikGeo();
   } catch (e) {
     c.innerHTML = '<div class="err">Kunne ikke hente statistikk: ' + (e.message || e) + '</div>';
   }
@@ -241,7 +240,7 @@ function render(d) {
     h += d.perNavn.map((r, i) => `<tr>
       <td class="muted">${i + 1}</td>
       <td><strong>${esc(r.navn)}</strong></td>
-      <td class="muted" data-geo-ip="${esc(r.ip || '')}">${esc(r.sted || '')}</td>
+      <td class="muted">${esc(r.sted || '')}</td>
       <td class="muted">${esc(r.ip || '—')}</td>
       <td data-sort="${r.besok}">${r.besok}</td>
       <td class="muted" data-sort="${r.forste || ''}">${dt(r.forste)}</td>
@@ -283,7 +282,7 @@ function render(d) {
   h += d.sisteBesok.map(r => `<tr>
     <td>${esc(r.navn || '—')}</td>
     <td>${esc(r.side || '')}</td>
-    <td class="muted" data-geo-ip="${esc(r.ip || '')}">${esc(r.sted || '')}</td>
+    <td class="muted">${esc(r.sted || '')}</td>
     <td class="muted">${esc(r.ip || '—')}</td>
     <td class="muted" data-sort="${r.opprettet || ''}">${dt(r.opprettet)}</td>
   </tr>`).join('');
