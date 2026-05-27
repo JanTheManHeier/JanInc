@@ -359,13 +359,18 @@
   }
 
   // ============ Gjester ============
-  function initGjester() {
+  function oppdaterGjesterStats() {
     const stats = document.getElementById('gjester-stats');
+    if (!stats) return;
     const totalt = GJESTER.filter(g => !g.avbud).length;
     const pust = GJESTER.filter(g => g.pust && !g.avbud).length;
     stats.innerHTML = `
       <div><strong>${totalt}</strong>Bekreftet</div>
       <div><strong>${pust}</strong>På Pust</div>`;
+  }
+
+  function initGjester() {
+    oppdaterGjesterStats();
 
     document.querySelectorAll('.chip[data-filter]').forEach(c => {
       c.addEventListener('click', () => {
@@ -380,6 +385,7 @@
   }
 
   function renderGjester() {
+    oppdaterGjesterStats();
     const grid = document.getElementById('gjester-grid');
     let liste = GJESTER.slice();
     if (gjesterFilter === 'pust') liste = liste.filter(g => g.pust);
