@@ -101,6 +101,7 @@
           if (has('relasjon')) ny.relasjon = d.relasjon;
           if (has('extraBio')) ny.extraBio = d.extraBio;
           if (has('jobb')) ny.jobb = d.jobb;
+          if (d.pust === true || d.pust === 1) ny.pust = true;
           if (has('bildeUrl')) ny.bildeFil = d.bildeUrl;
           if (!GJESTER.find(x => x.navn === ny.navn)) GJESTER.push(ny);
           return;
@@ -119,6 +120,7 @@
         if (has('liUrl')) g.liUrl = d.liUrl;
         if (has('igUrl')) g.igUrl = d.igUrl;
         if (has('bildeUrl')) g.bildeFil = d.bildeUrl;
+        if (d.pust !== null && d.pust !== undefined) g.pust = !!d.pust;
         if (has('nyttNavn')) {
           if (!g.originalNavn) g.originalNavn = g.navn;
           g.navn = d.nyttNavn;

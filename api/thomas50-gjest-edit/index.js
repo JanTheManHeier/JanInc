@@ -24,9 +24,10 @@ IF COL_LENGTH('Thomas50_GjestEdit','igUrl')    IS NULL ALTER TABLE Thomas50_Gjes
 IF COL_LENGTH('Thomas50_GjestEdit','bildeUrl') IS NULL ALTER TABLE Thomas50_GjestEdit ADD bildeUrl NVARCHAR(MAX) NULL;
 IF COL_LENGTH('Thomas50_GjestEdit','skjult')   IS NULL ALTER TABLE Thomas50_GjestEdit ADD skjult BIT NOT NULL DEFAULT 0 WITH VALUES;
 IF COL_LENGTH('Thomas50_GjestEdit','nyGjest')  IS NULL ALTER TABLE Thomas50_GjestEdit ADD nyGjest BIT NOT NULL DEFAULT 0 WITH VALUES;
+IF COL_LENGTH('Thomas50_GjestEdit','pust')     IS NULL ALTER TABLE Thomas50_GjestEdit ADD pust BIT NULL;
 `;
 
-const SELECT_SQL = `SELECT navn, bio, relasjon, extraBio, nyttNavn, jobb, bord, sete, bordType, fbUrl, liUrl, igUrl, bildeUrl, skjult, nyGjest, oppdatert FROM Thomas50_GjestEdit`;
+const SELECT_SQL = `SELECT navn, bio, relasjon, extraBio, nyttNavn, jobb, bord, sete, bordType, fbUrl, liUrl, igUrl, bildeUrl, skjult, nyGjest, pust, oppdatert FROM Thomas50_GjestEdit`;
 
 function s(v, max) {
     if (v === null || v === undefined) return null;
@@ -40,6 +41,11 @@ function n(v) {
     return Number.isFinite(x) ? x : null;
 }
 function b(v) {
+    return v === true || v === 1 || v === '1' || v === 'true' ? 1 : 0;
+}
+// Tristate bit: null beholdes som null, ellers konverter
+function bn(v) {
+    if (v === null || v === undefined || v === '') return null;
     return v === true || v === 1 || v === '1' || v === 'true' ? 1 : 0;
 }
 
@@ -104,6 +110,7 @@ module.exports = async function (context, req) {
                 bildeUrl: s(body.bildeUrl),
                 skjult: b(body.skjult),
                 nyGjest: b(body.nyGjest),
+                pust: bn(body.pust),
             };
 
             await executeQuery(connection, `
@@ -114,11 +121,11 @@ module.exports = async function (context, req) {
                     nyttNavn = @nyttNavn, jobb = @jobb,
                     bord = @bord, sete = @sete, bordType = @bordType,
                     fbUrl = @fbUrl, liUrl = @liUrl, igUrl = @igUrl,
-                    bildeUrl = @bildeUrl, skjult = @skjult, nyGjest = @nyGjest,
+                    bildeUrl = @bildeUrl, skjult = @skjult, nyGjest = @nyGjest, pust = @pust,
                     oppdatert = GETDATE()
                 WHEN NOT MATCHED THEN INSERT
-                    (navn, bio, relasjon, extraBio, nyttNavn, jobb, bord, sete, bordType, fbUrl, liUrl, igUrl, bildeUrl, skjult, nyGjest)
-                    VALUES (@navn, @bio, @relasjon, @extraBio, @nyttNavn, @jobb, @bord, @sete, @bordType, @fbUrl, @liUrl, @igUrl, @bildeUrl, @skjult, @nyGjest);`,
+                    (navn, bio, relasjon, extraBio, nyttNavn, jobb, bord, sete, bordType, fbUrl, liUrl, igUrl, bildeUrl, skjult, nyGjest, pust)
+                    VALUES (@navn, @bio, @relasjon, @extraBio, @nyttNavn, @jobb, @bord, @sete, @bordType, @fbUrl, @liUrl, @igUrl, @bildeUrl, @skjult, @nyGjest, @pust);`,
                 [
                     { name: 'navn',     type: TYPES.NVarChar, value: p.navn },
                     { name: 'bio',      type: TYPES.NVarChar, value: p.bio },
@@ -135,6 +142,7 @@ module.exports = async function (context, req) {
                     { name: 'bildeUrl', type: TYPES.NVarChar, value: p.bildeUrl, options: { length: Infinity } },
                     { name: 'skjult',   type: TYPES.Bit,      value: p.skjult },
                     { name: 'nyGjest',  type: TYPES.Bit,      value: p.nyGjest },
+                    { name: 'pust',     type: TYPES.Bit,      value: p.pust },
                 ]
             );
             context.res = { status: 200, headers, body: { success: true } };

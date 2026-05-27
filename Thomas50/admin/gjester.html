@@ -206,6 +206,17 @@ function radHtml(g) {
               ${[6,8,10,12].map(n => `<option value="${n}" ${String(eff(g.navn,'bordType',g.bordType||8))==String(n)?'selected':''}>${n}-mannsbord</option>`).join('')}
             </select>
           </div>
+          <div class="felt"><label>🧖 Pust (badstue)</label>
+            <select data-felt="pust" data-tristate="1">
+              ${(() => {
+                const cur = (e.pust === true || e.pust === 1) ? 'true' : (e.pust === false || e.pust === 0) ? 'false' : '';
+                const orig = g.pust ? 'Ja' : 'Nei';
+                return `<option value="" ${cur===''?'selected':''}>— bruk original (${orig}) —</option>
+                        <option value="true" ${cur==='true'?'selected':''}>Med på Pust</option>
+                        <option value="false" ${cur==='false'?'selected':''}>Ikke med</option>`;
+              })()}
+            </select>
+          </div>
           <div class="felt"><label>Jobb / tittel</label>
             <input data-felt="jobb" value="${v('jobb', g.jobb)}" placeholder="f.eks. Lege, Lærer" />
           </div>
