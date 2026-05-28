@@ -48,6 +48,11 @@
         box-shadow: 0 2px 6px rgba(0,0,0,0.4);
     }
     .num-icon.ny { background: #e94560; }
+    .num-icon.pending { opacity: 0.55; border-style: dashed; }
+    .num-icon.locked { opacity: 0.35; border-style: dashed; }
+    .badge-open { background: #2d6a4f; color: #fff; }
+    .badge-soon { background: #b88600; color: #fff; }
+    .badge-later { background: #6c757d; color: #fff; }
     .disclaimer {
         font-size: 0.75rem; color: #888; padding: 6px 20px;
         background: #0f0f1e; border-top: 1px solid #16213e;
@@ -57,7 +62,7 @@
 <body>
 <header>
     <h1>🏔️ Ti på Topp Tromsø <span>2026</span></h1>
-    <div class="stats">15 turmål · <span style="color:#e94560">●</span> 8 nye · <span style="color:#2d6a4f">●</span> 7 videreført</div>
+    <div class="stats">15 turmål · <span style="color:#e94560">●</span> 8 nye · <span style="color:#2d6a4f">●</span> 7 videreført · <span id="opentoday"></span></div>
 </header>
 <div id="map"></div>
 <div class="disclaimer">📍 Alle 15 koordinater verifisert. Kilde: Kartverket Stedsnavn + brukerinnspill. Bruk Norgeskart-lenken i popup for detaljert posisjon.</div>
@@ -67,22 +72,43 @@
 // Koordinater fra Kartverket Stedsnavn-API (geonorge.no) der mulig.
 // kilde: "kv" = Kartverket verifisert, "ca" = omtrentlig (flere kandidater eller ikke funnet)
 const peaks = [
-    { n: 1,  navn: "Brosmortinden",                ny: true,  lat: 69.75484, lon: 18.31946, hoyde: "525 moh",   omr: "Kvaløya", kilde: "kv" },
-    { n: 2,  navn: "Charlottenlund – Doktordalen", ny: false, lat: 69.67090, lon: 18.95905, hoyde: "~250 moh",  omr: "Tromsøya (Doktordalen)", kilde: "kv" },
-    { n: 3,  navn: "Elverhøy kirke",               ny: true,  lat: 69.64846, lon: 18.92130, hoyde: "ca. 20 moh",omr: "Tromsø sentrum", kilde: "kv" },
-    { n: 4,  navn: "Krokvatnet",                   ny: false, lat: 69.66020, lon: 19.10171, hoyde: "~250 moh",  omr: "Ramfjord", kilde: "kv" },
-    { n: 5,  navn: "Varden",                       ny: false, lat: 69.70269, lon: 18.99636, hoyde: "291 moh",   omr: "Tromsdalen nord", kilde: "kv" },
-    { n: 6,  navn: "Arnttuva",                     ny: false, lat: 69.72431, lon: 18.85907, hoyde: "388 moh",   omr: "Kvaløya/Tromsøya", kilde: "kv" },
-    { n: 7,  navn: "Dalberget",                    ny: true,  lat: 69.62421, lon: 18.96789, hoyde: "~250 moh",  omr: "Tromsdalen", kilde: "kv" },
-    { n: 8,  navn: "Grønnlibruna",                 ny: true,  lat: 69.59734, lon: 18.70469, hoyde: "~500 moh",  omr: "Kvaløya", kilde: "kv" },
-    { n: 9,  navn: "Reinheia",                     ny: false, lat: 69.51114, lon: 18.80317, hoyde: "~200 moh",  omr: "Vikran, Malangshalvøya", kilde: "kv" },
-    { n: 10, navn: "Rundfjellet",                  ny: true,  lat: 69.67439, lon: 19.14545, hoyde: "~600 moh",  omr: "Ramfjord", kilde: "kv" },
-    { n: 11, navn: "Øvre Langvatnet",              ny: true,  lat: 69.87296, lon: 19.05951, hoyde: "~250 moh",  omr: "Ringvassøya", kilde: "kv" },
-    { n: 12, navn: "Bønntuva",                     ny: false, lat: 69.60605, lon: 19.00378, hoyde: "~450 moh",  omr: "Tromsdalen", kilde: "kv" },
-    { n: 13, navn: "Hatten, Kantornes",            ny: true,  lat: 69.39556, lon: 19.35750, hoyde: "~400 moh",  omr: "Balsfjord (Kantornes)", kilde: "kv" },
-    { n: 14, navn: "Ramnberget",                   ny: false, lat: 69.75985, lon: 18.44353, hoyde: "~150 moh",  omr: "Kvaløya", kilde: "kv" },
-    { n: 15, navn: "Sollidalsaksla",               ny: true,  lat: 69.58671, lon: 18.98698, hoyde: "~700 moh",  omr: "Sollidalen", kilde: "kv" }
+    { n: 1,  navn: "Brosmortinden",                ny: true,  lat: 69.75484, lon: 18.31946, hoyde: "525 moh",   omr: "Kvaløya", kilde: "kv", apner: null },
+    { n: 2,  navn: "Charlottenlund – Doktordalen", ny: false, lat: 69.67090, lon: 18.95905, hoyde: "~250 moh",  omr: "Tromsøya (Doktordalen)", kilde: "kv", apner: null },
+    { n: 3,  navn: "Elverhøy kirke",               ny: true,  lat: 69.64846, lon: 18.92130, hoyde: "ca. 20 moh",omr: "Tromsø sentrum", kilde: "kv", apner: null },
+    { n: 4,  navn: "Krokvatnet",                   ny: false, lat: 69.66020, lon: 19.10171, hoyde: "~250 moh",  omr: "Ramfjord", kilde: "kv", apner: null },
+    { n: 5,  navn: "Varden",                       ny: false, lat: 69.70269, lon: 18.99636, hoyde: "291 moh",   omr: "Tromsdalen nord", kilde: "kv", apner: null },
+    { n: 6,  navn: "Arnttuva",                     ny: false, lat: 69.72431, lon: 18.85907, hoyde: "388 moh",   omr: "Kvaløya/Tromsøya", kilde: "kv", apner: "2026-06-14" },
+    { n: 7,  navn: "Dalberget",                    ny: true,  lat: 69.62421, lon: 18.96789, hoyde: "~250 moh",  omr: "Tromsdalen", kilde: "kv", apner: "2026-06-14" },
+    { n: 8,  navn: "Grønnlibruna",                 ny: true,  lat: 69.59734, lon: 18.70469, hoyde: "~500 moh",  omr: "Kvaløya", kilde: "kv", apner: "2026-06-14" },
+    { n: 9,  navn: "Reinheia",                     ny: false, lat: 69.51114, lon: 18.80317, hoyde: "~200 moh",  omr: "Vikran, Malangshalvøya", kilde: "kv", apner: "2026-06-14" },
+    { n: 10, navn: "Rundfjellet",                  ny: true,  lat: 69.67439, lon: 19.14545, hoyde: "~600 moh",  omr: "Ramfjord", kilde: "kv", apner: "2026-06-14" },
+    { n: 11, navn: "Øvre Langvatnet",              ny: true,  lat: 69.87296, lon: 19.05951, hoyde: "~250 moh",  omr: "Ringvassøya", kilde: "kv", apner: "2026-06-14" },
+    { n: 12, navn: "Bønntuva",                     ny: false, lat: 69.60605, lon: 19.00378, hoyde: "~450 moh",  omr: "Tromsdalen", kilde: "kv", apner: "2026-07-01" },
+    { n: 13, navn: "Hatten, Kantornes",            ny: true,  lat: 69.39556, lon: 19.35750, hoyde: "~400 moh",  omr: "Balsfjord (Kantornes)", kilde: "kv", apner: "2026-07-01" },
+    { n: 14, navn: "Ramnberget",                   ny: false, lat: 69.75985, lon: 18.44353, hoyde: "~150 moh",  omr: "Kvaløya", kilde: "kv", apner: "2026-07-01" },
+    { n: 15, navn: "Sollidalsaksla",               ny: true,  lat: 69.58671, lon: 18.98698, hoyde: "~700 moh",  omr: "Sollidalen", kilde: "kv", apner: "2026-07-01" }
 ];
+
+const today = new Date();
+today.setHours(0,0,0,0);
+
+function getStatus(p) {
+    if (!p.apner) return { key: 'open', label: '✅ Åpen', cls: 'badge-open', iconCls: '' };
+    const d = new Date(p.apner);
+    if (d <= today) return { key: 'open', label: '✅ Åpen', cls: 'badge-open', iconCls: '' };
+    const dager = Math.ceil((d - today) / (1000*60*60*24));
+    const dato = d.toLocaleDateString('no-NO', { day: 'numeric', month: 'long' });
+    const isSoon = dager <= 21;
+    return {
+        key: isSoon ? 'soon' : 'later',
+        label: `🔒 Åpner ${dato} (${dager} dager)`,
+        cls: isSoon ? 'badge-soon' : 'badge-later',
+        iconCls: isSoon ? ' pending' : ' locked'
+    };
+}
+
+const apneNa = peaks.filter(p => getStatus(p).key === 'open').length;
+document.getElementById('opentoday').innerHTML = `<span style="color:#2d6a4f">●</span> ${apneNa} åpne nå`;
 
 const map = L.map('map').setView([69.65, 18.95], 9);
 
@@ -107,8 +133,9 @@ L.control.layers({
 
 const bounds = [];
 peaks.forEach(p => {
+    const status = getStatus(p);
     const icon = L.divIcon({
-        className: 'num-icon' + (p.ny ? ' ny' : ''),
+        className: 'num-icon' + (p.ny ? ' ny' : '') + status.iconCls,
         html: p.n,
         iconSize: [30, 30],
         iconAnchor: [15, 15]
@@ -121,7 +148,8 @@ peaks.forEach(p => {
         <div class="popup-content">
             <h3>${p.n}. ${p.navn}</h3>
             <span class="badge ${p.ny ? 'badge-ny' : 'badge-videre'}">${p.ny ? 'NY 2026' : 'Videreført'}</span>
-            <div class="meta">${p.omr} · ${p.hoyde} ${p.kilde === 'kv' ? '· 📍 Kartverket' : p.kilde === 'kv?' ? '· ⚠️ flere kandidater' : '· ⚠️ omtrentlig'}</div>
+            <span class="badge ${status.cls}">${status.label}</span>
+            <div class="meta">${p.omr} · ${p.hoyde} · 📍 Kartverket</div>
             <a href="${utSok}" target="_blank" rel="noopener">ut.no</a>
             <a href="${norgeskart}" target="_blank" rel="noopener">Norgeskart</a>
             <a href="${gmaps}" target="_blank" rel="noopener">Google Maps</a>
@@ -139,8 +167,9 @@ legend.onAdd = function () {
     const div = L.DomUtil.create('div', 'legend');
     div.innerHTML = `
         <strong>Ti på Topp 2026</strong><br>
-        🔴 Nytt turmål (8)<br>
-        🔵 Videreført (7)<br>
+        🔴 Nytt turmål (8) · 🔵 Videreført (7)<br>
+        <span style="opacity:1">●</span> Åpen · <span style="opacity:0.55">●</span> Åpner 14. juni<br>
+        <span style="opacity:0.35">●</span> Åpner 1. juli<br>
         Klikk på markør for info
     `;
     return div;
