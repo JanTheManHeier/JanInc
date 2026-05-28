@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ti på Topp Tromsø 2026 — Kart</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { display: flex; flex-direction: column; background: #1a1a2e; color: #eee; }
+    header {
+        background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+        padding: 12px 20px;
+        border-bottom: 2px solid #e94560;
+        display: flex; justify-content: space-between; align-items: center;
+        flex-wrap: wrap; gap: 10px;
+    }
+    h1 { font-size: 1.3rem; color: #fff; }
+    h1 span { color: #e94560; }
+    .stats { font-size: 0.85rem; color: #b8b8d4; }
+    #map { flex: 1; min-height: 0; }
+    .popup-content { color: #222; min-width: 200px; }
+    .popup-content h3 { margin-bottom: 6px; color: #0f3460; }
+    .popup-content .badge {
+        display: inline-block; padding: 2px 8px; border-radius: 10px;
+        font-size: 0.75rem; font-weight: 600; margin-bottom: 8px;
+    }
+    .badge-ny { background: #e94560; color: #fff; }
+    .badge-videre { background: #2d6a4f; color: #fff; }
+    .popup-content .meta { font-size: 0.85rem; color: #555; margin-bottom: 8px; }
+    .popup-content a {
+        display: inline-block; margin-right: 8px; margin-top: 4px;
+        padding: 4px 10px; background: #0f3460; color: #fff;
+        text-decoration: none; border-radius: 4px; font-size: 0.8rem;
+    }
+    .popup-content a:hover { background: #e94560; }
+    .legend {
+        background: rgba(26, 26, 46, 0.95); color: #eee;
+        padding: 10px 14px; border-radius: 6px; font-size: 0.85rem;
+        line-height: 1.6; border: 1px solid #0f3460;
+    }
+    .legend strong { color: #e94560; }
+    .num-icon {
+        background: #0f3460; color: #fff; border: 2px solid #fff;
+        border-radius: 50%; width: 30px !important; height: 30px !important;
+        text-align: center; line-height: 26px; font-weight: bold;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .num-icon.ny { background: #e94560; }
+    .disclaimer {
+        font-size: 0.75rem; color: #888; padding: 6px 20px;
+        background: #0f0f1e; border-top: 1px solid #16213e;
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>🏔️ Ti på Topp Tromsø <span>2026</span></h1>
+    <div class="stats">15 turmål · <span style="color:#e94560">●</span> 8 nye · <span style="color:#2d6a4f">●</span> 7 videreført</div>
+</header>
+<div id="map"></div>
+<div class="disclaimer">📍 Alle 15 koordinater verifisert. Kilde: Kartverket Stedsnavn + brukerinnspill. Bruk Norgeskart-lenken i popup for detaljert posisjon.</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// Koordinater fra Kartverket Stedsnavn-API (geonorge.no) der mulig.
+// kilde: "kv" = Kartverket verifisert, "ca" = omtrentlig (flere kandidater eller ikke funnet)
+const peaks = [
+    { n: 1,  navn: "Brosmortinden",                ny: true,  lat: 69.75484, lon: 18.31946, hoyde: "525 moh",   omr: "Kvaløya", kilde: "kv" },
+    { n: 2,  navn: "Charlottenlund – Doktordalen", ny: false, lat: 69.67090, lon: 18.95905, hoyde: "~250 moh",  omr: "Tromsøya (Doktordalen)", kilde: "kv" },
+    { n: 3,  navn: "Elverhøy kirke",               ny: true,  lat: 69.64846, lon: 18.92130, hoyde: "ca. 20 moh",omr: "Tromsø sentrum", kilde: "kv" },
+    { n: 4,  navn: "Krokvatnet",                   ny: false, lat: 69.66020, lon: 19.10171, hoyde: "~250 moh",  omr: "Ramfjord", kilde: "kv" },
+    { n: 5,  navn: "Varden",                       ny: false, lat: 69.70269, lon: 18.99636, hoyde: "291 moh",   omr: "Tromsdalen nord", kilde: "kv" },
+    { n: 6,  navn: "Arnttuva",                     ny: false, lat: 69.72431, lon: 18.85907, hoyde: "388 moh",   omr: "Kvaløya/Tromsøya", kilde: "kv" },
+    { n: 7,  navn: "Dalberget",                    ny: true,  lat: 69.62421, lon: 18.96789, hoyde: "~250 moh",  omr: "Tromsdalen", kilde: "kv" },
+    { n: 8,  navn: "Grønnlibruna",                 ny: true,  lat: 69.59734, lon: 18.70469, hoyde: "~500 moh",  omr: "Kvaløya", kilde: "kv" },
+    { n: 9,  navn: "Reinheia",                     ny: false, lat: 69.51114, lon: 18.80317, hoyde: "~200 moh",  omr: "Vikran, Malangshalvøya", kilde: "kv" },
+    { n: 10, navn: "Rundfjellet",                  ny: true,  lat: 69.67439, lon: 19.14545, hoyde: "~600 moh",  omr: "Ramfjord", kilde: "kv" },
+    { n: 11, navn: "Øvre Langvatnet",              ny: true,  lat: 69.87296, lon: 19.05951, hoyde: "~250 moh",  omr: "Ringvassøya", kilde: "kv" },
+    { n: 12, navn: "Bønntuva",                     ny: false, lat: 69.60605, lon: 19.00378, hoyde: "~450 moh",  omr: "Tromsdalen", kilde: "kv" },
+    { n: 13, navn: "Hatten, Kantornes",            ny: true,  lat: 69.39556, lon: 19.35750, hoyde: "~400 moh",  omr: "Balsfjord (Kantornes)", kilde: "kv" },
+    { n: 14, navn: "Ramnberget",                   ny: false, lat: 69.75985, lon: 18.44353, hoyde: "~150 moh",  omr: "Kvaløya", kilde: "kv" },
+    { n: 15, navn: "Sollidalsaksla",               ny: true,  lat: 69.58671, lon: 18.98698, hoyde: "~700 moh",  omr: "Sollidalen", kilde: "kv" }
+];
+
+const map = L.map('map').setView([69.65, 18.95], 9);
+
+const kartverket = L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png', {
+    attribution: '© <a href="https://www.kartverket.no/">Kartverket</a>',
+    maxZoom: 18
+});
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap',
+    maxZoom: 19
+});
+const satellitt = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '© Esri', maxZoom: 19
+});
+
+kartverket.addTo(map);
+L.control.layers({
+    "Kartverket Topo": kartverket,
+    "OpenStreetMap": osm,
+    "Satellitt": satellitt
+}).addTo(map);
+
+const bounds = [];
+peaks.forEach(p => {
+    const icon = L.divIcon({
+        className: 'num-icon' + (p.ny ? ' ny' : ''),
+        html: p.n,
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
+    });
+    const utSok = `https://ut.no/sok?q=${encodeURIComponent(p.navn)}`;
+    const norgeskart = `https://www.norgeskart.no/?lat=${p.lat}&lon=${p.lon}&zoom=13`;
+    const gmaps = `https://www.google.com/maps?q=${p.lat},${p.lon}`;
+
+    const popup = `
+        <div class="popup-content">
+            <h3>${p.n}. ${p.navn}</h3>
+            <span class="badge ${p.ny ? 'badge-ny' : 'badge-videre'}">${p.ny ? 'NY 2026' : 'Videreført'}</span>
+            <div class="meta">${p.omr} · ${p.hoyde} ${p.kilde === 'kv' ? '· 📍 Kartverket' : p.kilde === 'kv?' ? '· ⚠️ flere kandidater' : '· ⚠️ omtrentlig'}</div>
+            <a href="${utSok}" target="_blank" rel="noopener">ut.no</a>
+            <a href="${norgeskart}" target="_blank" rel="noopener">Norgeskart</a>
+            <a href="${gmaps}" target="_blank" rel="noopener">Google Maps</a>
+        </div>
+    `;
+
+    L.marker([p.lat, p.lon], { icon }).addTo(map).bindPopup(popup);
+    bounds.push([p.lat, p.lon]);
+});
+
+map.fitBounds(bounds, { padding: [40, 40] });
+
+const legend = L.control({ position: 'bottomright' });
+legend.onAdd = function () {
+    const div = L.DomUtil.create('div', 'legend');
+    div.innerHTML = `
+        <strong>Ti på Topp 2026</strong><br>
+        🔴 Nytt turmål (8)<br>
+        🔵 Videreført (7)<br>
+        Klikk på markør for info
+    `;
+    return div;
+};
+legend.addTo(map);
+</script>
+</body>
+</html>
