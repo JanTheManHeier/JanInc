@@ -72,21 +72,21 @@
 // Koordinater fra Kartverket Stedsnavn-API (geonorge.no) der mulig.
 // kilde: "kv" = Kartverket verifisert, "ca" = omtrentlig (flere kandidater eller ikke funnet)
 const peaks = [
-    { n: 1,  navn: "Brosmortinden",                ny: true,  lat: 69.75484, lon: 18.31946, hoyde: "525 moh",   omr: "Kvaløya", kilde: "kv", apner: null },
-    { n: 2,  navn: "Charlottenlund – Doktordalen", ny: false, lat: 69.67090, lon: 18.95905, hoyde: "~250 moh",  omr: "Tromsøya (Doktordalen)", kilde: "kv", apner: null },
-    { n: 3,  navn: "Elverhøy kirke",               ny: true,  lat: 69.64846, lon: 18.92130, hoyde: "ca. 20 moh",omr: "Tromsø sentrum", kilde: "kv", apner: null },
-    { n: 4,  navn: "Krokvatnet",                   ny: false, lat: 69.66020, lon: 19.10171, hoyde: "~250 moh",  omr: "Ramfjord", kilde: "kv", apner: null },
-    { n: 5,  navn: "Varden",                       ny: false, lat: 69.70269, lon: 18.99636, hoyde: "291 moh",   omr: "Tromsdalen nord", kilde: "kv", apner: null },
-    { n: 6,  navn: "Arnttuva",                     ny: false, lat: 69.72431, lon: 18.85907, hoyde: "388 moh",   omr: "Kvaløya/Tromsøya", kilde: "kv", apner: "2026-06-14" },
-    { n: 7,  navn: "Dalberget",                    ny: true,  lat: 69.62421, lon: 18.96789, hoyde: "~250 moh",  omr: "Tromsdalen", kilde: "kv", apner: "2026-06-14" },
-    { n: 8,  navn: "Grønnlibruna",                 ny: true,  lat: 69.59734, lon: 18.70469, hoyde: "~500 moh",  omr: "Kvaløya", kilde: "kv", apner: "2026-06-14" },
-    { n: 9,  navn: "Reinheia",                     ny: false, lat: 69.51114, lon: 18.80317, hoyde: "~200 moh",  omr: "Vikran, Malangshalvøya", kilde: "kv", apner: "2026-06-14" },
-    { n: 10, navn: "Rundfjellet",                  ny: true,  lat: 69.67439, lon: 19.14545, hoyde: "~600 moh",  omr: "Ramfjord", kilde: "kv", apner: "2026-06-14" },
-    { n: 11, navn: "Øvre Langvatnet",              ny: true,  lat: 69.87296, lon: 19.05951, hoyde: "~250 moh",  omr: "Ringvassøya", kilde: "kv", apner: "2026-06-14" },
-    { n: 12, navn: "Bønntuva",                     ny: false, lat: 69.60605, lon: 19.00378, hoyde: "~450 moh",  omr: "Tromsdalen", kilde: "kv", apner: "2026-07-01" },
-    { n: 13, navn: "Hatten, Kantornes",            ny: true,  lat: 69.39556, lon: 19.35750, hoyde: "~400 moh",  omr: "Balsfjord (Kantornes)", kilde: "kv", apner: "2026-07-01" },
-    { n: 14, navn: "Ramnberget",                   ny: false, lat: 69.75985, lon: 18.44353, hoyde: "~150 moh",  omr: "Kvaløya", kilde: "kv", apner: "2026-07-01" },
-    { n: 15, navn: "Sollidalsaksla",               ny: true,  lat: 69.58671, lon: 18.98698, hoyde: "~700 moh",  omr: "Sollidalen", kilde: "kv", apner: "2026-07-01" }
+    { n: 1,  navn: "Brosmortinden",                ny: true,  lat: 69.75484, lon: 18.31946, hoyde: "524 moh", omr: "Kvaløya", kilde: "kv", apner: null },
+    { n: 2,  navn: "Charlottenlund – Doktordalen", ny: false, lat: 69.67090, lon: 18.95905, hoyde: "107 moh", omr: "Tromsøya (Doktordalen)", kilde: "kv", apner: null },
+    { n: 3,  navn: "Elverhøy kirke",               ny: true,  lat: 69.64846, lon: 18.92130, hoyde: "96 moh",  omr: "Tromsø sentrum", kilde: "kv", apner: null },
+    { n: 4,  navn: "Krokvatnet",                   ny: false, lat: 69.66020, lon: 19.10171, hoyde: "350 moh", omr: "Ramfjord", kilde: "kv", apner: null },
+    { n: 5,  navn: "Varden",                       ny: false, lat: 69.70269, lon: 18.99636, hoyde: "158 moh", omr: "Tromsdalen nord", kilde: "kv", apner: null },
+    { n: 6,  navn: "Arnttuva",                     ny: false, lat: 69.72431, lon: 18.85907, hoyde: "479 moh", omr: "Kvaløya/Tromsøya", kilde: "kv", apner: "2026-06-14" },
+    { n: 7,  navn: "Dalberget",                    ny: true,  lat: 69.62421, lon: 18.96789, hoyde: "352 moh", omr: "Tromsdalen", kilde: "kv", apner: "2026-06-14" },
+    { n: 8,  navn: "Grønnlibruna",                 ny: true,  lat: 69.59734, lon: 18.70469, hoyde: "400 moh", omr: "Kvaløya", kilde: "kv", apner: "2026-06-14" },
+    { n: 9,  navn: "Reinheia",                     ny: false, lat: 69.51114, lon: 18.80317, hoyde: "181 moh", omr: "Vikran, Malangshalvøya", kilde: "kv", apner: "2026-06-14" },
+    { n: 10, navn: "Rundfjellet",                  ny: true,  lat: 69.67439, lon: 19.14545, hoyde: "750 moh", omr: "Ramfjord", kilde: "kv", apner: "2026-06-14" },
+    { n: 11, navn: "Øvre Langvatnet",              ny: true,  lat: 69.87296, lon: 19.05951, hoyde: "272 moh", omr: "Ringvassøya", kilde: "kv", apner: "2026-06-14" },
+    { n: 12, navn: "Bønntuva",                     ny: false, lat: 69.60605, lon: 19.00378, hoyde: "775 moh", omr: "Tromsdalen", kilde: "kv", apner: "2026-07-01" },
+    { n: 13, navn: "Hatten, Kantornes",            ny: true,  lat: 69.39556, lon: 19.35750, hoyde: "707 moh", omr: "Balsfjord (Kantornes)", kilde: "kv", apner: "2026-07-01" },
+    { n: 14, navn: "Ramnberget",                   ny: false, lat: 69.75985, lon: 18.44353, hoyde: "742 moh", omr: "Kvaløya", kilde: "kv", apner: "2026-07-01" },
+    { n: 15, navn: "Sollidalsaksla",               ny: true,  lat: 69.58671, lon: 18.98698, hoyde: "786 moh", omr: "Sollidalen", kilde: "kv", apner: "2026-07-01" }
 ];
 
 const today = new Date();
