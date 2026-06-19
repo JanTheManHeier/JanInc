@@ -551,89 +551,89 @@ const DAYS = [
         date: '4. juli', day: 'Fredag', label: 'Ankomst',
         note: 'Jan, Kristina & Olivia ankommer Olbia 18:55. Hente leiebil (Avis, Nissan Juke) kl 19:30 → Kjøre til Valledoria (~1t)',
         activities: [
-            { id: 'a1', name: 'Kveldsspasertur i Isola Rossa', desc: 'Solnedgang ved havnen', icon: '🌅', type: 'nature' },
+            { id: 'a1', name: 'Kveldsspasertur i Isola Rossa', desc: 'Solnedgang ved havnen', icon: '🌅', type: 'nature', igTag: 'isolarossa' },
         ]
     },
     {
         date: '5. juli', day: 'Lørdag', label: 'Surfing & Strand',
         activities: [
-            { id: 'a2', name: 'Surfekurs – Bulli Surf Club', desc: 'Castelsardo, for Olivia (barnekurs)', icon: '🏄‍♀️', type: 'surf' },
-            { id: 'a3', name: 'Surfekurs – Nesos Marineddabay', desc: 'Marinedda Beach, alternativ for Olivia', icon: '🏄‍♀️', type: 'surf' },
-            { id: 'a4', name: 'Castelsardo gamlebyen', desc: 'Historisk by på klippen', icon: '🏰', type: 'culture' },
-            { id: 'a5', name: 'Roccia dell\'Elefante', desc: 'Berømt elefantformet klippe', icon: '🐘', type: 'nature' },
+            { id: 'a2', name: 'Surfekurs – Bulli Surf Club', desc: 'Castelsardo, for Olivia (barnekurs)', icon: '🏄‍♀️', type: 'surf', ig: 'bullisurfclub.castelsardo' },
+            { id: 'a3', name: 'Surfekurs – Nesos Marineddabay', desc: 'Marinedda Beach, alternativ for Olivia', icon: '🏄‍♀️', type: 'surf', ig: 'marineddabay' },
+            { id: 'a4', name: 'Castelsardo gamlebyen', desc: 'Historisk by på klippen', icon: '🏰', type: 'culture', ig: 'sardegnaturismo', igTag: 'castelsardo' },
+            { id: 'a5', name: 'Roccia dell\'Elefante', desc: 'Berømt elefantformet klippe', icon: '🐘', type: 'nature', igTag: 'rocciadellelefante' },
         ]
     },
     {
         date: '6. juli', day: 'Søndag', label: 'Strand & Grotte',
         activities: [
-            { id: 'a6', name: 'Spiaggia La Pelosa', desc: 'En av Sardinias vakreste strender (Stintino)', icon: '🏖️', type: 'beach' },
-            { id: 'a7', name: 'Grotta di Nettuno', desc: 'Spektakulær sjøgrotte ved Alghero', icon: '🕳️', type: 'nature' },
-            { id: 'a8', name: 'Asinara National Park', desc: 'Øy med villsvin og hvite esler (ferge fra Stintino)', icon: '🏝️', type: 'nature' },
+            { id: 'a6', name: 'Spiaggia La Pelosa', desc: 'En av Sardinias vakreste strender (Stintino)', icon: '🏖️', type: 'beach', igTag: 'lapelosa' },
+            { id: 'a7', name: 'Grotta di Nettuno', desc: 'Spektakulær sjøgrotte ved Alghero', icon: '🕳️', type: 'nature', ig: 'algheroturismo', igTag: 'grottadinettuno' },
+            { id: 'a8', name: 'Asinara National Park', desc: 'Øy med villsvin og hvite esler (ferge fra Stintino)', icon: '🏝️', type: 'nature', ig: 'parcoasinara' },
         ]
     },
     {
         date: '7. juli', day: 'Mandag', label: 'Surfing & Natur',
         activities: [
-            { id: 'a9', name: 'Surfekurs dag 2', desc: 'Fortsettelse for Olivia', icon: '🏄‍♀️', type: 'surf' },
-            { id: 'a10', name: 'Monte Ossoni', desc: 'Kort vandring, fantastisk utsikt', icon: '⛰️', type: 'nature' },
-            { id: 'a11', name: 'Mount Limbara', desc: 'Mer krevende fjelltur, panoramautsikt', icon: '🏔️', type: 'nature' },
-            { id: 'a12', name: 'Fontana Termale Castel Doria', desc: 'Varme kilder ved Castelsardo', icon: '♨️', type: 'nature' },
+            { id: 'a9', name: 'Surfekurs dag 2', desc: 'Fortsettelse for Olivia', icon: '🏄‍♀️', type: 'surf', ig: 'bullisurfclub.castelsardo' },
+            { id: 'a10', name: 'Monte Ossoni', desc: 'Kort vandring, fantastisk utsikt', icon: '⛰️', type: 'nature', igTag: 'monteossoni' },
+            { id: 'a11', name: 'Mount Limbara', desc: 'Mer krevende fjelltur, panoramautsikt', icon: '🏔️', type: 'nature', igTag: 'montelimbara' },
+            { id: 'a12', name: 'Fontana Termale Castel Doria', desc: 'Varme kilder ved Castelsardo', icon: '♨️', type: 'nature', igTag: 'castelsardo' },
         ]
     },
     {
         date: '8. juli', day: 'Tirsdag', label: 'Jakob ankommer! 🎉',
         note: 'Jakob ankommer Olbia kl 16:50. Hente på flyplassen!',
         activities: [
-            { id: 'a13', name: 'Surfekurs dag 3', desc: 'Fortsettelse for Olivia (formiddag)', icon: '🏄‍♀️', type: 'surf' },
-            { id: 'a14', name: 'Surrau vingård', desc: 'Vermentino-smaking 🍷', icon: '🍇', type: 'culture' },
+            { id: 'a13', name: 'Surfekurs dag 3', desc: 'Fortsettelse for Olivia (formiddag)', icon: '🏄‍♀️', type: 'surf', ig: 'bullisurfclub.castelsardo' },
+            { id: 'a14', name: 'Surrau vingård', desc: 'Vermentino-smaking 🍷', icon: '🍇', type: 'culture', ig: 'vignesurrau' },
             { id: 'a15', name: 'Hente Jakob på Olbia flyplass', desc: 'Ankomst 16:50 – kan kombineres med vingård', icon: '✈️', type: 'travel' },
         ]
     },
     {
         date: '9. juli', day: 'Onsdag', label: 'Seiling & Utforsking',
         activities: [
-            { id: 'a16', name: 'Guincho – Seiltur', desc: 'Escursioni in barca a vela ⛵', icon: '⛵', type: 'beach' },
-            { id: 'a17', name: 'Sassari', desc: 'Utforsk Sardinias nest største by', icon: '🏛️', type: 'culture' },
-            { id: 'a18', name: 'Campanile', desc: 'Historisk kulturminne', icon: '⛪', type: 'culture' },
+            { id: 'a16', name: 'Guincho – Seiltur', desc: 'Escursioni in barca a vela ⛵', icon: '⛵', type: 'beach', ig: 'guincho1952' },
+            { id: 'a17', name: 'Sassari', desc: 'Utforsk Sardinias nest største by', icon: '🏛️', type: 'culture', igTag: 'sassari' },
+            { id: 'a18', name: 'Campanile', desc: 'Historisk kulturminne', icon: '⛪', type: 'culture', ig: 'sardegnaturismo' },
         ]
     },
     {
         date: '10. juli', day: 'Torsdag', label: 'La Maddalena',
         activities: [
-            { id: 'a19', name: 'La Maddalena øygruppen', desc: 'Ferge fra Palau – snorkling, turkist vann, øyhopping', icon: '🏝️', type: 'beach' },
-            { id: 'a20', name: 'Spiaggia di Cartoe', desc: 'Vakker strand på østkysten (på veien?)', icon: '🏖️', type: 'beach' },
+            { id: 'a19', name: 'La Maddalena øygruppen', desc: 'Ferge fra Palau – snorkling, turkist vann, øyhopping', icon: '🏝️', type: 'beach', ig: 'parco.lamaddalena' },
+            { id: 'a20', name: 'Spiaggia di Cartoe', desc: 'Vakker strand på østkysten (på veien?)', icon: '🏖️', type: 'beach', igTag: 'spiaggiadicartoe' },
         ]
     },
     {
         date: '11. juli', day: 'Fredag', label: 'Flytt til Orosei',
         note: 'Utsjekk Airbnb kl 10:00 → Kjør til Club Hotel Marina Beach (~2t)',
         activities: [
-            { id: 'a21', name: 'Orosei gamlebyen', desc: 'Sjarmerende by med kirker og piazzaer', icon: '🏘️', type: 'culture' },
-            { id: 'a22', name: 'Cala Fuili strand', desc: 'Liten vakker strand nær Cala Gonone', icon: '🏖️', type: 'beach' },
+            { id: 'a21', name: 'Orosei gamlebyen', desc: 'Sjarmerende by med kirker og piazzaer', icon: '🏘️', type: 'culture', igTag: 'orosei' },
+            { id: 'a22', name: 'Cala Fuili strand', desc: 'Liten vakker strand nær Cala Gonone', icon: '🏖️', type: 'beach', igTag: 'calafuili' },
         ]
     },
     {
         date: '12. juli', day: 'Lørdag', label: 'Strender & Grotter',
         activities: [
-            { id: 'a23', name: 'Cala Mariolu', desc: 'Båttur – spektakulær strand (4.8⭐)', icon: '🏖️', type: 'beach' },
-            { id: 'a24', name: 'Cala Goloritzé', desc: 'UNESCO-strand med naturlig bue (4.7⭐)', icon: '🏖️', type: 'beach' },
-            { id: 'a25', name: 'Grotta del Bue Marino', desc: 'Sjøgrotte tilgjengelig med båt', icon: '🕳️', type: 'nature' },
+            { id: 'a23', name: 'Cala Mariolu', desc: 'Båttur – spektakulær strand (4.8⭐)', icon: '🏖️', type: 'beach', igTag: 'calamariolu' },
+            { id: 'a24', name: 'Cala Goloritzé', desc: 'UNESCO-strand med naturlig bue (4.7⭐)', icon: '🏖️', type: 'beach', igTag: 'calagoloritzé' },
+            { id: 'a25', name: 'Grotta del Bue Marino', desc: 'Sjøgrotte tilgjengelig med båt', icon: '🕳️', type: 'nature', igTag: 'grottadelbuemarino' },
         ]
     },
     {
         date: '13. juli', day: 'Søndag', label: 'Eventyr & Natur',
         activities: [
-            { id: 'a26', name: 'Tiscali', desc: 'Nuraghisk landsby i en grotte – vandring ~3t tur/retur', icon: '🏛️', type: 'nature' },
-            { id: 'a27', name: 'Sorgente Su Gologone', desc: 'Naturlig kilde, krystallklart vann (4.6⭐)', icon: '💧', type: 'nature' },
-            { id: 'a28', name: 'Grotta di Ispinigoli', desc: 'Verdens nest høyeste stalagmitt!', icon: '🕳️', type: 'nature' },
+            { id: 'a26', name: 'Tiscali', desc: 'Nuraghisk landsby i en grotte – vandring ~3t tur/retur', icon: '🏛️', type: 'nature', ig: 'exploresardinia', igTag: 'tiscali' },
+            { id: 'a27', name: 'Sorgente Su Gologone', desc: 'Naturlig kilde, krystallklart vann (4.6⭐)', icon: '💧', type: 'nature', igTag: 'sugologone' },
+            { id: 'a28', name: 'Grotta di Ispinigoli', desc: 'Verdens nest høyeste stalagmitt!', icon: '🕳️', type: 'nature', igTag: 'grottadiispinigoli' },
         ]
     },
     {
         date: '14. juli', day: 'Mandag', label: 'Siste fulle dag',
         activities: [
-            { id: 'a29', name: 'Oasi Biderosa', desc: 'Naturreservat – booking nødvendig!', icon: '🌿', type: 'nature' },
-            { id: 'a30', name: 'Monte Tuttavista & Kristus-statuen', desc: 'Panoramautsikt over hele kysten', icon: '⛰️', type: 'nature' },
-            { id: 'a31', name: 'Porto di Cala Gonone', desc: 'Koselig havn, siste spasertur', icon: '⚓', type: 'culture' },
+            { id: 'a29', name: 'Oasi Biderosa', desc: 'Naturreservat – booking nødvendig!', icon: '🌿', type: 'nature', igTag: 'oasibiderosa' },
+            { id: 'a30', name: 'Monte Tuttavista & Kristus-statuen', desc: 'Panoramautsikt over hele kysten', icon: '⛰️', type: 'nature', igTag: 'montetuttavista' },
+            { id: 'a31', name: 'Porto di Cala Gonone', desc: 'Koselig havn, siste spasertur', icon: '⚓', type: 'culture', igTag: 'calagonone' },
         ]
     },
     {
@@ -692,12 +692,18 @@ function renderVoteDots(itemId) {
 }
 
 function renderActivity(act) {
+    const igLinks = [];
+    if (act.ig) igLinks.push(`<a href="https://instagram.com/${act.ig}" target="_blank" style="color:var(--ocean); text-decoration:none; font-size:0.8rem;">📸 @${act.ig}</a>`);
+    if (act.igTag) igLinks.push(`<a href="https://instagram.com/explore/tags/${act.igTag}" target="_blank" style="color:var(--sunset); text-decoration:none; font-size:0.8rem;">#${act.igTag}</a>`);
+    const igHtml = igLinks.length ? `<div style="margin-top:3px;">${igLinks.join(' • ')}</div>` : '';
+
     return `
         <div class="activity">
             <div class="activity-icon ${act.type}">${act.icon}</div>
             <div class="activity-info">
                 <div class="name">${act.name}</div>
                 <div class="desc">${act.desc}</div>
+                ${igHtml}
                 <div class="vote-summary">${renderVoteDots(act.id)}</div>
             </div>
             <div class="vote-area">
