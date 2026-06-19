@@ -157,6 +157,8 @@
             gap: 0.8rem;
         }
         .activity:last-child { border-bottom: none; }
+        .activity[onclick] { cursor: pointer; }
+        .activity[onclick]:hover { background: var(--light-gray); border-radius: 8px; }
         .activity-icon {
             width: 40px;
             height: 40px;
@@ -375,6 +377,7 @@
     <button class="tab" onclick="showTab('plan')">🗓️ Dagsplan</button>
     <button class="tab" onclick="showTab('activities')">🎯 Aktiviteter</button>
     <button class="tab" onclick="showTab('food')">🍽️ Mat</button>
+    <button class="tab" onclick="showTab('todo')">✅ Sjekkliste</button>
     <button class="tab" onclick="showTab('results')">📊 Resultater</button>
 </div>
 
@@ -524,6 +527,14 @@
         <div id="food-container"></div>
     </div>
 
+    <!-- TODO TAB -->
+    <div id="tab-todo" class="tab-content">
+        <div class="note-box">
+            ✅ Ting vi må gjøre før avreise. Kryss av etter hvert som det blir gjort!
+        </div>
+        <div id="todo-container"></div>
+    </div>
+
     <!-- RESULTS TAB -->
     <div id="tab-results" class="tab-content">
         <div class="note-box">
@@ -538,12 +549,73 @@
 // State
 let currentUser = 'jan';
 let votes = JSON.parse(localStorage.getItem('sardinia-votes') || '{}');
+let todos = JSON.parse(localStorage.getItem('sardinia-todos') || '{}');
 
 const USERS = [
     { id: 'jan', name: 'Jan', emoji: '👨' },
     { id: 'kristina', name: 'Kristina', emoji: '👩' },
     { id: 'olivia', name: 'Olivia', emoji: '👧' },
     { id: 'jakob', name: 'Jakob', emoji: '🧑' }
+];
+
+const TODOS = [
+    {
+        category: '📄 Bekreftelser',
+        items: [
+            { id: 't1', text: 'Bekreft Airbnb-reservasjon med Alessandro', who: 'kristina', deadline: '30. juni' },
+            { id: 't2', text: 'Bekreft Club Hotel Marina Beach (tilbud #588733)', who: 'kristina', deadline: '25. juni' },
+            { id: 't3', text: 'Sjekk Avis leiebil-bekreftelse, skriv ut kopi', who: 'jan', deadline: '1. juli' },
+            { id: 't4', text: 'Last ned boardingkort Norwegian (ZG9ROB + ZP55MJ)', who: 'jan', deadline: '2. juli' },
+            { id: 't5', text: 'Last ned boardingkort Eurowings (TMK83Q) – Jakob', who: 'jakob', deadline: '6. juli' },
+        ]
+    },
+    {
+        category: '🏄 Aktiviteter å booke',
+        items: [
+            { id: 't6', text: 'Book surfekurs for Olivia (Bulli eller Nesos)', who: 'jan', deadline: '25. juni' },
+            { id: 't7', text: 'Book adgang La Pelosa strand + parkering', who: 'jan', deadline: '28. juni', link: 'https://spiaggialapelosa.it/' },
+            { id: 't8', text: 'Book Asinara ferge fra Stintino', who: 'kristina', deadline: '28. juni' },
+            { id: 't9', text: 'Book Oasi Biderosa adgang (begrenset antall!)', who: 'jan', deadline: '1. juli', link: 'https://www.oasibidderosa.com/' },
+            { id: 't10', text: 'Book båttur Cala Mariolu / Cala Goloritzé', who: 'kristina', deadline: '5. juli' },
+            { id: 't11', text: 'Book Guincho seiltur', who: 'jan', deadline: '1. juli' },
+            { id: 't12', text: 'Reservér bord Agriturismo Nuraghe Mannu', who: 'kristina', deadline: '3. juli' },
+            { id: 't13', text: 'Reservér bord Agriturismo Canales', who: 'kristina', deadline: '3. juli' },
+        ]
+    },
+    {
+        category: '📱 Praktisk',
+        items: [
+            { id: 't14', text: 'Sjekk at alle har gyldig pass / ID', who: 'jan', deadline: '25. juni' },
+            { id: 't15', text: 'Ta med fysisk førerkort (ikke digitalt!)', who: 'jan', deadline: '3. juli' },
+            { id: 't16', text: 'Ta med betalingskort (MasterCard ****2238) for Avis', who: 'jan', deadline: '3. juli' },
+            { id: 't17', text: 'Last ned offline kart Sardinia (Google Maps)', who: 'jan', deadline: '2. juli' },
+            { id: 't18', text: 'Sjekk mobilabonnement – roaming i Italia', who: 'jan', deadline: '30. juni' },
+            { id: 't19', text: 'Pakk snorkelutstyr', who: 'olivia', deadline: '2. juli' },
+            { id: 't20', text: 'Kjøp reiseforsikring (om ikke allerede dekket)', who: 'jan', deadline: '25. juni' },
+            { id: 't21', text: 'Sjekk at kredittkort har høy nok grense (egenandel €2300)', who: 'jan', deadline: '30. juni' },
+        ]
+    },
+    {
+        category: '👙 Pakking',
+        items: [
+            { id: 't22', text: 'Solkrem SPF 50+', who: 'kristina', deadline: '2. juli' },
+            { id: 't23', text: 'Vann-sko / reef shoes (steinete strender)', who: 'kristina', deadline: '2. juli' },
+            { id: 't24', text: 'Tursko for Tiscali-vandring og Monte Ossoni', who: 'jan', deadline: '2. juli' },
+            { id: 't25', text: 'Drikkeflaske / vannflaske (varmt i juli!)', who: 'olivia', deadline: '2. juli' },
+            { id: 't26', text: 'Strandtelt / parasoll (ekstra sol-beskyttelse)', who: 'kristina', deadline: '2. juli' },
+            { id: 't27', text: 'Lader + powerbank', who: 'jakob', deadline: '6. juli' },
+            { id: 't28', text: 'Adapter Type L (Italia) – om nødvendig', who: 'jan', deadline: '2. juli' },
+        ]
+    },
+    {
+        category: '✈️ Reisedag 4. juli',
+        items: [
+            { id: 't29', text: 'Alarm kl 04:30 – fly fra Tromsø 06:30', who: 'jan', deadline: '4. juli' },
+            { id: 't30', text: 'Husk: Lang layover Oslo (08:25→15:35) – plan lunsjsted', who: 'kristina', deadline: '3. juli' },
+            { id: 't31', text: 'Hente leiebil Avis kl 19:30 Olbia flyplass', who: 'jan', deadline: '4. juli' },
+            { id: 't32', text: 'Handle mat på vei til Valledoria (Conad/Eurospin)', who: 'kristina', deadline: '4. juli' },
+        ]
+    },
 ];
 
 const DAYS = [
@@ -846,10 +918,62 @@ function renderResults() {
     `;
 }
 
+function toggleTodo(todoId) {
+    todos[todoId] = !todos[todoId];
+    localStorage.setItem('sardinia-todos', JSON.stringify(todos));
+    renderTodos();
+}
+
+function renderTodos() {
+    const container = document.getElementById('todo-container');
+    const totalItems = TODOS.flatMap(c => c.items).length;
+    const doneItems = TODOS.flatMap(c => c.items).filter(i => todos[i.id]).length;
+    const pct = totalItems > 0 ? Math.round(doneItems / totalItems * 100) : 0;
+
+    container.innerHTML = `
+        <div class="card" style="margin-bottom:1rem;">
+            <div style="display:flex; align-items:center; gap:1rem;">
+                <div style="flex:1;">
+                    <div style="background:#e0e0e0; border-radius:10px; height:12px; overflow:hidden;">
+                        <div style="background: linear-gradient(90deg, #4caf50, #81c784); height:100%; width:${pct}%; transition: width 0.3s;"></div>
+                    </div>
+                </div>
+                <div style="font-weight:800; font-size:1.1rem; color:${pct === 100 ? '#4caf50' : 'var(--ocean)'};">${doneItems}/${totalItems}</div>
+            </div>
+            <p style="font-size:0.85rem; color:var(--gray); margin-top:0.5rem; text-align:center;">${pct === 100 ? '🎉 Alt er klart – god tur!' : pct > 50 ? '👍 Godt i gang!' : '⏳ La oss komme i gang!'}</p>
+        </div>
+        ${TODOS.map(cat => `
+            <div class="card">
+                <h3>${cat.category}</h3>
+                ${cat.items.map(item => {
+                    const done = todos[item.id];
+                    const user = USERS.find(u => u.id === item.who);
+                    return `
+                        <div class="activity" style="${done ? 'opacity:0.5;' : ''}" onclick="toggleTodo('${item.id}')" style="cursor:pointer;">
+                            <div style="width:32px; height:32px; border-radius:8px; border:2px solid ${done ? '#4caf50' : '#e0e0e0'}; background:${done ? '#4caf50' : 'white'}; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; transition: all 0.2s;">
+                                ${done ? '<span style="color:white; font-size:1rem;">✓</span>' : ''}
+                            </div>
+                            <div class="activity-info" style="cursor:pointer;">
+                                <div class="name" style="${done ? 'text-decoration:line-through; color:var(--gray);' : ''}">${item.text}</div>
+                                <div class="desc">
+                                    ${user ? user.emoji + ' ' + user.name : ''} 
+                                    ${item.deadline ? ' • ⏰ ' + item.deadline : ''}
+                                    ${item.link ? ' • <a href="' + item.link + '" target="_blank" onclick="event.stopPropagation();" style="color:var(--ocean);">🔗 Book</a>' : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `).join('')}
+    `;
+}
+
 function renderAll() {
     renderDayPlan();
     renderAllActivities();
     renderFood();
+    renderTodos();
     renderResults();
 }
 
