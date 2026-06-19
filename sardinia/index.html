@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏖️ Sardinia 2026 – Familiens Ferieplan</title>
+    <style>
+        :root {
+            --sand: #f5e6d3;
+            --ocean: #0077b6;
+            --ocean-light: #90e0ef;
+            --ocean-dark: #023e8a;
+            --sunset: #ff6b35;
+            --sunset-light: #ffb347;
+            --green: #2d6a4f;
+            --white: #ffffff;
+            --gray: #6c757d;
+            --light-gray: #f8f9fa;
+            --dark: #1a1a2e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--sand);
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--ocean-dark) 0%, var(--ocean) 50%, var(--ocean-light) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 Q150 0 300 20 Q450 40 600 20 Q750 0 900 20 Q1050 40 1200 20 V40 H0Z' fill='%23f5e6d3'/%3E%3C/svg%3E");
+            background-size: cover;
+        }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 0.3rem; }
+        .hero p { font-size: 1.1rem; opacity: 0.9; }
+        .hero .dates { font-size: 0.95rem; margin-top: 0.5rem; opacity: 0.8; }
+
+        /* User selector */
+        .user-selector {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1.2rem 1rem;
+            flex-wrap: wrap;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .user-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--ocean);
+            border-radius: 25px;
+            background: white;
+            color: var(--ocean);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .user-btn:hover { background: var(--ocean-light); }
+        .user-btn.active {
+            background: var(--ocean);
+            color: white;
+        }
+        .user-btn .emoji { margin-right: 4px; }
+
+        /* Nav tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            background: var(--white);
+            border-bottom: 2px solid #e0e0e0;
+            overflow-x: auto;
+        }
+        .tab {
+            padding: 0.8rem 1.2rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .tab:hover { color: var(--ocean); }
+        .tab.active {
+            color: var(--ocean);
+            border-bottom-color: var(--ocean);
+        }
+
+        /* Content */
+        .content { max-width: 900px; margin: 0 auto; padding: 1rem; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Day header */
+        .day-header {
+            background: linear-gradient(135deg, var(--ocean-dark), var(--ocean));
+            color: white;
+            padding: 1rem 1.2rem;
+            border-radius: 16px 16px 0 0;
+            margin-bottom: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .day-header h2 { font-size: 1.2rem; }
+        .day-header .date { font-size: 0.85rem; opacity: 0.8; }
+        .day-card {
+            border-radius: 0 0 16px 16px;
+            margin-bottom: 1.5rem;
+            margin-top: 0;
+        }
+
+        /* Activity item */
+        .activity {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            gap: 0.8rem;
+        }
+        .activity:last-child { border-bottom: none; }
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .activity-icon.beach { background: #e3f2fd; }
+        .activity-icon.food { background: #fce4ec; }
+        .activity-icon.nature { background: #e8f5e9; }
+        .activity-icon.culture { background: #fff3e0; }
+        .activity-icon.surf { background: #e0f7fa; }
+        .activity-icon.travel { background: #f3e5f5; }
+
+        .activity-info { flex: 1; }
+        .activity-info .name { font-weight: 600; font-size: 0.95rem; }
+        .activity-info .desc { font-size: 0.8rem; color: var(--gray); margin-top: 2px; }
+
+        /* Vote buttons */
+        .vote-area {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-shrink: 0;
+        }
+        .vote-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .vote-btn:hover { transform: scale(1.15); }
+        .vote-btn.voted-yes {
+            background: #4caf50;
+            border-color: #4caf50;
+            color: white;
+        }
+        .vote-btn.voted-no {
+            background: #ef5350;
+            border-color: #ef5350;
+            color: white;
+        }
+        .vote-btn.voted-maybe {
+            background: var(--sunset-light);
+            border-color: var(--sunset-light);
+            color: white;
+        }
+        .vote-summary {
+            display: flex;
+            gap: 2px;
+            margin-top: 4px;
+            justify-content: center;
+        }
+        .vote-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e0e0e0;
+        }
+        .vote-dot.yes { background: #4caf50; }
+        .vote-dot.no { background: #ef5350; }
+        .vote-dot.maybe { background: var(--sunset-light); }
+
+        /* Flight card */
+        .flight-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            background: var(--light-gray);
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+        }
+        .flight-card .route {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+        }
+        .flight-card .city {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .flight-card .time {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        .flight-card .arrow {
+            color: var(--ocean);
+            font-size: 1.2rem;
+        }
+        .flight-card .flight-no {
+            font-size: 0.75rem;
+            color: var(--gray);
+            background: white;
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+
+        /* Accommodation */
+        .accommodation {
+            background: linear-gradient(135deg, #fff9e6, #fff3cc);
+            border: 2px solid #ffe082;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .accommodation h4 { color: var(--sunset); margin-bottom: 0.3rem; }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .stat-card .number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--ocean);
+        }
+        .stat-card .label {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding: 0.8rem;
+            background: var(--light-gray);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+        .legend span { display: flex; align-items: center; gap: 4px; }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6rem; }
+            .content { padding: 0.5rem; }
+            .user-selector { gap: 0.3rem; }
+            .user-btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+            .activity { flex-wrap: wrap; }
+        }
+
+        /* Family avatars */
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .family-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .family-card .avatar {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .family-card .fname { font-weight: 700; font-size: 1.1rem; }
+        .family-card .from { font-size: 0.8rem; color: var(--gray); }
+        .family-card .arrives { font-size: 0.8rem; color: var(--ocean); margin-top: 0.3rem; font-weight: 600; }
+
+        /* Packing / notes */
+        .note-box {
+            background: #fffde7;
+            border-left: 4px solid var(--sunset-light);
+            padding: 0.8rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>🏖️ Sardinia 2026</h1>
+    <p>Heier-Kantola Familieferie</p>
+    <div class="dates">4. – 15. juli 2026</div>
+</div>
+
+<div class="user-selector">
+    <button class="user-btn active" onclick="selectUser('jan')"><span class="emoji">👨</span>Jan</button>
+    <button class="user-btn" onclick="selectUser('kristina')"><span class="emoji">👩</span>Kristina</button>
+    <button class="user-btn" onclick="selectUser('olivia')"><span class="emoji">👧</span>Olivia</button>
+    <button class="user-btn" onclick="selectUser('jakob')"><span class="emoji">🧑</span>Jakob</button>
+</div>
+
+<div class="tabs">
+    <button class="tab active" onclick="showTab('overview')">📋 Oversikt</button>
+    <button class="tab" onclick="showTab('plan')">🗓️ Dagsplan</button>
+    <button class="tab" onclick="showTab('activities')">🎯 Aktiviteter</button>
+    <button class="tab" onclick="showTab('food')">🍽️ Mat</button>
+    <button class="tab" onclick="showTab('results')">📊 Resultater</button>
+</div>
+
+<div class="content">
+
+    <!-- OVERVIEW TAB -->
+    <div id="tab-overview" class="tab-content active">
+        <h2 style="margin: 1rem 0 0.5rem;">👨‍👩‍👧‍👦 Familien</h2>
+        <div class="family-grid">
+            <div class="family-card">
+                <div class="avatar">👨</div>
+                <div class="fname">Jan</div>
+                <div class="from">📍 Tromsø → Oslo → Olbia</div>
+                <div class="arrives">Ankommer 4. juli kl 18:55</div>
+            </div>
+            <div class="family-card">
+                <div class="avatar">👩</div>
+                <div class="fname">Kristina</div>
+                <div class="from">📍 Tromsø → Oslo → Olbia</div>
+                <div class="arrives">Ankommer 4. juli kl 18:55</div>
+            </div>
+            <div class="family-card">
+                <div class="avatar">👧</div>
+                <div class="fname">Olivia</div>
+                <div class="from">📍 Tromsø → Oslo → Olbia</div>
+                <div class="arrives">Ankommer 4. juli kl 18:55</div>
+            </div>
+            <div class="family-card">
+                <div class="avatar">🧑</div>
+                <div class="fname">Jakob</div>
+                <div class="from">📍 Faro → Stuttgart → Olbia</div>
+                <div class="arrives">Ankommer 8. juli kl 16:50</div>
+            </div>
+        </div>
+
+        <h2 style="margin: 1.5rem 0 0.5rem;">✈️ Flyreiser</h2>
+        <div class="card">
+            <h3>🛫 4. juli – Jan, Kristina & Olivia</h3>
+            <div class="flight-card">
+                <div class="route">
+                    <div><div class="city">Tromsø</div><div class="time">06:30</div></div>
+                    <div class="arrow">✈→</div>
+                    <div><div class="city">Oslo</div><div class="time">08:25</div></div>
+                </div>
+                <div class="flight-no">DY371</div>
+            </div>
+            <div class="flight-card">
+                <div class="route">
+                    <div><div class="city">Oslo</div><div class="time">15:35</div></div>
+                    <div class="arrow">✈→</div>
+                    <div><div class="city">Olbia</div><div class="time">18:55</div></div>
+                </div>
+                <div class="flight-no">DY1860 • ZG9ROB</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🛫 8. juli – Jakob</h3>
+            <div class="flight-card">
+                <div class="route">
+                    <div><div class="city">Faro</div><div class="time">09:20</div></div>
+                    <div class="arrow">✈→</div>
+                    <div><div class="city">Stuttgart</div><div class="time">13:15</div></div>
+                </div>
+                <div class="flight-no">EW 2649</div>
+            </div>
+            <div class="flight-card">
+                <div class="route">
+                    <div><div class="city">Stuttgart</div><div class="time">15:10</div></div>
+                    <div class="arrow">✈→</div>
+                    <div><div class="city">Olbia</div><div class="time">16:50</div></div>
+                </div>
+                <div class="flight-no">EW 2824 • TMK83Q</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🛬 15. juli – Alle hjem</h3>
+            <div class="flight-card">
+                <div class="route">
+                    <div><div class="city">Olbia</div><div class="time">10:30</div></div>
+                    <div class="arrow">✈→</div>
+                    <div><div class="city">Oslo</div><div class="time">13:45</div></div>
+                </div>
+                <div class="flight-no">DY1861 • ZP55MJ</div>
+            </div>
+        </div>
+
+        <h2 style="margin: 1.5rem 0 0.5rem;">🏠 Overnatting</h2>
+        <div class="accommodation">
+            <h4>🏠 4.–11. juli: Alba Appartamento sul Mare</h4>
+            <p>Airbnb i Valledoria-området • Innsjekk 15:00 • Utsjekk 10:00</p>
+            <p style="font-size:0.85rem; color: var(--gray); margin-top:4px;">Vert: Alessandro • Wi-Fi inkludert</p>
+        </div>
+        <div class="accommodation">
+            <h4>🏨 11.–15. juli: Club Hotel Marina Beach ⭐⭐⭐⭐</h4>
+            <p>Orosei (Sardegna) • Half board • 4 netter</p>
+            <p style="font-size:0.85rem; color: var(--gray); margin-top:4px;">Tilbud #588733 • Classic Room</p>
+        </div>
+
+        <h2 style="margin: 1.5rem 0 0.5rem;">🚗 Leiebil</h2>
+        <div class="card">
+            <h3>🚗 Avis – Nissan Juke (eller lignende)</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+                <div><strong>Reservasjon:</strong> 1377-4259-NO-2</div>
+                <div><strong>Pris:</strong> NOK 9 895 (forhåndsbetalt)</div>
+                <div><strong>Henting:</strong> Olbia flyplass</div>
+                <div><strong>Dato:</strong> lør 4. juli kl 19:30</div>
+                <div><strong>Retur:</strong> Olbia flyplass</div>
+                <div><strong>Dato:</strong> ons 15. juli kl 08:30</div>
+            </div>
+            <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid #eee;">
+                <div style="font-size: 0.85rem; color: var(--gray);">
+                    ✅ Inkludert: Skadeforsikring (CDI) • Super tyveriforsikring (STP) • Ubegrenset km • Skatter & avgifter
+                </div>
+                <div style="font-size: 0.85rem; color: var(--gray); margin-top: 4px;">
+                    ⚠️ Egenandel: Skade €2 300 • Tyveri €2 500
+                </div>
+            </div>
+            <div class="note-box" style="margin-top: 0.8rem;">
+                📋 <strong>Husk å ta med:</strong> Fysisk førerkort (ikke digitalt) • Betalingskort i Jans navn • Kopi av bestillingsbekreftelsen
+            </div>
+        </div>
+    </div>
+
+    <!-- DAY PLAN TAB -->
+    <div id="tab-plan" class="tab-content">
+        <div class="note-box">
+            💡 Stem på aktivitetene du har lyst til å gjøre! Velg 👍 (ja!), 🤷 (kanskje), eller 👎 (nei takk) for hver aktivitet.
+        </div>
+        <div id="day-plan-container"></div>
+    </div>
+
+    <!-- ACTIVITIES TAB -->
+    <div id="tab-activities" class="tab-content">
+        <div class="note-box">
+            🎯 Alle aktiviteter vi kan gjøre – stem på dine favoritter!
+        </div>
+        <div id="all-activities-container"></div>
+    </div>
+
+    <!-- FOOD TAB -->
+    <div id="tab-food" class="tab-content">
+        <div class="note-box">
+            🍝 Restauranter og spisesteder – stem på hvor dere vil spise!
+        </div>
+        <div id="food-container"></div>
+    </div>
+
+    <!-- RESULTS TAB -->
+    <div id="tab-results" class="tab-content">
+        <div class="note-box">
+            📊 Oversikt over hva familien har stemt på. Grønne = alle er enige!
+        </div>
+        <div id="results-container"></div>
+    </div>
+
+</div>
+
+<script>
+// State
+let currentUser = 'jan';
+let votes = JSON.parse(localStorage.getItem('sardinia-votes') || '{}');
+
+const USERS = [
+    { id: 'jan', name: 'Jan', emoji: '👨' },
+    { id: 'kristina', name: 'Kristina', emoji: '👩' },
+    { id: 'olivia', name: 'Olivia', emoji: '👧' },
+    { id: 'jakob', name: 'Jakob', emoji: '🧑' }
+];
+
+const DAYS = [
+    {
+        date: '4. juli', day: 'Fredag', label: 'Ankomst',
+        note: 'Jan, Kristina & Olivia ankommer Olbia 18:55. Hente leiebil (Avis, Nissan Juke) kl 19:30 → Kjøre til Valledoria (~1t)',
+        activities: [
+            { id: 'a1', name: 'Kveldsspasertur i Isola Rossa', desc: 'Solnedgang ved havnen', icon: '🌅', type: 'nature' },
+        ]
+    },
+    {
+        date: '5. juli', day: 'Lørdag', label: 'Surfing & Strand',
+        activities: [
+            { id: 'a2', name: 'Surfekurs – Bulli Surf Club', desc: 'Castelsardo, for Olivia (barnekurs)', icon: '🏄‍♀️', type: 'surf' },
+            { id: 'a3', name: 'Surfekurs – Nesos Marineddabay', desc: 'Marinedda Beach, alternativ for Olivia', icon: '🏄‍♀️', type: 'surf' },
+            { id: 'a4', name: 'Castelsardo gamlebyen', desc: 'Historisk by på klippen', icon: '🏰', type: 'culture' },
+            { id: 'a5', name: 'Roccia dell\'Elefante', desc: 'Berømt elefantformet klippe', icon: '🐘', type: 'nature' },
+        ]
+    },
+    {
+        date: '6. juli', day: 'Søndag', label: 'Strand & Grotte',
+        activities: [
+            { id: 'a6', name: 'Spiaggia La Pelosa', desc: 'En av Sardinias vakreste strender (Stintino)', icon: '🏖️', type: 'beach' },
+            { id: 'a7', name: 'Grotta di Nettuno', desc: 'Spektakulær sjøgrotte ved Alghero', icon: '🕳️', type: 'nature' },
+            { id: 'a8', name: 'Asinara National Park', desc: 'Øy med villsvin og hvite esler (ferge fra Stintino)', icon: '🏝️', type: 'nature' },
+        ]
+    },
+    {
+        date: '7. juli', day: 'Mandag', label: 'Surfing & Natur',
+        activities: [
+            { id: 'a9', name: 'Surfekurs dag 2', desc: 'Fortsettelse for Olivia', icon: '🏄‍♀️', type: 'surf' },
+            { id: 'a10', name: 'Monte Ossoni', desc: 'Kort vandring, fantastisk utsikt', icon: '⛰️', type: 'nature' },
+            { id: 'a11', name: 'Mount Limbara', desc: 'Mer krevende fjelltur, panoramautsikt', icon: '🏔️', type: 'nature' },
+            { id: 'a12', name: 'Fontana Termale Castel Doria', desc: 'Varme kilder ved Castelsardo', icon: '♨️', type: 'nature' },
+        ]
+    },
+    {
+        date: '8. juli', day: 'Tirsdag', label: 'Jakob ankommer! 🎉',
+        note: 'Jakob ankommer Olbia kl 16:50. Hente på flyplassen!',
+        activities: [
+            { id: 'a13', name: 'Surfekurs dag 3', desc: 'Fortsettelse for Olivia (formiddag)', icon: '🏄‍♀️', type: 'surf' },
+            { id: 'a14', name: 'Surrau vingård', desc: 'Vermentino-smaking 🍷', icon: '🍇', type: 'culture' },
+            { id: 'a15', name: 'Hente Jakob på Olbia flyplass', desc: 'Ankomst 16:50 – kan kombineres med vingård', icon: '✈️', type: 'travel' },
+        ]
+    },
+    {
+        date: '9. juli', day: 'Onsdag', label: 'Seiling & Utforsking',
+        activities: [
+            { id: 'a16', name: 'Guincho – Seiltur', desc: 'Escursioni in barca a vela ⛵', icon: '⛵', type: 'beach' },
+            { id: 'a17', name: 'Sassari', desc: 'Utforsk Sardinias nest største by', icon: '🏛️', type: 'culture' },
+            { id: 'a18', name: 'Campanile', desc: 'Historisk kulturminne', icon: '⛪', type: 'culture' },
+        ]
+    },
+    {
+        date: '10. juli', day: 'Torsdag', label: 'La Maddalena',
+        activities: [
+            { id: 'a19', name: 'La Maddalena øygruppen', desc: 'Ferge fra Palau – snorkling, turkist vann, øyhopping', icon: '🏝️', type: 'beach' },
+            { id: 'a20', name: 'Spiaggia di Cartoe', desc: 'Vakker strand på østkysten (på veien?)', icon: '🏖️', type: 'beach' },
+        ]
+    },
+    {
+        date: '11. juli', day: 'Fredag', label: 'Flytt til Orosei',
+        note: 'Utsjekk Airbnb kl 10:00 → Kjør til Club Hotel Marina Beach (~2t)',
+        activities: [
+            { id: 'a21', name: 'Orosei gamlebyen', desc: 'Sjarmerende by med kirker og piazzaer', icon: '🏘️', type: 'culture' },
+            { id: 'a22', name: 'Cala Fuili strand', desc: 'Liten vakker strand nær Cala Gonone', icon: '🏖️', type: 'beach' },
+        ]
+    },
+    {
+        date: '12. juli', day: 'Lørdag', label: 'Strender & Grotter',
+        activities: [
+            { id: 'a23', name: 'Cala Mariolu', desc: 'Båttur – spektakulær strand (4.8⭐)', icon: '🏖️', type: 'beach' },
+            { id: 'a24', name: 'Cala Goloritzé', desc: 'UNESCO-strand med naturlig bue (4.7⭐)', icon: '🏖️', type: 'beach' },
+            { id: 'a25', name: 'Grotta del Bue Marino', desc: 'Sjøgrotte tilgjengelig med båt', icon: '🕳️', type: 'nature' },
+        ]
+    },
+    {
+        date: '13. juli', day: 'Søndag', label: 'Eventyr & Natur',
+        activities: [
+            { id: 'a26', name: 'Tiscali', desc: 'Nuraghisk landsby i en grotte – vandring ~3t tur/retur', icon: '🏛️', type: 'nature' },
+            { id: 'a27', name: 'Sorgente Su Gologone', desc: 'Naturlig kilde, krystallklart vann (4.6⭐)', icon: '💧', type: 'nature' },
+            { id: 'a28', name: 'Grotta di Ispinigoli', desc: 'Verdens nest høyeste stalagmitt!', icon: '🕳️', type: 'nature' },
+        ]
+    },
+    {
+        date: '14. juli', day: 'Mandag', label: 'Siste fulle dag',
+        activities: [
+            { id: 'a29', name: 'Oasi Biderosa', desc: 'Naturreservat – booking nødvendig!', icon: '🌿', type: 'nature' },
+            { id: 'a30', name: 'Monte Tuttavista & Kristus-statuen', desc: 'Panoramautsikt over hele kysten', icon: '⛰️', type: 'nature' },
+            { id: 'a31', name: 'Porto di Cala Gonone', desc: 'Koselig havn, siste spasertur', icon: '⚓', type: 'culture' },
+        ]
+    },
+    {
+        date: '15. juli', day: 'Tirsdag', label: 'Hjemreise ✈️',
+        note: 'Fly Olbia 10:30 → Oslo 13:45 (alle 4). Lever leiebil Avis kl 08:30. Tidlig avreise fra hotellet!',
+        activities: []
+    },
+];
+
+const RESTAURANTS = [
+    { id: 'r1', name: 'Ristorante Da Robertino', desc: 'Sjømat • 30–60€ • 4.4⭐ (728)', icon: '🦞', area: 'Nordvest' },
+    { id: 'r2', name: 'Ristorante Il Nuovo Gabbiano', desc: '10–50€ • 3.5⭐ (224)', icon: '🍝', area: 'Nordvest' },
+    { id: 'r3', name: 'Agriturismo Nuraghe Mannu', desc: 'Gårdsferie & restaurant • 4.6⭐ (775)', icon: '🌾', area: 'Nordvest' },
+    { id: 'r4', name: 'Agriturismo Canales', desc: 'Gårdsferie & restaurant • 4.8⭐ (418)', icon: '🌾', area: 'Nordvest' },
+    { id: 'r5', name: 'Agriturismo Codula Fuili', desc: '3-stjerners • 4.7⭐ (926)', icon: '🌾', area: 'Orosei' },
+    { id: 'r6', name: 'Ristorante Pizzeria da Mario', desc: '10–50€ • 4.3⭐ (1485)', icon: '🍕', area: 'Orosei' },
+    { id: 'r7', name: 'Ristorante Pasta Pasta', desc: 'Italiensk • 20–30€ • 4.4⭐ (947)', icon: '🍝', area: 'Orosei' },
+];
+
+function selectUser(userId) {
+    currentUser = userId;
+    document.querySelectorAll('.user-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.onclick.toString().includes(userId));
+    });
+    renderAll();
+}
+
+function showTab(tabName) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tabName).classList.add('active');
+    event.target.classList.add('active');
+}
+
+function vote(itemId, value) {
+    if (!votes[currentUser]) votes[currentUser] = {};
+    if (votes[currentUser][itemId] === value) {
+        delete votes[currentUser][itemId];
+    } else {
+        votes[currentUser][itemId] = value;
+    }
+    localStorage.setItem('sardinia-votes', JSON.stringify(votes));
+    renderAll();
+}
+
+function getVoteClass(itemId, value) {
+    return (votes[currentUser] && votes[currentUser][itemId] === value) ? 'voted-' + value : '';
+}
+
+function renderVoteDots(itemId) {
+    return USERS.map(u => {
+        const v = votes[u.id] && votes[u.id][itemId];
+        const cls = v ? v : '';
+        return `<div class="vote-dot ${cls}" title="${u.name}: ${v || 'ikke stemt'}"></div>`;
+    }).join('');
+}
+
+function renderActivity(act) {
+    return `
+        <div class="activity">
+            <div class="activity-icon ${act.type}">${act.icon}</div>
+            <div class="activity-info">
+                <div class="name">${act.name}</div>
+                <div class="desc">${act.desc}</div>
+                <div class="vote-summary">${renderVoteDots(act.id)}</div>
+            </div>
+            <div class="vote-area">
+                <button class="vote-btn ${getVoteClass(act.id, 'yes')}" onclick="vote('${act.id}', 'yes')" title="Ja!">👍</button>
+                <button class="vote-btn ${getVoteClass(act.id, 'maybe')}" onclick="vote('${act.id}', 'maybe')" title="Kanskje">🤷</button>
+                <button class="vote-btn ${getVoteClass(act.id, 'no')}" onclick="vote('${act.id}', 'no')" title="Nei takk">👎</button>
+            </div>
+        </div>
+    `;
+}
+
+function renderDayPlan() {
+    const container = document.getElementById('day-plan-container');
+    container.innerHTML = DAYS.map(day => `
+        <div class="day-header">
+            <h2>${day.day} ${day.date}</h2>
+            <span class="date">${day.label}</span>
+        </div>
+        <div class="card day-card">
+            ${day.note ? `<div class="note-box">${day.note}</div>` : ''}
+            ${day.activities.length ? day.activities.map(renderActivity).join('') : '<p style="color:var(--gray); padding:0.5rem 0;">Reisedag – ingen planlagte aktiviteter</p>'}
+        </div>
+    `).join('');
+}
+
+function renderAllActivities() {
+    const container = document.getElementById('all-activities-container');
+    const allActs = DAYS.flatMap(d => d.activities);
+    const categories = {
+        'surf': { label: '🏄‍♀️ Surfing', items: [] },
+        'beach': { label: '🏖️ Strender & Båtturer', items: [] },
+        'nature': { label: '🌿 Natur & Grotter', items: [] },
+        'culture': { label: '🏛️ Kultur & Byer', items: [] },
+        'travel': { label: '✈️ Reise', items: [] },
+    };
+    allActs.forEach(a => {
+        if (categories[a.type]) categories[a.type].items.push(a);
+    });
+    container.innerHTML = Object.values(categories).filter(c => c.items.length).map(cat => `
+        <div class="card">
+            <h3>${cat.label}</h3>
+            ${cat.items.map(renderActivity).join('')}
+        </div>
+    `).join('');
+}
+
+function renderFood() {
+    const container = document.getElementById('food-container');
+    const areas = ['Nordvest', 'Orosei'];
+    container.innerHTML = areas.map(area => `
+        <div class="card">
+            <h3>📍 ${area} (${area === 'Nordvest' ? '4–11 juli' : '11–15 juli'})</h3>
+            ${RESTAURANTS.filter(r => r.area === area).map(r => `
+                <div class="activity">
+                    <div class="activity-icon food">${r.icon}</div>
+                    <div class="activity-info">
+                        <div class="name">${r.name}</div>
+                        <div class="desc">${r.desc}</div>
+                        <div class="vote-summary">${renderVoteDots(r.id)}</div>
+                    </div>
+                    <div class="vote-area">
+                        <button class="vote-btn ${getVoteClass(r.id, 'yes')}" onclick="vote('${r.id}', 'yes')" title="Ja!">👍</button>
+                        <button class="vote-btn ${getVoteClass(r.id, 'maybe')}" onclick="vote('${r.id}', 'maybe')" title="Kanskje">🤷</button>
+                        <button class="vote-btn ${getVoteClass(r.id, 'no')}" onclick="vote('${r.id}', 'no')" title="Nei takk">👎</button>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `).join('');
+}
+
+function renderResults() {
+    const container = document.getElementById('results-container');
+    const allItems = [
+        ...DAYS.flatMap(d => d.activities),
+        ...RESTAURANTS.map(r => ({ ...r, type: 'food' }))
+    ];
+
+    const scored = allItems.map(item => {
+        let score = 0;
+        let totalVotes = 0;
+        const userVotes = {};
+        USERS.forEach(u => {
+            const v = votes[u.id] && votes[u.id][item.id];
+            if (v === 'yes') { score += 2; totalVotes++; }
+            else if (v === 'maybe') { score += 1; totalVotes++; }
+            else if (v === 'no') { score -= 1; totalVotes++; }
+            userVotes[u.id] = v || null;
+        });
+        return { ...item, score, totalVotes, userVotes };
+    });
+
+    scored.sort((a, b) => b.score - a.score);
+
+    const yesCount = scored.filter(s => s.score >= 6).length;
+    const someVotes = scored.filter(s => s.totalVotes > 0).length;
+
+    container.innerHTML = `
+        <div class="stats-grid" style="margin-bottom:1rem;">
+            <div class="stat-card">
+                <div class="number">${allItems.length}</div>
+                <div class="label">Totalt aktiviteter</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">${someVotes}</div>
+                <div class="label">Har stemmer</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="color:#4caf50;">${yesCount}</div>
+                <div class="label">Alle enige! 🎉</div>
+            </div>
+        </div>
+        <div class="legend">
+            <span><div class="vote-dot yes"></div> Ja!</span>
+            <span><div class="vote-dot maybe"></div> Kanskje</span>
+            <span><div class="vote-dot no"></div> Nei</span>
+            <span><div class="vote-dot"></div> Ikke stemt</span>
+        </div>
+        <div class="card">
+            <h3>🏆 Rangering</h3>
+            ${scored.filter(s => s.totalVotes > 0).map((item, i) => `
+                <div class="activity" style="${item.score >= 6 ? 'background:#e8f5e9; border-radius:8px; margin:2px 0;' : ''}">
+                    <div style="width:28px; text-align:center; font-weight:800; color:${i < 3 ? 'var(--sunset)' : 'var(--gray)'};">${i + 1}</div>
+                    <div class="activity-icon ${item.type}">${item.icon}</div>
+                    <div class="activity-info">
+                        <div class="name">${item.name}</div>
+                        <div class="vote-summary" style="margin-top:4px;">
+                            ${USERS.map(u => {
+                                const v = item.userVotes[u.id];
+                                return `<span style="font-size:0.75rem; margin-right:6px;" title="${u.name}">${u.emoji}${v === 'yes' ? '👍' : v === 'maybe' ? '🤷' : v === 'no' ? '👎' : '⬜'}</span>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                    <div style="font-weight:800; font-size:1.2rem; color:${item.score > 0 ? '#4caf50' : item.score < 0 ? '#ef5350' : 'var(--gray)'};">
+                        ${item.score > 0 ? '+' : ''}${item.score}
+                    </div>
+                </div>
+            `).join('') || '<p style="color:var(--gray); padding:1rem;">Ingen stemmer enda – velg en bruker og begynn å stemme! 🗳️</p>'}
+        </div>
+    `;
+}
+
+function renderAll() {
+    renderDayPlan();
+    renderAllActivities();
+    renderFood();
+    renderResults();
+}
+
+renderAll();
+</script>
+
+</body>
+</html>
