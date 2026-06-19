@@ -908,13 +908,13 @@ const DAYS = [
 ];
 
 const RESTAURANTS = [
-    { id: 'r1', name: 'Ristorante Da Robertino', desc: 'Sjømat, Palau • 30–60€ • 4.4⭐ (728)', icon: '🦞', area: 'Nordvest', ta: 'https://www.tripadvisor.com/Restaurant_Review-g562810-d1552190-Reviews-Ristorante_da_Robertino-Palau_Province_of_Olbia_Tempio_Sardinia.html' },
-    { id: 'r2', name: 'Ristorante Il Nuovo Gabbiano', desc: 'Sjømat & pasta, Cala Gonone • 10–50€ • 4.1⭐', icon: '🍝', area: 'Orosei', ta: 'https://www.tripadvisor.com/Restaurant_Review-g608907-d2150090-Reviews-Il_Nuovo_Gabbiano-Cala_Gonone_Dorgali_Province_of_Nuoro_Sardinia.html' },
-    { id: 'r3', name: 'Agriturismo Nuraghe Mannu', desc: 'Tradisjonell sard middag, Cala Gonone • 4.5⭐ (500+)', icon: '🌾', area: 'Orosei', ta: 'https://www.tripadvisor.com/Restaurant_Review-g608907-d3491065-Reviews-Agriturismo_Nuraghe_Mannu-Cala_Gonone_Dorgali_Province_of_Nuoro_Sardinia.html', igTag: 'nuraghemannu' },
-    { id: 'r4', name: 'Agriturismo Canales', desc: 'Dorgali, ved Cedrino-sjøen • 4.9⭐ (500+) 🏆', icon: '🌾', area: 'Orosei', ta: 'https://www.tripadvisor.com/Hotel_Review-g642180-d1473115-Reviews-Agriturismo_Canales-Dorgali_Province_of_Nuoro_Sardinia.html' },
-    { id: 'r5', name: 'Agriturismo Codula Fuili', desc: 'Cala Gonone, utsikt over golfen • 4.6⭐ (460+) 🏆', icon: '🌾', area: 'Orosei', ta: 'https://www.tripadvisor.com/Hotel_Review-g642180-d1544216-Reviews-Agriturismo_Codula_Fuili-Dorgali_Province_of_Nuoro_Sardinia.html', ig: 'codulafuili' },
-    { id: 'r6', name: 'Ristorante Pizzeria da Mario', desc: 'Cala Gonone • 10–50€ • 4.3⭐', icon: '🍕', area: 'Orosei' },
-    { id: 'r7', name: 'Ristorante Pasta Pasta', desc: 'Italiensk, Cala Gonone • 20–30€ • 4.4⭐', icon: '🍝', area: 'Orosei' },
+    { id: 'r1', name: 'Ristorante Da Robertino', desc: 'Sjømat, Palau • 30–60€ • 4.4⭐ (728)', icon: '🦞', area: 'Nordvest', drive: '1t 22 min', ta: 'https://www.tripadvisor.com/Restaurant_Review-g562810-d1552190-Reviews-Ristorante_da_Robertino-Palau_Province_of_Olbia_Tempio_Sardinia.html', maps: mapsDir('Ristorante Da Robertino, Palau, Sardinia') },
+    { id: 'r2', name: 'Ristorante Il Nuovo Gabbiano', desc: 'Sjømat & pasta, Cala Gonone • 10–50€ • 4.1⭐', icon: '🍝', area: 'Orosei', drive: '42 min', ta: 'https://www.tripadvisor.com/Restaurant_Review-g608907-d2150090-Reviews-Il_Nuovo_Gabbiano-Cala_Gonone_Dorgali_Province_of_Nuoro_Sardinia.html', maps: mapsDir('Il Nuovo Gabbiano, Cala Gonone, Sardinia', BASE2) },
+    { id: 'r3', name: 'Agriturismo Nuraghe Mannu', desc: 'Tradisjonell sard middag, Cala Gonone • 4.5⭐ (500+)', icon: '🌾', area: 'Orosei', drive: '42 min', ta: 'https://www.tripadvisor.com/Restaurant_Review-g608907-d3491065-Reviews-Agriturismo_Nuraghe_Mannu-Cala_Gonone_Dorgali_Province_of_Nuoro_Sardinia.html', igTag: 'nuraghemannu', maps: mapsDir('Agriturismo Nuraghe Mannu, Cala Gonone, Sardinia', BASE2) },
+    { id: 'r4', name: 'Agriturismo Canales', desc: 'Dorgali, ved Cedrino-sjøen • 4.9⭐ (500+) 🏆', icon: '🌾', area: 'Orosei', drive: '35 min', ta: 'https://www.tripadvisor.com/Hotel_Review-g642180-d1473115-Reviews-Agriturismo_Canales-Dorgali_Province_of_Nuoro_Sardinia.html', maps: mapsDir('Agriturismo Canales, Dorgali, Sardinia', BASE2) },
+    { id: 'r5', name: 'Agriturismo Codula Fuili', desc: 'Cala Gonone, utsikt over golfen • 4.6⭐ (460+) 🏆', icon: '🌾', area: 'Orosei', drive: '43 min', ta: 'https://www.tripadvisor.com/Hotel_Review-g642180-d1544216-Reviews-Agriturismo_Codula_Fuili-Dorgali_Province_of_Nuoro_Sardinia.html', ig: 'codulafuili', maps: mapsDir('Agriturismo Codula Fuili, Dorgali, Sardinia', BASE2) },
+    { id: 'r6', name: 'Ristorante Pizzeria da Mario', desc: 'Orosei • 10–50€ • 4.3⭐', icon: '🍕', area: 'Orosei', drive: '4 min', maps: mapsDir('Pizzeria da Mario, Orosei, Sardinia', BASE2) },
+    { id: 'r7', name: 'Ristorante Pasta Pasta', desc: 'Italiensk, Cala Gonone • 20–30€ • 4.4⭐', icon: '🍝', area: 'Orosei', drive: '43 min', maps: mapsDir('Ristorante Pasta Pasta, Cala Gonone, Sardinia', BASE2) },
 ];
 
 function selectUser(userId) {
@@ -1027,12 +1027,14 @@ function renderFood() {
                 if (r.ta) links.push(`<a href="${r.ta}" target="_blank" style="color:#34e0a1; text-decoration:none; font-size:0.8rem;">🦉 TripAdvisor</a>`);
                 if (r.ig) links.push(`<a href="https://instagram.com/${r.ig}" target="_blank" style="color:var(--ocean); text-decoration:none; font-size:0.8rem;">📸 @${r.ig}</a>`);
                 if (r.igTag) links.push(`<a href="https://instagram.com/explore/tags/${r.igTag}" target="_blank" style="color:var(--sunset); text-decoration:none; font-size:0.8rem;">#${r.igTag}</a>`);
+                if (r.maps) links.push(`<a href="${r.maps}" target="_blank" style="color:#4285f4; text-decoration:none; font-size:0.8rem;">📍 Google Maps</a>`);
                 const linksHtml = links.length ? `<div style="margin-top:3px;">${links.join(' • ')}</div>` : '';
+                const driveHtml = r.drive ? `<span style="color:var(--ocean); font-size:0.75rem; background:rgba(0,150,200,0.1); padding:2px 6px; border-radius:8px; margin-left:6px;">🚗 ${r.drive}</span>` : '';
                 return `
                 <div class="activity">
                     <div class="activity-icon food">${r.icon}</div>
                     <div class="activity-info">
-                        <div class="name">${r.name}</div>
+                        <div class="name">${r.name}${driveHtml}</div>
                         <div class="desc">${r.desc}</div>
                         ${linksHtml}
                         <div class="vote-summary">${renderVoteDots(r.id)}</div>
