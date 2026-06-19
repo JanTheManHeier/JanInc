@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Italian flag stripes in rounded rectangle -->
+  <clipPath id="clip">
+    <rect x="4" y="12" width="56" height="40" rx="6"/>
+  </clipPath>
+  <g clip-path="url(#clip)">
+    <rect x="4" y="12" width="18.67" height="40" fill="#009246"/>
+    <rect x="22.67" y="12" width="18.67" height="40" fill="#fff"/>
+    <rect x="41.33" y="12" width="18.67" height="40" fill="#CE2B37"/>
+  </g>
+  <rect x="4" y="12" width="56" height="40" rx="6" fill="none" stroke="#333" stroke-width="1.5"/>
+  <!-- Golden sun -->
+  <circle cx="32" cy="14" r="10" fill="#FFB300"/>
+  <g fill="#FFB300">
+    <rect x="30.5" y="0" width="3" height="6" rx="1.5"/>
+    <rect x="30.5" y="0" width="3" height="6" rx="1.5" transform="rotate(45 32 14)"/>
+    <rect x="30.5" y="0" width="3" height="6" rx="1.5" transform="rotate(90 32 14)"/>
+    <rect x="30.5" y="0" width="3" height="6" rx="1.5" transform="rotate(135 32 14)"/>
+    <rect x="30.5" y="0" width="3" height="6" rx="1.5" transform="rotate(180 32 14)"/>
+    <rect x="30.5" y="0" width="3" height="6" rx="1.5" transform="rotate(225 32 14)"/>
+    <rect x="30.5" y="0" width="3" height="6" rx="1.5" transform="rotate(270 32 14)"/>
+    <rect x="30.5" y="0" width="3" height="6" rx="1.5" transform="rotate(315 32 14)"/>
+  </g>
+  <circle cx="32" cy="14" r="7" fill="#FFD54F"/>
+</svg>
