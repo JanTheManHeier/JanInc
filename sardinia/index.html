@@ -901,13 +901,13 @@ const DAYS = [
 ];
 
 const RESTAURANTS = [
-    { id: 'r1', name: 'Ristorante Da Robertino', desc: 'Sjømat • 30–60€ • 4.4⭐ (728)', icon: '🦞', area: 'Nordvest' },
-    { id: 'r2', name: 'Ristorante Il Nuovo Gabbiano', desc: '10–50€ • 3.5⭐ (224)', icon: '🍝', area: 'Nordvest' },
-    { id: 'r3', name: 'Agriturismo Nuraghe Mannu', desc: 'Gårdsferie & restaurant • 4.6⭐ (775)', icon: '🌾', area: 'Nordvest' },
-    { id: 'r4', name: 'Agriturismo Canales', desc: 'Gårdsferie & restaurant • 4.8⭐ (418)', icon: '🌾', area: 'Nordvest' },
-    { id: 'r5', name: 'Agriturismo Codula Fuili', desc: '3-stjerners • 4.7⭐ (926)', icon: '🌾', area: 'Orosei' },
-    { id: 'r6', name: 'Ristorante Pizzeria da Mario', desc: '10–50€ • 4.3⭐ (1485)', icon: '🍕', area: 'Orosei' },
-    { id: 'r7', name: 'Ristorante Pasta Pasta', desc: 'Italiensk • 20–30€ • 4.4⭐ (947)', icon: '🍝', area: 'Orosei' },
+    { id: 'r1', name: 'Ristorante Da Robertino', desc: 'Sjømat, Palau • 30–60€ • 4.4⭐ (728)', icon: '🦞', area: 'Nordvest', ta: 'https://www.tripadvisor.com/Restaurant_Review-g562810-d1552190-Reviews-Ristorante_da_Robertino-Palau_Province_of_Olbia_Tempio_Sardinia.html' },
+    { id: 'r2', name: 'Ristorante Il Nuovo Gabbiano', desc: 'Sjømat & pasta, Cala Gonone • 10–50€ • 4.1⭐', icon: '🍝', area: 'Orosei', ta: 'https://www.tripadvisor.com/Restaurant_Review-g608907-d2150090-Reviews-Il_Nuovo_Gabbiano-Cala_Gonone_Dorgali_Province_of_Nuoro_Sardinia.html' },
+    { id: 'r3', name: 'Agriturismo Nuraghe Mannu', desc: 'Tradisjonell sard middag, Cala Gonone • 4.5⭐ (500+)', icon: '🌾', area: 'Orosei', ta: 'https://www.tripadvisor.com/Restaurant_Review-g608907-d3491065-Reviews-Agriturismo_Nuraghe_Mannu-Cala_Gonone_Dorgali_Province_of_Nuoro_Sardinia.html', igTag: 'nuraghemannu' },
+    { id: 'r4', name: 'Agriturismo Canales', desc: 'Dorgali, ved Cedrino-sjøen • 4.9⭐ (500+) 🏆', icon: '🌾', area: 'Orosei', ta: 'https://www.tripadvisor.com/Hotel_Review-g642180-d1473115-Reviews-Agriturismo_Canales-Dorgali_Province_of_Nuoro_Sardinia.html' },
+    { id: 'r5', name: 'Agriturismo Codula Fuili', desc: 'Cala Gonone, utsikt over golfen • 4.6⭐ (460+) 🏆', icon: '🌾', area: 'Orosei', ta: 'https://www.tripadvisor.com/Hotel_Review-g642180-d1544216-Reviews-Agriturismo_Codula_Fuili-Dorgali_Province_of_Nuoro_Sardinia.html', ig: 'codulafuili' },
+    { id: 'r6', name: 'Ristorante Pizzeria da Mario', desc: 'Cala Gonone • 10–50€ • 4.3⭐', icon: '🍕', area: 'Orosei' },
+    { id: 'r7', name: 'Ristorante Pasta Pasta', desc: 'Italiensk, Cala Gonone • 20–30€ • 4.4⭐', icon: '🍝', area: 'Orosei' },
 ];
 
 function selectUser(userId) {
@@ -1013,12 +1013,19 @@ function renderFood() {
     container.innerHTML = areas.map(area => `
         <div class="card">
             <h3>📍 ${area} (${area === 'Nordvest' ? '4–11 juli' : '11–15 juli'})</h3>
-            ${RESTAURANTS.filter(r => r.area === area).map(r => `
+            ${RESTAURANTS.filter(r => r.area === area).map(r => {
+                const links = [];
+                if (r.ta) links.push(`<a href="${r.ta}" target="_blank" style="color:#34e0a1; text-decoration:none; font-size:0.8rem;">🦉 TripAdvisor</a>`);
+                if (r.ig) links.push(`<a href="https://instagram.com/${r.ig}" target="_blank" style="color:var(--ocean); text-decoration:none; font-size:0.8rem;">📸 @${r.ig}</a>`);
+                if (r.igTag) links.push(`<a href="https://instagram.com/explore/tags/${r.igTag}" target="_blank" style="color:var(--sunset); text-decoration:none; font-size:0.8rem;">#${r.igTag}</a>`);
+                const linksHtml = links.length ? `<div style="margin-top:3px;">${links.join(' • ')}</div>` : '';
+                return `
                 <div class="activity">
                     <div class="activity-icon food">${r.icon}</div>
                     <div class="activity-info">
                         <div class="name">${r.name}</div>
                         <div class="desc">${r.desc}</div>
+                        ${linksHtml}
                         <div class="vote-summary">${renderVoteDots(r.id)}</div>
                     </div>
                     <div class="vote-area">
@@ -1027,7 +1034,7 @@ function renderFood() {
                         <button class="vote-btn ${getVoteClass(r.id, 'no')}" onclick="vote('${r.id}', 'no')" title="Nei takk">👎</button>
                     </div>
                 </div>
-            `).join('')}
+            `}).join('')}
         </div>
     `).join('');
 }
