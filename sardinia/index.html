@@ -375,9 +375,11 @@
 <div class="tabs">
     <button class="tab active" onclick="showTab('overview')">📋 Oversikt</button>
     <button class="tab" onclick="showTab('plan')">🗓️ Dagsplan</button>
+    <button class="tab" onclick="showTab('map')">🗺️ Kart</button>
     <button class="tab" onclick="showTab('activities')">🎯 Aktiviteter</button>
     <button class="tab" onclick="showTab('food')">🍽️ Mat</button>
     <button class="tab" onclick="showTab('todo')">✅ Sjekkliste</button>
+    <button class="tab" onclick="showTab('info')">ℹ️ Nyttig</button>
     <button class="tab" onclick="showTab('results')">📊 Resultater</button>
 </div>
 
@@ -511,6 +513,88 @@
         <div id="day-plan-container"></div>
     </div>
 
+    <!-- MAP & DISTANCES TAB -->
+    <div id="tab-map" class="tab-content">
+        <div class="card">
+            <h3>🗺️ Kart – Nordvest Sardinia</h3>
+            <iframe src="https://www.google.com/maps/d/embed?mid=1&z=10&ll=40.93,8.75" width="100%" height="300" style="border:0; border-radius:12px;" allowfullscreen="" loading="lazy"></iframe>
+            <p style="font-size:0.8rem; color:var(--gray); margin-top:0.5rem; text-align:center;">
+                <a href="https://www.google.com/maps/place/Valledoria,+Province+of+Sassari,+Italy" target="_blank" style="color:var(--ocean);">📍 Åpne Valledoria i Google Maps</a>
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🚗 Kjøretider fra Airbnb (Valledoria) – Uke 1</h3>
+            <table style="width:100%; font-size:0.9rem; border-collapse:collapse;">
+                <thead>
+                    <tr style="border-bottom:2px solid var(--ocean); text-align:left;">
+                        <th style="padding:8px 4px;">Destinasjon</th>
+                        <th style="padding:8px 4px;">Avstand</th>
+                        <th style="padding:8px 4px;">Tid 🚗</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏖️ Isola Rossa</td><td>15 km</td><td><strong>20 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏰 Castelsardo</td><td>15 km</td><td><strong>20 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏄 Bulli Surf Club (Castelsardo)</td><td>15 km</td><td><strong>20 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏄 Nesos Marineddabay</td><td>18 km</td><td><strong>20 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🐘 Roccia dell'Elefante</td><td>8 km</td><td><strong>10 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">♨️ Fontana Termale Castel Doria</td><td>10 km</td><td><strong>15 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">⛰️ Monte Ossoni</td><td>12 km</td><td><strong>15 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏛️ Sassari</td><td>45 km</td><td><strong>40 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏖️ Spiaggia La Pelosa (Stintino)</td><td>70 km</td><td><strong>1t 10 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏝️ Asinara (ferge Stintino)</td><td>70 km</td><td><strong>1t 10 min + ferge</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🕳️ Grotta di Nettuno (Alghero)</td><td>90 km</td><td><strong>1t 20 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏔️ Mount Limbara</td><td>50 km</td><td><strong>1t</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🍇 Surrau vingård (Arzachena)</td><td>75 km</td><td><strong>1t</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏝️ La Maddalena (ferge Palau)</td><td>85 km</td><td><strong>1t 15 min + 20 min ferge</strong></td></tr>
+                    <tr><td style="padding:6px 4px;">⛵ Guincho seiltur (Palau)</td><td>85 km</td><td><strong>1t 15 min</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>🚗 Kjøretider fra Hotel Marina Beach (Orosei) – Uke 2</h3>
+            <table style="width:100%; font-size:0.9rem; border-collapse:collapse;">
+                <thead>
+                    <tr style="border-bottom:2px solid var(--ocean); text-align:left;">
+                        <th style="padding:8px 4px;">Destinasjon</th>
+                        <th style="padding:8px 4px;">Avstand</th>
+                        <th style="padding:8px 4px;">Tid 🚗</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🌿 Oasi Biderosa</td><td>14 km</td><td><strong>15 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏖️ Spiaggia di Cartoe</td><td>18 km</td><td><strong>20 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🕳️ Grotta di Ispinigoli</td><td>18 km</td><td><strong>20 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">⛰️ Monte Tuttavista</td><td>15 km</td><td><strong>20 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏘️ Orosei sentrum</td><td>3 km</td><td><strong>5 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">⚓ Cala Gonone (havn/båtturer)</td><td>25 km</td><td><strong>35 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏖️ Cala Fuili</td><td>28 km</td><td><strong>40 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏛️ Tiscali (trailhead)</td><td>30 km</td><td><strong>40 min + 1.5t vandring</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">💧 Sorgente Su Gologone</td><td>20 km</td><td><strong>25 min</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏖️ Cala Mariolu (båt fra Cala Gonone)</td><td>25 km</td><td><strong>35 min bil + 30 min båt</strong></td></tr>
+                    <tr><td style="padding:6px 4px;">🏖️ Cala Goloritzé (båt fra Cala Gonone)</td><td>25 km</td><td><strong>35 min bil + 40 min båt</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>🚗 Flytt mellom basene</h3>
+            <table style="width:100%; font-size:0.9rem; border-collapse:collapse;">
+                <tbody>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:8px 4px;">✈️ Olbia flyplass → Valledoria (Airbnb)</td><td><strong>~1t</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:8px 4px;">🏠 Valledoria → Club Hotel Marina Beach (Orosei)</td><td><strong>~2t</strong></td></tr>
+                    <tr><td style="padding:8px 4px;">🏨 Club Hotel Marina Beach → Olbia flyplass</td><td><strong>~1t 30 min</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="note-box">
+            💡 <strong>Tips:</strong> Sardinia har smale, svingete veier – beregn litt ekstra tid! Parkering ved La Pelosa og Cala Gonone kan ta tid i juli. Last ned offline kart i Google Maps før reisen.
+        </div>
+    </div>
+
     <!-- ACTIVITIES TAB -->
     <div id="tab-activities" class="tab-content">
         <div class="note-box">
@@ -535,8 +619,95 @@
         <div id="todo-container"></div>
     </div>
 
+    <!-- INFO TAB -->
+    <div id="tab-info" class="tab-content">
+        <div class="card">
+            <h3>🆘 Nødnumre & Viktig</h3>
+            <table style="width:100%; font-size:0.9rem; border-collapse:collapse;">
+                <tbody>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🚨 Nødnummer (politi/brann/ambulanse)</td><td><strong>112</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🚑 Ambulanse</td><td><strong>118</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">👮 Carabinieri (politi)</td><td><strong>112</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🚗 Avis nødhjelp / veihjelp</td><td><strong>+39 078 969 540</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏠 Airbnb vert (Alessandro)</td><td><strong>Via Airbnb-app</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏨 Club Hotel Marina Beach</td><td><strong>+39 0784 997 120</strong></td></tr>
+                    <tr><td style="padding:6px 4px;">🇳🇴 Norsk ambassade Roma</td><td><strong>+39 06 45 39 11</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>☀️ Vær i juli (Sardinia nordvest)</h3>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap:0.5rem; text-align:center;">
+                <div class="stat-card"><div class="number" style="font-size:1.3rem;">32°</div><div class="label">Dagstemperatur</div></div>
+                <div class="stat-card"><div class="number" style="font-size:1.3rem;">22°</div><div class="label">Natt</div></div>
+                <div class="stat-card"><div class="number" style="font-size:1.3rem;">25°</div><div class="label">Sjøtemp 🌊</div></div>
+                <div class="stat-card"><div class="number" style="font-size:1.3rem;">12t</div><div class="label">Sol per dag</div></div>
+                <div class="stat-card"><div class="number" style="font-size:1.3rem;">2%</div><div class="label">Regnrisiko</div></div>
+                <div class="stat-card"><div class="number" style="font-size:1.3rem;">UV 9</div><div class="label">UV-indeks ⚠️</div></div>
+            </div>
+            <div class="note-box" style="margin-top:0.8rem;">
+                ☀️ Juli er den varmeste måneden! Bruk SPF 50+, drikk mye vann, og unngå stranden midt på dagen (12–15).
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>💰 Budsjett-oversikt</h3>
+            <table style="width:100%; font-size:0.9rem; border-collapse:collapse;">
+                <thead>
+                    <tr style="border-bottom:2px solid var(--ocean); text-align:left;">
+                        <th style="padding:8px 4px;">Post</th>
+                        <th style="padding:8px 4px; text-align:right;">Beløp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">✈️ Fly (Norwegian TOS→OSL→Olbia)</td><td style="text-align:right;">Se bestilling</td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">✈️ Fly (Eurowings Faro→Olbia – Jakob)</td><td style="text-align:right;">Se bestilling</td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">✈️ Fly hjem (Norwegian Olbia→Oslo)</td><td style="text-align:right;">Se bestilling</td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🚗 Avis leiebil (11 dager)</td><td style="text-align:right;"><strong>NOK 9 895</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏠 Airbnb Valledoria (7 netter)</td><td style="text-align:right;">Se Airbnb</td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏨 Club Hotel Marina Beach (4 netter)</td><td style="text-align:right;"><strong>€ 1 136</strong></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">🏄 Surfekurs Olivia (estimat)</td><td style="text-align:right;">~€ 120–200</td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 4px;">⛽ Bensin (estimat 11 dager)</td><td style="text-align:right;">~€ 150–200</td></tr>
+                    <tr><td style="padding:6px 4px;">🍽️ Mat & restauranter (estimat)</td><td style="text-align:right;">~€ 800–1200</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>📱 Nyttige apper</h3>
+            <div style="font-size:0.9rem; line-height:1.8;">
+                📍 <strong>Google Maps</strong> – Last ned Sardinia offline-kart!<br>
+                🏖️ <strong>spiaggialapelosa.it</strong> – Bookingsystem La Pelosa<br>
+                ⛴️ <strong>Maddalena Lines / Delcomar</strong> – Fergetider Palau↔La Maddalena<br>
+                🌊 <strong>Windy</strong> – Vind & bølger (for surfing!)<br>
+                🍽️ <strong>TheFork / TripAdvisor</strong> – Restaurant-reservasjoner<br>
+                💱 <strong>Valuta:</strong> Euro (€) – ca. 11,5 NOK per €<br>
+                🔌 <strong>Strøm:</strong> Type L/C adapter (samme som Norge vanligvis – sjekk!)
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🗣️ Nyttige italienske fraser</h3>
+            <table style="width:100%; font-size:0.9rem; border-collapse:collapse;">
+                <tbody>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:4px;">Hei / Ha det</td><td><em>Ciao</em></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:4px;">God morgen</td><td><em>Buongiorno</em></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:4px;">Takk</td><td><em>Grazie</em></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:4px;">Vær så snill</td><td><em>Per favore</em></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:4px;">Unnskyld</td><td><em>Scusi</em></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:4px;">Regningen, takk</td><td><em>Il conto, per favore</em></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:4px;">Hvor er…?</td><td><em>Dove si trova…?</em></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:4px;">Jeg vil gjerne ha…</td><td><em>Vorrei…</em></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:4px;">Vann</td><td><em>Acqua</em></td></tr>
+                    <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:4px;">Is</td><td><em>Gelato</em> 🍦</td></tr>
+                    <tr><td style="padding:4px;">Stranden</td><td><em>La spiaggia</em></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- RESULTS TAB -->
-    <div id="tab-results" class="tab-content">
         <div class="note-box">
             📊 Oversikt over hva familien har stemt på. Grønne = alle er enige!
         </div>
