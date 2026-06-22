@@ -57,10 +57,16 @@
 <div class="admin-aksjoner"><button onclick="lastSvar()">🔄 Hent svar</button></div>
 <div id="svar-visning" class="muted">Trykk «Hent svar» for å laste inn.</div>
 
+<h2>🤫 Forlover-runde — hemmelige svar</h2>
+<p class="muted">Innsider-info fra forloverne (<a href="/SiljeOgTerje/forlover/" target="_blank">åpne forlover-runden →</a>). Skjult for brudeparet.</p>
+<div class="admin-aksjoner"><button onclick="lastForlover()">🔄 Hent forlover-svar</button></div>
+<div id="forlover-visning" class="muted">Trykk «Hent forlover-svar» for å laste inn.</div>
+
 <div id="content">Laster...</div>
 
 <script src="../data.js"></script>
 <script src="../sporsmal/sporsmal-data.js"></script>
+<script src="../forlover/forlover-data.js"></script>
 <script>
 let adminKey = sessionStorage.getItem('siljeterje-admin-key') || '';
 
@@ -495,6 +501,51 @@ async function lastSvar() {
     });
     h += '</table></div>';
   });
+  cont.className = '';
+  cont.innerHTML = h;
+}
+
+async function lastForlover() {
+  const cont = document.getElementById('forlover-visning');
+  if (!adminKey) settAdminKey();
+  if (!adminKey) return;
+  cont.className = 'muted';
+  cont.textContent = 'Henter forlover-svar…';
+  let data;
+  try {
+    const res = await fetch('/api/siljeterje-forlover?all=1&key=' + encodeURIComponent(adminKey));
+    if (res.status === 401) {
+      sessionStorage.removeItem('siljeterje-admin-key'); adminKey = '';
+      cont.className = 'err'; cont.textContent = 'Feil admin-nøkkel — prøv igjen.';
+      return;
+    }
+    if (!res.ok) { cont.className = 'err'; cont.textContent = 'Feil: ' + res.status; return; }
+    data = await res.json();
+  } catch (e) {
+    cont.className = 'err'; cont.textContent = 'Kunne ikke hente svar: ' + esc(e.message || e);
+    return;
+  }
+  const svar = (data && data.svar) || {};
+  const personer = window.FORLOVER_PERSONER || [];
+  const sek = window.FORLOVER_SPORSMAL || [];
+  // Vis kun forlovere som har svart på minst ett spørsmål
+  const aktive = personer.filter(p => svar[p.slug] && Object.keys(svar[p.slug]).length);
+  if (!aktive.length) { cont.className = 'muted'; cont.textContent = 'Ingen forlovere har svart ennå.'; return; }
+  let h = '<table><tr><th style="width:34%">Spørsmål</th>'
+    + aktive.map(p => '<th>' + esc(p.navn) + '</th>').join('') + '</tr>';
+  sek.forEach(s => {
+    h += '<tr><td colspan="' + (aktive.length + 1) + '" style="background:rgba(212,168,83,0.12);color:#D4A853;font-weight:bold">'
+      + esc((s.ikon || '') + ' ' + s.seksjon) + '</td></tr>';
+    s.sporsmal.forEach(sp => {
+      h += '<tr><td>' + esc(sp.tittel) + '</td>';
+      aktive.forEach(p => {
+        const v = (svar[p.slug] && svar[p.slug][sp.id]) || '';
+        h += '<td class="tekst">' + (v ? esc(v) : '<span class="muted">—</span>') + '</td>';
+      });
+      h += '</tr>';
+    });
+  });
+  h += '</table>';
   cont.className = '';
   cont.innerHTML = h;
 }
