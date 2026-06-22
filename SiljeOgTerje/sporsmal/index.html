@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="nb" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Silje &amp; Terje — Spørrerunde</title>
+<link rel="icon" href="../images/icon-192.png" />
+<style>
+  :root {
+    --gull: #8A6420;
+    --gull-lys: #B8893C;
+    --gull-bg: rgba(184,137,60,0.10);
+    --krem: #FAF6EE;
+    --kort: #FFFFFF;
+    --tekst: #1A2C3F;
+    --muted: #6B7A8C;
+    --kant: rgba(184,137,60,0.30);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+  html, body {
+    background: var(--krem); color: var(--tekst);
+    font-family: 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  }
+  body { max-width: 560px; margin: 0 auto; min-height: 100vh; padding: 0 0 40px;
+    padding-top: max(env(safe-area-inset-top, 0px), 12px); }
+  input, textarea, button { font-family: inherit; }
+
+  header { text-align: center; padding: 18px 20px 6px; }
+  header .ringer { font-size: 30px; }
+  header h1 { color: var(--gull); font-size: 22px; font-weight: 600; margin-top: 2px; }
+  header p { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+  /* Navnevalg */
+  .velg-wrap { padding: 30px 20px; text-align: center; }
+  .velg-wrap h2 { color: var(--gull); font-size: 20px; margin-bottom: 6px; }
+  .velg-wrap p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .velg-knapper { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .velg-knapp {
+    flex: 1 1 0; min-width: 130px; max-width: 200px;
+    background: var(--kort); border: 2px solid var(--kant); border-radius: 18px;
+    padding: 26px 16px; cursor: pointer; transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 2px 10px rgba(26,44,63,0.06); color: var(--tekst);
+  }
+  .velg-knapp:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(184,137,60,0.25); border-color: var(--gull-lys); }
+  .velg-knapp .emoji { font-size: 40px; display: block; }
+  .velg-knapp .navn { font-size: 19px; color: var(--gull); margin-top: 8px; font-weight: 600; }
+
+  /* Persontag */
+  .person-bar { display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 20px; font-size: 13px; color: var(--muted); }
+  .person-bar b { color: var(--gull); }
+  .person-bar a { color: var(--gull-lys); cursor: pointer; text-decoration: underline; }
+
+  /* Fremdrift */
+  .fremdrift { padding: 4px 20px 0; }
+  .fremdrift-bar { height: 7px; background: var(--gull-bg); border-radius: 6px; overflow: hidden; }
+  .fremdrift-fyll { height: 100%; background: linear-gradient(90deg, var(--gull-lys), var(--gull)); width: 0; transition: width .3s; }
+  .fremdrift-tekst { font-size: 12px; color: var(--muted); margin: 6px 2px 0; display: flex; justify-content: space-between; }
+
+  /* Seksjon */
+  .seksjon { padding: 14px 20px 0; }
+  .seksjon-tittel { color: var(--gull); font-size: 20px; margin-bottom: 2px; }
+  .seksjon-intro { color: var(--muted); font-size: 13px; margin: 6px 0 8px;
+    background: var(--gull-bg); border-radius: 10px; padding: 8px 12px; }
+  .sp {
+    background: var(--kort); border: 1px solid var(--kant); border-radius: 14px;
+    padding: 14px; margin: 12px 0; box-shadow: 0 2px 8px rgba(26,44,63,0.05);
+  }
+  .sp.privat { border-color: rgba(122,80,144,0.4); background: #FCFAFF; }
+  .sp-tittel { font-size: 16px; font-weight: 600; color: var(--tekst); }
+  .sp-laas { font-size: 12px; color: #7A5090; }
+  .sp-hjelp { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 8px; }
+  .chip {
+    background: var(--gull-bg); border: 1px solid var(--kant); color: var(--gull);
+    border-radius: 20px; padding: 6px 14px; font-size: 14px; cursor: pointer;
+  }
+  .chip:hover { background: rgba(184,137,60,0.2); }
+  .chip.aktiv { background: linear-gradient(135deg, var(--gull-lys), var(--gull)); color: #fff; border-color: var(--gull); }
+  .sp input, .sp textarea {
+    width: 100%; background: #FFFDF8; border: 1px solid var(--kant); border-radius: 8px;
+    color: var(--tekst); padding: 10px; font-size: 15px;
+  }
+  .sp input:focus, .sp textarea:focus { outline: none; border-color: var(--gull-lys); }
+  .sp textarea { min-height: 72px; resize: vertical; }
+
+  .nav-bar { display: flex; gap: 10px; align-items: center; padding: 16px 20px 0; }
+  .knapp {
+    border: none; border-radius: 12px; padding: 12px 18px; font-size: 15px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+  }
+  .knapp.primar { background: linear-gradient(135deg, var(--gull-lys), var(--gull)); color: #fff; flex: 1; box-shadow: 0 2px 10px rgba(184,137,60,0.3); }
+  .knapp.sekundar { background: var(--kort); color: var(--tekst); border: 1px solid var(--kant); }
+  .knapp:disabled { opacity: .4; cursor: default; }
+  .status { font-size: 13px; color: var(--muted); padding: 8px 20px 0; min-height: 20px; text-align: center; }
+  .status.ok { color: #4E8A53; }
+  .status.feil { color: #B85050; }
+
+  /* Ferdig */
+  .ferdig { text-align: center; padding: 50px 24px; }
+  .ferdig .stort { font-size: 56px; }
+  .ferdig h2 { color: var(--gull); font-size: 24px; margin: 12px 0 8px; }
+  .ferdig p { color: var(--muted); font-size: 15px; line-height: 1.5; }
+  .skjult { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <div class="ringer">💍</div>
+  <h1>Silje &amp; Terje</h1>
+  <p>Spørrerunde til brudeparet</p>
+</header>
+
+<!-- Steg 1: velg hvem du er -->
+<div id="velg" class="velg-wrap">
+  <h2>Hvem er du?</h2>
+  <p>Velg deg selv, så husker appen svarene dine.</p>
+  <div class="velg-knapper">
+    <div class="velg-knapp" onclick="ST.velgPerson('silje')">
+      <span class="emoji">👰</span><span class="navn">Jeg er Silje</span>
+    </div>
+    <div class="velg-knapp" onclick="ST.velgPerson('terje')">
+      <span class="emoji">🤵</span><span class="navn">Jeg er Terje</span>
+    </div>
+  </div>
+</div>
+
+<!-- Steg 2: skjema -->
+<div id="skjema" class="skjult">
+  <div class="person-bar">
+    <span>Du svarer som <b id="person-navn"></b></span>
+    <a onclick="ST.byttPerson()">Bytt person</a>
+  </div>
+  <div class="fremdrift">
+    <div class="fremdrift-bar"><div id="fremdrift-fyll" class="fremdrift-fyll"></div></div>
+    <div class="fremdrift-tekst"><span id="fremdrift-seksjon"></span><span id="fremdrift-prosent"></span></div>
+  </div>
+  <div id="seksjon" class="seksjon"></div>
+  <div class="nav-bar">
+    <button id="forrige" class="knapp sekundar" onclick="ST.forrige()">← Forrige</button>
+    <button id="neste" class="knapp primar" onclick="ST.neste()">Lagre og fortsett →</button>
+  </div>
+  <div id="status" class="status"></div>
+</div>
+
+<!-- Steg 3: ferdig -->
+<div id="ferdig" class="skjult ferdig">
+  <div class="stort">🎉💐</div>
+  <h2>Tusen takk!</h2>
+  <p>Svarene er lagret. Dere kan komme tilbake og endre når som helst.<br><br>
+    <a class="chip" onclick="ST.startPaNytt()">Gå gjennom på nytt</a></p>
+</div>
+
+<script src="sporsmal-data.js"></script>
+<script src="sporsmal.js"></script>
+</body>
+</html>

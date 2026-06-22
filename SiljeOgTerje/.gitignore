@@ -1,0 +1,11 @@
+# Scraper & build artifacts — NOT deployed (data.js is generated from these and IS committed)
+scrape-guests.js
+scraped-guests.json
+member-links.json
+gen-gjester.js
+gjester-array.gen.js
+build-data.js
+msedge-profile/
+node_modules/
+package.json
+package-lock.json

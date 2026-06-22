@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<base href="/SiljeOgTerje/" />
+<title>Silje & Terje — Vi gifter oss 22. august 2026</title>
+<meta name="description" content="Bryllupsapp for Silje Ingebrigtsen & Terje Karlstad — 22. august 2026, Elverhøy kirke & Rødbanken i Tromsø." />
+<meta name="theme-color" content="#8A6420" />
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="images/icon-180.png" />
+<link rel="manifest" href="manifest.json" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Silje & Terje" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="install-popup" class="install-popup" hidden>
+  <div class="install-card">
+    <button id="install-lukk" class="install-lukk" aria-label="Lukk">✕</button>
+    <div class="install-emoji">📲</div>
+    <h3 class="install-tittel">Legg til som app!</h3>
+    <p class="install-tekst">Få bryllupsappen til Silje & Terje som en ekte app på telefonen — raskere tilgang og ingen nettleser-rot.</p>
+    <div id="install-instr-ios" class="install-instr" hidden>
+      <h4>🍎 På iPhone:</h4>
+      <ol>
+        <li>Trykk <strong>Del-knappen</strong> <span style="font-size:20px">⬆️</span> nederst i nettleseren</li>
+        <li>Bla ned og velg <strong>«Legg til på Hjem-skjerm»</strong></li>
+        <li>Trykk <strong>Legg til</strong></li>
+      </ol>
+    </div>
+    <div id="install-instr-android" class="install-instr" hidden>
+      <h4>🤖 På Android:</h4>
+      <ol>
+        <li>Trykk <strong>⋮-menyen</strong> øverst til høyre</li>
+        <li>Velg <strong>«Legg til på startskjerm»</strong></li>
+        <li>Trykk <strong>Legg til</strong></li>
+      </ol>
+    </div>
+    <div id="install-instr-other" class="install-instr" hidden>
+      <p style="font-size:13px;color:#9BAABB">Bruk «legg til på hjem-skjerm» eller «installer» i nettleseren din.</p>
+    </div>
+    <button id="install-ok" class="btn-primary" style="margin-top:14px">Ok, skjønner!</button>
+  </div>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<button id="navn-pille" class="navn-pille" hidden>👋 Hvem er du?</button>
+
+<div id="overlay" class="overlay" hidden>
+  <img id="overlay-img" alt="" />
+  <button id="overlay-close" class="btn-danger">Lukk</button>
+</div>
+
+<div id="gjest-modal" class="modal" hidden>
+  <div class="modal-card gjest-modal-card">
+    <button id="gjest-modal-close" class="gjest-modal-close" aria-label="Lukk">✕</button>
+    <div id="gjest-modal-innhold"></div>
+  </div>
+</div>
+
+<div id="navn-modal" class="modal" hidden>
+  <div class="modal-card">
+    <h2>Velkommen!</h2>
+    <p>Skriv navnet ditt så vet vi hvem som er her.</p>
+    <input id="navn-input" type="text" placeholder="Ditt navn" autocomplete="name" />
+    <button id="navn-lagre" class="btn-primary">Sett i gang 🎉</button>
+    <button id="navn-skip" class="btn-link">Hopp over</button>
+  </div>
+</div>
+
+<main id="app">
+  <!-- HJEM -->
+  <section class="page" data-page="hjem">
+    <div class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-inner">
+        <div class="hero-par">
+          <img src="images/gjester/silje-ingebrigtsen.jpg" alt="Silje" class="hero-photo" />
+          <span class="hero-hjerte">💍</span>
+          <img src="images/gjester/terje-karlstad.jpg" alt="Terje" class="hero-photo" />
+        </div>
+        <h1 class="hero-name" id="hero-navn">Silje &amp; Terje</h1>
+        <p class="hero-nick" id="hero-tagline">Vi gifter oss! 💍</p>
+        <p class="hero-date" id="hero-dato">Lørdag 22. august 2026</p>
+        <p class="hero-sub" id="hero-sted">Elverhøy kirke &amp; Rødbanken · Tromsø</p>
+        <div class="countdown" id="countdown"></div>
+      </div>
+    </div>
+
+    <div class="card-row">
+      <button class="mini-card" data-go="program"><div class="mini-icon">💒</div><div class="mini-title">Vielse</div><div class="mini-sub">Elverhøy</div></button>
+      <button class="mini-card" data-go="program"><div class="mini-icon">🥂</div><div class="mini-title">Fest</div><div class="mini-sub">Rødbanken</div></button>
+      <button class="mini-card" data-go="bord"><div class="mini-icon">🪑</div><div class="mini-title">Bord</div><div class="mini-sub">Finn ditt</div></button>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title" id="hjem-om-tittel">Om dagen</h2>
+      <p class="lead" id="hjem-om-tekst"></p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title" id="omoss-tittel">Om oss</h2>
+      <p class="lead" id="omoss-tekst"></p>
+      <p class="lead" id="omoss-forlovelse" style="font-style:italic"></p>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">👔 Kleskode</h3>
+      <p class="lead" id="hjem-kleskode"></p>
+    </div>
+
+    <div class="section center">
+      <button class="btn-primary" data-go="hilsener">💌 Skriv en hilsen til brudeparet</button>
+      <button class="btn-secondary" data-go="toastmaster">🎤 Meld tale til toastmasterne</button>
+      <button class="btn-secondary" data-go="musikk">🎵 Send musikkønske</button>
+      <button class="btn-secondary" data-go="gave">🎁 Gaveønske</button>
+    </div>
+
+    <div class="section center qr-seksjon">
+      <h3 class="section-title">📲 Del appen</h3>
+      <p class="lead">Vis QR-koden til andre gjester for rask tilgang</p>
+      <div id="qr-kode" class="qr-wrap"></div>
+      <p class="muted small"><a href="https://janinc.no/SiljeOgTerje/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">janinc.no/SiljeOgTerje</a></p>
+      <button id="tema-toggle" class="tema-toggle" type="button" aria-label="Bytt fargetema">
+        <span class="tema-ikon">🌙</span><span class="tema-tekst">Mørkt tema</span>
+      </button>
+      <button id="refresh-btn" class="tema-toggle" type="button" aria-label="Oppdater appen" style="margin-left:8px">
+        <span>🔄</span><span>Oppdater</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section class="page" data-page="program" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab active" data-go="program">📍 Program</button>
+      <button class="sub-tab" data-go="meny">🍽️ Meny</button>
+    </div>
+    <h2 class="page-title">📍 Dagens program</h2>
+    <p class="muted">Trykk på et stopp for kart og detaljer</p>
+
+    <div id="program-list"></div>
+
+    <div class="section">
+      <h3 class="section-title">🗺️ Kart over stedene</h3>
+      <div id="map"></div>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Praktisk info</h3>
+      <div class="info-box" id="praktisk-info"></div>
+    </div>
+  </section>
+
+  <!-- GJESTER -->
+  <section class="page" data-page="gjester" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="gjester">👥 Gjester</button>
+      <button class="sub-tab" data-go="bord">🪑 Bord</button>
+    </div>
+    <h2 class="page-title">👥 Gjester</h2>
+    <p class="muted">De som feirer Silje &amp; Terje</p>
+
+    <div class="gjester-stats" id="gjester-stats"></div>
+
+    <div style="padding:0 16px 12px">
+      <input id="gjester-sok" type="text" placeholder="🔍 Søk navn, jobb, sted..."
+        style="width:100%;padding:12px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#E8E0D4;font-size:15px;box-sizing:border-box;font-family:inherit" />
+    </div>
+
+    <div class="filter-row">
+      <button class="chip active" data-filter="alle">Alle</button>
+      <button class="chip" data-filter="brudepar">Brudepar</button>
+      <button class="chip" data-filter="toast">Toastmaster</button>
+      <button class="chip" data-filter="forlover">Forlover</button>
+      <button class="chip" data-filter="avbud">Avbud</button>
+    </div>
+
+    <div id="gjester-grid" class="gjester-grid"></div>
+  </section>
+
+  <!-- HILSENER -->
+  <section class="page" data-page="hilsener" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="hilsener">💌 Hilsen</button>
+      <button class="sub-tab" data-go="toastmaster">🎤 Tale</button>
+      <button class="sub-tab" data-go="musikk">🎵 Musikk</button>
+    </div>
+    <h2 class="page-title">💌 Hilsener til brudeparet</h2>
+    <p class="muted">Skriv en hilsen — alle gjester ser dem her</p>
+
+    <div class="form">
+      <input id="hilsen-navn" type="text" placeholder="Ditt navn" autocomplete="name" />
+      <textarea id="hilsen-tekst" rows="4" placeholder="Skriv din hilsen til Silje &amp; Terje her... 💕"></textarea>
+      <button id="hilsen-lagre" class="btn-primary">💌 Send hilsen</button>
+    </div>
+
+    <div id="hilsen-status" class="muted small"></div>
+    <div id="hilsen-liste" class="hilsen-list"></div>
+  </section>
+
+  <!-- TOASTMASTER -->
+  <section class="page" data-page="toastmaster" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="hilsener">💌 Hilsen</button>
+      <button class="sub-tab" data-go="toastmaster">🎤 Tale</button>
+      <button class="sub-tab" data-go="musikk">🎵 Musikk</button>
+    </div>
+    <h2 class="page-title">🎤 Hold en tale</h2>
+    <p class="muted">Vil du holde tale? Toastmasterne <strong>Maja Wilhelmsen</strong> og <strong>Thomas Helge Hansen</strong> setter deg på lista.</p>
+
+    <div class="info-box">
+      <div>📧 E-post toastmastere: <a href="mailto:majawilhelmsen@hotmail.com">majawilhelmsen@hotmail.com</a> · <a href="mailto:thomas.helge@gmail.com">thomas.helge@gmail.com</a></div>
+      <div>💡 Tips: Hold den kort, varm og morsom. Maks 5 minutter.</div>
+    </div>
+
+    <div class="form">
+      <input id="toast-navn" type="text" placeholder="Ditt navn *" autocomplete="name" />
+      <input id="toast-epost" type="email" placeholder="Din e-post (så toastmasterne kan svare)" autocomplete="email" inputmode="email" />
+      <input id="toast-tema" type="text" placeholder="Tema for talen (kort)" autocomplete="off" />
+      <textarea id="toast-melding" rows="5" placeholder="Kort beskrivelse av talen — hvor lang, hva handler den om, har du behov for mikrofon, lerret, etc."></textarea>
+      <button id="toast-lagre" class="btn-primary">🎤 Meld tale</button>
+    </div>
+
+    <div id="toast-status" class="muted small"></div>
+  </section>
+
+  <!-- MUSIKKØNSKE -->
+  <section class="page" data-page="musikk" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="hilsener">💌 Hilsen</button>
+      <button class="sub-tab" data-go="toastmaster">🎤 Tale</button>
+      <button class="sub-tab" data-go="musikk">🎵 Musikk</button>
+    </div>
+    <h2 class="page-title">🎵 Musikkønske</h2>
+    <p class="muted">Har du en låt som må spilles på festen? Send inn ditt ønske!</p>
+
+    <div class="info-box">
+      <div>🎧 Vi samler inn ønsker nå — DJ/musikk avklares senere</div>
+      <div>💃 Tenk dansegulv: hva får DEG til å danse?</div>
+      <div>⏱️ Send i god tid før festen</div>
+    </div>
+
+    <div class="form">
+      <input id="musikk-navn" type="text" placeholder="Ditt navn *" autocomplete="name" />
+      <input id="musikk-artist" type="text" placeholder="Artist / band" autocomplete="off" />
+      <input id="musikk-laat" type="text" placeholder="Låt-tittel" autocomplete="off" />
+      <textarea id="musikk-melding" rows="3" placeholder="Kort melding (valgfritt) — f.eks. 'vår sang' eller 'spilles helst etter midnatt'"></textarea>
+      <button id="musikk-lagre" class="btn-primary">🎵 Send musikkønske</button>
+    </div>
+
+    <div id="musikk-status" class="muted small"></div>
+  </section>
+
+  <!-- SANG -->
+  <section class="page" data-page="sang" hidden>
+    <h2 class="page-title">🎵 Sangene</h2>
+    <p class="muted">To sanger fra utdrikningslagene — til Silje og til Terje</p>
+
+    <div class="sang-card">
+      <div class="sang-icon">🎶</div>
+      <h3 class="sang-title">Sangen til Silje</h3>
+      <p class="sang-sub">Fra Siljes utdrikningslag</p>
+      <audio id="sang-player-1" controls preload="metadata" style="width:100%;margin-top:14px;border-radius:8px">
+        <source src="audio/silje.mp3" type="audio/mpeg" />
+        Nettleseren din støtter ikke audio-avspilling.
+      </audio>
+      <button class="btn-secondary" data-lyrics-toggle="lyrics-1" style="margin-top:12px">📜 Vis sangtekst</button>
+      <div id="lyrics-1" class="lyrics" hidden><pre id="lyrics-text-1"></pre></div>
+    </div>
+
+    <div class="sang-card">
+      <div class="sang-icon">🐎</div>
+      <h3 class="sang-title">Den siste villhingsten</h3>
+      <p class="sang-sub">Fra Terjes utdrikningslag i Warszawa</p>
+      <audio id="sang-player-2" controls preload="metadata" style="width:100%;margin-top:14px;border-radius:8px">
+        <source src="audio/den-siste-villhingsten.mp3" type="audio/mpeg" />
+        Nettleseren din støtter ikke audio-avspilling.
+      </audio>
+      <button class="btn-secondary" data-lyrics-toggle="lyrics-2" style="margin-top:12px">📜 Vis sangtekst</button>
+      <div id="lyrics-2" class="lyrics" hidden><pre id="lyrics-text-2"></pre></div>
+    </div>
+  </section>
+
+  <!-- SPILL -->
+  <section class="page" data-page="spill" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="spill">🎲 Quiz</button>
+      <button class="sub-tab" data-go="mario">🫧 Spill</button>
+    </div>
+    <h2 class="page-title">🎲 Hvor godt kjenner du Silje &amp; Terje?</h2>
+    <p class="muted">Quiz og partyspill for bordet</p>
+
+    <div class="tabs">
+      <button class="tab active" data-spill="quiz">Quiz</button>
+      <button class="tab" data-spill="topp">🏆 Topp 10</button>
+      <button class="tab" data-spill="diskusjon">Diskusjon</button>
+      <button class="tab" data-spill="regler">Drikkeregler</button>
+    </div>
+
+    <div id="quiz-view">
+      <div id="quiz-spill-status" class="quiz-status"></div>
+      <div class="quiz-card">
+        <div class="quiz-num" id="quiz-num"></div>
+        <div class="quiz-q" id="quiz-q"></div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div class="quiz-fasit" id="quiz-fasit" hidden></div>
+        <div class="row" id="quiz-row">
+          <button id="quiz-prev" class="btn-secondary">← Forrige</button>
+          <button id="quiz-next" class="btn-primary">Neste →</button>
+        </div>
+      </div>
+      <div id="quiz-resultat" hidden>
+        <div class="quiz-card" style="text-align:center">
+          <div style="font-size:48px">🏆</div>
+          <h3 id="quiz-resultat-tittel" style="color:#D4A853"></h3>
+          <p id="quiz-resultat-tekst" style="font-size:16px;color:#B0C4D8"></p>
+          <button id="quiz-restart" class="btn-primary">🔁 Spill igjen</button>
+          <button id="quiz-se-topp" class="btn-secondary">🏆 Se topp 10</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="topp-view" hidden>
+      <p class="muted">Topp 10 — best score over 100% gir høyest plass</p>
+      <div id="topp-liste"></div>
+    </div>
+
+    <div id="diskusjon-view" hidden>
+      <div class="quiz-card">
+        <div class="quiz-num" id="disk-num"></div>
+        <div class="quiz-q" id="disk-q"></div>
+        <div class="row">
+          <button id="disk-next" class="btn-primary" style="flex:1">Neste →</button>
+          <button id="disk-rand" class="btn-secondary" style="flex:1">🎲 Tilfeldig</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="regler-view" hidden>
+      <div class="info-box">
+        <div>🥃 Feil svar → ta en slurk!</div>
+        <div>💍 Beste svar → brudeparet bestemmer skålen</div>
+        <div>🥂 Alle riktig → reis deg og skål for Silje &amp; Terje</div>
+        <div>💋 Noen klirrer i glasset → brudeparet må kysse</div>
+        <div>💃 Bordets beste danser → får velge neste sang</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINNEBOK -->
+  <section class="page" data-page="minnebok" hidden>
+    <h2 class="page-title">📸 Minnebok</h2>
+    <p class="muted">Del bilder fra kvelden — alle gjester ser dem!</p>
+
+    <div class="meny-rett" style="margin-top:0">
+      <div class="meny-tag">DELT ALBUM</div>
+      <div class="meny-ikon">🖼️</div>
+      <h3 class="meny-tittel">Silje &amp; Terje — Felles bildealbum</h3>
+      <p class="meny-beskrivelse">Vi samler alle bilder fra bryllupet i et felles album. Brudeparet legger ut lenken her – følg med!</p>
+      <p class="muted small" style="margin-top:10px;text-align:center">📷 Album-lenke kommer snart.</p>
+    </div>
+  </section>
+
+  <!-- BOBLE-SPILL -->
+  <section class="page" data-page="mario" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="spill">🎲 Quiz</button>
+      <button class="sub-tab" data-go="mario">🫧 Spill</button>
+    </div>
+    <h2 class="page-title">🫧 Boblebryllup</h2>
+    <p class="muted">Fang bryllupskvalene i kjærlighetsbobler og pop dem! · 60 sek</p>
+
+    <div id="mario-start" class="mario-start">
+      <div style="text-align:center;padding:20px">
+        <div style="font-size:48px;margin-bottom:8px">🫧💕</div>
+        <p style="font-size:13px;color:#B0C4D8;line-height:1.6;margin-bottom:14px">
+          <strong>Beveg deg</strong> med piltaster eller knappene på skjermen.<br/>
+          <strong>Skyt</strong> hjerte-bobler for å fange fiender.<br/>
+          <strong>Hopp</strong> på en fanget boble for å poppe den (+100).<br/>
+          Klar alle bølgene før tiden går ut!
+        </p>
+        <button id="mario-start-btn" class="btn-primary" style="margin:0">▶️ Start spillet</button>
+      </div>
+    </div>
+
+    <canvas id="mario-canvas" width="720" height="420" hidden></canvas>
+    <button id="mario-hopp-btn" hidden>⬆️ HOPP</button>
+
+    <div id="mario-resultat" hidden style="text-align:center;padding:16px">
+      <div style="font-size:48px">🏆</div>
+      <h3 id="mario-resultat-tittel" style="color:#D4A853"></h3>
+      <p id="mario-resultat-tekst" style="color:#B0C4D8;font-size:14px"></p>
+      <button id="mario-restart-btn" class="btn-primary">🔁 Spill igjen</button>
+      <button id="mario-se-topp-btn" class="btn-secondary">🏆 Se topp 10</button>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title small-title">🏆 Topp 10 — beste boble-mestere</h3>
+      <div id="mario-topp"></div>
+    </div>
+  </section>
+
+  <!-- MENY -->
+  <section class="page" data-page="meny" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="program">📍 Program</button>
+      <button class="sub-tab active" data-go="meny">🍽️ Meny</button>
+    </div>
+    <h2 class="page-title">🍽️ Bryllupsmeny</h2>
+    <p class="muted">Rødbanken — middag fra kl 18:00</p>
+
+    <div id="meny-list"></div>
+
+    <div class="info-box" id="meny-info" style="margin-top:16px"></div>
+  </section>
+
+  <!-- BORD -->
+  <section class="page" data-page="bord" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="gjester">👥 Gjester</button>
+      <button class="sub-tab" data-go="bord">🪑 Bord</button>
+    </div>
+    <h2 class="page-title">🪑 Bordplassering</h2>
+    <p class="muted">Finn ditt bord og se hvem du sitter med</p>
+
+    <div id="bord-snarvei" style="padding:0 16px 12px">
+      <input id="bord-sok" type="text" placeholder="🔍 Søk etter ditt navn..."
+        style="width:100%;padding:12px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#E8E0D4;font-size:15px;box-sizing:border-box;font-family:inherit" />
+    </div>
+
+    <div id="bord-liste"></div>
+  </section>
+
+  <section class="page" data-page="hjelp" hidden>
+    <h2 class="page-title">❓ Brukerveiledning</h2>
+    <p class="muted">Slik bruker du bryllupsappen</p>
+
+    <div class="hjelp-seksjon">
+      <h3>💍 Hjem</h3>
+      <p>Velkomstside med bilde av brudeparet, nedtelling til bryllupet og oversikt over dagen.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>📍 Program</h3>
+      <p>Dagens program – fra vielsen i Elverhøy kirke til fest på Rødbanken. Klikk "Åpne i Google Maps" for veibeskrivelse, eller bruk det interaktive kartet nederst.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>👥 Gjester &amp; 🪑 Bord</h3>
+      <p>Se de inviterte gjestene med kort om hver person. Bruk filterknappene for brudepar, toastmastere og forlovere. Under "Bord" finner du bordplasseringen.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>💌 Hilsener</h3>
+      <p>Skriv en hilsen til Silje &amp; Terje — alle gjester ser dem. Fyll inn navnet ditt og hilsenen.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>🎤 Tale</h3>
+      <p>Vil du holde tale? Send en kort beskrivelse til toastmasterne <strong>Maja Wilhelmsen</strong> og <strong>Thomas Helge Hansen</strong>. De kontakter deg for å sette deg på programmet.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>🎵 Sang</h3>
+      <p>To sanger fra utdrikningslagene – "Sangen til Silje" og "Den siste villhingsten" (Terje). Trykk play og syng med!</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>🎁 Gaveønske</h3>
+      <p>Ønsker du å gi en gave, finner du brudeparets ønsker og betalingsinfo her.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>🎲 Quiz &amp; 🫧 Spill</h3>
+      <p>Test hvor godt du kjenner brudeparet i quizen, og spill "Boblebryllup" – fang bryllupskvalene i kjærlighetsbobler! Topp 10 lagres så hele festen kan konkurrere.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>📸 Minner</h3>
+      <p>Felles bildealbum fra bryllupet. Brudeparet legger ut lenken når albumet er klart.</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>👋 Personvern</h3>
+      <p>Vi lagrer navnet ditt (hvis du oppgir det), hilsener, taleforespørsler og musikkønsker. Vi bruker ikke informasjonen til noe annet enn å gjøre bryllupet finere for Silje &amp; Terje. ❤️</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>🚕 Hjem etter festen?</h3>
+      <p><strong>Tromsø Taxi</strong> kjører hele natta. Bestill via:</p>
+      <p>📞 Ring <a href="tel:+4703003" style="font-size:18px;font-weight:bold">03003</a></p>
+      <p>📱 Last ned <a href="https://www.tromsotaxi.no/taxifix" target="_blank" rel="noopener">Taxifix-appen</a> for forhåndsbestilling og betaling i appen</p>
+    </div>
+
+    <div class="hjelp-seksjon">
+      <h3>🛟 Hjelp meg!</h3>
+      <p>Spørsmål om appen? Snakk med <strong>Jan Heier Johansen</strong> i festen, eller send en mail til <a href="mailto:janheier@gmail.com">janheier@gmail.com</a>.</p>
+    </div>
+  </section>
+
+  <!-- GAVEØNSKE -->
+  <section class="page" data-page="gave" hidden>
+    <h2 class="page-title">🎁 <span id="gave-tittel">Gaveønske</span></h2>
+    <p class="muted" id="gave-intro"></p>
+
+    <div class="section">
+      <h3 class="section-title">💝 Ønskeliste</h3>
+      <div class="info-box" id="gave-onsker"></div>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">💳 Slik kan du gi</h3>
+      <div class="info-box" id="gave-detaljer"></div>
+    </div>
+  </section>
+</main>
+
+<nav class="nav">
+  <button class="nav-btn active" data-go="hjem"><span class="nav-icon">💍</span><span class="nav-label">Hjem</span></button>
+  <button class="nav-btn" data-go="program"><span class="nav-icon">📍</span><span class="nav-label">Program</span></button>
+  <button class="nav-btn" data-go="gjester"><span class="nav-icon">👥</span><span class="nav-label">Gjester</span></button>
+  <button class="nav-btn" data-go="hilsener"><span class="nav-icon">💌</span><span class="nav-label">Bidra</span></button>
+  <button class="nav-btn" data-go="sang"><span class="nav-icon">🎵</span><span class="nav-label">Sang</span></button>
+  <button class="nav-btn" data-go="gave"><span class="nav-icon">🎁</span><span class="nav-label">Gave</span></button>
+  <button class="nav-btn" data-go="spill"><span class="nav-icon">🫧</span><span class="nav-label">Moro</span></button>
+  <button class="nav-btn" data-go="minnebok"><span class="nav-icon">📸</span><span class="nav-label">Minner</span></button>
+  <button class="nav-btn" data-go="hjelp"><span class="nav-icon">❓</span><span class="nav-label">Hjelp</span></button>
+</nav>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://cdn.jsdelivr.net/npm/easyqrcodejs@4.6.2/dist/easy.qrcode.min.js"></script>
+<script src="data.js"></script>
+<script src="spill.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Silje & Terje — Admin</title>
+<style>
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; background: #0D1B2A; color: #E8E0D4; margin: 0; padding: 24px; max-width: 1100px; margin: 0 auto; }
+  h1 { color: #D4A853; }
+  h2 { color: #D4A853; border-bottom: 1px solid rgba(212,168,83,0.3); padding-bottom: 6px; margin-top: 32px; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0; }
+  .stat-card { background: rgba(212,168,83,0.1); border: 1px solid rgba(212,168,83,0.3); border-radius: 12px; padding: 16px; text-align: center; }
+  .stat-num { font-size: 32px; color: #D4A853; font-weight: bold; }
+  .stat-label { font-size: 13px; color: #B0C4D8; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; background: rgba(255,255,255,0.04); border-radius: 8px; overflow: hidden; }
+  th { text-align: left; background: rgba(212,168,83,0.15); padding: 10px; color: #D4A853; font-size: 13px; }
+  th.sortable { cursor: pointer; user-select: none; }
+  th.sortable:hover { background: rgba(212,168,83,0.25); }
+  th.sortable::after { content: ' ⇅'; opacity: 0.4; font-size: 11px; }
+  th.sort-asc::after { content: ' ▲'; opacity: 1; }
+  th.sort-desc::after { content: ' ▼'; opacity: 1; }
+  td { padding: 10px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 13px; color: #C8D8E8; }
+  td.tekst { white-space: pre-wrap; }
+  .muted { color: #7A8FA8; font-size: 12px; }
+  button { background: #D4A853; color: #0D1B2A; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  button.danger { background: #C04040; color: #fff; }
+  button.danger:hover { background: #E05050; }
+  button.tiny { padding: 4px 10px; font-size: 12px; }
+  .admin-aksjoner { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+  .err { color: #E08080; padding: 16px; background: rgba(192,64,64,0.1); border-radius: 8px; margin: 12px 0; }
+  a { color: #D4A853; }
+  .red-seksjon { background: rgba(255,255,255,0.04); border: 1px solid rgba(212,168,83,0.25); border-radius: 12px; padding: 16px 18px; margin: 14px 0; }
+  .red-seksjon h3 { color: #D4A853; margin: 0 0 10px; }
+  .felt { margin: 8px 0; }
+  .felt label { display: block; font-size: 12px; color: #B0C4D8; margin-bottom: 3px; }
+  .felt input, .felt textarea { width: 100%; box-sizing: border-box; background: rgba(0,0,0,0.25); border: 1px solid rgba(212,168,83,0.3); border-radius: 6px; color: #E8E0D4; padding: 8px; font-family: inherit; font-size: 13px; }
+  .felt textarea { min-height: 60px; resize: vertical; }
+  .rad-kort { border: 1px dashed rgba(212,168,83,0.35); border-radius: 8px; padding: 10px; margin: 8px 0; }
+  .rad-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+  .lagre-bar { position: sticky; bottom: 0; background: #0D1B2A; padding: 12px 0; border-top: 1px solid rgba(212,168,83,0.3); margin-top: 16px; display: flex; gap: 10px; align-items: center; }
+  .ok { color: #6FCF97; }
+</style>
+</head>
+<body>
+<h1>💍 Silje &amp; Terje — Admin</h1>
+<p>
+  <button onclick="last()">🔄 Last på nytt</button>
+  <a href="/SiljeOgTerje/admin/gjester.html" style="color:#D4A853;margin-left:16px">👥 Rediger gjeste-info →</a>
+  <a href="/SiljeOgTerje/" style="color:#D4A853;margin-left:16px">🏠 Til appen</a>
+  <span class="muted" id="generert" style="margin-left:16px"></span>
+</p>
+
+<div id="innhold-redaktor">Laster innhold…</div>
+
+<h2>📝 Spørrerunde — svar fra brudeparet</h2>
+<p class="muted">Svar Silje og Terje har lagt inn i spørrerunden (<a href="/SiljeOgTerje/sporsmal/" target="_blank">åpne spørrerunden →</a>). 🔒 = privat svar om/for den andre.</p>
+<div class="admin-aksjoner"><button onclick="lastSvar()">🔄 Hent svar</button></div>
+<div id="svar-visning" class="muted">Trykk «Hent svar» for å laste inn.</div>
+
+<div id="content">Laster...</div>
+
+<script src="../data.js"></script>
+<script src="../sporsmal/sporsmal-data.js"></script>
+<script>
+let adminKey = sessionStorage.getItem('siljeterje-admin-key') || '';
+
+function settAdminKey() {
+  const k = prompt('Skriv inn admin-nøkkel (lagres i denne fanen):', adminKey);
+  if (k != null) {
+    adminKey = k;
+    sessionStorage.setItem('siljeterje-admin-key', k);
+  }
+  return adminKey;
+}
+
+async function adminPost(url, body) {
+  if (!adminKey) settAdminKey();
+  if (!adminKey) return null;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...body, key: adminKey }),
+  });
+  if (res.status === 401) {
+    alert('Feil admin-nøkkel — prøv igjen');
+    sessionStorage.removeItem('siljeterje-admin-key');
+    adminKey = '';
+    return null;
+  }
+  if (!res.ok) {
+    const t = await res.text().catch(() => '');
+    alert('Feil: ' + res.status + ' ' + t);
+    return null;
+  }
+  return res.json();
+}
+
+async function resetScores(type, label) {
+  if (!confirm(`Er du sikker på at du vil slette ALLE ${label}? Dette kan ikke angres.`)) return;
+  const r = await adminPost('/api/siljeterje-admin-reset', { type });
+  if (r && r.success) {
+    alert(`✅ ${label} er slettet`);
+    last();
+  }
+}
+
+async function slettHilsen(id, navn) {
+  if (!confirm(`Slette hilsen fra "${navn}"?`)) return;
+  const r = await adminPost('/api/siljeterje-admin-delete-greeting', { id });
+  if (r && r.success) last();
+}
+
+// Geo-cache i sessionStorage så vi ikke spør om samme IP flere ganger
+const geoCache = JSON.parse(sessionStorage.getItem('siljeterje-geo') || '{}');
+// Rydd ut tidligere feilede oppslag
+Object.keys(geoCache).forEach(k => { if (!geoCache[k] || geoCache[k].startsWith('?')) delete geoCache[k]; });
+function lagreGeoCache() { sessionStorage.setItem('siljeterje-geo', JSON.stringify(geoCache)); }
+
+async function slaaOppGeo(ip) {
+  if (!ip) return null;
+  if (geoCache[ip]) return geoCache[ip];
+  try {
+    const r = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}`);
+    const d = await r.json();
+    if (d && d.success !== false) {
+      const sted = d.city || d.region || '';
+      const land = d.country || '';
+      const flagg = landTilFlagg(d.country_code);
+      const tekst = sted && land ? `${flagg} ${sted}, ${land}` : (flagg + ' ' + (sted || land || '?')).trim();
+      geoCache[ip] = tekst;
+    } else {
+      geoCache[ip] = '? ' + (d && d.message ? d.message : 'ukjent');
+    }
+  } catch (e) {
+    geoCache[ip] = '? (' + (e.message || 'feil') + ')';
+  }
+  lagreGeoCache();
+  return geoCache[ip];
+}
+
+function landTilFlagg(kode) {
+  if (!kode || kode.length !== 2) return '';
+  return String.fromCodePoint(...[...kode.toUpperCase()].map(c => 0x1F1E6 - 65 + c.charCodeAt(0)));
+}
+
+async function berikGeo() {
+  const celler = document.querySelectorAll('[data-geo-ip]');
+  // Saml unike IP-er
+  const ips = [...new Set([...celler].map(c => c.dataset.geoIp).filter(Boolean))];
+  // Begrens parallellitet til 5 om gangen
+  const kø = ips.slice();
+  async function arbeider() {
+    while (kø.length) {
+      const ip = kø.shift();
+      await slaaOppGeo(ip);
+    }
+  }
+  await Promise.all(Array.from({ length: 5 }, arbeider));
+  celler.forEach(c => {
+    const ip = c.dataset.geoIp;
+    c.textContent = ip ? (geoCache[ip] || '?') : '';
+  });
+}
+function sorterTabell(table, thIdx, dir) {
+  const tbody = table.querySelector('tbody');
+  if (!tbody) return;
+  const ths = table.querySelectorAll('thead th');
+  const type = ths[thIdx]?.dataset.type || 'text';
+  const rader = [...tbody.querySelectorAll('tr')];
+  const verdi = (tr) => {
+    const td = tr.children[thIdx];
+    if (!td) return '';
+    const raw = td.dataset.sort !== undefined ? td.dataset.sort : td.textContent.trim();
+    if (type === 'num') return parseFloat(raw.replace(',', '.')) || 0;
+    if (type === 'date') { const t = Date.parse(raw); return isNaN(t) ? 0 : t; }
+    return raw.toLocaleLowerCase('nb-NO');
+  };
+  rader.sort((a, b) => {
+    const va = verdi(a), vb = verdi(b);
+    if (va < vb) return dir === 'asc' ? -1 : 1;
+    if (va > vb) return dir === 'asc' ? 1 : -1;
+    return 0;
+  });
+  rader.forEach(r => tbody.appendChild(r));
+  ths.forEach(th => th.classList.remove('sort-asc', 'sort-desc'));
+  ths[thIdx].classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
+}
+
+document.addEventListener('click', (e) => {
+  const th = e.target.closest('th.sortable');
+  if (!th) return;
+  const table = th.closest('table');
+  if (!table) return;
+  const thIdx = [...th.parentNode.children].indexOf(th);
+  const dir = th.classList.contains('sort-desc') ? 'asc' : 'desc';
+  sorterTabell(table, thIdx, dir);
+});
+
+async function last() {
+  const c = document.getElementById('content');
+  c.innerHTML = 'Laster...';
+  try {
+    const res = await fetch('/api/siljeterje-stats');
+    if (!res.ok) throw new Error('Status ' + res.status);
+    const d = await res.json();
+    document.getElementById('generert').textContent = 'Generert ' + new Date(d.generertAt).toLocaleString('nb-NO');
+    c.innerHTML = render(d);
+  } catch (e) {
+    c.innerHTML = '<div class="err">Kunne ikke hente statistikk: ' + (e.message || e) + '</div>';
+  }
+}
+
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function dt(s) { try { return new Date(s).toLocaleString('nb-NO'); } catch { return ''; } }
+
+function render(d) {
+  let h = '';
+  h += `<div class="stats-row">
+    <div class="stat-card"><div class="stat-num">${d.totalt}</div><div class="stat-label">Totale besøk</div></div>
+    <div class="stat-card"><div class="stat-num">${d.unikeNavn}</div><div class="stat-label">Unike personer</div></div>
+    <div class="stat-card"><div class="stat-num">${d.hilsener.length}</div><div class="stat-label">Hilsener</div></div>
+    <div class="stat-card"><div class="stat-num">${d.taler.length}</div><div class="stat-label">Taleforespørsler</div></div>
+    <div class="stat-card"><div class="stat-num">${d.highscore ? d.highscore.length : 0}</div><div class="stat-label">Quiz-spillere</div></div>
+  </div>`;
+
+  if (d.highscore && d.highscore.length) {
+    h += '<h2>🏆 Quiz topp 10</h2>';
+    h += '<div class="admin-aksjoner"><button class="danger tiny" onclick="resetScores(\'quiz\', \'Quiz-scores\')">🗑️ Reset quiz-scores</button></div>';
+    h += '<table class="sortable-tabell"><thead><tr><th>#</th><th class="sortable" data-type="text">Navn</th><th class="sortable" data-type="num">Score</th><th class="sortable" data-type="num">Forsøk</th><th class="sortable" data-type="date">Sist</th></tr></thead><tbody>';
+    h += d.highscore.map((r, i) => `<tr><td>${['🥇','🥈','🥉'][i]||(i+1)}</td><td><strong>${esc(r.navn)}</strong></td><td data-sort="${r.score}">${r.score}/${r.antall}</td><td>${r.forsok}</td><td class="muted" data-sort="${r.sist||''}">${dt(r.sist)}</td></tr>`).join('');
+    h += '</tbody></table>';
+  } else {
+    h += '<h2>🏆 Quiz topp 10</h2>';
+    h += '<div class="admin-aksjoner"><button class="danger tiny" onclick="resetScores(\'quiz\', \'Quiz-scores\')">🗑️ Reset quiz-scores</button></div>';
+    h += '<p class="muted">Ingen scores ennå.</p>';
+  }
+
+  h += '<h2>🎮 Spill topp 10 (Boblebryllup)</h2>';
+  h += '<div class="admin-aksjoner"><button class="danger tiny" onclick="resetScores(\'spill\', \'Spill-scores\')">🗑️ Reset spill-scores</button></div>';
+  if (d.spillTopp && d.spillTopp.length) {
+    h += '<table class="sortable-tabell"><thead><tr><th>#</th><th class="sortable" data-type="text">Navn</th><th class="sortable" data-type="num">Score</th><th class="sortable" data-type="date">Sist</th></tr></thead><tbody>';
+    h += d.spillTopp.map((r, i) => `<tr><td>${['🥇','🥈','🥉'][i]||(i+1)}</td><td><strong>${esc(r.navn)}</strong></td><td>${r.score}</td><td class="muted" data-sort="${r.sist||''}">${dt(r.sist)}</td></tr>`).join('');
+    h += '</tbody></table>';
+  } else {
+    h += '<p class="muted">Ingen scores ennå.</p>';
+  }
+
+  h += '<h2>👥 Hvem har vært inne? <span class="muted" style="font-size:13px;font-weight:normal">— sortert etter besøk (klikk kolonne for å endre)</span></h2>';
+  if (d.perNavn.length) {
+    h += '<table class="sortable-tabell" data-default-sort="3:desc"><thead><tr>'
+      + '<th class="sortable" data-type="num">#</th>'
+      + '<th class="sortable" data-type="text">Navn</th>'
+      + '<th class="sortable" data-type="text">Sted</th>'
+      + '<th class="sortable" data-type="text">IP</th>'
+      + '<th class="sortable sort-desc" data-type="num">Besøk</th>'
+      + '<th class="sortable" data-type="date">Først sett</th>'
+      + '<th class="sortable" data-type="date">Sist</th>'
+      + '</tr></thead><tbody>';
+    h += d.perNavn.map((r, i) => `<tr>
+      <td class="muted">${i + 1}</td>
+      <td><strong>${esc(r.navn)}</strong></td>
+      <td class="muted">${esc(r.sted || '')}</td>
+      <td class="muted">${esc(r.ip || '—')}</td>
+      <td data-sort="${r.besok}">${r.besok}</td>
+      <td class="muted" data-sort="${r.forste || ''}">${dt(r.forste)}</td>
+      <td data-sort="${r.sist || ''}">${dt(r.sist)}</td>
+    </tr>`).join('');
+    h += '</tbody></table>';
+  } else h += '<p class="muted">Ingen ennå.</p>';
+
+  h += '<h2>📊 Per side</h2><table class="sortable-tabell"><thead><tr><th class="sortable" data-type="text">Side</th><th class="sortable sort-desc" data-type="num">Antall</th></tr></thead><tbody>';
+  h += d.perSide.map(r => `<tr><td>${esc(r.side)}</td><td>${r.antall}</td></tr>`).join('');
+  h += '</tbody></table>';
+
+  h += '<h2>🎤 Taleforespørsler til toastmasterne</h2>';
+  if (d.taler.length) {
+    h += '<table><tr><th>Navn</th><th>E-post</th><th>Tema</th><th>Melding</th><th>Tid</th></tr>';
+    h += d.taler.map(t => `<tr>
+      <td><strong>${esc(t.navn)}</strong></td>
+      <td>${t.epost ? `<a href="mailto:${esc(t.epost)}">${esc(t.epost)}</a>` : '<span class="muted">—</span>'}</td>
+      <td>${esc(t.tema || '')}</td>
+      <td class="tekst">${esc(t.melding)}</td>
+      <td class="muted">${dt(t.opprettet)}</td>
+    </tr>`).join('');
+    h += '</table>';
+  } else h += '<p class="muted">Ingen taler meldt ennå.</p>';
+
+  h += '<h2>💌 Hilsener til brudeparet</h2>';
+  if (d.hilsener.length) {
+    h += '<table><tr><th>Navn</th><th>Hilsen</th><th>Tid</th><th></th></tr>';
+    h += d.hilsener.map(t => `<tr>
+      <td><strong>${esc(t.navn)}</strong></td>
+      <td class="tekst">${esc(t.tekst)}</td>
+      <td class="muted">${dt(t.opprettet)}</td>
+      <td><button class="danger tiny" onclick="slettHilsen(${t.id}, '${esc(t.navn).replace(/'/g, '&#39;')}')">🗑️</button></td>
+    </tr>`).join('');
+    h += '</table>';
+  } else h += '<p class="muted">Ingen hilsener ennå.</p>';
+
+  h += '<h2>🕒 Siste 50 besøk</h2><table class="sortable-tabell" data-default-sort="4:desc"><thead><tr><th class="sortable" data-type="text">Navn</th><th class="sortable" data-type="text">Side</th><th class="sortable" data-type="text">Sted</th><th class="sortable" data-type="text">IP</th><th class="sortable sort-desc" data-type="date">Tid</th></tr></thead><tbody>';
+  h += d.sisteBesok.map(r => `<tr>
+    <td>${esc(r.navn || '—')}</td>
+    <td>${esc(r.side || '')}</td>
+    <td class="muted">${esc(r.sted || '')}</td>
+    <td class="muted">${esc(r.ip || '—')}</td>
+    <td class="muted" data-sort="${r.opprettet || ''}">${dt(r.opprettet)}</td>
+  </tr>`).join('');
+  h += '</tbody></table>';
+
+  return h;
+}
+
+// ---------- Innhold-redaktør (selvbetjent for Silje & Terje) ----------
+function f(label, id, val, ph) {
+  return `<div class="felt"><label>${esc(label)}</label><input id="${id}" value="${esc(val||'')}" placeholder="${esc(ph||'')}"></div>`;
+}
+function ta(label, id, val, ph) {
+  return `<div class="felt"><label>${esc(label)}</label><textarea id="${id}" placeholder="${esc(ph||'')}">${esc(val||'')}</textarea></div>`;
+}
+
+function programRad(p) {
+  p = p || {};
+  return `<div class="rad-kort program-rad"><div class="rad-grid">
+    <div class="felt"><label>Klokkeslett</label><input data-k="tid" value="${esc(p.tid||'')}" placeholder="13:00"></div>
+    <div class="felt"><label>Tittel</label><input data-k="tittel" value="${esc(p.tittel||'')}" placeholder="Vielse"></div>
+    <div class="felt"><label>Sted</label><input data-k="sted" value="${esc(p.sted||'')}" placeholder="Elverhøy kirke"></div>
+    <div class="felt"><label>Adresse</label><input data-k="adresse" value="${esc(p.adresse||'')}" placeholder=""></div>
+  </div>
+  <div class="felt"><label>Beskrivelse</label><input data-k="tekst" value="${esc(p.tekst||p.beskrivelse||'')}"></div>
+  <button class="danger tiny" onclick="this.closest('.rad-kort').remove()">🗑️ Fjern</button></div>`;
+}
+function praktiskRad(p) {
+  p = p || {};
+  return `<div class="rad-kort praktisk-rad">
+    <div class="felt"><label>Overskrift</label><input data-k="tittel" value="${esc(p.tittel||'')}" placeholder="Parkering"></div>
+    <div class="felt"><label>Tekst</label><textarea data-k="tekst">${esc(p.tekst||'')}</textarea></div>
+    <button class="danger tiny" onclick="this.closest('.rad-kort').remove()">🗑️ Fjern</button></div>`;
+}
+function menyRad(m) {
+  m = m || {};
+  return `<div class="rad-kort meny-rad">
+    <div class="felt"><label>Rett / tittel</label><input data-k="tittel" value="${esc(m.tittel||'')}" placeholder="Forrett"></div>
+    <div class="felt"><label>Beskrivelse</label><textarea data-k="tekst">${esc(m.tekst||'')}</textarea></div>
+    <div class="felt"><label>Drikke (én per linje)</label><textarea data-k="drikke">${esc((m.drikke||[]).join('\n'))}</textarea></div>
+    <button class="danger tiny" onclick="this.closest('.rad-kort').remove()">🗑️ Fjern</button></div>`;
+}
+
+function leggTil(beholderId, type) {
+  const b = document.getElementById(beholderId);
+  const tmp = document.createElement('div');
+  tmp.innerHTML = type === 'program' ? programRad({}) : type === 'praktisk' ? praktiskRad({}) : menyRad({});
+  b.appendChild(tmp.firstElementChild);
+}
+
+function lesRader(beholderId, klasse) {
+  return [...document.getElementById(beholderId).querySelectorAll('.' + klasse)].map(kort => {
+    const o = {};
+    kort.querySelectorAll('[data-k]').forEach(inp => {
+      let v = inp.value;
+      if (inp.dataset.k === 'drikke') v = v.split('\n').map(s => s.trim()).filter(Boolean);
+      o[inp.dataset.k] = v;
+    });
+    return o;
+  }).filter(o => Object.values(o).some(v => (Array.isArray(v) ? v.length : String(v).trim())));
+}
+
+function byggRedaktor(c) {
+  c = c || {};
+  const hero = Object.assign({}, (typeof HERO!=='undefined'?HERO:{}), c.hero || {});
+  const omoss = Object.assign({}, (typeof OMOSS!=='undefined'?OMOSS:{}), c.omoss || {});
+  const gave = Object.assign({}, (typeof GAVE!=='undefined'?GAVE:{}), c.gave || {});
+  const program = (Array.isArray(c.program) && c.program.length) ? c.program : (typeof PROGRAM!=='undefined'?PROGRAM:[]);
+  const praktisk = Array.isArray(c.praktisk) ? c.praktisk : (typeof PRAKTISK!=='undefined'?PRAKTISK:[]);
+  const meny = Array.isArray(c.meny) ? c.meny : (typeof MENY!=='undefined'?MENY:[]);
+  const menyinfo = Array.isArray(c.menyinfo) ? c.menyinfo : (typeof MENYINFO!=='undefined'?MENYINFO:[]);
+  let h = '<h2>✏️ Rediger innhold</h2><p class="muted">Endringene blir synlige i appen for alle gjestene umiddelbart etter lagring.</p>';
+
+  h += '<div class="red-seksjon"><h3>💍 Forside</h3>'
+    + `<div class="rad-grid">${f('Brudens navn','h-brud',hero.brud)}${f('Brudgommens navn','h-brudgom',hero.brudgom)}</div>`
+    + f('Tagline / undertittel','h-tagline',hero.tagline)
+    + `<div class="rad-grid">${f('Dato-tekst','h-dato',hero.datoTekst)}${f('Sted-tekst','h-sted',hero.stedTekst)}</div>`
+    + f('Om dagen — overskrift','h-omtittel',hero.omTittel)
+    + ta('Om dagen — tekst','h-omtekst',hero.omTekst)
+    + ta('Kleskode','h-kleskode',hero.kleskode,'F.eks. Mørk dress / lang kjole')
+    + '</div>';
+
+  h += '<div class="red-seksjon"><h3>❤️ Om oss</h3>'
+    + f('Overskrift','om-tittel',omoss.tittel)
+    + ta('Tekst','om-tekst',omoss.tekst)
+    + ta('Forlovelseshistorien','om-forlovelse',omoss.forlovelse)
+    + '</div>';
+
+  h += '<div class="red-seksjon"><h3>📅 Program</h3><div id="program-rader">'
+    + (Array.isArray(program) ? program : []).map(programRad).join('')
+    + '</div><button class="tiny" onclick="leggTil(\'program-rader\',\'program\')">➕ Legg til punkt</button></div>';
+
+  h += '<div class="red-seksjon"><h3>📍 Praktisk info</h3>'
+    + ta('Praktisk info (én linje per punkt)','praktisk-info-ta',(Array.isArray(praktisk)?praktisk.map(p=>typeof p==='string'?p:((p.tittel?p.tittel+': ':'')+(p.tekst||''))).join('\n'):''))
+    + '</div>';
+
+  h += '<div class="red-seksjon"><h3>🍽️ Meny</h3><div id="meny-rader">'
+    + (Array.isArray(meny) ? meny : []).map(menyRad).join('')
+    + '</div><button class="tiny" onclick="leggTil(\'meny-rader\',\'meny\')">➕ Legg til rett</button>'
+    + ta('Meny-info (én linje per punkt, f.eks. allergener)','meny-info',(Array.isArray(menyinfo)?menyinfo:[]).join('\n'))
+    + '</div>';
+
+  h += '<div class="red-seksjon"><h3>🎁 Gaveønske</h3>'
+    + f('Overskrift','g-tittel',gave.tittel)
+    + ta('Introtekst','g-intro',gave.intro)
+    + ta('Ønsker / liste (én per linje)','g-onsker',(Array.isArray(gave.onsker)?gave.onsker.join('\n'):(gave.onsker||'')))
+    + ta('Betalingsdetaljer (Vipps/Spleis/konto)','g-detaljer',gave.detaljer)
+    + '</div>';
+
+  h += '<div class="lagre-bar"><button onclick="lagreInnhold()">💾 Lagre alt innhold</button>'
+    + '<span class="muted" id="innhold-tid"></span><span id="lagre-status"></span></div>';
+
+  document.getElementById('innhold-redaktor').innerHTML = h;
+}
+
+async function lastInnhold() {
+  try {
+    const res = await fetch('/api/siljeterje-content');
+    const d = res.ok ? await res.json() : {};
+    byggRedaktor(d.content || {});
+    const t = document.getElementById('innhold-tid');
+    if (t && d.oppdatert) t.textContent = 'Sist lagret: ' + dt(d.oppdatert);
+  } catch (e) {
+    document.getElementById('innhold-redaktor').innerHTML = '<div class="err">Kunne ikke hente innhold: ' + esc(e.message || e) + '</div>';
+  }
+}
+
+function linjer(id) { return document.getElementById(id).value.split('\n').map(s => s.trim()).filter(Boolean); }
+function val(id) { return document.getElementById(id).value.trim(); }
+
+async function lagreInnhold() {
+  const content = {
+    hero: {
+      brud: val('h-brud'), brudgom: val('h-brudgom'), tagline: val('h-tagline'),
+      datoTekst: val('h-dato'), stedTekst: val('h-sted'),
+      omTittel: val('h-omtittel'), omTekst: val('h-omtekst'), kleskode: val('h-kleskode'),
+    },
+    omoss: { tittel: val('om-tittel'), tekst: val('om-tekst'), forlovelse: val('om-forlovelse') },
+    program: lesRader('program-rader', 'program-rad'),
+    praktisk: linjer('praktisk-info-ta'),
+    meny: lesRader('meny-rader', 'meny-rad'),
+    menyinfo: linjer('meny-info'),
+    gave: { tittel: val('g-tittel'), intro: val('g-intro'), onsker: linjer('g-onsker'), detaljer: val('g-detaljer') },
+  };
+  const s = document.getElementById('lagre-status');
+  s.textContent = ' Lagrer…'; s.className = 'muted';
+  const r = await adminPost('/api/siljeterje-content', { content });
+  if (r) {
+    s.textContent = ' ✅ Lagret!'; s.className = 'ok';
+    const t = document.getElementById('innhold-tid');
+    if (t) t.textContent = 'Sist lagret: ' + dt(Date.now());
+    setTimeout(() => { s.textContent = ''; }, 3000);
+  } else {
+    s.textContent = ' ❌ Ikke lagret'; s.className = 'err';
+  }
+}
+
+async function lastSvar() {
+  const cont = document.getElementById('svar-visning');
+  if (!adminKey) settAdminKey();
+  if (!adminKey) return;
+  cont.className = 'muted';
+  cont.textContent = 'Henter svar…';
+  let data;
+  try {
+    const res = await fetch('/api/siljeterje-svar?all=1&key=' + encodeURIComponent(adminKey));
+    if (res.status === 401) {
+      sessionStorage.removeItem('siljeterje-admin-key'); adminKey = '';
+      cont.className = 'err'; cont.textContent = 'Feil admin-nøkkel — prøv igjen.';
+      return;
+    }
+    if (!res.ok) { cont.className = 'err'; cont.textContent = 'Feil: ' + res.status; return; }
+    data = await res.json();
+  } catch (e) {
+    cont.className = 'err'; cont.textContent = 'Kunne ikke hente svar: ' + esc(e.message || e);
+    return;
+  }
+  const svar = (data && data.svar) || { silje: {}, terje: {} };
+  const sek = window.SPORSMAL || [];
+  let h = '';
+  sek.forEach(s => {
+    h += '<div class="red-seksjon"><h3>' + esc((s.ikon || '') + ' ' + s.seksjon) + '</h3>';
+    h += '<table><tr><th style="width:34%">Spørsmål</th><th>Silje</th><th>Terje</th></tr>';
+    s.sporsmal.forEach(sp => {
+      const sv = (svar.silje && svar.silje[sp.id]) || '';
+      const tv = (svar.terje && svar.terje[sp.id]) || '';
+      const laas = sp.synlighet === 'privat' ? ' 🔒' : '';
+      h += '<tr><td>' + esc(sp.tittel) + laas + '</td>'
+        + '<td class="tekst">' + (sv ? esc(sv) : '<span class="muted">—</span>') + '</td>'
+        + '<td class="tekst">' + (tv ? esc(tv) : '<span class="muted">—</span>') + '</td></tr>';
+    });
+    h += '</table></div>';
+  });
+  cont.className = '';
+  cont.innerHTML = h;
+}
+
+lastInnhold();
+last();</script>
+</body>
+</html>

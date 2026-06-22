@@ -1,0 +1,15 @@
+{
+  "name": "Silje & Terje — Vi gifter oss",
+  "short_name": "Silje & Terje",
+  "description": "Bryllupsapp for Silje Ingebrigtsen & Terje Karlstad — 22. august 2026",
+  "start_url": "/SiljeOgTerje/",
+  "scope": "/SiljeOgTerje/",
+  "display": "standalone",
+  "background_color": "#FAF6EE",
+  "theme_color": "#8A6420",
+  "lang": "nb",
+  "icons": [
+    { "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
