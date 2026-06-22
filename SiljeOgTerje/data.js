@@ -9,7 +9,8 @@ const EVENT_DATO_ISO = "2026-08-22T13:00:00+02:00";
 // Programmet for dagen. Tider er foreløpige – Silje & Terje
 // kan endre alt selv via admin-siden.
 const PROGRAM = [
-  { tid: "13:00", tittel: "Vielse i Elverhøy kirke", sted: "Elverhøy kirke, Tromsø", ikon: "💒", beskrivelse: "Vi gifter oss! Møt opp i god tid – dørene åpner 12:30.", adresse: "Elverhøy kirke, Tromsø", kart: "https://maps.google.com/?q=Elverh%C3%B8y+kirke+Troms%C3%B8" },
+  { tid: "19:00", dag: "Fredag 21. august", tittel: "Mingling kvelden før", sted: "(sted kommer)", ikon: "🍕", beskrivelse: "Uformell sammenkomst for tilreisende kvelden før bryllupet. Mer info kommer – følg med her!" },
+  { tid: "13:00", dag: "Lørdag 22. august", tittel: "Vielse i Elverhøy kirke", sted: "Elverhøy kirke, Tromsø", ikon: "💒", beskrivelse: "Vi gifter oss! Møt opp i god tid – dørene åpner 12:30.", adresse: "Elverhøy kirke, Tromsø", kart: "https://maps.google.com/?q=Elverh%C3%B8y+kirke+Troms%C3%B8" },
   { tid: "14:00", tittel: "Gratulasjoner & bobler", sted: "Utenfor kirken", ikon: "🥂", beskrivelse: "Ris, klemmer og et glass til brudeparet utenfor kirken." },
   { tid: "14:30", tittel: "Fotografering", sted: "Tromsø sentrum", ikon: "📸", beskrivelse: "Brudeparet tar bilder. Gjestene forflytter seg mot festlokalet." },
   { tid: "17:00", tittel: "Mottakelse på Rødbanken", sted: "Rødbanken, Tromsø sentrum", ikon: "🏛️", beskrivelse: "Velkomstdrink og mingling i de vakre lokalene til Sparebank 1 Nord-Norge.", adresse: "Rødbanken, Tromsø sentrum", kart: "https://maps.google.com/?q=R%C3%B8dbanken+Troms%C3%B8" },

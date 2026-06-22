@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="../gate.js"></script>
 <title>Silje & Terje — Admin</title>
 <style>
   body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; background: #0D1B2A; color: #E8E0D4; margin: 0; padding: 24px; max-width: 1100px; margin: 0 auto; }
@@ -51,6 +52,19 @@
 </p>
 
 <div id="innhold-redaktor">Laster innhold…</div>
+
+<h2>💌 RSVP — hvem kommer?</h2>
+<div class="admin-aksjoner"><button onclick="lastRSVP()">🔑 Vis RSVP-svar</button></div>
+<div id="rsvp-sammendrag"></div>
+<div id="rsvp-visning" class="muted">Trykk «Vis RSVP-svar» for å laste inn (krever admin-nøkkel).</div>
+
+<h2>🔗 Personlige RSVP-lenker</h2>
+<p class="muted">Send en personlig lenke til hver gjest (forhåndsutfylt med navnet deres), eller del den felles lenken der man velger navn selv.</p>
+<div class="admin-aksjoner">
+  <button onclick="kopier(window.location.origin + '/SiljeOgTerje/rsvp/')">📋 Kopier felles lenke</button>
+  <span class="muted" id="felles-lenke-tekst"></span>
+</div>
+<div id="rsvp-lenker"></div>
 
 <h2>📝 Spørrerunde — svar fra brudeparet</h2>
 <p class="muted">Svar Silje og Terje har lagt inn i spørrerunden (<a href="/SiljeOgTerje/sporsmal/" target="_blank">åpne spørrerunden →</a>). 🔒 = privat svar om/for den andre.</p>
@@ -577,7 +591,93 @@ async function lastForlover() {
   cont.innerHTML = h;
 }
 
+// ---------- RSVP ----------
+function rsvpSlugify(s) {
+  return String(s || '').toLowerCase()
+    .replace(/æ/g, 'ae').replace(/ø/g, 'o').replace(/å/g, 'a')
+    .replace(/[àáâ]/g, 'a').replace(/[èéê]/g, 'e').replace(/[ìí]/g, 'i')
+    .replace(/[òó]/g, 'o').replace(/[ùú]/g, 'u')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+function rsvpSlug(g) {
+  if (g.slug) return g.slug;
+  if (g.bildeFil) { const m = g.bildeFil.match(/([^\/\\]+)\.(?:jpg|jpeg|png|webp)$/i); if (m) return m[1].toLowerCase(); }
+  return rsvpSlugify(g.navn);
+}
+
+async function kopier(tekst) {
+  try { await navigator.clipboard.writeText(tekst); alert('Kopiert:\n' + tekst); }
+  catch (_) { prompt('Kopier lenken:', tekst); }
+}
+
+async function lastRSVP() {
+  if (!adminKey) settAdminKey();
+  if (!adminKey) return;
+  const v = document.getElementById('rsvp-visning');
+  const sam = document.getElementById('rsvp-sammendrag');
+  v.innerHTML = 'Laster …'; v.className = '';
+  try {
+    const res = await fetch('/api/siljeterje-rsvp?all=1&key=' + encodeURIComponent(adminKey));
+    if (res.status === 401) { alert('Feil admin-nøkkel'); sessionStorage.removeItem('siljeterje-admin-key'); adminKey = ''; v.textContent = ''; return; }
+    if (!res.ok) throw new Error('status ' + res.status);
+    const d = await res.json();
+    const s = d.sammendrag || {};
+    const totalGjester = (typeof GJESTER !== 'undefined' ? GJESTER.length : 0);
+    sam.innerHTML = `<div class="stats-row">
+      <div class="stat-card"><div class="stat-num">${s.kommer || 0}</div><div class="stat-label">Kommer</div></div>
+      <div class="stat-card"><div class="stat-num">${s.kommerIkke || 0}</div><div class="stat-label">Kommer ikke</div></div>
+      <div class="stat-card"><div class="stat-num">${s.antallPersoner || 0}</div><div class="stat-label">Antall personer</div></div>
+      <div class="stat-card"><div class="stat-num">${s.fredag || 0}</div><div class="stat-label">Mingling fredag</div></div>
+      <div class="stat-card"><div class="stat-num">${(s.svart || 0)}/${totalGjester}</div><div class="stat-label">Har svart</div></div>
+    </div>`;
+    const rows = d.svar || [];
+    if (!rows.length) { v.innerHTML = '<p class="muted">Ingen svar ennå.</p>'; return; }
+    let h = '<table class="sortable-tabell"><thead><tr>'
+      + '<th class="sortable" data-type="text">Navn</th>'
+      + '<th class="sortable" data-type="text">Kommer</th>'
+      + '<th class="sortable" data-type="text">Fredag</th>'
+      + '<th class="sortable" data-type="num">Antall</th>'
+      + '<th class="sortable" data-type="text">Allergier / mat</th>'
+      + '<th class="sortable" data-type="text">Hilsen</th>'
+      + '<th class="sortable" data-type="date">Svart</th>'
+      + '</tr></thead><tbody>';
+    h += rows.map(r => `<tr>
+      <td><strong>${esc(r.navn)}</strong></td>
+      <td>${r.kommer ? '✅ Ja' : '❌ Nei'}</td>
+      <td>${!r.kommer ? '<span class="muted">—</span>' : (r.fredag ? '🍕 Ja' : 'Nei')}</td>
+      <td>${r.kommer ? (r.antall || 1) : '<span class="muted">—</span>'}</td>
+      <td class="tekst">${esc(r.allergier || '')}</td>
+      <td class="tekst">${esc(r.kommentar || '')}</td>
+      <td class="muted" data-sort="${r.oppdatert || ''}">${dt(r.oppdatert)}</td>
+    </tr>`).join('');
+    h += '</tbody></table>';
+    v.innerHTML = h;
+  } catch (e) {
+    v.innerHTML = '<div class="err">Kunne ikke hente RSVP: ' + esc(e.message || e) + '</div>';
+  }
+}
+
+function byggRSVPLenker() {
+  const el = document.getElementById('rsvp-lenker');
+  if (!el || typeof GJESTER === 'undefined') return;
+  const base = window.location.origin + '/SiljeOgTerje/rsvp/';
+  document.getElementById('felles-lenke-tekst').textContent = base;
+  const rader = [...GJESTER].filter(g => g.navn).sort((a, b) => a.navn.localeCompare(b.navn, 'nb'));
+  let h = '<table class="sortable-tabell"><thead><tr><th>Navn</th><th>Personlig lenke</th><th></th></tr></thead><tbody>';
+  h += rader.map(g => {
+    const lenke = base + '?g=' + encodeURIComponent(rsvpSlug(g));
+    return `<tr>
+      <td><strong>${esc(g.navn)}</strong></td>
+      <td class="muted" style="font-size:12px;word-break:break-all">${esc(lenke)}</td>
+      <td><button class="tiny" onclick="kopier('${lenke.replace(/'/g, "\\'")}')">📋 Kopier</button></td>
+    </tr>`;
+  }).join('');
+  h += '</tbody></table>';
+  el.innerHTML = h;
+}
+
 lastInnhold();
+byggRSVPLenker();
 last();</script>
 </body>
 </html>

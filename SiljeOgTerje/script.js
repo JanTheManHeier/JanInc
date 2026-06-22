@@ -335,6 +335,7 @@
         <div class="program-tid">${esc(p.tid || '')}</div>
         <div class="program-ikon">${p.ikon || '📍'}</div>
         <div class="program-info">
+          ${p.dag ? `<div class="program-dag">${esc(p.dag)}</div>` : ''}
           <div class="sted">${esc(p.tittel || p.sted || '')}</div>
           ${p.tittel && p.sted ? `<div class="adresse">📍 ${esc(p.sted)}</div>` : ''}
           <div class="beskrivelse">${esc(p.beskrivelse || p.tekst || '')}</div>
