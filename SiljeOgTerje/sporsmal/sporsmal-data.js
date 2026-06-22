@@ -8,8 +8,6 @@ window.SPORSMAL = [
     seksjon: 'Om dere',
     ikon: '💑',
     sporsmal: [
-      { id: 'navn-brud', tittel: 'Fullt navn på bruden', synlighet: 'felles', type: 'kort', forslag: ['Silje'] },
-      { id: 'navn-brudgom', tittel: 'Fullt navn på brudgommen', synlighet: 'felles', type: 'kort', forslag: ['Terje'] },
       { id: 'dato', tittel: 'Bryllupsdato', synlighet: 'felles', type: 'kort', forslag: ['22. august 2026'] },
       { id: 'sted-vielse', tittel: 'Sted for vielse', synlighet: 'felles', type: 'kort', forslag: ['Elverhøy kirke, Tromsø'] },
       { id: 'sted-fest', tittel: 'Sted for middag/fest', synlighet: 'felles', type: 'kort', forslag: ['Rødbanken, Tromsø'] },
