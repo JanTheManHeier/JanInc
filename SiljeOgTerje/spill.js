@@ -872,5 +872,5 @@
     } catch (e) {}
   }
 
-  window.ThomasSpill = { init, start, stopp, hopp };
+  window.BobleSpill = { init, start, stopp, hopp };
 })();

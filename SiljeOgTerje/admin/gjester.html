@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Thomas50 — Rediger gjester</title>
+<title>Silje &amp; Terje — Rediger gjester</title>
 <style>
   * { box-sizing: border-box; }
   body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; background: #0D1B2A; color: #E8E0D4; margin: 0 auto; padding: 20px; max-width: 1100px; }
@@ -66,8 +66,8 @@
 </head>
 <body>
 <p>
-  <a class="nav-link" href="/Thomas50/admin/">← Tilbake til admin</a>
-  <a class="nav-link" href="/Thomas50/">Til appen</a>
+  <a class="nav-link" href="/SiljeOgTerje/admin/">← Tilbake til admin</a>
+  <a class="nav-link" href="/SiljeOgTerje/">Til appen</a>
 </p>
 <h1>👥 Rediger gjester</h1>
 <div class="info">
@@ -84,7 +84,7 @@
 
 <div id="liste">Laster...</div>
 
-<script src="/Thomas50/data.js"></script>
+<script src="/SiljeOgTerje/data.js"></script>
 <script>
 const STAT = {};
 let adminKey = sessionStorage.getItem('siljeterje-admin-key') || '';
@@ -206,25 +206,14 @@ function radHtml(g) {
               ${[6,8,10,12].map(n => `<option value="${n}" ${String(eff(g.navn,'bordType',g.bordType||8))==String(n)?'selected':''}>${n}-mannsbord</option>`).join('')}
             </select>
           </div>
-          <div class="felt"><label>🧖 Pust (badstue)</label>
-            <select data-felt="pust" data-tristate="1">
-              ${(() => {
-                const cur = (e.pust === true || e.pust === 1) ? 'true' : (e.pust === false || e.pust === 0) ? 'false' : '';
-                const orig = g.pust ? 'Ja' : 'Nei';
-                return `<option value="" ${cur===''?'selected':''}>— bruk original (${orig}) —</option>
-                        <option value="true" ${cur==='true'?'selected':''}>Med på Pust</option>
-                        <option value="false" ${cur==='false'?'selected':''}>Ikke med</option>`;
-              })()}
-            </select>
-          </div>
           <div class="felt"><label>Jobb / tittel</label>
             <input data-felt="jobb" value="${v('jobb', g.jobb)}" placeholder="f.eks. Lege, Lærer" />
           </div>
           <div class="felt"><label>Relasjon</label>
-            <input data-felt="relasjon" value="${v('relasjon', g.relasjon)}" placeholder="f.eks. Søster" />
+            <input data-felt="relasjon" value="${v('relasjon', g.relasjon)}" placeholder="f.eks. Søster, venn av brudeparet" />
           </div>
-          <div class="felt"><label>Ekstra (gull)</label>
-            <input data-felt="extraBio" value="${v('extraBio', g.extraBio)}" placeholder="f.eks. Statssekretær" />
+          <div class="felt"><label>Ekstra info</label>
+            <input data-felt="extraBio" value="${v('extraBio', g.extraBio)}" placeholder="f.eks. tittel eller morsom detalj" />
           </div>
           <div class="felt"><label>Facebook URL</label>
             <input data-felt="fbUrl" value="${v('fbUrl', g.fbUrl)}" placeholder="https://facebook.com/..." />
@@ -398,7 +387,7 @@ function nyGjest() {
     alert('En gjest med dette navnet finnes allerede.');
     return;
   }
-  // Legg til som lokal stub, render — Thomas må trykke Lagre for å lagre i DB
+  // Legg til som lokal stub, render — brudeparet må trykke Lagre for å lagre i DB
   STAT[n] = { navn: n, nyGjest: true, bordType: 8 };
   render();
   // Scroll til den nye raden

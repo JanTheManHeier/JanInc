@@ -85,7 +85,7 @@
     }
   }
 
-  // Henter overstyrt info som Thomas har redigert i admin
+  // Henter overstyrt info som brudeparet har redigert i admin
   async function lastGjesteEdits() {
     try {
       const r = await fetchMedTimeout(`${API_BASE}/siljeterje-gjest-edit`, {}, 60000);
@@ -95,7 +95,7 @@
       data.forEach(d => {
         const has = (k) => d[k] !== null && d[k] !== undefined && d[k] !== '';
         if (d.nyGjest) {
-          // Ny gjest lagt til av Thomas
+          // Ny gjest lagt til av brudeparet
           if (d.skjult) return;
           const ny = { navn: d.navn, bordType: d.bordType || 8 };
           if (has('bord')) ny.bord = d.bord;
@@ -695,7 +695,7 @@
     if (data.navn) settNavn(data.navn);
   }
 
-  // ============ Musikkønske til Aggie ============
+  // ============ Musikkønske til brudeparet ============
   function initMusikk() {
     const lagre = document.getElementById('musikk-lagre');
     if (!lagre) return;
@@ -1106,15 +1106,15 @@
     const seToppBtn = document.getElementById('mario-se-topp-btn');
     const hoppBtn = document.getElementById('mario-hopp-btn');
 
-    if (!canvas || !window.ThomasSpill) return;
+    if (!canvas || !window.BobleSpill) return;
 
     if (hoppBtn) {
-      const trigger = (e) => { e.preventDefault(); ThomasSpill.hopp(); };
+      const trigger = (e) => { e.preventDefault(); BobleSpill.hopp(); };
       hoppBtn.addEventListener('touchstart', trigger, { passive: false });
       hoppBtn.addEventListener('mousedown', trigger);
     }
 
-    ThomasSpill.init(canvas, async (score) => {
+    BobleSpill.init(canvas, async (score) => {
       canvas.hidden = true;
       if (hoppBtn) hoppBtn.hidden = true;
       resScr.hidden = false;
@@ -1172,7 +1172,7 @@
       const form = document.getElementById('mario-navn-form');
       if (form) form.remove();
       // Wait for layout, then start
-      setTimeout(() => ThomasSpill.start(), 50);
+      setTimeout(() => BobleSpill.start(), 50);
     }
 
     startBtn.onclick = startSpill;
