@@ -37,13 +37,17 @@ module.exports = async function (context, req) {
                 const rows = await executeQuery(connection,
                     'SELECT person, sporsmal_id, svar, oppdatert FROM SiljeTerje_Forlover');
                 const svar = {};
+                const meta = {};
                 let oppdatert = null;
                 rows.forEach(r => {
                     if (!svar[r.person]) svar[r.person] = {};
                     svar[r.person][r.sporsmal_id] = r.svar;
+                    if (!meta[r.person]) meta[r.person] = { antall: 0, sist: null };
+                    if ((r.svar || '').toString().trim() !== '') meta[r.person].antall++;
+                    if (!meta[r.person].sist || r.oppdatert > meta[r.person].sist) meta[r.person].sist = r.oppdatert;
                     if (!oppdatert || r.oppdatert > oppdatert) oppdatert = r.oppdatert;
                 });
-                context.res = { status: 200, headers, body: { svar, oppdatert } };
+                context.res = { status: 200, headers, body: { svar, meta, oppdatert } };
                 return;
             }
 
