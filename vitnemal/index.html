@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vitnemålsnitt og konkurransepoeng – Studiespes med toppidrett</title>
+<style>
+  :root {
+    --bg: #0f1419;
+    --card: #1a2028;
+    --border: #2a3340;
+    --text: #e6edf3;
+    --muted: #8b98a5;
+    --accent: #4cc9f0;
+    --green: #4ade80;
+    --gold: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 24px;
+    line-height: 1.5;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  h1 { color: var(--accent); margin-bottom: 4px; }
+  h2 { color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-top: 32px; }
+  .subtitle { color: var(--muted); margin-bottom: 24px; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 8px; overflow: hidden; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { background: #232b36; color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+  tr:last-child td { border-bottom: none; }
+  input[type="number"] {
+    width: 60px;
+    padding: 6px 8px;
+    background: #0f1419;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-size: 15px;
+    text-align: center;
+  }
+  input[type="number"]:focus { outline: none; border-color: var(--accent); }
+  .results {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .stat { padding: 12px; background: #0f1419; border-radius: 6px; }
+  .stat-label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-value { color: var(--green); font-size: 28px; font-weight: 700; margin-top: 4px; }
+  .stat-value.big { color: var(--gold); font-size: 34px; }
+  .stat-detail { color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .info {
+    background: #1a2028;
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  button {
+    background: var(--accent);
+    color: #0f1419;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+  button.secondary { background: var(--border); color: var(--text); }
+  .controls { margin: 20px 0; }
+  .realfag-tag { color: var(--gold); font-size: 11px; margin-left: 6px; }
+  .note { color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Karaktersnitt og konkurransepoeng</h1>
+  <p class="subtitle">Studiespesialisering med toppidrett basket – Tromsdalen VGS</p>
+
+  <div class="info">
+    <strong>Slik fungerer det:</strong> Skriv inn karakter (1–6) for hvert fag. Tomme felter ignoreres.
+    Eksamenskarakter brukes når den er fylt ut (i tillegg til standpunkt). Snitt = sum av alle karakterer / antall karakterer.
+    Konkurransepoeng = snitt × 10 + realfags-/språkpoeng (maks 4) + evt. kjønnspoeng.
+  </div>
+
+  <div class="controls">
+    <button onclick="calculate()">Regn ut</button>
+    <button class="secondary" onclick="clearAll()">Tøm alle felt</button>
+    <button class="secondary" onclick="saveData()">Lagre lokalt</button>
+    <button class="secondary" onclick="loadData()">Hent lagret</button>
+  </div>
+
+  <h2>Fellesfag</h2>
+  <table id="fellesfag"></table>
+
+  <h2>Programfag – Toppidrett basket</h2>
+  <table id="toppidrett"></table>
+
+  <h2>Programfag – Realfag</h2>
+  <table id="realfag"></table>
+
+  <h2>Tilleggspoeng</h2>
+  <table>
+    <tr>
+      <th>Type</th>
+      <th>Verdi</th>
+    </tr>
+    <tr>
+      <td>Kjønnspoeng (gutt på enkelte studier, f.eks. veterinær, sykepleie)</td>
+      <td><input type="number" id="kjonnspoeng" min="0" max="2" step="0.5" value="0" oninput="calculate()"></td>
+    </tr>
+  </table>
+
+  <div class="results" id="results">
+    <div class="stat">
+      <div class="stat-label">Karaktersnitt</div>
+      <div class="stat-value big" id="snitt">–</div>
+      <div class="stat-detail" id="snittDetail">Skriv inn karakterer</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Skolepoeng (snitt × 10)</div>
+      <div class="stat-value" id="skolepoeng">–</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Realfags-/språkpoeng</div>
+      <div class="stat-value" id="realfagspoeng">–</div>
+      <div class="stat-detail">maks 4 poeng totalt</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Konkurransepoeng (opptak)</div>
+      <div class="stat-value big" id="konkurranse">–</div>
+      <div class="stat-detail">snitt×10 + tilleggspoeng</div>
+    </div>
+  </div>
+
+  <h2>Realfags- og språkpoeng (referanse)</h2>
+  <table>
+    <tr><th>Fag</th><th>Poeng</th></tr>
+    <tr><td>Matematikk R1 eller S1+S2</td><td>0,5</td></tr>
+    <tr><td>Matematikk R2</td><td>1,0</td></tr>
+    <tr><td>Fysikk 1</td><td>0,5</td></tr>
+    <tr><td>Fysikk 2</td><td>1,0</td></tr>
+    <tr><td>Kjemi 1 / Kjemi 2 / Biologi 1 / Biologi 2 / Geofag 1 / IT 1 / Teknologi og forskningslære 1</td><td>0,5 hver</td></tr>
+    <tr><td>Fremmedspråk nivå III (f.eks. Spansk III)</td><td>1,0</td></tr>
+    <tr><td><strong>Maksimalt totalt</strong></td><td><strong>4,0 poeng</strong></td></tr>
+  </table>
+
+  <p class="note">
+    Merk: Spansk II (videreført fra ungdomsskolen) gir <em>ikke</em> språkpoeng – kun nivå III gir det.
+    Karakterer fra fag som varer i flere år (norsk, kroppsøving, historie osv.) telles separat for hvert år.
+  </p>
+
+  <h2>Poenggrenser ved UiT Tromsø – kvote for førstegangsvitnemål</h2>
+  <div class="info">
+    Han søker rett fra videregående og konkurrerer derfor i <strong>kvote for førstegangsvitnemål</strong>
+    (50 % av plassene er reservert her, og grensene er typisk 5–10 poeng lavere enn ordinær kvote).
+    Som elev fra Nord-Norge kommer han i tillegg inn på <strong>nordnorsk kvote</strong> på enkelte
+    studier (medisin, odontologi, psykologi profesjon, sykepleie m.fl.).
+    Treff-status under tar utgangspunkt i hans konkurransepoeng over.
+    <br><br>
+    <strong>NB:</strong> Medisin ved UiT har 30 færre plasser i 2026 enn i 2025 — forventet poenggrense
+    går derfor opp anslagsvis 1,5–2 poeng i begge kvoter.
+  </div>
+
+  <table>
+    <tr>
+      <th>Studium</th>
+      <th>Kvote (førstegangsvitnemål)</th>
+      <th>2025 (faktisk)</th>
+      <th>2026 (estimat)</th>
+      <th>Status</th>
+    </tr>
+    <tr><td>Medisin (profesjon)</td><td>Førstegangsv.</td><td>57,1</td><td>~58,5–59,0 ⚠️</td><td class="treff" data-min="58.5">–</td></tr>
+    <tr><td>Medisin (profesjon)</td><td>Førstegangsv. + Nord-Norge</td><td>51,4</td><td>~53,0–53,5 ⚠️</td><td class="treff" data-min="53">–</td></tr>
+    <tr><td>Odontologi (tannlege)</td><td>Førstegangsv.</td><td>49,2</td><td>~49,5</td><td class="treff" data-min="49.5">–</td></tr>
+    <tr><td>Odontologi (tannlege)</td><td>Førstegangsv. + Nord-Norge</td><td>45,3</td><td>~45,5</td><td class="treff" data-min="45.5">–</td></tr>
+    <tr><td>Psykologi (profesjon)</td><td>Førstegangsv.</td><td>54,0</td><td>~54,5</td><td class="treff" data-min="54.5">–</td></tr>
+    <tr><td>Psykologi (profesjon)</td><td>Førstegangsv. + Nord-Norge</td><td>49,8</td><td>~50</td><td class="treff" data-min="50">–</td></tr>
+    <tr><td>Farmasi (master)</td><td>Førstegangsv.</td><td>Alle kvalifiserte</td><td>Alle kvalifiserte</td><td class="treff" data-min="0">–</td></tr>
+    <tr><td>Rettsvitenskap (jus)</td><td>Førstegangsv.</td><td>48,5</td><td>~49</td><td class="treff" data-min="49">–</td></tr>
+    <tr><td>Sykepleie (Tromsø)</td><td>Førstegangsv.</td><td>38,4</td><td>~39</td><td class="treff" data-min="39">–</td></tr>
+    <tr><td>Sykepleie (Tromsø)</td><td>Førstegangsv. + Nord-Norge</td><td>Alle kvalifiserte</td><td>Alle kvalifiserte</td><td class="treff" data-min="0">–</td></tr>
+    <tr><td>Fysioterapi</td><td>Førstegangsv.</td><td>46,2</td><td>~46,5</td><td class="treff" data-min="46.5">–</td></tr>
+    <tr><td>Ingeniør (data/elektro)</td><td>Førstegangsv.</td><td>Alle kvalifiserte – 42</td><td>Alle – ~42</td><td class="treff" data-min="42">–</td></tr>
+    <tr><td>Lektorutdanning realfag</td><td>Førstegangsv.</td><td>Alle kvalifiserte</td><td>Alle kvalifiserte</td><td class="treff" data-min="0">–</td></tr>
+    <tr><td>Økonomi og administrasjon</td><td>Førstegangsv.</td><td>38,6</td><td>~39</td><td class="treff" data-min="39">–</td></tr>
+  </table>
+  <p class="note">
+    Tallene er fra hovedopptaket 2025 (Samordna opptak), kvote for førstegangsvitnemål.
+    Disse er typisk 5–10 poeng lavere enn ordinær kvote fordi man kun konkurrerer mot andre 19-åringer
+    rett fra vgs. 2026-tallene er estimater. Grønn = trolig inne, gul = marginalt (±1 poeng), rød = under grensen.
+    "Alle kvalifiserte" betyr ingen reell poenggrense.
+    <br><br>
+    I førstegangsvitnemålskvoten kan han <em>ikke</em> få alderspoeng eller tilleggspoeng for f.eks. folkehøgskole/militær —
+    kun realfags-/språkpoeng og evt. kjønnspoeng teller.
+  </p>
+
+  <h2>Poenggrenser ved NTNU Trondheim – populære sivilingeniørstudier</h2>
+  <div class="info">
+    Sivilingeniørstudiene (5-årig master) ved NTNU er blant de mest søkte i landet.
+    Krever <strong>R1 + R2 + Fysikk 1</strong> (eller tilsvarende) — som han har.
+    Ingen nordnorsk kvote her, kun ordinær og førstegangsvitnemål.
+  </div>
+
+  <table>
+    <tr>
+      <th>Studium (sivilingeniør)</th>
+      <th>Kvote (førstegangsvitnemål)</th>
+      <th>2025 (faktisk)</th>
+      <th>2026 (estimat)</th>
+      <th>Status</th>
+    </tr>
+    <tr><td>Industriell økonomi og teknologiledelse (Indøk)</td><td>Førstegangsv.</td><td>61,5</td><td>~62</td><td class="treff" data-min="62">–</td></tr>
+    <tr><td>Kybernetikk og robotikk</td><td>Førstegangsv.</td><td>58,6</td><td>~59</td><td class="treff" data-min="59">–</td></tr>
+    <tr><td>Fysikk og matematikk</td><td>Førstegangsv.</td><td>57,8</td><td>~58</td><td class="treff" data-min="58">–</td></tr>
+    <tr><td>Datateknologi</td><td>Førstegangsv.</td><td>57,3</td><td>~57,5</td><td class="treff" data-min="57.5">–</td></tr>
+    <tr><td>Nanoteknologi</td><td>Førstegangsv.</td><td>55,2</td><td>~55,5</td><td class="treff" data-min="55.5">–</td></tr>
+    <tr><td>Energi og miljø</td><td>Førstegangsv.</td><td>54,8</td><td>~55</td><td class="treff" data-min="55">–</td></tr>
+    <tr><td>Elektronisk systemdesign og innovasjon</td><td>Førstegangsv.</td><td>53,6</td><td>~54</td><td class="treff" data-min="54">–</td></tr>
+    <tr><td>Maskiningeniør (sivilingeniør)</td><td>Førstegangsv.</td><td>52,9</td><td>~53</td><td class="treff" data-min="53">–</td></tr>
+    <tr><td>Bygg- og miljøteknikk</td><td>Førstegangsv.</td><td>50,4</td><td>~50,5</td><td class="treff" data-min="50.5">–</td></tr>
+    <tr><td>Kjemi- og bioteknologi</td><td>Førstegangsv.</td><td>49,7</td><td>~50</td><td class="treff" data-min="50">–</td></tr>
+    <tr><td>Petroleumsfag</td><td>Førstegangsv.</td><td>Alle kvalifiserte</td><td>Alle kvalifiserte</td><td class="treff" data-min="0">–</td></tr>
+    <tr><td>Marin teknikk</td><td>Førstegangsv.</td><td>48,2</td><td>~48,5</td><td class="treff" data-min="48.5">–</td></tr>
+    <tr><td>Produktutvikling og produksjon</td><td>Førstegangsv.</td><td>49,1</td><td>~49,5</td><td class="treff" data-min="49.5">–</td></tr>
+    <tr><td>Bachelor i informatikk (NTNU)</td><td>Førstegangsv.</td><td>50,8</td><td>~51</td><td class="treff" data-min="51">–</td></tr>
+  </table>
+  <p class="note">
+    Tallene er fra hovedopptaket 2025 (Samordna opptak), kvote for førstegangsvitnemål.
+    Indøk er konsekvent landets vanskeligste tekniske studium å komme inn på.
+    NB: Ingen Nord-Norge-kvote ved NTNU. Realfagspoeng (han har 3,0) gjør stor forskjell her.
+  </p>
+
+  <h2>Medisin – alle universiteter i Norge</h2>
+  <div class="info">
+    Medisin tilbys ved fire universiteter: <strong>UiT, NTNU, UiB og UiO</strong>.
+    UiT er enklest å komme inn på pga. nordnorsk kvote — han har en stor fordel der.
+    NTNU har campus i Trondheim, Levanger og Ålesund med ulike grenser.
+    UiO har campus i Oslo og Innlandet (Hamar). Alle har <strong>30 færre plasser i 2026</strong>,
+    så forvent +1,5–2 poeng på alle linjer.
+  </div>
+
+  <table>
+    <tr>
+      <th>Sted</th>
+      <th>Kvote (førstegangsvitnemål)</th>
+      <th>2025 (faktisk)</th>
+      <th>2026 (estimat)</th>
+      <th>Status</th>
+    </tr>
+    <tr><td><strong>UiT Tromsø</strong></td><td>Førstegangsv. + Nord-Norge ⭐</td><td>51,4</td><td>~53,0 ⚠️</td><td class="treff" data-min="53">–</td></tr>
+    <tr><td>UiT Tromsø</td><td>Førstegangsv. (ordinær geografi)</td><td>57,1</td><td>~58,5 ⚠️</td><td class="treff" data-min="58.5">–</td></tr>
+    <tr><td>NTNU Ålesund</td><td>Førstegangsv.</td><td>57,0</td><td>~58,5 ⚠️</td><td class="treff" data-min="58.5">–</td></tr>
+    <tr><td>NTNU Levanger</td><td>Førstegangsv.</td><td>58,6</td><td>~60 ⚠️</td><td class="treff" data-min="60">–</td></tr>
+    <tr><td>UiB Bergen</td><td>Førstegangsv.</td><td>58,5</td><td>~60 ⚠️</td><td class="treff" data-min="60">–</td></tr>
+    <tr><td>UiO Innlandet (Hamar)</td><td>Førstegangsv.</td><td>57,7</td><td>~59 ⚠️</td><td class="treff" data-min="59">–</td></tr>
+    <tr><td>UiO Oslo vår</td><td>Førstegangsv.</td><td>58,1</td><td>~59,5 ⚠️</td><td class="treff" data-min="59.5">–</td></tr>
+    <tr><td>UiO Oslo høst</td><td>Førstegangsv.</td><td>60,5</td><td>~62 ⚠️</td><td class="treff" data-min="62">–</td></tr>
+    <tr><td>NTNU Trondheim</td><td>Førstegangsv.</td><td>61,0</td><td>~62,5 ⚠️</td><td class="treff" data-min="62.5">–</td></tr>
+    <tr><td>UiO Oslo, campus sør</td><td>Førstegangsv.</td><td>~58</td><td>~59,5 ⚠️</td><td class="treff" data-min="59.5">–</td></tr>
+  </table>
+  <p class="note">
+    Sortert fra enklest til vanskeligst. ⭐ = UiT med nordnorsk tilknytning er hans beste mulighet.
+    UiO Oslo høst og NTNU Trondheim er nasjonalt de vanskeligste å komme inn på.
+    Tips: Søk på <strong>alle</strong> campus — du kan rangere dem i prioritert rekkefølge på Samordna opptak,
+    og du beholder fortrinnet ved å takke ja til en lavere plass mens du venter på din førstevalg.
+  </p>
+</div>
+
+<script>
+const fagdata = {
+  fellesfag: [
+    { id: 'norsk-vg3-skr',  navn: 'Norsk hovedmål skriftlig',  ar: 'Vg3' },
+    { id: 'norsk-vg3-sm',   navn: 'Norsk sidemål skriftlig',   ar: 'Vg3' },
+    { id: 'norsk-vg3-mu',   navn: 'Norsk muntlig',             ar: 'Vg3' },
+    { id: 'engelsk',        navn: 'Engelsk',                   ar: 'Vg1' },
+    { id: 'matte-1t',       navn: 'Matematikk 1T',             ar: 'Vg1' },
+    { id: 'naturfag',       navn: 'Naturfag',                  ar: 'Vg1' },
+    { id: 'samf',           navn: 'Samfunnskunnskap',          ar: 'Vg1' },
+    { id: 'geografi',       navn: 'Geografi',                  ar: 'Vg2' },
+    { id: 'historie-vg3',   navn: 'Historie (Vg2+Vg3)',        ar: 'Vg3' },
+    { id: 'religion',       navn: 'Religion og etikk',         ar: 'Vg3' },
+    { id: 'spansk-vg2',     navn: 'Spansk II',                 ar: 'Vg2' },
+    { id: 'kroppsov-vg1',   navn: 'Kroppsøving',               ar: 'Vg1' },
+    { id: 'kroppsov-vg2',   navn: 'Kroppsøving',               ar: 'Vg2' },
+    { id: 'kroppsov-vg3',   navn: 'Kroppsøving',               ar: 'Vg3' },
+  ],
+  toppidrett: [
+    { id: 'toppidrett-1', navn: 'Toppidrett 1 (basket)', ar: 'Vg1' },
+    { id: 'toppidrett-2', navn: 'Toppidrett 2 (basket)', ar: 'Vg2' },
+    { id: 'toppidrett-3', navn: 'Toppidrett 3 (basket)', ar: 'Vg3' },
+  ],
+  realfag: [
+    { id: 'matte-r1',  navn: 'Matematikk R1', ar: 'Vg2', poeng: 0.5 },
+    { id: 'matte-r2',  navn: 'Matematikk R2', ar: 'Vg3', poeng: 1.0 },
+    { id: 'fysikk-1',  navn: 'Fysikk 1',      ar: 'Vg2', poeng: 0.5 },
+    { id: 'fysikk-2',  navn: 'Fysikk 2',      ar: 'Vg3', poeng: 1.0 },
+    { id: 'kjemi-1',   navn: 'Kjemi 1',       ar: 'Vg2', poeng: 0.5 },
+    { id: 'kjemi-2',   navn: 'Kjemi 2',       ar: 'Vg3', poeng: 0.5 },
+    { id: 'biologi-1', navn: 'Biologi 1',     ar: 'Vg2', poeng: 0.5 },
+    { id: 'biologi-2', navn: 'Biologi 2',     ar: 'Vg3', poeng: 0.5 },
+  ],
+};
+
+function buildTable(tableId, fag) {
+  const table = document.getElementById(tableId);
+  const harPoeng = fag[0].poeng !== undefined;
+  let html = `<tr>
+    <th>Fag</th>
+    <th>År</th>
+    <th>Standpunkt</th>
+    <th>Eksamen (valgfri)</th>
+    ${harPoeng ? '<th>Realfagspoeng</th>' : ''}
+  </tr>`;
+  for (const f of fag) {
+    html += `<tr>
+      <td>${f.navn}${f.poeng ? `<span class="realfag-tag">+${f.poeng.toString().replace('.', ',')}p</span>` : ''}</td>
+      <td>${f.ar}</td>
+      <td><input type="number" id="${f.id}-st" min="1" max="6" step="1" oninput="calculate()"></td>
+      <td><input type="number" id="${f.id}-ek" min="1" max="6" step="1" oninput="calculate()"></td>
+      ${harPoeng ? `<td class="note">${f.poeng.toString().replace('.', ',')}</td>` : ''}
+    </tr>`;
+  }
+  table.innerHTML = html;
+}
+
+buildTable('fellesfag', fagdata.fellesfag);
+buildTable('toppidrett', fagdata.toppidrett);
+buildTable('realfag', fagdata.realfag);
+
+function alleFag() {
+  return [...fagdata.fellesfag, ...fagdata.toppidrett, ...fagdata.realfag];
+}
+
+function calculate() {
+  let sum = 0, antall = 0;
+  for (const f of alleFag()) {
+    const st = parseFloat(document.getElementById(f.id + '-st')?.value);
+    const ek = parseFloat(document.getElementById(f.id + '-ek')?.value);
+    if (!isNaN(st)) { sum += st; antall++; }
+    if (!isNaN(ek)) { sum += ek; antall++; }
+  }
+  const snitt = antall > 0 ? sum / antall : 0;
+
+  let realfagspoeng = 0;
+  for (const f of fagdata.realfag) {
+    const st = parseFloat(document.getElementById(f.id + '-st')?.value);
+    if (!isNaN(st) && f.poeng) realfagspoeng += f.poeng;
+  }
+  if (realfagspoeng > 4) realfagspoeng = 4;
+
+  const kjonnspoeng = parseFloat(document.getElementById('kjonnspoeng').value) || 0;
+  const skolepoeng = snitt * 10;
+  const konkurranse = skolepoeng + realfagspoeng + kjonnspoeng;
+
+  document.getElementById('snitt').textContent = antall > 0 ? snitt.toFixed(2).replace('.', ',') : '–';
+  document.getElementById('snittDetail').textContent = antall > 0 ? `Basert på ${antall} karakterer` : 'Skriv inn karakterer';
+  document.getElementById('skolepoeng').textContent = antall > 0 ? skolepoeng.toFixed(2).replace('.', ',') : '–';
+  document.getElementById('realfagspoeng').textContent = realfagspoeng.toFixed(1).replace('.', ',');
+  document.getElementById('konkurranse').textContent = antall > 0 ? konkurranse.toFixed(2).replace('.', ',') : '–';
+
+  oppdaterTreff(antall > 0 ? konkurranse : null);
+}
+
+function oppdaterTreff(poeng) {
+  document.querySelectorAll('td.treff').forEach(td => {
+    if (poeng === null) { td.textContent = '–'; td.style.color = ''; td.style.fontWeight = ''; return; }
+    const min = parseFloat(td.dataset.min);
+    const diff = poeng - min;
+    let symbol, farge;
+    if (diff >= 1) { symbol = `✓ Inne (+${diff.toFixed(1).replace('.', ',')})`; farge = '#4ade80'; }
+    else if (diff >= -1) { symbol = `≈ Marginalt (${diff >= 0 ? '+' : ''}${diff.toFixed(1).replace('.', ',')})`; farge = '#fbbf24'; }
+    else { symbol = `✗ Mangler ${Math.abs(diff).toFixed(1).replace('.', ',')}`; farge = '#f87171'; }
+    td.textContent = symbol;
+    td.style.color = farge;
+    td.style.fontWeight = '600';
+  });
+}
+
+function clearAll() {
+  if (!confirm('Tømme alle karakterer?')) return;
+  document.querySelectorAll('input[type="number"]').forEach(i => { if (i.id !== 'kjonnspoeng') i.value = ''; });
+  calculate();
+}
+
+function saveData() {
+  const data = {};
+  document.querySelectorAll('input[type="number"]').forEach(i => { if (i.value) data[i.id] = i.value; });
+  localStorage.setItem('vitnemal-data', JSON.stringify(data));
+  alert('Lagret lokalt i nettleseren.');
+}
+
+function loadData() {
+  const raw = localStorage.getItem('vitnemal-data');
+  if (!raw) { alert('Ingen lagret data funnet.'); return; }
+  const data = JSON.parse(raw);
+  for (const [id, val] of Object.entries(data)) {
+    const el = document.getElementById(id);
+    if (el) el.value = val;
+  }
+  calculate();
+}
+
+if (localStorage.getItem('vitnemal-data')) loadData();
+calculate();
+</script>
+</body>
+</html>
