@@ -409,7 +409,14 @@
     if (onResultat) onResultat(Math.max(0, Math.round(score)));
   }
 
+  function erSkrivefelt(el) {
+    if (!el) return false;
+    const t = (el.tagName || '').toUpperCase();
+    return t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || el.isContentEditable;
+  }
+
   function handterKeydown(e) {
+    if (erSkrivefelt(e.target)) return;
     const k = e.key;
     if (k === 'ArrowLeft' || k === 'a' || k === 'A') { taster.venstre = true; e.preventDefault(); }
     if (k === 'ArrowRight' || k === 'd' || k === 'D') { taster.hoyre = true; e.preventDefault(); }
@@ -418,6 +425,7 @@
   }
 
   function handterKeyup(e) {
+    if (erSkrivefelt(e.target)) return;
     const k = e.key;
     if (k === 'ArrowLeft' || k === 'a' || k === 'A') { taster.venstre = false; e.preventDefault(); }
     if (k === 'ArrowRight' || k === 'd' || k === 'D') { taster.hoyre = false; e.preventDefault(); }

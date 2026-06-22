@@ -55,7 +55,14 @@
       }
     }
     knapp.addEventListener('click', provLogin);
-    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') provLogin(); });
+    input.addEventListener('keydown', function (e) {
+      e.stopPropagation();
+      if (e.key === 'Enter') provLogin();
+    });
+    // hindre at globale tastatur-handlere i appen sluker tegn (f.eks. spillkontroller)
+    ['keypress', 'keyup'].forEach(function (evt) {
+      input.addEventListener(evt, function (e) { e.stopPropagation(); });
+    });
     input.focus();
   }
 
