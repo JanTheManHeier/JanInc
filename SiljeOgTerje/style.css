@@ -1562,6 +1562,12 @@ html[data-theme="light"] body {
   border-color: rgba(var(--gold-border-rgb),0.5);
   color: var(--gold-deep);
 }
+html[data-theme="light"][data-nav="waffel"] .meny-knapp {
+  background: rgba(255,250,240,0.95);
+  border-color: rgba(var(--gold-border-rgb),0.35);
+  color: var(--gold-deep);
+  box-shadow: 0 2px 10px rgba(var(--surface-rgb),0.12);
+}
 
 /* Tema-toggle på lyst tema */
 [data-theme="light"] .tema-toggle {
@@ -1631,3 +1637,65 @@ html[data-theme="light"] body {
 .stil-navn { font-size: 13px; font-weight: bold; color: var(--gold); }
 .stil-undertekst { font-size: 11px; color: var(--text-soft2); margin-top: 2px; }
 .stil-kort.valgt .stil-navn::after { content: " ✓"; color: var(--gold-2); }
+.meny-ikon-prove { font-size: 26px; line-height: 1; margin-bottom: 8px; height: 26px; }
+
+/* === Meny-plassering (testbar via velger på forsiden) === */
+.meny-knapp, .meny-scrim { display: none; }
+
+/* TOPP: fast menylinje øverst, horisontalt rullbar */
+html[data-nav="topp"] body { padding-top: 88px; padding-bottom: 40px; }
+html[data-nav="topp"] .nav {
+  top: 0; bottom: auto;
+  border-top: none;
+  border-bottom: 1px solid rgba(var(--gold-rgb),0.2);
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow-x: auto;
+  padding: 8px 10px;
+  scrollbar-width: none;
+}
+html[data-nav="topp"] .nav::-webkit-scrollbar { height: 0; }
+html[data-nav="topp"] .nav-btn { flex: 0 0 auto; min-width: 56px; }
+html[data-nav="topp"] .nav-icon { font-size: 20px; }
+html[data-nav="topp"] .nav-label { font-size: 11px; }
+
+/* WAFFEL: hamburger-knapp åpner skuff fra høyre */
+html[data-nav="waffel"] body { padding-bottom: 40px; }
+html[data-nav="waffel"] .meny-knapp {
+  display: flex; align-items: center; justify-content: center;
+  position: fixed; top: 12px; left: 12px; z-index: 65;
+  width: 44px; height: 44px;
+  background: rgba(var(--bg-rgb),0.92);
+  border: 1px solid rgba(var(--gold-rgb),0.3);
+  border-radius: 12px;
+  color: var(--gold); font-size: 22px; line-height: 1;
+  cursor: pointer; backdrop-filter: blur(10px);
+}
+html[data-nav="waffel"] .nav {
+  top: 0; bottom: 0; left: auto; right: 0;
+  transform: translateX(100%);
+  width: 268px; max-width: 80vw;
+  flex-direction: column; flex-wrap: nowrap;
+  justify-content: flex-start; align-content: flex-start;
+  gap: 4px;
+  border-top: none;
+  border-left: 1px solid rgba(var(--gold-rgb),0.2);
+  padding: 64px 12px 24px;
+  overflow-y: auto;
+  z-index: 60;
+  transition: transform .25s ease;
+}
+html[data-nav="waffel"].meny-apen .nav { transform: translateX(0); }
+html[data-nav="waffel"] .nav-btn {
+  flex: 0 0 auto; flex-direction: row;
+  justify-content: flex-start; gap: 14px;
+  width: 100%; padding: 12px 14px;
+}
+html[data-nav="waffel"] .nav-icon { font-size: 22px; }
+html[data-nav="waffel"] .nav-label { font-size: 15px; }
+html[data-nav="waffel"] .meny-scrim {
+  display: block; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45); z-index: 55;
+  opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+html[data-nav="waffel"].meny-apen .meny-scrim { opacity: 1; pointer-events: auto; }

@@ -8,11 +8,19 @@
   document.documentElement.setAttribute('data-theme', tema);
 })();
 
+// === Meny-plassering-init: settes umiddelbart for å unngå flash ===
+(function menyInit() {
+  const KEY = 'siljeterje-meny';
+  const plassering = localStorage.getItem(KEY) || 'bunn';
+  document.documentElement.setAttribute('data-nav', plassering);
+})();
+
 (function () {
   const STORAGE_NAVN = 'siljeterje-navn';
   const STORAGE_BILDER = 'siljeterje-bilder';
   const STORAGE_HILSEN_LOKAL = 'siljeterje-hilsener-lokal';
   const STORAGE_TEMA = 'siljeterje-tema';
+  const STORAGE_MENY = 'siljeterje-meny';
   const API_BASE = '/api';
 
   let mittNavn = localStorage.getItem(STORAGE_NAVN) || '';
@@ -35,6 +43,7 @@
     initNavnPille();
     initNavnModal();
     initTema();
+    initMeny();
     initNavigasjon();
     // Init kjøres umiddelbart — DB-avhengige kall venter ikke på SQL-vekking
     initHjem();
@@ -238,7 +247,7 @@
   }
   function oppdaterStilvelger() {
     const naa = gjeldendeTema();
-    document.querySelectorAll('.stil-kort').forEach(k => {
+    document.querySelectorAll('.stil-kort[data-stil]').forEach(k => {
       k.classList.toggle('valgt', k.dataset.stil === naa);
     });
   }
@@ -258,7 +267,7 @@
       btn.onclick = () => settTema(gjeldendeTema() === 'light' ? 'dark' : 'light');
     }
 
-    document.querySelectorAll('.stil-kort').forEach(kort => {
+    document.querySelectorAll('.stil-kort[data-stil]').forEach(kort => {
       const velg = () => settTema(kort.dataset.stil);
       kort.addEventListener('click', velg);
       kort.addEventListener('keydown', e => {
@@ -278,6 +287,50 @@
         }
       };
     }
+  }
+
+  // ============ Meny-plassering ============
+  function gjeldendeMeny() {
+    return document.documentElement.getAttribute('data-nav') || 'bunn';
+  }
+  function lukkMeny() {
+    document.documentElement.classList.remove('meny-apen');
+  }
+  function oppdaterMenyvelger() {
+    const naa = gjeldendeMeny();
+    document.querySelectorAll('.stil-kort[data-meny]').forEach(k => {
+      k.classList.toggle('valgt', k.dataset.meny === naa);
+    });
+  }
+  function settMeny(plassering) {
+    document.documentElement.setAttribute('data-nav', plassering);
+    document.documentElement.classList.remove('meny-apen');
+    try { localStorage.setItem(STORAGE_MENY, plassering); } catch (_) {}
+    oppdaterMenyvelger();
+  }
+  function initMeny() {
+    oppdaterMenyvelger();
+
+    document.querySelectorAll('.stil-kort[data-meny]').forEach(kort => {
+      const velg = () => settMeny(kort.dataset.meny);
+      kort.addEventListener('click', velg);
+      kort.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); velg(); }
+      });
+    });
+
+    const knapp = document.getElementById('meny-knapp');
+    if (knapp) {
+      knapp.addEventListener('click', () => {
+        document.documentElement.classList.toggle('meny-apen');
+      });
+    }
+    const scrim = document.getElementById('meny-scrim');
+    if (scrim) scrim.addEventListener('click', lukkMeny);
+    // Lukk skuffen når man velger en side (waffel-modus)
+    document.querySelectorAll('.nav-btn').forEach(b => {
+      b.addEventListener('click', lukkMeny);
+    });
   }
 
   // ============ Navigasjon ============
