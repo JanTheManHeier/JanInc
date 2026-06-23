@@ -341,6 +341,7 @@ function ta(label, id, val, ph) {
 function programRad(p) {
   p = p || {};
   return `<div class="rad-kort program-rad"><div class="rad-grid">
+    <div class="felt"><label>Dag / dato <span class="muted" style="font-weight:normal">(valgfritt)</span></label><input data-k="dag" value="${esc(p.dag||'')}" placeholder="Fredag 21. august"></div>
     <div class="felt"><label>Klokkeslett</label><input data-k="tid" value="${esc(p.tid||'')}" placeholder="13:00"></div>
     <div class="felt"><label>Tittel</label><input data-k="tittel" value="${esc(p.tittel||'')}" placeholder="Vielse"></div>
     <div class="felt"><label>Sted</label><input data-k="sted" value="${esc(p.sted||'')}" placeholder="Elverhøy kirke"></div>
@@ -637,23 +638,41 @@ async function lastRSVP() {
       + '<th class="sortable" data-type="text">Kommer</th>'
       + '<th class="sortable" data-type="text">Fredag</th>'
       + '<th class="sortable" data-type="num">Antall</th>'
+      + '<th class="sortable" data-type="text">Følge</th>'
       + '<th class="sortable" data-type="text">Allergier / mat</th>'
       + '<th class="sortable" data-type="text">Hilsen</th>'
       + '<th class="sortable" data-type="date">Svart</th>'
+      + '<th>Handling</th>'
       + '</tr></thead><tbody>';
     h += rows.map(r => `<tr>
       <td><strong>${esc(r.navn)}</strong></td>
       <td>${r.kommer ? '✅ Ja' : '❌ Nei'}</td>
       <td>${!r.kommer ? '<span class="muted">—</span>' : (r.fredag ? '🍕 Ja' : 'Nei')}</td>
       <td>${r.kommer ? (r.antall || 1) : '<span class="muted">—</span>'}</td>
+      <td class="tekst">${r.ledsagere ? esc(r.ledsagere).replace(/\n/g, '<br>') : '<span class="muted">—</span>'}</td>
       <td class="tekst">${esc(r.allergier || '')}</td>
       <td class="tekst">${esc(r.kommentar || '')}</td>
       <td class="muted" data-sort="${r.oppdatert || ''}">${dt(r.oppdatert)}</td>
+      <td><button class="danger tiny" onclick="slettRSVP('${esc(r.slug)}', '${esc(r.navn).replace(/'/g, '&#39;')}')">🗑️ Slett</button></td>
     </tr>`).join('');
     h += '</tbody></table>';
     v.innerHTML = h;
   } catch (e) {
     v.innerHTML = '<div class="err">Kunne ikke hente RSVP: ' + esc(e.message || e) + '</div>';
+  }
+}
+
+async function slettRSVP(slug, navn) {
+  if (!adminKey) settAdminKey();
+  if (!adminKey) return;
+  if (!confirm('Slette RSVP-svaret til ' + navn + '?\n\nDette kan ikke angres.')) return;
+  try {
+    const res = await fetch('/api/siljeterje-rsvp?slug=' + encodeURIComponent(slug) + '&key=' + encodeURIComponent(adminKey), { method: 'DELETE' });
+    if (res.status === 401) { alert('Feil admin-nøkkel'); sessionStorage.removeItem('siljeterje-admin-key'); adminKey = ''; return; }
+    if (!res.ok) throw new Error('status ' + res.status);
+    await lastRSVP();
+  } catch (e) {
+    alert('Kunne ikke slette: ' + (e.message || e));
   }
 }
 

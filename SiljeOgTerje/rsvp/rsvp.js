@@ -59,6 +59,13 @@
     inp.addEventListener('change', () => oppdaterValg('valg-fredag'));
   });
 
+  // Vis navnefelt for ledsager(e) når antall > 1
+  function oppdaterLedsager() {
+    const n = parseInt($('antall').value, 10) || 1;
+    $('ledsager-felt').classList.toggle('skjult', n <= 1);
+  }
+  $('antall').addEventListener('input', oppdaterLedsager);
+
   function visSkjema(g) {
     aktivGjest = g;
     velgKort.classList.add('skjult');
@@ -88,6 +95,8 @@
     if (s.fredag === true) settRadio('fredag', 'ja');
     else if (s.fredag === false) settRadio('fredag', 'nei');
     if (s.antall) $('antall').value = s.antall;
+    $('ledsagere').value = s.ledsagere || '';
+    oppdaterLedsager();
     $('allergier').value = s.allergier || '';
     $('kommentar').value = s.kommentar || '';
     $('lagre-btn').textContent = 'Oppdater svaret mitt';
@@ -105,13 +114,24 @@
     if (!kommerInp) { status.textContent = 'Velg om du kommer eller ikke 🙂'; status.className = 'status feil'; return; }
     const kommer = kommerInp.value === 'ja';
     const fredagInp = document.querySelector('input[name="fredag"]:checked');
+    const antall = kommer ? parseInt($('antall').value, 10) || 1 : 0;
+    const ledsagere = kommer ? $('ledsagere').value.trim() : '';
+
+    if (kommer && antall > 1 && !ledsagere) {
+      status.textContent = 'Skriv inn navnet på den/de du har med deg 🙂';
+      status.className = 'status feil';
+      $('ledsager-felt').classList.remove('skjult');
+      $('ledsagere').focus();
+      return;
+    }
 
     const body = {
       slug: gjestSlug(aktivGjest),
       navn: aktivGjest.navn,
       kommer: kommer,
       fredag: kommer && fredagInp ? fredagInp.value === 'ja' : false,
-      antall: kommer ? parseInt($('antall').value, 10) || 1 : 0,
+      antall: antall,
+      ledsagere: ledsagere,
       allergier: kommer ? $('allergier').value.trim() : '',
       kommentar: $('kommentar').value.trim(),
     };
@@ -147,6 +167,7 @@
       rader.push(`<div>🥂 <strong>Kommer i bryllupet:</strong> Ja</div>`);
       rader.push(`<div>🍕 <strong>Mingling fredag:</strong> ${body.fredag ? 'Ja' : 'Nei'}</div>`);
       rader.push(`<div>👥 <strong>Antall personer:</strong> ${body.antall}</div>`);
+      if (body.ledsagere) rader.push(`<div>🧑‍🤝‍🧑 <strong>Med deg:</strong> ${esc(body.ledsagere).replace(/\n/g, ', ')}</div>`);
       if (body.allergier) rader.push(`<div>🌿 <strong>Allergier/preferanser:</strong> ${esc(body.allergier)}</div>`);
       $('takk-oppsummering').innerHTML = rader.join('');
     } else {

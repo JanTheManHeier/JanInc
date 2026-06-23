@@ -2,10 +2,11 @@
 // om de kommer på minglingen fredag, antall personer, allergier/matpreferanser
 // og en valgfri hilsen. Hver gjest identifiseres med en stabil "slug".
 //
-//   GET  ?slug=<slug>          -> { svar: {...} | null }  (gjestens eget svar, til personlig lenke)
-//   GET  ?all=1&key=ADMIN_KEY  -> { svar: [...], sammendrag: {...} }  (kun admin)
-//   POST { slug, navn, kommer, fredag, antall, allergier, kommentar }
-//                              -> upsert (krever IKKE admin-key, gjestene svarer selv)
+//   GET    ?slug=<slug>          -> { svar: {...} | null }  (gjestens eget svar, til personlig lenke)
+//   GET    ?all=1&key=ADMIN_KEY  -> { svar: [...], sammendrag: {...} }  (kun admin)
+//   POST   { slug, navn, kommer, fredag, antall, ledsagere, allergier, kommentar }
+//                                -> upsert (krever IKKE admin-key, gjestene svarer selv)
+//   DELETE ?slug=<slug>&key=ADMIN_KEY -> sletter ett svar (kun admin)
 //
 // Personvern: GET uten admin-nøkkel returnerer kun ÉN gjests eget svar (via slug),
 // så hele RSVP-oversikten er kun synlig for brudeparet i admin.
@@ -19,10 +20,16 @@ CREATE TABLE SiljeTerje_RSVP (
     kommer BIT NOT NULL,
     fredag BIT NULL,
     antall INT NOT NULL DEFAULT 1,
+    ledsagere NVARCHAR(2000) NULL,
     allergier NVARCHAR(2000) NULL,
     kommentar NVARCHAR(2000) NULL,
     oppdatert DATETIME2 DEFAULT GETDATE()
 );`;
+
+// Legg til ledsagere-kolonnen for tabeller som ble laget før den fantes.
+const ENSURE_COLUMN_SQL = `
+IF COL_LENGTH('SiljeTerje_RSVP', 'ledsagere') IS NULL
+    ALTER TABLE SiljeTerje_RSVP ADD ledsagere NVARCHAR(2000) NULL;`;
 
 function reinSlug(s) {
     return String(s || '').toLowerCase().trim().replace(/[^a-z0-9\-]/g, '').slice(0, 80);
@@ -34,6 +41,7 @@ module.exports = async function (context, req) {
     try {
         connection = await getConnection();
         await executeQuery(connection, ENSURE_TABLE_SQL);
+        await executeQuery(connection, ENSURE_COLUMN_SQL);
 
         if (req.method === 'GET') {
             if (req.query.all) {
@@ -43,13 +51,14 @@ module.exports = async function (context, req) {
                     return;
                 }
                 const rows = await executeQuery(connection,
-                    'SELECT slug, navn, kommer, fredag, antall, allergier, kommentar, oppdatert FROM SiljeTerje_RSVP ORDER BY navn');
+                    'SELECT slug, navn, kommer, fredag, antall, ledsagere, allergier, kommentar, oppdatert FROM SiljeTerje_RSVP ORDER BY navn');
                 const svar = rows.map(r => ({
                     slug: r.slug,
                     navn: r.navn,
                     kommer: !!r.kommer,
                     fredag: r.fredag == null ? null : !!r.fredag,
                     antall: r.antall,
+                    ledsagere: r.ledsagere || '',
                     allergier: r.allergier || '',
                     kommentar: r.kommentar || '',
                     oppdatert: r.oppdatert,
@@ -71,7 +80,7 @@ module.exports = async function (context, req) {
                 return;
             }
             const rows = await executeQuery(connection,
-                'SELECT slug, navn, kommer, fredag, antall, allergier, kommentar, oppdatert FROM SiljeTerje_RSVP WHERE slug = @slug',
+                'SELECT slug, navn, kommer, fredag, antall, ledsagere, allergier, kommentar, oppdatert FROM SiljeTerje_RSVP WHERE slug = @slug',
                 [{ name: 'slug', type: TYPES.NVarChar, value: slug }]);
             if (!rows || !rows.length) {
                 context.res = { status: 200, headers, body: { svar: null } };
@@ -83,7 +92,7 @@ module.exports = async function (context, req) {
                     svar: {
                         slug: r.slug, navn: r.navn, kommer: !!r.kommer,
                         fredag: r.fredag == null ? null : !!r.fredag,
-                        antall: r.antall, allergier: r.allergier || '',
+                        antall: r.antall, ledsagere: r.ledsagere || '', allergier: r.allergier || '',
                         kommentar: r.kommentar || '', oppdatert: r.oppdatert,
                     }
                 }
@@ -108,6 +117,7 @@ module.exports = async function (context, req) {
             if (isNaN(antall) || antall < 0) antall = 1;
             if (antall > 20) antall = 20;
             if (!kommer) antall = 0;
+            const ledsagere = kommer ? String(body.ledsagere || '').slice(0, 2000) : '';
             const allergier = String(body.allergier || '').slice(0, 2000);
             const kommentar = String(body.kommentar || '').slice(0, 2000);
 
@@ -116,18 +126,36 @@ module.exports = async function (context, req) {
                  USING (SELECT @slug AS slug) AS s ON t.slug = s.slug
                  WHEN MATCHED THEN UPDATE SET
                      navn = @navn, kommer = @kommer, fredag = @fredag, antall = @antall,
-                     allergier = @allergier, kommentar = @kommentar, oppdatert = GETDATE()
-                 WHEN NOT MATCHED THEN INSERT (slug, navn, kommer, fredag, antall, allergier, kommentar)
-                     VALUES (@slug, @navn, @kommer, @fredag, @antall, @allergier, @kommentar);`,
+                     ledsagere = @ledsagere, allergier = @allergier, kommentar = @kommentar, oppdatert = GETDATE()
+                 WHEN NOT MATCHED THEN INSERT (slug, navn, kommer, fredag, antall, ledsagere, allergier, kommentar)
+                     VALUES (@slug, @navn, @kommer, @fredag, @antall, @ledsagere, @allergier, @kommentar);`,
                 [
                     { name: 'slug', type: TYPES.NVarChar, value: slug },
                     { name: 'navn', type: TYPES.NVarChar, value: navn },
                     { name: 'kommer', type: TYPES.Bit, value: kommer },
                     { name: 'fredag', type: TYPES.Bit, value: fredag },
                     { name: 'antall', type: TYPES.Int, value: antall },
+                    { name: 'ledsagere', type: TYPES.NVarChar, value: ledsagere },
                     { name: 'allergier', type: TYPES.NVarChar, value: allergier },
                     { name: 'kommentar', type: TYPES.NVarChar, value: kommentar },
                 ]);
+            context.res = { status: 200, headers, body: { success: true } };
+            return;
+        }
+
+        if (req.method === 'DELETE') {
+            const adminKey = process.env.ADMIN_KEY;
+            if (!adminKey || req.query.key !== adminKey) {
+                context.res = { status: 401, headers, body: { error: 'Ugyldig admin-key' } };
+                return;
+            }
+            const slug = reinSlug(req.query.slug);
+            if (!slug) {
+                context.res = { status: 400, headers, body: { error: 'slug påkrevd' } };
+                return;
+            }
+            await executeQuery(connection, 'DELETE FROM SiljeTerje_RSVP WHERE slug = @slug',
+                [{ name: 'slug', type: TYPES.NVarChar, value: slug }]);
             context.res = { status: 200, headers, body: { success: true } };
             return;
         }
