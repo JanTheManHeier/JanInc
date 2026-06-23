@@ -128,8 +128,12 @@ const SPILL_QUIZ = [
   { spm: "Hvor jobber Terje?", valg: ["SpareBank 1 Nord-Norge", "GC Rieber", "Bravida", "SmartDok"], svar: 0, fasit: "SpareBank 1 Nord-Norge. 🏦" },
   { spm: "Hvor mange forlovere har Terje?", valg: ["1", "2", "3", "4"], svar: 2, fasit: "Tre! Vegard, Mikal og Ole. 🤵" },
   { spm: "Hvilken dato er bryllupet?", valg: ["22. juli 2026", "22. august 2026", "12. august 2026", "2. august 2026"], svar: 1, fasit: "22. august 2026 – en dag å huske! 💍" },
-  { spm: "Hvem fridde til hvem?", valg: ["Terje fridde", "Silje fridde", "Samtidig", "Det er en hemmelighet"], svar: null, fasit: "Spør brudeparet rundt bordet – noen vet sikkert historien! 💕" },
+  { spm: "Hvem fridde til hvem?", valg: ["Terje fridde", "Silje fridde", "Samtidig", "Det er en hemmelighet"], svar: 0, fasit: "Terje fridde – på Siljes bursdag, ved gapahuken! 💍" },
   { spm: "Hvor reiser brudeparet på bryllupsreise?", valg: ["Syden", "Nordlys-safari", "Storbyferie", "Det er hemmelig"], svar: null, fasit: "Diskuter rundt bordet – kanskje de avslører det i talen!" },
+  { spm: "Hvem av brudeparet kommer oftest for sent?", valg: ["Silje", "Terje", "Begge", "Ingen vil innrømme det"], svar: 0, fasit: "Ifølge Terje: Silje! ⏰" },
+  { spm: "Hvem er mest impulsiv?", valg: ["Silje", "Terje", "Begge", "Umulig å si"], svar: 1, fasit: "Terje – ifølge ham selv! 🎲" },
+  { spm: "Hvem lager oftest middag?", valg: ["Silje", "Terje", "De deler likt", "Take-away"], svar: 0, fasit: "Silje står for mest matlaging. 🍳" },
+  { spm: "Hvem vinner som regel en diskusjon?", valg: ["Silje", "Terje", "Uavgjort", "Katten"], svar: 0, fasit: "Silje – ingen overraskelse der! 😄" },
 ];
 
 // Åpne diskusjonsspørsmål for bordet (uten fasit)
