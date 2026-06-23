@@ -295,6 +295,8 @@
   }
   function lukkMeny() {
     document.documentElement.classList.remove('meny-apen');
+    const knapp = document.getElementById('meny-knapp');
+    if (knapp) { knapp.textContent = '☰'; knapp.setAttribute('aria-label', 'Åpne meny'); }
   }
   function oppdaterMenyvelger() {
     const naa = gjeldendeMeny();
@@ -322,15 +324,27 @@
     const knapp = document.getElementById('meny-knapp');
     if (knapp) {
       knapp.addEventListener('click', () => {
-        document.documentElement.classList.toggle('meny-apen');
+        const aapen = document.documentElement.classList.toggle('meny-apen');
+        knapp.textContent = aapen ? '✕' : '☰';
+        knapp.setAttribute('aria-label', aapen ? 'Lukk meny' : 'Åpne meny');
       });
     }
     const scrim = document.getElementById('meny-scrim');
-    if (scrim) scrim.addEventListener('click', lukkMeny);
-    // Lukk skuffen når man velger en side (waffel-modus)
-    document.querySelectorAll('.nav-btn').forEach(b => {
-      b.addEventListener('click', lukkMeny);
+    if (scrim) scrim.addEventListener('click', () => { lukkMeny(); if (knapp) knapp.textContent = '☰'; });
+
+    // Samle-knapper i bunnmenyen åpner en liten popover med undersidene
+    document.querySelectorAll('.nav-group-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const grp = btn.closest('.nav-group');
+        const aapen = grp.classList.contains('apen');
+        lukkPopovere(grp);
+        grp.classList.toggle('apen', !aapen);
+        btn.setAttribute('aria-expanded', String(!aapen));
+      });
     });
+    // Klikk utenfor lukker åpne popovere
+    document.addEventListener('click', () => lukkPopovere(null));
   }
 
   // ============ Navigasjon ============
@@ -348,13 +362,34 @@
     bestevenn: 'spill',
     meny: 'program',
   };
+  // Hovedsider som ligger under en samle-knapp i bunnmenyen
+  const SLOT_GROUP = {
+    hilsener: 'bidra', minnebok: 'bidra', gave: 'bidra',
+    sang: 'mer', spill: 'mer', hjelp: 'mer',
+  };
+
+  function lukkPopovere(unntak) {
+    document.querySelectorAll('.nav-group.apen').forEach(g => {
+      if (g !== unntak) {
+        g.classList.remove('apen');
+        const b = g.querySelector('.nav-group-btn');
+        if (b) b.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 
   function visSide(id) {
     aktivSide = id;
     document.querySelectorAll('.page').forEach(p => p.hidden = (p.dataset.page !== id));
     const navParent = NAV_GROUP[id] || id;
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.go === navParent));
+    const grp = SLOT_GROUP[navParent];
+    document.querySelectorAll('.nav-btn[data-go]').forEach(b => b.classList.toggle('active', !grp && b.dataset.go === navParent));
+    document.querySelectorAll('.nav-group-btn').forEach(b => b.classList.toggle('active', grp && b.dataset.group === grp));
+    document.querySelectorAll('.nav-pop-item').forEach(b => b.classList.toggle('active', b.dataset.go === navParent));
     document.querySelectorAll('.sub-tab').forEach(t => t.classList.toggle('active', t.dataset.go === id));
+    // Lukk skuff/popover etter navigering
+    lukkMeny();
+    lukkPopovere(null);
     window.scrollTo(0, 0);
     if (id === 'program') setTimeout(initMap, 100);
     if (id === 'hilsener') lastHilsener();

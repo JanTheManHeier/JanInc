@@ -593,12 +593,22 @@
   <button class="nav-btn active" data-go="hjem"><span class="nav-icon">💍</span><span class="nav-label">Hjem</span></button>
   <button class="nav-btn" data-go="program"><span class="nav-icon">📍</span><span class="nav-label">Program</span></button>
   <button class="nav-btn" data-go="gjester"><span class="nav-icon">👥</span><span class="nav-label">Gjester</span></button>
-  <button class="nav-btn" data-go="hilsener"><span class="nav-icon">💌</span><span class="nav-label">Bidra</span></button>
-  <button class="nav-btn" data-go="sang"><span class="nav-icon">🎵</span><span class="nav-label">Sang</span></button>
-  <button class="nav-btn" data-go="gave"><span class="nav-icon">🎁</span><span class="nav-label">Gave</span></button>
-  <button class="nav-btn" data-go="spill"><span class="nav-icon">🫧</span><span class="nav-label">Moro</span></button>
-  <button class="nav-btn" data-go="minnebok"><span class="nav-icon">📸</span><span class="nav-label">Minner</span></button>
-  <button class="nav-btn" data-go="hjelp"><span class="nav-icon">❓</span><span class="nav-label">Hjelp</span></button>
+  <div class="nav-group">
+    <button class="nav-btn nav-group-btn" data-group="bidra" aria-haspopup="true" aria-expanded="false"><span class="nav-icon">💝</span><span class="nav-label">Bidra</span></button>
+    <div class="nav-popover" id="pop-bidra">
+      <button class="nav-pop-item" data-go="hilsener"><span class="nav-pop-ikon">💌</span> Hilsen</button>
+      <button class="nav-pop-item" data-go="minnebok"><span class="nav-pop-ikon">📸</span> Minner</button>
+      <button class="nav-pop-item" data-go="gave"><span class="nav-pop-ikon">🎁</span> Gave</button>
+    </div>
+  </div>
+  <div class="nav-group">
+    <button class="nav-btn nav-group-btn" data-group="mer" aria-haspopup="true" aria-expanded="false"><span class="nav-icon">✨</span><span class="nav-label">Mer</span></button>
+    <div class="nav-popover" id="pop-mer">
+      <button class="nav-pop-item" data-go="sang"><span class="nav-pop-ikon">🎵</span> Sang</button>
+      <button class="nav-pop-item" data-go="spill"><span class="nav-pop-ikon">🫧</span> Moro</button>
+      <button class="nav-pop-item" data-go="hjelp"><span class="nav-pop-ikon">❓</span> Hjelp</button>
+    </div>
+  </div>
 </nav>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
