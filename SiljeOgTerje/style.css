@@ -1,6 +1,7 @@
 /* Silje & Terje — bryllupsapp styling
    Fargetema styres av CSS-variabler + data-theme på <html>.
-   Tre valgbare stiler: champagne (lys), marine (mørk), smaragd (mørk grønn). */
+   Tre valgbare lyse stiler: champagne, salvie (grønn), støvblå (blå).
+   Mørkt tema (marine) er fortsatt tilgjengelig via tema-toggle. */
 
 /* === Fargetokens (standard = marineblå mørk) === */
 :root {
@@ -39,6 +40,27 @@
   --muted3: #5C7468;
   --accent: #4FA388;        --accent-rgb: 79,163,136;
   --accent-2: #9AD8C2;      --accent2-rgb: 154,216,194;
+}
+
+/* === Stil «Salvie & krem» (lys salviegrønn) ===
+   Lyst tema — arver hele lys-blokken, kun aksent + bakgrunn endres. */
+[data-theme="salvie"] {
+  --gold: #6E8E6A;          --gold-rgb: 110,142,106;
+  --gold-2: #8FAE88;
+  --gold-deep: #3F5C3C;
+  --gold-border: #7E9E78;   --gold-border-rgb: 126,158,120;
+  --accent: #9C7C5A;        --accent-rgb: 156,124,90;
+  --accent-2: #C2A98E;      --accent2-rgb: 194,169,142;
+}
+
+/* === Stil «Støvblå & sølv» (lys støvblå) === */
+[data-theme="stovbla"] {
+  --gold: #5E80A0;          --gold-rgb: 94,128,160;
+  --gold-2: #85A3C0;
+  --gold-deep: #34506E;
+  --gold-border: #7090AE;   --gold-border-rgb: 112,144,174;
+  --accent: #9A7E96;        --accent-rgb: 154,126,150;
+  --accent-2: #C0A6BE;      --accent2-rgb: 192,166,190;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -1082,8 +1104,8 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .meny-link:hover { color: #FFE9A8; text-decoration-color: var(--gold-2); }
 .meny-link:visited { color: var(--gold); }
-[data-theme="light"] .meny-link { color: var(--gold-deep); text-decoration-color: rgba(138,100,32,0.5); }
-[data-theme="light"] .meny-link:hover { color: #5C4416; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-link { color: var(--gold-deep); text-decoration-color: rgba(138,100,32,0.5); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-link:hover { color: #5C4416; }
 
 /* QR-kode */
 .qr-seksjon { padding: 24px 16px; }
@@ -1202,367 +1224,367 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 
 /* =============================================================
    LYST TEMA — varm crème palett, mørk navy tekst, bevarte gull-aksenter
-   Aktiveres via [data-theme="light"] på <html>
+   Aktiveres via :is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) på <html>
    ============================================================= */
-[data-theme="light"] {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) {
   color-scheme: light;
 }
-[data-theme="light"] html,
-html[data-theme="light"],
-html[data-theme="light"] body {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) html,
+html:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]),
+html:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) body {
   background: #FAF6EE;
   color: var(--surface);
 }
-[data-theme="light"] body { background: #FAF6EE; color: var(--surface); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) body { background: #FAF6EE; color: var(--surface); }
 
 /* Tekst-baseklasser */
-[data-theme="light"] .muted { color: var(--muted3); }
-[data-theme="light"] .lead { color: var(--surface-2); }
-[data-theme="light"] input::placeholder,
-[data-theme="light"] textarea::placeholder { color: #A8B4C2; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .muted { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .lead { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) input::placeholder,
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) textarea::placeholder { color: #A8B4C2; }
 
 /* HERO — varmt morgenlys, daggry på Tromsøya */
-[data-theme="light"] .hero-bg {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-bg {
   background: linear-gradient(135deg, #FFF4E0 0%, #FFE0C8 30%, #F8D8E8 60%, #E8DCFF 100%);
 }
 @keyframes nordlys-lys {
   0% { filter: hue-rotate(0deg) brightness(1); }
   100% { filter: hue-rotate(-12deg) brightness(1.05); }
 }
-[data-theme="light"] .hero-bg { animation: nordlys-lys 18s ease-in-out infinite alternate; }
-[data-theme="light"] .hero-photo {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-bg { animation: nordlys-lys 18s ease-in-out infinite alternate; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-photo {
   border-color: var(--gold-border);
   box-shadow: 0 8px 28px rgba(var(--gold-border-rgb),0.35);
 }
-[data-theme="light"] .age-bubble {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .age-bubble {
   background: linear-gradient(135deg, var(--gold-border), var(--gold));
   color: #FFF8EC;
   box-shadow: 0 4px 18px rgba(var(--gold-border-rgb),0.45);
 }
-[data-theme="light"] .hero-name {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-name {
   color: var(--gold-deep);
   text-shadow: 0 2px 14px rgba(var(--gold-border-rgb),0.25);
 }
-[data-theme="light"] .hero-nick { color: var(--accent); }
-[data-theme="light"] .hero-date { color: var(--gold-deep); }
-[data-theme="light"] .hero-sub { color: var(--surface-2); }
-[data-theme="light"] .countdown {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-nick { color: var(--accent); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-date { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-sub { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .countdown {
   background: rgba(var(--gold-border-rgb),0.12);
   border-color: rgba(var(--gold-border-rgb),0.35);
   color: var(--surface);
 }
 
 /* Mini-kort */
-[data-theme="light"] .mini-card {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .mini-card {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.25);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.06);
   color: var(--surface);
 }
-[data-theme="light"] .mini-title { color: var(--gold-deep); }
-[data-theme="light"] .mini-sub { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .mini-title { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .mini-sub { color: var(--muted3); }
 
 /* Sections / titler */
-[data-theme="light"] .section-title { color: var(--gold-deep); }
-[data-theme="light"] .page-title { color: var(--surface); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .section-title { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .page-title { color: var(--surface); }
 
 /* Om / karriere */
-[data-theme="light"] .om-card {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .om-card {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.2);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-[data-theme="light"] .karriere-item {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item {
   background: #FFFAF0;
   border-color: rgba(var(--gold-border-rgb),0.15);
 }
-[data-theme="light"] .karriere-item .tittel { color: var(--surface); }
-[data-theme="light"] .karriere-item .selskap { color: var(--muted3); }
-[data-theme="light"] .karriere-item .periode { color: #8995A4; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item .tittel { color: var(--surface); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item .selskap { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item .periode { color: #8995A4; }
 
 /* Knapper */
-[data-theme="light"] .btn-primary {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-primary {
   background: linear-gradient(135deg, var(--gold), var(--gold-border));
   color: var(--surface);
   box-shadow: 0 2px 10px rgba(var(--gold-border-rgb),0.3);
 }
-[data-theme="light"] .btn-secondary {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-secondary {
   background: #FFFFFF;
   color: var(--surface);
   border: 1px solid rgba(var(--surface-rgb),0.18);
   box-shadow: 0 2px 6px rgba(var(--surface-rgb),0.06);
 }
-[data-theme="light"] .btn-link { color: var(--muted3); }
-[data-theme="light"] .btn-link-box {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-link { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-link-box {
   background: rgba(var(--gold-border-rgb),0.1);
   border-color: rgba(var(--gold-border-rgb),0.4);
   color: var(--gold-deep);
 }
 
 /* Program */
-[data-theme="light"] .program-kort {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .program-kort {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.18);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-[data-theme="light"] .program-tid { color: var(--gold-deep); }
-[data-theme="light"] .program-info .sted { color: var(--surface); }
-[data-theme="light"] .program-info .beskrivelse { color: var(--muted3); }
-[data-theme="light"] .program-info .adresse { color: var(--muted3); }
-[data-theme="light"] .kart-link { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .program-tid { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .program-info .sted { color: var(--surface); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .program-info .beskrivelse { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .program-info .adresse { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .kart-link { color: var(--gold-deep); }
 
-[data-theme="light"] .info-box {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .info-box {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.18);
   color: var(--surface);
 }
-[data-theme="light"] .info-box a { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .info-box a { color: var(--gold-deep); }
 
 /* Gjester */
-[data-theme="light"] .gjester-stats {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjester-stats {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.18);
   color: var(--surface);
 }
-[data-theme="light"] .gjester-stats strong { color: var(--gold-deep); }
-[data-theme="light"] .chip {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjester-stats strong { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .chip {
   background: #FFFFFF;
   border: 1px solid rgba(var(--surface-rgb),0.15);
   color: var(--surface-2);
 }
-[data-theme="light"] .chip.active {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .chip.active {
   background: rgba(var(--gold-border-rgb),0.15);
   border-color: var(--gold-border);
   color: var(--gold-deep);
 }
-[data-theme="light"] .gjest-kort {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-kort {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.15);
   box-shadow: 0 2px 6px rgba(var(--surface-rgb),0.05);
 }
-[data-theme="light"] .gjest-kort:hover { border-color: rgba(var(--gold-border-rgb),0.5); }
-[data-theme="light"] .gjest-kort.toast {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-kort:hover { border-color: rgba(var(--gold-border-rgb),0.5); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-kort.toast {
   border-color: rgba(var(--accent-rgb),0.4);
   background: rgba(232,210,255,0.4);
 }
-[data-theme="light"] .gjest-navn { color: var(--surface); }
-[data-theme="light"] .gjest-bio { color: var(--muted3); }
-[data-theme="light"] .gjest-fbbio {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-navn { color: var(--surface); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-bio { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fbbio {
   color: var(--muted3);
   background: rgba(var(--surface-rgb),0.04);
 }
-[data-theme="light"] .gjest-extra {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-extra {
   color: var(--gold-deep);
   background: rgba(var(--gold-border-rgb),0.12);
 }
-[data-theme="light"] .gjest-rel { color: var(--accent); }
-[data-theme="light"] .bord-rel { color: var(--accent); }
-[data-theme="light"] .gjest-fb-link { color: #4A8AB8; }
-[data-theme="light"] .gjest-fb-link:hover { color: #2A6090; }
-[data-theme="light"] .gjest-tag {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-rel { color: var(--accent); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-rel { color: var(--accent); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fb-link { color: #4A8AB8; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fb-link:hover { color: #2A6090; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag {
   background: rgba(var(--gold-border-rgb),0.15);
   color: var(--gold-deep);
 }
-[data-theme="light"] .gjest-tag.toast {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag.toast {
   background: rgba(var(--accent-rgb),0.18);
   color: var(--accent);
 }
-[data-theme="light"] .gjest-tag.avbud {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag.avbud {
   background: rgba(192,64,64,0.15);
   color: #B04040;
 }
 
 /* Modal — gjest-popup hvit på lyst */
-[data-theme="light"] .modal { background: rgba(var(--surface-rgb),0.45); }
-[data-theme="light"] .modal-card {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .modal { background: rgba(var(--surface-rgb),0.45); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card {
   background: #FFFFFF;
   border: 1px solid rgba(var(--gold-border-rgb),0.25);
   box-shadow: 0 12px 40px rgba(var(--surface-rgb),0.2);
   color: var(--surface);
 }
-[data-theme="light"] .modal-card h2 { color: var(--gold-deep); }
-[data-theme="light"] .modal-card p { color: var(--surface-2); }
-[data-theme="light"] .modal-card input {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card h2 { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card p { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card input {
   background: #FAF6EE;
   border-color: rgba(var(--surface-rgb),0.18);
   color: var(--surface);
 }
-[data-theme="light"] .gjest-modal-close {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-close {
   background: rgba(var(--surface-rgb),0.08);
   color: var(--surface);
 }
-[data-theme="light"] .gjest-modal-close:hover { background: rgba(192,64,64,0.25); color: #B04040; }
-[data-theme="light"] .gjest-modal-navn { color: var(--surface); }
-[data-theme="light"] .gjest-modal-bio { color: var(--surface-2); }
-[data-theme="light"] .gjest-modal-felt { color: var(--muted3); }
-[data-theme="light"] .gjest-modal-felt.gjest-modal-extra {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-close:hover { background: rgba(192,64,64,0.25); color: #B04040; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-navn { color: var(--surface); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-bio { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-felt { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-felt.gjest-modal-extra {
   background: rgba(var(--gold-border-rgb),0.12);
   color: var(--gold-deep);
 }
-[data-theme="light"] .gjest-modal-bilde { border-color: var(--gold-border); }
-[data-theme="light"] .gjest-modal-avatar {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-bilde { border-color: var(--gold-border); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-avatar {
   background: linear-gradient(135deg, var(--gold-border), var(--gold));
   color: #FFF8EC;
 }
 
 /* Skjemaer / hilsen */
-[data-theme="light"] .form input,
-[data-theme="light"] .form textarea {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .form input,
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .form textarea {
   background: #FFFFFF;
   border-color: rgba(var(--surface-rgb),0.18);
   color: var(--surface);
 }
-[data-theme="light"] .hilsen-kort {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-kort {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.2);
   box-shadow: 0 2px 6px rgba(var(--surface-rgb),0.05);
 }
-[data-theme="light"] .hilsen-navn { color: var(--gold-deep); }
-[data-theme="light"] .hilsen-tekst { color: var(--surface-2); }
-[data-theme="light"] .hilsen-tid { color: #8995A4; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-navn { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-tekst { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-tid { color: #8995A4; }
 
 /* Sang */
-[data-theme="light"] .sang-card {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sang-card {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.2);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-[data-theme="light"] .sang-title { color: var(--gold-deep); }
-[data-theme="light"] .sang-sub { color: var(--muted3); }
-[data-theme="light"] .lyrics {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sang-title { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sang-sub { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .lyrics {
   background: #FFFAF0;
   border-color: rgba(var(--gold-border-rgb),0.2);
 }
-[data-theme="light"] .lyrics pre { color: var(--surface); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .lyrics pre { color: var(--surface); }
 
 /* Quiz / spill */
-[data-theme="light"] .tab {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .tab {
   background: #FFFFFF;
   border-color: rgba(var(--surface-rgb),0.15);
   color: var(--muted3);
 }
-[data-theme="light"] .tab.active {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .tab.active {
   background: rgba(var(--gold-border-rgb),0.15);
   color: var(--gold-deep);
 }
-[data-theme="light"] .quiz-card {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-card {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.2);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-[data-theme="light"] .quiz-num { color: var(--accent); }
-[data-theme="light"] .quiz-q { color: var(--surface); }
-[data-theme="light"] .quiz-opt {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-num { color: var(--accent); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-q { color: var(--surface); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt {
   background: #FAF6EE;
   border-color: rgba(var(--surface-rgb),0.15);
   color: var(--surface);
 }
-[data-theme="light"] .quiz-opt:hover { background: #F0E8D8; }
-[data-theme="light"] .quiz-opt.korrekt {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt:hover { background: #F0E8D8; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt.korrekt {
   background: rgba(80,180,100,0.18);
   border-color: #50B464;
 }
-[data-theme="light"] .quiz-opt.feil {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt.feil {
   background: rgba(192,64,64,0.18);
   border-color: #C85050;
 }
-[data-theme="light"] .quiz-fasit {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-fasit {
   background: rgba(var(--gold-border-rgb),0.1);
   color: var(--surface);
 }
-[data-theme="light"] .quiz-status { color: var(--muted3); }
-[data-theme="light"] .topp-rad {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-status { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-rad {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.18);
 }
-[data-theme="light"] .topp-rad:nth-child(1) {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-rad:nth-child(1) {
   background: rgba(var(--gold-border-rgb),0.15);
   border-color: rgba(var(--gold-border-rgb),0.4);
 }
-[data-theme="light"] .topp-navn { color: var(--surface); }
-[data-theme="light"] .topp-score { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-navn { color: var(--surface); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-score { color: var(--muted3); }
 
 /* Mario */
-[data-theme="light"] .mario-start {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .mario-start {
   background: linear-gradient(135deg, rgba(255,240,210,0.9), rgba(220,232,255,0.85));
   border-color: rgba(var(--gold-border-rgb),0.3);
 }
-[data-theme="light"] #mario-canvas { border-color: var(--gold-border); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) #mario-canvas { border-color: var(--gold-border); }
 
 /* Bord */
-[data-theme="light"] .bord-kort {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-kort {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.18);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-[data-theme="light"] .bord-header { border-bottom-color: rgba(var(--gold-border-rgb),0.2); }
-[data-theme="light"] .bord-nr-mini { color: var(--muted3); }
-[data-theme="light"] .bord-fjell-meta { color: var(--muted3); }
-[data-theme="light"] .bord-info { color: var(--gold-deep); }
-[data-theme="light"] .bord-gjest { background: #FFFAF0; }
-[data-theme="light"] .bord-gjest:hover { background: rgba(var(--gold-border-rgb),0.1); }
-[data-theme="light"] .bord-sete { background: rgba(var(--gold-border-rgb),0.18); color: var(--gold-deep); }
-[data-theme="light"] .bord-navn { color: var(--surface); }
-[data-theme="light"] .bord-tag {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-header { border-bottom-color: rgba(var(--gold-border-rgb),0.2); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-nr-mini { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-fjell-meta { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-info { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-gjest { background: #FFFAF0; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-gjest:hover { background: rgba(var(--gold-border-rgb),0.1); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-sete { background: rgba(var(--gold-border-rgb),0.18); color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-navn { color: var(--surface); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-tag {
   background: rgba(var(--accent-rgb),0.18);
   color: var(--accent);
 }
 
 /* Meny */
-[data-theme="light"] .meny-rett {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-rett {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.2);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-[data-theme="light"] .meny-tag {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-tag {
   background: rgba(var(--gold-border-rgb),0.15);
   color: var(--gold-deep);
 }
-[data-theme="light"] .meny-tittel { color: var(--gold-deep); }
-[data-theme="light"] .meny-beskrivelse { color: var(--surface-2); }
-[data-theme="light"] .meny-drikke { background: #FFFAF0; }
-[data-theme="light"] .meny-drikke strong { color: var(--gold-deep); }
-[data-theme="light"] .meny-drikke em { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-tittel { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-beskrivelse { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-drikke { background: #FFFAF0; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-drikke strong { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-drikke em { color: var(--muted3); }
 
 /* QR */
-[data-theme="light"] .qr-wrap {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .qr-wrap {
   background: #FFFFFF;
   border: 1px solid rgba(var(--gold-border-rgb),0.25);
   box-shadow: 0 4px 16px rgba(var(--surface-rgb),0.08);
 }
 
 /* Hjelp */
-[data-theme="light"] .hjelp-seksjon {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon {
   background: rgba(var(--gold-border-rgb),0.06);
   border-color: rgba(var(--gold-border-rgb),0.2);
 }
-[data-theme="light"] .hjelp-seksjon h3 { color: var(--gold-deep); }
-[data-theme="light"] .hjelp-seksjon p { color: var(--surface-2); }
-[data-theme="light"] .hjelp-seksjon a { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon h3 { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon p { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon a { color: var(--gold-deep); }
 
 /* Bottom nav */
-[data-theme="light"] .nav {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .nav {
   background: rgba(255,250,240,0.97);
   border-top-color: rgba(var(--gold-border-rgb),0.25);
   box-shadow: 0 -2px 12px rgba(var(--surface-rgb),0.08);
 }
-[data-theme="light"] .nav-btn { color: var(--muted3); }
-[data-theme="light"] .nav-btn.active {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-btn { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-btn.active {
   color: var(--gold-deep);
   background: rgba(var(--gold-border-rgb),0.12);
 }
-[data-theme="light"] .sub-nav { background: transparent; }
-[data-theme="light"] .sub-tab {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sub-nav { background: transparent; }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sub-tab {
   background: #FFFFFF;
   border-color: rgba(var(--surface-rgb),0.15);
   color: var(--muted3);
 }
-[data-theme="light"] .sub-tab.active {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sub-tab.active {
   background: rgba(var(--gold-border-rgb),0.15);
   border-color: rgba(var(--gold-border-rgb),0.5);
   color: var(--gold-deep);
 }
-html[data-theme="light"][data-nav="waffel"] .meny-knapp {
+html:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"])[data-nav="waffel"] .meny-knapp {
   background: rgba(255,250,240,0.95);
   border-color: rgba(var(--gold-border-rgb),0.35);
   color: var(--gold-deep);
@@ -1570,26 +1592,26 @@ html[data-theme="light"][data-nav="waffel"] .meny-knapp {
 }
 
 /* Tema-toggle på lyst tema */
-[data-theme="light"] .tema-toggle {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .tema-toggle {
   background: rgba(var(--gold-border-rgb),0.1);
   border-color: rgba(var(--gold-border-rgb),0.4);
   color: var(--gold-deep);
 }
-[data-theme="light"] .tema-toggle:hover { background: rgba(var(--gold-border-rgb),0.2); border-color: var(--gold-border); }
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .tema-toggle:hover { background: rgba(var(--gold-border-rgb),0.2); border-color: var(--gold-border); }
 
 /* Toast og navn-pille */
-[data-theme="light"] #toast {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) #toast {
   background: var(--surface);
   color: #FAF6EE;
   border: 1px solid rgba(var(--gold-border-rgb),0.4);
 }
-[data-theme="light"] .navn-pille {
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .navn-pille {
   background: linear-gradient(135deg, var(--gold), var(--gold-border));
   color: var(--surface);
 }
 
 /* Diverse felles korrigeringer */
-[data-theme="light"] .gjest-bord-tag { /* bord-emoji-pille på gjester-grid */
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-bord-tag { /* bord-emoji-pille på gjester-grid */
   /* lar fargen settes inline fra JS — inget override her */
 }
 
@@ -1605,11 +1627,11 @@ html[data-theme="light"][data-nav="waffel"] .meny-knapp {
   box-shadow: 0 6px 20px rgba(0,0,0,0.18);
 }
 .rsvp-cta:active { transform: scale(0.99); }
-.rsvp-cta-icon { font-size: 30px; }
+.rsvp-cta-icon { font-size: 32px; }
 .rsvp-cta-tekst { flex: 1; display: flex; flex-direction: column; }
-.rsvp-cta-tekst strong { font-size: 16px; color: var(--gold-2); letter-spacing: 0.5px; }
-.rsvp-cta-tekst small { font-size: 12px; color: var(--text-soft2); margin-top: 2px; }
-.rsvp-cta-pil { font-size: 22px; color: var(--gold); }
+.rsvp-cta-tekst strong { font-size: 18px; color: var(--gold-2); letter-spacing: 0.3px; font-weight: 700; }
+.rsvp-cta-tekst small { font-size: 13.5px; color: var(--text-soft2); margin-top: 3px; }
+.rsvp-cta-pil { font-size: 24px; color: var(--gold); }
 
 /* Dag-merke i programmet (f.eks. mingling fredag) */
 .program-dag {
@@ -1699,3 +1721,35 @@ html[data-nav="waffel"] .meny-scrim {
   opacity: 0; pointer-events: none; transition: opacity .25s;
 }
 html[data-nav="waffel"].meny-apen .meny-scrim { opacity: 1; pointer-events: auto; }
+
+/* ============================================================
+   Lys-tema kontrastjusteringer + nye lyse stiler (Salvie, Støvblå)
+   ============================================================ */
+
+/* Svar-på-invitasjonen-kortet: bedre kontrast og lesbarhet på lys bakgrunn */
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta {
+  background: linear-gradient(135deg, rgba(var(--gold-border-rgb),0.18), rgba(var(--gold-border-rgb),0.08));
+  border: 1.5px solid rgba(var(--gold-border-rgb),0.55);
+  box-shadow: 0 4px 16px rgba(var(--surface-rgb),0.10);
+}
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta-tekst strong {
+  color: var(--gold-deep);
+}
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta-tekst small {
+  color: var(--surface-2);
+}
+:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta-pil {
+  color: var(--gold-deep);
+}
+
+/* --- Salvie: krem-grønn bakgrunn + hero --- */
+html[data-theme="salvie"], html[data-theme="salvie"] body, [data-theme="salvie"] body { background: #EFF3EC; }
+[data-theme="salvie"] .hero-bg {
+  background: linear-gradient(135deg, #EAF2E4 0%, #D8E8D0 35%, #E4EFDC 70%, #EFF3EC 100%);
+}
+
+/* --- Støvblå: kjølig lys bakgrunn + hero --- */
+html[data-theme="stovbla"], html[data-theme="stovbla"] body, [data-theme="stovbla"] body { background: #EDF1F6; }
+[data-theme="stovbla"] .hero-bg {
+  background: linear-gradient(135deg, #E6EEF6 0%, #D4E2F0 35%, #E0E9F3 70%, #EDF1F6 100%);
+}
