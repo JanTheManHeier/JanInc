@@ -171,14 +171,14 @@ const HERO = {
   tagline: "Vi gifter oss! 💍",
   omTittel: "Om dagen",
   omTekst: "Silje og Terje gifter seg! Vi feirer dagen sammen med dere – fra vielsen i vakre Elverhøy kirke til en kveld med god mat, varme taler og dans på Rødbanken midt i Tromsø sentrum. Velkommen til en dag vi aldri vil glemme. ❤️",
-  kleskode: "Pent antrekk – mørk dress / kjole. Tromsø-vær: ta med et varmt ytterplagg.",
+  kleskode: "Dress / lang kjole – bunad er også fint. Ta gjerne med et varmt ytterplagg til Tromsø-været.",
 };
 
 // Om brudeparet / forlovelseshistorien
 const OMOSS = {
   tittel: "Om oss",
-  tekst: "Silje & Terje – to fra Tromsø som fant hverandre. Her kan brudeparet fortelle historien sin.",
-  forlovelse: "Forlovelseshistorien legges inn av Silje & Terje. 💍",
+  tekst: "Silje og Terje møttes på jobb på Matservice. Terje var 13 år, og Silje var «ho søte, men litt eldre jenta i fruktdisken». Det krevde noen års hardt arbeid å vinne hennes fulle oppmerksomhet – men 14. februar 2004 ble de kjærester. Siden har de bygget livet sitt sammen i Tromsø. 💛",
+  forlovelse: "Det var Silje sin bursdag i desember 2025. Silje hadde bare ett ønske – et besøk på favorittrestauranten. Dagen før ringte Terje restauranten mens Silje hørte på; de var «selvsagt fullbooket», og skuffelsen ble tydelig i ansiktet hennes. Det hun ikke visste, var at Terje hadde booket bord der flere uker i forveien. På selve bursdagen var planen en tur til gapahuken 1,5 km hjemmefra. Snøen, som hadde vært perfekt noen dager før, var nå blitt råtten av mildværet – Lilly løp lett oppå, mens de voksne gikk gjennom. Stemningen sank, og Silje ble etter hvert helt stille og la seg et stykke bak de andre. Terje slet med en svær sekk (fylt med vannflasker og en dyne, så det skulle se ut som en tung gave), og ba Silje snu seg bort mens han, Iver og Lilly gjorde «pakken» klar. Og der, ved gapahuken, ble det et ja. 💍",
 };
 
 // Ekstra info nederst på meny-siden (allergener, vegetar osv.)
@@ -190,12 +190,15 @@ const MENYINFO = [
 
 // Praktisk info (program-siden)
 const PRAKTISK = [
-  "👗 Kleskode: pent antrekk – mørk dress / kjole",
-  "🌸 Vielsen i Elverhøy kirke – kom i god tid, dørene åpner 12:30",
-  "📸 Etter vielsen tar brudeparet bilder mens dere forflytter dere til Rødbanken",
-  "🥂 Velkomstdrink og middag på Rødbanken",
-  "🚕 Tromsø Taxi 03003 kjører hele natta",
-  "📷 Ta bilder og last dem opp i Minneboken!",
+  "👗 Kleskode: dress / lang kjole – bunad er også fint",
+  "⛪ Vielse: Elverhøy kirke, Barduvegen 16, 9012 Tromsø – kom i god tid",
+  "🥂 Fest: Rødbanken, Storgata 65, 9008 Tromsø",
+  "🅿️ Parkering i Tromsø-tunnelen (avgift)",
+  "🚕 Taxi: 03011",
+  "🏨 Overnatting i nærheten: The Dock 69°39 (Scandic) eller Clarion The Edge – 200–500 m unna",
+  "🍷 Vinpakke, bar og alkoholfritt alternativ til middagen",
+  "🧒 Barna får fri denne dagen – festen er for de voksne",
+  "📷 Last opp bilder i Minneboken – QR-kode til felles album",
 ];
 
 // Kveldens meny – placeholder, brudeparet redigerer selv i admin
