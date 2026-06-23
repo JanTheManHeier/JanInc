@@ -223,29 +223,48 @@
     return id;
   }
 
-  // ============ Tema (lyst/mørkt) ============
-  function initTema() {
+  // ============ Tema / stilvelger ============
+  function gjeldendeTema() {
+    return document.documentElement.getAttribute('data-theme') || 'light';
+  }
+  function oppdaterTemaKnapp() {
     const btn = document.getElementById('tema-toggle');
     if (!btn) return;
-    const oppdaterKnapp = () => {
-      const tema = document.documentElement.getAttribute('data-theme') || 'dark';
-      const ikon = btn.querySelector('.tema-ikon');
-      const tekst = btn.querySelector('.tema-tekst');
-      if (tema === 'light') {
-        if (ikon) ikon.textContent = '🌙';
-        if (tekst) tekst.textContent = 'Mørkt tema';
-      } else {
-        if (ikon) ikon.textContent = '☀️';
-        if (tekst) tekst.textContent = 'Lyst tema';
-      }
-    };
-    oppdaterKnapp();
-    btn.onclick = () => {
-      const nav = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', nav);
-      localStorage.setItem(STORAGE_TEMA, nav);
-      oppdaterKnapp();
-    };
+    const lys = gjeldendeTema() === 'light';
+    const ikon = btn.querySelector('.tema-ikon');
+    const tekst = btn.querySelector('.tema-tekst');
+    if (ikon) ikon.textContent = lys ? '🌙' : '☀️';
+    if (tekst) tekst.textContent = lys ? 'Mørkt tema' : 'Lyst tema';
+  }
+  function oppdaterStilvelger() {
+    const naa = gjeldendeTema();
+    document.querySelectorAll('.stil-kort').forEach(k => {
+      k.classList.toggle('valgt', k.dataset.stil === naa);
+    });
+  }
+  function settTema(nav) {
+    document.documentElement.setAttribute('data-theme', nav);
+    try { localStorage.setItem(STORAGE_TEMA, nav); } catch (_) {}
+    oppdaterTemaKnapp();
+    oppdaterStilvelger();
+  }
+
+  function initTema() {
+    oppdaterTemaKnapp();
+    oppdaterStilvelger();
+
+    const btn = document.getElementById('tema-toggle');
+    if (btn) {
+      btn.onclick = () => settTema(gjeldendeTema() === 'light' ? 'dark' : 'light');
+    }
+
+    document.querySelectorAll('.stil-kort').forEach(kort => {
+      const velg = () => settTema(kort.dataset.stil);
+      kort.addEventListener('click', velg);
+      kort.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); velg(); }
+      });
+    });
 
     const refreshBtn = document.getElementById('refresh-btn');
     if (refreshBtn) {
