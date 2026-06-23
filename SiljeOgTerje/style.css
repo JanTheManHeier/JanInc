@@ -1730,8 +1730,10 @@ html[data-nav="waffel"] .meny-knapp {
   color: var(--gold); font-size: 22px; line-height: 1;
   cursor: pointer; backdrop-filter: blur(10px);
 }
-/* Reserver plass til hamburgeren så den ikke dekker fanene øverst */
+/* Reserver plass til hamburgeren så den ikke dekker fanene/titlene øverst */
 html[data-nav="waffel"] .sub-nav { padding-left: 60px; }
+html[data-nav="waffel"] .page > .page-title,
+html[data-nav="waffel"] .page > .page-title + .muted { padding-left: 60px; }
 html[data-nav="waffel"] .nav {
   top: 0; bottom: 0; left: 0; right: auto;
   transform: translateX(-100%);
