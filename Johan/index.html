@@ -25,6 +25,57 @@
   }
   a { color: var(--cyan); }
 
+  /* Instagram hover preview */
+  .ig {
+    position: relative;
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--cyan);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .ig::after { content: ' 📷'; font-size: .8em; opacity: .75; }
+  .ig .ig-card {
+    position: absolute;
+    bottom: 135%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    width: 250px;
+    background: var(--panel2);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .18s ease, transform .18s ease;
+    z-index: 60;
+    box-shadow: 0 14px 34px rgba(0,0,0,.65);
+    pointer-events: none;
+    white-space: normal;
+  }
+  .ig .ig-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    background: #000;
+  }
+  .ig .ig-card .cap {
+    display: block;
+    font-size: .78rem;
+    color: var(--accent2);
+    margin-top: 7px;
+    text-align: center;
+    font-weight: 700;
+  }
+  .ig:hover .ig-card,
+  .ig:focus .ig-card {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
   header {
     position: relative;
     text-align: center;
@@ -161,35 +212,36 @@
     <p class="lead">Fire baser: bykultur og rock i Bilbao, kystsykling langs Flysch-kysten fra Zarautz, grønne Pyreneene-daler fra Bera helt inntil Frankrike, og finale i pintxos-hovedstaden San Sebastián.</p>
 
     <div class="day">
-      <h4>Dag 1 &amp; 2 — Bilbao <span class="base-badge">Base: Bilbao</span></h4>
+      <h4>Dag 1 &amp; 2 — <a class="ig" href="https://www.instagram.com/explore/tags/bilbao/" target="_blank" rel="noopener">Bilbao<span class="ig-card"><img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Collage_de_Bilbao%2C_Pa%C3%ADs_Vasco%2C_Espa%C3%B1a.png" alt="Bilbao" loading="lazy"><span class="cap">📷 #bilbao</span></span></a> <span class="base-badge">Base: Bilbao</span></h4>
       <p>Syklene blir i bilen — fokus på by, kultur og den alternative scenen.</p>
       <ul>
-        <li><strong>Dag 1:</strong> Guggenheim utenfra (edderkoppen «Maman» + valpen «Puppy»), Casco Viejo &amp; pintxos på Plaza Nueva, funicular opp til Artxanda for panorama. Kveld: rocker-barer + gig på Kafe Antzokia eller Bilborock.</li>
+        <li><strong>Dag 1:</strong> <a class="ig" href="https://www.instagram.com/explore/tags/guggenheimbilbao/" target="_blank" rel="noopener">Guggenheim<span class="ig-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Museo_Guggenheim%2C_Bilbao_%2831273245344%29.jpg/1280px-Museo_Guggenheim%2C_Bilbao_%2831273245344%29.jpg" alt="Guggenheim Bilbao" loading="lazy"><span class="cap">📷 #guggenheimbilbao</span></span></a> utenfra (edderkoppen «Maman» + valpen «Puppy»), Casco Viejo &amp; pintxos på Plaza Nueva, funicular opp til Artxanda for panorama. Kveld: rocker-barer + gig på Kafe Antzokia eller Bilborock.</li>
         <li><strong>Dag 2:</strong> Zorrotzaurre-øya (gatekunst &amp; ZAWP-kulturhuset), Mercado de la Ribera, vinyljakt på Power Records.</li>
       </ul>
     </div>
 
     <div class="day">
-      <h4>Dag 3–4 — Zarautz &amp; Flysch-kysten <span class="base-badge">2 netter: Zarautz</span></h4>
+      <h4>Dag 3–4 — <a class="ig" href="https://www.instagram.com/explore/tags/zarautz/" target="_blank" rel="noopener">Zarautz<span class="ig-card"><img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Zarautz_Vue_Camping.jpg" alt="Zarautz" loading="lazy"><span class="cap">📷 #zarautz</span></span></a> &amp; <a class="ig" href="https://www.instagram.com/explore/tags/flysch/" target="_blank" rel="noopener">Flysch-kysten<span class="ig-card"><img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Zumaiako_flysch-a.jpg" alt="Flysch-kysten" loading="lazy"><span class="cap">📷 #flysch</span></span></a> <span class="base-badge">2 netter: Zarautz</span></h4>
       <p>~1 time øst for Bilbao mot San Sebastián. Surfeby med Baskerlands lengste strand, txakoli-vinmarker og dramatisk Flysch-kyst — egen sykkelsti (bidegorri) langs sjøen.</p>
       <ul>
-        <li><strong>Lett &amp; vakkert:</strong> Zarautz → Getaria (~7 km) på egen sykkelsti forbi vinmarker og havutsikt. Fiskerhavn og pintxos i Getaria.</li>
-        <li><strong>Videre:</strong> Getaria → Zumaia (~9 km til) — slake bakker, ender ved de berømte Flysch-klippene.</li>
+        <li><strong>Lett &amp; vakkert:</strong> Zarautz → <a class="ig" href="https://www.instagram.com/explore/tags/getaria/" target="_blank" rel="noopener">Getaria<span class="ig-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Getaria_iluntzean._Euskal_Herria.JPG/1280px-Getaria_iluntzean._Euskal_Herria.JPG" alt="Getaria" loading="lazy"><span class="cap">📷 #getaria</span></span></a> (~7 km) på egen sykkelsti forbi vinmarker og havutsikt. Fiskerhavn og pintxos i Getaria.</li>
+        <li><strong>Videre:</strong> Getaria → <a class="ig" href="https://www.instagram.com/explore/tags/zumaia/" target="_blank" rel="noopener">Zumaia<span class="ig-card"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Zumaiaren_ikuspegi_orokorra.jpg" alt="Zumaia" loading="lazy"><span class="cap">📷 #zumaia</span></span></a> (~9 km til) — slake bakker, ender ved de berømte Flysch-klippene.</li>
         <li><strong>Tilbake:</strong> Renfe-toget tar med sykler — perfekt hvis små bein blir trøtte på returen.</li>
       </ul>
     </div>
 
     <div class="day">
-      <h4>Dag 5–6 — Bera &amp; Bidasoa-dalen <span class="base-badge">2 netter: Bera</span></h4>
+      <h4>Dag 5–6 — <a class="ig" href="https://www.instagram.com/explore/tags/beranavarra/" target="_blank" rel="noopener">Bera<span class="ig-card"><img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Berako_elizaren_inguruak%2C_hegoaldetik_ikusita.jpg" alt="Bera" loading="lazy"><span class="cap">📷 #beranavarra</span></span></a> &amp; Bidasoa-dalen <span class="base-badge">2 netter: Bera</span></h4>
       <p>Autentisk landsby i Navarra, helt inntil den franske grensen i den frodige Bidasoa-dalen ved foten av Pyreneene. Grønt, rolig og baskisk til fingerspissene.</p>
       <ul>
         <li><strong>Lett &amp; trygt:</strong> Vía Verde del Bidasoa — gammel jernbanelinje med slake stigninger, tunneler og elveutsikt. Perfekt for barna (kjør i etapper).</li>
         <li><strong>Variert:</strong> Bera → Lesaka rundtur gjennom steinlandsbyer og baskisk arkitektur.</li>
+        <li><strong>Croissant-tur:</strong> Sykle nordover over grensen til de eventyrlige franske landsbyene <a class="ig" href="https://www.instagram.com/explore/tags/sare/" target="_blank" rel="noopener">Sare<span class="ig-card"><img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Sare_Village.jpg" alt="Sare" loading="lazy"><span class="cap">📷 #sare</span></span></a> og Ainhoa.</li>
       </ul>
     </div>
 
     <div class="day">
-      <h4>Dag 7–8 — San Sebastián (Donostia) <span class="base-badge">2 netter: San Sebastián</span></h4>
+      <h4>Dag 7–8 — <a class="ig" href="https://www.instagram.com/explore/tags/donostia/" target="_blank" rel="noopener">San Sebastián<span class="ig-card"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/San_Sebasti%C3%A1n_-_Ayuntamiento_10.jpg" alt="San Sebastián" loading="lazy"><span class="cap">📷 #donostia</span></span></a> (Donostia) <span class="base-badge">2 netter: San Sebastián</span></h4>
       <p>Elegant finale ved den berømte La Concha-bukta. Verdens tetteste samling av Michelin-stjerner, men også avslappet surf, strand og bykos. Flott sykkelsti (bidegorri) rundt hele bukta.</p>
       <ul>
         <li><strong>Lett &amp; flatt:</strong> Sykle bidegorrien langs La Concha og Zurriola — trygt og naturskjønt med barna.</li>
