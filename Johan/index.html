@@ -158,6 +158,27 @@
   .tag.gem  { background: rgba(155,90,255,0.18); color: #b794ff; }
   .card p { color: var(--text); font-size: .95rem; }
   .card .why { color: var(--muted); font-size: .88rem; margin-top: 8px; }
+  .card-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .card-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .76rem;
+    text-decoration: none;
+    color: var(--muted);
+    padding: 5px 11px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .card-links a:hover { color: var(--text); background: rgba(230,57,70,.08); border-color: var(--accent); }
 
   /* Itinerary */
   .day {
@@ -258,21 +279,41 @@
         <span class="tag rock">Konsertsted</span>
         <h3>Kafe Antzokia</h3>
         <p>Legendarisk scene for lokal rock og indie. Sjekk kalenderen for all-ages / matiné-gigs.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Kafe%20Antzokia%20Bilbao" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/kafeantzokia/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.kafeantzokia.eus/" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
       <div class="card">
         <span class="tag rock">Konsertsted</span>
         <h3>Bilborock</h3>
         <p>Rock og punk i en ombygd kirke. Veldig Johan.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Bilborock%20Bilbao" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/explore/tags/bilborock/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.bilbao.eus/" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
       <div class="card">
         <span class="tag gem">Hidden gem</span>
         <h3>ZAWP — Zorrotzaurre</h3>
         <p>Kreativt warehouse med open mic og undergrunnsshow på en post-industriell øy.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=ZAWP%20Bilbao%20Ribera%20de%20Deusto" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/zawp_bilbao/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.zawp.org/" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
       <div class="card">
         <span class="tag rock">Vinyl</span>
         <h3>Power Records</h3>
         <p>Platejakt og tips om hemmelige gigs fra de lokale.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Power%20Records%20Bilbao" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/explore/tags/powerrecords/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.google.com/search?q=Power+Records+Bilbao+tienda+discos" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
     </div>
 
@@ -284,17 +325,32 @@
         <span class="tag bike">Lett · 7 km</span>
         <h3>Zarautz → Getaria</h3>
         <p>Egen sykkelsti langs sjøen forbi txakoli-vinmarker. Slutt i den sjarmerende fiskerhavnen Getaria.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/dir/?api=1&amp;origin=Zarautz&amp;destination=Getaria&amp;travelmode=bicycling" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/explore/tags/getaria/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.getaria.eus/" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
       <div class="card">
         <span class="tag bike">Variert · +9 km</span>
         <h3>Getaria → Zumaia</h3>
         <p>Slake bakker og enda mer vinmark, ned til Zumaia og de dramatiske Flysch-klippene.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/dir/?api=1&amp;origin=Getaria&amp;destination=Zumaia&amp;travelmode=bicycling" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/explore/tags/zumaia/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.geoparkea.eus/" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
       <div class="card">
         <span class="tag bike">Smart retur</span>
         <h3>Tog tilbake</h3>
         <p>Renfe-toget tar med sykler — fin redning hvis barna er slitne på returen.</p>
         <p class="why">Tips: sykkelutleie i Zarautz, flere har barneseter og el-sykler.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Zarautz%20Euskotren%20geltokia" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/euskotren/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.euskotren.eus/" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
     </div>
 
@@ -305,31 +361,61 @@
         <span class="tag gem">Geologi</span>
         <h3>Flysch-klippene (Zumaia)</h3>
         <p>Spektakulære lagdelte klipper ved Itzurun-stranda — kjent som Dragonstone i Game of Thrones. Kort tur til fots, kult for barna.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Flysch%20Itzurun%20Zumaia" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/explore/tags/flysch/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.geoparkea.eus/" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
       <div class="card">
         <span class="tag fam">Surf</span>
         <h3>Surfeskole i Zarautz</h3>
         <p>Baskerlands lengste strand. Familie-surftimer eller bare leie brett — perfekt for ungene.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Surf%20eskola%20Zarautz" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/explore/tags/zarautzsurf/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.google.com/search?q=surf+eskola+Zarautz" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
       <div class="card">
         <span class="tag gem">Mat &amp; vin</span>
         <h3>Getaria — grill &amp; txakoli</h3>
         <p>Grillet fisk på havnen og txakoli-smaking på vinmark med havutsikt. Talai Berri / Txomin Etxaniz har familievennlige omvisninger.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Getaria%20txakoli" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/explore/tags/txakoli/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.getaria.eus/" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
       <div class="card">
         <span class="tag fam">Utsikt &amp; kapell</span>
         <h3>San Telmo-kapellet</h3>
         <p>Lite kapell på toppen av Flysch-klippene mellom Getaria og Zumaia. Episk havutsikt.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Ermita%20San%20Telmo%20Zumaia" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/explore/tags/zumaia/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.geoparkea.eus/" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
       <div class="card">
         <span class="tag fam">Natur</span>
         <h3>Zarautz-dynene</h3>
         <p>Vernede sanddyner med treplanker i østenden av stranda — fin naturtur.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=I%C3%B1urritza%20Zarautz%20dunas" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/explore/tags/zarautz/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.google.com/search?q=I%C3%B1urritza+Zarautz+dunas" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
       <div class="card">
         <span class="tag fam">Båt</span>
         <h3>Båttur fra Zumaia</h3>
         <p>Om sommeren: båt langs Flysch-kysten for utsikt fra sjøsiden. Stor stas for barna.</p>
+        <div class="card-links">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Zumaia%20portua" target="_blank" rel="noopener">📍 Maps</a>
+          <a href="https://www.instagram.com/explore/tags/zumaia/" target="_blank" rel="noopener">📷 Instagram</a>
+          <a href="https://www.geoparkea.eus/" target="_blank" rel="noopener">🌐 Hjemmeside</a>
+        </div>
       </div>
     </div>
 
