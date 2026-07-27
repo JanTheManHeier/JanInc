@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nb" data-theme="light">
+<html lang="nb" data-theme="invitasjon">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -8,9 +8,9 @@
 <link rel="icon" href="../images/icon-192.png" />
 <style>
   :root {
-    --gull: #8A6420; --gull-lys: #B8893C; --gull-bg: rgba(184,137,60,0.10);
-    --krem: #FAF6EE; --kort: #FFFFFF; --tekst: #1A2C3F; --muted: #6B7A8C;
-    --kant: rgba(184,137,60,0.30);
+    --gull: #A04E5C; --gull-lys: #C4737E; --gull-bg: rgba(196,115,126,0.10);
+    --krem: #FCF5F0; --kort: #FFFFFF; --tekst: #3A2C42; --muted: #6B7A8C;
+    --kant: rgba(196,115,126,0.30);
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
   html, body { background: var(--krem); color: var(--tekst);
@@ -34,7 +34,7 @@
     background: var(--kort); border: 2px solid var(--kant); border-radius: 16px;
     padding: 16px 18px; cursor: pointer; transition: transform .15s, box-shadow .15s;
     box-shadow: 0 2px 10px rgba(26,44,63,0.06); color: var(--tekst); }
-  .velg-knapp:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(184,137,60,0.22); border-color: var(--gull-lys); }
+  .velg-knapp:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(196,115,126,0.22); border-color: var(--gull-lys); }
   .velg-knapp .emoji { font-size: 32px; }
   .velg-knapp .navn { font-size: 17px; color: var(--gull); font-weight: 600; display: block; }
   .velg-knapp .velg-side { font-size: 12.5px; color: var(--muted); display: block; }
@@ -60,7 +60,7 @@
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 8px; }
   .chip { background: var(--gull-bg); border: 1px solid var(--kant); color: var(--gull);
     border-radius: 20px; padding: 6px 14px; font-size: 14px; cursor: pointer; }
-  .chip:hover { background: rgba(184,137,60,0.2); }
+  .chip:hover { background: rgba(196,115,126,0.2); }
   .chip.aktiv { background: linear-gradient(135deg, var(--gull-lys), var(--gull)); color: #fff; border-color: var(--gull); }
   .sp input, .sp textarea { width: 100%; background: #FFFDF8; border: 1px solid var(--kant);
     border-radius: 8px; color: var(--tekst); padding: 10px; font-size: 15px; }
@@ -69,7 +69,7 @@
 
   .nav-bar { display: flex; gap: 10px; align-items: center; padding: 16px 20px 0; }
   .knapp { border: none; border-radius: 12px; padding: 12px 18px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; }
-  .knapp.primar { background: linear-gradient(135deg, var(--gull-lys), var(--gull)); color: #fff; flex: 1; box-shadow: 0 2px 10px rgba(184,137,60,0.3); }
+  .knapp.primar { background: linear-gradient(135deg, var(--gull-lys), var(--gull)); color: #fff; flex: 1; box-shadow: 0 2px 10px rgba(196,115,126,0.3); }
   .knapp.sekundar { background: var(--kort); color: var(--tekst); border: 1px solid var(--kant); }
   .knapp:disabled { opacity: .4; cursor: default; }
   .status { font-size: 13px; color: var(--muted); padding: 8px 20px 0; min-height: 20px; text-align: center; }

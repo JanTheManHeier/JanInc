@@ -5,8 +5,8 @@
   "start_url": "/SiljeOgTerje/",
   "scope": "/SiljeOgTerje/",
   "display": "standalone",
-  "background_color": "#FAF6EE",
-  "theme_color": "#8A6420",
+  "background_color": "#FCF5F0",
+  "theme_color": "#A04E5C",
   "lang": "nb",
   "icons": [
     { "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },

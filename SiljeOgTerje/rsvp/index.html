@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nb" data-theme="light">
+<html lang="nb" data-theme="invitasjon">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -8,9 +8,9 @@
 <link rel="icon" href="../images/icon-192.png" />
 <style>
   :root {
-    --gull: #8A6420; --gull-lys: #B8893C; --gull-bg: rgba(184,137,60,0.10);
-    --krem: #FAF6EE; --kort: #FFFFFF; --tekst: #1A2C3F; --muted: #6B7A8C;
-    --kant: rgba(184,137,60,0.30); --gronn: #4F8A5B; --gronn-bg: rgba(79,138,91,0.12);
+    --gull: #A04E5C; --gull-lys: #C4737E; --gull-bg: rgba(196,115,126,0.10);
+    --krem: #FCF5F0; --kort: #FFFFFF; --tekst: #3A2C42; --muted: #6B7A8C;
+    --kant: rgba(196,115,126,0.30); --gronn: #4F8A5B; --gronn-bg: rgba(79,138,91,0.12);
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
   html, body { background: var(--krem); color: var(--tekst);
@@ -61,7 +61,8 @@
 <header>
   <div class="ringer">💍</div>
   <h1>Silje &amp; Terje</h1>
-  <p>Lørdag 22. august 2026 · Tromsø</p>
+  <p>Lørdag 22.08.2026 · Tromsø</p>
+  <p style="font-size:14px;margin-top:6px">Svar innen 01.08.26 · Spørsmål? Ring Silje: <a href="tel:+4795295261" style="color:var(--gull)">952 952 61</a></p>
 </header>
 
 <div class="kort" id="velg-kort">
@@ -84,7 +85,7 @@
 
   <div id="ja-felter" class="skjult">
     <div class="felt">
-      <label>Kommer du på minglingen fredag? 🍕 <span class="hint">Uformell sammenkomst kvelden før (fredag 21. august)</span></label>
+      <label>Kommer du på minglefesten fredag? 🎉 <span class="hint">Amtmandens datter, fredag 21.08.26 kl. 19.00</span></label>
       <div class="valg" id="valg-fredag">
         <label data-v="ja"><input type="radio" name="fredag" value="ja" /> ✓ Ja</label>
         <label data-v="nei"><input type="radio" name="fredag" value="nei" /> ✗ Nei</label>

@@ -4,17 +4,17 @@
 //  /api/siljeterje-content og overstyrer disse verdiene.
 // ============================================================
 
-const EVENT_DATO_ISO = "2026-08-22T13:00:00+02:00";
+const EVENT_DATO_ISO = "2026-08-22T12:00:00+02:00";
 
-// Programmet for dagen. Tider er foreløpige – Silje & Terje
+// Programmet for dagen. Tider fra invitasjonen – Silje & Terje
 // kan endre alt selv via admin-siden.
 const PROGRAM = [
-  { tid: "19:00", dag: "Fredag 21. august", tittel: "Mingling kvelden før", sted: "(sted kommer)", ikon: "🍕", beskrivelse: "Uformell sammenkomst for tilreisende kvelden før bryllupet. Mer info kommer – følg med her!" },
-  { tid: "13:00", dag: "Lørdag 22. august", tittel: "Vielse i Elverhøy kirke", sted: "Elverhøy kirke, Tromsø", ikon: "💒", beskrivelse: "Vi gifter oss! Møt opp i god tid – dørene åpner 12:30.", adresse: "Elverhøy kirke, Tromsø", kart: "https://maps.google.com/?q=Elverh%C3%B8y+kirke+Troms%C3%B8" },
-  { tid: "14:00", tittel: "Gratulasjoner & bobler", sted: "Utenfor kirken", ikon: "🥂", beskrivelse: "Ris, klemmer og et glass til brudeparet utenfor kirken." },
-  { tid: "14:30", tittel: "Fotografering", sted: "Tromsø sentrum", ikon: "📸", beskrivelse: "Brudeparet tar bilder. Gjestene forflytter seg mot festlokalet." },
-  { tid: "17:00", tittel: "Mottakelse på Rødbanken", sted: "Rødbanken, Tromsø sentrum", ikon: "🏛️", beskrivelse: "Velkomstdrink og mingling i de vakre lokalene til Sparebank 1 Nord-Norge.", adresse: "Rødbanken, Tromsø sentrum", kart: "https://maps.google.com/?q=R%C3%B8dbanken+Troms%C3%B8" },
-  { tid: "18:00", tittel: "Bryllupsmiddag", sted: "Rødbanken", ikon: "🍽️", beskrivelse: "Tre retter, taler og gode historier. Toastmasterne Maja & Thomas loser oss gjennom kvelden." },
+  { tid: "19:00", dag: "Fredag 21. august", tittel: "Minglefest", sted: "Amtmandens datter, Tromsø", ikon: "🎉", beskrivelse: "Uformell minglefest kvelden før bryllupet. Kom som du er – vi tar en skål sammen!", adresse: "Amtmandens datter, Tromsø", kart: "https://maps.google.com/?q=Amtmandens+datter+Troms%C3%B8" },
+  { tid: "12:00", dag: "Lørdag 22. august", tittel: "Vigsel i Elverhøy kirke", sted: "Elverhøy kirke, Tromsø", ikon: "💒", beskrivelse: "Vi gifter oss! Møt opp i god tid – dørene åpner 11:30.", adresse: "Elverhøy kirke, Tromsø", kart: "https://maps.google.com/?q=Elverh%C3%B8y+kirke+Troms%C3%B8" },
+  { tid: "13:00", tittel: "Gratulasjoner & bobler", sted: "Utenfor kirken", ikon: "🥂", beskrivelse: "Ris, klemmer og et glass til brudeparet utenfor kirken." },
+  { tid: "13:30", tittel: "Fotografering", sted: "Tromsø sentrum", ikon: "📸", beskrivelse: "Brudeparet tar bilder. Gjestene har fri noen timer før festen." },
+  { tid: "17:00", tittel: "Middag og fest", sted: "Festsalen i Rødbanken, Tromsø", ikon: "🏛️", beskrivelse: "Velkomstdrink og mingling i Festsalen i Rødbanken – midt i Tromsø sentrum.", adresse: "Rødbanken, Tromsø sentrum", kart: "https://maps.google.com/?q=R%C3%B8dbanken+Troms%C3%B8" },
+  { tid: "18:00", tittel: "Bryllupsmiddag", sted: "Festsalen i Rødbanken", ikon: "🍽️", beskrivelse: "Tre retter, taler og gode historier. Toastmasterne Maja & Thomas loser oss gjennom kvelden." },
   { tid: "21:00", tittel: "Kaffe, kake & første dans", sted: "Rødbanken", ikon: "💃", beskrivelse: "Bryllupskake, brudevals og åpning av dansegulvet." },
   { tid: "22:00", tittel: "Fest til langt på natt", sted: "Rødbanken", ikon: "🎶", beskrivelse: "Dans, bar og moro. Vi feirer til nattbussen går!" },
 ];
@@ -170,12 +170,12 @@ const OM_PARET = {
 const HERO = {
   brud: "Silje",
   brudgom: "Terje",
-  datoTekst: "Lørdag 22. august 2026",
-  stedTekst: "Elverhøy kirke & Rødbanken · Tromsø",
-  tagline: "Vi gifter oss! 💍",
+  datoTekst: "Lørdag 22.08.2026",
+  stedTekst: "Elverhøy kirke & Festsalen i Rødbanken · Tromsø",
+  tagline: "Vi gleder oss til å feire denne dagen med deg!",
   omTittel: "Om dagen",
-  omTekst: "Silje og Terje gifter seg! Vi feirer dagen sammen med dere – fra vielsen i vakre Elverhøy kirke til en kveld med god mat, varme taler og dans på Rødbanken midt i Tromsø sentrum. Velkommen til en dag vi aldri vil glemme. ❤️",
-  kleskode: "Dress / lang kjole – bunad er også fint. Ta gjerne med et varmt ytterplagg til Tromsø-været.",
+  omTekst: "Silje og Terje gifter seg! Vi feirer dagen sammen med dere – fra vigselen i vakre Elverhøy kirke kl. 12.00 til en kveld med god mat, varme taler og dans i Festsalen i Rødbanken fra kl. 17.00. Vi gleder oss til å feire denne dagen med deg! ❤️",
+  kleskode: "Mørk dress. Ta gjerne med et varmt ytterplagg til Tromsø-været.",
 };
 
 // Om brudeparet / forlovelseshistorien
@@ -194,9 +194,11 @@ const MENYINFO = [
 
 // Praktisk info (program-siden)
 const PRAKTISK = [
-  "👗 Kleskode: dress / lang kjole – bunad er også fint",
-  "⛪ Vielse: Elverhøy kirke, Barduvegen 16, 9012 Tromsø – kom i god tid",
-  "🥂 Fest: Rødbanken, Storgata 65, 9008 Tromsø",
+  "👗 Dresskode: mørk dress",
+  "⛪ Vigsel kl. 12.00: Elverhøy kirke, Barduvegen 16, 9012 Tromsø – kom i god tid",
+  "🥂 Middag og fest kl. 17.00: Festsalen i Rødbanken, Storgata 65, 9008 Tromsø",
+  "🎉 Minglefest fredag 21.08.26 kl. 19.00: Amtmandens datter",
+  "💌 Svar innen 01.08.26 til Silje: 952 952 61",
   "🅿️ Parkering i Tromsø-tunnelen (avgift)",
   "🚕 Taxi: 03011",
   "🏨 Overnatting i nærheten: The Dock 69°39 (Scandic) eller Clarion The Edge – 200–500 m unna",
@@ -207,7 +209,7 @@ const PRAKTISK = [
 
 // Kveldens meny – placeholder, brudeparet redigerer selv i admin
 const MENY = [
-  { tag: "VELKOMST", ikon: "🥂", tittel: "Velkomstdrink", beskrivelse: "Bobler og alkoholfritt alternativ ved ankomst Rødbanken.", drikke: ["🥂 Champagne / prosecco", "🍎 Alkoholfri cider"] },
+  { tag: "VELKOMST", ikon: "🥂", tittel: "Velkomstdrink", beskrivelse: "Bobler og alkoholfritt alternativ ved ankomst Festsalen i Rødbanken.", drikke: ["🥂 Champagne / prosecco", "🍎 Alkoholfri cider"] },
   { tag: "FORRETT", ikon: "🐟", tittel: "Forrett", beskrivelse: "Nordnorsk forrett – detaljer kommer.", drikke: ["🍷 Hvitvin", "💧 Vann"] },
   { tag: "HOVEDRETT", ikon: "🍽️", tittel: "Hovedrett", beskrivelse: "Hovedrett – detaljer kommer.", drikke: ["🍷 Rødvin", "🍺 Øl"] },
   { tag: "DESSERT", ikon: "🎂", tittel: "Bryllupskake & kaffe", beskrivelse: "Kake, kaffe og avec.", drikke: ["☕ Kaffe / te", "🥃 Avec"] },

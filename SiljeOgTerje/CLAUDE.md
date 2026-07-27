@@ -3,8 +3,15 @@
 Live: **https://janinc.no/SiljeOgTerje/** · Bryllup **22. august 2026**, Tromsø
 (vielse Elverhøy kirke → fest Rødbanken).
 
-Vanilla-JS PWA (ingen byggesteg for frontend) — bygget på samme oppsett som `Thomas50/`,
-men med lyst, elegant hvit/gull-tema og bryllup som tema.
+Vanilla-JS PWA (ingen byggesteg for frontend) — bygget på samme oppsett som `Thomas50/`.
+**Standardtema = `invitasjon`**: blomster/kalligrafi hentet fra papirinvitasjonen
+(rosa roser + lavendel, rose #C4737E, plomme #5E3A62, krem #FCF5F0).
+
+## Fakta fra papirinvitasjonen (fasit)
+- Vigsel **kl. 12.00** — Elverhøy kirke
+- Middag og fest **kl. 17.00** — **Festsalen i Rødbanken**
+- Minglefest **fredag 21.08.26 kl. 19.00** — **Amtmandens datter**
+- Dresskode: **mørk dress** · Svarfrist **01.08.26** til Silje **952 952 61**
 
 ## Filstruktur
 - `index.html` — hele appen (SPA, seksjoner vises/skjules via nav)
@@ -12,7 +19,13 @@ men med lyst, elegant hvit/gull-tema og bryllup som tema.
 - `data.js` — **GENERERT** av `build-data.js`. Inneholder runtime-data + innholds-DEFAULTS
   (HERO, OMOSS, PROGRAM, PRAKTISK, MENY, MENYINFO, GAVE, GJESTER, SANG*, BORD_TEMA, SPILL_QUIZ).
 - `spill.js` — Bubble Bobble bryllupsspill (`window.ThomasSpill = {init,start,stopp,hopp}` — navnet beholdt).
-- `style.css` — tema via `[data-theme="light"]` (gull #8A6420, krem #FAF6EE).
+- `style.css` — tema via `[data-theme]`. Fire lyse stiler: **`invitasjon`** (standard),
+  `light` (champagne), `salvie`, `stovbla` + mørkt `dark`/`smaragd`.
+  Lys-reglene deles via `:is([data-theme="light"],[data-theme="invitasjon"],…)`; legger du
+  til et nytt lyst tema må det inn i alle disse `:is(...)`-listene. Invitasjonsstilen ligger
+  i egen blokk nederst i fila (fonter Great Vibes + Cormorant Garamond fra Google Fonts).
+- `images/blomster-hjorne.svg` — akvarell-blomsterhjørne (roser, lavendel, blad) brukt i
+  hero-hjørnene og som bunndekor i invitasjonsstilen.
 - `admin/index.html` — admin: statistikk + **innholds-redaktør** (selvbetjent for brudeparet).
 - `admin/gjester.html` — rediger/legg til/skjul gjester, sette bord/sete.
 - `audio/silje.mp3`, `audio/den-siste-villhingsten.mp3` — de to sangene.

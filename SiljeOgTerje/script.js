@@ -3,8 +3,9 @@
 // === Tema-init: kjøres umiddelbart for å unngå flash ===
 (function temaInit() {
   const KEY = 'siljeterje-tema';
-  // Default lyst tema (bryllup) — kun bruk lagret valg, ignorer prefers-color-scheme
-  const tema = localStorage.getItem(KEY) || 'light';
+  // Default = «Invitasjon» (blomstertema fra papirinvitasjonen).
+  // Kun lagret valg brukes ellers — ignorer prefers-color-scheme.
+  const tema = localStorage.getItem(KEY) || 'invitasjon';
   document.documentElement.setAttribute('data-theme', tema);
 })();
 
@@ -233,13 +234,17 @@
   }
 
   // ============ Tema / stilvelger ============
+  const LYSE_TEMA = ['light', 'invitasjon', 'salvie', 'stovbla'];
   function gjeldendeTema() {
-    return document.documentElement.getAttribute('data-theme') || 'light';
+    return document.documentElement.getAttribute('data-theme') || 'invitasjon';
+  }
+  function erLystTema(tema) {
+    return LYSE_TEMA.includes(tema || gjeldendeTema());
   }
   function oppdaterTemaKnapp() {
     const btn = document.getElementById('tema-toggle');
     if (!btn) return;
-    const lys = gjeldendeTema() === 'light';
+    const lys = erLystTema();
     const ikon = btn.querySelector('.tema-ikon');
     const tekst = btn.querySelector('.tema-tekst');
     if (ikon) ikon.textContent = lys ? '🌙' : '☀️';
@@ -264,7 +269,11 @@
 
     const btn = document.getElementById('tema-toggle');
     if (btn) {
-      btn.onclick = () => settTema(gjeldendeTema() === 'light' ? 'dark' : 'light');
+      let sisteLyse = erLystTema() ? gjeldendeTema() : 'invitasjon';
+      btn.onclick = () => {
+        if (erLystTema()) { sisteLyse = gjeldendeTema(); settTema('dark'); }
+        else settTema(sisteLyse);
+      };
     }
 
     document.querySelectorAll('.stil-kort[data-stil]').forEach(kort => {
@@ -438,7 +447,7 @@
     const liste = document.getElementById('program-list');
     if (!liste) return;
     liste.innerHTML = PROGRAM.map(p => `
-      <div class="program-kort" style="border-left-color:${p.farge || '#8A6420'}">
+      <div class="program-kort" style="border-left-color:${p.farge || 'var(--gold-deep)'}">
         <div class="program-tid">${esc(p.tid || '')}</div>
         <div class="program-ikon">${p.ikon || '📍'}</div>
         <div class="program-info">

@@ -63,6 +63,22 @@
   --accent-2: #C0A6BE;      --accent2-rgb: 192,166,190;
 }
 
+/* === Stil «Invitasjon» (blomster: rosa roser, lavendel, plomme) ===
+   Hentet direkte fra papirinvitasjonen — akvarellblomster, rose-rødt
+   for dato/skript og dyp plomme for navnene. Arver lys-blokken. */
+[data-theme="invitasjon"] {
+  --gold: #C4737E;          --gold-rgb: 196,115,126;
+  --gold-2: #DDA0A8;
+  --gold-deep: #A04E5C;
+  --gold-border: #D9A3AB;   --gold-border-rgb: 217,163,171;
+  --accent: #6B4172;        --accent-rgb: 107,65,114;
+  --accent-2: #B08FC8;      --accent2-rgb: 176,143,200;
+  --krem: #FCF5F0;
+  --lavendel: #A98CC0;
+  --rose: #C4737E;
+  --plomme: #5E3A62;
+}
+
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
 html, body { background: var(--bg); color: var(--text); font-family: 'Palatino Linotype', 'Book Antiqua', Georgia, serif; }
 body {
@@ -1104,8 +1120,8 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .meny-link:hover { color: #FFE9A8; text-decoration-color: var(--gold-2); }
 .meny-link:visited { color: var(--gold); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-link { color: var(--gold-deep); text-decoration-color: rgba(138,100,32,0.5); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-link:hover { color: #5C4416; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-link { color: var(--gold-deep); text-decoration-color: rgba(138,100,32,0.5); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-link:hover { color: #5C4416; }
 
 /* QR-kode */
 .qr-seksjon { padding: 24px 16px; }
@@ -1254,367 +1270,367 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 
 /* =============================================================
    LYST TEMA — varm crème palett, mørk navy tekst, bevarte gull-aksenter
-   Aktiveres via :is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) på <html>
+   Aktiveres via :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) på <html>
    ============================================================= */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) {
   color-scheme: light;
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) html,
-html:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]),
-html:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) body {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) html,
+html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]),
+html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) body {
   background: #FAF6EE;
   color: var(--surface);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) body { background: #FAF6EE; color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) body { background: #FAF6EE; color: var(--surface); }
 
 /* Tekst-baseklasser */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .muted { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .lead { color: var(--surface-2); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) input::placeholder,
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) textarea::placeholder { color: #A8B4C2; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .muted { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .lead { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) input::placeholder,
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) textarea::placeholder { color: #A8B4C2; }
 
 /* HERO — varmt morgenlys, daggry på Tromsøya */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-bg {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-bg {
   background: linear-gradient(135deg, #FFF4E0 0%, #FFE0C8 30%, #F8D8E8 60%, #E8DCFF 100%);
 }
 @keyframes nordlys-lys {
   0% { filter: hue-rotate(0deg) brightness(1); }
   100% { filter: hue-rotate(-12deg) brightness(1.05); }
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-bg { animation: nordlys-lys 18s ease-in-out infinite alternate; }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-photo {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-bg { animation: nordlys-lys 18s ease-in-out infinite alternate; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-photo {
   border-color: var(--gold-border);
   box-shadow: 0 8px 28px rgba(var(--gold-border-rgb),0.35);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .age-bubble {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .age-bubble {
   background: linear-gradient(135deg, var(--gold-border), var(--gold));
   color: #FFF8EC;
   box-shadow: 0 4px 18px rgba(var(--gold-border-rgb),0.45);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-name {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-name {
   color: var(--gold-deep);
   text-shadow: 0 2px 14px rgba(var(--gold-border-rgb),0.25);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-nick { color: var(--accent); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-date { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-sub { color: var(--surface-2); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .countdown {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-nick { color: var(--accent); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-date { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hero-sub { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .countdown {
   background: rgba(var(--gold-border-rgb),0.12);
   border-color: rgba(var(--gold-border-rgb),0.35);
   color: var(--surface);
 }
 
 /* Mini-kort */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .mini-card {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .mini-card {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.25);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.06);
   color: var(--surface);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .mini-title { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .mini-sub { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .mini-title { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .mini-sub { color: var(--muted3); }
 
 /* Sections / titler */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .section-title { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .page-title { color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .section-title { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .page-title { color: var(--surface); }
 
 /* Om / karriere */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .om-card {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .om-card {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.2);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item {
   background: #FFFAF0;
   border-color: rgba(var(--gold-border-rgb),0.15);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item .tittel { color: var(--surface); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item .selskap { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item .periode { color: #8995A4; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item .tittel { color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item .selskap { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .karriere-item .periode { color: #8995A4; }
 
 /* Knapper */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-primary {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-primary {
   background: linear-gradient(135deg, var(--gold), var(--gold-border));
   color: var(--surface);
   box-shadow: 0 2px 10px rgba(var(--gold-border-rgb),0.3);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-secondary {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-secondary {
   background: #FFFFFF;
   color: var(--surface);
   border: 1px solid rgba(var(--surface-rgb),0.18);
   box-shadow: 0 2px 6px rgba(var(--surface-rgb),0.06);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-link { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-link-box {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-link { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .btn-link-box {
   background: rgba(var(--gold-border-rgb),0.1);
   border-color: rgba(var(--gold-border-rgb),0.4);
   color: var(--gold-deep);
 }
 
 /* Program */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .program-kort {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .program-kort {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.18);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .program-tid { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .program-info .sted { color: var(--surface); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .program-info .beskrivelse { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .program-info .adresse { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .kart-link { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .program-tid { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .program-info .sted { color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .program-info .beskrivelse { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .program-info .adresse { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .kart-link { color: var(--gold-deep); }
 
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .info-box {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .info-box {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.18);
   color: var(--surface);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .info-box a { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .info-box a { color: var(--gold-deep); }
 
 /* Gjester */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjester-stats {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjester-stats {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.18);
   color: var(--surface);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjester-stats strong { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .chip {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjester-stats strong { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .chip {
   background: #FFFFFF;
   border: 1px solid rgba(var(--surface-rgb),0.15);
   color: var(--surface-2);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .chip.active {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .chip.active {
   background: rgba(var(--gold-border-rgb),0.15);
   border-color: var(--gold-border);
   color: var(--gold-deep);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-kort {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-kort {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.15);
   box-shadow: 0 2px 6px rgba(var(--surface-rgb),0.05);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-kort:hover { border-color: rgba(var(--gold-border-rgb),0.5); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-kort.toast {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-kort:hover { border-color: rgba(var(--gold-border-rgb),0.5); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-kort.toast {
   border-color: rgba(var(--accent-rgb),0.4);
   background: rgba(232,210,255,0.4);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-navn { color: var(--surface); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-bio { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fbbio {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-navn { color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-bio { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fbbio {
   color: var(--muted3);
   background: rgba(var(--surface-rgb),0.04);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-extra {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-extra {
   color: var(--gold-deep);
   background: rgba(var(--gold-border-rgb),0.12);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-rel { color: var(--accent); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-rel { color: var(--accent); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fb-link { color: #4A8AB8; }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fb-link:hover { color: #2A6090; }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-rel { color: var(--accent); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-rel { color: var(--accent); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fb-link { color: #4A8AB8; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fb-link:hover { color: #2A6090; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag {
   background: rgba(var(--gold-border-rgb),0.15);
   color: var(--gold-deep);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag.toast {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag.toast {
   background: rgba(var(--accent-rgb),0.18);
   color: var(--accent);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag.avbud {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag.avbud {
   background: rgba(192,64,64,0.15);
   color: #B04040;
 }
 
 /* Modal — gjest-popup hvit på lyst */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .modal { background: rgba(var(--surface-rgb),0.45); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .modal { background: rgba(var(--surface-rgb),0.45); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card {
   background: #FFFFFF;
   border: 1px solid rgba(var(--gold-border-rgb),0.25);
   box-shadow: 0 12px 40px rgba(var(--surface-rgb),0.2);
   color: var(--surface);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card h2 { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card p { color: var(--surface-2); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card input {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card h2 { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card p { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card input {
   background: #FAF6EE;
   border-color: rgba(var(--surface-rgb),0.18);
   color: var(--surface);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-close {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-close {
   background: rgba(var(--surface-rgb),0.08);
   color: var(--surface);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-close:hover { background: rgba(192,64,64,0.25); color: #B04040; }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-navn { color: var(--surface); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-bio { color: var(--surface-2); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-felt { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-felt.gjest-modal-extra {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-close:hover { background: rgba(192,64,64,0.25); color: #B04040; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-navn { color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-bio { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-felt { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-felt.gjest-modal-extra {
   background: rgba(var(--gold-border-rgb),0.12);
   color: var(--gold-deep);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-bilde { border-color: var(--gold-border); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-avatar {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-bilde { border-color: var(--gold-border); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-avatar {
   background: linear-gradient(135deg, var(--gold-border), var(--gold));
   color: #FFF8EC;
 }
 
 /* Skjemaer / hilsen */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .form input,
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .form textarea {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .form input,
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .form textarea {
   background: #FFFFFF;
   border-color: rgba(var(--surface-rgb),0.18);
   color: var(--surface);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-kort {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-kort {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.2);
   box-shadow: 0 2px 6px rgba(var(--surface-rgb),0.05);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-navn { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-tekst { color: var(--surface-2); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-tid { color: #8995A4; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-navn { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-tekst { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hilsen-tid { color: #8995A4; }
 
 /* Sang */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sang-card {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .sang-card {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.2);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sang-title { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sang-sub { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .lyrics {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .sang-title { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .sang-sub { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .lyrics {
   background: #FFFAF0;
   border-color: rgba(var(--gold-border-rgb),0.2);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .lyrics pre { color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .lyrics pre { color: var(--surface); }
 
 /* Quiz / spill */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .tab {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .tab {
   background: #FFFFFF;
   border-color: rgba(var(--surface-rgb),0.15);
   color: var(--muted3);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .tab.active {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .tab.active {
   background: rgba(var(--gold-border-rgb),0.15);
   color: var(--gold-deep);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-card {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-card {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.2);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-num { color: var(--accent); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-q { color: var(--surface); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-num { color: var(--accent); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-q { color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt {
   background: #FAF6EE;
   border-color: rgba(var(--surface-rgb),0.15);
   color: var(--surface);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt:hover { background: #F0E8D8; }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt.korrekt {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt:hover { background: #F0E8D8; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt.korrekt {
   background: rgba(80,180,100,0.18);
   border-color: #50B464;
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt.feil {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-opt.feil {
   background: rgba(192,64,64,0.18);
   border-color: #C85050;
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-fasit {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-fasit {
   background: rgba(var(--gold-border-rgb),0.1);
   color: var(--surface);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-status { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-rad {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .quiz-status { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-rad {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.18);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-rad:nth-child(1) {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-rad:nth-child(1) {
   background: rgba(var(--gold-border-rgb),0.15);
   border-color: rgba(var(--gold-border-rgb),0.4);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-navn { color: var(--surface); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-score { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-navn { color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .topp-score { color: var(--muted3); }
 
 /* Mario */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .mario-start {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .mario-start {
   background: linear-gradient(135deg, rgba(255,240,210,0.9), rgba(220,232,255,0.85));
   border-color: rgba(var(--gold-border-rgb),0.3);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) #mario-canvas { border-color: var(--gold-border); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) #mario-canvas { border-color: var(--gold-border); }
 
 /* Bord */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-kort {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-kort {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.18);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-header { border-bottom-color: rgba(var(--gold-border-rgb),0.2); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-nr-mini { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-fjell-meta { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-info { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-gjest { background: #FFFAF0; }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-gjest:hover { background: rgba(var(--gold-border-rgb),0.1); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-sete { background: rgba(var(--gold-border-rgb),0.18); color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-navn { color: var(--surface); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-tag {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-header { border-bottom-color: rgba(var(--gold-border-rgb),0.2); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-nr-mini { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-fjell-meta { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-info { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-gjest { background: #FFFAF0; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-gjest:hover { background: rgba(var(--gold-border-rgb),0.1); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-sete { background: rgba(var(--gold-border-rgb),0.18); color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-navn { color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-tag {
   background: rgba(var(--accent-rgb),0.18);
   color: var(--accent);
 }
 
 /* Meny */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-rett {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-rett {
   background: #FFFFFF;
   border-color: rgba(var(--gold-border-rgb),0.2);
   box-shadow: 0 2px 8px rgba(var(--surface-rgb),0.05);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-tag {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-tag {
   background: rgba(var(--gold-border-rgb),0.15);
   color: var(--gold-deep);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-tittel { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-beskrivelse { color: var(--surface-2); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-drikke { background: #FFFAF0; }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-drikke strong { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-drikke em { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-tittel { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-beskrivelse { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-drikke { background: #FFFAF0; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-drikke strong { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .meny-drikke em { color: var(--muted3); }
 
 /* QR */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .qr-wrap {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .qr-wrap {
   background: #FFFFFF;
   border: 1px solid rgba(var(--gold-border-rgb),0.25);
   box-shadow: 0 4px 16px rgba(var(--surface-rgb),0.08);
 }
 
 /* Hjelp */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon {
   background: rgba(var(--gold-border-rgb),0.06);
   border-color: rgba(var(--gold-border-rgb),0.2);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon h3 { color: var(--gold-deep); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon p { color: var(--surface-2); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon a { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon h3 { color: var(--gold-deep); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon p { color: var(--surface-2); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .hjelp-seksjon a { color: var(--gold-deep); }
 
 /* Bottom nav */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .nav {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .nav {
   background: rgba(255,250,240,0.97);
   border-top-color: rgba(var(--gold-border-rgb),0.25);
   box-shadow: 0 -2px 12px rgba(var(--surface-rgb),0.08);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-btn { color: var(--muted3); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-btn.active {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-btn { color: var(--muted3); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-btn.active {
   color: var(--gold-deep);
   background: rgba(var(--gold-border-rgb),0.12);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sub-nav { background: transparent; }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sub-tab {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .sub-nav { background: transparent; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .sub-tab {
   background: #FFFFFF;
   border-color: rgba(var(--surface-rgb),0.15);
   color: var(--muted3);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .sub-tab.active {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .sub-tab.active {
   background: rgba(var(--gold-border-rgb),0.15);
   border-color: rgba(var(--gold-border-rgb),0.5);
   color: var(--gold-deep);
 }
-html:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"])[data-nav="waffel"] .meny-knapp {
+html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"])[data-nav="waffel"] .meny-knapp {
   background: rgba(255,250,240,0.95);
   border-color: rgba(var(--gold-border-rgb),0.35);
   color: var(--gold-deep);
@@ -1622,26 +1638,26 @@ html:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"])[data-
 }
 
 /* Tema-toggle på lyst tema */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .tema-toggle {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .tema-toggle {
   background: rgba(var(--gold-border-rgb),0.1);
   border-color: rgba(var(--gold-border-rgb),0.4);
   color: var(--gold-deep);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .tema-toggle:hover { background: rgba(var(--gold-border-rgb),0.2); border-color: var(--gold-border); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .tema-toggle:hover { background: rgba(var(--gold-border-rgb),0.2); border-color: var(--gold-border); }
 
 /* Toast og navn-pille */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) #toast {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) #toast {
   background: var(--surface);
   color: #FAF6EE;
   border: 1px solid rgba(var(--gold-border-rgb),0.4);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .navn-pille {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .navn-pille {
   background: linear-gradient(135deg, var(--gold), var(--gold-border));
   color: var(--surface);
 }
 
 /* Diverse felles korrigeringer */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-bord-tag { /* bord-emoji-pille på gjester-grid */
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-bord-tag { /* bord-emoji-pille på gjester-grid */
   /* lar fargen settes inline fra JS — inget override her */
 }
 
@@ -1775,17 +1791,17 @@ html[data-nav="waffel"] .meny-scrim {
 html[data-nav="waffel"].meny-apen .meny-scrim { opacity: 1; pointer-events: auto; }
 
 /* Popover-utseende på lyse temaer */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-popover {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-popover {
   background: rgba(255,250,240,0.99);
   border-color: rgba(var(--gold-border-rgb),0.3);
   box-shadow: 0 10px 28px rgba(var(--surface-rgb),0.18);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-pop-item { color: var(--surface); }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-pop-item:hover,
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-pop-item.active {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-pop-item { color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-pop-item:hover,
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-pop-item.active {
   background: rgba(var(--gold-border-rgb),0.14); color: var(--gold-deep);
 }
-html[data-nav="waffel"]:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-popover {
+html[data-nav="waffel"]:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .nav-popover {
   background: none; box-shadow: none;
 }
 
@@ -1794,18 +1810,18 @@ html[data-nav="waffel"]:is([data-theme="light"],[data-theme="salvie"],[data-them
    ============================================================ */
 
 /* Svar-på-invitasjonen-kortet: bedre kontrast og lesbarhet på lys bakgrunn */
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta {
   background: linear-gradient(135deg, rgba(var(--gold-border-rgb),0.18), rgba(var(--gold-border-rgb),0.08));
   border: 1.5px solid rgba(var(--gold-border-rgb),0.55);
   box-shadow: 0 4px 16px rgba(var(--surface-rgb),0.10);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta-tekst strong {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta-tekst strong {
   color: var(--gold-deep);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta-tekst small {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta-tekst small {
   color: var(--surface-2);
 }
-:is([data-theme="light"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta-pil {
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .rsvp-cta-pil {
   color: var(--gold-deep);
 }
 
@@ -1819,4 +1835,179 @@ html[data-theme="salvie"], html[data-theme="salvie"] body, [data-theme="salvie"]
 html[data-theme="stovbla"], html[data-theme="stovbla"] body, [data-theme="stovbla"] body { background: #EDF1F6; }
 [data-theme="stovbla"] .hero-bg {
   background: linear-gradient(135deg, #E6EEF6 0%, #D4E2F0 35%, #E0E9F3 70%, #EDF1F6 100%);
+}
+
+/* =============================================================
+   STIL «INVITASJON» — hentet fra papirinvitasjonen
+   Akvarellblomster (rosa roser + lavendel), kalligrafi-skrift,
+   dyp plomme for navn og rose-rødt for dato.
+   Arver hele lys-blokken; her kun det invitasjons-spesifikke.
+   ============================================================= */
+[data-theme="invitasjon"] html,
+html[data-theme="invitasjon"],
+html[data-theme="invitasjon"] body,
+[data-theme="invitasjon"] body { background: var(--krem); }
+
+[data-theme="invitasjon"] body {
+  font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+  font-size: 16px;
+}
+
+/* HERO: blomsterhjørner øverst til venstre og nederst til høyre */
+[data-theme="invitasjon"] .hero {
+  min-height: 460px;
+  border-bottom: 1px solid rgba(var(--gold-rgb),0.22);
+}
+[data-theme="invitasjon"] .hero-bg {
+  background: linear-gradient(160deg, #FDF7F2 0%, #FBEFEA 45%, #F6E9F0 100%);
+  animation: none;
+}
+[data-theme="invitasjon"] .hero::before,
+[data-theme="invitasjon"] .hero::after {
+  content: '';
+  position: absolute;
+  width: 212px; height: 212px;
+  background: url('images/blomster-hjorne.svg') no-repeat center / contain;
+  pointer-events: none;
+  z-index: 1;
+}
+[data-theme="invitasjon"] .hero::before { top: -10px; left: -18px; }
+[data-theme="invitasjon"] .hero::after {
+  width: 176px; height: 176px;
+  bottom: -34px; right: -36px;
+  transform: rotate(180deg);
+  opacity: 0.8;
+}
+[data-theme="invitasjon"] .hero-inner { z-index: 2; padding: 26px 20px 30px; }
+
+/* Skript-ordet «bryllup» + hjerte — kun i denne stilen */
+.inv-skript, .inv-hjerte, .inv-invitasjon { display: none; }
+[data-theme="invitasjon"] .inv-invitasjon {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 3.2px;
+  text-transform: uppercase;
+  color: var(--plomme);
+  opacity: 0.85;
+  line-height: 1.7;
+  margin-bottom: 2px;
+}
+[data-theme="invitasjon"] .inv-skript {
+  display: block;
+  font-family: 'Great Vibes', 'Segoe Script', cursive;
+  font-size: 62px;
+  line-height: 1.05;
+  color: var(--rose);
+  margin: -2px 0 2px;
+  text-shadow: none;
+}
+[data-theme="invitasjon"] .inv-hjerte {
+  display: block;
+  margin: 2px auto 10px;
+  width: 22px; height: 20px;
+}
+[data-theme="invitasjon"] .inv-hjerte path { fill: var(--rose); }
+
+[data-theme="invitasjon"] .hero-par { margin-bottom: 10px; }
+[data-theme="invitasjon"] .hero-photo {
+  width: 104px; height: 104px;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 6px 20px rgba(107,65,114,0.18);
+}
+[data-theme="invitasjon"] .hero-hjerte { color: var(--rose); }
+
+[data-theme="invitasjon"] .hero-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: 34px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--plomme);
+  text-shadow: none;
+}
+[data-theme="invitasjon"] .hero-nick {
+  font-family: 'Great Vibes', 'Segoe Script', cursive;
+  font-style: normal;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  margin: 6px 0 10px;
+}
+[data-theme="invitasjon"] .hero-date {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--rose);
+  position: relative;
+  display: inline-block;
+  padding: 0 14px;
+}
+/* Tynne linjer på hver side av datoen — som på invitasjonen */
+[data-theme="invitasjon"] .hero-date::before,
+[data-theme="invitasjon"] .hero-date::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 34px;
+  height: 1px;
+  background: rgba(var(--gold-rgb),0.55);
+}
+[data-theme="invitasjon"] .hero-date::before { right: 100%; }
+[data-theme="invitasjon"] .hero-date::after { left: 100%; }
+[data-theme="invitasjon"] .hero-sub {
+  font-size: 14px;
+  letter-spacing: 1.4px;
+  color: var(--plomme);
+  opacity: 0.85;
+  margin-top: 8px;
+}
+
+/* Seksjonstitler i plomme med kalligrafisk touch */
+[data-theme="invitasjon"] .section-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--plomme);
+}
+[data-theme="invitasjon"] .lead { font-size: 16px; color: #4A3A4E; }
+
+/* Bladranke som skille mellom seksjoner (som på invitasjonen) */
+[data-theme="invitasjon"] .section + .section::before {
+  content: '';
+  display: block;
+  width: 78px; height: 12px;
+  margin: 0 auto 16px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 78 12'%3E%3Cg stroke='%23C4737E' stroke-width='1' fill='none' stroke-linecap='round'%3E%3Cpath d='M10 6h58'/%3E%3Cpath d='M30 6c4-4 9-4 12 0-3 4-8 4-12 0z' fill='%23E9AEB6' fill-opacity='.6'/%3E%3Cpath d='M48 6c4-4 9-4 12 0-3 4-8 4-12 0z' fill='%23E9AEB6' fill-opacity='.6'/%3E%3Ccircle cx='6' cy='6' r='2' fill='%23C4737E'/%3E%3Ccircle cx='72' cy='6' r='2' fill='%23C4737E'/%3E%3C/g%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+/* Kort og flater — mykt rosa i stedet for gult */
+[data-theme="invitasjon"] .mini-card,
+[data-theme="invitasjon"] .card,
+[data-theme="invitasjon"] .om-card {
+  background: rgba(255,255,255,0.72);
+  border-color: rgba(var(--gold-rgb),0.28);
+}
+[data-theme="invitasjon"] .countdown {
+  background: rgba(255,255,255,0.7);
+  border-color: rgba(var(--gold-rgb),0.4);
+  color: var(--plomme);
+  letter-spacing: 0.6px;
+}
+[data-theme="invitasjon"] .rsvp-cta {
+  background: linear-gradient(135deg, #FBEDEF 0%, #F3E6F3 100%);
+  border-color: rgba(var(--gold-rgb),0.4);
+}
+
+/* Blomsterhjørne nederst på siden som avslutning */
+[data-theme="invitasjon"] #app::after {
+  content: '';
+  display: block;
+  height: 150px;
+  margin-top: 8px;
+  background: url('images/blomster-hjorne.svg') no-repeat left top / 190px auto;
+  transform: rotate(180deg);
+  opacity: 0.75;
 }

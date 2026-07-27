@@ -6,8 +6,11 @@
 <base href="/SiljeOgTerje/" />
 <script src="gate.js"></script>
 <title>Silje & Terje — Vi gifter oss 22. august 2026</title>
-<meta name="description" content="Bryllupsapp for Silje Ingebrigtsen & Terje Karlstad — 22. august 2026, Elverhøy kirke & Rødbanken i Tromsø." />
-<meta name="theme-color" content="#8A6420" />
+<meta name="description" content="Bryllupsapp for Silje Ingebrigtsen & Terje Karlstad — 22. august 2026, Elverhøy kirke & Festsalen i Rødbanken i Tromsø." />
+<meta name="theme-color" content="#A04E5C" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" />
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="images/icon-180.png" />
 <link rel="manifest" href="manifest.json" />
@@ -80,15 +83,18 @@
     <div class="hero">
       <div class="hero-bg"></div>
       <div class="hero-inner">
+        <p class="inv-invitasjon">Vi har gleden av å<br />invitere deg til</p>
+        <span class="inv-skript">bryllup</span>
+        <svg class="inv-hjerte" viewBox="0 0 24 22" aria-hidden="true"><path d="M12 21S2.4 15.3 2.4 8.8A5.4 5.4 0 0 1 12 5.6a5.4 5.4 0 0 1 9.6 3.2C21.6 15.3 12 21 12 21z"/></svg>
         <div class="hero-par">
           <img src="images/gjester/silje-ingebrigtsen.jpg" alt="Silje" class="hero-photo" />
           <span class="hero-hjerte">💍</span>
           <img src="images/gjester/terje-karlstad.jpg" alt="Terje" class="hero-photo" />
         </div>
         <h1 class="hero-name" id="hero-navn">Silje &amp; Terje</h1>
-        <p class="hero-nick" id="hero-tagline">Vi gifter oss! 💍</p>
-        <p class="hero-date" id="hero-dato">Lørdag 22. august 2026</p>
-        <p class="hero-sub" id="hero-sted">Elverhøy kirke &amp; Rødbanken · Tromsø</p>
+        <p class="hero-nick" id="hero-tagline">Vi gleder oss til å feire denne dagen med deg!</p>
+        <p class="hero-date" id="hero-dato">Lørdag 22.08.2026</p>
+        <p class="hero-sub" id="hero-sted">Elverhøy kirke &amp; Festsalen i Rødbanken · Tromsø</p>
         <div class="countdown" id="countdown"></div>
       </div>
     </div>
@@ -103,8 +109,8 @@
     </a>
 
     <div class="card-row">
-      <button class="mini-card" data-go="program"><div class="mini-icon">💒</div><div class="mini-title">Vielse</div><div class="mini-sub">Elverhøy</div></button>
-      <button class="mini-card" data-go="program"><div class="mini-icon">🥂</div><div class="mini-title">Fest</div><div class="mini-sub">Rødbanken</div></button>
+      <button class="mini-card" data-go="program"><div class="mini-icon">💒</div><div class="mini-title">Vigsel</div><div class="mini-sub">Kl. 12.00</div></button>
+      <button class="mini-card" data-go="program"><div class="mini-icon">🥂</div><div class="mini-title">Fest</div><div class="mini-sub">Kl. 17.00</div></button>
       <button class="mini-card" data-go="bord"><div class="mini-icon">🪑</div><div class="mini-title">Bord</div><div class="mini-sub">Finn ditt</div></button>
     </div>
 
@@ -133,8 +139,17 @@
 
     <div class="stilvelger">
       <h3 class="stilvelger-tittel">🎨 Velg stil</h3>
-      <p class="stilvelger-sub">Silje &amp; Terje — tre lyse forslag fra årets bryllupstrender. Prøv dem og se hva dere liker best. Valget huskes i nettleseren.</p>
+      <p class="stilvelger-sub">Silje &amp; Terje — «Invitasjon» følger papirinvitasjonen. De tre andre er lyse forslag fra årets bryllupstrender. Prøv dem og se hva dere liker best. Valget huskes i nettleseren.</p>
       <div class="stil-kort-rad">
+        <div class="stil-kort" data-stil="invitasjon" role="button" tabindex="0">
+          <div class="stil-prover">
+            <span class="stil-prikk" style="background:#FCF5F0"></span>
+            <span class="stil-prikk" style="background:#C4737E"></span>
+            <span class="stil-prikk" style="background:#6B4172"></span>
+          </div>
+          <div class="stil-navn">Invitasjon</div>
+          <div class="stil-undertekst">Blomster &amp; kalligrafi</div>
+        </div>
         <div class="stil-kort" data-stil="light" role="button" tabindex="0">
           <div class="stil-prover">
             <span class="stil-prikk" style="background:#FAF6EE"></span>
@@ -479,7 +494,7 @@
       <button class="sub-tab active" data-go="meny">🍽️ Meny</button>
     </div>
     <h2 class="page-title">🍽️ Bryllupsmeny</h2>
-    <p class="muted">Rødbanken — middag fra kl 18:00</p>
+    <p class="muted">Festsalen i Rødbanken — middag og fest fra kl. 17.00</p>
 
     <div id="meny-list"></div>
 
@@ -514,7 +529,7 @@
 
     <div class="hjelp-seksjon">
       <h3>📍 Program</h3>
-      <p>Dagens program – fra vielsen i Elverhøy kirke til fest på Rødbanken. Klikk "Åpne i Google Maps" for veibeskrivelse, eller bruk det interaktive kartet nederst.</p>
+      <p>Dagens program – fra vigselen i Elverhøy kirke kl. 12.00 til middag og fest i Festsalen i Rødbanken fra kl. 17.00. Klikk "Åpne i Google Maps" for veibeskrivelse, eller bruk det interaktive kartet nederst.</p>
     </div>
 
     <div class="hjelp-seksjon">
