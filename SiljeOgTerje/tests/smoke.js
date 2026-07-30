@@ -186,6 +186,17 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   assert.ok(layout.miniSubSize >= 17, 'Tidspunkt i hurtigkort er for lite');
   assert.equal(layout.musicVisible, false, 'Musikkønsker skal være avslått som standard');
 
+  await page.evaluate(() => window.scrollTo(0, 700));
+  await page.waitForTimeout(150);
+  assert.equal(await page.locator('html').evaluate(el => el.classList.contains('nav-kompakt')), true,
+    'Bunnmenyen skal minimeres ved nedscrolling på mobil');
+  assert.equal(await page.locator('.nav > .nav-btn[data-go="hjem"]').isVisible(), true,
+    'Hjem-knappen skal være synlig i minimert meny');
+  await page.evaluate(() => window.scrollBy(0, -120));
+  await page.waitForTimeout(150);
+  assert.equal(await page.locator('html').evaluate(el => el.classList.contains('nav-kompakt')), false,
+    'Hele menyen skal vises igjen ved oppscrolling');
+
   await page.locator('button[data-go="program"]').first().click();
   await page.waitForTimeout(250);
   const cards = await page.locator('.program-kort').allInnerTexts();

@@ -1203,6 +1203,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   padding: 6px 0 calc(env(safe-area-inset-bottom, 0px) + 6px);
   backdrop-filter: blur(20px);
   z-index: 50;
+  transition: width .22s ease, border-radius .22s ease, padding .22s ease, box-shadow .22s ease;
 }
 .nav > .nav-btn, .nav > .nav-group { flex: 1 1 0; min-width: 0; }
 .nav-group { position: relative; display: flex; }
@@ -1223,6 +1224,34 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 .nav-btn.active { color: var(--gold); background: rgba(var(--gold-rgb),0.1); }
 .nav-icon { font-size: 22px; }
 .nav-label { font-size: 12px; letter-spacing: 0.2px; font-weight: 500; }
+
+/* På mobil minimeres bunnmenyen ved nedscrolling, som i en native nyhetsapp. */
+@media (max-width: 600px) {
+  html[data-nav="bunn"].nav-kompakt .nav {
+    width: 104px;
+    border: 1px solid rgba(var(--gold-rgb),0.28);
+    border-radius: 22px;
+    padding: 5px 7px calc(env(safe-area-inset-bottom, 0px) + 5px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+  html[data-nav="bunn"].nav-kompakt .nav > :not(.nav-btn[data-go="hjem"]) {
+    display: none;
+  }
+  html[data-nav="bunn"].nav-kompakt .nav > .nav-btn[data-go="hjem"] {
+    flex: 1 1 auto;
+    flex-direction: row;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 10px;
+  }
+  html[data-nav="bunn"].nav-kompakt .nav > .nav-btn[data-go="hjem"] .nav-icon {
+    font-size: 20px;
+  }
+  html[data-nav="bunn"].nav-kompakt .nav > .nav-btn[data-go="hjem"] .nav-label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
 
 /* Popover for samle-knapper (Bidra / Mer) */
 .nav-popover {

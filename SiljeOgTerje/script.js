@@ -320,8 +320,44 @@
   function settMeny(plassering) {
     document.documentElement.setAttribute('data-nav', plassering);
     document.documentElement.classList.remove('meny-apen');
+    document.documentElement.classList.remove('nav-kompakt');
     try { localStorage.setItem(STORAGE_MENY, plassering); } catch (_) {}
     oppdaterMenyvelger();
+  }
+  function initScrollMeny() {
+    const mobil = window.matchMedia('(max-width: 600px)');
+    let referanseY = window.scrollY;
+    let planlagt = false;
+
+    const settKompakt = kompakt => {
+      const tillatt = mobil.matches && gjeldendeMeny() === 'bunn' && window.scrollY > 100;
+      document.documentElement.classList.toggle('nav-kompakt', kompakt && tillatt);
+      if (kompakt && tillatt) lukkPopovere(null);
+    };
+
+    const oppdater = () => {
+      planlagt = false;
+      const y = Math.max(0, window.scrollY);
+      const endring = y - referanseY;
+      if (y <= 40) {
+        settKompakt(false);
+        referanseY = y;
+      } else if (Math.abs(endring) >= 10) {
+        settKompakt(endring > 0);
+        referanseY = y;
+      }
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!planlagt) {
+        planlagt = true;
+        window.requestAnimationFrame(oppdater);
+      }
+    }, { passive: true });
+    mobil.addEventListener('change', () => settKompakt(false));
+
+    const hjem = document.querySelector('.nav > .nav-btn[data-go="hjem"]');
+    if (hjem) hjem.addEventListener('click', () => settKompakt(false));
   }
   function initMeny() {
     oppdaterMenyvelger();
@@ -358,6 +394,7 @@
     });
     // Klikk utenfor lukker åpne popovere
     document.addEventListener('click', () => lukkPopovere(null));
+    initScrollMeny();
   }
 
   // ============ Navigasjon ============
@@ -404,6 +441,7 @@
     // Lukk skuff/popover etter navigering
     lukkMeny();
     lukkPopovere(null);
+    document.documentElement.classList.remove('nav-kompakt');
     window.scrollTo(0, 0);
     if (id === 'program') setTimeout(initMap, 100);
     if (id === 'hilsener') lastHilsener();
