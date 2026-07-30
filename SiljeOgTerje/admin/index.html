@@ -40,6 +40,10 @@
   .rad-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
   .lagre-bar { position: sticky; bottom: 0; background: #0D1B2A; padding: 12px 0; border-top: 1px solid rgba(212,168,83,0.3); margin-top: 16px; display: flex; gap: 10px; align-items: center; }
   .ok { color: #6FCF97; }
+  .rsvp-hurtig { background: rgba(80,180,100,0.08); border: 1px solid rgba(80,180,100,0.35); border-radius: 12px; padding: 14px; margin: 12px 0; }
+  .rsvp-hurtig-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+  .rsvp-hurtig label { display: flex; flex-direction: column; gap: 4px; color: #B0C4D8; font-size: 12px; }
+  .rsvp-hurtig input, .rsvp-hurtig select { padding: 9px; border-radius: 7px; border: 1px solid rgba(255,255,255,.18); background: #132638; color: #E8E0D4; font: inherit; }
 </style>
 </head>
 <body>
@@ -346,6 +350,11 @@ function programRad(p) {
     <div class="felt"><label>Tittel</label><input data-k="tittel" value="${esc(p.tittel||'')}" placeholder="Vielse"></div>
     <div class="felt"><label>Sted</label><input data-k="sted" value="${esc(p.sted||'')}" placeholder="Elverhøy kirke"></div>
     <div class="felt"><label>Adresse</label><input data-k="adresse" value="${esc(p.adresse||'')}" placeholder=""></div>
+    <div class="felt"><label>Ikon</label><input data-k="ikon" value="${esc(p.ikon||'')}" placeholder="📍"></div>
+    <div class="felt"><label>Kartlenke</label><input data-k="kart" value="${esc(p.kart||'')}" placeholder="https://maps.google.com/..."></div>
+    <div class="felt"><label>Nettside</label><input data-k="nettside" value="${esc(p.nettside||'')}" placeholder="https://..."></div>
+    <div class="felt"><label>Breddegrad</label><input data-k="lat" type="number" step="any" value="${esc(p.lat||'')}" placeholder="69.6483"></div>
+    <div class="felt"><label>Lengdegrad</label><input data-k="lng" type="number" step="any" value="${esc(p.lng||'')}" placeholder="18.9209"></div>
   </div>
   <div class="felt"><label>Beskrivelse</label><input data-k="tekst" value="${esc(p.tekst||p.beskrivelse||'')}"></div>
   <button class="danger tiny" onclick="this.closest('.rad-kort').remove()">🗑️ Fjern</button></div>`;
@@ -394,6 +403,7 @@ function byggRedaktor(c) {
   const praktisk = Array.isArray(c.praktisk) ? c.praktisk : (typeof PRAKTISK!=='undefined'?PRAKTISK:[]);
   const meny = Array.isArray(c.meny) ? c.meny : (typeof MENY!=='undefined'?MENY:[]);
   const menyinfo = Array.isArray(c.menyinfo) ? c.menyinfo : (typeof MENYINFO!=='undefined'?MENYINFO:[]);
+  const innstillinger = Object.assign({ musikkOnske: false }, (typeof INNSTILLINGER!=='undefined'?INNSTILLINGER:{}), c.innstillinger || {});
   let h = '<h2>✏️ Rediger innhold</h2><p class="muted">Endringene blir synlige i appen for alle gjestene umiddelbart etter lagring.</p>';
 
   h += '<div class="red-seksjon"><h3>💍 Forside</h3>'
@@ -432,6 +442,10 @@ function byggRedaktor(c) {
     + ta('Betalingsdetaljer (Vipps/Spleis/konto)','g-detaljer',gave.detaljer)
     + '</div>';
 
+  h += '<div class="red-seksjon"><h3>⚙️ Funksjoner</h3>'
+    + `<label style="display:flex;gap:10px;align-items:center"><input id="i-musikk" type="checkbox" ${innstillinger.musikkOnske?'checked':''}> Vis musikkønsker for gjestene</label>`
+    + '<p class="muted">Musikkønsker er avslått som standard og kan aktiveres når dere ønsker.</p></div>';
+
   h += '<div class="lagre-bar"><button onclick="lagreInnhold()">💾 Lagre alt innhold</button>'
     + '<span class="muted" id="innhold-tid"></span><span id="lagre-status"></span></div>';
 
@@ -466,6 +480,7 @@ async function lagreInnhold() {
     meny: lesRader('meny-rader', 'meny-rad'),
     menyinfo: linjer('meny-info'),
     gave: { tittel: val('g-tittel'), intro: val('g-intro'), onsker: linjer('g-onsker'), detaljer: val('g-detaljer') },
+    innstillinger: { musikkOnske: document.getElementById('i-musikk').checked },
   };
   const s = document.getElementById('lagre-status');
   s.textContent = ' Lagrer…'; s.className = 'muted';
@@ -632,6 +647,7 @@ async function lastRSVP() {
       <div class="stat-card"><div class="stat-num">${(s.svart || 0)}/${totalGjester}</div><div class="stat-label">Har svart</div></div>
     </div>`;
     const rows = d.svar || [];
+    byggRsvpHurtig(rows);
     if (!rows.length) { v.innerHTML = '<p class="muted">Ingen svar ennå.</p>'; return; }
     let h = '<table class="sortable-tabell"><thead><tr>'
       + '<th class="sortable" data-type="text">Navn</th>'
@@ -659,6 +675,62 @@ async function lastRSVP() {
     v.innerHTML = h;
   } catch (e) {
     v.innerHTML = '<div class="err">Kunne ikke hente RSVP: ' + esc(e.message || e) + '</div>';
+  }
+
+  var rsvpSvarCache = [];
+  function byggRsvpHurtig(rows) {
+    rsvpSvarCache = rows || [];
+    const sam = document.getElementById('rsvp-sammendrag');
+    if (!sam || typeof GJESTER === 'undefined') return;
+    const gjester = [...GJESTER].filter(g => g.navn).sort((a,b) => a.navn.localeCompare(b.navn, 'nb'));
+    sam.insertAdjacentHTML('beforeend', `<div class="rsvp-hurtig">
+      <strong>✍️ Registrer eller endre svar for en gjest</strong>
+      <div class="rsvp-hurtig-grid" style="margin-top:10px">
+        <label>Gjest<select id="rsvp-admin-gjest"><option value="">Velg gjest</option>${gjester.map(g=>`<option value="${esc(rsvpSlug(g))}">${esc(g.navn)}</option>`).join('')}</select></label>
+        <label>Kommer<select id="rsvp-admin-kommer"><option value="ja">Ja</option><option value="nei">Nei</option></select></label>
+        <label>Fredag<select id="rsvp-admin-fredag"><option value="ja">Ja</option><option value="nei">Nei</option></select></label>
+        <label>Antall personer<input id="rsvp-admin-antall" type="number" min="1" max="20" value="1"></label>
+        <label style="grid-column:1/-1">Hvem har gjesten med?<input id="rsvp-admin-folge" placeholder="Navn, gjerne én per linje"></label>
+      </div>
+      <div class="admin-aksjoner"><button onclick="lagreRsvpAdmin()">💾 Lagre RSVP</button><span id="rsvp-admin-status" class="muted"></span></div>
+    </div>`);
+    document.getElementById('rsvp-admin-gjest').onchange = fyllRsvpAdmin;
+  }
+
+  function fyllRsvpAdmin() {
+    const slug = document.getElementById('rsvp-admin-gjest').value;
+    const r = rsvpSvarCache.find(x => x.slug === slug);
+    document.getElementById('rsvp-admin-kommer').value = r && !r.kommer ? 'nei' : 'ja';
+    document.getElementById('rsvp-admin-fredag').value = r && r.fredag ? 'ja' : 'nei';
+    document.getElementById('rsvp-admin-antall').value = r && r.antall ? r.antall : 1;
+    document.getElementById('rsvp-admin-folge').value = r ? (r.ledsagere || '') : '';
+  }
+
+  async function lagreRsvpAdmin() {
+    const slug = document.getElementById('rsvp-admin-gjest').value;
+    const status = document.getElementById('rsvp-admin-status');
+    const g = GJESTER.find(x => rsvpSlug(x) === slug);
+    if (!g) { status.textContent = 'Velg en gjest først.'; return; }
+    const kommer = document.getElementById('rsvp-admin-kommer').value === 'ja';
+    status.textContent = 'Lagrer…';
+    try {
+      const res = await fetch('/api/siljeterje-rsvp', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          slug, navn: g.navn, kommer,
+          fredag: kommer && document.getElementById('rsvp-admin-fredag').value === 'ja',
+          antall: kommer ? Number(document.getElementById('rsvp-admin-antall').value) || 1 : 0,
+          ledsagere: kommer ? document.getElementById('rsvp-admin-folge').value.trim() : '',
+          allergier: (rsvpSvarCache.find(x => x.slug === slug) || {}).allergier || '',
+          kommentar: (rsvpSvarCache.find(x => x.slug === slug) || {}).kommentar || '',
+        }),
+      });
+      if (!res.ok) throw new Error('status ' + res.status);
+      status.textContent = '✅ Lagret';
+      await lastRSVP();
+    } catch (e) {
+      status.textContent = '❌ Kunne ikke lagre: ' + (e.message || e);
+    }
   }
 }
 

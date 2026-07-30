@@ -27,6 +27,9 @@
   let mittNavn = localStorage.getItem(STORAGE_NAVN) || '';
   let aktivSide = 'hjem';
   let map = null;
+  let mapMarkers = [];
+  const innstillinger = Object.assign({ musikkOnske: false },
+    typeof INNSTILLINGER !== 'undefined' ? INNSTILLINGER : {});
   let hilsener = [];
   let bilder = JSON.parse(localStorage.getItem(STORAGE_BILDER) || '[]');
   let gjesterFilter = 'alle';
@@ -46,6 +49,7 @@
     initTema();
     initMeny();
     initNavigasjon();
+    applyFeatureFlags();
     // Init kjøres umiddelbart — DB-avhengige kall venter ikke på SQL-vekking
     initHjem();
     initProgram();
@@ -388,6 +392,7 @@
   }
 
   function visSide(id) {
+    if (id === 'musikk' && !innstillinger.musikkOnske) id = 'hilsener';
     aktivSide = id;
     document.querySelectorAll('.page').forEach(p => p.hidden = (p.dataset.page !== id));
     const navParent = NAV_GROUP[id] || id;
@@ -446,8 +451,11 @@
   function initProgram() {
     const liste = document.getElementById('program-list');
     if (!liste) return;
-    liste.innerHTML = PROGRAM.map(p => `
-      <div class="program-kort" style="border-left-color:${p.farge || 'var(--gold-deep)'}">
+    normaliserProgram();
+    liste.innerHTML = PROGRAM.map((p, i) => `
+      <div class="program-kort${p.lat && p.lng ? ' program-kort-klikkbar' : ''}" data-program-index="${i}"
+        ${p.lat && p.lng ? 'role="button" tabindex="0" aria-label="Vis stedet i kartet"' : ''}
+        style="border-left-color:${p.farge || 'var(--gold-deep)'}">
         <div class="program-tid">${esc(p.tid || '')}</div>
         <div class="program-ikon">${p.ikon || '📍'}</div>
         <div class="program-info">
@@ -455,9 +463,78 @@
           <div class="sted">${esc(p.tittel || p.sted || '')}</div>
           ${p.tittel && p.sted ? `<div class="adresse">📍 ${esc(p.sted)}</div>` : ''}
           <div class="beskrivelse">${esc(p.beskrivelse || p.tekst || '')}</div>
+          ${p.lat && p.lng ? `<button class="vis-i-kart" type="button" data-map-index="${i}">📍 Vis i kartet</button>` : ''}
           ${p.kart ? `<a class="kart-link" href="${p.kart}" target="_blank" rel="noopener">🗺️ Åpne i Google Maps →</a>` : ''}
+          ${p.nettside ? `<a class="kart-link program-nettside" href="${esc(p.nettside)}" target="_blank" rel="noopener">🍽️ Besøk nettsiden →</a>` : ''}
         </div>
       </div>`).join('');
+    liste.querySelectorAll('.program-kort-klikkbar').forEach(kort => {
+      const vis = e => {
+        if (e.target.closest('a')) return;
+        const p = PROGRAM[Number(kort.dataset.programIndex)];
+        fokuserKart(p);
+      };
+      kort.addEventListener('click', vis);
+      kort.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); vis(e); }
+      });
+    });
+    liste.querySelectorAll('.vis-i-kart').forEach(knapp => {
+      knapp.addEventListener('click', e => {
+        e.stopPropagation();
+        fokuserKart(PROGRAM[Number(knapp.dataset.mapIndex)]);
+      });
+    });
+  }
+
+  function normaliserProgram() {
+    PROGRAM.forEach(p => {
+      const tekst = `${p.tittel || ''} ${p.sted || ''}`.toLowerCase();
+      if (!tekst.includes('walter') &&
+          (tekst.includes('amtmand') || tekst.includes('minglefest') || tekst.includes('mingling kvelden før'))) {
+        Object.assign(p, {
+          tid: '19:00', dag: 'Fredag 21. august', tittel: 'Minglefest',
+          sted: 'Amtmandens Datter', adresse: 'Grønnegata 83, 9008 Tromsø',
+          ikon: '🎉', beskrivelse: 'Uformell minglefest kvelden før bryllupet. Kom som du er – vi tar en skål sammen!',
+          lat: 69.6507843, lng: 18.9559258,
+          kart: 'https://www.google.com/maps/search/?api=1&query=69.6507843%2C18.9559258',
+        });
+      } else if (tekst.includes('elverhøy') || tekst.includes('elverhoy') || tekst.includes('vielse')) {
+        Object.assign(p, {
+          tid: '12:00', dag: p.dag || 'Lørdag 22. august',
+          tittel: 'Vigsel i Elverhøy kirke', sted: 'Elverhøy kirke',
+          adresse: 'Barduvegen 16, 9012 Tromsø', ikon: '💒',
+          beskrivelse: 'Vi gifter oss! Møt opp i god tid – dørene åpner 11:30.',
+          lat: 69.6484610, lng: 18.9212894,
+          kart: 'https://www.google.com/maps/search/?api=1&query=69.6484610%2C18.9212894',
+        });
+      } else if (tekst.includes('rødbanken') || tekst.includes('rodbanken')) {
+        Object.assign(p, {
+          sted: p.tittel && /middag|mottakelse|fest/i.test(p.tittel) ? 'Festsalen i Rødbanken' : p.sted,
+          adresse: 'Storgata 65, 9008 Tromsø',
+          lat: 69.64934760314557, lng: 18.955826114305662,
+          kart: 'https://www.google.com/maps/search/?api=1&query=69.64934760314557%2C18.955826114305662',
+        });
+        if (/middag|mottakelse|fest/i.test(p.tittel || '') && !/bryllupsmiddag|langt på natt/i.test(p.tittel || '')) {
+          p.tid = '17:00';
+          p.tittel = 'Middag og fest';
+          p.ikon = '🏛️';
+        }
+      }
+    });
+    const harWalter = PROGRAM.some(p => /walter\s*(?:&|og)\s*leonard/i.test(`${p.tittel || ''} ${p.sted || ''}`));
+    if (!harWalter) {
+      const middagIdx = PROGRAM.findIndex(p => /middag og fest|mottakelse på rødbanken/i.test(p.tittel || ''));
+      const walter = {
+        tid: '14:00', tittel: 'Aperitiff og mingling', sted: 'Walter & Leonard', ikon: '🍸',
+        beskrivelse: 'Dick tar imot oss i restauranten i kjelleren på Rødbanken. Her blir det litt aperitiff og forfriskninger mens brudeparet fotograferes.',
+        adresse: 'Storgata 65, 9008 Tromsø',
+        lat: 69.64909901495177, lng: 18.956037276009752,
+        kart: 'https://www.google.com/maps/search/?api=1&query=69.64909901495177%2C18.956037276009752',
+        nettside: 'https://walterogleonard.no/',
+      };
+      PROGRAM.splice(middagIdx >= 0 ? middagIdx : PROGRAM.length, 0, walter);
+    }
   }
 
   // ============ Redigerbart innhold (hentes fra admin via API) ============
@@ -542,27 +619,70 @@
           if (Array.isArray(c.praktisk)) { PRAKTISK.length = 0; c.praktisk.forEach(p => PRAKTISK.push(p)); }
           if (Array.isArray(c.meny)) { MENY.length = 0; c.meny.forEach(m => MENY.push(m)); }
           if (c.gave) Object.assign(GAVE, c.gave);
+          if (c.innstillinger) Object.assign(innstillinger, c.innstillinger);
         }
       }
     } catch {}
+    HERO.stedTekst = 'Elverhøy kirke & Festsalen i Rødbanken · Tromsø';
+    HERO.kleskode = 'Mørk dress. Ta gjerne med et varmt ytterplagg til Tromsø-været.';
+    HERO.omTekst = 'Silje og Terje gifter seg! Vi feirer dagen sammen med dere – fra vigselen i Elverhøy kirke kl. 12.00 til middag og fest i Festsalen i Rødbanken kl. 17.00. Kvelden før møtes vi til minglefest på Amtmandens Datter fredag kl. 19.00. ❤️';
+    applyFeatureFlags();
     renderHero(); renderOmoss(); initProgram(); renderPraktisk(); renderMeny(); renderGave();
+    if (map) { map.remove(); map = null; mapMarkers = []; initMap(); }
+  }
+
+  function applyFeatureFlags() {
+    document.querySelectorAll('[data-feature="musikk"]').forEach(el => {
+      el.hidden = !innstillinger.musikkOnske;
+      el.style.display = innstillinger.musikkOnske ? '' : 'none';
+    });
+    if (!innstillinger.musikkOnske && aktivSide === 'musikk') visSide('hilsener');
   }
 
   function initMap() {
     const el = document.getElementById('map');
     if (!el || map) return;
-    map = L.map('map').setView([69.6493, 18.9590], 14);
+    normaliserProgram();
+    map = L.map('map').setView([69.6493, 18.9470], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap',
       maxZoom: 19,
     }).addTo(map);
+    const punkter = [];
+    const brukteSteder = [];
     PROGRAM.forEach(p => {
       if (p.lat && p.lng) {
+        const finnes = brukteSteder.some(sted =>
+          Math.abs(sted.lat - Number(p.lat)) < 0.00005 && Math.abs(sted.lng - Number(p.lng)) < 0.00005);
+        if (finnes) return;
+        brukteSteder.push({ lat: Number(p.lat), lng: Number(p.lng) });
         const m = L.marker([p.lat, p.lng]).addTo(map);
-        m.bindPopup(`<strong>${esc(p.sted)}</strong><br/>${esc(p.tid)}<br/><small>${esc(p.adresse)}</small>`);
+        m.bindPopup(`<strong>${esc(p.tittel || p.sted)}</strong><br/>${esc(p.tid)} · ${esc(p.sted)}<br/><small>${esc(p.adresse)}</small>`);
+        mapMarkers.push({ program: p, marker: m });
+        punkter.push([p.lat, p.lng]);
       }
     });
+    if (punkter.length > 1) map.fitBounds(punkter, { padding: [28, 28] });
     setTimeout(() => map.invalidateSize(), 200);
+  }
+
+  function fokuserKart(p) {
+    if (!p || !p.lat || !p.lng) return;
+    initMap();
+    setTimeout(() => {
+      map.invalidateSize();
+      map.setView([p.lat, p.lng], 16, { animate: true });
+      map.closePopup();
+      const treff = mapMarkers.reduce((narmest, kandidat) => {
+        const avstand = Math.hypot(kandidat.program.lat - p.lat, kandidat.program.lng - p.lng);
+        return !narmest || avstand < narmest.avstand ? { ...kandidat, avstand } : narmest;
+      }, null);
+      if (treff) {
+        treff.marker.setPopupContent(`<strong>${esc(p.tittel || p.sted)}</strong><br/>${esc(p.tid)} · ${esc(p.sted)}<br/><small>${esc(p.adresse)}</small>`);
+        treff.marker.openPopup();
+      }
+      document.getElementById('map').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 80);
   }
 
   // ============ Gjester ============
@@ -643,7 +763,7 @@
       const bordTag = g.bord && !g.avbud ? (() => {
         const t = (typeof BORD_TEMA !== 'undefined' && BORD_TEMA[g.bord]) || null;
         return t
-          ? `<span class="gjest-bord-tag" style="background:${t.farge}33;border-color:${t.farge}AA;color:${t.farge}">🪑 Bord ${esc(String(g.bord))} · 🏔️ ${esc(t.fjell)}</span>`
+          ? `<span class="gjest-bord-tag" style="background:${t.farge}22;border-color:${t.farge}AA;color:${t.farge}">🪑 Bord ${esc(String(g.bord))} · ${esc(t.ikon || '📍')} ${esc(t.navn || t.fjell)}</span>`
           : `<span class="gjest-bord-tag">🪑 Bord ${esc(String(g.bord))}</span>`;
       })() : '';
       return `
@@ -1169,8 +1289,10 @@
       const farge = tema ? tema.farge : '#D4A853';
       const matchSok = bordSok && b.gjester.some(g => g.navn.toLowerCase().includes(bordSok));
       const utheve = matchSok ? ' bord-treff' : '';
+      const temaNavn = tema && (tema.navn || tema.fjell);
+      const temaMeta = tema && (tema.meta || (tema.hoyde ? `${tema.hoyde} m · ${tema.hvor || ''}` : tema.hvor));
       const tittel = tema
-        ? `${tema.url ? `<a class="bord-fjell-link" href="${esc(tema.url)}" target="_blank" rel="noopener"><span class="bord-fjell">🏔️ ${esc(tema.fjell)}</span></a>` : `<span class="bord-fjell">🏔️ ${esc(tema.fjell)}</span>`}<span class="bord-fjell-meta">${tema.hoyde} m · ${esc(tema.hvor)}</span>`
+        ? `<span class="bord-fjell">${esc(tema.ikon || '📍')} ${esc(temaNavn)}</span>${temaMeta ? `<span class="bord-fjell-meta">${esc(temaMeta)}</span>` : ''}`
         : `<span class="bord-fjell">Bord ${nr}</span>`;
       html += `<div class="bord-kort${utheve}" id="bord-${nr}" style="--bord-farge:${farge}">
         <div class="bord-header">

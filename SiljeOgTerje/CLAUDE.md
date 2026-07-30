@@ -17,7 +17,8 @@ Vanilla-JS PWA (ingen byggesteg for frontend) — bygget på samme oppsett som `
 - `index.html` — hele appen (SPA, seksjoner vises/skjules via nav)
 - `script.js` — all app-logikk (IIFE). Tema = `light` som standard.
 - `data.js` — **GENERERT** av `build-data.js`. Inneholder runtime-data + innholds-DEFAULTS
-  (HERO, OMOSS, PROGRAM, PRAKTISK, MENY, MENYINFO, GAVE, GJESTER, SANG*, BORD_TEMA, SPILL_QUIZ).
+  (HERO, OMOSS, PROGRAM, PRAKTISK, MENY, MENYINFO, GAVE, INNSTILLINGER, GJESTER,
+  SANG*, BORD_TEMA, SPILL_QUIZ).
 - `spill.js` — Bubble Bobble bryllupsspill (`window.ThomasSpill = {init,start,stopp,hopp}` — navnet beholdt).
 - `style.css` — tema via `[data-theme]`. Fire lyse stiler: **`invitasjon`** (standard),
   `light` (champagne), `salvie`, `stovbla` + mørkt `dark`/`smaragd`.
@@ -27,6 +28,7 @@ Vanilla-JS PWA (ingen byggesteg for frontend) — bygget på samme oppsett som `
 - `images/blomster-hjorne.svg` — akvarell-blomsterhjørne (roser, lavendel, blad) brukt i
   hero-hjørnene og som bunndekor i invitasjonsstilen.
 - `admin/index.html` — admin: statistikk + **innholds-redaktør** (selvbetjent for brudeparet).
+  Her kan musikkønsker skrus av/på og RSVP registreres manuelt på vegne av gjester.
 - `admin/gjester.html` — rediger/legg til/skjul gjester, sette bord/sete.
 - `audio/silje.mp3`, `audio/den-siste-villhingsten.mp3` — de to sangene.
 - `images/gjester/*.jpg` — 57 gjestebilder (scrapet fra Facebook-gruppe).
@@ -36,7 +38,7 @@ Silje og Terje redigerer ALT praktisk selv via `admin/` — ikke endre i kode.
 - Innhold lagres som ett JSON-dokument i DB via API `siljeterje-content`
   (GET offentlig, POST krever `ADMIN_KEY`). Se `api/siljeterje-content/`.
 - `data.js` = DEFAULTS. `script.js` `lastContent()` henter fra API og overstyrer
-  HERO/OMOSS/PROGRAM/PRAKTISK/MENY/MENYINFO/GAVE der lagret innhold finnes.
+  HERO/OMOSS/PROGRAM/PRAKTISK/MENY/MENYINFO/GAVE/INNSTILLINGER der lagret innhold finnes.
 - Admin-redaktøren laster `../data.js` og pre-fyller skjemaene med defaults når
   ingenting er lagret ennå, så første lagring ikke visker ut standardinnholdet.
 - Tolerante felt-navn: PROGRAM/MENY leser `beskrivelse || tekst`; PRAKTISK tåler
@@ -74,11 +76,21 @@ node -e "<enkel http-server>" på repo-rot, åpne /SiljeOgTerje/
 Frontend testes med Playwright (allerede installert). Sjekk konsoll for ekte feil
 (API-404 er OK lokalt).
 
+Kritisk smoke-/regresjonstest kjøres fra repo-roten:
+```
+node SiljeOgTerje/tests/smoke.js
+```
+Testen starter en lokal server, mocker API-kall (skriver aldri produksjonsdata) og sjekker
+iPhone-bredde, horisontal overflow, program/fakta, kartpinner, RSVP, admin, PWA-filer og
+JavaScript-feil. Den bruker eksisterende Playwright-installasjon og krever ingen npm-nedlasting
+ved kjøring. Kjør den manuelt før push så lenge npm-registeret er blokkert av IT-policy.
+
 ## Scraper-artefakter (i .gitignore — IKKE deploy)
 `scrape-guests.js`, `scraped-guests.json`, `member-links.json`, `gen-gjester.js`,
 `gjester-array.gen.js`, `build-data.js`, `package.json`. `data.js` er generert MEN committes.
 
 ## Kjente TODO / placeholders (brudeparet fyller via admin)
-- Program-tider, meny-detaljer, gaveønske/betaling (Vipps/Spleis/konto), Om oss-tekst.
+- Meny-detaljer og gaveønske/betaling (Vipps/Spleis/konto).
 - Ikoner i `images/icon-*.png` er foreløpig gjenbrukt fra Thomas50 — bør byttes til bryllupsikon.
-- DJ og «bestevenn»-funksjon er bevisst utsatt.
+- Musikkønsker er standard av og aktiveres via admin når DJ/musikk er avklart.
+- Bordtema bruker Tromsø-bydeler og kjente områder, ikke fjell.

@@ -9,11 +9,12 @@ const EVENT_DATO_ISO = "2026-08-22T12:00:00+02:00";
 // Programmet for dagen. Tider fra invitasjonen – Silje & Terje
 // kan endre alt selv via admin-siden.
 const PROGRAM = [
-  { tid: "19:00", dag: "Fredag 21. august", tittel: "Minglefest", sted: "Amtmandens datter, Tromsø", ikon: "🎉", beskrivelse: "Uformell minglefest kvelden før bryllupet. Kom som du er – vi tar en skål sammen!", adresse: "Amtmandens datter, Tromsø", kart: "https://maps.google.com/?q=Amtmandens+datter+Troms%C3%B8" },
-  { tid: "12:00", dag: "Lørdag 22. august", tittel: "Vigsel i Elverhøy kirke", sted: "Elverhøy kirke, Tromsø", ikon: "💒", beskrivelse: "Vi gifter oss! Møt opp i god tid – dørene åpner 11:30.", adresse: "Elverhøy kirke, Tromsø", kart: "https://maps.google.com/?q=Elverh%C3%B8y+kirke+Troms%C3%B8" },
+  { tid: "19:00", dag: "Fredag 21. august", tittel: "Minglefest", sted: "Amtmandens Datter", ikon: "🎉", beskrivelse: "Uformell minglefest kvelden før bryllupet. Kom som du er – vi tar en skål sammen!", adresse: "Grønnegata 83, 9008 Tromsø", lat: 69.6507843, lng: 18.9559258, kart: "https://www.google.com/maps/search/?api=1&query=69.6507843%2C18.9559258" },
+  { tid: "12:00", dag: "Lørdag 22. august", tittel: "Vigsel i Elverhøy kirke", sted: "Elverhøy kirke", ikon: "💒", beskrivelse: "Vi gifter oss! Møt opp i god tid – dørene åpner 11:30.", adresse: "Barduvegen 16, 9012 Tromsø", lat: 69.6484610, lng: 18.9212894, kart: "https://www.google.com/maps/search/?api=1&query=69.6484610%2C18.9212894" },
   { tid: "13:00", tittel: "Gratulasjoner & bobler", sted: "Utenfor kirken", ikon: "🥂", beskrivelse: "Ris, klemmer og et glass til brudeparet utenfor kirken." },
   { tid: "13:30", tittel: "Fotografering", sted: "Tromsø sentrum", ikon: "📸", beskrivelse: "Brudeparet tar bilder. Gjestene har fri noen timer før festen." },
-  { tid: "17:00", tittel: "Middag og fest", sted: "Festsalen i Rødbanken, Tromsø", ikon: "🏛️", beskrivelse: "Velkomstdrink og mingling i Festsalen i Rødbanken – midt i Tromsø sentrum.", adresse: "Rødbanken, Tromsø sentrum", kart: "https://maps.google.com/?q=R%C3%B8dbanken+Troms%C3%B8" },
+  { tid: "14:00", tittel: "Aperitiff og mingling", sted: "Walter & Leonard", ikon: "🍸", beskrivelse: "Dick tar imot oss i restauranten i kjelleren på Rødbanken. Her blir det litt aperitiff og forfriskninger mens brudeparet fotograferes.", adresse: "Storgata 65, 9008 Tromsø", lat: 69.64909901495177, lng: 18.956037276009752, kart: "https://www.google.com/maps/search/?api=1&query=69.64909901495177%2C18.956037276009752", nettside: "https://walterogleonard.no/" },
+  { tid: "17:00", tittel: "Middag og fest", sted: "Festsalen i Rødbanken", ikon: "🏛️", beskrivelse: "Velkomstdrink og mingling i Festsalen i Rødbanken – midt i Tromsø sentrum.", adresse: "Storgata 65, 9008 Tromsø", lat: 69.64934760314557, lng: 18.955826114305662, kart: "https://www.google.com/maps/search/?api=1&query=69.64934760314557%2C18.955826114305662" },
   { tid: "18:00", tittel: "Bryllupsmiddag", sted: "Festsalen i Rødbanken", ikon: "🍽️", beskrivelse: "Tre retter, taler og gode historier. Toastmasterne Maja & Thomas loser oss gjennom kvelden." },
   { tid: "21:00", tittel: "Kaffe, kake & første dans", sted: "Rødbanken", ikon: "💃", beskrivelse: "Bryllupskake, brudevals og åpning av dansegulvet." },
   { tid: "22:00", tittel: "Fest til langt på natt", sted: "Rødbanken", ikon: "🎶", beskrivelse: "Dans, bar og moro. Vi feirer til nattbussen går!" },
@@ -101,20 +102,20 @@ Trykk play og skål for brudgommen. 🥂`;
 const SANGER_LYRICS = SANG1_LYRICS;
 
 
-// Bord-tema: hvert bord oppkalt etter en fjelltopp rundt Tromsø.
+// Bord-tema: hvert bord oppkalt etter en bydel eller et kjent område i Tromsø.
 const BORD_TEMA = {
-  1:  { fjell: 'Hamperokken',     hoyde: 1404, hvor: 'Ullsfjorden',  farge: '#8A6420', url: 'https://kugo.no/2011/07/hamperokken-1404-moh/' },
-  2:  { fjell: 'Tromsdalstinden', hoyde: 1238, hvor: 'Tromsdalen',   farge: '#A07828', url: 'https://kugo.no/2015/04/tromsdalstinden-1238-moh-3/' },
-  3:  { fjell: 'Fløya',            hoyde: 671,  hvor: 'Tromsøya (Sherpatrappa)', farge: '#9C7A3C', url: 'https://kugo.no/2022/11/floya-671-sherpatrappa/' },
-  4:  { fjell: 'Steinskartinden',  hoyde: 817,  hvor: 'Kvaløya, Kattfjordeidet', farge: '#7E6230', url: 'https://kugo.no/2020/05/steinskartinden-817-moh/' },
-  5:  { fjell: 'Store Blåmann',    hoyde: 1044, hvor: 'Kvaløya',      farge: '#8A6420', url: 'https://kugo.no/2011/09/store-blamann-1044-moh/' },
-  6:  { fjell: 'Skamtinden',       hoyde: 884,  hvor: 'Kvaløya, Ersfjorden', farge: '#A07828', url: 'https://kugo.no/2012/10/skamtinden-884-moh/' },
-  7:  { fjell: 'Daltinden',        hoyde: 1533, hvor: 'Lyngsalpene, Furuflaten', farge: '#9C7A3C', url: 'https://kugo.no/2010/03/daltinden1533/' },
-  8:  { fjell: 'Store Kjølen',     hoyde: 668,  hvor: 'Tromsøya', farge: '#7E6230', url: 'https://kugo.no/' },
-  9:  { fjell: 'Skitntinden',      hoyde: 1042, hvor: 'Kvaløya, Kattfjordeidet', farge: '#8A6420', url: 'https://kugo.no/2011/04/skitntinden-1042-moh/' },
-  10: { fjell: 'Blåskredtinden',   hoyde: 785,  hvor: 'Kvaløya, Nordfjordbotn', farge: '#A07828', url: 'https://kugo.no/2012/10/blaskredtinden-785-moh/' },
-  11: { fjell: 'Styrmannstinden',  hoyde: 955,  hvor: 'Kvaløya, Vågbotn', farge: '#9C7A3C', url: 'https://kugo.no/2014/06/styrmannstinden-955-moh-2/' },
-  12: { fjell: 'Bønntuva',         hoyde: 689,  hvor: 'Kvaløya, Ersfjorden', farge: '#7E6230', url: 'https://kugo.no/' },
+  1:  { navn: 'Sentrum',       meta: 'Hjertet av Tromsø', ikon: '🏛️', farge: '#A04E5C' },
+  2:  { navn: 'Tromsdalen',    meta: 'På fastlandssiden', ikon: '🌉', farge: '#6B4172' },
+  3:  { navn: 'Bjerkaker',      meta: 'Sør på Tromsøya', ikon: '🌿', farge: '#7D6B91' },
+  4:  { navn: 'Workinnmarka',  meta: 'Skog og lysløyper', ikon: '🌲', farge: '#657A68' },
+  5:  { navn: 'Hamna',          meta: 'Nord på Tromsøya', ikon: '⚓', farge: '#557C8E' },
+  6:  { navn: 'Stakkevollan',   meta: 'Utsikt mot sundet', ikon: '🌊', farge: '#5E80A0' },
+  7:  { navn: 'Kvaløysletta',  meta: 'På Kvaløya', ikon: '🐋', farge: '#487A83' },
+  8:  { navn: 'Storelva',       meta: 'Mellom fjell og fjære', ikon: '🏞️', farge: '#6E8E6A' },
+  9:  { navn: 'Tomasjord',      meta: 'Langs Tromsøysundet', ikon: '⛵', farge: '#8A7088' },
+  10: { navn: 'Kroken',         meta: 'Under fjellene', ikon: '⛰️', farge: '#7B6A55' },
+  11: { navn: 'Lunheim',        meta: 'Et hjemlig bord', ikon: '🏡', farge: '#A36F73' },
+  12: { navn: 'Mortensnes',     meta: 'Vest på Tromsøya', ikon: '🌅', farge: '#9A7E96' },
 };
 
 
@@ -129,11 +130,16 @@ const SPILL_QUIZ = [
   { spm: "Hvor mange forlovere har Terje?", valg: ["1", "2", "3", "4"], svar: 2, fasit: "Tre! Vegard, Mikal og Ole. 🤵" },
   { spm: "Hvilken dato er bryllupet?", valg: ["22. juli 2026", "22. august 2026", "12. august 2026", "2. august 2026"], svar: 1, fasit: "22. august 2026 – en dag å huske! 💍" },
   { spm: "Hvem fridde til hvem?", valg: ["Terje fridde", "Silje fridde", "Samtidig", "Det er en hemmelighet"], svar: 0, fasit: "Terje fridde – på Siljes bursdag, ved gapahuken! 💍" },
-  { spm: "Hvor reiser brudeparet på bryllupsreise?", valg: ["Syden", "Nordlys-safari", "Storbyferie", "Det er hemmelig"], svar: null, fasit: "Diskuter rundt bordet – kanskje de avslører det i talen!" },
+  { spm: "Hvilken verdensdel drømmer brudeparet om til bryllupsreisen?", valg: ["Europa", "Asia", "Afrika", "Nord-Amerika"], svar: 1, fasit: "Asia står øverst på ønskelisten. ✈️" },
   { spm: "Hvem av brudeparet kommer oftest for sent?", valg: ["Silje", "Terje", "Begge", "Ingen vil innrømme det"], svar: 0, fasit: "Ifølge Terje: Silje! ⏰" },
   { spm: "Hvem er mest impulsiv?", valg: ["Silje", "Terje", "Begge", "Umulig å si"], svar: 1, fasit: "Terje – ifølge ham selv! 🎲" },
   { spm: "Hvem lager oftest middag?", valg: ["Silje", "Terje", "De deler likt", "Take-away"], svar: 0, fasit: "Silje står for mest matlaging. 🍳" },
   { spm: "Hvem vinner som regel en diskusjon?", valg: ["Silje", "Terje", "Uavgjort", "Katten"], svar: 0, fasit: "Silje – ingen overraskelse der! 😄" },
+  { spm: "Hvor var Silje og Terjes første date?", valg: ["På kino", "Hjemme hos Silje", "På fjelltur", "På Matservice"], svar: 1, fasit: "Første date var hjemme hos Silje. ❤️" },
+  { spm: "Hvem sa «jeg elsker deg» først?", valg: ["Silje", "Terje", "Begge samtidig", "Ingen husker"], svar: 1, fasit: "Terje sa det først. 💕" },
+  { spm: "Hvem bruker mest tid på telefonen?", valg: ["Silje", "Terje", "Helt likt", "Iver"], svar: 0, fasit: "Silje – ifølge Terje er det ikke konkurranse engang. 📱" },
+  { spm: "Hva gjør Silje gjerne når hun får servert skikkelig god mat?", valg: ["Klipper med ørene", "Nynner", "Tar bilde først", "Ber om oppskriften"], svar: 1, fasit: "Hun nynner når maten virkelig treffer. 🎶" },
+  { spm: "Hvilket utsagn forbindes med Silje?", valg: ["No kjøre vi", "Æ e myk og føyelig", "Det ordner sæ", "Vi tar det i morgen"], svar: 1, fasit: "«Æ e myk og føyelig» – ifølge forlover Hege. 😄" },
 ];
 
 // Åpne diskusjonsspørsmål for bordet (uten fasit)
@@ -227,4 +233,9 @@ const GAVE = {
   vippsTekst: "Vipps til brudeparet (legges inn av Silje & Terje)",
   spleisUrl: "",
   konto: "",
+};
+
+// Funksjoner som Silje og Terje kan skru av/på i admin.
+const INNSTILLINGER = {
+  musikkOnske: false,
 };

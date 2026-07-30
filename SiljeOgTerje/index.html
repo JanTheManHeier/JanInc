@@ -133,7 +133,7 @@
     <div class="section center">
       <button class="btn-primary" data-go="hilsener">💌 Skriv en hilsen til brudeparet</button>
       <button class="btn-secondary" data-go="toastmaster">🎤 Meld tale til toastmasterne</button>
-      <button class="btn-secondary" data-go="musikk">🎵 Send musikkønske</button>
+      <button class="btn-secondary" data-go="musikk" data-feature="musikk" hidden>🎵 Send musikkønske</button>
       <button class="btn-secondary" data-go="gave">🎁 Gaveønske</button>
     </div>
 
@@ -270,7 +270,7 @@
     <div class="sub-nav">
       <button class="sub-tab" data-go="hilsener">💌 Hilsen</button>
       <button class="sub-tab" data-go="toastmaster">🎤 Tale</button>
-      <button class="sub-tab" data-go="musikk">🎵 Musikk</button>
+      <button class="sub-tab" data-go="musikk" data-feature="musikk" hidden>🎵 Musikk</button>
     </div>
     <h2 class="page-title">💌 Hilsener til brudeparet</h2>
     <p class="muted">Skriv en hilsen — alle gjester ser dem her</p>
@@ -290,7 +290,7 @@
     <div class="sub-nav">
       <button class="sub-tab" data-go="hilsener">💌 Hilsen</button>
       <button class="sub-tab" data-go="toastmaster">🎤 Tale</button>
-      <button class="sub-tab" data-go="musikk">🎵 Musikk</button>
+      <button class="sub-tab" data-go="musikk" data-feature="musikk" hidden>🎵 Musikk</button>
     </div>
     <h2 class="page-title">🎤 Hold en tale</h2>
     <p class="muted">Vil du holde tale? Toastmasterne <strong>Maja Wilhelmsen</strong> og <strong>Thomas Helge Hansen</strong> setter deg på lista.</p>
@@ -312,11 +312,11 @@
   </section>
 
   <!-- MUSIKKØNSKE -->
-  <section class="page" data-page="musikk" hidden>
+  <section class="page" data-page="musikk" data-feature="musikk" hidden>
     <div class="sub-nav">
       <button class="sub-tab" data-go="hilsener">💌 Hilsen</button>
       <button class="sub-tab" data-go="toastmaster">🎤 Tale</button>
-      <button class="sub-tab" data-go="musikk">🎵 Musikk</button>
+      <button class="sub-tab" data-go="musikk" data-feature="musikk" hidden>🎵 Musikk</button>
     </div>
     <h2 class="page-title">🎵 Musikkønske</h2>
     <p class="muted">Har du en låt som må spilles på festen? Send inn ditt ønske!</p>
@@ -569,7 +569,7 @@
 
     <div class="hjelp-seksjon">
       <h3>👋 Personvern</h3>
-      <p>Vi lagrer navnet ditt (hvis du oppgir det), hilsener, taleforespørsler og musikkønsker. Vi bruker ikke informasjonen til noe annet enn å gjøre bryllupet finere for Silje &amp; Terje. ❤️</p>
+      <p>Vi lagrer navnet ditt (hvis du oppgir det), hilsener og taleforespørsler. Hvis musikkønsker aktiveres, lagres også disse. Vi bruker ikke informasjonen til noe annet enn å gjøre bryllupet finere for Silje &amp; Terje. ❤️</p>
     </div>
 
     <div class="hjelp-seksjon">
