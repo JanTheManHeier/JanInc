@@ -173,6 +173,8 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
     bodyWidth: document.body.scrollWidth,
     leadSize: parseFloat(getComputedStyle(document.querySelector('.lead')).fontSize),
     heroSubSize: parseFloat(getComputedStyle(document.querySelector('.hero-sub')).fontSize),
+    miniTitleSize: parseFloat(getComputedStyle(document.querySelector('.mini-title')).fontSize),
+    miniSubSize: parseFloat(getComputedStyle(document.querySelector('.mini-sub')).fontSize),
     musicVisible: [...document.querySelectorAll('[data-feature="musikk"]')]
       .some(el => getComputedStyle(el).display !== 'none'),
   }));
@@ -180,6 +182,8 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   assert.equal(layout.bodyWidth, layout.innerWidth, 'Body har horisontal overflow');
   assert.ok(layout.leadSize >= 17, 'Brødtekst er for liten');
   assert.ok(layout.heroSubSize >= 16, 'Stedsteksten i hero er for liten');
+  assert.ok(layout.miniTitleSize >= 19, 'Tittel i hurtigkort er for liten');
+  assert.ok(layout.miniSubSize >= 17, 'Tidspunkt i hurtigkort er for lite');
   assert.equal(layout.musicVisible, false, 'Musikkønsker skal være avslått som standard');
 
   await page.locator('button[data-go="program"]').first().click();
