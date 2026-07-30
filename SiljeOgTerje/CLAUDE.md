@@ -15,13 +15,14 @@ Vanilla-JS PWA (ingen byggesteg for frontend) — bygget på samme oppsett som `
 
 ## Filstruktur
 - `index.html` — hele appen (SPA, seksjoner vises/skjules via nav)
-- `script.js` — all app-logikk (IIFE). Tema = `light` som standard.
+- `script.js` — all app-logikk (IIFE). Tema = `invitasjon` som standard.
+- `program-sync.js` — felles programfasit brukt av både gjesteappen og admin.
 - `data.js` — **GENERERT** av `build-data.js`. Inneholder runtime-data + innholds-DEFAULTS
   (HERO, OMOSS, PROGRAM, PRAKTISK, MENY, MENYINFO, GAVE, INNSTILLINGER, GJESTER,
   SANG*, BORD_TEMA, SPILL_QUIZ).
 - `spill.js` — Bubble Bobble bryllupsspill (`window.ThomasSpill = {init,start,stopp,hopp}` — navnet beholdt).
-- `style.css` — tema via `[data-theme]`. Fire lyse stiler: **`invitasjon`** (standard),
-  `light` (champagne), `salvie`, `stovbla` + mørkt `dark`/`smaragd`.
+- `style.css` — tema via `[data-theme]`. Gjestevalgene er låst til
+  **`invitasjon`** (standard) og mørkt `dark`.
   Lys-reglene deles via `:is([data-theme="light"],[data-theme="invitasjon"],…)`; legger du
   til et nytt lyst tema må det inn i alle disse `:is(...)`-listene. Invitasjonsstilen ligger
   i egen blokk nederst i fila (fonter Great Vibes + Cormorant Garamond fra Google Fonts).

@@ -177,6 +177,8 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
     localStorage.setItem('siljeterje-tilgang', '1');
     localStorage.setItem('siljeterje-navn', 'Test App');
     localStorage.setItem('siljeterje-install-dismissed', '1');
+    localStorage.setItem('siljeterje-tema', 'salvie');
+    localStorage.setItem('siljeterje-meny', 'topp');
   });
   const page = await context.newPage();
   const captured = [];
@@ -194,6 +196,9 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
     heroSubSize: parseFloat(getComputedStyle(document.querySelector('.hero-sub')).fontSize),
     miniTitleSize: parseFloat(getComputedStyle(document.querySelector('.mini-title')).fontSize),
     miniSubSize: parseFloat(getComputedStyle(document.querySelector('.mini-sub')).fontSize),
+    theme: document.documentElement.dataset.theme,
+    nav: document.documentElement.dataset.nav,
+    styleSelectors: document.querySelectorAll('[data-stil], [data-meny]').length,
     musicVisible: [...document.querySelectorAll('[data-feature="musikk"]')]
       .some(el => getComputedStyle(el).display !== 'none'),
   }));
@@ -203,28 +208,30 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   assert.ok(layout.heroSubSize >= 16, 'Stedsteksten i hero er for liten');
   assert.ok(layout.miniTitleSize >= 19, 'Tittel i hurtigkort er for liten');
   assert.ok(layout.miniSubSize >= 17, 'Tidspunkt i hurtigkort er for lite');
+  assert.equal(layout.theme, 'invitasjon', 'Invitasjonsfargene skal være eneste lyse standard');
+  assert.equal(layout.nav, 'waffel', 'Hamburgermeny skal være eneste menyplassering');
+  assert.equal(layout.styleSelectors, 0, 'Alternative stil- og menyvalg skal være skjult');
   assert.equal(layout.musicVisible, false, 'Musikkønsker skal være avslått som standard');
+
+  await page.locator('#tema-toggle').click();
+  assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
+  await page.locator('#tema-toggle').click();
+  assert.equal(await page.locator('html').getAttribute('data-theme'), 'invitasjon');
 
   await page.locator('button[data-go="gave"]').first().click();
   assert.match(await page.locator('#gave-detaljer').innerText(), /Vipps 12345678/);
   assert.match(await page.locator('#gave-detaljer').innerText(), /Merk betalingen med navn/);
-  await page.locator('.nav > button[data-go="hjem"]').click();
+  await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
   await page.locator('button[data-go="bord"]').first().click();
   await page.waitForTimeout(150);
   assert.match(await page.locator('.bord-info').first().innerText(), /1\s*\/\s*10/,
     'Bord uten egen kapasitet skal være timannsbord');
-  await page.locator('.nav > button[data-go="hjem"]').click();
+  await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
 
-  await page.evaluate(() => window.scrollTo(0, 700));
-  await page.waitForTimeout(150);
-  assert.equal(await page.locator('html').evaluate(el => el.classList.contains('nav-kompakt')), true,
-    'Bunnmenyen skal minimeres ved nedscrolling på mobil');
-  assert.equal(await page.locator('.nav > .nav-btn[data-go="hjem"]').isVisible(), true,
-    'Hjem-knappen skal være synlig i minimert meny');
-  await page.evaluate(() => window.scrollBy(0, -120));
-  await page.waitForTimeout(150);
-  assert.equal(await page.locator('html').evaluate(el => el.classList.contains('nav-kompakt')), false,
-    'Hele menyen skal vises igjen ved oppscrolling');
+  await page.locator('#meny-knapp').click();
+  assert.equal(await page.locator('html').evaluate(el => el.classList.contains('meny-apen')), true,
+    'Hamburgermenyen skal åpnes på mobil');
+  await page.locator('#meny-scrim').click({ position: { x: 390, y: 400 } });
 
   await page.locator('button[data-go="program"]').first().click();
   await page.waitForTimeout(250);
@@ -284,6 +291,15 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   assert.equal(await page.locator('#i-musikk').isChecked(), false);
   assert.ok(await page.locator('.program-rad [data-k="lat"]').count() >= 4);
   assert.ok(await page.locator('.program-rad [data-k="nettside"]').count() >= 4);
+  const adminProgram = await page.locator('.program-rad').evaluateAll(rows => rows.map(row => ({
+    tid: row.querySelector('[data-k="tid"]').value,
+    tittel: row.querySelector('[data-k="tittel"]').value,
+    sted: row.querySelector('[data-k="sted"]').value,
+  })));
+  assert.ok(adminProgram.some(p => p.tittel === 'Minglefest' && p.tid === '19:00' && p.sted === 'Amtmandens Datter'));
+  assert.ok(adminProgram.some(p => p.tittel === 'Vigsel i Elverhøy kirke' && p.tid === '12:00'));
+  assert.ok(adminProgram.some(p => p.sted === 'Walter & Leonard' && p.tid === '14:00'));
+  assert.ok(adminProgram.some(p => p.tittel === 'Middag og fest' && p.tid === '17:00'));
   assert.equal(await page.locator('#g-detaljer').inputValue(), 'Vipps 12345678\nMerk betalingen med navn');
   await page.locator('#g-vipps').fill('99887766');
   await page.getByRole('button', { name: /Lagre alt innhold/ }).click();
@@ -291,6 +307,8 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   const contentPost = captured.find(x => x.endpoint === 'siljeterje-content');
   assert.equal(contentPost.body.content.gave.vipps, '99887766');
   assert.equal(contentPost.body.content.gave.detaljer, 'Vipps 12345678\nMerk betalingen med navn');
+  assert.ok(contentPost.body.content.program.some(p => p.tittel === 'Vigsel i Elverhøy kirke' && p.tid === '12:00'));
+  assert.ok(contentPost.body.content.program.some(p => p.sted === 'Walter & Leonard' && p.tid === '14:00'));
 
   await page.getByRole('button', { name: /Vis RSVP-svar/ }).click();
   await assert.doesNotReject(() => page.locator('#rsvp-admin-gjest').waitFor({ state: 'visible' }));

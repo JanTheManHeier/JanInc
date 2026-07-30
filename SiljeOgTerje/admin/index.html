@@ -83,6 +83,7 @@
 <div id="content">Laster...</div>
 
 <script src="../data.js"></script>
+<script src="../program-sync.js"></script>
 <script src="../sporsmal/sporsmal-data.js"></script>
 <script src="../forlover/forlover-data.js"></script>
 <script>
@@ -400,6 +401,7 @@ function byggRedaktor(c) {
   const omoss = Object.assign({}, (typeof OMOSS!=='undefined'?OMOSS:{}), c.omoss || {});
   const gave = Object.assign({}, (typeof GAVE!=='undefined'?GAVE:{}), c.gave || {});
   const program = (Array.isArray(c.program) && c.program.length) ? c.program : (typeof PROGRAM!=='undefined'?PROGRAM:[]);
+  if (window.SiljeTerjeProgram) window.SiljeTerjeProgram.normaliser(program);
   const praktisk = Array.isArray(c.praktisk) ? c.praktisk : (typeof PRAKTISK!=='undefined'?PRAKTISK:[]);
   const meny = Array.isArray(c.meny) ? c.meny : (typeof MENY!=='undefined'?MENY:[]);
   const menyinfo = Array.isArray(c.menyinfo) ? c.menyinfo : (typeof MENYINFO!=='undefined'?MENYINFO:[]);
@@ -421,7 +423,9 @@ function byggRedaktor(c) {
     + ta('Forlovelseshistorien','om-forlovelse',omoss.forlovelse)
     + '</div>';
 
-  h += '<div class="red-seksjon"><h3>📅 Program</h3><div id="program-rader">'
+  h += '<div class="red-seksjon"><h3>📅 Program</h3>'
+    + '<p class="muted">Faste tider og steder synkroniseres med programmet gjestene ser: fredag kl. 19, vigsel kl. 12, Walter & Leonard kl. 14 og middag/fest kl. 17.</p>'
+    + '<div id="program-rader">'
     + (Array.isArray(program) ? program : []).map(programRad).join('')
     + '</div><button class="tiny" onclick="leggTil(\'program-rader\',\'program\')">➕ Legg til punkt</button></div>';
 
@@ -472,6 +476,8 @@ function linjer(id) { return document.getElementById(id).value.split('\n').map(s
 function val(id) { return document.getElementById(id).value.trim(); }
 
 async function lagreInnhold() {
+  const program = lesRader('program-rader', 'program-rad');
+  if (window.SiljeTerjeProgram) window.SiljeTerjeProgram.normaliser(program);
   const content = {
     hero: {
       brud: val('h-brud'), brudgom: val('h-brudgom'), tagline: val('h-tagline'),
@@ -479,7 +485,7 @@ async function lagreInnhold() {
       omTittel: val('h-omtittel'), omTekst: val('h-omtekst'), kleskode: val('h-kleskode'),
     },
     omoss: { tittel: val('om-tittel'), tekst: val('om-tekst'), forlovelse: val('om-forlovelse') },
-    program: lesRader('program-rader', 'program-rad'),
+    program,
     praktisk: linjer('praktisk-info-ta'),
     meny: lesRader('meny-rader', 'meny-rad'),
     menyinfo: linjer('meny-info'),

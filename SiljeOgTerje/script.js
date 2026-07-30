@@ -3,17 +3,16 @@
 // === Tema-init: kjøres umiddelbart for å unngå flash ===
 (function temaInit() {
   const KEY = 'siljeterje-tema';
-  // Default = «Invitasjon» (blomstertema fra papirinvitasjonen).
-  // Kun lagret valg brukes ellers — ignorer prefers-color-scheme.
-  const tema = localStorage.getItem(KEY) || 'invitasjon';
+  const tema = localStorage.getItem(KEY) === 'dark' ? 'dark' : 'invitasjon';
   document.documentElement.setAttribute('data-theme', tema);
+  localStorage.setItem(KEY, tema);
 })();
 
 // === Meny-plassering-init: settes umiddelbart for å unngå flash ===
 (function menyInit() {
   const KEY = 'siljeterje-meny';
-  const plassering = localStorage.getItem(KEY) || 'bunn';
-  document.documentElement.setAttribute('data-nav', plassering);
+  document.documentElement.setAttribute('data-nav', 'waffel');
+  localStorage.setItem(KEY, 'waffel');
 })();
 
 (function () {
@@ -526,53 +525,7 @@
   }
 
   function normaliserProgram() {
-    PROGRAM.forEach(p => {
-      const tekst = `${p.tittel || ''} ${p.sted || ''}`.toLowerCase();
-      if (!tekst.includes('walter') &&
-          (tekst.includes('amtmand') || tekst.includes('minglefest') || tekst.includes('mingling kvelden før'))) {
-        Object.assign(p, {
-          tid: '19:00', dag: 'Fredag 21. august', tittel: 'Minglefest',
-          sted: 'Amtmandens Datter', adresse: 'Grønnegata 83, 9008 Tromsø',
-          ikon: '🎉', beskrivelse: 'Uformell minglefest kvelden før bryllupet. Kom som du er – vi tar en skål sammen!',
-          lat: 69.6507843, lng: 18.9559258,
-          kart: 'https://www.google.com/maps/search/?api=1&query=69.6507843%2C18.9559258',
-        });
-      } else if (tekst.includes('elverhøy') || tekst.includes('elverhoy') || tekst.includes('vielse')) {
-        Object.assign(p, {
-          tid: '12:00', dag: p.dag || 'Lørdag 22. august',
-          tittel: 'Vigsel i Elverhøy kirke', sted: 'Elverhøy kirke',
-          adresse: 'Barduvegen 16, 9012 Tromsø', ikon: '💒',
-          beskrivelse: 'Vi gifter oss! Møt opp i god tid – dørene åpner 11:30.',
-          lat: 69.6484610, lng: 18.9212894,
-          kart: 'https://www.google.com/maps/search/?api=1&query=69.6484610%2C18.9212894',
-        });
-      } else if (tekst.includes('rødbanken') || tekst.includes('rodbanken')) {
-        Object.assign(p, {
-          sted: p.tittel && /middag|mottakelse|fest/i.test(p.tittel) ? 'Festsalen i Rødbanken' : p.sted,
-          adresse: 'Storgata 65, 9008 Tromsø',
-          lat: 69.64934760314557, lng: 18.955826114305662,
-          kart: 'https://www.google.com/maps/search/?api=1&query=69.64934760314557%2C18.955826114305662',
-        });
-        if (/middag|mottakelse|fest/i.test(p.tittel || '') && !/bryllupsmiddag|langt på natt/i.test(p.tittel || '')) {
-          p.tid = '17:00';
-          p.tittel = 'Middag og fest';
-          p.ikon = '🏛️';
-        }
-      }
-    });
-    const harWalter = PROGRAM.some(p => /walter\s*(?:&|og)\s*leonard/i.test(`${p.tittel || ''} ${p.sted || ''}`));
-    if (!harWalter) {
-      const middagIdx = PROGRAM.findIndex(p => /middag og fest|mottakelse på rødbanken/i.test(p.tittel || ''));
-      const walter = {
-        tid: '14:00', tittel: 'Aperitiff og mingling', sted: 'Walter & Leonard', ikon: '🍸',
-        beskrivelse: 'Dick tar imot oss i restauranten i kjelleren på Rødbanken. Her blir det litt aperitiff og forfriskninger mens brudeparet fotograferes.',
-        adresse: 'Storgata 65, 9008 Tromsø',
-        lat: 69.64909901495177, lng: 18.956037276009752,
-        kart: 'https://www.google.com/maps/search/?api=1&query=69.64909901495177%2C18.956037276009752',
-        nettside: 'https://walterogleonard.no/',
-      };
-      PROGRAM.splice(middagIdx >= 0 ? middagIdx : PROGRAM.length, 0, walter);
-    }
+    if (window.SiljeTerjeProgram) window.SiljeTerjeProgram.normaliser(PROGRAM);
   }
 
   // ============ Redigerbart innhold (hentes fra admin via API) ============
