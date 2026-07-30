@@ -1,6 +1,6 @@
 // rsvp.js — RSVP-logikk. Personlig lenke (?g=slug) forhåndsvelger gjesten,
 // felles lenke lar gjesten velge navn fra lista. Lagrer mot /api/siljeterje-rsvp.
-(function () {
+(async function () {
   'use strict';
 
   // Stabil slug per gjest — utledes fra bildefil-navnet (generert ved scraping),
@@ -21,7 +21,23 @@
     return slugify(g.navn);
   }
 
-  const gjester = (typeof GJESTER !== 'undefined' ? GJESTER : []).filter(g => g.navn);
+  const gjester = [...(typeof GJESTER !== 'undefined' ? GJESTER : [])].filter(g => g.navn);
+  try {
+    const r = await fetch('/api/siljeterje-gjest-edit');
+    if (r.ok) {
+      const edits = await r.json();
+      edits.forEach(e => {
+        const eksisterende = gjester.find(g => g.navn === e.navn);
+        if (e.skjult) {
+          if (eksisterende) gjester.splice(gjester.indexOf(eksisterende), 1);
+        } else if (e.nyGjest && !eksisterende) {
+          gjester.push({ navn: e.navn, relasjon: e.relasjon || '', bordType: e.bordType || 10 });
+        } else if (eksisterende && e.nyttNavn) {
+          eksisterende.navn = e.nyttNavn;
+        }
+      });
+    }
+  } catch (_) {}
   const slugTilGjest = {};
   gjester.forEach(g => { slugTilGjest[gjestSlug(g)] = g; });
 
@@ -116,9 +132,10 @@
     const fredagInp = document.querySelector('input[name="fredag"]:checked');
     const antall = kommer ? parseInt($('antall').value, 10) || 1 : 0;
     const ledsagere = kommer ? $('ledsagere').value.trim() : '';
+    const ledsagerNavn = ledsagere.split(/\n+/).map(n => n.trim()).filter(Boolean);
 
-    if (kommer && antall > 1 && !ledsagere) {
-      status.textContent = 'Skriv inn navnet på den/de du har med deg 🙂';
+    if (kommer && ledsagerNavn.length !== Math.max(0, antall - 1)) {
+      status.textContent = `Skriv inn ${antall - 1} fullt navn, ett per linje 🙂`;
       status.className = 'status feil';
       $('ledsager-felt').classList.remove('skjult');
       $('ledsagere').focus();

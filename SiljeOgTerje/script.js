@@ -111,7 +111,7 @@
         if (d.nyGjest) {
           // Ny gjest lagt til av brudeparet
           if (d.skjult) return;
-          const ny = { navn: d.navn, bordType: d.bordType || 8 };
+          const ny = { navn: d.navn, bordType: d.bordType || 10 };
           if (has('bord')) ny.bord = d.bord;
           if (has('sete')) ny.sete = d.sete;
           if (has('fbUrl')) ny.fbUrl = d.fbUrl;
@@ -629,16 +629,16 @@
     if (onsk) onsk.innerHTML = (GAVE.onsker || []).map(o => `<div>${esc(o)}</div>`).join('');
     const det = document.getElementById('gave-detaljer');
     if (det) {
+      if (GAVE.detaljer) {
+        det.innerHTML = String(GAVE.detaljer).split('\n').filter(Boolean).map(l => `<div>${esc(l)}</div>`).join('');
+        return;
+      }
       const rows = [];
       if (GAVE.vipps) rows.push(`<div>📱 <strong>Vipps:</strong> ${esc(GAVE.vipps)}${GAVE.vippsTekst ? ` — ${esc(GAVE.vippsTekst)}` : ''}</div>`);
       else if (GAVE.vippsTekst) rows.push(`<div>📱 ${esc(GAVE.vippsTekst)}</div>`);
       if (GAVE.konto) rows.push(`<div>🏦 <strong>Konto:</strong> ${esc(GAVE.konto)}</div>`);
       if (GAVE.spleisUrl) rows.push(`<div>💞 <a class="kart-link" href="${esc(GAVE.spleisUrl)}" target="_blank" rel="noopener">Gå til Spleis →</a></div>`);
-      if (!rows.length && GAVE.detaljer) {
-        det.innerHTML = String(GAVE.detaljer).split('\n').filter(Boolean).map(l => `<div>${esc(l)}</div>`).join('');
-      } else {
-        det.innerHTML = rows.join('') || '<div class="muted">Brudeparet legger inn detaljer her snart.</div>';
-      }
+      det.innerHTML = rows.join('') || '<div class="muted">Brudeparet legger inn detaljer her snart.</div>';
     }
   }
 
@@ -1310,7 +1310,7 @@
     GJESTER.forEach(g => {
       if (g.avbud) return;
       if (!g.bord) return;
-      if (!bordMap[g.bord]) bordMap[g.bord] = { type: g.bordType || 8, gjester: [] };
+      if (!bordMap[g.bord]) bordMap[g.bord] = { type: g.bordType || 10, gjester: [] };
       bordMap[g.bord].gjester.push(g);
     });
     // Sorter gjester innenfor hvert bord etter setnummer
@@ -1338,7 +1338,7 @@
             <span class="bord-nr-mini">Bord ${nr}</span>
             ${tittel}
           </div>
-          <span class="bord-info">${b.gjester.length} 🪑</span>
+          <span class="bord-info">${b.gjester.length} / ${b.type || 10} 🪑</span>
         </div>
         <div class="bord-gjester">`;
       for (const g of b.gjester) {

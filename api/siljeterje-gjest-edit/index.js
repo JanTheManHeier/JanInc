@@ -25,9 +25,11 @@ IF COL_LENGTH('SiljeTerje_GjestEdit','bildeUrl') IS NULL ALTER TABLE SiljeTerje_
 IF COL_LENGTH('SiljeTerje_GjestEdit','skjult')   IS NULL ALTER TABLE SiljeTerje_GjestEdit ADD skjult BIT NOT NULL DEFAULT 0 WITH VALUES;
 IF COL_LENGTH('SiljeTerje_GjestEdit','nyGjest')  IS NULL ALTER TABLE SiljeTerje_GjestEdit ADD nyGjest BIT NOT NULL DEFAULT 0 WITH VALUES;
 IF COL_LENGTH('SiljeTerje_GjestEdit','pust')     IS NULL ALTER TABLE SiljeTerje_GjestEdit ADD pust BIT NULL;
+IF COL_LENGTH('SiljeTerje_GjestEdit','rsvpSlug') IS NULL ALTER TABLE SiljeTerje_GjestEdit ADD rsvpSlug NVARCHAR(80) NULL;
+IF COL_LENGTH('SiljeTerje_GjestEdit','rsvpLedsager') IS NULL ALTER TABLE SiljeTerje_GjestEdit ADD rsvpLedsager BIT NOT NULL DEFAULT 0 WITH VALUES;
 `;
 
-const SELECT_SQL = `SELECT navn, bio, relasjon, extraBio, nyttNavn, jobb, bord, sete, bordType, fbUrl, liUrl, igUrl, bildeUrl, skjult, nyGjest, pust, oppdatert FROM SiljeTerje_GjestEdit`;
+const SELECT_SQL = `SELECT navn, bio, relasjon, extraBio, nyttNavn, jobb, bord, sete, bordType, fbUrl, liUrl, igUrl, bildeUrl, skjult, nyGjest, pust, rsvpSlug, rsvpLedsager, oppdatert FROM SiljeTerje_GjestEdit`;
 
 function s(v, max) {
     if (v === null || v === undefined) return null;

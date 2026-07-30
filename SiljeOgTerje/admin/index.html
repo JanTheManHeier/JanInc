@@ -439,7 +439,11 @@ function byggRedaktor(c) {
     + f('Overskrift','g-tittel',gave.tittel)
     + ta('Introtekst','g-intro',gave.intro)
     + ta('Ønsker / liste (én per linje)','g-onsker',(Array.isArray(gave.onsker)?gave.onsker.join('\n'):(gave.onsker||'')))
-    + ta('Betalingsdetaljer (Vipps/Spleis/konto)','g-detaljer',gave.detaljer)
+    + f('Vippsnummer','g-vipps',gave.vipps)
+    + f('Tekst ved Vippsnummer','g-vippstekst',gave.vippsTekst)
+    + f('Kontonummer','g-konto',gave.konto)
+    + f('Spleis-lenke','g-spleis',gave.spleisUrl)
+    + ta('Annen betalingsinformasjon','g-detaljer',gave.detaljer)
     + '</div>';
 
   h += '<div class="red-seksjon"><h3>⚙️ Funksjoner</h3>'
@@ -479,7 +483,11 @@ async function lagreInnhold() {
     praktisk: linjer('praktisk-info-ta'),
     meny: lesRader('meny-rader', 'meny-rad'),
     menyinfo: linjer('meny-info'),
-    gave: { tittel: val('g-tittel'), intro: val('g-intro'), onsker: linjer('g-onsker'), detaljer: val('g-detaljer') },
+    gave: {
+      tittel: val('g-tittel'), intro: val('g-intro'), onsker: linjer('g-onsker'),
+      vipps: val('g-vipps'), vippsTekst: val('g-vippstekst'),
+      konto: val('g-konto'), spleisUrl: val('g-spleis'), detaljer: val('g-detaljer'),
+    },
     innstillinger: { musikkOnske: document.getElementById('i-musikk').checked },
   };
   const s = document.getElementById('lagre-status');
@@ -626,9 +634,12 @@ async function kopier(tekst) {
   catch (_) { prompt('Kopier lenken:', tekst); }
 }
 
+let rsvpSvarCache = [];
+
 async function lastRSVP() {
   if (!adminKey) settAdminKey();
   if (!adminKey) return;
+  await lastAdminGjester();
   const v = document.getElementById('rsvp-visning');
   const sam = document.getElementById('rsvp-sammendrag');
   v.innerHTML = 'Laster …'; v.className = '';
@@ -676,62 +687,102 @@ async function lastRSVP() {
   } catch (e) {
     v.innerHTML = '<div class="err">Kunne ikke hente RSVP: ' + esc(e.message || e) + '</div>';
   }
+}
 
-  var rsvpSvarCache = [];
-  function byggRsvpHurtig(rows) {
-    rsvpSvarCache = rows || [];
-    const sam = document.getElementById('rsvp-sammendrag');
-    if (!sam || typeof GJESTER === 'undefined') return;
-    const gjester = [...GJESTER].filter(g => g.navn).sort((a,b) => a.navn.localeCompare(b.navn, 'nb'));
-    sam.insertAdjacentHTML('beforeend', `<div class="rsvp-hurtig">
-      <strong>✍️ Registrer eller endre svar for en gjest</strong>
-      <div class="rsvp-hurtig-grid" style="margin-top:10px">
-        <label>Gjest<select id="rsvp-admin-gjest"><option value="">Velg gjest</option>${gjester.map(g=>`<option value="${esc(rsvpSlug(g))}">${esc(g.navn)}</option>`).join('')}</select></label>
-        <label>Kommer<select id="rsvp-admin-kommer"><option value="ja">Ja</option><option value="nei">Nei</option></select></label>
-        <label>Fredag<select id="rsvp-admin-fredag"><option value="ja">Ja</option><option value="nei">Nei</option></select></label>
-        <label>Antall personer<input id="rsvp-admin-antall" type="number" min="1" max="20" value="1"></label>
-        <label style="grid-column:1/-1">Hvem har gjesten med?<input id="rsvp-admin-folge" placeholder="Navn, gjerne én per linje"></label>
-      </div>
-      <div class="admin-aksjoner"><button onclick="lagreRsvpAdmin()">💾 Lagre RSVP</button><span id="rsvp-admin-status" class="muted"></span></div>
-    </div>`);
-    document.getElementById('rsvp-admin-gjest').onchange = fyllRsvpAdmin;
-  }
+function byggRsvpHurtig(rows) {
+  rsvpSvarCache = rows || [];
+  const sam = document.getElementById('rsvp-sammendrag');
+  if (!sam || typeof GJESTER === 'undefined') return;
+  const gjester = [...GJESTER].filter(g => g.navn).sort((a,b) => a.navn.localeCompare(b.navn, 'nb'));
+  sam.insertAdjacentHTML('beforeend', `<div class="rsvp-hurtig">
+    <strong>✍️ Registrer eller endre svar for en gjest</strong>
+    <div class="rsvp-hurtig-grid" style="margin-top:10px">
+      <label>Gjest<select id="rsvp-admin-gjest"><option value="">Velg gjest</option>${gjester.map(g=>`<option value="${esc(rsvpSlug(g))}">${esc(g.navn)}</option>`).join('')}</select></label>
+      <label>Kommer<select id="rsvp-admin-kommer"><option value="ja">Ja</option><option value="nei">Nei</option></select></label>
+      <label>Fredag<select id="rsvp-admin-fredag"><option value="ja">Ja</option><option value="nei">Nei</option></select></label>
+      <label>Antall personer<input id="rsvp-admin-antall" type="number" min="1" max="20" value="1"></label>
+      <label style="grid-column:1/-1">Hvem har gjesten med?
+        <textarea id="rsvp-admin-folge" placeholder="Ett fullt navn per linje"></textarea>
+      </label>
+    </div>
+    <div id="rsvp-admin-valgt" class="muted" style="margin-top:8px">Velg en gjest for å registrere eller endre svaret.</div>
+    <div class="admin-aksjoner"><button onclick="lagreRsvpAdmin()">💾 Lagre RSVP</button><span id="rsvp-admin-status" class="muted"></span></div>
+  </div>`);
+  document.getElementById('rsvp-admin-gjest').onchange = fyllRsvpAdmin;
+}
 
-  function fyllRsvpAdmin() {
-    const slug = document.getElementById('rsvp-admin-gjest').value;
-    const r = rsvpSvarCache.find(x => x.slug === slug);
-    document.getElementById('rsvp-admin-kommer').value = r && !r.kommer ? 'nei' : 'ja';
-    document.getElementById('rsvp-admin-fredag').value = r && r.fredag ? 'ja' : 'nei';
-    document.getElementById('rsvp-admin-antall').value = r && r.antall ? r.antall : 1;
-    document.getElementById('rsvp-admin-folge').value = r ? (r.ledsagere || '') : '';
-  }
+function fyllRsvpAdmin() {
+  const select = document.getElementById('rsvp-admin-gjest');
+  const slug = select.value;
+  const r = rsvpSvarCache.find(x => x.slug === slug);
+  document.getElementById('rsvp-admin-kommer').value = r && !r.kommer ? 'nei' : 'ja';
+  document.getElementById('rsvp-admin-fredag').value = r && r.fredag ? 'ja' : 'nei';
+  document.getElementById('rsvp-admin-antall').value = r && r.antall ? r.antall : 1;
+  document.getElementById('rsvp-admin-folge').value = r ? (r.ledsagere || '') : '';
+  const valgt = document.getElementById('rsvp-admin-valgt');
+  if (!slug) valgt.textContent = 'Velg en gjest for å registrere eller endre svaret.';
+  else valgt.textContent = `${r ? 'Endrer eksisterende svar for' : 'Registrerer nytt svar for'} ${select.options[select.selectedIndex].text}.`;
+}
 
-  async function lagreRsvpAdmin() {
-    const slug = document.getElementById('rsvp-admin-gjest').value;
-    const status = document.getElementById('rsvp-admin-status');
-    const g = GJESTER.find(x => rsvpSlug(x) === slug);
-    if (!g) { status.textContent = 'Velg en gjest først.'; return; }
-    const kommer = document.getElementById('rsvp-admin-kommer').value === 'ja';
-    status.textContent = 'Lagrer…';
-    try {
-      const res = await fetch('/api/siljeterje-rsvp', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          slug, navn: g.navn, kommer,
-          fredag: kommer && document.getElementById('rsvp-admin-fredag').value === 'ja',
-          antall: kommer ? Number(document.getElementById('rsvp-admin-antall').value) || 1 : 0,
-          ledsagere: kommer ? document.getElementById('rsvp-admin-folge').value.trim() : '',
-          allergier: (rsvpSvarCache.find(x => x.slug === slug) || {}).allergier || '',
-          kommentar: (rsvpSvarCache.find(x => x.slug === slug) || {}).kommentar || '',
-        }),
-      });
-      if (!res.ok) throw new Error('status ' + res.status);
-      status.textContent = '✅ Lagret';
-      await lastRSVP();
-    } catch (e) {
-      status.textContent = '❌ Kunne ikke lagre: ' + (e.message || e);
-    }
+function rsvpLedsagerNavn(tekst) {
+  return String(tekst || '').split(/\n+/).map(n => n.trim()).filter(Boolean);
+}
+
+async function lagreRsvpAdmin() {
+  const slug = document.getElementById('rsvp-admin-gjest').value;
+  const status = document.getElementById('rsvp-admin-status');
+  const g = GJESTER.find(x => rsvpSlug(x) === slug);
+  if (!g) { status.textContent = 'Velg en gjest først.'; return; }
+  const kommer = document.getElementById('rsvp-admin-kommer').value === 'ja';
+  const antall = kommer ? Number(document.getElementById('rsvp-admin-antall').value) || 1 : 0;
+  const ledsagere = kommer ? document.getElementById('rsvp-admin-folge').value.trim() : '';
+  const ledsagerNavn = rsvpLedsagerNavn(ledsagere);
+  if (kommer && ledsagerNavn.length !== Math.max(0, antall - 1)) {
+    status.textContent = `Skriv inn ${antall - 1} ledsagernavn, ett per linje.`;
+    return;
   }
+  status.textContent = 'Lagrer…';
+  try {
+    const res = await fetch('/api/siljeterje-rsvp', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        slug, navn: g.navn, kommer,
+        fredag: kommer && document.getElementById('rsvp-admin-fredag').value === 'ja',
+        antall, ledsagere,
+        allergier: (rsvpSvarCache.find(x => x.slug === slug) || {}).allergier || '',
+        kommentar: (rsvpSvarCache.find(x => x.slug === slug) || {}).kommentar || '',
+      }),
+    });
+    if (!res.ok) throw new Error('status ' + res.status);
+    const resultat = await res.json();
+    const melding = resultat.ledsagereOpprettet && resultat.ledsagereOpprettet.length
+      ? `✅ Lagret og opprettet ${resultat.ledsagereOpprettet.join(', ')} som gjest`
+      : '✅ Lagret';
+    await lastAdminGjester();
+    await lastRSVP();
+    const nyStatus = document.getElementById('rsvp-admin-status');
+    if (nyStatus) nyStatus.textContent = melding;
+  } catch (e) {
+    status.textContent = '❌ Kunne ikke lagre: ' + (e.message || e);
+  }
+}
+
+async function lastAdminGjester() {
+  if (typeof GJESTER === 'undefined') return;
+  try {
+    const res = await fetch('/api/siljeterje-gjest-edit');
+    if (!res.ok) return;
+    const edits = await res.json();
+    edits.forEach(e => {
+      if (e.skjult) return;
+      if (e.nyGjest && !GJESTER.some(g => g.navn === e.navn)) {
+        GJESTER.push({ navn: e.navn, relasjon: e.relasjon || '', bord: e.bord, sete: e.sete, bordType: e.bordType || 10 });
+        return;
+      }
+      const g = GJESTER.find(x => x.navn === e.navn);
+      if (g && e.nyttNavn) g.navn = e.nyttNavn;
+    });
+  } catch (_) {}
 }
 
 async function slettRSVP(slug, navn) {
@@ -768,7 +819,7 @@ function byggRSVPLenker() {
 }
 
 lastInnhold();
-byggRSVPLenker();
+lastAdminGjester().then(byggRSVPLenker);
 last();</script>
 </body>
 </html>

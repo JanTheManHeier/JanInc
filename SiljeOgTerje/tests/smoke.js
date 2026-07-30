@@ -55,8 +55,12 @@ function mockApi(page, captured) {
     const url = new URL(req.url());
     const endpoint = url.pathname.split('/').pop();
     if (req.method() === 'POST') {
-      captured.push({ endpoint, body: req.postDataJSON() });
-      await route.fulfill({ status: 200, contentType: 'application/json', body: '{"success":true}' });
+      const body = req.postDataJSON();
+      captured.push({ endpoint, body });
+      const response = endpoint === 'siljeterje-rsvp'
+        ? { success: true, ledsagereOpprettet: String(body.ledsagere || '').split(/\n+/).filter(Boolean) }
+        : { success: true };
+      await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(response) });
       return;
     }
     if (endpoint === 'siljeterje-content') {
@@ -77,6 +81,10 @@ function mockApi(page, captured) {
               { tid: '14:30', tittel: 'Fotografering', sted: 'Tromsø sentrum', tekst: 'Brudeparet fotograferes' },
               { tid: '17:00', tittel: 'Mottakelse på Rødbanken', sted: 'Rødbanken', tekst: 'Velkommen' },
             ],
+            gave: {
+              tittel: 'Gaveønske', intro: 'Test gave', onsker: ['Bryllupsreise'],
+              detaljer: 'Vipps 12345678\nMerk betalingen med navn',
+            },
             innstillinger: { musikkOnske: false },
           },
         }),
@@ -112,6 +120,17 @@ function mockApi(page, captured) {
     }
     if (endpoint === 'siljeterje-rsvp') {
       await route.fulfill({ status: 200, contentType: 'application/json', body: '{"svar":null}' });
+      return;
+    }
+    if (endpoint === 'siljeterje-gjest-edit') {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify([{
+          navn: 'Dynamisk Ledsager', relasjon: 'Følge til Test App',
+          bord: 1, sete: 1, bordType: null, nyGjest: true, skjult: false,
+        }]),
+      });
       return;
     }
     await route.fulfill({ status: 200, contentType: 'application/json', body: '[]' });
@@ -186,6 +205,16 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   assert.ok(layout.miniSubSize >= 17, 'Tidspunkt i hurtigkort er for lite');
   assert.equal(layout.musicVisible, false, 'Musikkønsker skal være avslått som standard');
 
+  await page.locator('button[data-go="gave"]').first().click();
+  assert.match(await page.locator('#gave-detaljer').innerText(), /Vipps 12345678/);
+  assert.match(await page.locator('#gave-detaljer').innerText(), /Merk betalingen med navn/);
+  await page.locator('.nav > button[data-go="hjem"]').click();
+  await page.locator('button[data-go="bord"]').first().click();
+  await page.waitForTimeout(150);
+  assert.match(await page.locator('.bord-info').first().innerText(), /1\s*\/\s*10/,
+    'Bord uten egen kapasitet skal være timannsbord');
+  await page.locator('.nav > button[data-go="hjem"]').click();
+
   await page.evaluate(() => window.scrollTo(0, 700));
   await page.waitForTimeout(150);
   assert.equal(await page.locator('html').evaluate(el => el.classList.contains('nav-kompakt')), true,
@@ -248,14 +277,38 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   const page = await context.newPage();
   const captured = [];
   await mockApi(page, captured);
+  const pageErrors = [];
+  page.on('pageerror', error => pageErrors.push(error.message));
   await page.goto(`${baseURL}/SiljeOgTerje/admin/`);
   await page.waitForLoadState('networkidle');
   assert.equal(await page.locator('#i-musikk').isChecked(), false);
   assert.ok(await page.locator('.program-rad [data-k="lat"]').count() >= 4);
   assert.ok(await page.locator('.program-rad [data-k="nettside"]').count() >= 4);
+  assert.equal(await page.locator('#g-detaljer').inputValue(), 'Vipps 12345678\nMerk betalingen med navn');
+  await page.locator('#g-vipps').fill('99887766');
+  await page.getByRole('button', { name: /Lagre alt innhold/ }).click();
+  await page.waitForTimeout(100);
+  const contentPost = captured.find(x => x.endpoint === 'siljeterje-content');
+  assert.equal(contentPost.body.content.gave.vipps, '99887766');
+  assert.equal(contentPost.body.content.gave.detaljer, 'Vipps 12345678\nMerk betalingen med navn');
+
   await page.getByRole('button', { name: /Vis RSVP-svar/ }).click();
   await assert.doesNotReject(() => page.locator('#rsvp-admin-gjest').waitFor({ state: 'visible' }));
   assert.ok(await page.locator('#rsvp-admin-gjest option').count() > 50);
+  await page.locator('#rsvp-admin-gjest').selectOption('hege-lauritzen');
+  assert.equal(await page.locator('#rsvp-admin-antall').inputValue(), '2');
+  assert.equal(await page.locator('#rsvp-admin-folge').inputValue(), 'Test Følge');
+  assert.match(await page.locator('#rsvp-admin-valgt').innerText(), /Endrer eksisterende svar for Hege Lauritzen/);
+  await page.locator('#rsvp-admin-antall').fill('3');
+  await page.locator('#rsvp-admin-folge').fill('Test Følge\nNy Ledsager');
+  await page.getByRole('button', { name: /Lagre RSVP/ }).click();
+  await page.waitForTimeout(250);
+  const rsvpPost = captured.find(x => x.endpoint === 'siljeterje-rsvp');
+  assert.ok(rsvpPost, 'Admin-RSVP ble ikke sendt');
+  assert.equal(rsvpPost.body.navn, 'Hege Lauritzen');
+  assert.equal(rsvpPost.body.antall, 3);
+  assert.equal(rsvpPost.body.ledsagere, 'Test Følge\nNy Ledsager');
+  assert.equal(pageErrors.length, 0, `JavaScript-feil i admin: ${pageErrors.join('; ')}`);
   await context.close();
 });
 

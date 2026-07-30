@@ -204,7 +204,7 @@ function radHtml(g) {
           </div>
           <div class="felt"><label>Bordtype</label>
             <select data-felt="bordType">
-              ${[6,8,10,12].map(n => `<option value="${n}" ${String(eff(g.navn,'bordType',g.bordType||8))==String(n)?'selected':''}>${n}-mannsbord</option>`).join('')}
+              ${[6,8,10,12].map(n => `<option value="${n}" ${String(eff(g.navn,'bordType',g.bordType||10))==String(n)?'selected':''}>${n}-mannsbord</option>`).join('')}
             </select>
           </div>
           <div class="felt"><label>Jobb / tittel</label>
@@ -389,7 +389,7 @@ function nyGjest() {
     return;
   }
   // Legg til som lokal stub, render — brudeparet må trykke Lagre for å lagre i DB
-  STAT[n] = { navn: n, nyGjest: true, bordType: 8 };
+  STAT[n] = { navn: n, nyGjest: true, bordType: 10 };
   render();
   // Scroll til den nye raden
   setTimeout(() => {

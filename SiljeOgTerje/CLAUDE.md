@@ -29,6 +29,7 @@ Vanilla-JS PWA (ingen byggesteg for frontend) — bygget på samme oppsett som `
   hero-hjørnene og som bunndekor i invitasjonsstilen.
 - `admin/index.html` — admin: statistikk + **innholds-redaktør** (selvbetjent for brudeparet).
   Her kan musikkønsker skrus av/på og RSVP registreres manuelt på vegne av gjester.
+  Navngitte RSVP-ledsagere opprettes automatisk som dynamiske gjester.
 - `admin/gjester.html` — rediger/legg til/skjul gjester, sette bord/sete.
 - `audio/silje.mp3`, `audio/den-siste-villhingsten.mp3` — de to sangene.
 - `images/gjester/*.jpg` — 57 gjestebilder (scrapet fra Facebook-gruppe).
@@ -94,3 +95,4 @@ ved kjøring. Kjør den manuelt før push så lenge npm-registeret er blokkert a
 - Ikoner i `images/icon-*.png` er foreløpig gjenbrukt fra Thomas50 — bør byttes til bryllupsikon.
 - Musikkønsker er standard av og aktiveres via admin når DJ/musikk er avklart.
 - Bordtema bruker Tromsø-bydeler og kjente områder, ikke fjell.
+- Bord uten eksplisitt kapasitet behandles som timannsbord.
