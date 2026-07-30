@@ -176,9 +176,9 @@ const OM_PARET = {
 const HERO = {
   brud: "Silje",
   brudgom: "Terje",
-  datoTekst: "Lørdag 22.08.2026",
+  datoTekst: "Lørdag 22. august 2026",
   stedTekst: "Elverhøy kirke & Festsalen i Rødbanken · Tromsø",
-  tagline: "Vi gleder oss til å feire denne dagen med deg!",
+  tagline: "Vi gifter oss! 💍",
   omTittel: "Om dagen",
   omTekst: "Silje og Terje gifter seg! Vi feirer dagen sammen med dere – fra vigselen i vakre Elverhøy kirke kl. 12.00 til en kveld med god mat, varme taler og dans i Festsalen i Rødbanken fra kl. 17.00. Vi gleder oss til å feire denne dagen med deg! ❤️",
   kleskode: "Mørk dress. Ta gjerne med et varmt ytterplagg til Tromsø-været.",
