@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prosjektside for nytt soverom og walk-in-garderobe.">
+    <title>Soverom & walk-in | JanInc</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text x='3' y='25' font-size='24'>⌂</text></svg>">
+    <script>
+        (() => {
+            const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+            const theme =
+                param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            document.documentElement.setAttribute("data-theme", theme);
+        })();
+    </script>
+    <style>
+        :root {
+            color-scheme: light;
+            --cp-bg: #f7f4ef;
+            --cp-bg-elevated: #fcfbf8;
+            --cp-surface: #ffffff;
+            --cp-surface-soft: #f5f5f5;
+            --cp-border: #dedede;
+            --cp-border-strong: #919191;
+            --cp-text: #242424;
+            --cp-text-muted: #5c5c5c;
+            --cp-text-soft: #6f6f6f;
+            --cp-accent: #b11f4b;
+            --cp-accent-hover: #9a1a41;
+            --cp-accent-soft: rgba(177, 31, 75, 0.08);
+            --cp-accent-fg: #ffffff;
+            --cp-success: #16a34a;
+            --cp-danger: #dc2626;
+            --cp-warning: #f59e0b;
+            --cp-link: #0078d4;
+            --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+            --cp-overlay: rgba(255, 255, 255, 0.8);
+            --cp-panel: rgba(255, 255, 255, 0.86);
+            --cp-panel-strong: rgba(255, 255, 255, 0.96);
+            --cp-sheen: rgba(255, 255, 255, 0.55);
+            --cp-highlight: rgba(177, 31, 75, 0.12);
+        }
+        html[data-theme="dark"] {
+            color-scheme: dark;
+            --cp-bg: #3d3b3a;
+            --cp-bg-elevated: #343231;
+            --cp-surface: #292929;
+            --cp-surface-soft: #2e2e2e;
+            --cp-border: #474747;
+            --cp-border-strong: #5f5f5f;
+            --cp-text: #dedede;
+            --cp-text-muted: #919191;
+            --cp-text-soft: #b0b0b0;
+            --cp-accent: #fd8ea1;
+            --cp-accent-hover: #fb7b91;
+            --cp-accent-soft: rgba(253, 142, 161, 0.14);
+            --cp-accent-fg: #1a1a1a;
+            --cp-success: #4ade80;
+            --cp-danger: #f87171;
+            --cp-warning: #fbbf24;
+            --cp-link: #4da6ff;
+            --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+            --cp-overlay: rgba(41, 41, 41, 0.88);
+            --cp-panel: rgba(41, 41, 41, 0.72);
+            --cp-panel-strong: rgba(41, 41, 41, 0.96);
+            --cp-sheen: rgba(255, 255, 255, 0.04);
+            --cp-highlight: rgba(253, 142, 161, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--cp-bg);
+            color: var(--cp-text);
+            font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        a {
+            color: var(--cp-link);
+        }
+
+        .shell {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        header {
+            padding: 52px 0 28px;
+            border-bottom: 1px solid var(--cp-border);
+            background: var(--cp-bg-elevated);
+        }
+
+        .eyebrow {
+            margin: 0 0 8px;
+            color: var(--cp-accent);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1 {
+            max-width: 760px;
+            margin-bottom: 12px;
+            font-size: clamp(2.2rem, 7vw, 4.6rem);
+            line-height: 0.98;
+            letter-spacing: -0.045em;
+        }
+
+        h2 {
+            margin-bottom: 18px;
+            font-size: clamp(1.45rem, 3vw, 2rem);
+            letter-spacing: -0.025em;
+        }
+
+        h3 {
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .intro {
+            max-width: 720px;
+            margin-bottom: 22px;
+            color: var(--cp-text-muted);
+            font-size: 1.08rem;
+        }
+
+        .status-row,
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .saved {
+            color: var(--cp-text-muted);
+            font-size: 0.9rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+            padding: 4px 12px;
+            border: 1px solid var(--cp-border);
+            border-radius: 999px;
+            background: var(--cp-surface);
+            color: var(--cp-text-muted);
+            font-size: 0.86rem;
+            font-weight: 600;
+        }
+
+        main {
+            padding: 32px 0 64px;
+        }
+
+        section {
+            margin-bottom: 28px;
+        }
+
+        .card {
+            padding: 24px;
+            border: 1px solid var(--cp-border);
+            border-radius: 16px;
+            background: var(--cp-surface);
+        }
+
+        .robustness-card {
+            margin-top: 16px;
+        }
+
+        .project-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .project-stat {
+            padding: 16px;
+            border: 1px solid var(--cp-border);
+            border-radius: 0.625rem;
+            background: var(--cp-surface-soft);
+        }
+
+        .project-stat strong {
+            display: block;
+            font-size: 1.35rem;
+        }
+
+        .project-stat span {
+            color: var(--cp-text-muted);
+            font-size: 0.82rem;
+        }
+
+        .callout {
+            padding: 16px;
+            border-left: 4px solid var(--cp-warning);
+            border-radius: 0.625rem;
+            background: var(--cp-surface-soft);
+        }
+
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+
+        .status-select {
+            min-width: 132px;
+        }
+
+        .compact-list {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--cp-text-muted);
+        }
+
+        .compact-list li + li {
+            margin-top: 7px;
+        }
+
+        .overview-grid,
+        .choice-grid,
+        .product-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .overview-grid {
+            grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+        }
+
+        .choice-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .product-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .room-plan {
+            position: relative;
+            min-height: 400px;
+            overflow: hidden;
+            border: 2px solid var(--cp-border-strong);
+            border-radius: 0.625rem;
+            background: var(--cp-bg-elevated);
+        }
+
+        .zone-label {
+            position: absolute;
+            z-index: 2;
+            padding: 4px 8px;
+            border-radius: 0.625rem;
+            background: var(--cp-panel-strong);
+            color: var(--cp-text-muted);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .zone-label.wardrobe-label {
+            top: 12px;
+            left: 12px;
+        }
+
+        .zone-label.bedroom-label {
+            top: 12px;
+            left: 48%;
+        }
+
+        .divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 40%;
+            width: 1px;
+            background: var(--cp-border-strong);
+        }
+
+        .wardrobe {
+            position: absolute;
+            border: 1px solid var(--cp-accent);
+            border-radius: 0.625rem;
+            background: var(--cp-accent-soft);
+            color: var(--cp-text);
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .wardrobe.top {
+            top: 52px;
+            left: 4%;
+            width: 32%;
+            height: 72px;
+            padding-top: 25px;
+        }
+
+        .wardrobe.left {
+            top: 138px;
+            left: 4%;
+            width: 14%;
+            height: 145px;
+            padding-top: 55px;
+        }
+
+        .wardrobe.right {
+            top: 138px;
+            left: 22%;
+            width: 14%;
+            height: 145px;
+            padding-top: 55px;
+        }
+
+        .bed {
+            position: absolute;
+            top: 100px;
+            right: 8%;
+            width: 42%;
+            height: 210px;
+            display: grid;
+            place-items: center;
+            border: 2px solid var(--cp-border-strong);
+            border-radius: 0.625rem;
+            background: var(--cp-surface-soft);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .nightstand {
+            position: absolute;
+            right: 3%;
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--cp-border-strong);
+            border-radius: 0.625rem;
+            background: var(--cp-surface);
+            color: var(--cp-text-muted);
+            font-size: 0.68rem;
+            text-align: center;
+        }
+
+        .nightstand.top {
+            top: 40px;
+        }
+
+        .nightstand.bottom {
+            bottom: 34px;
+        }
+
+        .light-point {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border: 4px solid var(--cp-accent);
+            border-radius: 50%;
+            background: var(--cp-surface);
+        }
+
+        .light-point.ceiling {
+            top: 58%;
+            left: 67%;
+        }
+
+        .light-point.spot-1 {
+            top: 44px;
+            left: 9%;
+        }
+
+        .light-point.spot-2 {
+            top: 44px;
+            left: 19%;
+        }
+
+        .light-point.spot-3 {
+            top: 44px;
+            left: 29%;
+        }
+
+        .room-facts {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .fact {
+            padding: 14px;
+            border-radius: 0.625rem;
+            background: var(--cp-surface-soft);
+        }
+
+        .fact strong {
+            display: block;
+            font-size: 1.3rem;
+        }
+
+        .fact span {
+            color: var(--cp-text-muted);
+            font-size: 0.82rem;
+        }
+
+        .choice {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .choice input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .choice-content {
+            height: 100%;
+            padding: 20px;
+            border: 1px solid var(--cp-border);
+            border-radius: 16px;
+            background: var(--cp-surface);
+            transition: border-color 140ms ease, background 140ms ease;
+        }
+
+        .choice input:checked + .choice-content {
+            border-color: var(--cp-accent);
+            background: var(--cp-accent-soft);
+        }
+
+        .choice-content p {
+            margin-bottom: 0;
+            color: var(--cp-text-muted);
+            font-size: 0.9rem;
+        }
+
+        .recommendation {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: var(--cp-accent);
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .product-card p {
+            flex: 1;
+            margin-bottom: 0;
+            color: var(--cp-text-muted);
+            font-size: 0.9rem;
+        }
+
+        .product-meta {
+            color: var(--cp-text-soft);
+            font-size: 0.8rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--cp-border);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            color: var(--cp-text-muted);
+            font-size: 0.82rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .price-table td:last-child,
+        .price-table th:last-child {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        tfoot td {
+            border-bottom: 0;
+            font-weight: 700;
+        }
+
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid var(--cp-border);
+            border-radius: 0.625rem;
+            background: var(--cp-bg-elevated);
+            color: var(--cp-text);
+        }
+
+        select {
+            min-height: 40px;
+            padding: 7px 10px;
+        }
+
+        textarea {
+            min-height: 180px;
+            padding: 14px;
+            resize: vertical;
+        }
+
+        select:focus,
+        textarea:focus,
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--cp-highlight);
+            outline-offset: 2px;
+        }
+
+        .checklist {
+            display: grid;
+            gap: 2px;
+        }
+
+        .check-item {
+            display: grid;
+            grid-template-columns: 22px 1fr;
+            gap: 10px;
+            align-items: start;
+            padding: 12px 4px;
+            border-bottom: 1px solid var(--cp-border);
+        }
+
+        .check-item:last-child {
+            border-bottom: 0;
+        }
+
+        .check-item input {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: var(--cp-accent);
+        }
+
+        .check-item span {
+            color: var(--cp-text-muted);
+            font-size: 0.9rem;
+        }
+
+        button,
+        .button-link {
+            min-height: 40px;
+            padding: 9px 15px;
+            border: 1px solid var(--cp-border);
+            border-radius: 0.625rem;
+            background: var(--cp-surface);
+            color: var(--cp-text);
+            cursor: pointer;
+            font-weight: 650;
+            text-decoration: none;
+        }
+
+        button:hover,
+        .button-link:hover {
+            border-color: var(--cp-border-strong);
+        }
+
+        .primary {
+            border-color: var(--cp-accent);
+            background: var(--cp-accent);
+            color: var(--cp-accent-fg);
+        }
+
+        .primary:hover {
+            border-color: var(--cp-accent-hover);
+            background: var(--cp-accent-hover);
+        }
+
+        .danger {
+            color: var(--cp-danger);
+        }
+
+        .footer-note {
+            margin: 20px 0 0;
+            color: var(--cp-text-muted);
+            font-size: 0.84rem;
+        }
+
+        @media (max-width: 820px) {
+            .overview-grid,
+            .choice-grid,
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .room-plan {
+                min-height: 360px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .shell {
+                width: min(100% - 20px, 1180px);
+            }
+
+            header {
+                padding-top: 34px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+            .project-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .room-plan {
+                min-height: 320px;
+            }
+
+            .bed {
+                right: 5%;
+                width: 46%;
+                height: 170px;
+            }
+
+            .nightstand {
+                right: 1%;
+                width: 38px;
+                height: 44px;
+                font-size: 0.58rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="shell">
+            <p class="eyebrow">JanInc · Oppussingsprosjekt</p>
+            <h1>Soverom & walk-in</h1>
+            <p class="intro">Samleside for mål, lysplan, produkter og beslutninger. Alt du endrer lagres automatisk i denne nettleseren.</p>
+            <div class="status-row">
+                <span class="badge">Rom: 290 × 280 cm</span>
+                <span class="badge">Takhøyde: 240 cm</span>
+                <span class="badge">Seng: 180 × 200 cm</span>
+                <span class="badge">Montana: ca. 35 × 35 × 35 cm</span>
+                <span class="saved" id="savedStatus">Klar</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="shell">
+        <section class="overview-grid" aria-labelledby="plan-title">
+            <div class="card">
+                <h2 id="plan-title">Foreløpig romplan</h2>
+                <div class="room-plan" aria-label="Forenklet plantegning av garderobe og soverom">
+                    <span class="zone-label wardrobe-label">Walk-in</span>
+                    <span class="zone-label bedroom-label">Soverom</span>
+                    <div class="divider"></div>
+                    <div class="wardrobe top">Garderobe</div>
+                    <div class="wardrobe left">Skap</div>
+                    <div class="wardrobe right">Skap</div>
+                    <div class="bed">Seng<br>180 × 200 cm</div>
+                    <div class="nightstand top">Montana</div>
+                    <div class="nightstand bottom">Montana</div>
+                    <span class="light-point ceiling" title="Taklys"></span>
+                    <span class="light-point spot-1" title="Garderobespot"></span>
+                    <span class="light-point spot-2" title="Garderobespot"></span>
+                    <span class="light-point spot-3" title="Garderobespot"></span>
+                </div>
+            </div>
+
+            <aside class="card">
+                <h2>Nøkkelpunkter</h2>
+                <div class="room-facts">
+                    <div class="fact"><strong>2</strong><span>lyssoner</span></div>
+                    <div class="fact"><strong>1</strong><span>eksisterende bryter</span></div>
+                    <div class="fact"><strong>3–4</strong><span>garderobespotter</span></div>
+                    <div class="fact"><strong>240</strong><span>cm takhøyde</span></div>
+                </div>
+                <p class="footer-note">Fast elektrisk installasjon og nye stikk planlegges og utføres av registrert elektriker.</p>
+            </aside>
+        </section>
+
+        <section aria-labelledby="renovation-title">
+            <p class="eyebrow">Hovedprosjekt · høsten 2026</p>
+            <h2 id="renovation-title">Oppussingsplan og fremdrift</h2>
+            <div class="project-summary">
+                <div class="project-stat"><strong>3.–5. aug.</strong><span>Bestill vindu</span></div>
+                <div class="project-stat"><strong>Tidlig sep.</strong><span>Befaring med snekker</span></div>
+                <div class="project-stat"><strong>6–8 uker</strong><span>Forventet vinduslevering</span></div>
+                <div class="project-stat"><strong>Høst 2026</strong><span>Planlagt byggeperiode</span></div>
+            </div>
+
+            <div class="callout">
+                <h3>Kritisk rekkefølge</h3>
+                <p>Vinduet må spesifiseres og bestilles først. Før bestilling må mål, rømningskrav, fasadeendring og mulig behov for ny bæring over den større åpningen avklares. Snekkeren bør ikke få endelig oppstart før vindu, dører, knekottdører og kritiske byggematerialer har bekreftet leveringsdato.</p>
+            </div>
+        </section>
+
+        <section class="card" aria-labelledby="actions-title">
+            <h2 id="actions-title">Dette må gjøres nå</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Frist</th>
+                            <th>Oppgave</th>
+                            <th>Ansvar</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>3.–4. august</td>
+                            <td><strong>Bekreft vindusmål og løsning</strong><br>Utvendig karmmål, fri åpning, slagretning, farge, beslag, vannbrett og behov for ny overdekning/bæring.</td>
+                            <td>Dere + snekker/vindusleverandør</td>
+                            <td><select class="status-select" data-project-task="windowSpec"><option value="not_started">Ikke startet</option><option value="in_progress">Pågår</option><option value="waiting">Venter på svar</option><option value="ordered">Bestilt</option><option value="done">Ferdig</option></select></td>
+                        </tr>
+                        <tr>
+                            <td>3.–4. august</td>
+                            <td><strong>Avklar søknadsplikt</strong><br>Større vindu og nytt avtrekk i yttervegg kan være fasadeendringer. Avklar med Tromsø kommune før bestilling/bygging.</td>
+                            <td>Dere</td>
+                            <td><select class="status-select" data-project-task="permitCheck"><option value="not_started">Ikke startet</option><option value="in_progress">Pågår</option><option value="waiting">Venter på svar</option><option value="done">Ferdig</option></select></td>
+                        </tr>
+                        <tr>
+                            <td>Senest 5. august</td>
+                            <td><strong>Bestill vinduet</strong><br>Oppgitt leveringstid er 6–8 uker. Be om skriftlig ordrebekreftelse og forventet leveringsuke.</td>
+                            <td>Dere</td>
+                            <td><select class="status-select" data-project-task="orderWindow"><option value="not_started">Ikke startet</option><option value="in_progress">Pågår</option><option value="ordered">Bestilt</option><option value="delivered">Levert</option><option value="done">Ferdig</option></select></td>
+                        </tr>
+                        <tr>
+                            <td>Denne uken</td>
+                            <td><strong>Kontakt elektrikeren</strong><br>Reserver befaring, grovinstallasjon før gips og sluttmontasje etter overflatearbeid.</td>
+                            <td>Dere</td>
+                            <td><select class="status-select" data-project-task="contactElectrician"><option value="not_started">Ikke startet</option><option value="contacted">Kontaktet</option><option value="waiting">Venter på svar</option><option value="booked">Avtalt</option><option value="done">Ferdig</option></select></td>
+                        </tr>
+                        <tr>
+                            <td>Denne uken</td>
+                            <td><strong>Bestill ventilasjonsbefaring</strong><br>Planlegg nytt direkte avtrekk fra kjellerbadet gjennom bakveggen før det gamle røret fjernes.</td>
+                            <td>Dere + ventilasjonsfirma</td>
+                            <td><select class="status-select" data-project-task="ventilationContact"><option value="not_started">Ikke startet</option><option value="contacted">Kontaktet</option><option value="waiting">Venter på svar</option><option value="booked">Avtalt</option><option value="done">Ferdig</option></select></td>
+                        </tr>
+                        <tr>
+                            <td>Innen 10. august</td>
+                            <td><strong>Mål alle døråpninger</strong><br>Ikke bestill bare ut fra «80 cm karm». Mål karmyttermål, veggtykkelse, høyde, slagretning og terskel.</td>
+                            <td>Dere + snekker</td>
+                            <td><select class="status-select" data-project-task="measureDoors"><option value="not_started">Ikke startet</option><option value="in_progress">Pågår</option><option value="done">Ferdig</option></select></td>
+                        </tr>
+                        <tr>
+                            <td>Innen 15. august</td>
+                            <td><strong>Velg eikedører og knekottdører</strong><br>Avklar utførelse, karm, hengsling, terskel, håndtak og leveringstid.</td>
+                            <td>Dere</td>
+                            <td><select class="status-select" data-project-task="chooseDoors"><option value="not_started">Ikke startet</option><option value="in_progress">Pågår</option><option value="waiting">Venter på prøve/pris</option><option value="ordered">Bestilt</option><option value="done">Ferdig</option></select></td>
+                        </tr>
+                        <tr>
+                            <td>Tidlig september</td>
+                            <td><strong>Befaring med snekkeren</strong><br>Gå gjennom bæring ved vindu, riveomfang, veggoppbygging, materialmengder, lettvegg, gulv og hvem som gjør hva.</td>
+                            <td>Dere + snekker</td>
+                            <td><select class="status-select" data-project-task="carpenterVisit"><option value="in_progress">Foreløpig avtalt</option><option value="booked">Dato avtalt</option><option value="done">Gjennomført</option></select></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="overview-grid" aria-labelledby="contacts-title">
+            <div class="card">
+                <h2 id="contacts-title">Hvem må kontaktes?</h2>
+                <div class="checklist">
+                    <label class="check-item"><input type="checkbox" data-task="contactCarpenter"><span><strong>Snekker</strong><br>Befaring, konstruksjon, materialliste, oppstart og koordinering.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="contactElectricianAutumn"><span><strong>Elektriker</strong><br>To besøk: skjult anlegg før gips og sluttmontasje etter maling/gulv.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="contactVentilation"><span><strong>Ventilasjonsfirma</strong><br>Nytt avtrekk fra kjellerbad direkte gjennom yttervegg.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="contactMunicipality"><span><strong>Tromsø kommune</strong><br>Avklar fasadeendring for større vindu og ventilasjonsrist.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="contactPestControl"><span><strong>Skadedyrfirma ved behov</strong><br>Finn inngangspunkter og vurder omfanget av forurenset isolasjon.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="contactWindowSupplier"><span><strong>Vindusleverandør</strong><br>Kontroller mål, rømningsåpning, U-verdi og leveringsuke.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="contactWaste"><span><strong>Avfallsmottak/container</strong><br>Planlegg håndtering av panel, isolasjon, vindu, gips og parkett.</span></label>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Viktige avklaringer</h2>
+                <ul class="compact-list">
+                    <li>Er det større vinduet søknadspliktig og berører det bærende stendere?</li>
+                    <li>Oppfyller vinduet krav til rømningsåpning og trygg høyde over gulv?</li>
+                    <li>Hvordan skal nytt baderomsavtrekk isoleres og sikres mot kondens og tilbakeslag?</li>
+                    <li>Hvordan tettes gjennomføringen i soverom og knekott luft- og damptett?</li>
+                    <li>Har soverommet fortsatt tilstrekkelig tilluft når det gamle røret fjernes?</li>
+                    <li>Skal lettveggen ha kryssfiner/OSB bak gips for knaggrekke?</li>
+                    <li>Er gulvet plant, og hvordan bygges terskelfri overgang uten høydeforskjell?</li>
+                    <li>Er det eldre materialer som bør miljøkartlegges før riving?</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="card" aria-labelledby="procurement-title">
+            <h2 id="procurement-title">Innkjøp og forventet levering</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produkt/materiale</th>
+                            <th>Må avklares</th>
+                            <th>Når bestille</th>
+                            <th>Må være i hus</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Nytt større vindu</strong></td><td>Mål, åpning, rømningskrav, farge, beslag, U-verdi</td><td>3.–5. august</td><td>Før oppstart på ytterveggen</td><td><select class="status-select" data-project-task="windowDelivery"><option value="not_started">Ikke bestilt</option><option value="ordered">Bestilt</option><option value="confirmed">Levering bekreftet</option><option value="delivered">I hus</option></select></td></tr>
+                        <tr><td><strong>Eikedører med karmer</strong></td><td>Eksakte mål, slagretning, terskel, håndtak</td><td>Etter oppmåling</td><td>Før sluttføring</td><td><select class="status-select" data-project-task="oakDoors"><option value="not_started">Ikke valgt</option><option value="in_progress">Vurderes</option><option value="ordered">Bestilt</option><option value="delivered">I hus</option></select></td></tr>
+                        <tr><td><strong>Isolerte knekottdører</strong></td><td>Lysåpning, U-verdi, lufttetthet, slagretning</td><td>Etter oppmåling</td><td>Før gips/gerikter avsluttes</td><td><select class="status-select" data-project-task="kneewallDoors"><option value="not_started">Ikke valgt</option><option value="in_progress">Vurderes</option><option value="ordered">Bestilt</option><option value="delivered">I hus</option></select></td></tr>
+                        <tr><td><strong>Isolasjon + dampsperre</strong></td><td>Tykkelse, total veggoppbygging, tape og mansjetter</td><td>Etter snekkerbefaring</td><td>Før oppstart</td><td><select class="status-select" data-project-task="insulationMaterials"><option value="not_started">Ikke beregnet</option><option value="quoted">Mengder klare</option><option value="ordered">Bestilt</option><option value="delivered">I hus</option></select></td></tr>
+                        <tr><td><strong>Stendere/lekter og bæring</strong></td><td>Dimensjonering rundt vindu og for to lag gips</td><td>Etter snekkerbefaring</td><td>Før oppstart</td><td><select class="status-select" data-project-task="framingMaterials"><option value="not_started">Ikke beregnet</option><option value="quoted">Mengder klare</option><option value="ordered">Bestilt</option><option value="delivered">I hus</option></select></td></tr>
+                        <tr><td><strong>Gips og festemidler</strong></td><td>To lag vegg, ett lag tak, riktig skruelengde og forskyvning</td><td>Etter materialliste</td><td>Før veggene lukkes</td><td><select class="status-select" data-project-task="gypsumMaterials"><option value="not_started">Ikke beregnet</option><option value="quoted">Mengder klare</option><option value="ordered">Bestilt</option><option value="delivered">I hus</option></select></td></tr>
+                        <tr><td><strong>Bakplate i lettvegg</strong></td><td>Kryssfiner/OSB for knaggrekke og eventuelle skap</td><td>Med øvrige plater</td><td>Før lettveggen lukkes</td><td><select class="status-select" data-project-task="wallBacking"><option value="not_started">Ikke avklart</option><option value="decided">Valgt</option><option value="delivered">I hus</option></select></td></tr>
+                        <tr><td><strong>Parkett og underlag</strong></td><td>Type, retning, svinn, undergulv og terskelfri overgang</td><td>Etter gulvkontroll</td><td>Akklimatiseres før legging</td><td><select class="status-select" data-project-task="floorMaterials"><option value="not_started">Ikke valgt</option><option value="in_progress">Vurderes</option><option value="ordered">Bestilt</option><option value="delivered">I hus</option></select></td></tr>
+                        <tr><td><strong>Ventilasjonsdeler</strong></td><td>Vifte, dimensjon, isolert kanal, tilbakeslagsspjeld, rist</td><td>Etter faglig vurdering</td><td>Før gammelt rør fjernes</td><td><select class="status-select" data-project-task="ventilationMaterials"><option value="not_started">Ikke prosjektert</option><option value="quoted">Tilbud klart</option><option value="ordered">Bestilt</option><option value="delivered">I hus</option></select></td></tr>
+                        <tr><td><strong>Elektrisk materiell</strong></td><td>Spotter, drivere, stikk, ovnsuttak, bokser og styring</td><td>Etter lys-/stikkplan</td><td>Før elektrikerens grovinstallasjon</td><td><select class="status-select" data-project-task="electricalMaterials"><option value="not_started">Ikke valgt</option><option value="quoted">Tilbud klart</option><option value="ordered">Bestilt</option><option value="delivered">I hus</option></select></td></tr>
+                        <tr><td><strong>Listverk og foringer</strong></td><td>Profil, eik/hvit, vindusdybde og dørkarmer</td><td>Etter ferdige mål</td><td>Før sluttføring</td><td><select class="status-select" data-project-task="trimMaterials"><option value="not_started">Ikke valgt</option><option value="ordered">Bestilt</option><option value="delivered">I hus</option></select></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="overview-grid" aria-labelledby="ready-title">
+            <div class="card">
+                <h2 id="ready-title">Klar før snekkeren starter</h2>
+                <div class="checklist">
+                    <label class="check-item"><input type="checkbox" data-task="readyScope"><span>Omfang, tegning og ansvarsdeling er skriftlig avklart.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="readyPermit"><span>Søknadsplikt er avklart og eventuell tillatelse foreligger.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="readyWindow"><span>Vinduet er levert, kontrollmålt og uskadd.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="readyDoors"><span>Dører og knekottdører er bestilt med bekreftet levering.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="readyVentilation"><span>Ny ventilasjonsløsning er prosjektert og tidspunktet koordinert.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="readyElectrician"><span>Elektrikerens første besøk er avtalt i riktig byggefase.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="readyMaterials"><span>Materialliste er kontrollert og kritiske materialer er tørre og lagret inne.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="readyRoom"><span>Rommet er tømt og tilkomst/arbeidsområde er ryddet.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="readyWaste"><span>Avfallshåndtering og sikker sanering av museskitt er planlagt.</span></label>
+                    <label class="check-item"><input type="checkbox" data-task="readyBudget"><span>Budsjett, reserve og betalingsplan er avklart.</span></label>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Planlagt arbeidsrekkefølge</h2>
+                <ol class="compact-list">
+                    <li>Etabler nytt baderomsavtrekk direkte gjennom yttervegg.</li>
+                    <li>Tøm rommet, koble fra relevante elektriske punkter og sikre arbeidsområdet.</li>
+                    <li>Riv panel på vegger og tak uten å virvle opp museskitt.</li>
+                    <li>Fjern forurenset isolasjon, rengjør og tett alle museinnganger.</li>
+                    <li>Fjern gammelt ventilasjonsrør i soverom/knekott og tett gjennomføringer.</li>
+                    <li>Fjern ett vindu og bygg om åpningen til det nye større vinduet med korrekt bæring.</li>
+                    <li>Etterisoler yttervegg med 100 mm og etabler kontinuerlig dampsperre.</li>
+                    <li>Elektriker legger skjult anlegg, bokser og opplegg for belysning.</li>
+                    <li>Bygg lettvegg til walk-in med bakplate for knaggrekke.</li>
+                    <li>Stav opp vegger/tak og monter to lag gips på veggene og gips i taket.</li>
+                    <li>Sparkle, slipe og male før nytt gulv monteres.</li>
+                    <li>Legg parkett med terskelfri overgang, monter dører, lister og elektrisk sluttmateriell.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section aria-labelledby="control-title">
+            <h2 id="control-title">Velg styringssystem</h2>
+            <div class="choice-grid">
+                <label class="choice">
+                    <input type="radio" name="controlSystem" value="plejd" data-save>
+                    <span class="choice-content">
+                        <h3>Plejd</h3>
+                        <p>Vanlige dimbare lamper, solide veggbrytere og enkel styring av to soner fra døren og begge sider av sengen.</p>
+                    </span>
+                </label>
+                <label class="choice">
+                    <input type="radio" name="controlSystem" value="hue" data-save>
+                    <span class="choice-content">
+                        <span class="recommendation">Valgt testløsning</span>
+                        <h3>Philips Hue</h3>
+                        <p>Best hvis dere ønsker farget lys, justerbar hvitfarge, mange lysscener og tett integrasjon med andre smarthussystemer.</p>
+                    </span>
+                </label>
+                <label class="choice">
+                    <input type="radio" name="controlSystem" value="hybrid" data-save>
+                    <span class="choice-content">
+                        <h3>Kombinasjon</h3>
+                        <p>Mulig, men ikke anbefalt på samme lyskurs. Plejd og Hue har ingen direkte integrasjon og må styres som separate systemer.</p>
+                    </span>
+                </label>
+            </div>
+            <div class="card robustness-card">
+                <h3>Robusthetsprinsipp</h3>
+                <p class="intro">Bruk standard 230 V-kabling, dype veggbokser og armaturer med utskiftbare E27/GU10-lyskilder. Da kan Hue senere erstattes av vanlige pærer, Plejd eller et annet system uten ny oppussing.</p>
+            </div>
+            <div class="card robustness-card">
+                <span class="recommendation">Fase 1 · test uten elektriker</span>
+                <h3>Prøv Philips Hue i eksisterende armaturer</h3>
+                <p class="intro">Sett Hue-pærer i eksisterende E27- og GU10-armaturer, la den ene felles veggbryteren stå på og bruk Hue Bridge med trådløse Tap Dial- eller Dimmer-brytere. Hue deler pærene i sonene «Soverom» og «Garderobe», selv om alle får strøm fra samme bryter.</p>
+                <p class="footer-note">Hue-pærer skal ikke brukes bak en vanlig veggdimmer. Hvis eksisterende styring er en dimmer, må den ikke brukes som regulering for Hue-pærene.</p>
+            </div>
+        </section>
+
+        <section aria-labelledby="lighting-title">
+            <h2 id="lighting-title">Velg hovedlys på soverommet</h2>
+            <div class="choice-grid">
+                <label class="choice">
+                    <input type="radio" name="bedroomLight" value="ceiling" data-save>
+                    <span class="choice-content">
+                        <span class="recommendation">Anbefalt</span>
+                        <h3>Stor Hue-taklampe</h3>
+                        <p>Mykt, dimbart lys uten spotter rett over sengen. Plasseres sentralt eller litt mot fotenden.</p>
+                    </span>
+                </label>
+                <label class="choice">
+                    <input type="radio" name="bedroomLight" value="downlights" data-save>
+                    <span class="choice-content">
+                        <h3>Fire Hue-downlights</h3>
+                        <p>Fleksible lysscener og jevn fordeling. Plasseres rundt sengen, ikke over hodeputene.</p>
+                    </span>
+                </label>
+                <label class="choice">
+                    <input type="radio" name="bedroomLight" value="pendant" data-save>
+                    <span class="choice-content">
+                        <h3>Dekorativ pendel</h3>
+                        <p>Gir rommet et tydelig uttrykk. Kombineres med separat arbeidslys i garderoben.</p>
+                    </span>
+                </label>
+            </div>
+        </section>
+
+        <section class="card" aria-labelledby="technology-title">
+            <h2 id="technology-title">Langsiktig teknologivalg</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Teknologi</th>
+                            <th>Fordeler</th>
+                            <th>Ulemper</th>
+                            <th>Passer best til</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Hue / Zigbee + Matter</strong></td>
+                            <td>Modent mesh, stort produktutvalg, lokal Bridge, farger og justerbar hvitfarge. Kan kobles til Matter-plattformer.</td>
+                            <td>Hue-pærene må ha permanent strøm. Full funksjonalitet og tilbehør er fortsatt knyttet til Hue-systemet.</td>
+                            <td>DIY, lysscener, stemningslys og utskiftbare E27/GU10-pærer.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Plejd / Bluetooth mesh</strong></td>
+                            <td>Lokal og rask styring, gode fysiske brytere og bruk av vanlige dimbare armaturer.</td>
+                            <td>Krever elektriker for faste moduler. Proprietært system uten direkte Matter-støtte.</td>
+                            <td>Fast hvitt lys, downlights og tradisjonell veggbetjening.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Matter over Thread</strong></td>
+                            <td>Åpen standard, lokal styring og mulighet for å kombinere flere produsenter og plattformer.</td>
+                            <td>Utvalget av nordiske dimmere og brytere er fortsatt mindre og mindre modent enn Hue og Plejd.</td>
+                            <td>Fremtidige sensorer, brytere og integrasjon på tvers av smarthus.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DALI-2</strong></td>
+                            <td>Kablet industristandard, svært stabil og leverandøruavhengig med avansert dimming.</td>
+                            <td>Dyrere kabling, drivere og programmering; unødvendig komplekst for ett lite rom.</td>
+                            <td>Nybygg, større boliger og omfattende profesjonelle lysanlegg.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Wi-Fi-pærer</strong></td>
+                            <td>Billige og krever ofte ingen separat hub.</td>
+                            <td>Avhengighet av Wi-Fi og ofte skytjenester; svakere som permanent grunnbelysning.</td>
+                            <td>Enkeltstående lamper og midlertidige løsninger.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="footer-note"><strong>Anbefalt strategi:</strong> Standard 230 V-kabling, dype veggbokser, nøytral leder og armaturer med utskiftbare E27/GU10-lyskilder. Test Hue nå, og bruk Matter som integrasjonslag fremfor å vente på et helt Matter-basert lysanlegg.</p>
+        </section>
+
+        <section aria-labelledby="products-title">
+            <h2 id="products-title">Produkter vi vurderer</h2>
+            <div class="product-grid">
+                <article class="card product-card">
+                    <div>
+                        <span class="recommendation">Leselys</span>
+                        <h3>Hotellampe med separat lesearm</h3>
+                    </div>
+                    <p>Hovedlampe med skjerm øverst og smalt, fleksibelt LED-leselys under. Begge lys bør kunne styres separat.</p>
+                    <span class="product-meta">Eksempel: Bristol hotellampe</span>
+                    <div class="product-actions">
+                        <a class="button-link" href="https://www.lysbutikken.no/innebelysning/vegglamper/leselamper/sengelamper-hotell/bristol-vegglampe-med-separat-led-leselys-satin-u-skjerm" target="_blank" rel="noopener">Se produkt</a>
+                        <select aria-label="Status for hotellampe" data-product="hotelLamp">
+                            <option value="considering">Vurderes</option>
+                            <option value="chosen">Valgt</option>
+                            <option value="rejected">Utgår</option>
+                        </select>
+                    </div>
+                </article>
+
+                <article class="card product-card">
+                    <div>
+                        <span class="recommendation">Alternativ</span>
+                        <h3>Lucide Galen fleksibelt leselys</h3>
+                    </div>
+                    <p>Enkel veggmontert svanehalslampe med 3 W integrert LED, varmt lys på 3000 K og egen bryter.</p>
+                    <span class="product-meta">Elektroimportøren · varenr. 92033</span>
+                    <div class="product-actions">
+                        <a class="button-link" href="https://www.elektroimportoren.no/lucide-galen-vegglampe-3w-3000k-m-fleksibel-arm-hvit/92033/Product.html" target="_blank" rel="noopener">Se produkt</a>
+                        <select aria-label="Status for Lucide Galen" data-product="galenLamp">
+                            <option value="considering">Vurderes</option>
+                            <option value="chosen">Valgt</option>
+                            <option value="rejected">Utgår</option>
+                        </select>
+                    </div>
+                </article>
+
+                <article class="card product-card">
+                    <div>
+                        <span class="recommendation">Strøm</span>
+                        <h3>ELKO One stikk med USB-C PD</h3>
+                    </div>
+                    <p>Ett stikk ved hvert nattbord, ca. 45–50 cm over gulvet. Endelig høyde tilpasses lampen og Montana-modulene.</p>
+                    <span class="product-meta">Elektroimportøren · ELKO One</span>
+                    <div class="product-actions">
+                        <a class="button-link" href="https://www.elektroimportoren.no/" target="_blank" rel="noopener">Finn produkt</a>
+                        <select aria-label="Status for stikkontakt" data-product="usbOutlet">
+                            <option value="considering">Vurderes</option>
+                            <option value="chosen">Valgt</option>
+                            <option value="rejected">Utgår</option>
+                        </select>
+                    </div>
+                </article>
+
+                <article class="card product-card">
+                    <div>
+                        <span class="recommendation">Anbefalt ved sengen</span>
+                        <h3>Hue Tap Dial Switch</h3>
+                    </div>
+                    <p>Fire programmerbare knapper og et dreiehjul for dimming. Knappene kan styre separate rom eller soner, for eksempel soverom og garderobe.</p>
+                    <span class="product-meta">Trådløs · kan monteres ved stikkontakten · krever Hue Bridge</span>
+                    <div class="product-actions">
+                        <a class="button-link" href="https://www.philips-hue.com/en-gb/p/hue-tap-dial-switch/8719514498495" target="_blank" rel="noopener">Se produkt</a>
+                        <select aria-label="Status for Hue Tap Dial Switch" data-product="tapDial">
+                            <option value="considering">Vurderes</option>
+                            <option value="chosen">Valgt</option>
+                            <option value="rejected">Utgår</option>
+                        </select>
+                    </div>
+                </article>
+
+                <article class="card product-card">
+                    <div>
+                        <span class="recommendation">Innfelt alternativ</span>
+                        <h3>Hue Wall Switch Module</h3>
+                    </div>
+                    <p>Monteres bak en vanlig bryter og lar Hue-lampene ha permanent strøm. Modellen med to innganger kan brukes med dobbel vippe for to separate lyssoner.</p>
+                    <span class="product-meta">To styreinnganger, ikke to 230 V-faser · krever Hue Bridge</span>
+                    <div class="product-actions">
+                        <a class="button-link" href="https://www.philips-hue.com/en-gb/p/hue-philips-hue-wall-switch-module/8719514318045" target="_blank" rel="noopener">Se produkt</a>
+                        <select aria-label="Status for Hue Wall Switch Module" data-product="wallModule">
+                            <option value="considering">Vurderes</option>
+                            <option value="chosen">Valgt</option>
+                            <option value="rejected">Utgår</option>
+                        </select>
+                    </div>
+                </article>
+
+                <article class="card product-card">
+                    <div>
+                        <span class="recommendation">Plejd · to lyssoner</span>
+                        <h3>Plejd DIM-02 dobbeldimmer</h3>
+                    </div>
+                    <p>To separate dimmekanaler på opptil 100 VA hver. Kan styre soverom og garderobe fra trykknapper, app, tidsplaner og scenarioer.</p>
+                    <span class="product-meta">Monteres av elektriker · 2 × 100 VA LED · Bluetooth mesh</span>
+                    <div class="product-actions">
+                        <a class="button-link" href="https://www.elektroimportoren.no/plejd-dim-02-dobbeldimmer-2x100va-led-bluetooth-mesh/1400277/Product.html" target="_blank" rel="noopener">Se produkt</a>
+                        <select aria-label="Status for Plejd DIM-02" data-product="plejdDim02">
+                            <option value="considering">Vurderes</option>
+                            <option value="chosen">Valgt</option>
+                            <option value="rejected">Utgår</option>
+                        </select>
+                    </div>
+                </article>
+
+                <article class="card product-card">
+                    <div>
+                        <span class="recommendation">Plejd · ved sengen</span>
+                        <h3>Plejd WPH-01 trådløs bryter</h3>
+                    </div>
+                    <p>Kan monteres ved siden av stikkontakten uten styrekabel. Dobbel vippe kan styre soveromslys, garderobelys eller et «slå av alt»-scenario.</p>
+                    <span class="product-meta">Inntil ca. 15 års batterilevetid · passer vanlige bryterrammer</span>
+                    <div class="product-actions">
+                        <a class="button-link" href="https://www.elektroimportoren.no/plejd-wph-01-ew-ph-traadloes-bryter/1400283/Product.html" target="_blank" rel="noopener">Se produkt</a>
+                        <select aria-label="Status for Plejd WPH-01" data-product="plejdWph01">
+                            <option value="considering">Vurderes</option>
+                            <option value="chosen">Valgt</option>
+                            <option value="rejected">Utgår</option>
+                        </select>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="card" aria-labelledby="price-title">
+            <h2 id="price-title">Prisoverslag for styring</h2>
+            <p class="intro">Sammenlignbare priser hos Elektroimportøren, kontrollert 31. juli 2026. Elektriker, rammer, trykknapper og selve lampene er ikke inkludert.</p>
+            <div class="table-wrap">
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th>System</th>
+                            <th>Utstyr</th>
+                            <th>Pris</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Plejd lokalt</strong></td>
+                            <td>1 × DIM-02 (779 kr) + 2 × WPH-01 (519 kr)</td>
+                            <td>1 817 kr</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Plejd med fjernstyring</strong></td>
+                            <td>Lokalt oppsett + GWY-01 Gateway (989 kr)</td>
+                            <td>2 806 kr</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Philips Hue</strong></td>
+                            <td>Bridge (489,90 kr) + 2 × Tap Dial (479,90 kr) + Wall Switch Module (419,90 kr)</td>
+                            <td>1 869,60 kr</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="footer-note">Plejd uten Gateway er 52,60 kr rimeligere enn Hue-styringen. Hue-prisen inkluderer nødvendig Bridge, mens Plejd Gateway er valgfri. Hue-lyskilder kommer i tillegg; Plejd DIM-02 kan styre kompatible standardarmaturer.</p>
+        </section>
+
+        <section class="card" aria-labelledby="test-cart-title">
+            <h2 id="test-cart-title">Handleliste for Hue-test</h2>
+            <p class="intro">Forutsetter én E27-pære i taklampen på soverommet, én E27-pære i garderobetaket og tre GU10-pærer i spotlampen.</p>
+            <div class="table-wrap">
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th>Produkt</th>
+                            <th>Antall</th>
+                            <th>Bruk</th>
+                            <th>Pris</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="https://www.clasohlson.com/no/Philips-Hue-Essential-startpakke-E27-white-and-colour-ambiance/p/46-1650" target="_blank" rel="noopener">Hue Essential E27 Color-startpakke</a></td>
+                            <td>1</td>
+                            <td>2 × E27 Color, Bridge og Dimmer Switch til døren</td>
+                            <td>1 049 kr</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://www.elektroimportoren.no/philips-hue-wa-lyskilde-4-2w-gu10-2pk/60782/Product.html" target="_blank" rel="noopener">Hue White Ambiance GU10 2-pk</a></td>
+                            <td>2</td>
+                            <td>Tre garderobespotter og én reservepære</td>
+                            <td>959,80 kr</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://www.elektroimportoren.no/philips-hue-bryter-rund-hvit/60693/Product.html" target="_blank" rel="noopener">Hue Tap Dial Switch</a></td>
+                            <td>2</td>
+                            <td>Én ved hver side av sengen</td>
+                            <td>959,80 kr</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Anslått totalpris</td>
+                            <td>2 968,60 kr</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <p class="footer-note">Tap Dial monteres ved hver side av sengen, mens startsettets Dimmer Switch plasseres ved døren. Eksisterende veggbryter må stå på. Kontroller at Hue GU10 fysisk passer i spotarmaturen før kjøp.</p>
+            <div class="card robustness-card">
+                <span class="recommendation">Ny anbefalt handlekurv</span>
+                <h3>Start med E27 Essential-startpakken</h3>
+                <p class="intro"><a href="https://www.clasohlson.com/no/Philips-Hue-Essential-startpakke-E27-white-and-colour-ambiance/p/46-1650" target="_blank" rel="noopener">Hue Essential E27-startpakken hos Clas Ohlson</a> inneholder to E27 Color-pærer, Hue Bridge og én Hue Dimmer Switch. Legg til to GU10 White Ambiance 2-pakninger og to Tap Dial-brytere, én ved hver side av sengen. Bruk den medfølgende Dimmer Switch ved døren.</p>
+                <p class="footer-note"><strong>Total: 2 968,60 kr</strong> – E27-startpakke 1 049 kr + to GU10 2-pakninger 959,80 kr + to Tap Dial 959,80 kr. Dette gir én GU10-reservepære.</p>
+            </div>
+        </section>
+
+        <section class="card" aria-labelledby="responsibility-title">
+            <h2 id="responsibility-title">Hva kan vi gjøre selv?</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Dere kan gjøre selv</th>
+                            <th>Registrert elektriker</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Kjøpe alt utstyret og avtale plassering, høyder og funksjoner.</td>
+                            <td>Kontrollere at produktene passer kurs, last, armaturer og eksisterende anlegg.</td>
+                        </tr>
+                        <tr>
+                            <td>Montere og plassere Plejd WPH-01 eller Hue Tap Dial med tape eller skruer.</td>
+                            <td>Installere Plejd DIM-02 og Hue Wall Switch Module bak fast bryter.</td>
+                        </tr>
+                        <tr>
+                            <td>Koble til Bridge/Gateway med støpsel og nettverkskabel samt bruke appene.</td>
+                            <td>Montere eller flytte stikkontakter, USB-C-stikk, veggbokser og kablede brytere.</td>
+                        </tr>
+                        <tr>
+                            <td>Skifte Hue-pærer i eksisterende sokler og koble til løse lamper med støpsel.</td>
+                            <td>Montere downlights, nye lampepunkter og fast tilkoblede tak- eller vegglamper.</td>
+                        </tr>
+                        <tr>
+                            <td>Montere taklampe som henger i krok og kobles med godkjent lampeplugg eller eksisterende klemme, når produsentens anvisning tillater det.</td>
+                            <td>Legge eller endre fast kabling, koblingsbokser, kurser og arbeid i sikringsskapet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="footer-note">Følg alltid produsentens anvisning. Elektrisk arbeid utover DSBs uttrykkelige liste over mindre arbeider skal utføres og dokumenteres av en virksomhet registrert i Elvirksomhetsregisteret.</p>
+        </section>
+
+        <section class="card" aria-labelledby="switch-map-title">
+            <h2 id="switch-map-title">Foreslått bryteroppsett</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Plassering</th>
+                            <th>Bryter</th>
+                            <th>Funksjon</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Venstre side av sengen</td>
+                            <td>Hue Tap Dial</td>
+                            <td>Slå soveromslampen av/på, dimme den med dreiehjulet og slå av garderobens lys.</td>
+                        </tr>
+                        <tr>
+                            <td>Høyre side av sengen</td>
+                            <td>Hue Tap Dial</td>
+                            <td>Samme funksjoner som på venstre side, slik at begge får full kontroll fra sengen.</td>
+                        </tr>
+                        <tr>
+                            <td>Ved døren</td>
+                            <td>Medfølgende Hue Dimmer Switch</td>
+                            <td>Slå hele rommet av/på, dimme og bytte mellom forhåndsdefinerte scener.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="footer-note">Forslag til Tap Dial: knapp 1 styrer soverom av/på, knapp 2 slår garderoben av, knapp 3 slår alt av, og dreiehjulet dimmer soverommet.</p>
+        </section>
+
+        <section class="overview-grid" aria-labelledby="decisions-title">
+            <div class="card">
+                <h2 id="decisions-title">Beslutninger og neste steg</h2>
+                <div class="checklist">
+                    <label class="check-item">
+                        <input type="checkbox" data-task="measureCeiling">
+                        <span><strong>Takhøyde målt: 240 cm</strong><br>Brukes ved valg av plafond, pendel og plassering av leselys.</span>
+                    </label>
+                    <label class="check-item">
+                        <input type="checkbox" data-task="chooseMainLight">
+                        <span><strong>Velg hovedlys</strong><br>Stor taklampe, downlights eller pendel.</span>
+                    </label>
+                    <label class="check-item">
+                        <input type="checkbox" data-task="chooseBedsideLamp">
+                        <span><strong>Velg nattbordslampe</strong><br>Hotellampe med hovedlys og separat fleksibel lesearm.</span>
+                    </label>
+                    <label class="check-item">
+                        <input type="checkbox" data-task="confirmOutlets">
+                        <span><strong>Bestem plassering av stikk og sengebrytere</strong><br>Planlegg stikk og Hue-styring side om side ved begge Montana-modulene.</span>
+                    </label>
+                    <label class="check-item">
+                        <input type="checkbox" data-task="electrician">
+                        <span><strong>Gå gjennom planen med elektriker</strong><br>Fastsett spotter, stikk, ovnsuttak, bokser og permanent strøm til valgt lysstyring før veggene lukkes.</span>
+                    </label>
+                    <label class="check-item">
+                        <input type="checkbox" data-task="fallbackDesign">
+                        <span><strong>Bekreft leverandøruavhengig reserveplan</strong><br>Standard kabling, dype bokser og utskiftbare lyskilder skal gjøre det enkelt å bytte system senere.</span>
+                    </label>
+                    <label class="check-item">
+                        <input type="checkbox" data-task="huePilot">
+                        <span><strong>Gjennomfør Hue-test</strong><br>Test Hue-pærer, Bridge og trådløse brytere i eksisterende armaturer før endelig system velges.</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Prosjektnotater</h2>
+                <textarea id="notes" placeholder="Skriv inn mål, ideer, priser, elektrikertilbud og ting dere vil undersøke..."></textarea>
+                <p class="footer-note">Notatene lagres automatisk på denne enheten.</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Ta vare på prosjektet</h2>
+            <p class="intro">Lagringen er lokal i nettleseren. Last ned en sikkerhetskopi hvis dere vil flytte valgene til en annen enhet.</p>
+            <div class="actions">
+                <button class="primary" id="exportButton" type="button">Last ned prosjektdata</button>
+                <button id="importButton" type="button">Importer prosjektdata</button>
+                <input id="importFile" type="file" accept="application/json" hidden>
+                <button class="danger" id="resetButton" type="button">Nullstill valg</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const STORAGE_KEY = "janinc-bedroom-project-v1";
+        const defaultState = {
+            controlSystem: "hue",
+            bedroomLight: "ceiling",
+            products: {
+                hotelLamp: "considering",
+                galenLamp: "considering",
+                usbOutlet: "considering",
+                tapDial: "considering",
+                wallModule: "considering",
+                plejdDim02: "considering",
+                plejdWph01: "considering"
+            },
+            tasks: {
+                measureCeiling: true
+            },
+            projectTasks: {},
+            notes: ""
+        };
+
+        let state = loadState();
+        let saveTimer;
+
+        function loadState() {
+            try {
+                const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                return stored ? {
+                    ...structuredClone(defaultState),
+                    ...stored,
+                    products: { ...defaultState.products, ...stored.products },
+                    tasks: { ...defaultState.tasks, ...stored.tasks },
+                    projectTasks: { ...defaultState.projectTasks, ...stored.projectTasks }
+                } : structuredClone(defaultState);
+            } catch {
+                return structuredClone(defaultState);
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            const time = new Intl.DateTimeFormat("no-NO", {
+                hour: "2-digit",
+                minute: "2-digit"
+            }).format(new Date());
+            document.getElementById("savedStatus").textContent = `Lagret ${time}`;
+        }
+
+        function queueSave() {
+            clearTimeout(saveTimer);
+            document.getElementById("savedStatus").textContent = "Lagrer …";
+            saveTimer = setTimeout(saveState, 250);
+        }
+
+        function renderState() {
+            const selectedControl = document.querySelector(
+                `input[name="controlSystem"][value="${state.controlSystem}"]`
+            );
+            if (selectedControl) selectedControl.checked = true;
+
+            const selectedLight = document.querySelector(
+                `input[name="bedroomLight"][value="${state.bedroomLight}"]`
+            );
+            if (selectedLight) selectedLight.checked = true;
+
+            document.querySelectorAll("[data-product]").forEach((select) => {
+                select.value = state.products[select.dataset.product] || "considering";
+            });
+
+            document.querySelectorAll("[data-task]").forEach((checkbox) => {
+                checkbox.checked = Boolean(state.tasks[checkbox.dataset.task]);
+            });
+
+            document.querySelectorAll("[data-project-task]").forEach((select) => {
+                const savedValue = state.projectTasks[select.dataset.projectTask];
+                if (savedValue && [...select.options].some((option) => option.value === savedValue)) {
+                    select.value = savedValue;
+                }
+            });
+
+            document.getElementById("notes").value = state.notes || "";
+        }
+
+        document.querySelectorAll('input[name="bedroomLight"]').forEach((input) => {
+            input.addEventListener("change", (event) => {
+                state.bedroomLight = event.target.value;
+                queueSave();
+            });
+        });
+
+        document.querySelectorAll('input[name="controlSystem"]').forEach((input) => {
+            input.addEventListener("change", (event) => {
+                state.controlSystem = event.target.value;
+                queueSave();
+            });
+        });
+
+        document.querySelectorAll("[data-product]").forEach((select) => {
+            select.addEventListener("change", (event) => {
+                state.products[event.target.dataset.product] = event.target.value;
+                queueSave();
+            });
+        });
+
+        document.querySelectorAll("[data-task]").forEach((checkbox) => {
+            checkbox.addEventListener("change", (event) => {
+                state.tasks[event.target.dataset.task] = event.target.checked;
+                queueSave();
+            });
+        });
+
+        document.querySelectorAll("[data-project-task]").forEach((select) => {
+            select.addEventListener("change", (event) => {
+                state.projectTasks[event.target.dataset.projectTask] = event.target.value;
+                queueSave();
+            });
+        });
+
+        document.getElementById("notes").addEventListener("input", (event) => {
+            state.notes = event.target.value;
+            queueSave();
+        });
+
+        document.getElementById("exportButton").addEventListener("click", () => {
+            saveState();
+            const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "soverom-prosjekt.json";
+            link.click();
+            URL.revokeObjectURL(url);
+        });
+
+        document.getElementById("importButton").addEventListener("click", () => {
+            document.getElementById("importFile").click();
+        });
+
+        document.getElementById("importFile").addEventListener("change", async (event) => {
+            const [file] = event.target.files;
+            if (!file) return;
+
+            try {
+                const imported = JSON.parse(await file.text());
+                state = {
+                    ...structuredClone(defaultState),
+                    ...imported,
+                    products: { ...defaultState.products, ...imported.products },
+                    tasks: { ...defaultState.tasks, ...imported.tasks },
+                    projectTasks: { ...defaultState.projectTasks, ...imported.projectTasks }
+                };
+                renderState();
+                saveState();
+            } catch {
+                window.alert("Filen kunne ikke leses som gyldige prosjektdata.");
+            } finally {
+                event.target.value = "";
+            }
+        });
+
+        document.getElementById("resetButton").addEventListener("click", () => {
+            if (!window.confirm("Vil du nullstille alle valg og notater på denne enheten?")) return;
+            state = structuredClone(defaultState);
+            renderState();
+            saveState();
+        });
+
+        renderState();
+    </script>
+</body>
+</html>
