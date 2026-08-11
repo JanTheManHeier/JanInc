@@ -665,7 +665,7 @@ async function lastRSVP() {
       <div class="stat-card"><div class="stat-num">${s.kommer || 0}</div><div class="stat-label">Kommer</div></div>
       <div class="stat-card"><div class="stat-num">${s.kommerIkke || 0}</div><div class="stat-label">Kommer ikke</div></div>
       <div class="stat-card"><div class="stat-num">${s.antallPersoner || 0}</div><div class="stat-label">Antall personer</div></div>
-      <div class="stat-card"><div class="stat-num">${s.fredag || 0}</div><div class="stat-label">Mingling fredag</div></div>
+      <div class="stat-card"><div class="stat-num">${s.fredagPersoner || 0}</div><div class="stat-label">Personer på minglefest</div></div>
       <div class="stat-card"><div class="stat-num">${(s.svart || 0)}/${totalGjester}</div><div class="stat-label">Har svart</div></div>
     </div>`;
     const rows = d.svar || [];
@@ -685,7 +685,7 @@ async function lastRSVP() {
     h += rows.map(r => `<tr>
       <td><strong>${esc(r.navn)}</strong></td>
       <td>${r.kommer ? '✅ Ja' : '❌ Nei'}</td>
-      <td>${!r.kommer ? '<span class="muted">—</span>' : (r.fredag ? '🍕 Ja' : 'Nei')}</td>
+      <td>${r.fredag ? `🍕 Ja (${r.fredagAntall || 1})` : 'Nei'}</td>
       <td>${r.kommer ? (r.antall || 1) : '<span class="muted">—</span>'}</td>
       <td class="tekst">${r.ledsagere ? esc(r.ledsagere).replace(/\n/g, '<br>') : '<span class="muted">—</span>'}</td>
       <td class="tekst">${esc(r.allergier || '')}</td>

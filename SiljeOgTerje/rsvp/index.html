@@ -54,6 +54,8 @@
   .ferdig p { color: var(--muted); font-size: 15px; }
   .oppsummering { background: var(--gull-bg); border-radius: 12px; padding: 14px; margin: 14px 0; text-align: left; font-size: 14px; }
   .oppsummering div { margin: 4px 0; }
+  .bekreftet { background: var(--gronn-bg); border: 1px solid rgba(79,138,91,.28);
+    color: #376A42; border-radius: 12px; padding: 13px; line-height: 1.5; margin: 14px 0 6px; text-align: center; }
   .til-app { display: block; text-align: center; margin-top: 18px; color: var(--gull-lys); font-size: 14px; }
 </style>
 </head>
@@ -75,37 +77,22 @@
 <form class="kort skjult" id="skjema">
   <div class="hilsen" id="hilsen"></div>
 
+  <div class="bekreftet">
+    🥂 Dere er allerede bekreftet til bryllupet.<br />
+    Nå trenger vi bare svar for minglekvelden.
+  </div>
+
   <div class="felt">
-    <label>Kommer du i bryllupet? 🥂</label>
-    <div class="valg" id="valg-kommer">
-      <label data-v="ja"><input type="radio" name="kommer" value="ja" /> ✓ Ja, jeg kommer</label>
-      <label data-v="nei"><input type="radio" name="kommer" value="nei" /> ✗ Dessverre ikke</label>
+    <label>Kommer du/dere på minglefesten fredag? 🎉 <span class="hint">Amtmandens Datter, fredag 21.08.26 kl. 19.00</span></label>
+    <div class="valg" id="valg-fredag">
+      <label data-v="ja"><input type="radio" name="fredag" value="ja" /> ✓ Ja</label>
+      <label data-v="nei"><input type="radio" name="fredag" value="nei" /> ✗ Nei</label>
     </div>
   </div>
 
-  <div id="ja-felter" class="skjult">
-    <div class="felt">
-      <label>Kommer du på minglefesten fredag? 🎉 <span class="hint">Amtmandens datter, fredag 21.08.26 kl. 19.00</span></label>
-      <div class="valg" id="valg-fredag">
-        <label data-v="ja"><input type="radio" name="fredag" value="ja" /> ✓ Ja</label>
-        <label data-v="nei"><input type="radio" name="fredag" value="nei" /> ✗ Nei</label>
-      </div>
-    </div>
-
-    <div class="felt">
-      <label for="antall">Antall personer <span class="hint">Inkludert deg selv og evt. ledsager</span></label>
-      <input type="number" id="antall" min="1" max="20" value="1" />
-    </div>
-
-    <div class="felt skjult" id="ledsager-felt">
-      <label for="ledsagere">Hvem har du med deg? <span class="hint">Skriv navnet på den/de du tar med (én per linje)</span></label>
-      <textarea id="ledsagere" placeholder="F.eks. Kari Nordmann"></textarea>
-    </div>
-
-    <div class="felt">
-      <label for="allergier">Allergier / matpreferanser <span class="hint">(valgfritt)</span></label>
-      <textarea id="allergier" placeholder="F.eks. glutenfri, vegetar, nøtteallergi …"></textarea>
-    </div>
+  <div class="felt skjult" id="fredag-antall-felt">
+    <label for="fredag-antall">Hvor mange kommer på minglefesten? <span class="hint">Inkludert deg selv og eventuell ledsager</span></label>
+    <input type="number" id="fredag-antall" min="1" max="20" value="1" />
   </div>
 
   <div class="felt">

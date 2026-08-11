@@ -29,7 +29,9 @@ CREATE TABLE SiljeTerje_RSVP (
 // Legg til ledsagere-kolonnen for tabeller som ble laget før den fantes.
 const ENSURE_COLUMN_SQL = `
 IF COL_LENGTH('SiljeTerje_RSVP', 'ledsagere') IS NULL
-    ALTER TABLE SiljeTerje_RSVP ADD ledsagere NVARCHAR(2000) NULL;`;
+    ALTER TABLE SiljeTerje_RSVP ADD ledsagere NVARCHAR(2000) NULL;
+IF COL_LENGTH('SiljeTerje_RSVP', 'fredagAntall') IS NULL
+    ALTER TABLE SiljeTerje_RSVP ADD fredagAntall INT NULL;`;
 
 const ENSURE_GUEST_TABLE_SQL = `
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'SiljeTerje_GjestEdit')
@@ -72,24 +74,36 @@ async function lagreRsvpOgLedsagere(connection, data) {
         MERGE SiljeTerje_RSVP AS t
         USING (SELECT @slug AS slug) AS s ON t.slug = s.slug
         WHEN MATCHED THEN UPDATE SET
-            navn = @hovedgjest, kommer = @kommer, fredag = @fredag, antall = @antall,
-            ledsagere = @ledsagere, allergier = @allergier, kommentar = @kommentar, oppdatert = GETDATE()
-        WHEN NOT MATCHED THEN INSERT (slug, navn, kommer, fredag, antall, ledsagere, allergier, kommentar)
-            VALUES (@slug, @hovedgjest, @kommer, @fredag, @antall, @ledsagere, @allergier, @kommentar);
+            navn = @hovedgjest,
+            kommer = CASE WHEN @kunFredag = 1 THEN t.kommer ELSE @kommer END,
+            fredag = @fredag,
+            fredagAntall = @fredagAntall,
+            antall = CASE WHEN @kunFredag = 1 THEN t.antall ELSE @antall END,
+            ledsagere = CASE WHEN @kunFredag = 1 THEN t.ledsagere ELSE @ledsagere END,
+            allergier = CASE WHEN @kunFredag = 1 THEN t.allergier ELSE @allergier END,
+            kommentar = CASE WHEN @kunFredag = 1 AND @kommentar = '' THEN t.kommentar ELSE @kommentar END,
+            oppdatert = GETDATE()
+        WHEN NOT MATCHED THEN INSERT (slug, navn, kommer, fredag, fredagAntall, antall, ledsagere, allergier, kommentar)
+            VALUES (@slug, @hovedgjest, @kommer, @fredag, @fredagAntall, @antall, @ledsagere, @allergier, @kommentar);
 
-        DELETE FROM SiljeTerje_GjestEdit WHERE rsvpLedsager = 1 AND rsvpSlug = @slug;
-        INSERT INTO SiljeTerje_GjestEdit
-            (navn, relasjon, bordType, skjult, nyGjest, rsvpSlug, rsvpLedsager, oppdatert)
-        OUTPUT inserted.navn
-        SELECT j.navn, @relasjon, 10, 0, 1, @slug, 1, GETDATE()
-        FROM OPENJSON(@navnJson) WITH (navn NVARCHAR(100) '$') j
-        WHERE NOT EXISTS (SELECT 1 FROM SiljeTerje_GjestEdit g WHERE g.navn = j.navn);
+        IF @kunFredag = 0
+        BEGIN
+            DELETE FROM SiljeTerje_GjestEdit WHERE rsvpLedsager = 1 AND rsvpSlug = @slug;
+            INSERT INTO SiljeTerje_GjestEdit
+                (navn, relasjon, bordType, skjult, nyGjest, rsvpSlug, rsvpLedsager, oppdatert)
+            OUTPUT inserted.navn
+            SELECT j.navn, @relasjon, 10, 0, 1, @slug, 1, GETDATE()
+            FROM OPENJSON(@navnJson) WITH (navn NVARCHAR(100) '$') j
+            WHERE NOT EXISTS (SELECT 1 FROM SiljeTerje_GjestEdit g WHERE g.navn = j.navn);
+        END
         COMMIT TRANSACTION;`,
         [
             { name: 'slug', type: TYPES.NVarChar, value: data.slug },
             { name: 'hovedgjest', type: TYPES.NVarChar, value: data.navn },
             { name: 'kommer', type: TYPES.Bit, value: data.kommer },
             { name: 'fredag', type: TYPES.Bit, value: data.fredag },
+            { name: 'fredagAntall', type: TYPES.Int, value: data.fredagAntall },
+            { name: 'kunFredag', type: TYPES.Bit, value: data.kunFredag },
             { name: 'antall', type: TYPES.Int, value: data.antall },
             { name: 'ledsagere', type: TYPES.NVarChar, value: data.ledsagere },
             { name: 'allergier', type: TYPES.NVarChar, value: data.allergier },
@@ -116,12 +130,13 @@ module.exports = async function (context, req) {
                     return;
                 }
                 const rows = await executeQuery(connection,
-                    'SELECT slug, navn, kommer, fredag, antall, ledsagere, allergier, kommentar, oppdatert FROM SiljeTerje_RSVP ORDER BY navn');
+                    'SELECT slug, navn, kommer, fredag, fredagAntall, antall, ledsagere, allergier, kommentar, oppdatert FROM SiljeTerje_RSVP ORDER BY navn');
                 const svar = rows.map(r => ({
                     slug: r.slug,
                     navn: r.navn,
                     kommer: !!r.kommer,
                     fredag: r.fredag == null ? null : !!r.fredag,
+                    fredagAntall: r.fredagAntall || 0,
                     antall: r.antall,
                     ledsagere: r.ledsagere || '',
                     allergier: r.allergier || '',
@@ -133,6 +148,7 @@ module.exports = async function (context, req) {
                     kommer: svar.filter(s => s.kommer).length,
                     kommerIkke: svar.filter(s => !s.kommer).length,
                     fredag: svar.filter(s => s.kommer && s.fredag).length,
+                    fredagPersoner: svar.filter(s => s.fredag).reduce((sum, s) => sum + (s.fredagAntall || 0), 0),
                     antallPersoner: svar.filter(s => s.kommer).reduce((sum, s) => sum + (s.antall || 0), 0),
                 };
                 context.res = { status: 200, headers, body: { svar, sammendrag } };
@@ -145,7 +161,7 @@ module.exports = async function (context, req) {
                 return;
             }
             const rows = await executeQuery(connection,
-                'SELECT slug, navn, kommer, fredag, antall, ledsagere, allergier, kommentar, oppdatert FROM SiljeTerje_RSVP WHERE slug = @slug',
+                'SELECT slug, navn, kommer, fredag, fredagAntall, antall, ledsagere, allergier, kommentar, oppdatert FROM SiljeTerje_RSVP WHERE slug = @slug',
                 [{ name: 'slug', type: TYPES.NVarChar, value: slug }]);
             if (!rows || !rows.length) {
                 context.res = { status: 200, headers, body: { svar: null } };
@@ -157,6 +173,7 @@ module.exports = async function (context, req) {
                     svar: {
                         slug: r.slug, navn: r.navn, kommer: !!r.kommer,
                         fredag: r.fredag == null ? null : !!r.fredag,
+                        fredagAntall: r.fredagAntall || 0,
                         antall: r.antall, ledsagere: r.ledsagere || '', allergier: r.allergier || '',
                         kommentar: r.kommentar || '', oppdatert: r.oppdatert,
                     }
@@ -174,6 +191,7 @@ module.exports = async function (context, req) {
                 return;
             }
             const kommer = (body.kommer === true || body.kommer === 1 || body.kommer === 'ja') ? 1 : 0;
+            const kunFredag = (body.kunFredag === true || body.kunFredag === 1) ? 1 : 0;
             let fredag = null;
             if (kommer) {
                 fredag = (body.fredag === true || body.fredag === 1 || body.fredag === 'ja') ? 1 : 0;
@@ -182,13 +200,17 @@ module.exports = async function (context, req) {
             if (isNaN(antall) || antall < 0) antall = 1;
             if (antall > 20) antall = 20;
             if (!kommer) antall = 0;
+            let fredagAntall = parseInt(body.fredagAntall, 10);
+            if (!fredag) fredagAntall = 0;
+            else if (isNaN(fredagAntall) || fredagAntall < 1) fredagAntall = antall || 1;
+            if (fredagAntall > 20) fredagAntall = 20;
             const ledsagere = kommer ? String(body.ledsagere || '').slice(0, 2000) : '';
             const ledsagereSomGjester = kommer ? ledsagerNavn(ledsagere, Math.max(0, antall - 1)) : [];
             const allergier = String(body.allergier || '').slice(0, 2000);
             const kommentar = String(body.kommentar || '').slice(0, 2000);
 
             const ledsagereOpprettet = await lagreRsvpOgLedsagere(connection, {
-                slug, navn, kommer, fredag, antall, ledsagere,
+                slug, navn, kommer, fredag, fredagAntall, kunFredag, antall, ledsagere,
                 allergier, kommentar, ledsagereSomGjester,
             });
             context.res = { status: 200, headers, body: { success: true, ledsagereOpprettet } };
