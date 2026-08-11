@@ -269,9 +269,19 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   await page.locator('[data-page="gjester"] button[data-go="bestevenn"]').click();
   await page.locator('#bv-search').fill('Andreas Granaas');
   await page.locator('.bv-dropdown-item').filter({ hasText: 'Andreas Granaas' }).click();
-  await assert.doesNotReject(() => page.locator('#bv-resultat .bv-resultat-kort').first().waitFor({ state: 'visible' }));
+  await assert.doesNotReject(() => page.locator('#bv-resultat .bv-resultat-kort').nth(2).waitFor({ state: 'visible' }));
   assert.equal(await page.locator('#bv-resultat .bv-resultat-kort').count(), 3);
   assert.doesNotMatch(await page.locator('#bv-resultat').innerText(), /Bord \?/);
+  const bvFarger = await page.locator('#bv-resultat .bv-resultat-kort').first().evaluate(kort => ({
+    kort: getComputedStyle(kort).backgroundColor,
+    grunn: getComputedStyle(kort.querySelector('.bv-grunne')).color,
+    samtale: getComputedStyle(kort.querySelector('.bv-samtale')).color,
+    navn: getComputedStyle(kort.querySelector('.bv-resultat-navn')).color,
+  }));
+  assert.equal(bvFarger.kort, 'rgb(255, 249, 247)');
+  assert.equal(bvFarger.grunn, 'rgb(58, 74, 92)');
+  assert.equal(bvFarger.samtale, 'rgb(26, 44, 63)');
+  assert.equal(bvFarger.navn, 'rgb(160, 78, 92)');
   assert.match(await page.locator('[data-page="bestevenn"] .bv-info-box').innerText(), /ikke dating/i);
   await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
   await page.locator('button[data-go="bord"]').first().click();

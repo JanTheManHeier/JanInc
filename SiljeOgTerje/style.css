@@ -1518,6 +1518,89 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
   color: #B04040;
 }
 
+/* Bestevenn — mørk tekst og rolige flater på lyse temaer */
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-info-box {
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(var(--gold-border-rgb),0.22);
+  color: var(--surface-2);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-search-wrap input {
+  background: #FFFFFF;
+  border-color: rgba(var(--gold-border-rgb),0.55);
+  color: var(--surface);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-search-wrap input:focus {
+  background: #FFFFFF;
+  border-color: var(--gold-deep);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-search-wrap input::placeholder {
+  color: var(--muted3);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-dropdown {
+  background: #FFFFFF;
+  border-color: rgba(var(--gold-border-rgb),0.35);
+  box-shadow: 0 8px 24px rgba(var(--surface-rgb),0.14);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-dropdown-item {
+  border-bottom-color: rgba(var(--surface-rgb),0.08);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-dropdown-navn {
+  color: var(--surface);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-dropdown-meta {
+  color: var(--muted3);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-resultat-kort,
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-resultat-kort.bv-rank-2,
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-resultat-kort.bv-rank-3 {
+  background: #FFF9F7;
+  border-color: rgba(var(--gold-border-rgb),0.55);
+  box-shadow: 0 3px 12px rgba(var(--surface-rgb),0.07);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-resultat-tittel {
+  color: var(--gold-deep);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-resultat-navn,
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-resultat-kort.bv-rank-2 .bv-resultat-navn,
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-resultat-kort.bv-rank-3 .bv-resultat-navn {
+  color: var(--gold-deep);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-resultat-meta {
+  background: rgba(var(--surface-rgb),0.06);
+  color: var(--surface);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-grunner {
+  background: rgba(var(--surface-rgb),0.045);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-grunner-tittel {
+  color: var(--gold-deep);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-grunne {
+  color: var(--surface-2);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-samtale {
+  background: rgba(var(--gold-border-rgb),0.13);
+  border-left-color: var(--gold-deep);
+  color: var(--surface);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-samtale strong {
+  color: var(--gold-deep);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-allianse-kort {
+  background: #F7F0F8;
+  border-color: rgba(var(--accent-rgb),0.32);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-allianse-navn {
+  color: var(--accent);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-allianse-beskr {
+  color: var(--surface-2);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bv-allianse-medlem {
+  background: #FFFFFF;
+  color: var(--surface);
+}
+
 /* Modal — gjest-popup hvit på lyst */
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .modal { background: rgba(var(--surface-rgb),0.45); }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .modal-card {
