@@ -1,0 +1,2180 @@
+[
+  {
+    "navn": "Adrian Edvardsen",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Silje Ramsvatn",
+        "match_grunner": [
+          "Begge liker å sette seg tydelige mål",
+          "Dere har sterke interesser innen hav og aktivitet"
+        ],
+        "samtale_starter": "Hva er det morsomste prosjektet du har jobbet med i det siste?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Andreas Granaas",
+        "match_grunner": [
+          "Begge liker teknologi og praktiske utfordringer",
+          "Sykling og friluftsliv gir dere en naturlig felles inngang"
+        ],
+        "samtale_starter": "Hvordan kombinerer du datajobben med alle turene og sykkelturene?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Thomas Karlsen",
+        "match_grunner": [
+          "Begge liker å få ting gjort med hendene",
+          "Boligprosjekter og problemløsing er gode felles temaer"
+        ],
+        "samtale_starter": "Hvilket oppussingsprosjekt har lært deg mest?"
+      }
+    ]
+  },
+  {
+    "navn": "Anders Bjørnar Ingebrigtsen",
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Sissel Maria Myrnes Karlstad",
+        "match_grunner": [
+          "Begge setter pris på god mat og gjestfrihet",
+          "Reiser og erfaring fra et langt arbeidsliv gir mye å snakke om"
+        ],
+        "samtale_starter": "Hvilket reisemål har gitt deg de beste minnene?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge har et internasjonalt utsyn",
+          "Ansvar og store prosjekter er kjent territorium for dere begge"
+        ],
+        "samtale_starter": "Hva er det mest spennende stedet arbeidet har ført deg til?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Per Johnny Olsen",
+        "match_grunner": [
+          "Begge trives med reiser og nye omgivelser",
+          "Friluftsliv og gode historier passer godt rundt samme bord"
+        ],
+        "samtale_starter": "Hvilken utenlandstur anbefaler du på det varmeste?"
+      }
+    ]
+  },
+  {
+    "navn": "Andreas Granaas",
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge er glade i sykling og fysisk aktivitet",
+          "Dere liker å møte folk og få energi av sosialt liv"
+        ],
+        "samtale_starter": "Hvilken sykkeltur husker du best?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Silje-Kristin Jensen",
+        "match_grunner": [
+          "Begge trives best med naturen tett på",
+          "Havet og aktive fritidsinteresser er tydelige fellesnevnere"
+        ],
+        "samtale_starter": "Har du et favorittsted for hav, fjell eller friluftsliv?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Silje Ramsvatn",
+        "match_grunner": [
+          "Begge kombinerer utholdenhet med kjærlighet til havet",
+          "Sykling og trening gir dere mange konkrete samtaleemner"
+        ],
+        "samtale_starter": "Hvilken del av triatlon eller fridykking liker du aller best?"
+      }
+    ]
+  },
+  {
+    "navn": "Anette Ingebrigtsen",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Halvard Olsen",
+        "match_grunner": [
+          "Begge setter pris på fjellturer og friluftsliv",
+          "Fiske og aktive familieliv gir en naturlig felles plattform"
+        ],
+        "samtale_starter": "Hva er den fineste turen du har gått i år?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Kjerstin Johnsen",
+        "match_grunner": [
+          "Begge har mye energi i hverdagen",
+          "Familie, reiser og et sosialt liv står sterkt hos dere begge"
+        ],
+        "samtale_starter": "Hvilken reise har gitt deg mest påfyll?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Silje-Kristin Jensen",
+        "match_grunner": [
+          "Begge er opptatt av natur og livet ute",
+          "Tur og havinteresser gjør det lett å finne felles temaer"
+        ],
+        "samtale_starter": "Hva liker du best: kajakk, fjell eller en rolig dag ved sjøen?"
+      }
+    ]
+  },
+  {
+    "navn": "Angelica Berg Jensen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Pernille Vebostad",
+        "match_grunner": [
+          "Begge har fotball som en viktig interesse",
+          "Dere er i samme livsfase og liker å være aktive"
+        ],
+        "samtale_starter": "Hvilken fotballkamp eller spiller har imponert deg mest?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Silje Helèn",
+        "match_grunner": [
+          "Begge liker trening og høy energi",
+          "Fotball og dans gir dere en naturlig inngang til festprat"
+        ],
+        "samtale_starter": "Hva er den beste sangen å få på når dansegulvet åpner?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge liker å skape god stemning rundt seg",
+          "Mat, baking og sosiale sammenkomster passer godt sammen"
+        ],
+        "samtale_starter": "Hva baker eller lager du når du vil imponere noen?"
+      }
+    ]
+  },
+  {
+    "navn": "Ann Sissel Christoffersen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Kristina Antonsen",
+        "match_grunner": [
+          "Begge er varme og lojale venner",
+          "Dere liker å samle folk og følge opp de rundt dere"
+        ],
+        "samtale_starter": "Hva er ditt beste tips for å få en vennegjeng til å møtes oftere?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge er sosiale katalysatorer",
+          "Middager og gode samtaler er tydelige felles interesser"
+        ],
+        "samtale_starter": "Hva er den perfekte menyen for en lang kveld med venner?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge kombinerer ansvar med stor omtanke for andre",
+          "Reiser og prosjektarbeid gir dere spennende overlapp"
+        ],
+        "samtale_starter": "Hvordan får du plass til både jobb, venner og reiser?"
+      }
+    ]
+  },
+  {
+    "navn": "Aslak Hammer",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge jobber tett på mennesker",
+          "Dere har kapasitet til både ansvar og gode sosiale kvelder"
+        ],
+        "samtale_starter": "Hva liker du best ved å jobbe med mennesker?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Hege Lauritzen",
+        "match_grunner": [
+          "Begge har solid erfaring fra helsefag",
+          "Omsorg og faglig ansvar er naturlige samtaletemaer"
+        ],
+        "samtale_starter": "Hva har arbeidslivet lært deg om mennesker?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge leder komplekse prosjekter",
+          "Flytting og nye livsfaser gir dere mye å dele"
+        ],
+        "samtale_starter": "Hva er det mest lærerike prosjektet du har vært med på?"
+      }
+    ]
+  },
+  {
+    "navn": "Berit Skog",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Stine Smith Ingebrigtsen",
+        "match_grunner": [
+          "Begge skaper varme rundt familie og venner",
+          "Baking og hjemmelagde retter er en herlig felles interesse"
+        ],
+        "samtale_starter": "Hva er din signaturkake eller rett?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Else-Marie Olsen",
+        "match_grunner": [
+          "Begge er familiekjære og inkluderende",
+          "Reiser og gode måltider gir dere lett samtaleflyt"
+        ],
+        "samtale_starter": "Hva setter du mest pris på ved å være på reise?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ragnhild Lettrem Olsen",
+        "match_grunner": [
+          "Begge er varme og gode på fellesskap",
+          "Hverdagsliv og omsorg for andre er felles verdier"
+        ],
+        "samtale_starter": "Hva gjør en vanlig dag litt ekstra hyggelig for deg?"
+      }
+    ]
+  },
+  {
+    "navn": "Berith Olsen",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Berit Skog",
+        "match_grunner": [
+          "Begge liker familie, mat og hyggelige samvær",
+          "Dere har en inkluderende og sosial stil"
+        ],
+        "samtale_starter": "Hva er det hyggeligste du har bakt eller laget i det siste?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Halvard Olsen",
+        "match_grunner": [
+          "Begge liker å være aktive ute",
+          "Tur og fisking gir dere en lett felles inngang"
+        ],
+        "samtale_starter": "Hvor går du helst når du skal få frisk luft?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge trives når folk samles",
+          "God mat og sosial energi er tydelige fellestrekk"
+        ],
+        "samtale_starter": "Hva gjør en fest eller middag virkelig vellykket?"
+      }
+    ]
+  },
+  {
+    "navn": "Charlotte Marianne Hammer",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Hege Lauritzen",
+        "match_grunner": [
+          "Begge har sterk tilknytning til helsefaget",
+          "Dere kombinerer faglig tyngde med omsorg for andre"
+        ],
+        "samtale_starter": "Hva liker du best ved å jobbe i helsetjenesten?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge er vant til krevende ansvar",
+          "Nye prosjekter og flytting gir spennende felles temaer"
+        ],
+        "samtale_starter": "Hva gleder du deg mest til i den nye livsfasen?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Kristina Garfjell Kantola",
+        "match_grunner": [
+          "Begge har imponerende faglig driv",
+          "Familieliv og krevende karriereløp gir mye å dele"
+        ],
+        "samtale_starter": "Hvordan finner du energi til både jobb og familie?"
+      }
+    ]
+  },
+  {
+    "navn": "Christianne B. Eilertsen",
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Siv-Cathrine Torbergsen",
+        "match_grunner": [
+          "Begge har sterk tilknytning til hav og fiskeri",
+          "Studier og turer på sjøen gir mange felles referanser"
+        ],
+        "samtale_starter": "Hva er ditt beste minne fra en tur på sjøen?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Silje-Kristin Jensen",
+        "match_grunner": [
+          "Begge er opptatt av natur og havmiljø",
+          "Kajakk, fisketurer og friluftsliv passer naturlig sammen"
+        ],
+        "samtale_starter": "Hva er den fineste naturopplevelsen du har hatt i nord?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Magnus Seppola",
+        "match_grunner": [
+          "Begge liker fisking og båtliv",
+          "God mat og friluftsliv gjør dere til naturlige samtalepartnere"
+        ],
+        "samtale_starter": "Hva er den perfekte dagen på sjøen for deg?"
+      }
+    ]
+  },
+  {
+    "navn": "Edvard Eilertsen",
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Magnus Seppola",
+        "match_grunner": [
+          "Begge trives best med sjøen tett på",
+          "Fisking og båtliv er sterke felles interesser"
+        ],
+        "samtale_starter": "Hva står øverst på ønskelisten for neste båtsesong?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Eirik Torbergsen",
+        "match_grunner": [
+          "Begge kjenner fiskeri- og sjømiljøet godt",
+          "Praktisk erfaring og båtliv gir mye å snakke om"
+        ],
+        "samtale_starter": "Hva er den mest interessante utviklingen du ser i fiskerinæringen?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Mikal Johnsen",
+        "match_grunner": [
+          "Begge liker tekniske og praktiske temaer",
+          "Friluftsliv og jakt gir dere en fin felles inngang"
+        ],
+        "samtale_starter": "Hvilken teknologisk utvikling synes du er mest spennende nå?"
+      }
+    ]
+  },
+  {
+    "navn": "Eirik Torbergsen",
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Silje-Kristin Jensen",
+        "match_grunner": [
+          "Begge jobber tett på hav og fiskeri",
+          "Løping og friluftsliv gir dere også felles energi"
+        ],
+        "samtale_starter": "Hva er din beste kombinasjon av jobb og friluftsliv?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Trond-Bjørnar Pedersen",
+        "match_grunner": [
+          "Begge er svært aktive",
+          "Arbeid rundt flyplass og koordinering gir et konkret samtaletema"
+        ],
+        "samtale_starter": "Hvordan holder du motivasjonen oppe til alle treningsøktene?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siv Sofie Vian",
+        "match_grunner": [
+          "Begge har erfaring fra travle arbeidsmiljøer",
+          "Sosial trygghet og flytting mellom steder gir mye å dele"
+        ],
+        "samtale_starter": "Hva liker du best ved Tromsø sammenlignet med andre steder du har bodd?"
+      }
+    ]
+  },
+  {
+    "navn": "Elin Andersen",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Else-Marie Olsen",
+        "match_grunner": [
+          "Begge liker å reise og nyte varmere strøk",
+          "Hage og hjem gir dere en rolig felles samtale"
+        ],
+        "samtale_starter": "Hva er ditt favorittsted å reise til når du vil slappe av?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Ingrid Karlsen",
+        "match_grunner": [
+          "Begge setter familie og reiser høyt",
+          "Dere har erfaring med å bygge gode hjem flere steder"
+        ],
+        "samtale_starter": "Hva gjør at et sted føles som hjemme?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge er reiseglade",
+          "Arbeid og livet i Tromsø gir dere flere overlapp"
+        ],
+        "samtale_starter": "Hvilken reise har du lyst til å ta neste gang?"
+      }
+    ]
+  },
+  {
+    "navn": "Ellen Dølvik Eliassen",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Merit Reiertsen",
+        "match_grunner": [
+          "Begge har sterk tilknytning til NFH",
+          "Studietid og gamle vennskap gir umiddelbar samtaleflyt"
+        ],
+        "samtale_starter": "Hva husker du best fra studietiden på NFH?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Silje-Kristin Jensen",
+        "match_grunner": [
+          "Begge har marin fagbakgrunn",
+          "Naturinteresse og arbeid med mennesker møtes fint hos dere"
+        ],
+        "samtale_starter": "Hva er den viktigste saken for havet akkurat nå?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge liker å holde folk samlet",
+          "Skole, mat og gode tradisjoner er felles temaer"
+        ],
+        "samtale_starter": "Hva er din favoritt blant tradisjonene du holder i live?"
+      }
+    ]
+  },
+  {
+    "navn": "Else-Marie Olsen",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Elin Andersen",
+        "match_grunner": [
+          "Begge er glade i reiser og vakre omgivelser",
+          "Hage og hjem gir dere mye rolig prat"
+        ],
+        "samtale_starter": "Hva er det fineste stedet du har hatt et hjem?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Sissel Maria Myrnes Karlstad",
+        "match_grunner": [
+          "Begge setter pris på sol, varme og reiser",
+          "God mat og familietid er tydelige fellesnevnere"
+        ],
+        "samtale_starter": "Hvor kunne du gjerne reist tilbake i morgen?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Lillian Karlstad",
+        "match_grunner": [
+          "Begge er familiekjære og reiseglade",
+          "Bær, mat og gode generasjonsmøter gir mye å snakke om"
+        ],
+        "samtale_starter": "Hva er den beste ferien du har hatt med familien?"
+      }
+    ]
+  },
+  {
+    "navn": "Grete Ingebrigtsen",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Sissel Maria Myrnes Karlstad",
+        "match_grunner": [
+          "Begge har lang erfaring fra helsetjenesten",
+          "Matlaging og omsorg for familien er sterke fellestrekk"
+        ],
+        "samtale_starter": "Hva liker du best å lage når familien samles?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Stine Smith Ingebrigtsen",
+        "match_grunner": [
+          "Begge skaper trygghet rundt familien",
+          "Baking og omsorg er naturlige felles temaer"
+        ],
+        "samtale_starter": "Hvilken familietradisjon er du mest glad i?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Hege Lauritzen",
+        "match_grunner": [
+          "Begge er stødig og omsorgsfull",
+          "Helsefag og mange år med ansvar gir gjensidig forståelse"
+        ],
+        "samtale_starter": "Hva gir deg mest energi i hverdagen?"
+      }
+    ]
+  },
+  {
+    "navn": "Halvard Olsen",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Andreas Granaas",
+        "match_grunner": [
+          "Begge trives med aktivt friluftsliv",
+          "Fiske og turer gir dere mange konkrete historier"
+        ],
+        "samtale_starter": "Hvilken tur eller fisketur anbefaler du?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Tore Olsen",
+        "match_grunner": [
+          "Begge liker trening og turer",
+          "Familie og et aktivt hverdagsliv passer godt sammen"
+        ],
+        "samtale_starter": "Hvor går du helst tur når du har god tid?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Ole Nicolai S. Aarbakke",
+        "match_grunner": [
+          "Begge setter pris på jakt og friluftsliv",
+          "Langsomme bilturer og gode turhistorier er felles stoff"
+        ],
+        "samtale_starter": "Hva er den morsomste historien fra en jakttur?"
+      }
+    ]
+  },
+  {
+    "navn": "Hege Lauritzen",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Marita Haugen",
+        "match_grunner": [
+          "Begge jobber med mennesker og helse",
+          "Dere kombinerer omsorg med en aktiv hverdag"
+        ],
+        "samtale_starter": "Hva liker du best ved jobben din?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge er kloke og gode samtalepartnere",
+          "Ski, fjell og sosialt engasjement gir mye felles"
+        ],
+        "samtale_starter": "Hva er din favorittur når du trenger å koble av?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge holder et høyt aktivitetsnivå",
+          "Sosial energi og Tromsø-tilhørighet gjør praten lett"
+        ],
+        "samtale_starter": "Hvilken aktivitet får deg alltid i bedre humør?"
+      }
+    ]
+  },
+  {
+    "navn": "Hege Oleanna Iversen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Siv Sofie Vian",
+        "match_grunner": [
+          "Begge er dyktige og sosiale kolleger",
+          "Flytting og nye jobbutfordringer gir mye å dele"
+        ],
+        "samtale_starter": "Hva har vært den morsomste jobbutfordringen din?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Ragnhild Lettrem Olsen",
+        "match_grunner": [
+          "Begge kjenner Kvaløya og Tromsø godt",
+          "Omsorg og nærmiljø er gode felles temaer"
+        ],
+        "samtale_starter": "Hva setter du mest pris på ved nærmiljøet ditt?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Tone Christin Nilsen",
+        "match_grunner": [
+          "Begge er varme og tilpasningsdyktige",
+          "Vennskap og fellesskap betyr mye for dere begge"
+        ],
+        "samtale_starter": "Hva gjør en kveld med venner ekstra fin?"
+      }
+    ]
+  },
+  {
+    "navn": "Heidi Martens",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge liker sykling og ski",
+          "Dere får energi av aktivitet og mennesker"
+        ],
+        "samtale_starter": "Hvilken aktivitet gleder du deg mest til i vinter?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Stian Simonsen",
+        "match_grunner": [
+          "Begge har stor treningsglede",
+          "Løping, sykling og fjell er naturlige felles temaer"
+        ],
+        "samtale_starter": "Har du et favorittfjell eller en favorittrute?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge trives med fjell og ski",
+          "Sosial varme gjør dere lette å bli kjent med"
+        ],
+        "samtale_starter": "Hva er den perfekte turdagen for deg?"
+      }
+    ]
+  },
+  {
+    "navn": "Helge Karlstad",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Vegard Lund Aspen",
+        "match_grunner": [
+          "Begge liker å løse praktiske utfordringer",
+          "Prosjekter og friluftsliv gir dere mye å snakke om"
+        ],
+        "samtale_starter": "Hvilket prosjekt er du mest fornøyd med?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Mikal Johnsen",
+        "match_grunner": [
+          "Begge er handy og løsningsorienterte",
+          "Teknologi og praktisk arbeid møtes fint hos dere"
+        ],
+        "samtale_starter": "Hva er det nyttigste verktøyet eller hjelpemiddelet du har?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Tore Arnesen",
+        "match_grunner": [
+          "Begge liker å stille opp for andre",
+          "Ledelse og prosjekter gir en naturlig felles plattform"
+        ],
+        "samtale_starter": "Hva er det morsomste prosjektet du har fått til sammen med andre?"
+      }
+    ]
+  },
+  {
+    "navn": "Ingrid Karlsen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Kristina Rognmo",
+        "match_grunner": [
+          "Begge er familiekjære og sosiale",
+          "Vennskap over avstand og reiser gir mye å dele"
+        ],
+        "samtale_starter": "Hvordan holder du kontakten med venner når hverdagen er travel?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge har lange vennskap i Tromsø",
+          "Fester, mat og gode samtaler er felles referanser"
+        ],
+        "samtale_starter": "Hva er ditt beste Tromsø-minne fra skoletiden?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge liker et aktivt sosialt liv",
+          "Tromsø og reiser gir dere en lett inngang til praten"
+        ],
+        "samtale_starter": "Hva savner du mest fra Tromsø når du er borte?"
+      }
+    ]
+  },
+  {
+    "navn": "Iver Ingebrigtsen Karlstad",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Pernille Vebostad",
+        "match_grunner": [
+          "Begge liker fotball",
+          "Spill og ungdomsliv gir dere en naturlig inngang"
+        ],
+        "samtale_starter": "Hvilket lag følger du mest med på?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Stian Simonsen",
+        "match_grunner": [
+          "Begge liker å være aktive",
+          "Fotball, løping og trening er gode felles temaer"
+        ],
+        "samtale_starter": "Hvilken aktivitet synes du er morsomst akkurat nå?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Mikal Johnsen",
+        "match_grunner": [
+          "Begge er nysgjerrige på teknologi",
+          "Spørsmål og nye ting å lære gir god samtaleflyt"
+        ],
+        "samtale_starter": "Hvilken teknologi skulle du ønske du kunne mer om?"
+      }
+    ]
+  },
+  {
+    "navn": "Jan Heier Johansen",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Mikal Johnsen",
+        "match_grunner": [
+          "Begge liker teknologi og praktisk problemløsing",
+          "Dere er nysgjerrige på hvordan ting kan utvikles"
+        ],
+        "samtale_starter": "Hvilket teknologiprosjekt er du mest nysgjerrig på nå?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Andreas Granaas",
+        "match_grunner": [
+          "Begge jobber analytisk med teknologi",
+          "Data og friluftsliv gir dere en fin kombinasjon av temaer"
+        ],
+        "samtale_starter": "Hva er den mest nyttige måten du bruker data på?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge har teknologisk bakgrunn",
+          "Store prosjekter og internasjonalt arbeid gir mye å snakke om"
+        ],
+        "samtale_starter": "Hva er den mest spennende teknologiske utviklingen du ser?"
+      }
+    ]
+  },
+  {
+    "navn": "Jon Christoffersen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Mikal Johnsen",
+        "match_grunner": [
+          "Begge liker jakt og gode diskusjoner",
+          "Dere kombinerer ansvar med en sosial stil"
+        ],
+        "samtale_starter": "Hva er den beste historien fra jaktlaget?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge er gjestfrie og utadvendte",
+          "Sport og fest gjør dere til naturlige samtalepartnere"
+        ],
+        "samtale_starter": "Hva skal til for at en fest blir skikkelig vellykket?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Per Johnny Olsen",
+        "match_grunner": [
+          "Begge liker fotball og reiser",
+          "Vertskap og gode opplevelser står sterkt hos dere"
+        ],
+        "samtale_starter": "Hvilken fotballtur har vært den beste?"
+      }
+    ]
+  },
+  {
+    "navn": "Jørn Magnus Karlsen",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Karl Erik Thomassen",
+        "match_grunner": [
+          "Begge har sans for historie og gode historier",
+          "Humor og samfunnsinteresse gir en lett samtale"
+        ],
+        "samtale_starter": "Hvilken historisk periode kunne du tenkt deg å oppleve?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge liker film og underholdning",
+          "Sosial energi gjør det lett å komme i gang"
+        ],
+        "samtale_starter": "Hvilken film eller serie anbefaler du akkurat nå?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Jan Heier Johansen",
+        "match_grunner": [
+          "Begge er nysgjerrige og observante",
+          "Post, teknologi og hverdagslogistikk gir overraskende mye å snakke om"
+        ],
+        "samtale_starter": "Hva er det mest interessante du har lært den siste tiden?"
+      }
+    ]
+  },
+  {
+    "navn": "Jorunn Karlstad",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Lillian Karlstad",
+        "match_grunner": [
+          "Begge setter familien høyt",
+          "Bærplukking og natur gir en varm felles inngang"
+        ],
+        "samtale_starter": "Har du et favorittsted for bærplukking?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Else-Marie Olsen",
+        "match_grunner": [
+          "Begge liker familie og gode reiser",
+          "Hytte- og ferieliv er naturlige samtaletemaer"
+        ],
+        "samtale_starter": "Hva er ditt beste hytteminne?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Berith Olsen",
+        "match_grunner": [
+          "Begge er sosiale og omgjengelige",
+          "Tur og familieliv gir mye felles"
+        ],
+        "samtale_starter": "Hva liker du best å gjøre når storfamilien samles?"
+      }
+    ]
+  },
+  {
+    "navn": "Karl Erik Thomassen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge liker løping og fysisk aktivitet",
+          "Musikk og sosial energi gjør praten lett"
+        ],
+        "samtale_starter": "Hvilken sang får deg alltid i godt humør?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Trond-Bjørnar Pedersen",
+        "match_grunner": [
+          "Begge trener mye og liker å sette mål",
+          "Flyplassarbeid og humor gir konkrete samtaleemner"
+        ],
+        "samtale_starter": "Hvordan markerer du en personlig rekord?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Mikal Johnsen",
+        "match_grunner": [
+          "Begge setter pris på jakt og friluftsliv",
+          "Praktisk sans og konkurranseinstinkt gir god kjemi"
+        ],
+        "samtale_starter": "Hva er den beste turen du har hatt med gode venner?"
+      }
+    ]
+  },
+  {
+    "navn": "Kjell G Karlsen",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Halvard Olsen",
+        "match_grunner": [
+          "Begge liker hytteliv og friluftsliv",
+          "Fiske og praktiske historier gir god samtaleflyt"
+        ],
+        "samtale_starter": "Hva er det beste med hyttelivet for deg?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Lillian Karlstad",
+        "match_grunner": [
+          "Begge er opptatt av familien",
+          "Bærplukking og generasjoner er fine felles temaer"
+        ],
+        "samtale_starter": "Hvilken familietradisjon setter du mest pris på?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Tore Olsen",
+        "match_grunner": [
+          "Begge liker trening og et sosialt liv",
+          "Nærmiljø og familie gir en enkel inngang til praten"
+        ],
+        "samtale_starter": "Hva gjør du helst når du skal være litt aktiv?"
+      }
+    ]
+  },
+  {
+    "navn": "Kjell Ove Haug",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Ole Nicolai S. Aarbakke",
+        "match_grunner": [
+          "Begge har sterk tilknytning til jaktlaget",
+          "Turer og reisehistorier gir mye latter rundt bordet"
+        ],
+        "samtale_starter": "Hvilken jakthistorie blir aldri kjedelig å fortelle?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Per Johnny Olsen",
+        "match_grunner": [
+          "Begge liker friluftsliv og reiser",
+          "Familie og livet utenfor Tromsø gir felles temaer"
+        ],
+        "samtale_starter": "Hva er det beste ved å bo litt utenfor byen?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Jan Heier Johansen",
+        "match_grunner": [
+          "Begge har familieliv og mange prosjekter",
+          "Teknologi og hverdagslogistikk gir en overraskende god prat"
+        ],
+        "samtale_starter": "Hvilket prosjekt har du lyst til å prioritere fremover?"
+      }
+    ]
+  },
+  {
+    "navn": "Kjerstin Johnsen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Tone Christin Nilsen",
+        "match_grunner": [
+          "Begge er varme, sosiale og familiekjære",
+          "Reiser og gode vennskap gir mye å dele"
+        ],
+        "samtale_starter": "Hvilken reise har gitt deg mest energi?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge kombinerer familie med krevende hverdager",
+          "Reiser og ansvar i arbeidslivet gir spennende overlapp"
+        ],
+        "samtale_starter": "Hvordan får du tid til de tingene du liker best?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge bidrar til at fester blir gode",
+          "Familie og sosialt engasjement er tydelige fellestrekk"
+        ],
+        "samtale_starter": "Hva er ditt beste tips for å samle folk?"
+      }
+    ]
+  },
+  {
+    "navn": "Kristin Halvorsen",
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Tore Arnesen",
+        "match_grunner": [
+          "Begge har skole og ledelse tett på livet",
+          "Dere liker å bygge gode miljøer for andre"
+        ],
+        "samtale_starter": "Hva er det beste ved å jobbe med ungdom?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Hege Lauritzen",
+        "match_grunner": [
+          "Begge har et stort ansvar for andre",
+          "Omsorg og ledelse er sterke fellesnevnere"
+        ],
+        "samtale_starter": "Hva kjennetegner en god leder for deg?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge leder store prosjekter",
+          "Familie og ansvar gir en naturlig felles plattform"
+        ],
+        "samtale_starter": "Hvilket prosjekt har gitt deg mest stolthet?"
+      }
+    ]
+  },
+  {
+    "navn": "Kristina Antonsen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Silje Ingebrigtsen",
+        "match_grunner": [
+          "Begge har et langt og nært vennskap",
+          "Dere kjenner verdien av å stille opp for hverandre"
+        ],
+        "samtale_starter": "Hva er ditt fineste minne fra vennskapet deres?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Ann Sissel Christoffersen",
+        "match_grunner": [
+          "Begge er lojale og inkluderende",
+          "Bank, mennesker og vertskap gir felles samtaletemaer"
+        ],
+        "samtale_starter": "Hva er det hyggeligste arrangementet du har stelt i stand?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Tone Christin Nilsen",
+        "match_grunner": [
+          "Begge er varme og omsorgsfulle",
+          "Langvarige vennskap og familieliv gir mye å snakke om"
+        ],
+        "samtale_starter": "Hva setter du mest pris på i et godt vennskap?"
+      }
+    ]
+  },
+  {
+    "navn": "Kristina Garfjell Kantola",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge har sterk teknologisk fagbakgrunn",
+          "Forskning og store prosjekter gir dere mye å dele"
+        ],
+        "samtale_starter": "Hva er det mest spennende du arbeider med nå?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Kristina Antonsen",
+        "match_grunner": [
+          "Begge har stort faglig driv",
+          "Familie og krevende karriereløp er felles erfaringer"
+        ],
+        "samtale_starter": "Hvordan feirer du små seire i en travel hverdag?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Silje-Kristin Jensen",
+        "match_grunner": [
+          "Begge har doktorgrads- og forskningsinteresse",
+          "Naturvitenskap og engasjement gir en god faglig inngang"
+        ],
+        "samtale_starter": "Hva håper du at folk forstår bedre gjennom forskningen din?"
+      }
+    ]
+  },
+  {
+    "navn": "Kristina Rognmo",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Ingrid Karlsen",
+        "match_grunner": [
+          "Begge er familiekjære og sosiale",
+          "Vennskap på avstand og reiser gir mye å dele"
+        ],
+        "samtale_starter": "Hva gjør du for å holde gamle vennskap levende?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge er rause og flinke til å samle folk",
+          "Mat, fester og gode samtaler passer godt sammen"
+        ],
+        "samtale_starter": "Hva er din favorittmåte å invitere folk på?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siv Sofie Vian",
+        "match_grunner": [
+          "Begge er varme og omsorgsfulle",
+          "Flytting og nye kapitler gir naturlige samtaletemaer"
+        ],
+        "samtale_starter": "Hva har gjort Tromsø til et godt sted for deg?"
+      }
+    ]
+  },
+  {
+    "navn": "Lillian Karlstad",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Jorunn Karlstad",
+        "match_grunner": [
+          "Begge setter stor pris på familie",
+          "Bærplukking og hytteliv gir felles minner og interesser"
+        ],
+        "samtale_starter": "Hva er ditt beste bærsted eller hytteminne?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Else-Marie Olsen",
+        "match_grunner": [
+          "Begge liker reiser til varmere strøk",
+          "Familie og gode måltider er tydelige fellestrekk"
+        ],
+        "samtale_starter": "Hva er den beste all-inclusive-opplevelsen du har hatt?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Sissel Maria Myrnes Karlstad",
+        "match_grunner": [
+          "Begge er omsorgsfulle og familiekjære",
+          "Reiser og matlaging gir dere mange felles temaer"
+        ],
+        "samtale_starter": "Hva lager du når du vil skjemme bort familien?"
+      }
+    ]
+  },
+  {
+    "navn": "Lilly Ingebrigtsen Karlstad",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Pernille Vebostad",
+        "match_grunner": [
+          "Begge liker fotball og spill",
+          "Dere er flinke til å få med andre i leken"
+        ],
+        "samtale_starter": "Hvilket spill eller hvilken aktivitet liker du best?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Silje Helèn",
+        "match_grunner": [
+          "Begge liker turn, trening og fart",
+          "Sport og godt humør gir en naturlig samtale"
+        ],
+        "samtale_starter": "Hva er det morsomste du liker å øve på?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge sprer godt humør",
+          "Maja er glad i mennesker og kan dele mange gode festtips"
+        ],
+        "samtale_starter": "Hva gleder du deg mest til på bryllupsfesten?"
+      }
+    ]
+  },
+  {
+    "navn": "Magnus Seppola",
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Christianne B. Eilertsen",
+        "match_grunner": [
+          "Begge elsker fisking og sjøliv",
+          "God mat og friluftsliv er tydelige felles interesser"
+        ],
+        "samtale_starter": "Hva er den beste fisketuren du har hatt?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Edvard Eilertsen",
+        "match_grunner": [
+          "Begge liker båtliv og turer på sjøen",
+          "Rolige kvelder ute gir dere en naturlig felles plattform"
+        ],
+        "samtale_starter": "Hva håper du å få til på sjøen neste sesong?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Andreas Granaas",
+        "match_grunner": [
+          "Begge trives med aktivt friluftsliv",
+          "Fiske, sykling og eventyr gir mye å snakke om"
+        ],
+        "samtale_starter": "Hva er den mest undervurderte friluftsaktiviteten?"
+      }
+    ]
+  },
+  {
+    "navn": "Maja Wilhelmsen",
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Hege Lauritzen",
+        "match_grunner": [
+          "Begge er gode samtalepartnere",
+          "Ski, fjell og omsorg for andre er felles interesser"
+        ],
+        "samtale_starter": "Hva er din beste måte å koble av etter en travel uke?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Ellen Dølvik Eliassen",
+        "match_grunner": [
+          "Begge liker å skape gode tradisjoner",
+          "Mat, skole og sosialt ansvar gir mye felles"
+        ],
+        "samtale_starter": "Hvilken tradisjon håper du aldri forsvinner?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge får mennesker og prosjekter til å fungere",
+          "Reiser og ledelse gir dere en spennende overlapp"
+        ],
+        "samtale_starter": "Hva er det beste rådet du har fått om ledelse?"
+      }
+    ]
+  },
+  {
+    "navn": "Marita Haugen",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Hege Lauritzen",
+        "match_grunner": [
+          "Begge jobber med helse og mennesker",
+          "Dere kombinerer faglig tyngde med aktivt familieliv"
+        ],
+        "samtale_starter": "Hva gir deg mest energi i jobben?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge er sosiale og omsorgsfulle",
+          "Ski, familie og gode samtaler gir mye felles"
+        ],
+        "samtale_starter": "Hva er din favorittaktivitet med venner?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Silje Helèn",
+        "match_grunner": [
+          "Begge liker trening og en aktiv hverdag",
+          "Familie og bevegelse er naturlige samtaletemaer"
+        ],
+        "samtale_starter": "Hvilken treningsform anbefaler du når man vil ha det gøy?"
+      }
+    ]
+  },
+  {
+    "navn": "Merit Reiertsen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Ellen Dølvik Eliassen",
+        "match_grunner": [
+          "Begge har NFH og studietid som felles bakgrunn",
+          "Gamle vennskap og humor gjør praten lett"
+        ],
+        "samtale_starter": "Hva er ditt morsomste minne fra studietiden?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Siv-Cathrine Torbergsen",
+        "match_grunner": [
+          "Begge kjenner studiemiljøet på NFH godt",
+          "Reiser og vennskap fra studentårene gir mye å dele"
+        ],
+        "samtale_starter": "Hvilken studietur eller hyttetur husker du best?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Kristina Rognmo",
+        "match_grunner": [
+          "Begge er uhøytidelige og sosiale",
+          "Vennskap og gode fester gir en naturlig kjemi"
+        ],
+        "samtale_starter": "Hva er oppskriften på en skikkelig morsom kveld?"
+      }
+    ]
+  },
+  {
+    "navn": "Mikal Johnsen",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Jan Heier Johansen",
+        "match_grunner": [
+          "Begge liker teknologi og utvikling",
+          "Praktisk problemløsing gir dere mye å diskutere"
+        ],
+        "samtale_starter": "Hvilken teknologisk idé burde flere ta i bruk?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Andreas Granaas",
+        "match_grunner": [
+          "Begge kombinerer IT med aktive interesser",
+          "Data, jakt og friluftsliv gir mange felles innganger"
+        ],
+        "samtale_starter": "Hvordan bruker du teknologi på tur?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Karl Erik Thomassen",
+        "match_grunner": [
+          "Begge liker jakt og fysisk aktivitet",
+          "Teknisk sans og konkurranseinstinkt passer godt sammen"
+        ],
+        "samtale_starter": "Hva er den beste måten å forberede seg til en tur på?"
+      }
+    ]
+  },
+  {
+    "navn": "Ole Nicolai S. Aarbakke",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Mikal Johnsen",
+        "match_grunner": [
+          "Begge er ivrige medlemmer av jaktmiljøet",
+          "Turer og gode historier kommer naturlig"
+        ],
+        "samtale_starter": "Hva er det mest uforutsigbare som har skjedd på jakt?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Halvard Olsen",
+        "match_grunner": [
+          "Begge liker jakt og friluftsliv",
+          "Dere setter pris på lange turer og naturopplevelser"
+        ],
+        "samtale_starter": "Hvilket fiske- eller jaktsted drømmer du om å besøke?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Per Johnny Olsen",
+        "match_grunner": [
+          "Begge trives med friluftsliv og reiser",
+          "Familie og gode historier gir lett samtaleflyt"
+        ],
+        "samtale_starter": "Hva er den fineste turen du har hatt med familien?"
+      }
+    ]
+  },
+  {
+    "navn": "Per Johnny Olsen",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Halvard Olsen",
+        "match_grunner": [
+          "Begge er ivrige friluftsmennesker",
+          "Fiske og reiser gir dere mange historier å dele"
+        ],
+        "samtale_starter": "Hva er ditt beste tips til en fin tur på Senja?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Jon Christoffersen",
+        "match_grunner": [
+          "Begge liker fotball og reiser",
+          "Vertskap og gode opplevelser er tydelige fellestrekk"
+        ],
+        "samtale_starter": "Hvilken fotballtur har du lyst til å ta neste gang?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge er reiseglade og nysgjerrige",
+          "Arbeid og liv i nord gir en fin felles inngang"
+        ],
+        "samtale_starter": "Hvilket sted har du mest lyst til å oppleve?"
+      }
+    ]
+  },
+  {
+    "navn": "Pernille Vebostad",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Iver Ingebrigtsen Karlstad",
+        "match_grunner": [
+          "Begge liker fotball",
+          "Spill og ungdomsliv gjør praten enkel"
+        ],
+        "samtale_starter": "Hvilket lag eller hvilken spiller følger du mest med på?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Stian Simonsen",
+        "match_grunner": [
+          "Begge setter pris på aktivitet",
+          "Fotball og trening gir mange felles temaer"
+        ],
+        "samtale_starter": "Hva er den morsomste aktiviteten du har prøvd?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Silje Helèn",
+        "match_grunner": [
+          "Begge har fotball og trening som interesser",
+          "God energi og konkurranseglede passer godt sammen"
+        ],
+        "samtale_starter": "Hva er det beste med å spille eller trene sammen med andre?"
+      }
+    ]
+  },
+  {
+    "navn": "Ragnhild Lettrem Olsen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Hege Oleanna Iversen",
+        "match_grunner": [
+          "Begge kjenner Tromsø og Kvaløya godt",
+          "Omsorg og nærmiljø er fine felles temaer"
+        ],
+        "samtale_starter": "Hva liker du best ved å bo der du bor?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Silje Ingebrigtsen",
+        "match_grunner": [
+          "Begge har sterk tilknytning til Kvaløya",
+          "Naboskap og hverdagsliv gir mye å dele"
+        ],
+        "samtale_starter": "Hva er ditt beste tips til en rolig tur på Kvaløya?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Tone Christin Nilsen",
+        "match_grunner": [
+          "Begge er varme og omsorgsfulle",
+          "Vennskap og familie står sterkt hos dere begge"
+        ],
+        "samtale_starter": "Hva gjør et nabolag eller vennskap godt å være i?"
+      }
+    ]
+  },
+  {
+    "navn": "Silje Helèn",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge liker aktivitet og dans",
+          "Dere trives med sosial energi og fest"
+        ],
+        "samtale_starter": "Hvilken sang bør alltid spilles på dansegulvet?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Stian Simonsen",
+        "match_grunner": [
+          "Begge trener og liker å holde seg i form",
+          "Løping og sykling gir en naturlig felles inngang"
+        ],
+        "samtale_starter": "Hva er din favorittøkt når du vil ha det gøy?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Pernille Vebostad",
+        "match_grunner": [
+          "Begge har fotball og aktivitet som interesser",
+          "Godt humør og konkurranseglede passer fint sammen"
+        ],
+        "samtale_starter": "Hva var ditt morsomste idrettsminne?"
+      }
+    ]
+  },
+  {
+    "navn": "Silje Ingebrigtsen",
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge har sterk tilknytning til vennemiljøet",
+          "Sosiale kvelder og gode samtaler er felles styrker"
+        ],
+        "samtale_starter": "Hva gleder du deg mest til når alle vennene samles?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Silje-Kristin Jensen",
+        "match_grunner": [
+          "Begge er varme og engasjerte",
+          "Nabolag, familie og natur gir mye å dele"
+        ],
+        "samtale_starter": "Hva er ditt favorittsted for en rolig tur?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Hege Lauritzen",
+        "match_grunner": [
+          "Begge er omsorgsfulle og lojale",
+          "Dere vet hvordan man stiller opp for andre"
+        ],
+        "samtale_starter": "Hva setter du mest pris på ved et godt vennskap?"
+      }
+    ]
+  },
+  {
+    "navn": "Silje Ramsvatn",
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Silje-Kristin Jensen",
+        "match_grunner": [
+          "Begge har doktorgrad innen marin biologi",
+          "Hav, natur og aktivt friluftsliv er sterke fellestrekk"
+        ],
+        "samtale_starter": "Hva er det mest fascinerende ved livet i havet?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Andreas Granaas",
+        "match_grunner": [
+          "Begge liker utholdenhetsidrett og natur",
+          "Sykling og havaktiviteter gir mange konkrete temaer"
+        ],
+        "samtale_starter": "Hva er den beste treningsøkten når du har god tid?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siv-Cathrine Torbergsen",
+        "match_grunner": [
+          "Begge har marin fagbakgrunn",
+          "Kystliv og faglig nysgjerrighet gjør praten lett"
+        ],
+        "samtale_starter": "Hva savner du mest fra studietiden eller feltarbeidet?"
+      }
+    ]
+  },
+  {
+    "navn": "Silje-Kristin Jensen",
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge jobber med avansert teknologi og kunnskap",
+          "Store prosjekter og naturinteresse gir spennende overlapp"
+        ],
+        "samtale_starter": "Hva håper du at neste prosjekt skal føre til?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Christianne B. Eilertsen",
+        "match_grunner": [
+          "Begge er glade i havet",
+          "Fisketurer og naturvern gir en god felles inngang"
+        ],
+        "samtale_starter": "Hva er ditt beste råd for å ta vare på kysten?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Andreas Granaas",
+        "match_grunner": [
+          "Begge liker aktive dager ute",
+          "Hav, sykling og friluftsliv passer naturlig sammen"
+        ],
+        "samtale_starter": "Hvilket sted i nord burde flere oppleve?"
+      }
+    ]
+  },
+  {
+    "navn": "Siri Jaklin",
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Kristina Garfjell Kantola",
+        "match_grunner": [
+          "Begge har sterk teknologisk bakgrunn",
+          "Forskning, ledelse og krevende prosjekter gir mye å dele"
+        ],
+        "samtale_starter": "Hva er det mest spennende prosjektet du følger med på?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Mikal Johnsen",
+        "match_grunner": [
+          "Begge er nysgjerrige på teknologi",
+          "Utvikling og praktisk problemløsing gir god samtaleflyt"
+        ],
+        "samtale_starter": "Hvilken teknologisk trend tror du blir viktigst fremover?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge liker å møte nye mennesker",
+          "Reiser og sosial energi gjør dere lett pratbare"
+        ],
+        "samtale_starter": "Hva er den beste byen du har blitt kjent med gjennom jobb eller reise?"
+      }
+    ]
+  },
+  {
+    "navn": "Sissel Maria Myrnes Karlstad",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Grete Ingebrigtsen",
+        "match_grunner": [
+          "Begge har lang erfaring fra helsetjenesten",
+          "Omsorg, mat og familie er sterke fellesnevnere"
+        ],
+        "samtale_starter": "Hva liker du best å lage når du får god tid på kjøkkenet?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge liker å ta vare på andre",
+          "God mat og reiser gir mange hyggelige samtaletemaer"
+        ],
+        "samtale_starter": "Hva er ditt beste reiseminne med familie eller venner?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Else-Marie Olsen",
+        "match_grunner": [
+          "Begge setter pris på reiser og sol",
+          "Familie og matlaging gjør dere til naturlige samtalepartnere"
+        ],
+        "samtale_starter": "Hvor finner du mest ro og påfyll?"
+      }
+    ]
+  },
+  {
+    "navn": "Siv Sofie Vian",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Hege Oleanna Iversen",
+        "match_grunner": [
+          "Begge er dyktige og sosiale",
+          "Arbeidsliv og flytting til nye steder gir mye å dele"
+        ],
+        "samtale_starter": "Hva har vært den største positive overraskelsen i arbeidslivet?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Tone Christin Nilsen",
+        "match_grunner": [
+          "Begge er varme og omsorgsfulle",
+          "Vennskap og familie står sentralt hos dere begge"
+        ],
+        "samtale_starter": "Hva er det fineste ved å ha gode venner over lang tid?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Marita Haugen",
+        "match_grunner": [
+          "Begge har erfaring med å støtte andre",
+          "Sosial trygghet og livserfaring gir en god felles plattform"
+        ],
+        "samtale_starter": "Hva gjør en arbeidsdag meningsfull for deg?"
+      }
+    ]
+  },
+  {
+    "navn": "Siv-Cathrine Torbergsen",
+    "allianse": "Havets folk",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Ellen Dølvik Eliassen",
+        "match_grunner": [
+          "Begge har NFH som viktig felles bakgrunn",
+          "Studier, systematikk og vennskap gir lett samtale"
+        ],
+        "samtale_starter": "Hva husker du best fra NFH-tiden?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Silje-Kristin Jensen",
+        "match_grunner": [
+          "Begge har sterk interesse for hav og natur",
+          "Faglig nysgjerrighet og friluftsliv møtes fint"
+        ],
+        "samtale_starter": "Hva er den mest spennende utviklingen i havnæringen?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Magnus Seppola",
+        "match_grunner": [
+          "Begge liker fisking og kystliv",
+          "Mat og turer gir mange konkrete samtaleemner"
+        ],
+        "samtale_starter": "Hva er den beste måten å tilberede dagens fangst på?"
+      }
+    ]
+  },
+  {
+    "navn": "Stian Simonsen",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge er svært aktive",
+          "Løping, sykling og ski gir mye felles energi"
+        ],
+        "samtale_starter": "Hvilken aktivitet passer best for en perfekt helg?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Trond-Bjørnar Pedersen",
+        "match_grunner": [
+          "Begge liker å trene og sette mål",
+          "Dere har også en sosial og konkurranseglad side"
+        ],
+        "samtale_starter": "Hva er ditt neste treningsmål?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Silje Helèn",
+        "match_grunner": [
+          "Begge trives med trening og bevegelse",
+          "Godt humør og aktivitet gir en lett samtale"
+        ],
+        "samtale_starter": "Hva får deg til å holde treningsgleden oppe?"
+      }
+    ]
+  },
+  {
+    "navn": "Stine Smith Ingebrigtsen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Berit Skog",
+        "match_grunner": [
+          "Begge er flinke til å skape gode måltider",
+          "Familie og baking gir en varm felles inngang"
+        ],
+        "samtale_starter": "Hva er hemmeligheten bak den beste ostekaken?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge liker å samle folk rundt mat",
+          "Gjestfrihet og familie står sterkt hos dere begge"
+        ],
+        "samtale_starter": "Hva serverer du når du vil gjøre en kveld ekstra hyggelig?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Sissel Maria Myrnes Karlstad",
+        "match_grunner": [
+          "Begge er omsorgsfulle og matglade",
+          "Baking og familietradisjoner gir mye å snakke om"
+        ],
+        "samtale_starter": "Hvilken oppskrift går igjen i familien din?"
+      }
+    ]
+  },
+  {
+    "navn": "Terje Karlstad",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Mikal Johnsen",
+        "match_grunner": [
+          "Begge liker jakt og friluftsliv",
+          "Teknologi og målrettet problemløsing gir gode samtaler"
+        ],
+        "samtale_starter": "Hva er den beste turen du har hatt med jaktlaget?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Andreas Granaas",
+        "match_grunner": [
+          "Begge trives med hav, sykling og eventyr",
+          "Dere har mange felles friluftsinteresser"
+        ],
+        "samtale_starter": "Hvilket eventyr burde dere planlegge sammen?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge er sosiale og aktive",
+          "Sport og Tromsø-engasjement gir naturlig samtaleflyt"
+        ],
+        "samtale_starter": "Hvilken aktivitet eller kamp gleder du deg mest til?"
+      }
+    ]
+  },
+  {
+    "navn": "Thomas Helge Hansen",
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Stian Simonsen",
+        "match_grunner": [
+          "Begge har stor treningsglede",
+          "Løping, sykling og ski gir mange konkrete temaer"
+        ],
+        "samtale_starter": "Hvilken treningsøkt er du aldri lei av?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Karl Erik Thomassen",
+        "match_grunner": [
+          "Begge liker fysisk aktivitet og musikk",
+          "Humor og sosial energi gjør dere lett pratbare"
+        ],
+        "samtale_starter": "Hvilken sang beskriver best en god fest for deg?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Jon Christoffersen",
+        "match_grunner": [
+          "Begge er utadvendte og gjestfrie",
+          "Sport og mennesker er naturlige felles temaer"
+        ],
+        "samtale_starter": "Hva er ditt beste tips for å få en ny gjest til å føle seg velkommen?"
+      }
+    ]
+  },
+  {
+    "navn": "Thomas Karlsen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Vegard Lund Aspen",
+        "match_grunner": [
+          "Begge liker praktiske prosjekter",
+          "Ledelse og problemløsing gir mye å snakke om"
+        ],
+        "samtale_starter": "Hvilket prosjekt har du lært mest av?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Helge Karlstad",
+        "match_grunner": [
+          "Begge er handy og løsningsorienterte",
+          "Hus, hytte og prosjekter er tydelige felles interesser"
+        ],
+        "samtale_starter": "Hva er det morsomste du har bygget eller fikset?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Adrian Edvardsen",
+        "match_grunner": [
+          "Begge liker oppussing og å lære ved å gjøre",
+          "Praktisk sans og arbeidslyst gir en naturlig kjemi"
+        ],
+        "samtale_starter": "Hvilket rom eller prosjekt ville du startet med hjemme?"
+      }
+    ]
+  },
+  {
+    "navn": "Tina Nikolaisen",
+    "allianse": "De vise",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge er gode på organisering og vertskap",
+          "Bryllup og familieliv gir mange naturlige samtaletemaer"
+        ],
+        "samtale_starter": "Hva er ditt beste triks for å holde oversikt når mye skjer?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Hege Lauritzen",
+        "match_grunner": [
+          "Begge kombinerer omsorg med struktur",
+          "Helse og familielogistikk gir gjensidig forståelse"
+        ],
+        "samtale_starter": "Hvordan får du en travel hverdag til å fungere?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Siri Jaklin",
+        "match_grunner": [
+          "Begge er flinke til å koordinere store ting",
+          "Familie og prosjekter gir mye å dele"
+        ],
+        "samtale_starter": "Hva er det mest tilfredsstillende å få organisert?"
+      }
+    ]
+  },
+  {
+    "navn": "Tone Christin Nilsen",
+    "allianse": "Bakrommet-stammen",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Siv Sofie Vian",
+        "match_grunner": [
+          "Begge er omsorgsfulle og sosiale",
+          "Langvarige vennskap og livserfaring gir god samtaleflyt"
+        ],
+        "samtale_starter": "Hva setter du mest pris på ved en god venn?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Kjerstin Johnsen",
+        "match_grunner": [
+          "Begge er familie- og reiseglade",
+          "Dere trives når folk samles og har det hyggelig"
+        ],
+        "samtale_starter": "Hva er din favorittmåte å feire en milepæl på?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Silje-Kristin Jensen",
+        "match_grunner": [
+          "Begge liker natur og gode samtaler",
+          "Vennskap og engasjement gir mange felles temaer"
+        ],
+        "samtale_starter": "Hvilken tur eller naturopplevelse anbefaler du?"
+      }
+    ]
+  },
+  {
+    "navn": "Tore Arnesen",
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Kristin Halvorsen",
+        "match_grunner": [
+          "Begge jobber med skole og ungdom",
+          "Ledelse og utvikling av gode miljøer er felles drivere"
+        ],
+        "samtale_starter": "Hva er det beste ved å jobbe med ungdom?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Tore Olsen",
+        "match_grunner": [
+          "Begge er familieorienterte og aktive",
+          "Skole, nærmiljø og trening gir lett samtale"
+        ],
+        "samtale_starter": "Hva liker du best ved Tromsø når du skal være ute?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Jan Heier Johansen",
+        "match_grunner": [
+          "Begge liker å hjelpe andre videre",
+          "Utdanning og teknologi gir gode samtaletemaer"
+        ],
+        "samtale_starter": "Hvilken egenskap er viktigst hos en god lærer eller mentor?"
+      }
+    ]
+  },
+  {
+    "navn": "Tore Olsen",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Halvard Olsen",
+        "match_grunner": [
+          "Begge liker trening og turer",
+          "Familie og friluftsliv gir mange felles historier"
+        ],
+        "samtale_starter": "Hva er ditt favorittområde for en rolig tur?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Trond-Bjørnar Pedersen",
+        "match_grunner": [
+          "Begge er aktive og sosiale",
+          "Trening og festglede gir en naturlig kjemi"
+        ],
+        "samtale_starter": "Hvordan lader du best opp etter en lang uke?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Maja Wilhelmsen",
+        "match_grunner": [
+          "Begge trives i sosialt lag",
+          "Familie og gode sammenkomster er felles interesser"
+        ],
+        "samtale_starter": "Hva gjør en middag med venner ekstra vellykket?"
+      }
+    ]
+  },
+  {
+    "navn": "Trond-Bjørnar Pedersen",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Thomas Helge Hansen",
+        "match_grunner": [
+          "Begge er svært aktive og sosiale",
+          "Sykling, ski og fest gir mange felles temaer"
+        ],
+        "samtale_starter": "Hvilken aktivitet ville du tatt med en ny venn på?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Stian Simonsen",
+        "match_grunner": [
+          "Begge liker løping og å sette mål",
+          "Dere har også en tydelig lag- og konkurranseglede"
+        ],
+        "samtale_starter": "Hva er det morsomste treningsmålet du har satt deg?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Hege Lauritzen",
+        "match_grunner": [
+          "Begge holder et høyt aktivitetsnivå",
+          "Omsorg for familien og helse er felles verdier"
+        ],
+        "samtale_starter": "Hva får deg til å prioritere trening i en travel uke?"
+      }
+    ]
+  },
+  {
+    "navn": "Vegard Lund Aspen",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Mikal Johnsen",
+        "match_grunner": [
+          "Begge liker jakt og friluftsliv",
+          "Teknologi og ledelse gir mye å snakke om"
+        ],
+        "samtale_starter": "Hva er den beste turen du har hatt med jaktlaget?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Thomas Karlsen",
+        "match_grunner": [
+          "Begge er praktiske og løsningsorienterte",
+          "Prosjekter og håndverk gir naturlig samtaleflyt"
+        ],
+        "samtale_starter": "Hvilket prosjekt har vært mest tilfredsstillende å fullføre?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Trond-Bjørnar Pedersen",
+        "match_grunner": [
+          "Begge liker å holde folk i aktivitet",
+          "Trening og sosial energi passer godt sammen"
+        ],
+        "samtale_starter": "Hva er din favorittmåte å få andre med på en aktivitet?"
+      }
+    ]
+  }
+]

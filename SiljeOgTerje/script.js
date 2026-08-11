@@ -76,6 +76,7 @@
     lastGjesteEdits().then(() => {
       // Re-render gjester med eventuelle admin-overstyringer
       if (typeof renderGjester === 'function') renderGjester();
+      forhandsvelgBestevenn();
     });
   });
 
@@ -1503,7 +1504,19 @@
     const dd = document.getElementById('bv-dropdown');
     if (!input || !dd) return;
 
-    // Forhåndsfyll med mittNavn hvis det matcher en gjest
+    forhandsvelgBestevenn();
+
+    input.addEventListener('focus', () => visBvDropdown(input.value));
+    input.addEventListener('input', () => visBvDropdown(input.value));
+    input.addEventListener('blur', () => setTimeout(() => { dd.hidden = true; }, 200));
+    document.addEventListener('click', e => {
+      if (!input.contains(e.target) && !dd.contains(e.target)) dd.hidden = true;
+    });
+  }
+
+  function forhandsvelgBestevenn() {
+    const input = document.getElementById('bv-search');
+    if (!input || input.value || bvValgtNavn || !mittNavn) return;
     if (mittNavn) {
       const g = GJESTER.find(x => x.navn.toLowerCase() === mittNavn.toLowerCase()
         || (x.originalNavn && x.originalNavn.toLowerCase() === mittNavn.toLowerCase()));
@@ -1512,13 +1525,6 @@
         visBestevenn(g.navn);
       }
     }
-
-    input.addEventListener('focus', () => visBvDropdown(input.value));
-    input.addEventListener('input', () => visBvDropdown(input.value));
-    input.addEventListener('blur', () => setTimeout(() => { dd.hidden = true; }, 200));
-    document.addEventListener('click', e => {
-      if (!input.contains(e.target) && !dd.contains(e.target)) dd.hidden = true;
-    });
   }
 
   // ============ PWA Install Popup ============
@@ -1567,7 +1573,7 @@
         ${avatar}
         <div class="bv-dropdown-info">
           <div class="bv-dropdown-navn">${esc(g.navn)}</div>
-          <div class="bv-dropdown-meta">Bord ${g.bord || '?'}${g.relasjon ? ' · ' + esc(g.relasjon) : ''}</div>
+          <div class="bv-dropdown-meta">${esc(g.relasjon || g.jobb || g.bio || 'Bryllupsgjest')}</div>
         </div>
       </div>`;
     }).join('');
@@ -1642,7 +1648,7 @@
           <div class="bv-resultat-tittel">${medalje}</div>
           ${bilde}
           <div class="bv-resultat-navn">${esc(visNavn)}</div>
-          <div class="bv-resultat-bord">Bord ${matchGjest.bord || '?'}${matchGjest.relasjon ? ' · ' + esc(matchGjest.relasjon) : ''}</div>
+          ${(matchGjest.relasjon || matchGjest.jobb) ? `<div class="bv-resultat-meta">${esc(matchGjest.relasjon || matchGjest.jobb)}</div>` : ''}
           <div class="bv-grunner">
             <div class="bv-grunner-tittel">Dere har til felles</div>
             ${(mt.match_grunner || []).map(g => `<div class="bv-grunne">🤝 ${esc(g)}</div>`).join('')}
@@ -1654,9 +1660,6 @@
     }).join('');
 
     ut.innerHTML = `
-      <div class="bv-samme-bord-info">
-        💡 <strong>Vi viser kun matches fra andre bord</strong> — folk på <strong>ditt eget bord</strong> har du allerede hele kvelden!
-      </div>
       ${matchKort}
       <div class="bv-allianse-kort">
         <div class="bv-allianse-emoji">${allianseInfo.emoji}</div>
