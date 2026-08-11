@@ -352,6 +352,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   display: flex;
   flex-direction: column;
   gap: 6px;
+  align-self: start;
   border: 1px solid rgba(255,255,255,0.05);
 }
 .gjest-kort.toast { border-color: rgba(var(--accent2-rgb),0.4); background: rgba(var(--accent2-rgb),0.08); }
@@ -376,7 +377,14 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .gjest-lenker { display: flex; gap: 8px; justify-content: center; margin-top: 4px; }
 .gjest-navn { font-size: 13px; font-weight: bold; color: var(--text); text-align: center; }
-.gjest-bio { font-size: 11px; color: var(--muted); line-height: 1.4; text-align: center; }
+.gjest-bio {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+  text-align: center;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
 .gjest-fbbio { font-size: 10px; color: var(--muted2); line-height: 1.4; text-align: center; padding: 4px 6px; background: rgba(255,255,255,0.03); border-radius: 6px; margin-top: 4px; }
 .gjest-extra { font-size: 11px; color: var(--gold); line-height: 1.4; text-align: center; padding: 4px 6px; background: rgba(var(--gold-rgb),0.12); border-radius: 6px; margin-top: 4px; font-weight: bold; }
 .gjest-rel { font-size: 10px; color: var(--accent-2); text-align: center; padding: 2px 6px; margin-top: 4px; font-style: italic; }
@@ -474,8 +482,10 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 .gjest-modal-bio {
   font-size: 14px;
   color: var(--text-soft);
-  line-height: 1.5;
+  line-height: 1.6;
   margin-bottom: 12px;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
 }
 .gjest-modal-felt {
   font-size: 13px;
@@ -888,7 +898,13 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .bv-dropdown-info { flex: 1; min-width: 0; }
 .bv-dropdown-navn { font-size: 14px; color: var(--text); }
-.bv-dropdown-meta { font-size: 11px; color: var(--muted2); }
+.bv-dropdown-meta {
+  font-size: 11px;
+  color: var(--muted2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .bv-resultat-kort {
   margin: 0 16px 16px;
@@ -946,7 +962,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   font-weight: bold;
   margin-bottom: 6px;
 }
-.bv-resultat-bord {
+.bv-resultat-meta {
   display: inline-block;
   font-size: 12px;
   color: var(--text-soft2);

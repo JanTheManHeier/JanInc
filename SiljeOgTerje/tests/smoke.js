@@ -123,12 +123,13 @@ function mockApi(page, captured) {
       return;
     }
     if (endpoint === 'siljeterje-gjest-edit') {
+      const langBio = Array(36).fill('Dette er en lengre presentasjon av gjesten.').join('\n');
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify([{
           navn: 'Dynamisk Ledsager', relasjon: 'Følge til Test App',
-          bord: 1, sete: 1, bordType: null, nyGjest: true, skjult: false,
+          bio: langBio, bord: 1, sete: 1, bordType: null, nyGjest: true, skjult: false,
         }]),
       });
       return;
@@ -166,6 +167,20 @@ test('Passordporten godtar riktig passord', async ({ browser, baseURL }) => {
   await page.goto(`${baseURL}/SiljeOgTerje/`);
   await page.locator('#tilgang-pass').fill('Silje&Terje');
   await page.locator('#tilgang-knapp').click();
+  await assert.doesNotReject(() => page.locator('.hero').waitFor({ state: 'visible' }));
+  assert.equal(await page.locator('#tilgang-overlay').count(), 0);
+  await context.close();
+});
+
+test('Gjestesiden åpnes uten passord når den er satt live', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ viewport: { width: 402, height: 874 } });
+  const page = await context.newPage();
+  await page.route('**/api/siljeterje-content', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ content: { innstillinger: { passordbeskyttelse: false } } }),
+  }));
+  await page.goto(`${baseURL}/SiljeOgTerje/`);
   await assert.doesNotReject(() => page.locator('.hero').waitFor({ state: 'visible' }));
   assert.equal(await page.locator('#tilgang-overlay').count(), 0);
   await context.close();
@@ -213,6 +228,25 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   assert.equal(layout.styleSelectors, 0, 'Alternative stil- og menyvalg skal være skjult');
   assert.equal(layout.musicVisible, false, 'Musikkønsker skal være avslått som standard');
 
+  await page.evaluate(() => document.querySelector('[data-go="gjester"]').click());
+  const langBioKort = page.locator('.gjest-kort', { hasText: 'Dynamisk Ledsager' });
+  await assert.doesNotReject(() => langBioKort.waitFor({ state: 'visible' }));
+  const bioLayout = await langBioKort.evaluate(kort => {
+    const bio = kort.querySelector('.gjest-bio');
+    const rect = kort.getBoundingClientRect();
+    return {
+      length: bio.textContent.length,
+      whiteSpace: getComputedStyle(bio).whiteSpace,
+      left: rect.left,
+      right: rect.right,
+      viewport: innerWidth,
+    };
+  });
+  assert.ok(bioLayout.length > 500, 'Lang bio ble avkortet i gjestevisningen');
+  assert.equal(bioLayout.whiteSpace, 'pre-line', 'Linjeskift i bio skal bevares');
+  assert.ok(bioLayout.left >= 0 && bioLayout.right <= bioLayout.viewport, 'Lang bio går utenfor mobilskjermen');
+  await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
+
   await page.locator('#tema-toggle').click();
   assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
   await page.locator('#tema-toggle').click();
@@ -221,6 +255,15 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   await page.locator('button[data-go="gave"]').first().click();
   assert.match(await page.locator('#gave-detaljer').innerText(), /Vipps 12345678/);
   assert.match(await page.locator('#gave-detaljer').innerText(), /Merk betalingen med navn/);
+  await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
+  await page.locator('.nav > button[data-go="gjester"]').click();
+  await page.locator('[data-page="gjester"] button[data-go="bestevenn"]').click();
+  await page.locator('#bv-search').fill('Andreas Granaas');
+  await page.locator('.bv-dropdown-item').filter({ hasText: 'Andreas Granaas' }).click();
+  await assert.doesNotReject(() => page.locator('#bv-resultat .bv-resultat-kort').first().waitFor({ state: 'visible' }));
+  assert.equal(await page.locator('#bv-resultat .bv-resultat-kort').count(), 3);
+  assert.doesNotMatch(await page.locator('#bv-resultat').innerText(), /Bord \?/);
+  assert.match(await page.locator('[data-page="bestevenn"] .bv-info-box').innerText(), /ikke dating/i);
   await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
   await page.locator('button[data-go="bord"]').first().click();
   await page.waitForTimeout(150);
@@ -289,6 +332,7 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   await page.goto(`${baseURL}/SiljeOgTerje/admin/`);
   await page.waitForLoadState('networkidle');
   assert.equal(await page.locator('#i-musikk').isChecked(), false);
+  assert.equal(await page.locator('#i-passord').isChecked(), true);
   assert.ok(await page.locator('.program-rad [data-k="lat"]').count() >= 4);
   assert.ok(await page.locator('.program-rad [data-k="nettside"]').count() >= 4);
   const adminProgram = await page.locator('.program-rad').evaluateAll(rows => rows.map(row => ({
@@ -302,11 +346,13 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   assert.ok(adminProgram.some(p => p.tittel === 'Middag og fest' && p.tid === '17:00'));
   assert.equal(await page.locator('#g-detaljer').inputValue(), 'Vipps 12345678\nMerk betalingen med navn');
   await page.locator('#g-vipps').fill('99887766');
+  await page.locator('#i-passord').uncheck();
   await page.getByRole('button', { name: /Lagre alt innhold/ }).click();
   await page.waitForTimeout(100);
   const contentPost = captured.find(x => x.endpoint === 'siljeterje-content');
   assert.equal(contentPost.body.content.gave.vipps, '99887766');
   assert.equal(contentPost.body.content.gave.detaljer, 'Vipps 12345678\nMerk betalingen med navn');
+  assert.equal(contentPost.body.content.innstillinger.passordbeskyttelse, false);
   assert.ok(contentPost.body.content.program.some(p => p.tittel === 'Vigsel i Elverhøy kirke' && p.tid === '12:00'));
   assert.ok(contentPost.body.content.program.some(p => p.sted === 'Walter & Leonard' && p.tid === '14:00'));
 

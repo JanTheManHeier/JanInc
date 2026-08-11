@@ -405,7 +405,7 @@ function byggRedaktor(c) {
   const praktisk = Array.isArray(c.praktisk) ? c.praktisk : (typeof PRAKTISK!=='undefined'?PRAKTISK:[]);
   const meny = Array.isArray(c.meny) ? c.meny : (typeof MENY!=='undefined'?MENY:[]);
   const menyinfo = Array.isArray(c.menyinfo) ? c.menyinfo : (typeof MENYINFO!=='undefined'?MENYINFO:[]);
-  const innstillinger = Object.assign({ musikkOnske: false }, (typeof INNSTILLINGER!=='undefined'?INNSTILLINGER:{}), c.innstillinger || {});
+  const innstillinger = Object.assign({ musikkOnske: false, passordbeskyttelse: true }, (typeof INNSTILLINGER!=='undefined'?INNSTILLINGER:{}), c.innstillinger || {});
   let h = '<h2>✏️ Rediger innhold</h2><p class="muted">Endringene blir synlige i appen for alle gjestene umiddelbart etter lagring.</p>';
 
   h += '<div class="red-seksjon"><h3>💍 Forside</h3>'
@@ -452,7 +452,9 @@ function byggRedaktor(c) {
 
   h += '<div class="red-seksjon"><h3>⚙️ Funksjoner</h3>'
     + `<label style="display:flex;gap:10px;align-items:center"><input id="i-musikk" type="checkbox" ${innstillinger.musikkOnske?'checked':''}> Vis musikkønsker for gjestene</label>`
-    + '<p class="muted">Musikkønsker er avslått som standard og kan aktiveres når dere ønsker.</p></div>';
+    + '<p class="muted">Musikkønsker er avslått som standard og kan aktiveres når dere ønsker.</p>'
+    + `<label style="display:flex;gap:10px;align-items:center;margin-top:16px"><input id="i-passord" type="checkbox" ${innstillinger.passordbeskyttelse?'checked':''}> Krev forhåndsvisningspassord på gjestesiden</label>`
+    + '<p class="muted">Fjern avhukingen når løsningen skal settes live. Admin-sidene er fortsatt passordbeskyttet.</p></div>';
 
   h += '<div class="lagre-bar"><button onclick="lagreInnhold()">💾 Lagre alt innhold</button>'
     + '<span class="muted" id="innhold-tid"></span><span id="lagre-status"></span></div>';
@@ -494,7 +496,10 @@ async function lagreInnhold() {
       vipps: val('g-vipps'), vippsTekst: val('g-vippstekst'),
       konto: val('g-konto'), spleisUrl: val('g-spleis'), detaljer: val('g-detaljer'),
     },
-    innstillinger: { musikkOnske: document.getElementById('i-musikk').checked },
+    innstillinger: {
+      musikkOnske: document.getElementById('i-musikk').checked,
+      passordbeskyttelse: document.getElementById('i-passord').checked,
+    },
   };
   const s = document.getElementById('lagre-status');
   s.textContent = ' Lagrer…'; s.className = 'muted';

@@ -44,6 +44,7 @@
     font-family: inherit;
   }
   .felt textarea { resize: vertical; min-height: 50px; }
+  .felt textarea[data-felt="bio"] { min-height: 150px; line-height: 1.5; }
   .felt input:focus, .felt textarea:focus, .felt select:focus { outline: none; border-color: #D4A853; }
   .felt.full { grid-column: 1 / -1; }
   .knapper { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
@@ -225,8 +226,8 @@ function radHtml(g) {
           <div class="felt"><label>Instagram URL</label>
             <input data-felt="igUrl" value="${v('igUrl', g.igUrl)}" placeholder="https://instagram.com/..." />
           </div>
-          <div class="felt full"><label>Bio</label>
-            <textarea data-felt="bio" placeholder="Kort beskrivelse...">${esc(eff(g.navn,'bio',g.bio))}</textarea>
+          <div class="felt full"><label>Bio — full presentasjon, ingen tegnbegrensning</label>
+            <textarea data-felt="bio" rows="8" placeholder="Skriv presentasjonen av gjesten...">${esc(eff(g.navn,'bio',g.bio))}</textarea>
           </div>
         </div>
         <div class="knapper">

@@ -27,6 +27,7 @@ IF COL_LENGTH('SiljeTerje_GjestEdit','nyGjest')  IS NULL ALTER TABLE SiljeTerje_
 IF COL_LENGTH('SiljeTerje_GjestEdit','pust')     IS NULL ALTER TABLE SiljeTerje_GjestEdit ADD pust BIT NULL;
 IF COL_LENGTH('SiljeTerje_GjestEdit','rsvpSlug') IS NULL ALTER TABLE SiljeTerje_GjestEdit ADD rsvpSlug NVARCHAR(80) NULL;
 IF COL_LENGTH('SiljeTerje_GjestEdit','rsvpLedsager') IS NULL ALTER TABLE SiljeTerje_GjestEdit ADD rsvpLedsager BIT NOT NULL DEFAULT 0 WITH VALUES;
+IF COL_LENGTH('SiljeTerje_GjestEdit','bio') <> -1 ALTER TABLE SiljeTerje_GjestEdit ALTER COLUMN bio NVARCHAR(MAX) NULL;
 `;
 
 const SELECT_SQL = `SELECT navn, bio, relasjon, extraBio, nyttNavn, jobb, bord, sete, bordType, fbUrl, liUrl, igUrl, bildeUrl, skjult, nyGjest, pust, rsvpSlug, rsvpLedsager, oppdatert FROM SiljeTerje_GjestEdit`;
@@ -98,7 +99,7 @@ module.exports = async function (context, req) {
             }
             const p = {
                 navn: s(body.navn, 100),
-                bio: s(body.bio, 500),
+                bio: s(body.bio),
                 relasjon: s(body.relasjon, 200),
                 extraBio: s(body.extraBio, 500),
                 nyttNavn: s(body.nyttNavn, 100),
@@ -130,7 +131,7 @@ module.exports = async function (context, req) {
                     VALUES (@navn, @bio, @relasjon, @extraBio, @nyttNavn, @jobb, @bord, @sete, @bordType, @fbUrl, @liUrl, @igUrl, @bildeUrl, @skjult, @nyGjest, @pust);`,
                 [
                     { name: 'navn',     type: TYPES.NVarChar, value: p.navn },
-                    { name: 'bio',      type: TYPES.NVarChar, value: p.bio },
+                    { name: 'bio',      type: TYPES.NVarChar, value: p.bio, options: { length: Infinity } },
                     { name: 'relasjon', type: TYPES.NVarChar, value: p.relasjon },
                     { name: 'extraBio', type: TYPES.NVarChar, value: p.extraBio },
                     { name: 'nyttNavn', type: TYPES.NVarChar, value: p.nyttNavn },

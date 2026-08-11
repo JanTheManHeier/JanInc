@@ -238,4 +238,5 @@ const GAVE = {
 // Funksjoner som Silje og Terje kan skru av/på i admin.
 const INNSTILLINGER = {
   musikkOnske: false,
+  passordbeskyttelse: true,
 };
