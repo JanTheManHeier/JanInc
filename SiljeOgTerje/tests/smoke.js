@@ -256,6 +256,15 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   assert.match(await page.locator('#gave-detaljer').innerText(), /Vipps 12345678/);
   assert.match(await page.locator('#gave-detaljer').innerText(), /Merk betalingen med navn/);
   await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
+  await page.evaluate(() => document.querySelector('.nav > button[data-go="gjester"]').click());
+  await page.locator('[data-page="gjester"] button[data-go="bestevenn"]').click();
+  await page.locator('#bv-search').fill('Andreas Granaas');
+  await page.locator('.bv-dropdown-item').filter({ hasText: 'Andreas Granaas' }).click();
+  await assert.doesNotReject(() => page.locator('#bv-resultat .bv-resultat-kort').first().waitFor({ state: 'visible' }));
+  assert.equal(await page.locator('#bv-resultat .bv-resultat-kort').count(), 3);
+  assert.doesNotMatch(await page.locator('#bv-resultat').innerText(), /Bord \?/);
+  assert.match(await page.locator('[data-page="bestevenn"] .bv-info-box').innerText(), /ikke dating/i);
+  await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
   await page.locator('button[data-go="bord"]').first().click();
   await page.waitForTimeout(150);
   assert.match(await page.locator('.bord-info').first().innerText(), /1\s*\/\s*10/,

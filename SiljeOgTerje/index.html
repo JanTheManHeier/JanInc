@@ -177,6 +177,7 @@
   <section class="page" data-page="gjester" hidden>
     <div class="sub-nav">
       <button class="sub-tab" data-go="gjester">👥 Gjester</button>
+      <button class="sub-tab" data-go="bestevenn">🤝 Bestevenn</button>
       <button class="sub-tab" data-go="bord">🪑 Bord</button>
     </div>
     <h2 class="page-title">👥 Gjester</h2>
@@ -198,6 +199,32 @@
     </div>
 
     <div id="gjester-grid" class="gjester-grid"></div>
+  </section>
+
+  <!-- BESTEVENN -->
+  <section class="page" data-page="bestevenn" hidden>
+    <div class="sub-nav">
+      <button class="sub-tab" data-go="gjester">👥 Gjester</button>
+      <button class="sub-tab active" data-go="bestevenn">🤝 Bestevenn</button>
+      <button class="sub-tab" data-go="bord">🪑 Bord</button>
+    </div>
+    <h2 class="page-title">🤝 Finn din nye bestevenn</h2>
+    <p class="muted">Tre personer du kanskje bør slå av en prat med i bryllupet</p>
+
+    <div class="bv-info-box">
+      <div>🔎 Forslagene bygger på interesser, jobb, utdanning, prosjekter og personlighet.</div>
+      <div>💛 Dette er vennskapsmatching — ikke dating.</div>
+      <div>🪑 Listen er midlertidig og uavhengig av bordplasseringen.</div>
+    </div>
+
+    <div class="bv-velg-boks">
+      <div class="bv-search-wrap">
+        <input id="bv-search" type="text" placeholder="Søk etter navnet ditt..." autocomplete="off" />
+        <div id="bv-dropdown" class="bv-dropdown" hidden></div>
+      </div>
+    </div>
+
+    <div id="bv-resultat" hidden></div>
   </section>
 
   <!-- HILSENER -->
@@ -440,6 +467,7 @@
   <section class="page" data-page="bord" hidden>
     <div class="sub-nav">
       <button class="sub-tab" data-go="gjester">👥 Gjester</button>
+      <button class="sub-tab" data-go="bestevenn">🤝 Bestevenn</button>
       <button class="sub-tab" data-go="bord">🪑 Bord</button>
     </div>
     <h2 class="page-title">🪑 Bordplassering</h2>
