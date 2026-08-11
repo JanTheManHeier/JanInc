@@ -44,6 +44,31 @@
   .rsvp-hurtig-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
   .rsvp-hurtig label { display: flex; flex-direction: column; gap: 4px; color: #B0C4D8; font-size: 12px; }
   .rsvp-hurtig input, .rsvp-hurtig select { padding: 9px; border-radius: 7px; border: 1px solid rgba(255,255,255,.18); background: #132638; color: #E8E0D4; font: inherit; }
+  .forlover-pakke { display: grid; gap: 16px; margin-top: 18px; }
+  .pakke-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .pakke-kort { background: rgba(255,255,255,0.04); border: 1px solid rgba(212,168,83,0.25); border-radius: 12px; padding: 16px; }
+  .pakke-kort h3 { color: #D4A853; margin: 0 0 10px; }
+  .pakke-kort ul { margin: 0; padding-left: 20px; }
+  .pakke-kort li { margin: 8px 0; line-height: 1.45; }
+  .pakke-kort .kilde { color: #8FA5BA; font-size: 12px; }
+  .pakke-varsel { border-color: rgba(224,128,128,0.55); background: rgba(192,64,64,0.1); }
+  .pakke-varsel h3 { color: #F0A0A0; }
+  .quiz-kort { border-left: 4px solid #D4A853; }
+  .quiz-kort ol { margin: 8px 0; padding-left: 24px; }
+  .quiz-fasit { color: #6FCF97; font-weight: bold; }
+  .quiz-status { display: inline-block; margin-top: 8px; padding: 4px 8px; border-radius: 999px; background: rgba(111,207,151,0.12); color: #8BE0AF; font-size: 12px; }
+  details.forlover-raa { margin-top: 18px; }
+  details.forlover-raa summary { color: #D4A853; cursor: pointer; font-weight: bold; }
+  @media print {
+    body { background: #fff; color: #111; max-width: none; padding: 0; }
+    body > * { display: none !important; }
+    #forlover-visning, #forlover-visning * { display: revert !important; }
+    #forlover-visning { color: #111; }
+    #forlover-visning .stats-row, #forlover-visning .admin-aksjoner, #forlover-visning .forlover-raa { display: none !important; }
+    #forlover-visning .pakke-kort { break-inside: avoid; border-color: #999; background: #fff; }
+    #forlover-visning h2, #forlover-visning h3 { color: #111; }
+    #forlover-visning .kilde, #forlover-visning .muted { color: #444; }
+  }
 </style>
 </head>
 <body>
@@ -76,9 +101,9 @@
 <div id="svar-visning" class="muted">Trykk «Hent svar» for å laste inn.</div>
 
 <h2>🤫 Forlover-runde — hemmelige svar</h2>
-<p class="muted">Innsider-info fra forloverne (<a href="/SiljeOgTerje/forlover/" target="_blank">åpne forlover-runden →</a>). Skjult for brudeparet.</p>
-<div class="admin-aksjoner"><button onclick="lastForlover()">🔄 Hent forlover-svar</button></div>
-<div id="forlover-visning" class="muted">Trykk «Hent forlover-svar» for å laste inn.</div>
+<p class="muted">Privat arbeidsflate for toastmasterne: koordinering, talehjelp og quizkandidater. Råsvarene er skjult for brudeparet og publiseres aldri automatisk.</p>
+<div class="admin-aksjoner"><button onclick="lastForlover()">🔄 Hent forlover-pakke</button></div>
+<div id="forlover-visning" class="muted">Trykk «Hent forlover-pakke» for å laste inn.</div>
 
 <div id="content">Laster...</div>
 
@@ -607,7 +632,20 @@ async function lastForlover() {
   // Detaljtabell viser kun forlovere som har svart på minst ett spørsmål
   const aktive = personer.filter(p => svar[p.slug] && Object.keys(svar[p.slug]).length);
   if (!aktive.length) { cont.className = ''; cont.innerHTML = status + '<p class="muted">Ingen forlovere har svart ennå.</p>'; return; }
-  let h = status + '<table><tr><th style="width:34%">Spørsmål</th>'
+  const pakke = byggForloverPakke(personer, svar);
+  const quiz = byggTryggeQuizkandidater(personer, svar);
+  let h = status
+    + '<div class="admin-aksjoner"><button onclick="kopierForloverPakke()">📋 Kopier pakken</button>'
+    + '<button onclick="window.print()">🖨️ Skriv ut / lagre PDF</button></div>'
+    + '<div id="forlover-pakke" class="forlover-pakke">'
+    + '<div><h2>🎤 Toastmaster- og talehjelpspakke</h2><p class="muted">Privat arbeidsdokument. Navn vises her fordi koordinering krever det.</p></div>'
+    + renderKoordinering(pakke)
+    + renderTalegull(pakke)
+    + '<div><h2>🧠 Trygge quizkandidater</h2><p class="muted">Kun ufarlige felt er brukt. Kildenavn vises ikke. Ingen spørsmål publiseres før manuell godkjenning.</p></div>'
+    + renderQuizkandidater(quiz)
+    + '</div>'
+    + '<details class="forlover-raa"><summary>Vis komplette råsvar (fortrolig)</summary>'
+    + '<table><tr><th style="width:34%">Spørsmål</th>'
     + aktive.map(p => '<th>' + esc(p.navn) + '</th>').join('') + '</tr>';
   sek.forEach(s => {
     h += '<tr><td colspan="' + (aktive.length + 1) + '" style="background:rgba(212,168,83,0.12);color:#D4A853;font-weight:bold">'
@@ -621,9 +659,187 @@ async function lastForlover() {
       h += '</tr>';
     });
   });
-  h += '</table>';
+  h += '</table></details>';
   cont.className = '';
   cont.innerHTML = h;
+}
+
+function forloverOppforinger(personer, svar, id, filter) {
+  return personer
+    .filter(p => !filter || filter(p))
+    .map(p => ({ navn: p.navn, side: p.side || '', tekst: String((svar[p.slug] && svar[p.slug][id]) || '').trim() }))
+    .filter(x => x.tekst);
+}
+
+function renderOppforinger(oppforinger, tomTekst) {
+  if (!oppforinger.length) return '<p class="muted">' + esc(tomTekst || 'Ingen svar registrert.') + '</p>';
+  return '<ul>' + oppforinger.map(x => '<li><strong>' + esc(x.navn) + ':</strong> ' + esc(x.tekst)
+    + (x.etikett ? '<div class="kilde">' + esc(x.etikett) + '</div>' : '') + '</li>').join('') + '</ul>';
+}
+
+function byggForloverPakke(personer, svar) {
+  const tale = forloverOppforinger(personer, svar, 'holder-tale');
+  const innslag = forloverOppforinger(personer, svar, 'planlegger-innslag')
+    .filter(x => !/^nei\b/i.test(x.tekst))
+    .map(x => {
+      const person = personer.find(p => p.navn === x.navn);
+      const detalj = person && svar[person.slug] && svar[person.slug]['innslag-hva'];
+      return { ...x, tekst: detalj ? x.tekst + ' — ' + detalj : x.tekst };
+    });
+  const utstyr = forloverOppforinger(personer, svar, 'trenger-hjelp');
+  const unnga = forloverOppforinger(personer, svar, 'unnga-temaer');
+  const siljeFilter = p => /Silje/i.test(p.side || '');
+  const terjeFilter = p => /Terje/i.test(p.side || '');
+  const taleIds = ['forste-inntrykk', 'beste-egenskap', 'beste-minne', 'morsomste', 'pinlig-men-snill', 'innsidevitser', 'kallenavn'];
+  const parIds = ['nar-skjonte', 'hva-utfyller', 'soteste', 'rad-ekteskap', 'onske'];
+  const etiketter = new Map((window.FORLOVER_SPORSMAL || [])
+    .flatMap(seksjon => seksjon.sporsmal || [])
+    .map(sporsmal => [sporsmal.id, sporsmal.tittel]));
+  const samle = (ids, filter) => ids.flatMap(id => forloverOppforinger(personer, svar, id, filter)
+    .map(x => ({ ...x, id, etikett: etiketter.get(id) || id })));
+  const historier = samle([...taleIds, ...parIds]);
+  return {
+    tale, innslag, utstyr, unnga,
+    silje: samle(taleIds, siljeFilter),
+    terje: samle(taleIds, terjeFilter),
+    paret: samle(parIds),
+    overlapp: finnHistorieOverlapp(historier),
+  };
+}
+
+function historieOrd(tekst) {
+  const stopp = new Set(['dette','denne','eller','ikke','ogsa','veldig','etter','hadde','fordi','silje','terje','begge','deres','sammen','bare','blitt','vaere','var','som','det','med','for','til','fra','hun','han','dem','seg','jeg','meg']);
+  return new Set(String(tekst).toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9 ]/g, ' ').split(/\s+/)
+    .filter(ord => ord.length >= 5 && !stopp.has(ord)));
+}
+
+function finnHistorieOverlapp(historier) {
+  const treff = [];
+  for (let i = 0; i < historier.length; i++) {
+    const a = historieOrd(historier[i].tekst);
+    if (a.size < 4) continue;
+    for (let j = i + 1; j < historier.length; j++) {
+      if (historier[i].navn === historier[j].navn) continue;
+      const b = historieOrd(historier[j].tekst);
+      const felles = [...a].filter(ord => b.has(ord));
+      const likhet = felles.length / Math.max(1, Math.min(a.size, b.size));
+      if (felles.length >= 3 && likhet >= 0.28) {
+        treff.push({ a: historier[i].navn, b: historier[j].navn, ord: felles.slice(0, 5) });
+      }
+    }
+  }
+  return treff.slice(0, 8);
+}
+
+function renderKoordinering(pakke) {
+  return '<div class="pakke-grid">'
+    + '<section class="pakke-kort"><h3>🗣️ Taler</h3>' + renderOppforinger(pakke.tale, 'Ingen har meldt tale.') + '</section>'
+    + '<section class="pakke-kort"><h3>🎁 Innslag og overraskelser</h3>' + renderOppforinger(pakke.innslag, 'Ingen aktive innslag meldt.') + '</section>'
+    + '<section class="pakke-kort"><h3>🔌 Utstyr og hjelp</h3>' + renderOppforinger(pakke.utstyr, 'Ingen utstyrsbehov meldt.') + '</section>'
+    + '<section class="pakke-kort pakke-varsel"><h3>⛔ Temaer som skal unngås</h3>' + renderOppforinger(pakke.unnga, 'Ingen varsler registrert — avklar likevel med talerne.') + '</section>'
+    + '</div>';
+}
+
+function renderTalegruppe(tittel, oppforinger) {
+  return '<section class="pakke-kort"><h3>' + esc(tittel) + '</h3>'
+    + renderOppforinger(oppforinger, 'Ikke nok materiale ennå.') + '</section>';
+}
+
+function renderTalegull(pakke) {
+  const overlapp = pakke.overlapp.length
+    ? '<ul>' + pakke.overlapp.map(x => '<li><strong>' + esc(x.a) + ' / ' + esc(x.b) + ':</strong> mulig samme tema (' + esc(x.ord.join(', ')) + ')</li>').join('') + '</ul>'
+    : '<p class="muted">Ingen tydelige overlapp mellom ulike bidragsytere ble funnet automatisk.</p>';
+  return '<div><h2>✨ Talegull og historiebank</h2><p class="muted">Bruk som råmateriale, ikke som ferdig tale. Pinlige historier må vurderes ekstra nøye.</p></div>'
+    + '<div class="pakke-grid">'
+    + renderTalegruppe('👰 Om Silje', pakke.silje)
+    + renderTalegruppe('🤵 Om Terje', pakke.terje)
+    + renderTalegruppe('💞 Om paret', pakke.paret)
+    + '<section class="pakke-kort"><h3>🔁 Mulig overlapp</h3>' + overlapp + '</section>'
+    + '</div>';
+}
+
+function flertallKandidat(personer, svar, id, sporsmal, valg) {
+  const verdier = forloverOppforinger(personer, svar, id).map(x => x.tekst.trim());
+  const teller = new Map();
+  verdier.forEach(v => {
+    const nokkel = v.toLowerCase();
+    const forrige = teller.get(nokkel);
+    teller.set(nokkel, { tekst: v, antall: forrige ? forrige.antall + 1 : 1 });
+  });
+  const sortert = [...teller.values()].sort((a, b) => b.antall - a.antall);
+  if (!sortert.length || sortert[0].antall < 2) return null;
+  return { sporsmal, valg, fasit: sortert[0].tekst, grunnlag: sortert[0].antall + ' av ' + verdier.length + ' svar' };
+}
+
+function vanligsteOrdKandidat(personer, svar, filter, navn) {
+  const verdier = forloverOppforinger(personer, svar, 'beskriv-tre-ord', filter);
+  const teller = new Map();
+  verdier.forEach(x => {
+    String(x.tekst).toLowerCase().split(/[,/ ]+/).map(v => v.trim()).filter(v => v.length > 3)
+      .forEach(v => teller.set(v, (teller.get(v) || 0) + 1));
+  });
+  const treff = [...teller.entries()].sort((a, b) => b[1] - a[1])[0];
+  if (!treff || treff[1] < 2) return null;
+  return {
+    sporsmal: 'Hvilket ord brukte flere forlovere for å beskrive ' + navn + '?',
+    valg: [treff[0], 'Eventyrlysten', 'Morgenfugl', 'Beskjeden'],
+    fasit: treff[0],
+    grunnlag: treff[1] + ' uavhengige svar',
+  };
+}
+
+function feltKandidat(personer, svar, filter, id, sporsmal, distraktorer) {
+  const verdier = forloverOppforinger(personer, svar, id, filter);
+  if (!verdier.length) return null;
+  const fasit = verdier[0].tekst;
+  return {
+    sporsmal,
+    valg: [fasit, ...distraktorer.filter(v => v.toLowerCase() !== fasit.toLowerCase())].slice(0, 4),
+    fasit,
+    grunnlag: verdier.length + (verdier.length === 1 ? ' svar' : ' svar; fasit må dobbeltsjekkes'),
+  };
+}
+
+function byggTryggeQuizkandidater(personer, svar) {
+  const silje = p => /Silje/i.test(p.side || '');
+  const terje = p => /Terje/i.test(p.side || '');
+  return [
+    flertallKandidat(personer, svar, 'hvem-bestemmer', 'Hva svarte flest forlovere på spørsmålet «Hvem bestemmer egentlig mest?»', ['Silje', 'Terje', 'Helt likt', 'Avhenger av saken']),
+    flertallKandidat(personer, svar, 'most-likely', 'Hvem mente flest forlovere er mest sannsynlig til å gjøre noe spontant og sprøtt?', ['Silje', 'Terje', 'Begge']),
+    vanligsteOrdKandidat(personer, svar, silje, 'Silje'),
+    vanligsteOrdKandidat(personer, svar, terje, 'Terje'),
+    feltKandidat(personer, svar, silje, 'sjarmerende-uvane', 'Hvilken sjarmerende uvane ble nevnt om Silje?', ['Hun trommer med fingrene', 'Hun rydder før gjestene har gått', 'Hun sovner alltid til film']),
+    feltKandidat(personer, svar, silje, 'skjult-talent', 'Hvilket skjult talent ble nevnt om Silje?', ['Hun kan alle hovedsteder', 'Hun sjonglerer', 'Hun løser Rubiks kube']),
+    feltKandidat(personer, svar, silje, 'guilty-pleasure', 'Hva ble nevnt som Siljes «guilty pleasure»?', ['Reality-TV', 'Lakris', 'Karaoke']),
+    feltKandidat(personer, svar, silje, 'typisk-utsagn', 'Hvilket utsagn ble oppgitt som typisk for Silje?', ['Det ordner sæ', 'Vi tar det i morgen', 'No må vi skjerpe oss']),
+    feltKandidat(personer, svar, terje, 'guilty-pleasure', 'Hva ble nevnt som en «guilty pleasure» for Terje?', ['Danseband', 'Romantiske komedier', 'Smågodt']),
+    feltKandidat(personer, svar, terje, 'typisk-utsagn', 'Hvilket utsagn ble oppgitt som typisk for Terje?', ['Det ordner sæ', 'Vi får se', 'Æ kommer snart']),
+    feltKandidat(personer, svar, terje, 'skjult-talent', 'Hvilket skjult talent ble nevnt om Terje?', ['Tryllekunster', 'Kakepynting', 'Speedcubing']),
+  ].filter(Boolean).slice(0, 12);
+}
+
+function renderQuizkandidater(kandidater) {
+  if (!kandidater.length) return '<p class="muted">Ikke nok ufarlige svar til å lage quizkandidater ennå.</p>';
+  return '<div class="pakke-grid">' + kandidater.map((q, i) =>
+    '<section class="pakke-kort quiz-kort"><h3>' + (i + 1) + '. ' + esc(q.sporsmal) + '</h3>'
+    + '<ol type="A">' + q.valg.map(v => '<li>' + esc(v) + '</li>').join('') + '</ol>'
+    + '<div class="quiz-fasit">Fasit: ' + esc(q.fasit) + '</div>'
+    + '<div class="kilde">Grunnlag: ' + esc(q.grunnlag) + '. Ingen kildenavn vises.</div>'
+    + '<span class="quiz-status">Trygg kandidat — må godkjennes</span></section>'
+  ).join('') + '</div>';
+}
+
+async function kopierForloverPakke() {
+  const pakke = document.getElementById('forlover-pakke');
+  if (!pakke) return;
+  try {
+    await navigator.clipboard.writeText(pakke.innerText);
+    alert('Toastmasterpakken er kopiert.');
+  } catch (_) {
+    alert('Kunne ikke kopiere automatisk. Bruk utskriftsknappen eller marker teksten manuelt.');
+  }
 }
 
 // ---------- RSVP ----------

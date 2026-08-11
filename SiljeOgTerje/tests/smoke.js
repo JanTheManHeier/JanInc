@@ -122,6 +122,71 @@ function mockApi(page, captured) {
       await route.fulfill({ status: 200, contentType: 'application/json', body: '{"svar":null}' });
       return;
     }
+    if (endpoint === 'siljeterje-forlover' && url.searchParams.has('all')) {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          svar: {
+            hege: {
+              'holder-tale': 'Ja',
+              'planlegger-innslag': 'Idé på gang',
+              'innslag-hva': 'Et tidlig musikalsk innslag',
+              'trenger-hjelp': 'Må teste flygelet',
+              'unnga-temaer': 'Unngå aldersvitser',
+              'beskriv-tre-ord': 'Omsorgsfull, vakker og tøff',
+              'sjarmerende-uvane': 'Nynner når maten er god',
+              'skjult-talent': 'Råsterk',
+              'guilty-pleasure': 'Popmusikk',
+              'typisk-utsagn': 'Testutsagn Silje',
+              'beste-minne': 'En trygg historie fra en hyttetur med mye latter og god mat.',
+              'hvem-bestemmer': 'Silje',
+              'most-likely': 'Begge',
+            },
+            annsissel: {
+              'holder-tale': 'Ja',
+              'unnga-temaer': 'Unngå aldersvitser',
+              'beskriv-tre-ord': 'Raus, omsorgsfull og ærlig',
+              'hvem-bestemmer': 'Silje',
+              'most-likely': 'Terje',
+            },
+            vegard: {
+              'holder-tale': 'Ja',
+              'trenger-hjelp': 'Skjerm og lyd',
+              'beskriv-tre-ord': 'Inkluderende, morsom og optimistisk',
+              'guilty-pleasure': 'Noilly Prat',
+              'typisk-utsagn': 'Testutsagn Terje',
+              'skjult-talent': 'Nynner og synger',
+              'hvem-bestemmer': 'Avhenger av saken',
+              'most-likely': 'Terje',
+            },
+            mikal: {
+              'holder-tale': 'Ja',
+              'beskriv-tre-ord': 'Inkluderende, leken og seriøs',
+              'guilty-pleasure': 'Rock og ost',
+              'typisk-utsagn': 'Et annet utsagn',
+              'skjult-talent': 'Tidligere paintballspiller',
+              'hvem-bestemmer': 'Avhenger av saken',
+              'most-likely': 'Terje',
+            },
+            olenicolai: {
+              'holder-tale': 'Ja, felles tale',
+              'planlegger-innslag': 'Ja',
+              'innslag-hva': 'Felles tale på 5–8 minutter',
+              'trenger-hjelp': 'Lerret og laptop',
+              'beskriv-tre-ord': 'Morsom, entusiastisk og inkluderende',
+              'hvem-bestemmer': 'Avhenger av saken',
+              'most-likely': 'Begge',
+            },
+          },
+          meta: {
+            hege: { antall: 14 }, annsissel: { antall: 6 }, vegard: { antall: 9 },
+            mikal: { antall: 9 }, olenicolai: { antall: 8 },
+          },
+        }),
+      });
+      return;
+    }
     if (endpoint === 'siljeterje-gjest-edit') {
       const langBio = Array(36).fill('Dette er en lengre presentasjon av gjesten.').join('\n');
       await route.fulfill({
@@ -416,6 +481,22 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   assert.equal(rsvpPost.body.navn, 'Hege Lauritzen');
   assert.equal(rsvpPost.body.antall, 3);
   assert.equal(rsvpPost.body.ledsagere, 'Test Følge\nNy Ledsager');
+
+  await page.getByRole('button', { name: /Hent forlover-pakke/ }).click();
+  await assert.doesNotReject(() => page.locator('#forlover-pakke').waitFor({ state: 'visible' }));
+  const pakkeTekst = await page.locator('#forlover-pakke').innerText();
+  assert.match(pakkeTekst, /Toastmaster- og talehjelpspakke/);
+  assert.match(pakkeTekst, /Temaer som skal unngås/);
+  assert.match(pakkeTekst, /Unngå aldersvitser/);
+  assert.match(pakkeTekst, /Skjerm og lyd/);
+  assert.match(pakkeTekst, /Trygge quizkandidater/);
+  assert.ok(await page.locator('.quiz-kort').count() >= 8, 'Det skal lages minst åtte quizkandidater');
+  assert.equal(await page.locator('.quiz-kort').filter({ hasText: 'Hege Lauritzen' }).count(), 0,
+    'Quizkandidater skal ikke røpe hvem som leverte svaret');
+  assert.equal(await page.locator('.quiz-status').count(), await page.locator('.quiz-kort').count(),
+    'Alle quizkandidater skal kreve manuell godkjenning');
+  assert.equal(await page.locator('details.forlover-raa').isVisible(), true,
+    'Komplette råsvar skal ligge sammenfoldet under pakken');
   assert.equal(pageErrors.length, 0, `JavaScript-feil i admin: ${pageErrors.join('; ')}`);
   await context.close();
 });
