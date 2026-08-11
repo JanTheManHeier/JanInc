@@ -46,6 +46,30 @@
       }
     });
 
+    // Admininnhold kan inneholde både «Bryllupsmiddag» og «Middag og fest» kl. 17.
+    // Slå dem sammen til ett tydelig programpunkt og behold den mest informative teksten.
+    const middagKandidater = program
+      .map((p, index) => ({ p, index }))
+      .filter(({ p }) => /bryllupsmiddag|middag og fest|mottakelse på rødbanken/i.test(p.tittel || ''));
+    if (middagKandidater.length) {
+      const behold = middagKandidater.find(({ p }) => /bryllupsmiddag/i.test(p.tittel || '')) || middagKandidater[0];
+      Object.assign(behold.p, {
+        tid: '17:00',
+        tittel: 'Middag og fest',
+        sted: 'Festsalen i Rødbanken',
+        ikon: '🏛️',
+        beskrivelse: behold.p.beskrivelse || behold.p.tekst || 'Tre retter, taler og gode historier.',
+        adresse: 'Storgata 65, 9008 Tromsø',
+        lat: 69.64934760314557,
+        lng: 18.955826114305662,
+        kart: 'https://www.google.com/maps/search/?api=1&query=69.64934760314557%2C18.955826114305662',
+      });
+      middagKandidater
+        .filter(({ index }) => index !== behold.index)
+        .sort((a, b) => b.index - a.index)
+        .forEach(({ index }) => program.splice(index, 1));
+    }
+
     const harWalter = program.some(p => /walter\s*(?:&|og)\s*leonard/i.test(`${p.tittel || ''} ${p.sted || ''}`));
     if (!harWalter) {
       const middagIdx = program.findIndex(p => /middag og fest|mottakelse på rødbanken/i.test(p.tittel || ''));

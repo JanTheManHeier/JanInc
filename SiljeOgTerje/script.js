@@ -159,8 +159,9 @@
     const p = document.getElementById('navn-pille');
     if (!p) return;
     function oppdater() {
-      p.hidden = !!mittNavn;
-      p.style.display = mittNavn ? 'none' : '';
+      const synlig = !mittNavn && aktivSide === 'hjem';
+      p.hidden = !synlig;
+      p.style.display = synlig ? '' : 'none';
     }
     oppdater();
     p.onclick = () => {
@@ -409,7 +410,7 @@
     toastmaster: 'hilsener',
     musikk: 'hilsener',
     mario: 'spill',
-    bestevenn: 'spill',
+    bestevenn: 'gjester',
     meny: 'program',
   };
   // Hovedsider som ligger under en samle-knapp i bunnmenyen
@@ -438,6 +439,7 @@
     document.querySelectorAll('.nav-group-btn').forEach(b => b.classList.toggle('active', grp && b.dataset.group === grp));
     document.querySelectorAll('.nav-pop-item').forEach(b => b.classList.toggle('active', b.dataset.go === navParent));
     document.querySelectorAll('.sub-tab').forEach(t => t.classList.toggle('active', t.dataset.go === id));
+    if (window._oppdaterNavnPille) window._oppdaterNavnPille();
     // Lukk skuff/popover etter navigering
     lukkMeny();
     lukkPopovere(null);
@@ -763,6 +765,7 @@
           ${g.bildeFil ? `<img class="gjest-bilde" src="${esc(g.bildeFil)}" alt="${esc(g.navn)}" />` : `<div class="gjest-avatar">${esc(init)}</div>`}
           <div class="gjest-navn">${esc(g.navn)}</div>
           <div class="gjest-bio">${esc(g.bio)}</div>
+          ${g.bio ? '<div class="gjest-les-mer">Trykk for å lese mer</div>' : ''}
           ${bordTag}
           ${tag}
         </div>`;

@@ -110,10 +110,10 @@ function mockApi(page, captured) {
         body: JSON.stringify({
           svar: [{
             slug: 'hege-lauritzen', navn: 'Hege Lauritzen', kommer: true,
-            fredag: true, antall: 2, ledsagere: 'Test Følge',
+            fredag: true, fredagAntall: 2, antall: 2, ledsagere: 'Test Følge',
             allergier: '', kommentar: '', oppdatert: new Date().toISOString(),
           }],
-          sammendrag: { svart: 1, kommer: 1, kommerIkke: 0, fredag: 1, antallPersoner: 2 },
+          sammendrag: { svart: 1, kommer: 1, kommerIkke: 0, fredag: 1, fredagPersoner: 2, antallPersoner: 2 },
         }),
       });
       return;
@@ -246,14 +246,25 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
     return {
       length: bio.textContent.length,
       whiteSpace: getComputedStyle(bio).whiteSpace,
+      fontSize: parseFloat(getComputedStyle(bio).fontSize),
+      lineClamp: getComputedStyle(bio).webkitLineClamp,
       left: rect.left,
       right: rect.right,
       viewport: innerWidth,
     };
   });
-  assert.ok(bioLayout.length > 500, 'Lang bio ble avkortet i gjestevisningen');
+  assert.ok(bioLayout.length > 500, 'Hele biografien må ligge tilgjengelig i gjestekortet');
   assert.equal(bioLayout.whiteSpace, 'pre-line', 'Linjeskift i bio skal bevares');
+  assert.ok(bioLayout.fontSize >= 13, 'Biografien i gjestekortet er for liten');
+  assert.equal(bioLayout.lineClamp, '5', 'Lange biografier skal ha en lesbar forhåndsvisning');
   assert.ok(bioLayout.left >= 0 && bioLayout.right <= bioLayout.viewport, 'Lang bio går utenfor mobilskjermen');
+  await langBioKort.click();
+  await assert.doesNotReject(() => page.locator('#gjest-modal').waitFor({ state: 'visible' }));
+  assert.ok((await page.locator('.gjest-modal-bio').innerText()).length > 500,
+    'Hele biografien skal vises når gjesten åpnes');
+  await page.locator('#gjest-modal-close').click();
+  assert.equal(await page.locator('#navn-pille').isVisible(), false,
+    'Navneknappen skal ikke dekke navigasjonen på undersider');
   await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
 
   await page.locator('#tema-toggle').click();
@@ -283,6 +294,8 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   assert.equal(bvFarger.samtale, 'rgb(26, 44, 63)');
   assert.equal(bvFarger.navn, 'rgb(160, 78, 92)');
   assert.match(await page.locator('[data-page="bestevenn"] .bv-info-box').innerText(), /ikke dating/i);
+  assert.equal(await page.locator('.nav > button[data-go="gjester"]').evaluate(el => el.classList.contains('active')), true,
+    'Bestevenn skal markeres som en del av gjestesiden');
   await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
   await page.locator('button[data-go="bord"]').first().click();
   await page.waitForTimeout(150);
@@ -302,6 +315,8 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   assert.ok(cards.some(text => text.includes('Vigsel i Elverhøy kirke') && text.includes('12:00')));
   assert.ok(cards.some(text => text.includes('Walter & Leonard') && text.includes('14:00') && text.includes('Dick')));
   assert.ok(cards.some(text => text.includes('Middag og fest') && text.includes('17:00')));
+  assert.equal(cards.filter(text => text.includes('17:00') && /Middag og fest|Bryllupsmiddag/.test(text)).length, 1,
+    'Programmet skal bare ha ett middagspunkt kl. 17');
   assert.equal(await page.locator('.leaflet-marker-icon').count(), 4, 'Kartet skal ha fire unike lokasjoner');
 
   const walter = page.locator('.program-kort').filter({ hasText: 'Walter & Leonard' });
@@ -313,27 +328,37 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   const rodbanken = page.locator('.program-kort').filter({ hasText: 'Middag og fest' });
   const rodbankenLink = await rodbanken.locator('a.kart-link').first().getAttribute('href');
   assert.match(rodbankenLink, /69\.64934760314557%2C18\.955826114305662/);
+
+  await page.locator('[data-page="program"] button[data-go="meny"]').click();
+  assert.equal(await page.locator('.meny-drikke').first().evaluate(el => getComputedStyle(el).color), 'rgb(58, 74, 92)',
+    'Drikketekst skal ha tydelig kontrast i invitasjonstemaet');
+  await page.evaluate(() => document.querySelector('[data-go="mario"]').click());
+  assert.equal(await page.locator('.mario-instruksjon').evaluate(el => getComputedStyle(el).color), 'rgb(58, 74, 92)',
+    'Spillinstruksjonen skal ha tydelig kontrast i invitasjonstemaet');
+  await page.evaluate(() => document.querySelector('[data-go="hjelp"]').click());
+  assert.ok(await page.locator('.hjelp-seksjon').filter({ hasText: 'Bestevenn' }).count());
+  assert.ok(await page.locator('.hjelp-seksjon').filter({ hasText: 'Musikkønske' }).count());
+  assert.ok(await page.locator('.hjelp-seksjon p').first().evaluate(el => parseFloat(getComputedStyle(el).fontSize)) >= 14);
   assert.equal(pageErrors.length, 0, `JavaScript-feil: ${pageErrors.join('; ')}`);
   await context.close();
 });
 
-test('RSVP støtter følge og viser bekreftelse', async ({ browser, baseURL }) => {
+test('RSVP registrerer minglekvelden og viser bekreftelse', async ({ browser, baseURL }) => {
   const context = await browser.newContext({ viewport: { width: 402, height: 874 } });
   const page = await context.newPage();
   const captured = [];
   await mockApi(page, captured);
   await page.goto(`${baseURL}/SiljeOgTerje/rsvp/`);
   await page.locator('#velg-gjest').selectOption({ index: 1 });
-  await page.locator('#valg-kommer label[data-v="ja"]').click();
   await page.locator('#valg-fredag label[data-v="ja"]').click();
-  await page.locator('#antall').fill('2');
-  await page.locator('#ledsagere').fill('Test Agent');
+  await page.locator('#fredag-antall').fill('2');
   await page.locator('#lagre-btn').click();
   await assert.doesNotReject(() => page.locator('#takk').waitFor({ state: 'visible' }));
   const post = captured.find(x => x.endpoint === 'siljeterje-rsvp');
   assert.ok(post, 'RSVP ble ikke sendt');
-  assert.equal(post.body.antall, 2);
-  assert.equal(post.body.ledsagere, 'Test Agent');
+  assert.equal(post.body.kunFredag, true);
+  assert.equal(post.body.fredag, true);
+  assert.equal(post.body.fredagAntall, 2);
   await context.close();
 });
 
