@@ -2135,12 +2135,12 @@
       },
       {
         "rank": 3,
-        "match_navn": "Hege Lauritzen",
+        "match_navn": "Eirik Torbergsen",
         "match_grunner": [
-          "Begge holder et høyt aktivitetsnivå",
-          "Omsorg for familien og helse er felles verdier"
+          "Begge kombinerer lederansvar med et høyt aktivitetsnivå",
+          "Løping, friluftsliv og konkurranseglede gir mye å snakke om"
         ],
-        "samtale_starter": "Hva får deg til å prioritere trening i en travel uke?"
+        "samtale_starter": "Hvordan får du plass til trening når arbeidsdagene er travle?"
       }
     ]
   },

@@ -161,6 +161,15 @@ test('Alle lokale bilder, skript og sider finnes', async () => {
   verifyLocalReferences();
 });
 
+test('Skilte gjester foreslås ikke som bestevenner', async () => {
+  const matches = JSON.parse(fs.readFileSync(path.join(appRoot, 'matches.json'), 'utf8'));
+  const hege = matches.find(x => x.navn === 'Hege Lauritzen');
+  const trond = matches.find(x => x.navn === 'Trond-Bjørnar Pedersen');
+  assert.ok(hege && trond, 'Begge gjestene må finnes i matchmatrisen');
+  assert.ok(!hege.matches.some(x => x.match_navn === trond.navn));
+  assert.ok(!trond.matches.some(x => x.match_navn === hege.navn));
+});
+
 test('Passordporten godtar riktig passord', async ({ browser, baseURL }) => {
   const context = await browser.newContext({ viewport: { width: 402, height: 874 } });
   const page = await context.newPage();
