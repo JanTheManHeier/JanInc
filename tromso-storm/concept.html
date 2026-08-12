@@ -14,6 +14,9 @@
     <meta name="twitter:description" content="Tilbake i BLNO. Se terminliste, laget, nyheter og klubbhistorie.">
     <meta name="twitter:image" content="https://janinc.no/tromso-storm/assets/new-era.png">
     <link rel="icon" type="image/png" href="assets/storm-mark-source.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
     <title>Tromsø Storm | Designkonsept</title>
     <link rel="stylesheet" href="concepts.css">
 </head>
@@ -32,7 +35,7 @@
 
     <header class="site-header">
         <a class="logo" href="#" aria-label="Tromsø Storm forside">
-            <img src="assets/storm-mark.png" width="180" height="108" alt="Tromsø Storm">
+            <img src="assets/storm-mark.svg" width="180" height="108" alt="Tromsø Storm">
         </a>
         <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Meny</button>
         <nav id="site-nav" class="site-nav" aria-label="Hovedmeny">
@@ -53,7 +56,6 @@
                     <source media="(max-width: 700px)" srcset="assets/hero-action-900.webp">
                     <img src="assets/hero-action-1600.webp" width="1600" height="1320" fetchpriority="high" alt="Tromsø Storm-spiller med ball i kamp">
                 </picture>
-                <figcaption>Foto: Gry Berntzen Fotografi</figcaption>
             </figure>
             <div class="hero-copy">
                 <span class="kicker">BLNO 2026/27 · 50-årsjubileum</span>
@@ -84,7 +86,7 @@
             </div>
             <article class="next-game">
                 <div class="game-date"><span id="next-weekday">FRE</span><strong id="next-date">18. SEPTEMBER</strong><time id="next-time" datetime="2026-09-18T19:30">19:30</time></div>
-                <div class="team home"><img src="assets/storm-mark.png" width="120" height="72" alt=""><strong id="next-home">Tromsø Storm</strong></div>
+                <div class="team home"><img src="assets/storm-mark.svg" width="120" height="72" alt=""><strong id="next-home">Tromsø Storm</strong></div>
                 <div class="versus"><span class="home-badge">Hjemme</span><strong>—</strong><a id="next-venue" href="#venue">Rødtindhallen</a></div>
                 <div class="team away"><span class="opponent-mark">F</span><strong id="next-away">Frøya</strong></div>
                 <div class="game-actions"><a class="button primary" href="#tickets">Kjøp billett</a><button id="next-calendar" class="button secondary" type="button">Legg i kalender</button></div>
@@ -95,7 +97,7 @@
             <div class="section-heading"><div><span class="kicker">Siste nytt</span><h2>Fra Stormen</h2></div><a href="https://tromsostorm.no/">Eksisterende nyhetsarkiv →</a></div>
             <div class="news-grid">
                 <article class="story lead">
-                    <img src="assets/grant-sitton-800.webp" srcset="assets/grant-sitton-480.webp 480w, assets/grant-sitton-800.webp 800w" sizes="(max-width: 760px) 100vw, 50vw" width="800" height="800" loading="lazy" alt="Velkommen Grant Sitton – Tromsø Storm">
+                    <img src="assets/grant-sitton-800.webp" srcset="assets/grant-sitton-480.webp 480w, assets/grant-sitton-800.webp 800w, assets/grant-sitton-1200.webp 1200w" sizes="(max-width: 760px) 100vw, 55vw" width="1200" height="1200" loading="lazy" alt="Velkommen Grant Sitton – Tromsø Storm">
                     <div><span class="chip">A-laget</span><time datetime="2026-08-10">10. august 2026</time><h3>Ny amerikaner klar for Storm</h3><p>Grant Sitton tilfører 2,06 meter, internasjonal erfaring og et trepoengsskudd som åpner banen.</p><a href="https://tromsostorm.no/2026/08/10/ny-amerikaner-klar-for-storm-2/">Les eksisterende artikkel →</a></div>
                 </article>
                 <article class="story coach-story">
@@ -119,18 +121,27 @@
                 <button class="filter" type="button" data-filter="home" aria-pressed="false">Hjemme</button>
                 <button class="filter" type="button" data-filter="away" aria-pressed="false">Borte</button>
             </div>
-            <div id="schedule-list" class="schedule-list" aria-live="polite"></div>
+            <div class="schedule-shell">
+                <button class="schedule-arrow previous" type="button" aria-label="Bla mot venstre">←</button>
+                <div id="schedule-list" class="schedule-list" aria-live="polite"></div>
+                <button class="schedule-arrow next" type="button" aria-label="Bla mot høyre">→</button>
+            </div>
+            <button id="schedule-toggle" class="schedule-toggle" type="button" aria-expanded="false">Vis alle 27 kamper →</button>
         </section>
 
         <section id="roster" class="roster section-pad">
             <div class="section-heading">
-                <div><span class="kicker">Stallen</span><h2>Møt laget</h2></div>
-                <p>Actionbilder og komplette spillerdata erstattes når klubben leverer originalmaterialet.</p>
+                <div><span class="kicker">Bekreftet stall 2026/27</span><h2>Møt laget</h2></div>
+                <p>Spillerkort legges til fortløpende når signeringer og draktnumre offentliggjøres.</p>
             </div>
             <div class="roster-grid">
-                <article class="player-card"><div class="player-visual"><img src="assets/storm-mark.png" width="120" height="72" alt=""><span>PF</span></div><div><small>Power forward · 206 cm · USA</small><h3>Grant Sitton</h3><a href="https://tromsostorm.no/2026/08/10/ny-amerikaner-klar-for-storm-2/">Spillerprofil →</a></div></article>
-                <article class="player-card"><div class="player-visual"><img src="assets/storm-mark.png" width="120" height="72" alt=""><span>G</span></div><div><small>Guard · 187 cm · Norge</small><h3>Trym Engelsen</h3><a href="https://tromsostorm.no/spillere-trenere/spillere-trenere-2025-2026/">Spillerprofil →</a></div></article>
-                <article class="player-card coach"><div class="player-visual"><img src="assets/storm-mark.png" width="120" height="72" alt=""><span>HC</span></div><div><small>Hovedtrener</small><h3>Sergio Vicente Beleña</h3><a href="https://tromsostorm.no/2026/06/04/drommesignering-for-tromso-storm/">Trenerprofil →</a></div></article>
+                <article class="player-card"><div class="player-visual"><img src="assets/storm-mark.svg" width="120" height="72" alt=""><span aria-label="Draktnummer ikke offentliggjort">—</span></div><div><small>Power forward · 206 cm · USA</small><h3>Grant Sitton</h3><a href="https://tromsostorm.no/2026/08/10/ny-amerikaner-klar-for-storm-2/">Spillerprofil →</a></div></article>
+                <article class="player-card"><div class="player-visual"><img src="assets/storm-mark.svg" width="120" height="72" alt=""><span aria-label="Draktnummer ikke offentliggjort">—</span></div><div><small>Guard · 187 cm · Norge</small><h3>Trym Engelsen</h3><a href="https://tromsostorm.no/spillere-trenere/spillere-trenere-2025-2026/">Spillerprofil →</a></div></article>
+                <article class="roster-status"><strong>Flere navn kommer</strong><span>Den nye BLNO-stallen bygges nå. Siden oppdateres når klubben offentliggjør signeringene.</span></article>
+            </div>
+            <div class="staff-row">
+                <span class="kicker">Støtteapparat</span>
+                <article><strong>HC</strong><div><small>Hovedtrener</small><h3>Sergio Vicente Beleña</h3><a href="https://tromsostorm.no/2026/06/04/drommesignering-for-tromso-storm/">Trenerprofil →</a></div></article>
             </div>
             <figure class="team-photo">
                 <picture><source media="(max-width: 700px)" srcset="assets/team-current-700.webp"><img src="assets/team-current-1200.webp" width="1200" height="603" loading="lazy" alt="Tromsø Storms lag 2025/26"></picture>
@@ -141,9 +152,23 @@
         <section id="standings" class="standings section-pad">
             <div class="section-heading"><div><span class="kicker">BLNO 2026/27</span><h2>Tabell og resultater</h2></div><span class="season-status">Sesongen starter 18. september</span></div>
             <div class="standings-card">
-                <div class="standing-head"><span>Lag</span><span>K</span><span>V</span><span>T</span><span>P</span></div>
-                <div class="standing-row highlight"><strong>Tromsø Storm</strong><span>0</span><span>0</span><span>0</span><span>0</span></div>
-                <p>Full tabell og resultater fylles automatisk når sesongen er i gang.</p>
+                <strong>Tabellen åpner ved seriestart</strong>
+                <p>Alle lag starter likt. Komplett, tilgjengelig BLNO-tabell kobles til når første kamp er spilt 18. september.</p>
+                <table>
+                    <thead><tr><th scope="col">Lag</th><th scope="col"><abbr title="Kamper">K</abbr></th><th scope="col"><abbr title="Seire">V</abbr></th><th scope="col"><abbr title="Tap">T</abbr></th><th scope="col"><abbr title="Poeng">P</abbr></th></tr></thead>
+                    <tbody>
+                        <tr class="highlight"><th scope="row">Tromsø Storm</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th scope="row">Ammerud</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th scope="row">Bærum Basket</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th scope="row">Centrum Tigers</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th scope="row">Fyllingen Lions</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th scope="row">Frøya</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th scope="row">Gimle</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th scope="row">Kongsberg Miners</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th scope="row">Nidaros Jets</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th scope="row">TNT Towers</th><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -184,6 +209,10 @@
                     <a href="https://tromsostorm.no/wp-content/uploads/2009/10/infobrosjyre.pdf"><strong>Infobrosjyre</strong><span>2009 · PDF</span></a>
                 </div>
             </div>
+            <form id="archive-search" class="archive-search" role="search">
+                <label for="archive-query"><span class="kicker">Søk i 25 år med Storm</span><strong>Finn spiller, sesong eller motstander</strong></label>
+                <div><input id="archive-query" type="search" autocomplete="off" placeholder="Eksempel: Jeff Lange"><button type="submit">Søk i arkivet</button></div>
+            </form>
         </section>
 
         <section id="history" class="history section-pad">
@@ -205,6 +234,19 @@
             <div class="venue-facts"><span><strong>13</strong> hjemmekamper</span><span><strong>Gratis</strong> barn u/16</span><span><strong>Vipps</strong> 16355</span></div>
         </section>
 
+        <section class="club-life section-pad">
+            <div class="section-heading"><div><span class="kicker">Hele klubben</span><h2>Mer enn A-laget.</h2></div></div>
+            <div class="club-life-grid">
+                <article class="youth-card"><span class="kicker">Storm Ungdom</span><h3>Basketglede fra første sprett</h3><p>Treninger, lag og informasjon for unge spillere og foreldre får en tydelig inngang på den nye siden.</p><a href="https://tromsostorm.no/category/tromso-storm-ungdom/">Se ungdomsnytt →</a></article>
+                <div class="gallery-card" aria-label="Bilder fra Storm">
+                    <img src="assets/hero-action-900.webp" width="900" height="743" loading="lazy" alt="Tromsø Storm i kamp">
+                    <img src="assets/nm-1997-600.webp" width="600" height="425" loading="lazy" alt="NM-mesterne fra 1997">
+                    <img src="assets/team-current-700.webp" width="700" height="352" loading="lazy" alt="Tromsø Storms lag 2025/26">
+                    <a href="https://tromsostorm.no/wp-content/uploads/">Kampgalleri →</a>
+                </div>
+            </div>
+        </section>
+
         <section id="partners" class="partners section-pad">
             <div class="section-heading"><div><span class="kicker">Laget bak laget</span><h2>Våre partnere</h2></div><a href="mailto:storm@tromsostorm.no?subject=Samarbeid%20med%20Tromsø%20Storm">Bli partner →</a></div>
             <div class="partner-grid">
@@ -224,7 +266,7 @@
     </main>
 
     <footer>
-        <img src="assets/storm-mark.png" width="180" height="108" alt="Tromsø Storm">
+        <img src="assets/storm-mark.svg" width="180" height="108" alt="Tromsø Storm">
         <div><strong>#uværfranord</strong><a href="mailto:storm@tromsostorm.no">storm@tromsostorm.no</a></div>
         <div><a href="https://www.facebook.com/TromsoStorm">Facebook</a><a href="https://www.instagram.com/tromsostorm/">Instagram</a></div>
     </footer>

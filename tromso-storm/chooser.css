@@ -15,7 +15,7 @@ main { width: min(1260px, calc(100% - 40px)); margin: auto; padding: 58px 0 76px
 .chooser-hero { max-width: 900px; margin-bottom: 48px; }
 .chooser-hero > img { width: 140px; height: 84px; object-fit: contain; }
 .chooser-hero > span, .platform-note span { display: block; margin: 20px 0 8px; color: var(--storm-blue); font-size: .78rem; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
-.chooser-hero h1 { margin: 0; font-size: clamp(3.4rem, 9vw, 7.4rem); line-height: .9; letter-spacing: -.06em; }
+.chooser-hero h1 { margin: 0; font-size: clamp(3.4rem, 9vw, 7.4rem); line-height: .9; letter-spacing: -.03em; }
 .chooser-hero p { max-width: 780px; color: var(--storm-muted); font-size: 1.15rem; }
 .concept-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 .concept-card { overflow: hidden; background: var(--storm-white); box-shadow: var(--storm-shadow); }

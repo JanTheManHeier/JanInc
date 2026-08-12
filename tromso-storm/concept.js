@@ -76,23 +76,29 @@ function downloadCalendar(game) {
 function gameRow(game) {
     const date = localDate(game);
     const location = isHome(game) ? "Hjemme" : "Borte";
-    const opponent = isHome(game) ? game.away : game.home;
+    const teamName = (name) => name === "Tromsø Storm" ? `<strong>${name}</strong>` : name;
+    const note = game.tag || game.trip;
     return `
         <article class="game-row" data-location="${location.toLowerCase()}">
             <time datetime="${game.date}T${game.time}">
                 ${dayNames[date.getDay()]} ${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")} ${game.time}
-                <small>${game.tag || game.trip || location}</small>
+                ${note ? `<small>${note}</small>` : ""}
             </time>
-            <div class="teams"><strong>Tromsø Storm</strong> – ${opponent}</div>
+            <a class="teams" href="https://tromsostorm.no/kampoversikt/">${teamName(game.home)} – ${teamName(game.away)}</a>
             <div class="game-place">${game.venue}<span class="game-type">${location}</span></div>
             <button class="calendar-button" type="button" data-date="${game.date}">+ Kalender</button>
         </article>`;
 }
 
-function renderSchedule(games, filter = "all") {
+let currentFilter = "all";
+let scheduleExpanded = false;
+
+function renderSchedule(games) {
+    const filter = currentFilter;
     const filtered = games.filter((game) => filter === "all" || (filter === "home" ? isHome(game) : !isHome(game)));
+    const visible = scheduleExpanded ? filtered : filtered.slice(0, 5);
     const groups = new Map();
-    filtered.forEach((game) => {
+    visible.forEach((game) => {
         const date = localDate(game);
         const key = `${date.getFullYear()}-${date.getMonth()}`;
         if (!groups.has(key)) groups.set(key, { title: `${monthNames[date.getMonth()]} ${date.getFullYear()}`, games: [] });
@@ -106,6 +112,10 @@ function renderSchedule(games, filter = "all") {
         }
     });
     document.getElementById("schedule-list").innerHTML = html.join("");
+    const toggle = document.getElementById("schedule-toggle");
+    toggle.hidden = filtered.length <= 5;
+    toggle.textContent = scheduleExpanded ? "Vis bare de fem neste ↑" : `Vis alle ${filtered.length} kamper →`;
+    toggle.setAttribute("aria-expanded", String(scheduleExpanded));
 }
 
 function updateNextGame(game) {
@@ -141,7 +151,9 @@ fetch("data/kamper.json")
                 item.classList.toggle("active", active);
                 item.setAttribute("aria-pressed", String(active));
             });
-            renderSchedule(games, button.dataset.filter);
+            currentFilter = button.dataset.filter;
+            scheduleExpanded = false;
+            renderSchedule(games);
         });
 
         document.getElementById("schedule-list").addEventListener("click", (event) => {
@@ -150,7 +162,27 @@ fetch("data/kamper.json")
             const game = games.find((item) => item.date === button.dataset.date);
             if (game) downloadCalendar(game);
         });
+
+        document.getElementById("schedule-toggle").addEventListener("click", () => {
+            scheduleExpanded = !scheduleExpanded;
+            renderSchedule(games);
+        });
+
+        document.querySelector(".schedule-arrow.previous").addEventListener("click", () => {
+            document.getElementById("schedule-list").scrollBy({ left: -350, behavior: "smooth" });
+        });
+        document.querySelector(".schedule-arrow.next").addEventListener("click", () => {
+            document.getElementById("schedule-list").scrollBy({ left: 350, behavior: "smooth" });
+        });
     })
     .catch((error) => {
         document.getElementById("schedule-list").innerHTML = `<p>${error.message}. Se eksisterende kampoversikt på tromsostorm.no.</p>`;
     });
+
+document.getElementById("archive-search").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const query = document.getElementById("archive-query").value.trim();
+    if (query) {
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(`site:tromsostorm.no ${query}`)}`, "_blank", "noopener");
+    }
+});

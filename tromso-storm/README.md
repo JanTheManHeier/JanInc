@@ -12,6 +12,10 @@ Alle konseptene bruker samme datadrevne terminliste fra `data/kamper.json`.
 De inneholder også neste kamp, kalendernedlasting, stall, tabellstatus,
 Rødtindhallen, klubbhistorie, partnere og et kuratert arkiv.
 
+Forsiden viser de fem neste kampene og kan utvides til hele terminlisten.
+Arkivet har søk, spillerstall og trenerteam er adskilt, og mobilvisningen
+bevarer motstander, arena og hjemme-/bortestatus i neste-kamp-modulen.
+
 ## Lokal kjøring
 
 Åpne `index.html` direkte, eller kjør en enkel lokal server:
@@ -33,3 +37,5 @@ Nyheter og enkelte detaljsider peker foreløpig til eksisterende `tromsostorm.no
 Etter valg av konsept anbefales designet implementert som et moderne WordPress blokktema. Eksisterende artikler, bilder, klubbaviser og historikk kan da migreres, samtidig som dagens redaksjonelle arbeidsflyt beholdes.
 
 Dagens WordPress har over 2 100 artikler og 1 200 mediefiler tilbake til 2001. Prototypen viser hvordan dette kan løftes frem som et redaksjonelt klubbarkiv, inkludert eldre StormVarsel-PDF-er.
+
+Logoen brukes som optimalisert SVG. Eksterne bilder og historiske fotografier må rettighetsavklares før endelig produksjonslansering.
