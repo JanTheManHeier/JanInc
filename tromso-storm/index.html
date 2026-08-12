@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="no">
+<head>
+    <script>
+      (() => {
+        const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+        const theme =
+          param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Velg design | Tromsø Storm</title>
+    <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    </style>
+    <link rel="stylesheet" href="chooser.css">
+</head>
+<body>
+    <main>
+        <header class="chooser-hero">
+            <img src="assets/storm-logo.png" alt="Tromsø Storm">
+            <span>Ny hjemmeside · designrunde 1</span>
+            <h1>Tre retninger.<br>Én Storm.</h1>
+            <p>Alle konseptene er ungdommelige, mobiltilpassede og laget for å kunne bygges som et moderne WordPress-tema.</p>
+        </header>
+        <section class="concept-grid">
+            <article class="concept-card">
+                <div class="preview"><img src="assets/grant-sitton-brand.png" alt=""><strong>UVÆR<br>FRA NORD</strong></div>
+                <div class="card-content"><span>Konsept 01</span><h2>Arena</h2><p>Mørk, kraftfull og kampdrevet. Store bilder, høy puls og tydelig billettfokus.</p><a href="concept.html?style=arena&clawpilotTheme=dark">Se Arena →</a></div>
+            </article>
+            <article class="concept-card">
+                <div class="preview pulse"><img src="assets/new-era.png" alt=""><strong>STORM<br>WARNING</strong></div>
+                <div class="card-content"><span>Konsept 02</span><h2>Pulse</h2><p>Ung, rask og digital. Modulbasert nyhetsfeed med energi fra sosiale medier.</p><a href="concept.html?style=pulse&clawpilotTheme=dark">Se Pulse →</a></div>
+            </article>
+            <article class="concept-card">
+                <div class="preview heritage"><img src="assets/nm-1997.jpg" alt=""><strong>SIDEN<br>1976</strong></div>
+                <div class="card-content"><span>Konsept 03</span><h2>Arven</h2><p>Moderne klubbavis med historien i sentrum og plass til mennesker og miljø.</p><a href="concept.html?style=heritage&clawpilotTheme=light">Se Arven →</a></div>
+            </article>
+        </section>
+        <section class="platform-note">
+            <div><span>Anbefalt plattform</span><h2>WordPress videreføres</h2></div>
+            <p>Valgt design kan bygges som et moderne blokktema. Ørjan beholder arbeidsflyten han kjenner, mens gamle artikler, bilder, klubbaviser og arkiv migreres i stedet for å gå tapt.</p>
+        </section>
+    </main>
+</body>
+</html>

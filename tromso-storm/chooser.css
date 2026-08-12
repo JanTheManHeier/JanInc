@@ -1,0 +1,26 @@
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cp-bg); color: var(--cp-text); font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; }
+main { width: min(1260px, calc(100% - 40px)); margin: auto; padding: 72px 0; }
+.chooser-hero { max-width: 840px; margin-bottom: 52px; }
+.chooser-hero img { width: 310px; height: 64px; object-fit: contain; object-position: left; }
+.chooser-hero > span, .card-content > span, .platform-note span { display: block; margin: 26px 0 10px; color: var(--cp-link); font-size: .78rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+.chooser-hero h1 { margin: 0; font-size: clamp(3.4rem, 9vw, 7.4rem); line-height: .9; letter-spacing: -.06em; }
+.chooser-hero p { max-width: 720px; color: var(--cp-text-muted); font-size: 1.15rem; }
+.concept-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.concept-card { overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); box-shadow: var(--cp-shadow); }
+.preview { position: relative; aspect-ratio: 1.25; overflow: hidden; background: var(--cp-bg-elevated); }
+.preview img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.9); }
+.preview.pulse img { filter: contrast(1.1) saturate(.75); }
+.preview.heritage img { filter: grayscale(.45) contrast(1.05); }
+.preview strong { position: absolute; inset: auto 20px 20px; color: var(--cp-accent-fg); font-size: clamp(1.9rem, 3vw, 3.1rem); line-height: .82; letter-spacing: -.04em; text-shadow: var(--cp-shadow); }
+.card-content { padding: 24px; }
+.card-content > span { margin-top: 0; }
+.card-content h2 { margin: 0; font-size: 2rem; }
+.card-content p { min-height: 72px; color: var(--cp-text-muted); }
+.card-content a { color: var(--cp-link); font-weight: 800; }
+.platform-note { display: grid; grid-template-columns: .7fr 1.3fr; gap: 56px; align-items: center; margin-top: 70px; padding: 38px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface-soft); }
+.platform-note span { margin-top: 0; }
+.platform-note h2 { margin: 0; font-size: 2.4rem; }
+.platform-note p { color: var(--cp-text-muted); font-size: 1.08rem; }
+@media (max-width: 900px) { .concept-grid { grid-template-columns: 1fr; } .concept-card { display: grid; grid-template-columns: .9fr 1.1fr; } .preview { aspect-ratio: auto; min-height: 320px; } .card-content p { min-height: 0; } }
+@media (max-width: 600px) { main { width: min(100% - 28px, 1260px); padding: 36px 0; } .chooser-hero h1 { font-size: 3.5rem; } .concept-card, .platform-note { grid-template-columns: 1fr; } .preview { min-height: 280px; } .platform-note { gap: 10px; padding: 24px; } }
