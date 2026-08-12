@@ -1,141 +1,233 @@
 <!doctype html>
 <html lang="no">
 <head>
-    <script>
-      (() => {
-        const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
-        const theme =
-          param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-        document.documentElement.setAttribute("data-theme", theme);
-      })();
-    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Designkonsept for Tromsø Storms nye hjemmeside.">
+    <meta name="description" content="Tromsø Storm – nyheter, kamper, spillerstall, billetter og 50 år med basket i nord.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Tromsø Storm – en ny æra">
+    <meta property="og:description" content="Tilbake i BLNO. Se terminliste, laget, nyheter og klubbhistorie.">
+    <meta property="og:image" content="https://janinc.no/tromso-storm/assets/new-era.png">
+    <meta property="og:locale" content="nb_NO">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tromsø Storm – en ny æra">
+    <meta name="twitter:description" content="Tilbake i BLNO. Se terminliste, laget, nyheter og klubbhistorie.">
+    <meta name="twitter:image" content="https://janinc.no/tromso-storm/assets/new-era.png">
+    <link rel="icon" type="image/png" href="assets/storm-mark-source.png">
     <title>Tromsø Storm | Designkonsept</title>
-    <style>
-    :root {
-      color-scheme: light;
-      --cp-bg: #f7f4ef;
-      --cp-bg-elevated: #fcfbf8;
-      --cp-surface: #ffffff;
-      --cp-surface-soft: #f5f5f5;
-      --cp-border: #dedede;
-      --cp-border-strong: #919191;
-      --cp-text: #242424;
-      --cp-text-muted: #5c5c5c;
-      --cp-text-soft: #6f6f6f;
-      --cp-accent: #b11f4b;
-      --cp-accent-hover: #9a1a41;
-      --cp-accent-soft: rgba(177, 31, 75, 0.08);
-      --cp-accent-fg: #ffffff;
-      --cp-success: #16a34a;
-      --cp-danger: #dc2626;
-      --cp-warning: #f59e0b;
-      --cp-link: #0078d4;
-      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
-      --cp-overlay: rgba(255, 255, 255, 0.8);
-      --cp-panel: rgba(255, 255, 255, 0.86);
-      --cp-panel-strong: rgba(255, 255, 255, 0.96);
-      --cp-sheen: rgba(255, 255, 255, 0.55);
-      --cp-highlight: rgba(177, 31, 75, 0.12);
-    }
-    html[data-theme="dark"] {
-      color-scheme: dark;
-      --cp-bg: #3d3b3a;
-      --cp-bg-elevated: #343231;
-      --cp-surface: #292929;
-      --cp-surface-soft: #2e2e2e;
-      --cp-border: #474747;
-      --cp-border-strong: #5f5f5f;
-      --cp-text: #dedede;
-      --cp-text-muted: #919191;
-      --cp-text-soft: #b0b0b0;
-      --cp-accent: #fd8ea1;
-      --cp-accent-hover: #fb7b91;
-      --cp-accent-soft: rgba(253, 142, 161, 0.14);
-      --cp-accent-fg: #1a1a1a;
-      --cp-success: #4ade80;
-      --cp-danger: #f87171;
-      --cp-warning: #fbbf24;
-      --cp-link: #4da6ff;
-      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
-      --cp-overlay: rgba(41, 41, 41, 0.88);
-      --cp-panel: rgba(41, 41, 41, 0.72);
-      --cp-panel-strong: rgba(41, 41, 41, 0.96);
-      --cp-sheen: rgba(255, 255, 255, 0.04);
-      --cp-highlight: rgba(253, 142, 161, 0.12);
-    }
-    </style>
     <link rel="stylesheet" href="concepts.css">
 </head>
 <body>
-    <aside class="concept-switcher">
+    <a class="skip-link" href="#main">Hopp til hovedinnhold</a>
+
+    <aside class="concept-switcher" aria-label="Bytt designkonsept">
         <a class="back" href="index.html">← Alle design</a>
         <strong id="concept-name">Arena</strong>
-        <nav><a href="?style=arena&clawpilotTheme=dark">01</a><a href="?style=pulse&clawpilotTheme=dark">02</a><a href="?style=heritage&clawpilotTheme=light">03</a></nav>
+        <nav aria-label="Konsepter">
+            <a href="?style=arena" aria-label="Arena">01</a>
+            <a href="?style=pulse" aria-label="Pulse">02</a>
+            <a href="?style=heritage" aria-label="Arven">03</a>
+        </nav>
     </aside>
+
     <header class="site-header">
-        <a class="logo" href="#"><img src="assets/storm-logo.png" alt="Tromsø Storm"></a>
-        <button class="menu-button" type="button" aria-expanded="false">Meny</button>
-        <nav class="site-nav"><a href="#news">Nyheter</a><a href="#games">Kamper</a><a href="#team">Laget</a><a href="#history">Historien</a><a href="#club">Klubben</a><a class="ticket-link" href="#tickets">Billetter</a></nav>
+        <a class="logo" href="#" aria-label="Tromsø Storm forside">
+            <img src="assets/storm-mark.png" width="180" height="108" alt="Tromsø Storm">
+        </a>
+        <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Meny</button>
+        <nav id="site-nav" class="site-nav" aria-label="Hovedmeny">
+            <a href="#news">Nyheter</a>
+            <a href="#schedule">Terminliste</a>
+            <a href="#roster">Stallen</a>
+            <a href="#archive">Arkivet</a>
+            <a href="#history">Historien</a>
+            <a href="#partners">Partnere</a>
+            <a class="ticket-link" href="#tickets">Billetter</a>
+        </nav>
     </header>
-    <main>
+
+    <main id="main">
         <section class="hero">
-            <div class="hero-media"><img src="assets/grant-sitton-brand.png" alt="Grant Sitton i Tromsø Storm-drakt"></div>
+            <figure class="hero-media">
+                <picture>
+                    <source media="(max-width: 700px)" srcset="assets/hero-action-900.webp">
+                    <img src="assets/hero-action-1600.webp" width="1600" height="1320" fetchpriority="high" alt="Tromsø Storm-spiller med ball i kamp">
+                </picture>
+                <figcaption>Foto: Gry Berntzen Fotografi</figcaption>
+            </figure>
             <div class="hero-copy">
-                <span class="kicker">En ny æra · BLNO 2026/27</span>
-                <h1><span class="arena-title">Uværets kraft.<br>Nordens lag.</span><span class="pulse-title">Storm<br>warning.</span><span class="heritage-title">50 år med<br>basket i nord.</span></h1>
+                <span class="kicker">BLNO 2026/27 · 50-årsjubileum</span>
+                <h1>
+                    <span class="arena-title">Uværets kraft.<br>Nordens lag.</span>
+                    <span class="pulse-title">Storm<br>warning.</span>
+                    <span class="heritage-title">50 år med<br>basket i nord.</span>
+                </h1>
                 <p class="arena-title">Mer energi. Større ambisjoner. Tromsø Storm er tilbake på øverste nivå.</p>
                 <p class="pulse-title">Nye spillere. Ny sesong. Samme kompromissløse kraft fra nord.</p>
                 <p class="heritage-title">Fra Tromsø Basketballklubb til Tromsø Storm – historien fortsetter.</p>
-                <div class="hero-actions"><a class="button primary" href="#games">Neste kamp</a><a class="button secondary" href="#news">Siste nytt</a></div>
+                <div class="hero-actions">
+                    <a class="button primary" href="#next-game">Sesongåpningen</a>
+                    <a class="button secondary" href="#news">Siste nytt</a>
+                </div>
             </div>
-            <div class="hero-ticker"><span>Breaking</span><strong>Grant Sitton klar for Storm</strong><strong>Sergio tilbake som hovedtrener</strong><strong>Tilbake i BLNO</strong></div>
+            <div class="hero-stats" aria-label="Sesongfakta">
+                <span><strong>27</strong> kamper</span>
+                <span><strong>13</strong> hjemme</span>
+                <span><strong>18.09</strong> seriestart</span>
+            </div>
         </section>
-        <section id="games" class="games section-pad">
-            <div class="section-label"><span>Kamper</span><strong>2026/27</strong></div>
+
+        <section id="next-game" class="next-game-section section-pad">
+            <div class="section-heading compact">
+                <div><span class="kicker">Neste kamp</span><h2>Sesongåpning</h2></div>
+                <strong id="countdown" class="countdown">37 dager igjen</strong>
+            </div>
             <article class="next-game">
-                <div class="game-date"><strong>Snart</strong><span>Terminlisten kommer</span></div>
-                <div class="team home"><img src="assets/storm-logo.png" alt=""><strong>Tromsø Storm</strong></div>
-                <div class="versus"><span>Hjemmekamp</span><strong>VS</strong><small>Rødtindhallen</small></div>
-                <div class="team away"><span class="unknown">?</span><strong>Publiseres snart</strong></div>
-                <a class="button primary" href="#tickets">Billettinfo</a>
+                <div class="game-date"><span id="next-weekday">FRE</span><strong id="next-date">18. SEPTEMBER</strong><time id="next-time" datetime="2026-09-18T19:30">19:30</time></div>
+                <div class="team home"><img src="assets/storm-mark.png" width="120" height="72" alt=""><strong id="next-home">Tromsø Storm</strong></div>
+                <div class="versus"><span class="home-badge">Hjemme</span><strong>—</strong><a id="next-venue" href="#venue">Rødtindhallen</a></div>
+                <div class="team away"><span class="opponent-mark">F</span><strong id="next-away">Frøya</strong></div>
+                <div class="game-actions"><a class="button primary" href="#tickets">Kjøp billett</a><button id="next-calendar" class="button secondary" type="button">Legg i kalender</button></div>
             </article>
         </section>
+
         <section id="news" class="news section-pad">
-            <div class="section-heading"><div><span class="kicker">Siste nytt</span><h2>Fra Stormen</h2></div><a href="https://tromsostorm.no/">Alle saker →</a></div>
+            <div class="section-heading"><div><span class="kicker">Siste nytt</span><h2>Fra Stormen</h2></div><a href="https://tromsostorm.no/">Eksisterende nyhetsarkiv →</a></div>
             <div class="news-grid">
-                <article class="story lead"><img src="assets/grant-sitton-brand.png" alt="Grant Sitton"><div><span>10. august 2026 · A-laget</span><h3>Ny amerikaner klar for Storm</h3><p>2,06 meter, internasjonal erfaring og et trepoengsskudd som åpner banen.</p><a href="https://tromsostorm.no/2026/08/10/ny-amerikaner-klar-for-storm-2/">Les saken →</a></div></article>
-                <article class="story"><img src="assets/sergio-marcus.jpg" alt="Sergio Vicente Beleña"><div><span>4. juni 2026 · Trener</span><h3>Sergio vender tilbake</h3><p>Årets trener i BLNO 2022/23 leder et nytt og ambisiøst prosjekt.</p><a href="https://tromsostorm.no/2026/06/04/drommesignering-for-tromso-storm/">Les saken →</a></div></article>
-                <article class="story history-story"><img src="assets/nm-1997.jpg" alt="NM-mesterne fra 1997"><div><span>Fra arkivet</span><h3>Gullet i 1997</h3><p>Robert Holm og Jeff Lange ledet klubben til det første NM-gullet.</p><a href="#history">Se historien →</a></div></article>
+                <article class="story lead">
+                    <img src="assets/grant-sitton-800.webp" srcset="assets/grant-sitton-480.webp 480w, assets/grant-sitton-800.webp 800w" sizes="(max-width: 760px) 100vw, 50vw" width="800" height="800" loading="lazy" alt="Velkommen Grant Sitton – Tromsø Storm">
+                    <div><span class="chip">A-laget</span><time datetime="2026-08-10">10. august 2026</time><h3>Ny amerikaner klar for Storm</h3><p>Grant Sitton tilfører 2,06 meter, internasjonal erfaring og et trepoengsskudd som åpner banen.</p><a href="https://tromsostorm.no/2026/08/10/ny-amerikaner-klar-for-storm-2/">Les eksisterende artikkel →</a></div>
+                </article>
+                <article class="story coach-story">
+                    <img src="assets/new-era-500.webp" width="500" height="500" loading="lazy" alt="En ny æra for Tromsø Storm">
+                    <div><span class="chip">Trener</span><time datetime="2026-06-04">4. juni 2026</time><h3>Sergio vender tilbake</h3><p>Årets trener i BLNO 2022/23 leder et nytt og ambisiøst prosjekt.</p><a href="https://tromsostorm.no/2026/06/04/drommesignering-for-tromso-storm/">Les eksisterende artikkel →</a></div>
+                </article>
+                <article class="story history-story">
+                    <img src="assets/nm-1997-600.webp" srcset="assets/nm-1997-600.webp 600w, assets/nm-1997-1200.webp 1200w" sizes="(max-width: 760px) 100vw, 45vw" width="600" height="425" loading="lazy" alt="Tromsø-laget som vant NM-gull i 1997">
+                    <div><span class="chip">Fra arkivet</span><h3>Gullet i 1997</h3><p>Robert Holm og Jeff Lange ledet klubben til det første NM-gullet.</p><a href="#history">Se klubbhistorien →</a></div>
+                </article>
             </div>
         </section>
-        <section id="team" class="team-feature section-pad">
-            <div class="team-image"><img src="assets/team-2025.jpg" alt="Tromsø Storm lagbilde"></div>
-            <div class="team-content"><span class="kicker">A-laget</span><h2>Bygd i nord.<br>Klar for ligaen.</h2><p>En sterk nordnorsk stamme, unge talenter og internasjonal erfaring.</p><dl><div><dt>Hovedtrener</dt><dd>Sergio Vicente Beleña</dd></div><div><dt>Sesong</dt><dd>BLNO 2026/27</dd></div></dl><a class="button primary" href="https://tromsostorm.no/spillere-trenere/spillere-trenere-2025-2026/">Møt laget</a></div>
+
+        <section id="schedule" class="schedule section-pad">
+            <div class="section-heading">
+                <div><span class="kicker">BLNO menn · grunnserie</span><h2>Terminliste</h2></div>
+                <div class="schedule-summary"><strong>27 kamper</strong><span>18.09.2026–06.03.2027</span></div>
+            </div>
+            <div class="filters" role="group" aria-label="Filtrer terminlisten">
+                <button class="filter active" type="button" data-filter="all" aria-pressed="true">Alle</button>
+                <button class="filter" type="button" data-filter="home" aria-pressed="false">Hjemme</button>
+                <button class="filter" type="button" data-filter="away" aria-pressed="false">Borte</button>
+            </div>
+            <div id="schedule-list" class="schedule-list" aria-live="polite"></div>
         </section>
+
+        <section id="roster" class="roster section-pad">
+            <div class="section-heading">
+                <div><span class="kicker">Stallen</span><h2>Møt laget</h2></div>
+                <p>Actionbilder og komplette spillerdata erstattes når klubben leverer originalmaterialet.</p>
+            </div>
+            <div class="roster-grid">
+                <article class="player-card"><div class="player-visual"><img src="assets/storm-mark.png" width="120" height="72" alt=""><span>PF</span></div><div><small>Power forward · 206 cm · USA</small><h3>Grant Sitton</h3><a href="https://tromsostorm.no/2026/08/10/ny-amerikaner-klar-for-storm-2/">Spillerprofil →</a></div></article>
+                <article class="player-card"><div class="player-visual"><img src="assets/storm-mark.png" width="120" height="72" alt=""><span>G</span></div><div><small>Guard · 187 cm · Norge</small><h3>Trym Engelsen</h3><a href="https://tromsostorm.no/spillere-trenere/spillere-trenere-2025-2026/">Spillerprofil →</a></div></article>
+                <article class="player-card coach"><div class="player-visual"><img src="assets/storm-mark.png" width="120" height="72" alt=""><span>HC</span></div><div><small>Hovedtrener</small><h3>Sergio Vicente Beleña</h3><a href="https://tromsostorm.no/2026/06/04/drommesignering-for-tromso-storm/">Trenerprofil →</a></div></article>
+            </div>
+            <figure class="team-photo">
+                <picture><source media="(max-width: 700px)" srcset="assets/team-current-700.webp"><img src="assets/team-current-1200.webp" width="1200" height="603" loading="lazy" alt="Tromsø Storms lag 2025/26"></picture>
+                <figcaption>Forrige sesongs lagbilde. Nytt lagbilde for 2026/27 legges inn før lansering.</figcaption>
+            </figure>
+        </section>
+
+        <section id="standings" class="standings section-pad">
+            <div class="section-heading"><div><span class="kicker">BLNO 2026/27</span><h2>Tabell og resultater</h2></div><span class="season-status">Sesongen starter 18. september</span></div>
+            <div class="standings-card">
+                <div class="standing-head"><span>Lag</span><span>K</span><span>V</span><span>T</span><span>P</span></div>
+                <div class="standing-row highlight"><strong>Tromsø Storm</strong><span>0</span><span>0</span><span>0</span><span>0</span></div>
+                <p>Full tabell og resultater fylles automatisk når sesongen er i gang.</p>
+            </div>
+        </section>
+
+        <section id="archive" class="archive section-pad">
+            <div class="section-heading">
+                <div><span class="kicker">Gull fra arkivet</span><h2>25 år på nett.</h2></div>
+                <a href="https://tromsostorm.no/category/tromso-storm/">Utforsk dagens arkiv →</a>
+            </div>
+            <div class="archive-overview">
+                <div class="archive-intro">
+                    <p>Den gamle nettsiden dokumenterer spillere, ildsjeler, sluttspill, skuffelser og store øyeblikk helt tilbake til 2001.</p>
+                    <div class="archive-stats" aria-label="Innhold i dagens WordPress-arkiv">
+                        <span><strong>2 108</strong> artikler</span>
+                        <span><strong>1 247</strong> bilder og filer</span>
+                        <span><strong>2001</strong> første nettartikler</span>
+                    </div>
+                </div>
+                <article class="archive-lead">
+                    <img src="assets/nm-1997-1200.webp" width="1200" height="849" loading="lazy" alt="Tromsø Basketballklubbs norgesmestere i 1997">
+                    <div><span class="kicker">1997</span><h3>Da Tromsø ble norgesmester</h3><p>Åge Kvilstad, Ørjan Sandvik Hansen, Tom Wilsgaard, Kelvin Joe Woods og lagkameratene tok klubbens historiske NM-gull under Robert Holm og Jeff Lange.</p><a href="https://tromsostorm.no/2017/02/24/20-ars-jubileum-for-97-laget/">Les jubileumssaken →</a></div>
+                </article>
+            </div>
+            <div class="archive-grid">
+                <article class="archive-card with-photo">
+                    <img src="assets/solem-600.webp" width="487" height="650" loading="lazy" alt="Anders Solem med familien">
+                    <div><span class="kicker">Profil</span><h3>En bauta i Stormen</h3><p>Historien om Anders Solem og en familie som har vært tett vevd inn i klubben gjennom flere generasjoner.</p><a href="https://tromsostorm.no/2025/02/12/en-bauta-i-stormen/">Les portrettet →</a></div>
+                </article>
+                <article class="archive-card"><span class="kicker">Heder</span><h3>Ørjan og klubbbyggerne</h3><p>Fra spiller og daglig leder til mottaker av NBBFs høyeste hederstegn.</p><a href="https://tromsostorm.no/2014/12/15/orjan-overrakt-med-nbbfs-hedertegn/">Les historien →</a></article>
+                <article class="archive-card"><span class="kicker">Legender</span><h3>Pensjonerte drakter</h3><p>Tom Wilsgaard og Jeff Lange ble hedret for innsatsen på banen og betydningen for basketbyen Tromsø.</p><a href="https://tromsostorm.no/2017/02/16/storm-pensjonerer-tom-wilsgaard-og-jeff-lange/">Les historien →</a></article>
+                <article class="archive-card"><span class="kicker">2001</span><h3>Prinsen har landet</h3><p>De eldste nettartiklene gir et tidsbilde av klubben like etter navneskiftet til Tromsø Storm.</p><a href="https://tromsostorm.no/2001/10/11/prinsen-har-landet/">Tilbake til 2001 →</a></article>
+            </div>
+            <div class="publications">
+                <div><span class="kicker">Fra klubbhylla</span><h3>StormVarsel</h3><p>Gamle klubbaviser er bevart som PDF og kan få en fast, søkbar plass i den nye løsningen.</p></div>
+                <div class="publication-links">
+                    <a href="https://tromsostorm.no/Storm/Filer/Klubbavis/stormvarsel_01_2005.pdf"><strong>StormVarsel</strong><span>2005 · PDF</span></a>
+                    <a href="https://tromsostorm.no/Storm/Filer/Klubbavis/stormvarsel_01_2006.pdf"><strong>StormVarsel</strong><span>2006 · PDF</span></a>
+                    <a href="https://tromsostorm.no/Storm/Filer/Klubbavis/stormvarsel_01_2007.pdf"><strong>StormVarsel</strong><span>2007 · PDF</span></a>
+                    <a href="https://tromsostorm.no/wp-content/uploads/2009/10/infobrosjyre.pdf"><strong>Infobrosjyre</strong><span>2009 · PDF</span></a>
+                </div>
+            </div>
+        </section>
+
         <section id="history" class="history section-pad">
-            <div class="history-intro"><span class="kicker">Klubbhistorien</span><h2>Uværets røtter.</h2><p>Historikken fra dagens WordPress-side skal bevares og løftes frem – ikke gjemmes i et arkiv.</p></div>
+            <div class="history-intro"><span class="kicker">Klubbhistorien</span><h2>Uværets røtter.</h2><p>Historikken fra dagens WordPress-side skal bevares, struktureres og løftes frem – ikke gjemmes i et arkiv.</p></div>
             <div class="timeline">
                 <article><strong>1976</strong><h3>Klubben stiftes</h3><p>Tromsø Basketballklubb blir starten på organisert toppbasket i byen.</p></article>
                 <article><strong>1985/86</strong><h3>De første medaljene</h3><p>Robert Holm leder dame- og herrelaget til henholdsvis sølv og bronse.</p></article>
                 <article><strong>1997</strong><h3>NM-gull</h3><p>Klubben vinner sitt første NM-gull med Robert Holm og Jeff Lange.</p></article>
                 <article><strong>2026</strong><h3>Tilbake i BLNO</h3><p>Et nytt kapittel begynner med Sergio tilbake og større ambisjoner.</p></article>
             </div>
-            <div class="archive-callout"><img src="assets/nm-1997.jpg" alt="NM-laget i 1997"><div><span>Digitalt klubbmuseum</span><h3>50 år med bilder, klubbaviser og historier</h3><p>Den nye WordPress-løsningen kan gjøre mer enn 400 sider med innhold søkbart etter sesong, person og tema.</p><a href="https://tromsostorm.no/arkiv/">Utforsk dagens arkiv →</a></div></div>
+            <figure class="archive-callout">
+                <img src="assets/nm-1997-1200.webp" width="1200" height="849" loading="lazy" alt="NM-mesterne fra Tromsø i 1997">
+                <figcaption><span>Digitalt klubbmuseum</span><h3>50 år med bilder, klubbaviser og historier</h3><p>Mer enn 2 100 artikler kan bli søkbare etter sesong, spiller, trener og motstander.</p><a href="https://tromsostorm.no/category/tromso-storm/">Eksisterende arkiv →</a></figcaption>
+            </figure>
         </section>
-        <section id="club" class="club section-pad">
-            <div class="section-heading"><div><span class="kicker">Hele klubben</span><h2>Basket for flere.</h2></div></div>
-            <div class="club-links"><a href="https://www.klubbnett.no/troms-storm"><strong>Storm Ungdom</strong><span>Lag og treninger →</span></a><a href="https://tromsostorm.no/treningstider/"><strong>Treningstider</strong><span>Se ukesplan →</span></a><a href="https://tromsostorm.no/stottemedlem/"><strong>Støtt Storm</strong><span>Bli medlem →</span></a><a href="mailto:storm@tromsostorm.no"><strong>Partner</strong><span>Ta kontakt →</span></a></div>
+
+        <section id="venue" class="venue section-pad">
+            <div><span class="kicker">Hjemmebane</span><h2>Rødtindhallen</h2><p>Øvre Storvollen 77, 9104 Kvaløya. Hallen har garderober, kiosk-/kjøkkenmuligheter og parkering ved anlegget. Kom tidlig på kampdag.</p><a class="button secondary" href="https://www.google.com/maps/search/?api=1&query=Øvre+Storvollen+77+9104+Kvaløya">Åpne kart</a></div>
+            <div class="venue-facts"><span><strong>13</strong> hjemmekamper</span><span><strong>Gratis</strong> barn u/16</span><span><strong>Vipps</strong> 16355</span></div>
         </section>
+
+        <section id="partners" class="partners section-pad">
+            <div class="section-heading"><div><span class="kicker">Laget bak laget</span><h2>Våre partnere</h2></div><a href="mailto:storm@tromsostorm.no?subject=Samarbeid%20med%20Tromsø%20Storm">Bli partner →</a></div>
+            <div class="partner-grid">
+                <img src="assets/jekta.png" width="250" height="90" loading="lazy" alt="Jekta Storsenter">
+                <img src="assets/snn.png" width="250" height="90" loading="lazy" alt="SpareBank 1 Nord-Norge">
+                <img src="assets/extra.png" width="250" height="90" loading="lazy" alt="Coop Extra">
+                <img src="assets/hermes.png" width="250" height="90" loading="lazy" alt="Hermes">
+                <img src="assets/bedsys.png" width="250" height="90" loading="lazy" alt="Bedriftssystemer">
+            </div>
+        </section>
+
         <section id="tickets" class="tickets section-pad">
             <div><span class="kicker">Hjemmekamp</span><h2>Opplev Stormen.</h2><p>Barn under 16 år kommer gratis inn.</p></div>
             <div class="prices"><span>Voksen <strong>110,-</strong></span><span>Student / honnør <strong>80,-</strong></span><span>Barn u/16 <strong>Gratis</strong></span></div>
             <a class="button primary" href="https://tromsostorm.no/billettpriser/">Billettinformasjon</a>
         </section>
     </main>
-    <footer><img src="assets/storm-logo.png" alt="Tromsø Storm"><div><strong>#uværfranord</strong><span>storm@tromsostorm.no</span></div><div><a href="https://www.facebook.com/TromsoStorm">Facebook</a><a href="https://www.instagram.com/tromsostorm/">Instagram</a></div></footer>
+
+    <footer>
+        <img src="assets/storm-mark.png" width="180" height="108" alt="Tromsø Storm">
+        <div><strong>#uværfranord</strong><a href="mailto:storm@tromsostorm.no">storm@tromsostorm.no</a></div>
+        <div><a href="https://www.facebook.com/TromsoStorm">Facebook</a><a href="https://www.instagram.com/tromsostorm/">Instagram</a></div>
+    </footer>
     <script src="concept.js"></script>
 </body>
 </html>
