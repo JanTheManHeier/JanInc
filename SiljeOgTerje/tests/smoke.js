@@ -96,9 +96,14 @@ function mockApi(page, captured) {
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify({
-          generertAt: new Date().toISOString(), totalt: 0, unikeNavn: 0,
+          generertAt: new Date().toISOString(), totalt: 12, unikeNavn: 3,
           hilsener: [], taler: [], highscore: [], spillTopp: [],
-          perNavn: [], perSide: [], sisteBesok: [],
+          perNavn: [
+            { navn: 'Eldst Aktiv', besok: 20, forste: '2026-08-01T10:00:00Z', sist: '2026-08-10T10:00:00Z', ip: '' },
+            { navn: 'Nyest Aktiv', besok: 1, forste: '2026-08-14T15:00:00Z', sist: '2026-08-14T16:00:00Z', ip: '' },
+            { navn: 'Mellom Aktiv', besok: 5, forste: '2026-08-05T10:00:00Z', sist: '2026-08-12T10:00:00Z', ip: '' },
+          ],
+          perSide: [], sisteBesok: [],
         }),
       });
       return;
@@ -305,6 +310,16 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   await page.evaluate(() => document.querySelector('[data-go="gjester"]').click());
   const langBioKort = page.locator('.gjest-kort', { hasText: 'Dynamisk Ledsager' });
   await assert.doesNotReject(() => langBioKort.waitFor({ state: 'visible' }));
+  await page.locator('#gjester-sok').fill('Dynamisk Ledsager');
+  const gjesteSokFarger = await page.locator('#gjester-sok').evaluate(el => ({
+    color: getComputedStyle(el).color,
+    background: getComputedStyle(el).backgroundColor,
+    placeholder: getComputedStyle(el, '::placeholder').color,
+  }));
+  assert.equal(gjesteSokFarger.color, 'rgb(26, 44, 63)', 'Gjestenavn i søkefeltet skal være mørkt i lyst tema');
+  assert.equal(gjesteSokFarger.background, 'rgb(255, 255, 255)', 'Gjestenavn skal stå på hvit søkeflate');
+  assert.equal(gjesteSokFarger.placeholder, 'rgb(92, 107, 124)', 'Plassholdertekst skal ha lesbar kontrast');
+  await page.locator('#gjester-sok').fill('');
   const bioLayout = await langBioKort.evaluate(kort => {
     const bio = kort.querySelector('.gjest-bio');
     const rect = kort.getBoundingClientRect();
@@ -347,6 +362,8 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   await page.locator('.bv-dropdown-item').filter({ hasText: 'Andreas Granaas' }).click();
   await assert.doesNotReject(() => page.locator('#bv-resultat .bv-resultat-kort').nth(2).waitFor({ state: 'visible' }));
   assert.equal(await page.locator('#bv-resultat .bv-resultat-kort').count(), 3);
+  assert.equal(await page.locator('#bv-search').evaluate(el => getComputedStyle(el).color), 'rgb(26, 44, 63)',
+    'Bestevenn-søk skal bruke mørk tekst i lyst tema');
   assert.doesNotMatch(await page.locator('#bv-resultat').innerText(), /Bord \?/);
   const bvFarger = await page.locator('#bv-resultat .bv-resultat-kort').first().evaluate(kort => ({
     kort: getComputedStyle(kort).backgroundColor,
@@ -366,12 +383,43 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   await page.waitForTimeout(150);
   assert.match(await page.locator('.bord-info').first().innerText(), /1\s*\/\s*10/,
     'Bord uten egen kapasitet skal være timannsbord');
+  await page.locator('#bord-sok').fill('Dynamisk Ledsager');
+  const bordSokFarger = await page.locator('#bord-sok').evaluate(el => ({
+    color: getComputedStyle(el).color,
+    background: getComputedStyle(el).backgroundColor,
+  }));
+  assert.equal(bordSokFarger.color, 'rgb(26, 44, 63)', 'Navnet i bordsøket skal være mørkt i lyst tema');
+  assert.equal(bordSokFarger.background, 'rgb(255, 255, 255)', 'Bordsøket skal ha hvit bakgrunn');
+  await assert.doesNotReject(() => page.locator('.bord-gjest-treff').waitFor({ state: 'visible' }));
+  assert.equal(await page.locator('.bord-gjest-treff .bord-navn').evaluate(el => getComputedStyle(el).color),
+    'rgb(26, 44, 63)', 'Navnet i markert bordtreff skal være tydelig');
   await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
 
+  await page.setViewportSize({ width: 390, height: 560 });
   await page.locator('#meny-knapp').click();
   assert.equal(await page.locator('html').evaluate(el => el.classList.contains('meny-apen')), true,
     'Hamburgermenyen skal åpnes på mobil');
-  await page.locator('#meny-scrim').click({ position: { x: 390, y: 400 } });
+  const menyMaal = await page.locator('.nav').evaluate(nav => {
+    nav.scrollTop = nav.scrollHeight;
+    const siste = nav.querySelector('.nav-pop-item[data-go="hjelp"]');
+    const navRect = nav.getBoundingClientRect();
+    const sisteRect = siste.getBoundingClientRect();
+    return {
+      top: navRect.top,
+      bottom: navRect.bottom,
+      viewport: innerHeight,
+      overflowY: getComputedStyle(nav).overflowY,
+      sisteTop: sisteRect.top,
+      sisteBottom: sisteRect.bottom,
+    };
+  });
+  assert.ok(menyMaal.top >= 0 && menyMaal.bottom <= menyMaal.viewport,
+    'PWA-menyen skal holde seg innenfor synlig mobilhøyde');
+  assert.equal(menyMaal.overflowY, 'scroll', 'PWA-menyen skal kunne rulles');
+  assert.ok(menyMaal.sisteTop >= 0 && menyMaal.sisteBottom <= menyMaal.viewport,
+    'Siste menypunkt skal kunne nås på en kort mobilskjerm');
+  await page.locator('#meny-scrim').click({ position: { x: 380, y: 400 } });
+  await page.setViewportSize({ width: 402, height: 874 });
 
   await page.locator('button[data-go="program"]').first().click();
   await page.waitForTimeout(250);
@@ -440,6 +488,10 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   page.on('pageerror', error => pageErrors.push(error.message));
   await page.goto(`${baseURL}/SiljeOgTerje/admin/`);
   await page.waitForLoadState('networkidle');
+  const besokNavn = await page.locator('#besok-per-navn tbody tr td:nth-child(2)').allInnerTexts();
+  assert.deepEqual(besokNavn, ['Nyest Aktiv', 'Mellom Aktiv', 'Eldst Aktiv'],
+    'Besøksoversikten skal vise senest aktive navn først');
+  assert.match(await page.locator('#besok-per-navn thead').innerText(), /Sist aktiv/);
   assert.equal(await page.locator('#i-musikk').isChecked(), false);
   assert.equal(await page.locator('#i-passord').isChecked(), true);
   assert.ok(await page.locator('.program-rad [data-k="lat"]').count() >= 4);

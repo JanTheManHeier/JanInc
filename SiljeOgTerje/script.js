@@ -722,7 +722,7 @@
       });
     }
     if (gjesterFilter === 'avbud' && liste.length === 0) {
-      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#7A8FA8;padding:20px">Ingen avbud — nice! 🎉</div>`;
+      grid.innerHTML = '<div class="sok-tom">Ingen avbud — nice! 🎉</div>';
       return;
     }
     // Sortering: brudepar → toastmaster → forlover → alfabetisk
@@ -736,7 +736,7 @@
       return a.navn.localeCompare(b.navn, 'no');
     });
     if (liste.length === 0) {
-      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#7A8FA8;padding:20px">Ingen treff for "${esc(gjesterSok)}"</div>`;
+      grid.innerHTML = `<div class="sok-tom">Ingen treff for "${esc(gjesterSok)}"</div>`;
       return;
     }
     grid.innerHTML = liste.map((g, idx) => {
@@ -1116,11 +1116,8 @@
       form.id = 'quiz-navn-form';
       form.style.marginTop = '16px';
       form.innerHTML = `
-        <p style="font-size:13px;color:#D4A853">🏆 Du kommer på topp 10! Skriv navnet ditt:</p>
-        <input id="quiz-navn-input" type="text" placeholder="Ditt navn" 
-          style="display:block;width:100%;padding:10px;margin:8px 0;background:rgba(255,255,255,0.07);
-          border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#E8E0D4;font-size:15px;
-          box-sizing:border-box;font-family:inherit" />
+        <p class="score-navn-prompt">🏆 Du kommer på topp 10! Skriv navnet ditt:</p>
+        <input id="quiz-navn-input" class="score-navn-input" type="text" placeholder="Ditt navn" />
         <button id="quiz-navn-lagre" class="btn-primary" style="margin:0">💾 Lagre score</button>`;
       tekstEl.after(form);
       const inp = form.querySelector('#quiz-navn-input');
@@ -1371,11 +1368,8 @@
         form.id = 'mario-navn-form';
         form.style.marginTop = '16px';
         form.innerHTML = `
-          <p style="font-size:13px;color:#D4A853">🏆 Skriv navnet ditt for å komme på topp 10!</p>
-          <input id="mario-navn-input" type="text" placeholder="Ditt navn"
-            style="display:block;width:100%;padding:10px;margin:8px 0;background:rgba(255,255,255,0.07);
-            border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#E8E0D4;font-size:15px;
-            box-sizing:border-box;font-family:inherit" />
+          <p class="score-navn-prompt">🏆 Skriv navnet ditt for å komme på topp 10!</p>
+          <input id="mario-navn-input" class="score-navn-input" type="text" placeholder="Ditt navn" />
           <button id="mario-navn-lagre" class="btn-primary" style="margin:0">💾 Lagre score</button>`;
         document.getElementById('mario-resultat-tekst').after(form);
         const inp = form.querySelector('#mario-navn-input');

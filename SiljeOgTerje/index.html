@@ -19,7 +19,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Silje & Terje" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-<link rel="stylesheet" href="style.css?v=20260811-3" />
+<link rel="stylesheet" href="style.css?v=20260814-1" />
 </head>
 <body>
 
@@ -187,8 +187,7 @@
     <div class="gjester-stats" id="gjester-stats"></div>
 
     <div style="padding:0 16px 12px">
-      <input id="gjester-sok" type="text" placeholder="🔍 Søk navn, jobb, sted..."
-        style="width:100%;padding:12px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#E8E0D4;font-size:15px;box-sizing:border-box;font-family:inherit" />
+      <input id="gjester-sok" class="side-sok" type="text" placeholder="🔍 Søk navn, jobb, sted..." />
     </div>
 
     <div class="filter-row">
@@ -362,8 +361,8 @@
       <div id="quiz-resultat" hidden>
         <div class="quiz-card" style="text-align:center">
           <div style="font-size:48px">🏆</div>
-          <h3 id="quiz-resultat-tittel" style="color:#D4A853"></h3>
-          <p id="quiz-resultat-tekst" style="font-size:16px;color:#B0C4D8"></p>
+          <h3 id="quiz-resultat-tittel"></h3>
+          <p id="quiz-resultat-tekst"></p>
           <button id="quiz-restart" class="btn-primary">🔁 Spill igjen</button>
           <button id="quiz-se-topp" class="btn-secondary">🏆 Se topp 10</button>
         </div>
@@ -438,8 +437,8 @@
 
     <div id="mario-resultat" hidden style="text-align:center;padding:16px">
       <div style="font-size:48px">🏆</div>
-      <h3 id="mario-resultat-tittel" style="color:#D4A853"></h3>
-      <p id="mario-resultat-tekst" style="color:#B0C4D8;font-size:14px"></p>
+      <h3 id="mario-resultat-tittel"></h3>
+      <p id="mario-resultat-tekst"></p>
       <button id="mario-restart-btn" class="btn-primary">🔁 Spill igjen</button>
       <button id="mario-se-topp-btn" class="btn-secondary">🏆 Se topp 10</button>
     </div>
@@ -475,8 +474,7 @@
     <p class="muted">Finn ditt bord og se hvem du sitter med</p>
 
     <div id="bord-snarvei" style="padding:0 16px 12px">
-      <input id="bord-sok" type="text" placeholder="🔍 Søk etter ditt navn..."
-        style="width:100%;padding:12px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#E8E0D4;font-size:15px;box-sizing:border-box;font-family:inherit" />
+      <input id="bord-sok" class="side-sok" type="text" placeholder="🔍 Søk etter ditt navn..." />
     </div>
 
     <div id="bord-liste"></div>
@@ -600,6 +598,6 @@
 <script src="data.js"></script>
 <script src="program-sync.js"></script>
 <script src="spill.js"></script>
-<script src="script.js?v=20260811-3"></script>
+<script src="script.js?v=20260814-1"></script>
 </body>
 </html>

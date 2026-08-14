@@ -295,18 +295,23 @@ function render(d) {
     h += '<p class="muted">Ingen scores ennå.</p>';
   }
 
-  h += '<h2>👥 Hvem har vært inne? <span class="muted" style="font-size:13px;font-weight:normal">— sortert etter besøk (klikk kolonne for å endre)</span></h2>';
+  h += '<h2>👥 Hvem har vært inne? <span class="muted" style="font-size:13px;font-weight:normal">— senest aktive først (klikk kolonne for å endre)</span></h2>';
   if (d.perNavn.length) {
-    h += '<table class="sortable-tabell" data-default-sort="3:desc"><thead><tr>'
+    const perNavnSistAktiv = [...d.perNavn].sort((a, b) => {
+      const sistA = Date.parse(a.sist || '') || 0;
+      const sistB = Date.parse(b.sist || '') || 0;
+      return sistB - sistA || (b.besok || 0) - (a.besok || 0);
+    });
+    h += '<table id="besok-per-navn" class="sortable-tabell" data-default-sort="6:desc"><thead><tr>'
       + '<th class="sortable" data-type="num">#</th>'
       + '<th class="sortable" data-type="text">Navn</th>'
       + '<th class="sortable" data-type="text">Sted</th>'
       + '<th class="sortable" data-type="text">IP</th>'
-      + '<th class="sortable sort-desc" data-type="num">Besøk</th>'
+      + '<th class="sortable" data-type="num">Besøk</th>'
       + '<th class="sortable" data-type="date">Først sett</th>'
-      + '<th class="sortable" data-type="date">Sist</th>'
+      + '<th class="sortable sort-desc" data-type="date">Sist aktiv</th>'
       + '</tr></thead><tbody>';
-    h += d.perNavn.map((r, i) => `<tr>
+    h += perNavnSistAktiv.map((r, i) => `<tr>
       <td class="muted">${i + 1}</td>
       <td><strong>${esc(r.navn)}</strong></td>
       <td class="muted">${esc(r.sted || '')}</td>
