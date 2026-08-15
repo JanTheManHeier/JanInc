@@ -52,7 +52,12 @@ module.exports = async function (context, req) {
 
         // Hent statistikk: total besøk, unike navn, besøk per side, siste 50 besøk, alle hilsener, alle taler
         const totalt = await executeQuery(connection, "SELECT COUNT(*) AS total FROM SiljeTerje_Besok");
-        const unike = await executeQuery(connection, "SELECT COUNT(DISTINCT navn) AS unike FROM SiljeTerje_Besok WHERE navn IS NOT NULL AND navn <> 'anonym'");
+        const unike = await executeQuery(connection, `
+            SELECT
+              COUNT(DISTINCT CASE WHEN navn NOT LIKE '(anon)%' THEN navn END) AS navngitte,
+              COUNT(DISTINCT CASE WHEN navn LIKE '(anon)%' THEN navn END) AS anonyme
+            FROM SiljeTerje_Besok
+            WHERE navn IS NOT NULL AND navn <> 'anonym'`);
         const perSide = await executeQuery(connection, "SELECT side, COUNT(*) AS antall FROM SiljeTerje_Besok GROUP BY side ORDER BY antall DESC");
         const perNavn = await executeQuery(connection, `
             SELECT b.navn,
@@ -95,7 +100,8 @@ module.exports = async function (context, req) {
             status: 200, headers,
             body: {
                 totalt: totalt[0]?.total || 0,
-                unikeNavn: unike[0]?.unike || 0,
+                unikeNavn: unike[0]?.navngitte || 0,
+                anonymeEnheter: unike[0]?.anonyme || 0,
                 perSide,
                 perNavn,
                 sisteBesok,

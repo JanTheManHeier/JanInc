@@ -44,7 +44,7 @@
   // ============ Init ============
   document.addEventListener('DOMContentLoaded', () => {
     initNavnPille();
-    initNavnModal();
+    const venterPaNavn = initNavnModal();
     initTema();
     initMeny();
     initNavigasjon();
@@ -69,7 +69,7 @@
     initBord();
     initBestevenn();
     initInstallPopup();
-    sporBesok('hjem');
+    if (!venterPaNavn) sporBesok('hjem');
     // Wake-up + admin-overstyringer hentes parallelt, blokkerer ikke UI
     vekkDb();
     lastContent();
@@ -204,9 +204,11 @@
       };
       document.getElementById('navn-skip').onclick = lukk;
       inp.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('navn-lagre').click(); });
+      return true;
     } else {
       modal.hidden = true;
       modal.style.display = 'none';
+      return false;
     }
   }
 

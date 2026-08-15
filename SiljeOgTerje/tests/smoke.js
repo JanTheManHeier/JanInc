@@ -96,7 +96,7 @@ function mockApi(page, captured) {
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify({
-          generertAt: new Date().toISOString(), totalt: 12, unikeNavn: 3,
+          generertAt: new Date().toISOString(), totalt: 12, unikeNavn: 3, anonymeEnheter: 2,
           hilsener: [], taler: [], highscore: [], spillTopp: [],
           perNavn: [
             { navn: 'Eldst Aktiv', besok: 20, forste: '2026-08-01T10:00:00Z', sist: '2026-08-10T10:00:00Z', ip: '' },
@@ -333,6 +333,27 @@ test('Gjestesiden åpnes uten passord når den er satt live', async ({ browser, 
   await context.close();
 });
 
+test('Førstegangsbesøk spores én gang etter navnevalg', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ viewport: { width: 402, height: 874 } });
+  await context.addInitScript(() => {
+    localStorage.setItem('siljeterje-tilgang', '1');
+    localStorage.setItem('siljeterje-install-dismissed', '1');
+  });
+  const page = await context.newPage();
+  const captured = [];
+  await mockApi(page, captured);
+  await page.goto(`${baseURL}/SiljeOgTerje/`);
+  await page.locator('#navn-input').fill('Ny Gjest');
+  await page.locator('#navn-lagre').click();
+  await page.waitForTimeout(150);
+  const hjemSporinger = captured.filter(x =>
+    x.endpoint === 'siljeterje-track' && x.body.side === 'hjem');
+  assert.equal(hjemSporinger.length, 1, 'Førstegangsbesøk skal ikke dobbelttelles på Hjem');
+  assert.equal(hjemSporinger[0].body.navn, 'Ny Gjest',
+    'Første besøk skal knyttes til valgt navn, ikke en anonym enhet');
+  await context.close();
+});
+
 test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL }) => {
   const context = await browser.newContext({ viewport: { width: 402, height: 874 } });
   await context.addInitScript(() => {
@@ -560,6 +581,8 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   assert.deepEqual(besokNavn, ['Nyest Aktiv', 'Mellom Aktiv', 'Eldst Aktiv'],
     'Besøksoversikten skal vise senest aktive navn først');
   assert.match(await page.locator('#besok-per-navn thead').innerText(), /Sist aktiv/);
+  assert.match(await page.locator('.stat-card', { hasText: 'Navngitte profiler' }).innerText(), /3/);
+  assert.match(await page.locator('.stat-card', { hasText: 'Anonyme enheter' }).innerText(), /2/);
   assert.equal(await page.locator('#i-musikk').isChecked(), false);
   assert.equal(await page.locator('#i-passord').isChecked(), true);
   assert.ok(await page.locator('.program-rad [data-k="lat"]').count() >= 4);

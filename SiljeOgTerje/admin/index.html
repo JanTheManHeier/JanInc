@@ -267,7 +267,8 @@ function render(d) {
   let h = '';
   h += `<div class="stats-row">
     <div class="stat-card"><div class="stat-num">${d.totalt}</div><div class="stat-label">Totale besøk</div></div>
-    <div class="stat-card"><div class="stat-num">${d.unikeNavn}</div><div class="stat-label">Unike personer</div></div>
+    <div class="stat-card"><div class="stat-num">${d.unikeNavn}</div><div class="stat-label">Navngitte profiler</div></div>
+    <div class="stat-card"><div class="stat-num">${d.anonymeEnheter || 0}</div><div class="stat-label">Anonyme enheter</div></div>
     <div class="stat-card"><div class="stat-num">${d.hilsener.length}</div><div class="stat-label">Hilsener</div></div>
     <div class="stat-card"><div class="stat-num">${d.taler.length}</div><div class="stat-label">Taleforespørsler</div></div>
     <div class="stat-card"><div class="stat-num">${d.highscore ? d.highscore.length : 0}</div><div class="stat-label">Quiz-spillere</div></div>
