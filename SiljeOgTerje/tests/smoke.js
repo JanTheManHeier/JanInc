@@ -231,13 +231,81 @@ test('Alle lokale bilder, skript og sider finnes', async () => {
   verifyLocalReferences();
 });
 
-test('Skilte gjester foreslås ikke som bestevenner', async () => {
+test('Alle gjester har tre gyldige bestevenner uten partnerkoblinger', async () => {
   const matches = JSON.parse(fs.readFileSync(path.join(appRoot, 'matches.json'), 'utf8'));
-  const hege = matches.find(x => x.navn === 'Hege Lauritzen');
-  const trond = matches.find(x => x.navn === 'Trond-Bjørnar Pedersen');
-  assert.ok(hege && trond, 'Begge gjestene må finnes i matchmatrisen');
-  assert.ok(!hege.matches.some(x => x.match_navn === trond.navn));
-  assert.ok(!trond.matches.some(x => x.match_navn === hege.navn));
+  const navn = new Set(matches.map(x => x.navn));
+  const nyeGjester = [
+    'Alma Lauritzen', 'Angelica Sophie Rybak Jensen', 'Åse Florholmen-Kjær',
+    'Astrid Løvberg Sørensen', 'Axel  Ingebrigtsen Thomassen', 'Børge Finsæther',
+    'Christel Slettli Hansen', 'Endre Laugerud', 'Erik Josefsen',
+    'Espen Widding Bruwold', 'Gaute Myklebust', 'Gjermund Halvorsen',
+    'Håvard Florholmen-Kjær', 'Hermine Widding Bruwold', 'Kjell Jamissen',
+    'Kolbjørn Engeseth', 'Leif Johnny Engseth', 'Marianne Widding Bruwold',
+    'Maryam Amri', 'Øystein Aasland', 'Ronny Løvberg Sørensen', 'Stine Jensen',
+    'Susanne Jenssen', 'Synne Gulbrandsen', 'Torkel Fredriksen', 'Trond Haug',
+    'Vetle Lauritzen',
+  ];
+  assert.equal(matches.length, 90, 'Matchmatrisen skal dekke alle synlige gjester');
+  nyeGjester.forEach(n => assert.ok(navn.has(n), `Ny gjest mangler i matchmatrisen: ${n}`));
+  ['Angelica Berg Jensen', 'Else-Marie Olsen', 'Halvard Olsen'].forEach(n => {
+    assert.ok(!navn.has(n), `Skjult eller erstattet profil skal ikke ligge i matrisen: ${n}`);
+  });
+  matches.forEach(person => {
+    assert.equal(person.matches.length, 3, `${person.navn} skal ha tre forslag`);
+    assert.equal(new Set(person.matches.map(x => x.match_navn)).size, 3,
+      `${person.navn} skal ha tre unike forslag`);
+    person.matches.forEach(forslag => {
+      assert.ok(navn.has(forslag.match_navn),
+        `${person.navn} peker til en skjult eller ukjent gjest: ${forslag.match_navn}`);
+      assert.notEqual(forslag.match_navn, person.navn, `${person.navn} kan ikke matche seg selv`);
+      assert.equal(forslag.match_grunner.length, 2, `${person.navn} mangler begrunnelse`);
+      assert.ok(forslag.samtale_starter, `${person.navn} mangler samtalestarter`);
+    });
+  });
+
+  const utelukkedePar = [
+    ['Silje Ingebrigtsen', 'Terje Karlstad'],
+    ['Hege Lauritzen', 'Trond-Bjørnar Pedersen'],
+    ['Anders Bjørnar Ingebrigtsen', 'Grete Ingebrigtsen'],
+    ['Ann Sissel Christoffersen', 'Jon Christoffersen'],
+    ['Anette Ingebrigtsen', 'Karl Erik Thomassen'],
+    ['Angelica Sophie Rybak Jensen', 'Iver Ingebrigtsen Karlstad'],
+    ['Åse Florholmen-Kjær', 'Håvard Florholmen-Kjær'],
+    ['Astrid Løvberg Sørensen', 'Ronny Løvberg Sørensen'],
+    ['Berit Skog', 'Tore Arnesen'],
+    ['Berith Olsen', 'Tore Olsen'],
+    ['Børge Finsæther', 'Siv Sofie Vian'],
+    ['Charlotte Marianne Hammer', 'Aslak Hammer'],
+    ['Christel Slettli Hansen', 'Gaute Myklebust'],
+    ['Christianne B. Eilertsen', 'Edvard Eilertsen'],
+    ['Elin Andersen', 'Per Johnny Olsen'],
+    ['Endre Laugerud', 'Siri Jaklin'],
+    ['Erik Josefsen', 'Synne Gulbrandsen'],
+    ['Espen Widding Bruwold', 'Marianne Widding Bruwold'],
+    ['Gjermund Halvorsen', 'Kristin Halvorsen'],
+    ['Kjell G Karlsen', 'Jorunn Karlstad'],
+    ['Kjell Jamissen', 'Ingrid Karlsen'],
+    ['Leif Johnny Engseth', 'Ragnhild Lettrem Olsen'],
+    ['Magnus Seppola', 'Ellen Dølvik Eliassen'],
+    ['Maryam Amri', 'Torkel Fredriksen'],
+    ['Øystein Aasland', 'Stine Jensen'],
+    ['Silje Helèn', 'Vegard Lund Aspen'],
+    ['Silje Ramsvatn', 'Ole Nicolai S. Aarbakke'],
+    ['Sissel Maria Myrnes Karlstad', 'Helge Karlstad'],
+    ['Stian Simonsen', 'Tone Christin Nilsen'],
+    ['Susanne Jenssen', 'Jørn Magnus Karlsen'],
+    ['Thomas Karlsen', 'Tina Nikolaisen'],
+    ['Andreas Granaas', 'Heidi Martens'],
+    ['Mikal Johnsen', 'Kjerstin Johnsen'],
+    ['Jan Heier Johansen', 'Kristina Garfjell Kantola'],
+  ];
+  utelukkedePar.forEach(([a, b]) => {
+    const personA = matches.find(x => x.navn === a);
+    const personB = matches.find(x => x.navn === b);
+    assert.ok(personA && personB, `Begge i utelukket par må finnes: ${a} / ${b}`);
+    assert.ok(!personA.matches.some(x => x.match_navn === b), `${a} skal ikke foreslå ${b}`);
+    assert.ok(!personB.matches.some(x => x.match_navn === a), `${b} skal ikke foreslå ${a}`);
+  });
 });
 
 test('Passordporten godtar riktig passord', async ({ browser, baseURL }) => {
