@@ -28,8 +28,8 @@ module.exports = async function (context, req) {
 
         if (req.method === 'POST') {
             const { navn, score } = req.body || {};
-            if (!navn || typeof score !== 'number' || score < 0 || score > 1000) {
-                context.res = { status: 400, headers, body: { error: 'navn og score paakrevd' } };
+            if (!navn || typeof score !== 'number' || !Number.isFinite(score) || score < 0 || score > 1000000) {
+                context.res = { status: 400, headers, body: { error: 'Gyldig navn og score mellom 0 og 1000000 er påkrevd' } };
                 return;
             }
             await executeQuery(connection,

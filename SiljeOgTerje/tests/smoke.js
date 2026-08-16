@@ -644,6 +644,41 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   await context.close();
 });
 
+test('Spillscore over 1000 lagres', async () => {
+  const dbPath = require.resolve('../../api/shared/db');
+  const apiPath = require.resolve('../../api/siljeterje-spillscore');
+  const originalDb = require.cache[dbPath];
+  const queries = [];
+  require.cache[dbPath] = {
+    id: dbPath,
+    filename: dbPath,
+    loaded: true,
+    exports: {
+      TYPES: { NVarChar: 'nvarchar', Int: 'int' },
+      getConnection: async () => ({ close() {} }),
+      executeQuery: async (_connection, sql, params) => {
+        queries.push({ sql, params });
+        return [];
+      },
+    },
+  };
+  delete require.cache[apiPath];
+
+  try {
+    const handler = require(apiPath);
+    const context = { log: { error() {} } };
+    await handler(context, { method: 'POST', body: { navn: 'Terje', score: 1375 } });
+    assert.equal(context.res.status, 200, 'En gyldig rekord over 1000 skal godtas');
+    const insert = queries.find(q => q.sql.includes('INSERT INTO SiljeTerje_Spillscore'));
+    assert.ok(insert, 'Scoren skal skrives til databasen');
+    assert.equal(insert.params.find(p => p.name === 'score').value, 1375);
+  } finally {
+    delete require.cache[apiPath];
+    if (originalDb) require.cache[dbPath] = originalDb;
+    else delete require.cache[dbPath];
+  }
+});
+
 test('Manifest og appikoner kan lastes', async ({ browser, baseURL }) => {
   const context = await browser.newContext();
   for (const resource of ['manifest.json', 'images/icon-180.png', 'images/icon-192.png', 'images/icon-512.png']) {

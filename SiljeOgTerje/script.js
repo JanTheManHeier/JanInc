@@ -1380,16 +1380,25 @@
           const n = inp.value.trim();
           if (!n) { inp.focus(); return; }
           settNavn(n);
-          await sendMarioScore(n, score);
-          form.remove();
-          toast(`🏆 Lagret: ${score} poeng for ${n}`);
-          lastMarioTopp();
+          const lagreBtn = form.querySelector('#mario-navn-lagre');
+          lagreBtn.disabled = true;
+          try {
+            await sendMarioScore(n, score);
+            form.remove();
+            toast(`🏆 Lagret: ${score} poeng for ${n}`);
+            await lastMarioTopp();
+          } catch {
+            lagreBtn.disabled = false;
+            toast('Kunne ikke lagre poengsummen. Prøv igjen.');
+          }
         };
         inp.addEventListener('keydown', e => { if (e.key === 'Enter') form.querySelector('#mario-navn-lagre').click(); });
       } else {
         sendMarioScore(mittNavn, score).then(() => {
           toast(`🏆 Lagret: ${score} poeng for ${mittNavn}`);
           lastMarioTopp();
+        }).catch(() => {
+          toast('Kunne ikke lagre poengsummen. Prøv igjen.');
         });
       }
     });
@@ -1416,13 +1425,12 @@
   }
 
   async function sendMarioScore(navn, score) {
-    try {
-      await fetch(`${API_BASE}/siljeterje-spillscore`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ navn, score }),
-      });
-    } catch {}
+    const r = await fetch(`${API_BASE}/siljeterje-spillscore`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ navn, score }),
+    });
+    if (!r.ok) throw new Error(`Kunne ikke lagre spillscore (HTTP ${r.status})`);
   }
 
   async function lastMarioTopp() {
