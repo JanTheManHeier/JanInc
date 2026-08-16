@@ -290,7 +290,7 @@ function render(d) {
   h += '<div class="admin-aksjoner"><button class="danger tiny" onclick="resetScores(\'spill\', \'Spill-scores\')">🗑️ Reset spill-scores</button></div>';
   if (d.spillTopp && d.spillTopp.length) {
     h += '<table class="sortable-tabell"><thead><tr><th>#</th><th class="sortable" data-type="text">Navn</th><th class="sortable" data-type="num">Score</th><th class="sortable" data-type="date">Sist</th></tr></thead><tbody>';
-    h += d.spillTopp.map((r, i) => `<tr><td>${['🥇','🥈','🥉'][i]||(i+1)}</td><td><strong>${esc(r.navn)}</strong></td><td>${r.score}</td><td class="muted" data-sort="${r.sist||''}">${dt(r.sist)}</td></tr>`).join('');
+    h += d.spillTopp.map((r, i) => `<tr><td>${['🥇','🥈','🥉'][i]||(i+1)}</td><td><strong>${esc(r.navn)}</strong></td><td>${r.score}${r.bonus ? ' (inkl. 1 brudgomspoeng)' : ''}</td><td class="muted" data-sort="${r.sist||''}">${dt(r.sist)}</td></tr>`).join('');
     h += '</tbody></table>';
   } else {
     h += '<p class="muted">Ingen scores ennå.</p>';

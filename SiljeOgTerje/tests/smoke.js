@@ -679,6 +679,23 @@ test('Spillscore over 1000 lagres', async () => {
   }
 });
 
+test('Brudgomspoeng avgjør bare poenglikhet med Thomas', async () => {
+  const { applyGroomTieBonus } = require('../../api/shared/weddingGameScores');
+  const rows = [
+    { navn: 'Thomas Hansen', score: 1000, sist: '2026-08-14T20:00:00Z' },
+    { navn: 'Terje Karlstad', score: 1000, sist: '2026-08-16T10:00:00Z' },
+    { navn: 'Terje Test', score: 875, sist: '2026-08-16T10:00:00Z' },
+    { navn: 'Jan', score: 875, sist: '2026-08-15T10:00:00Z' },
+  ];
+  const result = applyGroomTieBonus(rows);
+  assert.equal(result[0].navn, 'Terje Karlstad');
+  assert.equal(result[0].score, 1001);
+  assert.equal(result[0].grunnscore, 1000);
+  assert.equal(result[0].bonus, 1);
+  assert.equal(result.find(row => row.navn === 'Terje Test').score, 875,
+    'Terje skal ikke få bonus ved poenglikhet med andre enn Thomas');
+});
+
 test('Manifest og appikoner kan lastes', async ({ browser, baseURL }) => {
   const context = await browser.newContext();
   for (const resource of ['manifest.json', 'images/icon-180.png', 'images/icon-192.png', 'images/icon-512.png']) {

@@ -1446,10 +1446,11 @@
       }
       liste.innerHTML = '<div class="topp-liste">' + data.map((d, i) => {
         const medalje = ['🥇', '🥈', '🥉'][i] || `${i+1}.`;
+        const bonus = d.bonus ? ' <small>(inkl. 1 brudgomspoeng)</small>' : '';
         return `<div class="topp-rad">
           <span class="topp-medalje">${medalje}</span>
           <span class="topp-navn">${esc(d.navn)}</span>
-          <span class="topp-score">${d.score} poeng</span>
+          <span class="topp-score">${d.score} poeng${bonus}</span>
         </div>`;
       }).join('') + '</div>';
     } catch {

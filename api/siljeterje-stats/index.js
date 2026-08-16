@@ -1,4 +1,5 @@
 const { getConnection, executeQuery } = require('../shared/db');
+const { applyGroomTieBonus } = require('../shared/weddingGameScores');
 const https = require('https');
 
 // In-memory cache i function-instansen — varer så lenge functionen er varm
@@ -80,9 +81,9 @@ module.exports = async function (context, req) {
         } catch {}
         let spillTopp = [];
         try {
-            spillTopp = await executeQuery(connection, `
+            spillTopp = applyGroomTieBonus(await executeQuery(connection, `
                 SELECT TOP 20 navn, MAX(score) AS score, MAX(opprettet) AS sist
-                FROM SiljeTerje_Spillscore GROUP BY navn ORDER BY score DESC, sist ASC`);
+                FROM SiljeTerje_Spillscore GROUP BY navn ORDER BY score DESC, sist ASC`));
         } catch {}
 
         // Berik med geo-info (server-side, ingen CORS-problem)

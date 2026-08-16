@@ -1,4 +1,5 @@
 const { getConnection, executeQuery, TYPES } = require('../shared/db');
+const { applyGroomTieBonus } = require('../shared/weddingGameScores');
 
 const ENSURE_TABLE_SQL = `
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'SiljeTerje_Spillscore')
@@ -18,11 +19,11 @@ module.exports = async function (context, req) {
 
         if (req.method === 'GET') {
             const rows = await executeQuery(connection, `
-                SELECT TOP 10 navn, MAX(score) AS score, MAX(opprettet) AS sist
+                SELECT TOP 20 navn, MAX(score) AS score, MAX(opprettet) AS sist
                 FROM SiljeTerje_Spillscore
                 GROUP BY navn
                 ORDER BY score DESC, sist ASC`);
-            context.res = { status: 200, headers, body: rows };
+            context.res = { status: 200, headers, body: applyGroomTieBonus(rows).slice(0, 10) };
             return;
         }
 
