@@ -13,8 +13,8 @@ CREATE TABLE SiljeTerje_Musikkonske (
     opprettet DATETIME2 DEFAULT GETDATE()
 );`;
 
-const AGGIE_TO = process.env.MUSIKK_NOTIFY_TO || 'aggiepeterson@mac.com';
-const AGGIE_CC = process.env.MUSIKK_NOTIFY_CC || '';
+const MUSIKK_TO = process.env.MUSIKK_NOTIFY_TO || 'terje.karlstad@snn.no';
+const MUSIKK_CC = process.env.MUSIKK_NOTIFY_CC || 'isilje@hotmail.com';
 
 function escHtml(s) {
     return String(s == null ? '' : s)
@@ -23,10 +23,10 @@ function escHtml(s) {
 }
 
 function lagMail({ navn, artist, laat, melding }) {
-    const subject = `🎵 Musikkønske til Thomas 50 — fra ${navn}`;
-    const text = `Hei Aggie!
+    const subject = `🎵 Musikkønske til Silje og Terjes bryllup — fra ${navn}`;
+    const text = `Hei Terje og Silje!
 
-Det er kommet inn et musikkønske til Thomas sin 50-årsfeiring 30. mai 2026.
+Det er kommet inn et musikkønske til bryllupet deres 22. august 2026.
 
 Navn:    ${navn}
 Artist:  ${artist || '(ikke oppgitt)'}
@@ -35,18 +35,18 @@ Låt:     ${laat || '(ikke oppgitt)'}
 ${melding ? 'Melding:\n' + melding + '\n' : ''}
 Hilsen
 Jans agent 🤖
-(Automatisk varsel fra SiljeTerje-appen på https://janinc.no/SiljeTerje/)`;
+(Automatisk varsel fra Silje og Terje-appen på https://janinc.no/SiljeOgTerje/)`;
 
     const html = `
-<p>Hei Aggie!</p>
-<p>Det er kommet inn et musikkønske til Thomas sin 50-årsfeiring 30. mai 2026.</p>
+<p>Hei Terje og Silje!</p>
+<p>Det er kommet inn et musikkønske til bryllupet deres 22. august 2026.</p>
 <table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">
   <tr><td style="padding:6px 12px 6px 0;color:#888"><strong>Navn</strong></td><td style="padding:6px 0">${escHtml(navn)}</td></tr>
   <tr><td style="padding:6px 12px 6px 0;color:#888"><strong>Artist</strong></td><td style="padding:6px 0">${artist ? escHtml(artist) : '<em>(ikke oppgitt)</em>'}</td></tr>
   <tr><td style="padding:6px 12px 6px 0;color:#888"><strong>Låt</strong></td><td style="padding:6px 0">${laat ? escHtml(laat) : '<em>(ikke oppgitt)</em>'}</td></tr>
 </table>
 ${melding ? `<p style="margin-top:14px"><strong>Melding:</strong></p><blockquote style="border-left:3px solid #D4A853;padding:8px 14px;color:#333;background:#fafafa;white-space:pre-wrap;font-family:sans-serif;font-size:14px">${escHtml(melding)}</blockquote>` : ''}
-<p style="color:#888;font-size:13px;margin-top:24px">Hilsen<br/>Jans agent 🤖<br/><em>Automatisk varsel fra <a href="https://janinc.no/SiljeTerje/">SiljeTerje-appen</a></em></p>`;
+<p style="color:#888;font-size:13px;margin-top:24px">Hilsen<br/>Jans agent 🤖<br/><em>Automatisk varsel fra <a href="https://janinc.no/SiljeOgTerje/">Silje og Terje-appen</a></em></p>`;
 
     return { subject, text, html };
 }
@@ -91,8 +91,8 @@ module.exports = async function (context, req) {
 
         const mail = lagMail({ navn: navnRen, artist: artistRen, laat: laatRen, melding: meldingRen });
         const mailRes = await sendMail({
-            to: AGGIE_TO,
-            cc: AGGIE_CC || undefined,
+            to: MUSIKK_TO,
+            cc: MUSIKK_CC || undefined,
             subject: mail.subject,
             text: mail.text,
             html: mail.html,
