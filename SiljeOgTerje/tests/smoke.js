@@ -395,6 +395,10 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   assert.equal(layout.nav, 'waffel', 'Hamburgermeny skal være eneste menyplassering');
   assert.equal(layout.styleSelectors, 0, 'Alternative stil- og menyvalg skal være skjult');
   assert.equal(layout.musicVisible, false, 'Musikkønsker skal være avslått som standard');
+  assert.match(await page.locator('#festvenn-cta-tittel').innerText(), /Test/,
+    'Forsiden skal gjøre festvenninngangen personlig');
+  assert.ok(await page.locator('#festvenn-cta [data-festvenn-ny]').isVisible(),
+    'Festvenninngangen skal merkes som ny før den åpnes');
 
   await page.evaluate(() => document.querySelector('[data-go="gjester"]').click());
   const langBioKort = page.locator('.gjest-kort', { hasText: 'Dynamisk Ledsager' });
@@ -451,6 +455,14 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   await page.locator('.bv-dropdown-item').filter({ hasText: 'Andreas Granaas' }).click();
   await assert.doesNotReject(() => page.locator('#bv-resultat .bv-resultat-kort').nth(2).waitFor({ state: 'visible' }));
   assert.equal(await page.locator('#bv-resultat .bv-resultat-kort').count(), 3);
+  await page.waitForTimeout(100);
+  assert.ok(captured.some(x => x.endpoint === 'siljeterje-track' && x.body.side === 'bestevenn-resultat'),
+    'Et vist festvennresultat skal spores');
+  await page.locator('#bv-resultat .bv-resultat-kort').first().click();
+  await page.waitForTimeout(100);
+  assert.ok(captured.some(x => x.endpoint === 'siljeterje-track' && x.body.side === 'bestevenn-profil'),
+    'Klikk på en festvennprofil skal spores');
+  await page.locator('#gjest-modal-close').click();
   assert.equal(await page.locator('#bv-search').evaluate(el => getComputedStyle(el).color), 'rgb(26, 44, 63)',
     'Bestevenn-søk skal bruke mørk tekst i lyst tema');
   assert.doesNotMatch(await page.locator('#bv-resultat').innerText(), /Bord \?/);
@@ -538,7 +550,7 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   assert.equal(await page.locator('.mario-instruksjon').evaluate(el => getComputedStyle(el).color), 'rgb(58, 74, 92)',
     'Spillinstruksjonen skal ha tydelig kontrast i invitasjonstemaet');
   await page.evaluate(() => document.querySelector('[data-go="hjelp"]').click());
-  assert.ok(await page.locator('.hjelp-seksjon').filter({ hasText: 'Bestevenn' }).count());
+  assert.ok(await page.locator('.hjelp-seksjon').filter({ hasText: 'Festvenner' }).count());
   assert.ok(await page.locator('.hjelp-seksjon').filter({ hasText: 'Musikkønske' }).count());
   assert.ok(await page.locator('.hjelp-seksjon p').first().evaluate(el => parseFloat(getComputedStyle(el).fontSize)) >= 14);
   assert.equal(pageErrors.length, 0, `JavaScript-feil: ${pageErrors.join('; ')}`);

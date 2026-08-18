@@ -19,7 +19,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Silje & Terje" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-<link rel="stylesheet" href="style.css?v=20260814-1" />
+<link rel="stylesheet" href="style.css?v=20260818-1" />
 </head>
 <body>
 
@@ -109,6 +109,16 @@
       <span class="rsvp-cta-pil">→</span>
     </a>
 
+    <button class="rsvp-cta festvenn-cta" id="festvenn-cta" data-go="bestevenn" type="button">
+      <span class="rsvp-cta-icon">🤝</span>
+      <span class="rsvp-cta-tekst">
+        <strong id="festvenn-cta-tittel">Finn dine 3 festvenner</strong>
+        <small>Se hvem du bør slå av en prat med i bryllupet</small>
+      </span>
+      <span class="festvenn-ny" data-festvenn-ny>NY</span>
+      <span class="rsvp-cta-pil">→</span>
+    </button>
+
     <div class="card-row">
       <button class="mini-card" data-go="program"><div class="mini-icon">💒</div><div class="mini-title">Vigsel</div><div class="mini-sub">Kl. 12.00</div></button>
       <button class="mini-card" data-go="program"><div class="mini-icon">🥂</div><div class="mini-title">Fest</div><div class="mini-sub">Kl. 17.00</div></button>
@@ -178,7 +188,7 @@
   <section class="page" data-page="gjester" hidden>
     <div class="sub-nav">
       <button class="sub-tab" data-go="gjester">👥 Gjester</button>
-      <button class="sub-tab" data-go="bestevenn">🤝 Bestevenn</button>
+      <button class="sub-tab" data-go="bestevenn">🤝 Dine 3 festvenner <span class="festvenn-ny" data-festvenn-ny>NY</span></button>
       <button class="sub-tab" data-go="bord">🪑 Bord</button>
     </div>
     <h2 class="page-title">👥 Gjester</h2>
@@ -205,10 +215,10 @@
   <section class="page" data-page="bestevenn" hidden>
     <div class="sub-nav">
       <button class="sub-tab" data-go="gjester">👥 Gjester</button>
-      <button class="sub-tab active" data-go="bestevenn">🤝 Bestevenn</button>
+      <button class="sub-tab active" data-go="bestevenn">🤝 Dine 3 festvenner <span class="festvenn-ny" data-festvenn-ny>NY</span></button>
       <button class="sub-tab" data-go="bord">🪑 Bord</button>
     </div>
-    <h2 class="page-title">🤝 Finn din nye bestevenn</h2>
+    <h2 class="page-title">🤝 Dine 3 festvenner</h2>
     <p class="muted">Tre personer du kanskje bør slå av en prat med i bryllupet</p>
 
     <div class="bv-info-box">
@@ -467,7 +477,7 @@
   <section class="page" data-page="bord" hidden>
     <div class="sub-nav">
       <button class="sub-tab" data-go="gjester">👥 Gjester</button>
-      <button class="sub-tab" data-go="bestevenn">🤝 Bestevenn</button>
+      <button class="sub-tab" data-go="bestevenn">🤝 Dine 3 festvenner <span class="festvenn-ny" data-festvenn-ny>NY</span></button>
       <button class="sub-tab" data-go="bord">🪑 Bord</button>
     </div>
     <h2 class="page-title">🪑 Bordplassering</h2>
@@ -495,8 +505,8 @@
     </div>
 
     <div class="hjelp-seksjon">
-      <h3>👥 Gjester, 🤝 Bestevenn &amp; 🪑 Bord</h3>
-      <p>Se de inviterte gjestene og trykk på et kort for å lese hele presentasjonen. Under "Bestevenn" får hver gjest tre platoniske samtaleforslag. Under "Bord" finner du bordplasseringen.</p>
+      <h3>👥 Gjester, 🤝 Festvenner &amp; 🪑 Bord</h3>
+      <p>Se de inviterte gjestene og trykk på et kort for å lese hele presentasjonen. Under "Dine 3 festvenner" får hver gjest tre platoniske samtaleforslag. Under "Bord" finner du bordplasseringen.</p>
     </div>
 
     <div class="hjelp-seksjon">
@@ -598,6 +608,6 @@
 <script src="data.js"></script>
 <script src="program-sync.js"></script>
 <script src="spill.js"></script>
-<script src="script.js?v=20260816-2"></script>
+<script src="script.js?v=20260818-1"></script>
 </body>
 </html>

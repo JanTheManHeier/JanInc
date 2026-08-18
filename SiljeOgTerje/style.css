@@ -1912,6 +1912,29 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
 .rsvp-cta-tekst strong { font-size: 18px; color: var(--gold-2); letter-spacing: 0.3px; font-weight: 700; }
 .rsvp-cta-tekst small { font-size: 13.5px; color: var(--text-soft2); margin-top: 3px; }
 .rsvp-cta-pil { font-size: 24px; color: var(--gold); }
+.festvenn-cta {
+  width: calc(100% - 32px);
+  border: 1.5px solid rgba(var(--gold-rgb),0.45);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.festvenn-ny {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  padding: 3px 6px;
+  border-radius: 999px;
+  background: #C94F63;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+.festvenn-ny[hidden] { display: none; }
+.sub-tab .festvenn-ny { margin-left: 4px; vertical-align: middle; }
 
 /* Dag-merke i programmet (f.eks. mingling fredag) */
 .program-dag {

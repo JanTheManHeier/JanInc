@@ -21,6 +21,7 @@
   const STORAGE_HILSEN_LOKAL = 'siljeterje-hilsener-lokal';
   const STORAGE_TEMA = 'siljeterje-tema';
   const STORAGE_MENY = 'siljeterje-meny';
+  const STORAGE_FESTVENN_APNET = 'siljeterje-festvenn-apnet';
   const API_BASE = '/api';
 
   let mittNavn = localStorage.getItem(STORAGE_NAVN) || '';
@@ -177,6 +178,7 @@
     mittNavn = n;
     localStorage.setItem(STORAGE_NAVN, n);
     if (window._oppdaterNavnPille) window._oppdaterNavnPille();
+    oppdaterFestvennFremheving();
   }
 
   // ============ Navn-modal ============
@@ -433,6 +435,10 @@
 
   function visSide(id) {
     if (id === 'musikk' && !innstillinger.musikkOnske) id = 'hilsener';
+    if (id === 'bestevenn') {
+      localStorage.setItem(STORAGE_FESTVENN_APNET, '1');
+      oppdaterFestvennFremheving();
+    }
     aktivSide = id;
     document.querySelectorAll('.page').forEach(p => p.hidden = (p.dataset.page !== id));
     const navParent = NAV_GROUP[id] || id;
@@ -1512,6 +1518,7 @@
     const dd = document.getElementById('bv-dropdown');
     if (!input || !dd) return;
 
+    oppdaterFestvennFremheving();
     forhandsvelgBestevenn();
 
     input.addEventListener('focus', () => visBvDropdown(input.value));
@@ -1519,6 +1526,20 @@
     input.addEventListener('blur', () => setTimeout(() => { dd.hidden = true; }, 200));
     document.addEventListener('click', e => {
       if (!input.contains(e.target) && !dd.contains(e.target)) dd.hidden = true;
+    });
+  }
+
+  function oppdaterFestvennFremheving() {
+    const fornavn = mittNavn.trim().split(/\s+/)[0];
+    const tittel = document.getElementById('festvenn-cta-tittel');
+    if (tittel) {
+      tittel.textContent = fornavn
+        ? `Vi har funnet 3 festvenner til deg, ${fornavn}`
+        : 'Finn dine 3 festvenner';
+    }
+    const erNy = localStorage.getItem(STORAGE_FESTVENN_APNET) !== '1';
+    document.querySelectorAll('[data-festvenn-ny]').forEach(el => {
+      el.hidden = !erNy;
     });
   }
 
@@ -1649,7 +1670,7 @@
       const bilde = matchGjest.bildeFil
         ? `<img class="bv-resultat-bilde" src="${esc(matchGjest.bildeFil)}" alt="" />`
         : `<div class="bv-resultat-bilde" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#D4A853,#C4943A);color:#0D1B2A;font-size:36px;font-weight:bold">${esc(init)}</div>`;
-      const medalje = ['🥇 Din nye bestevenn', '🥈 Andre-bestevenn', '🥉 Tredje-bestevenn'][idx] || `#${mt.rank}`;
+      const medalje = ['🥇 Din nærmeste festvenn', '🥈 Festvenn nummer to', '🥉 Festvenn nummer tre'][idx] || `#${mt.rank}`;
       const klass = idx === 0 ? 'bv-resultat-kort bv-rank-1' : 'bv-resultat-kort bv-rank-' + (idx + 1);
       return `
         <div class="${klass} bv-klikkbar" data-bv-match-navn="${esc(visNavn)}" title="Trykk for å se hele kortet">
@@ -1684,12 +1705,20 @@
           </div>
         ` : ''}
       </div>`;
+    const resultatSporing = `siljeterje-festvenn-resultat-${origNavn}`;
+    if (!sessionStorage.getItem(resultatSporing)) {
+      sessionStorage.setItem(resultatSporing, '1');
+      sporBesok('bestevenn-resultat');
+    }
     // Klikk på match-kort eller allianse-medlem åpner gjest-modal
     ut.querySelectorAll('.bv-klikkbar').forEach(el => {
       el.addEventListener('click', () => {
         const matchNavn = el.dataset.bvMatchNavn;
         const g = GJESTER.find(x => x.navn === matchNavn);
-        if (g) visGjestModal(g);
+        if (g) {
+          sporBesok('bestevenn-profil');
+          visGjestModal(g);
+        }
       });
     });
     ut.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
