@@ -13,8 +13,8 @@ CREATE TABLE SiljeTerje_Toaster (
     opprettet DATETIME2 DEFAULT GETDATE()
 );`;
 
-const TOAST_TO = process.env.TOAST_NOTIFY_TO || 'ronnyandre@gmail.com';
-const TOAST_CC = process.env.TOAST_NOTIFY_CC || '';
+const TOAST_TO = process.env.TOAST_NOTIFY_TO || 'majawilhelmsen@hotmail.com';
+const TOAST_CC = process.env.TOAST_NOTIFY_CC || 'thomas.helge@gmail.com';
 
 function escHtml(s) {
     return String(s == null ? '' : s)
@@ -23,12 +23,12 @@ function escHtml(s) {
 }
 
 function lagMail({ navn, epost, tema, melding }) {
-    const subject = `🎤 Ny taleforespørsel til Thomas 50 — fra ${navn}`;
+    const subject = `🎤 Ny taleforespørsel til Silje og Terjes bryllup — fra ${navn}`;
     const epostLinje = epost || '(ikke oppgitt)';
     const temaLinje = tema || '(ikke oppgitt)';
-    const text = `Hei Ronny og Marianne!
+    const text = `Hei Maja og Thomas!
 
-Det er noen som ønsker å holde tale i Thomas sin 50-årsfeiring 30. mai 2026.
+Det er noen som ønsker å holde tale i Silje og Terjes bryllup 22. august 2026.
 
 Navn:    ${navn}
 E-post:  ${epostLinje}
@@ -41,11 +41,11 @@ Svar gjerne direkte til avsenderen for å avtale plass i programmet.
 
 Hilsen
 Jans agent 🤖
-(Automatisk varsel fra SiljeTerje-appen på https://janinc.no/SiljeTerje/)`;
+(Automatisk varsel fra Silje og Terje-appen på https://janinc.no/SiljeOgTerje/)`;
 
     const html = `
-<p>Hei Ronny og Marianne!</p>
-<p>Det er noen som ønsker å holde tale i Thomas sin 50-årsfeiring 30. mai 2026.</p>
+<p>Hei Maja og Thomas!</p>
+<p>Det er noen som ønsker å holde tale i Silje og Terjes bryllup 22. august 2026.</p>
 <table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">
   <tr><td style="padding:6px 12px 6px 0;color:#888"><strong>Navn</strong></td><td style="padding:6px 0">${escHtml(navn)}</td></tr>
   <tr><td style="padding:6px 12px 6px 0;color:#888"><strong>E-post</strong></td><td style="padding:6px 0">${epost ? `<a href="mailto:${escHtml(epost)}">${escHtml(epost)}</a>` : '<em>(ikke oppgitt)</em>'}</td></tr>
@@ -54,7 +54,7 @@ Jans agent 🤖
 <p style="margin-top:14px"><strong>Melding:</strong></p>
 <blockquote style="border-left:3px solid #D4A853;padding:8px 14px;color:#333;background:#fafafa;white-space:pre-wrap;font-family:sans-serif;font-size:14px">${escHtml(melding)}</blockquote>
 <p>Svar gjerne direkte til avsenderen for å avtale plass i programmet.</p>
-<p style="color:#888;font-size:13px;margin-top:24px">Hilsen<br/>Jans agent 🤖<br/><em>Automatisk varsel fra <a href="https://janinc.no/SiljeTerje/">SiljeTerje-appen</a></em></p>`;
+<p style="color:#888;font-size:13px;margin-top:24px">Hilsen<br/>Jans agent 🤖<br/><em>Automatisk varsel fra <a href="https://janinc.no/SiljeOgTerje/">Silje og Terje-appen</a></em></p>`;
 
     return { subject, text, html };
 }
@@ -118,4 +118,3 @@ module.exports = async function (context, req) {
         if (connection) try { connection.close(); } catch (_) {}
     }
 };
-

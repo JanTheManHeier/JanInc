@@ -920,11 +920,11 @@
       }
       if (!res.ok) throw new Error('API feil');
       status.textContent = '';
-      toast('🎤 Talen er meldt inn til Ronny og Marianne!');
+      toast('🎤 Talen er meldt inn til Maja og Thomas!');
       document.getElementById('toast-tema').value = '';
       document.getElementById('toast-melding').value = '';
     } catch (e) {
-      status.textContent = 'Kunne ikke sende — prøv igjen senere eller send mail direkte til ronnyandre@gmail.com';
+      status.textContent = 'Kunne ikke sende — prøv igjen senere eller send mail direkte til majawilhelmsen@hotmail.com eller thomas.helge@gmail.com';
     }
     if (data.navn) settNavn(data.navn);
   }
