@@ -540,6 +540,20 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   display: flex; gap: 14px; justify-content: center;
   margin-top: 10px;
 }
+.gjest-modal-festvenn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 11px 14px;
+  border: 1px solid rgba(var(--gold-rgb),0.4);
+  border-radius: 12px;
+  background: rgba(var(--gold-rgb),0.14);
+  color: var(--gold);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.gjest-modal-festvenn:hover { background: rgba(var(--gold-rgb),0.24); }
 
 /* Form / hilsener */
 .form { padding: 0 16px; }
@@ -1086,6 +1100,164 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 .bv-info-box > div { padding: 3px 0; }
 
 /* Bord */
+.bordkart-panel {
+  margin: 0 16px 22px;
+  padding: 10px;
+  border: 1px solid rgba(var(--gold-rgb),0.28);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+}
+.bordkart-verktøy {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.bordkart-verktøy button {
+  min-width: 42px;
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid rgba(var(--gold-rgb),0.35);
+  border-radius: 9px;
+  background: rgba(var(--gold-rgb),0.12);
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.bordkart-viewport {
+  height: clamp(430px, 68vh, 720px);
+  overflow: hidden;
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid rgba(94,58,98,0.18);
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,0.98), rgba(252,245,240,0.94) 65%, rgba(238,222,213,0.92));
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.bordkart-viewport.drar { cursor: grabbing; }
+.bordkart-scene {
+  width: 1400px;
+  height: 1000px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.bordkart-bord {
+  position: absolute;
+  width: 126px;
+  height: 126px;
+  transform: translate(-50%, -50%);
+  border: 3px solid #7d7275;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #fff, #eee9e8 72%, #d7cecc);
+  box-shadow: 0 7px 18px rgba(56,38,46,0.18), inset 0 0 0 5px rgba(255,255,255,0.65);
+  color: #493d43;
+  font: inherit;
+  cursor: zoom-in;
+}
+.bordkart-bord:hover,
+.bordkart-bord:focus-visible,
+.bordkart-bord.bordkart-treff {
+  border-color: var(--gold-deep);
+  box-shadow: 0 0 0 7px rgba(var(--gold-rgb),0.17), 0 10px 22px rgba(56,38,46,0.24);
+  outline: none;
+}
+.bordkart-bordnummer {
+  display: block;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 42px;
+  line-height: 1;
+}
+.bordkart-bordnavn {
+  display: block;
+  max-width: 105px;
+  margin: 5px auto 0;
+  overflow: hidden;
+  color: #765e69;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bordkart-gjest {
+  position: absolute;
+  width: 104px;
+  min-height: 74px;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border: 0;
+  background: transparent;
+  color: #382e33;
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+.bordkart-gjest:hover,
+.bordkart-gjest:focus-visible {
+  z-index: 4;
+  outline: none;
+}
+.bordkart-gjest:hover .bordkart-avatar,
+.bordkart-gjest:focus-visible .bordkart-avatar,
+.bordkart-gjest.bordkart-treff .bordkart-avatar {
+  transform: scale(1.13);
+  border-color: var(--gold-deep);
+  box-shadow: 0 0 0 5px rgba(var(--gold-rgb),0.2);
+}
+.bordkart-avatar {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 3px;
+  border: 3px solid #d8c3bf;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #5e3a62, #c4737e);
+  box-shadow: 0 3px 8px rgba(56,38,46,0.24);
+  object-fit: cover;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.bordkart-avatar.bordkart-init {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+}
+.bordkart-gjestnavn {
+  display: block;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 0 #fff;
+  white-space: nowrap;
+}
+.bordkart-sete {
+  position: absolute;
+  right: 21px;
+  top: 35px;
+  min-width: 18px;
+  height: 18px;
+  padding: 1px 4px;
+  border-radius: 9px;
+  background: #5e3a62;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+}
+.bordkart-hint {
+  margin: 8px 4px 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+}
+.bordliste-tittel { margin: 0 16px 12px; }
 .bord-kort {
   margin: 0 16px 16px;
   padding: 14px;
@@ -1168,6 +1340,20 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 .bord-avatar.bord-init { background: linear-gradient(135deg, var(--gold), var(--gold-border)); color: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; }
 .bord-navn { flex: 1; font-size: 14px; color: var(--text); }
 .bord-tag { font-size: 10px; background: rgba(var(--accent2-rgb),0.2); color: var(--accent-2); padding: 2px 6px; border-radius: 8px; }
+
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bordkart-panel {
+  background: rgba(255,255,255,0.45);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bordkart-verktøy button {
+  background: #fff9f7;
+  color: var(--surface);
+}
+
+@media (max-width: 520px) {
+  .bordkart-panel { margin-left: 8px; margin-right: 8px; padding: 7px; }
+  .bordkart-viewport { height: min(62vh, 560px); }
+  .bordkart-hint { font-size: 11px; }
+}
 
 /* Meny */
 .meny-rett {
@@ -1692,6 +1878,10 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-bio { color: var(--surface-2); }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-felt { color: var(--muted3); }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-felt.gjest-modal-extra {
+  background: rgba(var(--gold-border-rgb),0.12);
+  color: var(--gold-deep);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-festvenn {
   background: rgba(var(--gold-border-rgb),0.12);
   color: var(--gold-deep);
 }

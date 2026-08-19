@@ -97,6 +97,7 @@ module.exports = async function (context, req) {
                 context.res = { status: 400, headers, body: { error: 'navn paakrevd' } };
                 return;
             }
+            const oppdaterBilde = Object.prototype.hasOwnProperty.call(body, 'bildeUrl');
             const p = {
                 navn: s(body.navn, 100),
                 bio: s(body.bio),
@@ -124,7 +125,8 @@ module.exports = async function (context, req) {
                     nyttNavn = @nyttNavn, jobb = @jobb,
                     bord = @bord, sete = @sete, bordType = @bordType,
                     fbUrl = @fbUrl, liUrl = @liUrl, igUrl = @igUrl,
-                    bildeUrl = @bildeUrl, skjult = @skjult, nyGjest = @nyGjest, pust = @pust,
+                    bildeUrl = CASE WHEN @oppdaterBilde = 1 THEN @bildeUrl ELSE t.bildeUrl END,
+                    skjult = @skjult, nyGjest = @nyGjest, pust = @pust,
                     oppdatert = GETDATE()
                 WHEN NOT MATCHED THEN INSERT
                     (navn, bio, relasjon, extraBio, nyttNavn, jobb, bord, sete, bordType, fbUrl, liUrl, igUrl, bildeUrl, skjult, nyGjest, pust)
@@ -143,6 +145,7 @@ module.exports = async function (context, req) {
                     { name: 'liUrl',    type: TYPES.NVarChar, value: p.liUrl },
                     { name: 'igUrl',    type: TYPES.NVarChar, value: p.igUrl },
                     { name: 'bildeUrl', type: TYPES.NVarChar, value: p.bildeUrl, options: { length: Infinity } },
+                    { name: 'oppdaterBilde', type: TYPES.Bit, value: oppdaterBilde ? 1 : 0 },
                     { name: 'skjult',   type: TYPES.Bit,      value: p.skjult },
                     { name: 'nyGjest',  type: TYPES.Bit,      value: p.nyGjest },
                     { name: 'pust',     type: TYPES.Bit,      value: p.pust },

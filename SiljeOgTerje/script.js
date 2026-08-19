@@ -78,6 +78,7 @@
     lastGjesteEdits().then(() => {
       // Re-render gjester med eventuelle admin-overstyringer
       if (typeof renderGjester === 'function') renderGjester();
+      if (aktivSide === 'bord') renderBord();
       forhandsvelgBestevenn();
     });
   });
@@ -411,7 +412,6 @@
   }
   // Sammenslåtte sider: sub-side → forelder-knapp i hovedmenyen
   const NAV_GROUP = {
-    bord: 'gjester',
     toastmaster: 'hilsener',
     musikk: 'hilsener',
     mario: 'spill',
@@ -421,7 +421,7 @@
   // Hovedsider som ligger under en samle-knapp i bunnmenyen
   const SLOT_GROUP = {
     hilsener: 'bidra', minnebok: 'bidra', gave: 'bidra',
-    sang: 'mer', spill: 'mer', hjelp: 'mer',
+    bord: 'mer', sang: 'mer', spill: 'mer', hjelp: 'mer',
   };
 
   function lukkPopovere(unntak) {
@@ -826,10 +826,23 @@
         ${g.fbUrl && g.fbUrl !== 'N/A' ? `<a class="gjest-fb-link" href="${esc(g.fbUrl)}" target="_blank" rel="noopener">facebook</a>` : ''}
         ${g.liUrl ? `<a class="gjest-fb-link" href="${esc(g.liUrl)}" target="_blank" rel="noopener">linkedin</a>` : ''}
         ${g.igUrl ? `<a class="gjest-fb-link" href="${esc(g.igUrl)}" target="_blank" rel="noopener">instagram</a>` : ''}
-      </div>`;
+      </div>
+      ${!g.avbud ? `<button class="gjest-modal-festvenn" type="button" data-gjest-festvenn="${esc(g.navn)}">🤝 Se festvennene til ${esc(g.navn.split(' ')[0])}</button>` : ''}`;
     const gjestModal = document.getElementById('gjest-modal');
     gjestModal.hidden = false;
     gjestModal.style.display = '';
+    const festvennKnapp = innhold.querySelector('[data-gjest-festvenn]');
+    if (festvennKnapp) {
+      festvennKnapp.onclick = () => {
+        const navn = festvennKnapp.dataset.gjestFestvenn;
+        gjestModal.hidden = true;
+        gjestModal.style.display = 'none';
+        visSide('bestevenn');
+        const input = document.getElementById('bv-search');
+        if (input) input.value = navn;
+        visBestevenn(navn);
+      };
+    }
   }
 
   // ============ Hilsener ============
@@ -1333,10 +1346,232 @@
   // ============ Bord ============
   let bordSok = '';
   let bordGjesterFlat = [];
+  let bordKartGjester = [];
+  const BORDKART_BREDDE = 1400;
+  const BORDKART_HOYDE = 1000;
+  const BORDKART_POSISJONER = {
+    1: [200, 515], 2: [450, 845], 3: [535, 515], 4: [440, 185],
+    5: [790, 845], 6: [835, 515], 7: [790, 185], 8: [1140, 845],
+    9: [1170, 515], 10: [1150, 185],
+  };
+  const BORDKART_REKKEFOLGE = {
+    1: ['Sissel Maria Myrnes Karlstad', 'Helge Karlstad', 'Anders Bjørnar Ingebrigtsen',
+      'Grete Ingebrigtsen', 'Angelica Sophie Rybak Jensen', 'Iver Ingebrigtsen Karlstad',
+      'Silje Ingebrigtsen', 'Terje Karlstad', 'Lilly Ingebrigtsen Karlstad'],
+    2: ['Trond-Bjørnar Pedersen', 'Alma Lauritzen', 'Vetle Lauritzen', 'Jon Christoffersen',
+      'Ann Sissel Christoffersen', 'Siri Jaklin', 'Endre Laugerud', 'Hege Lauritzen',
+      'Ragnhild Lettrem Olsen', 'Leif Johnny Engseth'],
+    3: ['Berith Olsen', 'Tore Olsen', 'Karl Erik Thomassen', 'Anette Ingebrigtsen',
+      'Axel Ingebrigtsen Thomassen', 'Pernille Vebostad', 'Adrian Edvardsen',
+      'Stine Smith Ingebrigtsen', 'Tore Arnesen', 'Berit Skog'],
+    4: ['Ole Nicolai S. Aarbakke', 'Silje Ramsvatn', 'Vegard Lund Aspen', 'Silje Helèn',
+      'Silje-Kristin Jensen', 'Heidi Martens', 'Andreas Granaas', 'Mikal Johnsen',
+      'Kjerstin Johnsen'],
+    5: ['Siv Sofie Vian', 'Hege Oleanna Iversen', 'Christel Slettli Hansen',
+      'Gaute Myklebust', 'Astrid Løvberg Sørensen', 'Ronny Løvberg Sørensen',
+      'Maryam Amri', 'Torkel Fredriksen', 'Børge Finsæther'],
+    6: ['Tina Nikolaisen', 'Thomas Karlsen', 'Edvard Eilertsen', 'Christianne B. Eilertsen',
+      'Charlotte Marianne Hammer', 'Aslak Hammer', 'Kjell Ove Haug', 'Trond Haug',
+      'Susanne Jenssen', 'Jørn Magnus Karlsen'],
+    7: ['Kjell G Karlsen', 'Lillian Karlstad', 'Per Johnny Olsen', 'Elin Andersen',
+      'Vibeke Grønaas Sørlie', 'Håvard Sørlie', 'Gjermund Halvorsen',
+      'Kristin Halvorsen', 'Jorunn Karlstad'],
+    8: ['Kjell Jamissen', 'Ingrid Karlsen', 'Stian Simonsen', 'Tone Christin Nilsen',
+      'Øystein Aasland', 'Stine Jensen', 'Eirik Torbergsen', 'Siv-Cathrine Torbergsen',
+      'Merit Reiertsen'],
+    9: ['Marita Haugen', 'Kristina Rognmo', 'Åse Florholmen-Kjær',
+      'Håvard Florholmen-Kjær', 'Kristina Garfjell Kantola', 'Jan Heier Johansen',
+      'Kolbjørn Engeseth', 'Kristina Antonsen'],
+    10: ['Ellen Dølvik Eliassen', 'Maja Wilhelmsen', 'Thomas Helge Hansen', 'Erik Josefsen',
+      'Synne Gulbrandsen', 'Marianne Widding Bruwold', 'Hermine Widding Bruwold',
+      'Espen Widding Bruwold', 'Magnus Seppola'],
+  };
+  const BORDKART_STARTVINKEL = { 5: -110 };
+  const bordKartVisning = { skala: 1, x: 0, y: 0 };
+  let bordKartKlar = false;
+
   function initBord() {
     const inp = document.getElementById('bord-sok');
     if (!inp) return;
     inp.oninput = () => { bordSok = inp.value.trim().toLowerCase(); renderBord(); };
+    initBordKart();
+  }
+
+  function initBordKart() {
+    if (bordKartKlar) return;
+    const viewport = document.getElementById('bordkart-viewport');
+    if (!viewport) return;
+    bordKartKlar = true;
+
+    document.getElementById('bordkart-zoom-inn').onclick = () => zoomBordKart(1.25);
+    document.getElementById('bordkart-zoom-ut').onclick = () => zoomBordKart(0.8);
+    document.getElementById('bordkart-hele').onclick = () => tilpassBordKart();
+    viewport.addEventListener('wheel', e => {
+      e.preventDefault();
+      const rect = viewport.getBoundingClientRect();
+      zoomBordKart(e.deltaY < 0 ? 1.12 : 0.89, e.clientX - rect.left, e.clientY - rect.top);
+    }, { passive: false });
+
+    let drar = false;
+    let sistX = 0;
+    let sistY = 0;
+    viewport.addEventListener('pointerdown', e => {
+      if (e.button !== 0 || e.target.closest('.bordkart-gjest')) return;
+      drar = true;
+      sistX = e.clientX;
+      sistY = e.clientY;
+      viewport.classList.add('drar');
+      viewport.setPointerCapture(e.pointerId);
+    });
+    viewport.addEventListener('pointermove', e => {
+      if (!drar) return;
+      bordKartVisning.x += e.clientX - sistX;
+      bordKartVisning.y += e.clientY - sistY;
+      sistX = e.clientX;
+      sistY = e.clientY;
+      oppdaterBordKartTransform();
+    });
+    const stoppDra = () => {
+      drar = false;
+      viewport.classList.remove('drar');
+    };
+    viewport.addEventListener('pointerup', stoppDra);
+    viewport.addEventListener('pointercancel', stoppDra);
+    window.addEventListener('resize', () => {
+      if (aktivSide === 'bord') tilpassBordKart();
+    });
+  }
+
+  function oppdaterBordKartTransform() {
+    const scene = document.getElementById('bordkart-scene');
+    if (!scene) return;
+    scene.style.transform = `translate(${bordKartVisning.x}px, ${bordKartVisning.y}px) scale(${bordKartVisning.skala})`;
+  }
+
+  function tilpassBordKart() {
+    const viewport = document.getElementById('bordkart-viewport');
+    if (!viewport) return;
+    const skala = Math.min(viewport.clientWidth / BORDKART_BREDDE, viewport.clientHeight / BORDKART_HOYDE) * 0.96;
+    bordKartVisning.skala = skala;
+    bordKartVisning.x = (viewport.clientWidth - BORDKART_BREDDE * skala) / 2;
+    bordKartVisning.y = (viewport.clientHeight - BORDKART_HOYDE * skala) / 2;
+    oppdaterBordKartTransform();
+  }
+
+  function zoomBordKart(faktor, punktX, punktY) {
+    const viewport = document.getElementById('bordkart-viewport');
+    if (!viewport) return;
+    const px = punktX == null ? viewport.clientWidth / 2 : punktX;
+    const py = punktY == null ? viewport.clientHeight / 2 : punktY;
+    const gammel = bordKartVisning.skala;
+    const ny = Math.max(0.24, Math.min(2.4, gammel * faktor));
+    const sceneX = (px - bordKartVisning.x) / gammel;
+    const sceneY = (py - bordKartVisning.y) / gammel;
+    bordKartVisning.skala = ny;
+    bordKartVisning.x = px - sceneX * ny;
+    bordKartVisning.y = py - sceneY * ny;
+    oppdaterBordKartTransform();
+  }
+
+  function fokuserBord(nr) {
+    const viewport = document.getElementById('bordkart-viewport');
+    const pos = BORDKART_POSISJONER[nr];
+    if (!viewport || !pos) return;
+    const skala = Math.min(1.65, Math.max(0.9, viewport.clientWidth / 420));
+    bordKartVisning.skala = skala;
+    bordKartVisning.x = viewport.clientWidth / 2 - pos[0] * skala;
+    bordKartVisning.y = viewport.clientHeight / 2 - pos[1] * skala;
+    oppdaterBordKartTransform();
+  }
+
+  function normaliserBordkartNavn(navn) {
+    return String(navn || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9æøå]/g, '');
+  }
+
+  function sorterBordkartGjester(nr, gjester) {
+    const rekkefolge = BORDKART_REKKEFOLGE[nr] || [];
+    const ubrukt = gjester.slice();
+    const sortert = [];
+    rekkefolge.forEach(navn => {
+      const fasit = normaliserBordkartNavn(navn);
+      const idx = ubrukt.findIndex(g =>
+        normaliserBordkartNavn(g.navn) === fasit
+        || normaliserBordkartNavn(g.originalNavn) === fasit);
+      if (idx >= 0) sortert.push(ubrukt.splice(idx, 1)[0]);
+    });
+    ubrukt.sort((a, b) => {
+      const seteForskjell = (a.sete || 999) - (b.sete || 999);
+      return seteForskjell || a.navn.localeCompare(b.navn, 'nb-NO');
+    });
+    return sortert.concat(ubrukt);
+  }
+
+  function renderBordKart(bordMap) {
+    const scene = document.getElementById('bordkart-scene');
+    if (!scene) return;
+    bordKartGjester = [];
+    let html = '';
+    for (let nr = 1; nr <= 10; nr++) {
+      const pos = BORDKART_POSISJONER[nr];
+      const bord = bordMap[nr] || { type: 10, gjester: [] };
+      const tema = (typeof BORD_TEMA !== 'undefined' && BORD_TEMA[nr]) || null;
+      const temaNavn = tema && (tema.navn || tema.fjell);
+      const bordTreff = bordSok && bord.gjester.some(g => g.navn.toLowerCase().includes(bordSok));
+      html += `<button class="bordkart-bord${bordTreff ? ' bordkart-treff' : ''}" type="button"
+        data-bordkart-bord="${nr}" style="left:${pos[0]}px;top:${pos[1]}px"
+        aria-label="Zoom inn på bord ${nr}">
+        <span class="bordkart-bordnummer">${nr}</span>
+        ${temaNavn ? `<span class="bordkart-bordnavn">${esc(temaNavn)}</span>` : ''}
+      </button>`;
+
+      const kartGjester = sorterBordkartGjester(nr, bord.gjester);
+      const kapasitet = Math.max(kartGjester.length, 1);
+      kartGjester.forEach((g, index) => {
+        const sete = Number(g.sete) || index + 1;
+        const vinkel = (BORDKART_STARTVINKEL[nr] || -90) + (index / kapasitet) * 360;
+        const rad = vinkel * Math.PI / 180;
+        const x = pos[0] + Math.cos(rad) * 128;
+        const y = pos[1] + Math.sin(rad) * 128;
+        const init = g.navn.split(' ').map(s => s[0]).slice(0, 2).join('');
+        const fornavn = g.navn.split(' ')[0];
+        const idx = bordKartGjester.length;
+        bordKartGjester.push(g);
+        const treff = bordSok && g.navn.toLowerCase().includes(bordSok);
+        html += `<button class="bordkart-gjest${treff ? ' bordkart-treff' : ''}" type="button"
+          data-bordkart-gjest="${idx}" style="left:${x}px;top:${y}px"
+          aria-label="${esc(g.navn)}, bord ${nr}, sete ${sete}" title="${esc(g.navn)}">
+          ${g.bildeFil
+            ? `<img class="bordkart-avatar" src="${esc(g.bildeFil)}" alt="" />`
+            : `<span class="bordkart-avatar bordkart-init">${esc(init)}</span>`}
+          <span class="bordkart-gjestnavn">${esc(fornavn)}</span>
+          <span class="bordkart-sete">${sete}</span>
+        </button>`;
+      });
+    }
+    scene.innerHTML = html;
+    scene.querySelectorAll('[data-bordkart-bord]').forEach(el => {
+      el.onclick = () => fokuserBord(Number(el.dataset.bordkartBord));
+    });
+    scene.querySelectorAll('[data-bordkart-gjest]').forEach(el => {
+      el.onclick = e => {
+        e.stopPropagation();
+        visGjestModal(bordKartGjester[Number(el.dataset.bordkartGjest)]);
+      };
+    });
+
+    requestAnimationFrame(() => {
+      if (bordSok) {
+        const treff = Object.keys(bordMap).find(nr =>
+          bordMap[nr].gjester.some(g => g.navn.toLowerCase().includes(bordSok)));
+        if (treff) fokuserBord(Number(treff));
+      } else {
+        tilpassBordKart();
+      }
+    });
   }
 
   function renderBord() {
@@ -1355,6 +1590,7 @@
       b.gjester.sort((a, c) => (a.sete || 999) - (c.sete || 999));
     });
     const bordNumre = Object.keys(bordMap).map(n => +n).sort((a,b) => a - b);
+    renderBordKart(bordMap);
 
     let html = '';
     bordGjesterFlat = [];

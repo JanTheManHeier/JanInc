@@ -489,6 +489,22 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   await page.evaluate(() => document.querySelector('.nav > button[data-go="hjem"]').click());
   await page.locator('button[data-go="bord"]').first().click();
   await page.waitForTimeout(150);
+  assert.equal(await page.locator('.bordkart-bord').count(), 10,
+    'Det interaktive kartet skal vise alle ti bord i salen');
+  assert.ok(await page.locator('.bordkart-gjest').count() >= 1,
+    'Gjester med bordplassering skal vises i det interaktive kartet');
+  const transformFor = await page.locator('#bordkart-scene').evaluate(el => el.style.transform);
+  await page.locator('#bordkart-zoom-inn').click();
+  const transformEtter = await page.locator('#bordkart-scene').evaluate(el => el.style.transform);
+  assert.notEqual(transformEtter, transformFor, 'Zoom inn skal endre kartvisningen');
+  await page.locator('.bordkart-gjest').first().click();
+  await assert.doesNotReject(() => page.locator('#gjest-modal').waitFor({ state: 'visible' }));
+  assert.match(await page.locator('.gjest-modal-festvenn').innerText(), /Se festvennene til/,
+    'Gjesteprofilen fra kartet skal lenke til personens festvenner');
+  await page.locator('.gjest-modal-festvenn').click();
+  assert.equal(await page.locator('[data-page="bestevenn"]').isVisible(), true,
+    'Festvenn-lenken skal åpne festvennsiden for valgt gjest');
+  await page.locator('[data-page="bestevenn"] button[data-go="bord"]').click();
   assert.match(await page.locator('.bord-info').first().innerText(), /1\s*\/\s*10/,
     'Bord uten egen kapasitet skal være timannsbord');
   await page.locator('#bord-sok').fill('Dynamisk Ledsager');
@@ -507,6 +523,8 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   await page.locator('#meny-knapp').click();
   assert.equal(await page.locator('html').evaluate(el => el.classList.contains('meny-apen')), true,
     'Hamburgermenyen skal åpnes på mobil');
+  assert.match(await page.locator('.nav-pop-item[data-go="bord"]').innerText(), /Bordplassering/,
+    'Bordplassering skal være et eget menypunkt');
   const menyMaal = await page.locator('.nav').evaluate(nav => {
     nav.scrollTop = nav.scrollHeight;
     const siste = nav.querySelector('.nav-pop-item[data-go="hjelp"]');
@@ -734,6 +752,62 @@ test('Spillscore over 1000 lagres', async () => {
     delete require.cache[apiPath];
     if (originalDb) require.cache[dbPath] = originalDb;
     else delete require.cache[dbPath];
+  }
+});
+
+test('Gjestebilder beholdes når andre gjestefelt lagres', async () => {
+  const dbPath = require.resolve('../../api/shared/db');
+  const apiPath = require.resolve('../../api/siljeterje-gjest-edit');
+  const originalDb = require.cache[dbPath];
+  const originalAdminKey = process.env.ADMIN_KEY;
+  const queries = [];
+  require.cache[dbPath] = {
+    id: dbPath,
+    filename: dbPath,
+    loaded: true,
+    exports: {
+      TYPES: { NVarChar: 'nvarchar', Int: 'int', Bit: 'bit' },
+      getConnection: async () => ({ close() {} }),
+      executeQuery: async (_connection, sql, params) => {
+        queries.push({ sql, params });
+        return [];
+      },
+    },
+  };
+  process.env.ADMIN_KEY = 'test-key';
+  delete require.cache[apiPath];
+
+  try {
+    const handler = require(apiPath);
+    const context = { log: { error() {} } };
+    await handler(context, {
+      method: 'POST',
+      headers: {},
+      query: {},
+      body: { key: 'test-key', navn: 'Test Gjest', bio: 'Oppdatert tekst' },
+    });
+    assert.equal(context.res.status, 200);
+    const merge = queries.find(q => q.sql.includes('MERGE SiljeTerje_GjestEdit'));
+    assert.ok(merge.sql.includes('ELSE t.bildeUrl'),
+      'Eksisterende bilde skal beholdes når forespørselen ikke inneholder et nytt bilde');
+    assert.equal(merge.params.find(p => p.name === 'oppdaterBilde').value, 0);
+
+    queries.length = 0;
+    await handler(context, {
+      method: 'POST',
+      headers: {},
+      query: {},
+      body: { key: 'test-key', navn: 'Test Gjest', bildeUrl: 'data:image/jpeg;base64,test' },
+    });
+    const bildeMerge = queries.find(q => q.sql.includes('MERGE SiljeTerje_GjestEdit'));
+    assert.equal(bildeMerge.params.find(p => p.name === 'oppdaterBilde').value, 1,
+      'Et eksplisitt nytt bilde skal fortsatt lagres');
+  } finally {
+    delete require.cache[apiPath];
+    if (originalDb) require.cache[dbPath] = originalDb;
+    else delete require.cache[dbPath];
+    if (originalAdminKey === undefined) delete process.env.ADMIN_KEY;
+    else process.env.ADMIN_KEY = originalAdminKey;
   }
 });
 

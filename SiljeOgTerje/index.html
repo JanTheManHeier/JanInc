@@ -488,6 +488,19 @@
       <input id="bord-sok" class="side-sok" type="text" placeholder="🔍 Søk etter ditt navn..." />
     </div>
 
+    <div class="bordkart-panel">
+      <div class="bordkart-verktøy" aria-label="Kartverktøy">
+        <button id="bordkart-zoom-ut" type="button" aria-label="Zoom ut">−</button>
+        <button id="bordkart-hele" type="button">Hele salen</button>
+        <button id="bordkart-zoom-inn" type="button" aria-label="Zoom inn">+</button>
+      </div>
+      <div id="bordkart-viewport" class="bordkart-viewport" tabindex="0" aria-label="Interaktivt kart over bordplasseringen">
+        <div id="bordkart-scene" class="bordkart-scene"></div>
+      </div>
+      <p class="bordkart-hint">Trykk på et bord for å zoome inn. Dra kartet for å flytte det, og trykk på en gjest for å se profilen.</p>
+    </div>
+
+    <h3 class="section-title bordliste-tittel">Alle bord og gjester</h3>
     <div id="bord-liste"></div>
   </section>
 
@@ -597,6 +610,7 @@
   <div class="nav-group">
     <button class="nav-btn nav-group-btn" data-group="mer" aria-haspopup="true" aria-expanded="false"><span class="nav-icon">✨</span><span class="nav-label">Mer</span></button>
     <div class="nav-popover" id="pop-mer">
+      <button class="nav-pop-item" data-go="bord"><span class="nav-pop-ikon">🪑</span> Bordplassering</button>
       <button class="nav-pop-item" data-go="sang"><span class="nav-pop-ikon">🎵</span> Sang</button>
       <button class="nav-pop-item" data-go="spill"><span class="nav-pop-ikon">🫧</span> Moro</button>
       <button class="nav-pop-item" data-go="hjelp"><span class="nav-pop-ikon">❓</span> Hjelp</button>
