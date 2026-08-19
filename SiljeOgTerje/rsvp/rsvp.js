@@ -97,6 +97,7 @@
   }
 
   function fyllSkjema(s) {
+    if (aktivGjest) localStorage.setItem(`siljeterje-rsvp-svart:${gjestSlug(aktivGjest)}`, '1');
     if (s.fredag === true) settRadio('fredag', 'ja');
     else if (s.fredag === false) settRadio('fredag', 'nei');
     $('fredag-antall').value = s.fredagAntall || (s.fredag ? (s.antall || 1) : 1);
@@ -147,6 +148,7 @@
   });
 
   function visTakk(body) {
+    if (aktivGjest) localStorage.setItem(`siljeterje-rsvp-svart:${gjestSlug(aktivGjest)}`, '1');
     skjema.classList.add('skjult');
     takk.classList.remove('skjult');
     const fornavn = body.navn.split(' ')[0];

@@ -53,6 +53,7 @@
     applyFeatureFlags();
     // Init kjøres umiddelbart — DB-avhengige kall venter ikke på SQL-vekking
     initHjem();
+    oppdaterRsvpCta();
     initProgram();
     renderHero();
     renderOmoss();
@@ -79,6 +80,7 @@
       // Re-render gjester med eventuelle admin-overstyringer
       if (typeof renderGjester === 'function') renderGjester();
       if (aktivSide === 'bord') renderBord();
+      oppdaterRsvpCta();
       forhandsvelgBestevenn();
     });
   });
@@ -494,6 +496,44 @@
         qrEl.innerHTML = '<p class="muted">Kunne ikke generere QR: ' + e.message + '</p>';
       }
     }
+  }
+
+  function rsvpSlug(g) {
+    if (!g) return '';
+    if (g.slug) return g.slug;
+    if (g.bildeFil) {
+      const m = g.bildeFil.match(/([^\/\\]+)\.(?:jpg|jpeg|png|webp)$/i);
+      if (m) return m[1].toLowerCase();
+    }
+    return String(g.navn || '').toLowerCase()
+      .replace(/æ/g, 'ae').replace(/ø/g, 'o').replace(/å/g, 'a')
+      .replace(/[àáâ]/g, 'a').replace(/[èéê]/g, 'e').replace(/[ìí]/g, 'i')
+      .replace(/[òó]/g, 'o').replace(/[ùú]/g, 'u')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
+  async function oppdaterRsvpCta() {
+    const cta = document.getElementById('rsvp-cta');
+    if (!cta || !mittNavn) return;
+    const g = GJESTER.find(x =>
+      x.navn.toLowerCase() === mittNavn.toLowerCase()
+      || (x.originalNavn && x.originalNavn.toLowerCase() === mittNavn.toLowerCase()));
+    if (!g) return;
+    const slug = rsvpSlug(g);
+    if (!slug) return;
+    if (localStorage.getItem(`siljeterje-rsvp-svart:${slug}`) === '1') {
+      cta.hidden = true;
+      return;
+    }
+    try {
+      const r = await fetchMedTimeout(`${API_BASE}/siljeterje-rsvp?slug=${encodeURIComponent(slug)}`, {}, 60000);
+      if (!r.ok) return;
+      const data = await r.json();
+      if (data && data.svar) {
+        localStorage.setItem(`siljeterje-rsvp-svart:${slug}`, '1');
+        cta.hidden = true;
+      }
+    } catch {}
   }
 
   // ============ Program ============

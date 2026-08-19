@@ -662,6 +662,40 @@ test('RSVP registrerer minglekvelden og viser bekreftelse', async ({ browser, ba
   assert.equal(post.body.kunFredag, true);
   assert.equal(post.body.fredag, true);
   assert.equal(post.body.fredagAntall, 2);
+  const rsvpMarkorer = await page.evaluate(() =>
+    Object.keys(localStorage).filter(key => key.startsWith('siljeterje-rsvp-svart:')));
+  assert.equal(rsvpMarkorer.length, 1, 'Et lagret RSVP-svar skal huskes på samme enhet');
+  await context.close();
+});
+
+test('Forsiden skjuler invitasjonen når gjesten har svart', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ viewport: { width: 402, height: 874 } });
+  await context.addInitScript(() => {
+    localStorage.setItem('siljeterje-tilgang', '1');
+    localStorage.setItem('siljeterje-navn', 'Hege Lauritzen');
+    localStorage.setItem('siljeterje-install-dismissed', '1');
+  });
+  const page = await context.newPage();
+  await page.route('**/api/**', async route => {
+    const url = new URL(route.request().url());
+    if (url.pathname.endsWith('/siljeterje-rsvp') && url.searchParams.has('slug')) {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ svar: { navn: 'Hege Lauritzen', fredag: true } }),
+      });
+      return;
+    }
+    if (url.pathname.endsWith('/siljeterje-content')) {
+      await route.fulfill({ status: 200, contentType: 'application/json', body: '{"content":{}}' });
+      return;
+    }
+    await route.fulfill({ status: 200, contentType: 'application/json', body: '[]' });
+  });
+  await page.goto(`${baseURL}/SiljeOgTerje/`);
+  await assert.doesNotReject(() => page.locator('#rsvp-cta').waitFor({ state: 'hidden' }));
+  assert.equal(await page.locator('#rsvp-cta').isHidden(), true,
+    'Svar på invitasjonen skal ikke vises på forsiden etter lagret svar');
   await context.close();
 });
 
