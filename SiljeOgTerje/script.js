@@ -838,6 +838,8 @@
         gjestModal.hidden = true;
         gjestModal.style.display = 'none';
         visSide('bestevenn');
+        const tilbakeTilBord = document.getElementById('bestevenn-tilbake-bord');
+        if (tilbakeTilBord) tilbakeTilBord.hidden = false;
         const input = document.getElementById('bv-search');
         if (input) input.value = navn;
         visBestevenn(navn);
@@ -1412,28 +1414,74 @@
       zoomBordKart(e.deltaY < 0 ? 1.12 : 0.89, e.clientX - rect.left, e.clientY - rect.top);
     }, { passive: false });
 
+    const aktivePekere = new Map();
     let drar = false;
     let sistX = 0;
     let sistY = 0;
+    let pinchAvstand = 0;
+    let pinchMidtX = 0;
+    let pinchMidtY = 0;
     viewport.addEventListener('pointerdown', e => {
-      if (e.button !== 0 || e.target.closest('.bordkart-gjest')) return;
-      drar = true;
-      sistX = e.clientX;
-      sistY = e.clientY;
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      aktivePekere.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (aktivePekere.size === 1) {
+        drar = !e.target.closest('.bordkart-gjest, .bordkart-bord');
+        sistX = e.clientX;
+        sistY = e.clientY;
+        if (drar) {
+          try { viewport.setPointerCapture(e.pointerId); } catch {}
+        }
+      } else if (aktivePekere.size === 2) {
+        aktivePekere.forEach((_p, pointerId) => {
+          try { viewport.setPointerCapture(pointerId); } catch {}
+        });
+        const [a, b] = [...aktivePekere.values()];
+        pinchAvstand = Math.hypot(b.x - a.x, b.y - a.y);
+        pinchMidtX = (a.x + b.x) / 2;
+        pinchMidtY = (a.y + b.y) / 2;
+        drar = false;
+      }
       viewport.classList.add('drar');
-      viewport.setPointerCapture(e.pointerId);
     });
     viewport.addEventListener('pointermove', e => {
-      if (!drar) return;
-      bordKartVisning.x += e.clientX - sistX;
-      bordKartVisning.y += e.clientY - sistY;
-      sistX = e.clientX;
-      sistY = e.clientY;
-      oppdaterBordKartTransform();
+      if (!aktivePekere.has(e.pointerId)) return;
+      aktivePekere.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (aktivePekere.size >= 2) {
+        const [a, b] = [...aktivePekere.values()];
+        const avstand = Math.hypot(b.x - a.x, b.y - a.y);
+        const midtX = (a.x + b.x) / 2;
+        const midtY = (a.y + b.y) / 2;
+        bordKartVisning.x += midtX - pinchMidtX;
+        bordKartVisning.y += midtY - pinchMidtY;
+        const rect = viewport.getBoundingClientRect();
+        if (pinchAvstand > 0) {
+          zoomBordKart(avstand / pinchAvstand, midtX - rect.left, midtY - rect.top);
+        }
+        pinchAvstand = avstand;
+        pinchMidtX = midtX;
+        pinchMidtY = midtY;
+        return;
+      }
+      if (drar) {
+        bordKartVisning.x += e.clientX - sistX;
+        bordKartVisning.y += e.clientY - sistY;
+        sistX = e.clientX;
+        sistY = e.clientY;
+        oppdaterBordKartTransform();
+      }
     });
-    const stoppDra = () => {
-      drar = false;
-      viewport.classList.remove('drar');
+    const stoppDra = e => {
+      aktivePekere.delete(e.pointerId);
+      pinchAvstand = 0;
+      if (aktivePekere.size === 1) {
+        const p = [...aktivePekere.values()][0];
+        drar = true;
+        sistX = p.x;
+        sistY = p.y;
+      } else if (aktivePekere.size === 0) {
+        drar = false;
+        viewport.classList.remove('drar');
+      }
     };
     viewport.addEventListener('pointerup', stoppDra);
     viewport.addEventListener('pointercancel', stoppDra);
@@ -1477,7 +1525,9 @@
     const viewport = document.getElementById('bordkart-viewport');
     const pos = BORDKART_POSISJONER[nr];
     if (!viewport || !pos) return;
-    const skala = Math.min(1.65, Math.max(0.9, viewport.clientWidth / 420));
+    const skala = viewport.clientWidth < 600
+      ? Math.min(1.3, Math.max(1.1, viewport.clientWidth / 340))
+      : Math.min(1.65, Math.max(1.05, viewport.clientWidth / 420));
     bordKartVisning.skala = skala;
     bordKartVisning.x = viewport.clientWidth / 2 - pos[0] * skala;
     bordKartVisning.y = viewport.clientHeight / 2 - pos[1] * skala;
@@ -1828,6 +1878,13 @@
     const input = document.getElementById('bv-search');
     const dd = document.getElementById('bv-dropdown');
     if (!input || !dd) return;
+    const tilbakeTilBord = document.getElementById('bestevenn-tilbake-bord');
+    if (tilbakeTilBord) {
+      tilbakeTilBord.onclick = () => {
+        tilbakeTilBord.hidden = true;
+        visSide('bord');
+      };
+    }
 
     oppdaterFestvennFremheving();
     forhandsvelgBestevenn();

@@ -1098,6 +1098,20 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   color: var(--muted);
 }
 .bv-info-box > div { padding: 3px 0; }
+.bestevenn-tilbake-bord {
+  display: block;
+  margin: 10px 16px 14px;
+  padding: 10px 14px;
+  border: 1px solid rgba(var(--gold-rgb),0.38);
+  border-radius: 11px;
+  background: rgba(var(--gold-rgb),0.13);
+  color: var(--gold);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.bestevenn-tilbake-bord[hidden] { display: none; }
 
 /* Bord */
 .bordkart-panel {
@@ -1347,6 +1361,10 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bordkart-verktøy button {
   background: #fff9f7;
   color: var(--surface);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bestevenn-tilbake-bord {
+  background: #fff9f7;
+  color: var(--gold-deep);
 }
 
 @media (max-width: 520px) {

@@ -497,6 +497,30 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   await page.locator('#bordkart-zoom-inn').click();
   const transformEtter = await page.locator('#bordkart-scene').evaluate(el => el.style.transform);
   assert.notEqual(transformEtter, transformFor, 'Zoom inn skal endre kartvisningen');
+  const pinch = await page.locator('#bordkart-viewport').evaluate(viewport => {
+    const scene = document.getElementById('bordkart-scene');
+    const rect = viewport.getBoundingClientRect();
+    const send = (type, pointerId, x, y) => viewport.dispatchEvent(new PointerEvent(type, {
+      pointerId, pointerType: 'touch', isPrimary: pointerId === 1,
+      clientX: rect.left + x, clientY: rect.top + y, bubbles: true,
+    }));
+    const forPinch = scene.style.transform;
+    send('pointerdown', 1, 110, 180);
+    send('pointerdown', 2, 210, 180);
+    send('pointermove', 2, 290, 180);
+    send('pointerup', 2, 290, 180);
+    send('pointerup', 1, 110, 180);
+    return { forPinch, etterPinch: scene.style.transform };
+  });
+  assert.notEqual(pinch.etterPinch, pinch.forPinch,
+    'To fingre som dras fra hverandre skal zoome inn i kartet');
+  await page.locator('#bordkart-hele').click();
+  await page.locator('[data-bordkart-bord="1"]').evaluate(el => el.click());
+  const fokusSkala = await page.locator('#bordkart-scene').evaluate(el => {
+    const match = el.style.transform.match(/scale\(([\d.]+)\)/);
+    return match ? Number(match[1]) : 0;
+  });
+  assert.ok(fokusSkala >= 1.1, 'Et bord skal fylle mer av kartflaten når det åpnes på mobil');
   await page.locator('.bordkart-gjest').first().click();
   await assert.doesNotReject(() => page.locator('#gjest-modal').waitFor({ state: 'visible' }));
   assert.match(await page.locator('.gjest-modal-festvenn').innerText(), /Se festvennene til/,
@@ -504,7 +528,11 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   await page.locator('.gjest-modal-festvenn').click();
   assert.equal(await page.locator('[data-page="bestevenn"]').isVisible(), true,
     'Festvenn-lenken skal åpne festvennsiden for valgt gjest');
-  await page.locator('[data-page="bestevenn"] button[data-go="bord"]').click();
+  assert.equal(await page.locator('#bestevenn-tilbake-bord').isVisible(), true,
+    'Festvennsiden skal vise en tydelig vei tilbake til bordkartet');
+  await page.locator('#bestevenn-tilbake-bord').click();
+  assert.equal(await page.locator('[data-page="bord"]').isVisible(), true,
+    'Tilbakeknappen skal åpne bordkartet igjen');
   assert.match(await page.locator('.bord-info').first().innerText(), /1\s*\/\s*10/,
     'Bord uten egen kapasitet skal være timannsbord');
   await page.locator('#bord-sok').fill('Dynamisk Ledsager');
