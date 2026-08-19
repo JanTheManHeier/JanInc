@@ -73,6 +73,11 @@ module.exports = async function (context, req) {
         const sisteBesok = await executeQuery(connection, "SELECT TOP 50 navn, side, ip, opprettet FROM SiljeTerje_Besok ORDER BY opprettet DESC");
         const hilsener = await executeQuery(connection, "SELECT id, navn, tekst, opprettet FROM SiljeTerje_Hilsener ORDER BY opprettet DESC");
         const taler = await executeQuery(connection, "SELECT id, navn, epost, tema, melding, opprettet FROM SiljeTerje_Toaster ORDER BY opprettet DESC");
+        let musikk = [];
+        try {
+            musikk = await executeQuery(connection,
+                "SELECT id, navn, artist, laat, melding, opprettet FROM SiljeTerje_Musikkonske ORDER BY opprettet DESC");
+        } catch {}
         let highscore = [];
         try {
             highscore = await executeQuery(connection, `
@@ -108,6 +113,7 @@ module.exports = async function (context, req) {
                 sisteBesok,
                 hilsener,
                 taler,
+                musikk,
                 highscore,
                 spillTopp,
                 generertAt: new Date().toISOString()

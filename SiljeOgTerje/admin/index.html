@@ -271,8 +271,18 @@ function render(d) {
     <div class="stat-card"><div class="stat-num">${d.anonymeEnheter || 0}</div><div class="stat-label">Anonyme enheter</div></div>
     <div class="stat-card"><div class="stat-num">${d.hilsener.length}</div><div class="stat-label">Hilsener</div></div>
     <div class="stat-card"><div class="stat-num">${d.taler.length}</div><div class="stat-label">Taleforespørsler</div></div>
+    <div class="stat-card"><div class="stat-num">${d.musikk ? d.musikk.length : 0}</div><div class="stat-label">Musikkønsker</div></div>
     <div class="stat-card"><div class="stat-num">${d.highscore ? d.highscore.length : 0}</div><div class="stat-label">Quiz-spillere</div></div>
   </div>`;
+
+  h += '<h2>🎵 Musikkønsker</h2>';
+  if (d.musikk && d.musikk.length) {
+    h += '<table class="sortable-tabell"><thead><tr><th class="sortable" data-type="text">Navn</th><th class="sortable" data-type="text">Artist</th><th class="sortable" data-type="text">Låt</th><th>Melding</th><th class="sortable sort-desc" data-type="date">Sendt</th></tr></thead><tbody>';
+    h += d.musikk.map(r => `<tr><td><strong>${esc(r.navn)}</strong></td><td>${esc(r.artist || '')}</td><td>${esc(r.laat || '')}</td><td>${esc(r.melding || '')}</td><td data-sort="${r.opprettet || ''}">${dt(r.opprettet)}</td></tr>`).join('');
+    h += '</tbody></table>';
+  } else {
+    h += '<p class="muted">Ingen musikkønsker ennå.</p>';
+  }
 
   if (d.highscore && d.highscore.length) {
     h += '<h2>🏆 Quiz topp 10</h2>';

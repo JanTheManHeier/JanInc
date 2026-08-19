@@ -49,7 +49,7 @@ function startServer() {
   });
 }
 
-function mockApi(page, captured) {
+function mockApi(page, captured, options = {}) {
   return page.route('**/api/**', async route => {
     const req = route.request();
     const url = new URL(req.url());
@@ -57,6 +57,11 @@ function mockApi(page, captured) {
     if (req.method() === 'POST') {
       const body = req.postDataJSON();
       captured.push({ endpoint, body });
+      if (endpoint === 'siljeterje-musikk' && options.musicFailures > 0) {
+        options.musicFailures--;
+        await route.fulfill({ status: 500, contentType: 'application/json', body: JSON.stringify({ error: 'Testfeil' }) });
+        return;
+      }
       const response = endpoint === 'siljeterje-rsvp'
         ? { success: true, ledsagereOpprettet: String(body.ledsagere || '').split(/\n+/).filter(Boolean) }
         : { success: true };
@@ -85,7 +90,7 @@ function mockApi(page, captured) {
               tittel: 'Gaveønske', intro: 'Test gave', onsker: ['Bryllupsreise'],
               detaljer: 'Vipps 12345678\nMerk betalingen med navn',
             },
-            innstillinger: { musikkOnske: false },
+            innstillinger: { musikkOnske: !!options.musicEnabled },
           },
         }),
       });
@@ -97,7 +102,9 @@ function mockApi(page, captured) {
         contentType: 'application/json',
         body: JSON.stringify({
           generertAt: new Date().toISOString(), totalt: 12, unikeNavn: 3, anonymeEnheter: 2,
-          hilsener: [], taler: [], highscore: [], spillTopp: [],
+          hilsener: [], taler: [],
+          musikk: [{ id: 1, navn: 'Test Gjest', artist: 'Testartist', laat: 'Testlåt', melding: '', opprettet: new Date().toISOString() }],
+          highscore: [], spillTopp: [],
           perNavn: [
             { navn: 'Eldst Aktiv', besok: 20, forste: '2026-08-01T10:00:00Z', sist: '2026-08-10T10:00:00Z', ip: '' },
             { navn: 'Nyest Aktiv', besok: 1, forste: '2026-08-14T15:00:00Z', sist: '2026-08-14T16:00:00Z', ip: '' },
@@ -557,6 +564,42 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   await context.close();
 });
 
+test('Musikkønsker beholdes lokalt og kan sendes på nytt', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ viewport: { width: 402, height: 874 } });
+  await context.addInitScript(() => {
+    localStorage.setItem('siljeterje-tilgang', '1');
+    localStorage.setItem('siljeterje-navn', 'Test Gjest');
+    localStorage.setItem('siljeterje-install-dismissed', '1');
+  });
+  const page = await context.newPage();
+  const captured = [];
+  const options = { musicEnabled: true, musicFailures: 1 };
+  await mockApi(page, captured, options);
+  await page.goto(`${baseURL}/SiljeOgTerje/`);
+  await assert.doesNotReject(() => page.locator('[data-go="musikk"]').first().waitFor({ state: 'visible' }));
+  await page.locator('[data-go="musikk"]').first().click();
+  await page.locator('#musikk-artist').fill('Testartist');
+  await page.locator('#musikk-laat').fill('Testlåt');
+  await page.locator('#musikk-lagre').click();
+  await assert.doesNotReject(() => page.locator('#musikk-status').filter({ hasText: 'lagret trygt' }).waitFor());
+
+  const ventende = await page.evaluate(() => JSON.parse(localStorage.getItem('siljeterje-musikk-ko') || '[]'));
+  assert.equal(ventende.length, 1);
+  assert.ok(ventende[0].requestId, 'Ventende forslag skal ha en stabil requestId');
+  assert.equal(await page.locator('#musikk-laat').inputValue(), 'Testlåt',
+    'Skjemaet skal ikke tømmes når sending feiler');
+
+  await page.locator('#musikk-proev-igjen').click();
+  await page.waitForTimeout(150);
+  const etterRetry = await page.evaluate(() => JSON.parse(localStorage.getItem('siljeterje-musikk-ko') || '[]'));
+  assert.equal(etterRetry.length, 0, 'Forslaget skal fjernes fra lokal kø etter vellykket sending');
+  const requests = captured.filter(x => x.endpoint === 'siljeterje-musikk');
+  assert.equal(requests.length, 2);
+  assert.equal(requests[0].body.requestId, requests[1].body.requestId,
+    'Retry skal bruke samme requestId og være idempotent');
+  await context.close();
+});
+
 test('RSVP registrerer minglekvelden og viser bekreftelse', async ({ browser, baseURL }) => {
   const context = await browser.newContext({ viewport: { width: 402, height: 874 } });
   const page = await context.newPage();
@@ -595,6 +638,9 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   assert.match(await page.locator('#besok-per-navn thead').innerText(), /Sist aktiv/);
   assert.match(await page.locator('.stat-card', { hasText: 'Navngitte profiler' }).innerText(), /3/);
   assert.match(await page.locator('.stat-card', { hasText: 'Anonyme enheter' }).innerText(), /2/);
+  assert.match(await page.locator('.stat-card', { hasText: 'Musikkønsker' }).innerText(), /1/);
+  assert.ok(await page.locator('table').filter({ hasText: 'Testlåt' }).count(),
+    'Admin skal vise lagrede musikkønsker');
   assert.equal(await page.locator('#i-musikk').isChecked(), false);
   assert.equal(await page.locator('#i-passord').isChecked(), true);
   assert.ok(await page.locator('.program-rad [data-k="lat"]').count() >= 4);

@@ -22,6 +22,7 @@
   const STORAGE_TEMA = 'siljeterje-tema';
   const STORAGE_MENY = 'siljeterje-meny';
   const STORAGE_FESTVENN_APNET = 'siljeterje-festvenn-apnet';
+  const STORAGE_MUSIKK_KO = 'siljeterje-musikk-ko';
   const API_BASE = '/api';
 
   let mittNavn = localStorage.getItem(STORAGE_NAVN) || '';
@@ -941,6 +942,47 @@
     if (!lagre) return;
     if (mittNavn) document.getElementById('musikk-navn').value = mittNavn;
     lagre.onclick = sendMusikk;
+    const proevIgjen = document.getElementById('musikk-proev-igjen');
+    if (proevIgjen) proevIgjen.onclick = sendVentendeMusikk;
+    oppdaterMusikkKoStatus();
+  }
+
+  function musikkRequestId() {
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
+    return `musikk-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  }
+
+  function hentVentendeMusikk() {
+    try {
+      const data = JSON.parse(localStorage.getItem(STORAGE_MUSIKK_KO) || '[]');
+      return Array.isArray(data) ? data : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function lagreVentendeMusikk(data) {
+    const ko = hentVentendeMusikk();
+    if (!ko.some(x => x.requestId === data.requestId)) ko.push(data);
+    localStorage.setItem(STORAGE_MUSIKK_KO, JSON.stringify(ko.slice(-100)));
+    oppdaterMusikkKoStatus();
+  }
+
+  function fjernVentendeMusikk(requestId) {
+    const ko = hentVentendeMusikk().filter(x => x.requestId !== requestId);
+    localStorage.setItem(STORAGE_MUSIKK_KO, JSON.stringify(ko));
+    oppdaterMusikkKoStatus();
+  }
+
+  function oppdaterMusikkKoStatus() {
+    const antall = hentVentendeMusikk().length;
+    const knapp = document.getElementById('musikk-proev-igjen');
+    if (knapp) knapp.hidden = antall === 0;
+    if (!antall) return;
+    const status = document.getElementById('musikk-status');
+    if (status && !status.textContent) {
+      status.textContent = `${antall} forslag er lagret trygt på denne enheten og venter på sending.`;
+    }
   }
 
   async function sendMusikk() {
@@ -949,10 +991,19 @@
       artist: document.getElementById('musikk-artist').value.trim(),
       laat: document.getElementById('musikk-laat').value.trim(),
       melding: document.getElementById('musikk-melding').value.trim(),
+      requestId: musikkRequestId(),
     };
     if (!data.navn) { toast('Skriv inn ditt navn'); return; }
     if (!data.artist && !data.laat) { toast('Skriv inn artist eller låt'); return; }
+    lagreVentendeMusikk(data);
+    await sendMusikkData(data, true);
+    if (data.navn) settNavn(data.navn);
+  }
+
+  async function sendMusikkData(data, visBekreftelse) {
     const status = document.getElementById('musikk-status');
+    const lagre = document.getElementById('musikk-lagre');
+    if (lagre) lagre.disabled = true;
     status.textContent = 'Sender...';
     try {
       const res = await fetchMedTimeout(`${API_BASE}/siljeterje-musikk`, {
@@ -962,19 +1013,43 @@
       }, 60000);
       if (res.status === 429) {
         const d = await res.json().catch(() => ({}));
-        status.textContent = d.error || 'For mange musikkønsker — vent litt';
-        return;
+        status.textContent = `${d.error || 'For mange musikkønsker — vent litt'} Forslaget er lagret på denne enheten.`;
+        sporBesok('musikk-rate-limit');
+        oppdaterMusikkKoStatus();
+        return false;
       }
       if (!res.ok) throw new Error('API feil');
+      fjernVentendeMusikk(data.requestId);
       status.textContent = '';
-      toast('🎵 Musikkønsket er sendt!');
-      document.getElementById('musikk-artist').value = '';
-      document.getElementById('musikk-laat').value = '';
-      document.getElementById('musikk-melding').value = '';
+      sporBesok('musikk-sendt');
+      if (visBekreftelse) {
+        toast('🎵 Musikkønsket er sendt og lagret!');
+        document.getElementById('musikk-artist').value = '';
+        document.getElementById('musikk-laat').value = '';
+        document.getElementById('musikk-melding').value = '';
+      }
+      return true;
     } catch (e) {
-      status.textContent = 'Kunne ikke sende — prøv igjen senere';
+      status.textContent = 'Kunne ikke sende nå. Forslaget er lagret trygt på denne enheten.';
+      sporBesok('musikk-feil');
+      oppdaterMusikkKoStatus();
+      return false;
+    } finally {
+      if (lagre) lagre.disabled = false;
     }
-    if (data.navn) settNavn(data.navn);
+  }
+
+  async function sendVentendeMusikk() {
+    const knapp = document.getElementById('musikk-proev-igjen');
+    if (knapp) knapp.disabled = true;
+    let sendt = 0;
+    for (const data of hentVentendeMusikk()) {
+      if (!await sendMusikkData(data, false)) break;
+      sendt++;
+    }
+    if (knapp) knapp.disabled = false;
+    if (sendt) toast(`🎵 ${sendt} lagrede forslag ble sendt!`);
+    oppdaterMusikkKoStatus();
   }
 
   // ============ Sang ============

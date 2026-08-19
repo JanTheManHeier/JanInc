@@ -10,8 +10,14 @@ CREATE TABLE SiljeTerje_Musikkonske (
     artist NVARCHAR(200) NULL,
     laat NVARCHAR(200) NULL,
     melding NVARCHAR(MAX) NULL,
+    requestId NVARCHAR(80) NULL,
     opprettet DATETIME2 DEFAULT GETDATE()
-);`;
+);
+IF COL_LENGTH('SiljeTerje_Musikkonske', 'requestId') IS NULL
+    ALTER TABLE SiljeTerje_Musikkonske ADD requestId NVARCHAR(80) NULL;
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'UX_SiljeTerje_Musikkonske_RequestId')
+    CREATE UNIQUE INDEX UX_SiljeTerje_Musikkonske_RequestId
+    ON SiljeTerje_Musikkonske(requestId) WHERE requestId IS NOT NULL;`;
 
 const MUSIKK_TO = process.env.MUSIKK_NOTIFY_TO || 'terje.karlstad@snn.no';
 const MUSIKK_CC = process.env.MUSIKK_NOTIFY_CC || 'isilje@hotmail.com';
@@ -55,7 +61,7 @@ module.exports = async function (context, req) {
     const headers = { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' };
     let connection;
     try {
-        const rl = sjekkRate(req, 'musikk', 5);
+        const rl = sjekkRate(req, 'musikk', 30);
         if (!rl.ok) {
             context.res = { status: 429, headers, body: { error: `For mange musikkønsker. Prøv igjen om ${rl.gjenstaar} sek.` } };
             return;
@@ -63,13 +69,14 @@ module.exports = async function (context, req) {
         connection = await getConnection();
         await executeQuery(connection, ENSURE_TABLE_SQL);
 
-        const { navn, artist, laat, melding } = req.body || {};
+        const { navn, artist, laat, melding, requestId } = req.body || {};
         if (!navn || (!artist && !laat)) {
             context.res = { status: 400, headers, body: { error: 'navn og minst artist eller låt påkrevd' } };
             return;
         }
         if (String(navn).length > 100 || (artist && String(artist).length > 200) ||
-            (laat && String(laat).length > 200) || (melding && String(melding).length > 2000)) {
+            (laat && String(laat).length > 200) || (melding && String(melding).length > 2000) ||
+            (requestId && String(requestId).length > 80)) {
             context.res = { status: 400, headers, body: { error: 'For lange felter' } };
             return;
         }
@@ -78,14 +85,31 @@ module.exports = async function (context, req) {
         const artistRen = artist ? String(artist).trim() : null;
         const laatRen = laat ? String(laat).trim() : null;
         const meldingRen = melding ? String(melding).trim() : null;
+        const requestIdRen = requestId ? String(requestId).trim() : null;
+
+        if (requestIdRen) {
+            const eksisterende = await executeQuery(connection,
+                'SELECT TOP 1 id FROM SiljeTerje_Musikkonske WHERE requestId = @requestId',
+                [{ name: 'requestId', type: TYPES.NVarChar, value: requestIdRen }]
+            );
+            if (eksisterende.length) {
+                context.res = { status: 200, headers, body: { success: true, duplicate: true } };
+                return;
+            }
+        }
 
         await executeQuery(connection,
-            'INSERT INTO SiljeTerje_Musikkonske (navn, artist, laat, melding) VALUES (@navn, @artist, @laat, @melding)',
+            `INSERT INTO SiljeTerje_Musikkonske (navn, artist, laat, melding, requestId)
+             SELECT @navn, @artist, @laat, @melding, @requestId
+             WHERE @requestId IS NULL OR NOT EXISTS (
+                 SELECT 1 FROM SiljeTerje_Musikkonske WHERE requestId = @requestId
+             )`,
             [
                 { name: 'navn', type: TYPES.NVarChar, value: navnRen },
                 { name: 'artist', type: TYPES.NVarChar, value: artistRen },
                 { name: 'laat', type: TYPES.NVarChar, value: laatRen },
-                { name: 'melding', type: TYPES.NVarChar, value: meldingRen }
+                { name: 'melding', type: TYPES.NVarChar, value: meldingRen },
+                { name: 'requestId', type: TYPES.NVarChar, value: requestIdRen }
             ]
         );
 
