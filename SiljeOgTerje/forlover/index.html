@@ -9,7 +9,7 @@
 <style>
   :root {
     --gull: #A04E5C; --gull-lys: #C4737E; --gull-bg: rgba(196,115,126,0.10);
-    --krem: #FCF5F0; --kort: #FFFFFF; --tekst: #3A2C42; --muted: #6B7A8C;
+    --krem: #FCF5F0; --kort: #FFFFFF; --tekst: #3A2C42; --muted: #5F6D7E;
     --kant: rgba(196,115,126,0.30);
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -22,9 +22,9 @@
   header { text-align: center; padding: 18px 20px 6px; }
   header .emoji { font-size: 30px; }
   header h1 { color: var(--gull); font-size: 22px; font-weight: 600; margin-top: 2px; }
-  header p { color: var(--muted); font-size: 13px; margin-top: 4px; }
-  .hemmelig-banner { background: #FCF6E4; border: 1px dashed var(--kant); color: #7A5F1E;
-    border-radius: 10px; font-size: 12.5px; padding: 8px 12px; margin: 8px 20px 0; text-align: center; }
+  header p { color: var(--muted); font-size: 15px; margin-top: 4px; }
+  .hemmelig-banner { background: #FCF6E4; border: 1px dashed var(--kant); color: #6B5219;
+    border-radius: 10px; font-size: 14px; padding: 8px 12px; margin: 8px 20px 0; text-align: center; }
 
   .velg-wrap { padding: 24px 20px; text-align: center; }
   .velg-wrap h2 { color: var(--gull); font-size: 20px; margin-bottom: 6px; }
@@ -37,26 +37,26 @@
   .velg-knapp:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(196,115,126,0.22); border-color: var(--gull-lys); }
   .velg-knapp .emoji { font-size: 32px; }
   .velg-knapp .navn { font-size: 17px; color: var(--gull); font-weight: 600; display: block; }
-  .velg-knapp .velg-side { font-size: 12.5px; color: var(--muted); display: block; }
+  .velg-knapp .velg-side { font-size: 14px; color: var(--muted); display: block; }
 
   .person-bar { display: flex; align-items: center; justify-content: space-between;
-    padding: 8px 20px; font-size: 13px; color: var(--muted); }
+    padding: 8px 20px; font-size: 14px; color: var(--muted); }
   .person-bar b { color: var(--gull); }
-  .person-bar a { color: var(--gull-lys); cursor: pointer; text-decoration: underline; }
+  .person-bar a { color: var(--gull); cursor: pointer; text-decoration: underline; }
 
   .fremdrift { padding: 4px 20px 0; }
   .fremdrift-bar { height: 7px; background: var(--gull-bg); border-radius: 6px; overflow: hidden; }
   .fremdrift-fyll { height: 100%; background: linear-gradient(90deg, var(--gull-lys), var(--gull)); width: 0; transition: width .3s; }
-  .fremdrift-tekst { font-size: 12px; color: var(--muted); margin: 6px 2px 0; display: flex; justify-content: space-between; }
+  .fremdrift-tekst { font-size: 13px; color: var(--muted); margin: 6px 2px 0; display: flex; justify-content: space-between; }
 
   .seksjon { padding: 14px 20px 0; }
   .seksjon-tittel { color: var(--gull); font-size: 20px; margin-bottom: 2px; }
-  .seksjon-intro { color: var(--muted); font-size: 13px; margin: 6px 0 8px;
+  .seksjon-intro { color: var(--muted); font-size: 14px; margin: 6px 0 8px;
     background: var(--gull-bg); border-radius: 10px; padding: 8px 12px; }
   .sp { background: var(--kort); border: 1px solid var(--kant); border-radius: 14px;
     padding: 14px; margin: 12px 0; box-shadow: 0 2px 8px rgba(26,44,63,0.05); }
   .sp-tittel { font-size: 16px; font-weight: 600; color: var(--tekst); }
-  .sp-hjelp { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .sp-hjelp { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 8px; }
   .chip { background: var(--gull-bg); border: 1px solid var(--kant); color: var(--gull);
     border-radius: 20px; padding: 6px 14px; font-size: 14px; cursor: pointer; }
@@ -72,7 +72,7 @@
   .knapp.primar { background: linear-gradient(135deg, var(--gull-lys), var(--gull)); color: #fff; flex: 1; box-shadow: 0 2px 10px rgba(196,115,126,0.3); }
   .knapp.sekundar { background: var(--kort); color: var(--tekst); border: 1px solid var(--kant); }
   .knapp:disabled { opacity: .4; cursor: default; }
-  .status { font-size: 13px; color: var(--muted); padding: 8px 20px 0; min-height: 20px; text-align: center; }
+  .status { font-size: 14px; color: var(--muted); padding: 8px 20px 0; min-height: 20px; text-align: center; }
   .status.ok { color: #4E8A53; }
   .status.feil { color: #B85050; }
 

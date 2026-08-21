@@ -25,6 +25,32 @@
   const STORAGE_MUSIKK_KO = 'siljeterje-musikk-ko';
   const API_BASE = '/api';
 
+  // Bordfargene er valgt som dekor og blir for lyse som tekst på lyst tema.
+  // Mørkner fargen trinnvis til den når WCAG AA (4.5:1) mot lys bakgrunn.
+  // Referansen er det mørkeste lyse kortet (lavendel toastmaster-kort),
+  // slik at fargen holder kravet uansett hvilket kort pillen havner på.
+  function lesbarFarge(hex, bakgrunn) {
+    const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
+    if (!m) return hex;
+    const tall = parseInt(m[1], 16);
+    let rgb = [(tall >> 16) & 255, (tall >> 8) & 255, tall & 255];
+    const bak = bakgrunn || [216, 196, 232];
+    const lum = (c) => {
+      const l = c.map(v => {
+        const s = v / 255;
+        return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * l[0] + 0.7152 * l[1] + 0.0722 * l[2];
+    };
+    const bakLum = lum(bak);
+    for (let i = 0; i < 40; i++) {
+      const kontrast = (Math.max(lum(rgb), bakLum) + 0.05) / (Math.min(lum(rgb), bakLum) + 0.05);
+      if (kontrast >= 4.5) break;
+      rgb = rgb.map(v => Math.max(0, Math.round(v * 0.92)));
+    }
+    return '#' + rgb.map(v => v.toString(16).padStart(2, '0')).join('');
+  }
+
   let mittNavn = localStorage.getItem(STORAGE_NAVN) || '';
   let aktivSide = 'hjem';
   let map = null;
@@ -806,7 +832,7 @@
       const bordTag = g.bord && !g.avbud ? (() => {
         const t = (typeof BORD_TEMA !== 'undefined' && BORD_TEMA[g.bord]) || null;
         return t
-          ? `<span class="gjest-bord-tag" style="background:${t.farge}22;border-color:${t.farge}AA;color:${t.farge}">🪑 Bord ${esc(String(g.bord))} · ${esc(t.ikon || '📍')} ${esc(t.navn || t.fjell)}</span>`
+          ? `<span class="gjest-bord-tag" style="background:${t.farge}22;border-color:${t.farge}AA;color:var(--bord-tekst,${t.farge});--bord-tekst-mork:${lesbarFarge(t.farge)}">🪑 Bord ${esc(String(g.bord))} · ${esc(t.ikon || '📍')} ${esc(t.navn || t.fjell)}</span>`
           : `<span class="gjest-bord-tag">🪑 Bord ${esc(String(g.bord))}</span>`;
       })() : '';
       return `
@@ -851,7 +877,7 @@
       ${g.bord && !g.avbud ? (() => {
         const t = (typeof BORD_TEMA !== 'undefined' && BORD_TEMA[g.bord]) || null;
         return t
-          ? `<div class="gjest-modal-bord" style="background:${t.farge}33;border-color:${t.farge}AA;color:${t.farge}">🪑 Bord ${esc(String(g.bord))} — 🏔️ ${esc(t.fjell)}</div>`
+          ? `<div class="gjest-modal-bord" style="background:${t.farge}33;border-color:${t.farge}AA;color:var(--bord-tekst,${t.farge});--bord-tekst-mork:${lesbarFarge(t.farge)}">🪑 Bord ${esc(String(g.bord))} — 🏔️ ${esc(t.fjell)}</div>`
           : `<div class="gjest-modal-bord">🪑 Bord ${esc(String(g.bord))}</div>`;
       })() : ''}
       <div class="gjest-modal-bio">${esc(g.bio)}</div>
@@ -1695,7 +1721,7 @@
       const tittel = tema
         ? `<span class="bord-fjell">${esc(tema.ikon || '📍')} ${esc(temaNavn)}</span>${temaMeta ? `<span class="bord-fjell-meta">${esc(temaMeta)}</span>` : ''}`
         : `<span class="bord-fjell">Bord ${nr}</span>`;
-      html += `<div class="bord-kort${utheve}" id="bord-${nr}" style="--bord-farge:${farge}">
+      html += `<div class="bord-kort${utheve}" id="bord-${nr}" style="--bord-farge:${farge};--bord-farge-mork:${lesbarFarge(farge)}">
         <div class="bord-header">
           <div class="bord-tittel">
             <span class="bord-nr-mini">Bord ${nr}</span>

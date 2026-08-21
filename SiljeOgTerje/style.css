@@ -82,6 +82,8 @@
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
 html { width: 100%; overflow-x: hidden; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 html, body { background: var(--bg); color: var(--text); font-family: 'Palatino Linotype', 'Book Antiqua', Georgia, serif; }
+/* Standard line-height (~1.2) er for tett for brødtekst på mobil. */
+body { line-height: 1.45; }
 body {
   width: 100%;
   max-width: 520px;
@@ -112,17 +114,17 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   font-family: inherit;
 }
 .score-navn-input { margin: 8px 0; padding: 10px 12px; }
-.score-navn-prompt { color: var(--gold); font-size: 14px; font-weight: 600; }
+.score-navn-prompt { color: var(--gold); font-size: 15px; font-weight: 600; }
 .sok-tom {
   grid-column: 1 / -1;
   text-align: center;
   color: var(--muted);
   padding: 20px;
-  font-size: 15px;
+  font-size: 16px;
 }
 
-.muted { font-size: 15px; line-height: 1.5; color: var(--muted2); padding: 0 20px 12px; }
-.muted.small { font-size: 14px; padding: 8px 20px 0; }
+.muted { font-size: 16px; line-height: 1.5; color: var(--muted2); padding: 0 20px 12px; }
+.muted.small { font-size: 15px; padding: 8px 20px 0; }
 
 /* HERO */
 .hero {
@@ -185,7 +187,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border: 1px solid rgba(var(--gold-rgb),0.4);
   border-radius: 12px;
   padding: 8px 16px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--gold);
   font-weight: bold;
 }
@@ -214,7 +216,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 .section { padding: 16px 20px; }
 .section.center { text-align: center; }
 .section-title { font-size: 18px; color: var(--gold); margin-bottom: 10px; font-style: italic; }
-.section-title.small-title { font-size: 15px; margin-top: 16px; }
+.section-title.small-title { font-size: 16px; margin-top: 16px; }
 .lead { font-size: 17px; color: var(--text-soft2); line-height: 1.7; }
 
 .om-card {
@@ -224,7 +226,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-soft);
   line-height: 1.5;
 }
@@ -238,9 +240,9 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border-radius: 6px;
   padding: 8px 12px;
 }
-.karriere-item .tittel { font-size: 13px; color: var(--text); font-weight: bold; }
-.karriere-item .selskap { font-size: 12px; color: var(--muted); }
-.karriere-item .periode { font-size: 11px; color: #5A7A8A; font-style: italic; }
+.karriere-item .tittel { font-size: 15px; color: var(--text); font-weight: bold; }
+.karriere-item .selskap { font-size: 14px; color: var(--muted); }
+.karriere-item .periode { font-size: 13px; color: #5A7A8A; font-style: italic; }
 
 /* Buttons */
 .btn-primary, .btn-secondary, .btn-danger, .btn-link, .btn-link-box {
@@ -259,7 +261,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 .btn-primary { background: linear-gradient(135deg, var(--gold), var(--gold-border)); color: var(--bg); }
 .btn-secondary { background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid rgba(255,255,255,0.15); }
 .btn-danger { background: #C04040; color: #fff; }
-.btn-link { background: none; color: var(--muted2); font-size: 13px; font-weight: normal; }
+.btn-link { background: none; color: var(--muted2); font-size: 15px; font-weight: normal; }
 .btn-link-box { background: rgba(var(--gold-rgb),0.15); border: 1px solid rgba(var(--gold-rgb),0.4); color: var(--gold); }
 
 /* Page */
@@ -289,9 +291,9 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 .program-info { min-width: 0; }
 .program-info .sted { font-size: 18px; font-weight: bold; color: var(--text); margin-bottom: 4px; }
 .program-info .beskrivelse { font-size: 16px; color: var(--muted); line-height: 1.55; margin-bottom: 8px; }
-.program-info .adresse { font-size: 15px; color: var(--muted2); line-height: 1.4; margin-bottom: 7px; }
-.kart-link { display: inline-block; font-size: 15px; color: var(--gold); text-decoration: none; font-weight: bold; }
-.program-nettside { display: block; margin-top: 7px; }
+.program-info .adresse { font-size: 16px; color: var(--muted2); line-height: 1.4; margin-bottom: 7px; }
+.kart-link { display: inline-flex; align-items: center; min-height: 44px; padding: 4px 0; font-size: 16px; color: var(--gold); text-decoration: none; font-weight: bold; }
+.program-nettside { display: flex; margin-top: 7px; }
 .vis-i-kart {
   display: block;
   width: 100%;
@@ -303,7 +305,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   background: rgba(var(--gold-rgb), .12);
   color: var(--gold);
   font: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -318,6 +320,13 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   margin: 8px 0;
   z-index: 1;
 }
+/* Leaflet-kontrollene er 30px som standard — for små som berøringsmål. */
+.leaflet-control-zoom a {
+  width: 44px !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  font-size: 20px !important;
+}
 
 .info-box {
   margin: 0 16px;
@@ -327,7 +336,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-soft2);
   line-height: 1.5;
 }
@@ -343,7 +352,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   display: flex;
   justify-content: space-around;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-soft2);
 }
 .gjester-stats strong { display: block; font-size: 22px; color: var(--gold); }
@@ -355,7 +364,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   color: var(--text-soft2);
   padding: 6px 14px;
   border-radius: 20px;
-  font-size: 13px;
+  font-size: 15px;
   cursor: pointer;
   white-space: nowrap;
   min-height: 44px;
@@ -399,9 +408,9 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   display: block;
 }
 .gjest-lenker { display: flex; gap: 8px; justify-content: center; margin-top: 4px; }
-.gjest-navn { font-size: 15px; font-weight: bold; color: var(--text); text-align: center; }
+.gjest-navn { font-size: 16px; font-weight: bold; color: var(--text); text-align: center; }
 .gjest-bio {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
   line-height: 1.5;
   text-align: center;
@@ -414,19 +423,19 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .gjest-les-mer {
   color: var(--gold);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   text-align: center;
 }
-.gjest-fbbio { font-size: 10px; color: var(--muted2); line-height: 1.4; text-align: center; padding: 4px 6px; background: rgba(255,255,255,0.03); border-radius: 6px; margin-top: 4px; }
-.gjest-extra { font-size: 11px; color: var(--gold); line-height: 1.4; text-align: center; padding: 4px 6px; background: rgba(var(--gold-rgb),0.12); border-radius: 6px; margin-top: 4px; font-weight: bold; }
-.gjest-rel { font-size: 10px; color: var(--accent-2); text-align: center; padding: 2px 6px; margin-top: 4px; font-style: italic; }
-.bord-rel { font-size: 10px; color: var(--accent-2); font-style: italic; padding: 2px 6px; }
-.gjest-fb-link { font-size: 10px; color: #7EB8D4; text-decoration: none; text-align: center; margin-top: 4px; }
+.gjest-fbbio { font-size: 12px; color: var(--muted2); line-height: 1.4; text-align: center; padding: 4px 6px; background: rgba(255,255,255,0.03); border-radius: 6px; margin-top: 4px; }
+.gjest-extra { font-size: 13px; color: var(--gold); line-height: 1.4; text-align: center; padding: 4px 6px; background: rgba(var(--gold-rgb),0.12); border-radius: 6px; margin-top: 4px; font-weight: bold; }
+.gjest-rel { font-size: 12px; color: var(--accent-2); text-align: center; padding: 2px 6px; margin-top: 4px; font-style: italic; }
+.bord-rel { font-size: 12px; color: var(--accent-2); font-style: italic; padding: 2px 6px; }
+.gjest-fb-link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; font-size: 14px; color: #7EB8D4; text-decoration: none; text-align: center; margin-top: 4px; }
 .gjest-fb-link:hover { color: #B0D8E8; }
 .gjest-tag {
   display: inline-block;
-  font-size: 11px;
+  font-size: 13px;
   background: rgba(var(--gold-rgb),0.2);
   color: var(--gold);
   padding: 2px 8px;
@@ -443,7 +452,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 
 .gjest-bord-tag {
   display: inline-block;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   background: rgba(var(--gold-rgb),0.18);
   color: var(--gold);
@@ -471,7 +480,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border: none;
   color: var(--text);
   font-size: 18px;
-  width: 34px; height: 34px;
+  width: 44px; height: 44px;
   border-radius: 50%;
   cursor: pointer;
   font-family: inherit;
@@ -503,7 +512,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .gjest-modal-bord {
   display: inline-block;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   background: rgba(var(--gold-rgb),0.2);
   color: var(--gold);
@@ -513,7 +522,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border: 1px solid rgba(var(--gold-rgb),0.4);
 }
 .gjest-modal-bio {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-soft);
   line-height: 1.6;
   margin-bottom: 12px;
@@ -521,7 +530,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   overflow-wrap: anywhere;
 }
 .gjest-modal-felt {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
   line-height: 1.5;
   padding: 8px 12px;
@@ -549,7 +558,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   background: rgba(var(--gold-rgb),0.14);
   color: var(--gold);
   font: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -566,7 +575,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 10px;
   color: var(--text);
-  font-size: 15px;
+  font-size: 16px;
   box-sizing: border-box;
 }
 .form textarea { resize: vertical; min-height: 90px; }
@@ -579,9 +588,9 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   padding: 14px;
   margin-bottom: 10px;
 }
-.hilsen-navn { font-size: 15px; font-weight: bold; color: var(--gold); margin-bottom: 4px; }
-.hilsen-tekst { font-size: 14px; color: var(--text-soft); line-height: 1.6; white-space: pre-wrap; }
-.hilsen-tid { font-size: 11px; color: #5A7A8A; margin-top: 6px; }
+.hilsen-navn { font-size: 16px; font-weight: bold; color: var(--gold); margin-bottom: 4px; }
+.hilsen-tekst { font-size: 15px; color: var(--text-soft); line-height: 1.6; white-space: pre-wrap; }
+.hilsen-tid { font-size: 13px; color: #5A7A8A; margin-top: 6px; }
 
 /* Sang */
 .sang-card {
@@ -594,7 +603,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .sang-icon { font-size: 48px; margin-bottom: 8px; }
 .sang-title { font-size: 22px; color: var(--gold); margin-bottom: 6px; font-style: italic; }
-.sang-sub { font-size: 13px; color: var(--muted); }
+.sang-sub { font-size: 15px; color: var(--muted); }
 
 .lyrics {
   margin: 0 16px 16px;
@@ -604,7 +613,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .lyrics pre {
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-soft);
   line-height: 1.8;
   white-space: pre-wrap;
@@ -620,7 +629,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   color: var(--muted);
   padding: 10px;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 15px;
   cursor: pointer;
 }
 .tab.active { background: rgba(var(--gold-rgb),0.2); color: var(--gold); font-weight: bold; }
@@ -632,7 +641,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border: 1px solid rgba(var(--accent2-rgb),0.3);
   border-radius: 16px;
 }
-.quiz-num { font-size: 12px; color: var(--accent-2); margin-bottom: 10px; letter-spacing: 1px; }
+.quiz-num { font-size: 14px; color: var(--accent-2); margin-bottom: 10px; letter-spacing: 1px; }
 .quiz-q { font-size: 19px; color: var(--text); line-height: 1.4; font-style: italic; margin-bottom: 16px; }
 .quiz-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
 .quiz-opt {
@@ -641,7 +650,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   color: var(--text);
   padding: 12px;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 15px;
   text-align: left;
   cursor: pointer;
   min-height: 44px;
@@ -655,7 +664,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border-left: 3px solid var(--gold);
   padding: 10px 12px;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--gold-2);
   margin-bottom: 12px;
 }
@@ -711,12 +720,12 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   text-align: center;
 }
 .modal-card h2 { color: var(--gold); margin-bottom: 8px; }
-.modal-card p { font-size: 14px; color: var(--text-soft2); margin-bottom: 16px; line-height: 1.5; }
+.modal-card p { font-size: 15px; color: var(--text-soft2); margin-bottom: 16px; line-height: 1.5; }
 .modal-card input {
   width: 100%; padding: 12px;
   background: rgba(255,255,255,0.07);
   border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 10px; color: var(--text); font-size: 15px;
+  border-radius: 10px; color: var(--text); font-size: 16px;
   margin-bottom: 12px; box-sizing: border-box;
 }
 .modal-card .btn-link { width: auto; margin: 8px auto 0; }
@@ -730,7 +739,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   color: #A0E8B0;
   padding: 10px 20px;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
   z-index: 400;
   box-shadow: 0 4px 16px rgba(0,0,0,0.4);
@@ -747,7 +756,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border: none;
   border-radius: 20px;
   padding: 8px 14px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   z-index: 60;
@@ -762,14 +771,14 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 /* Spill: status + topp-liste */
 .quiz-status {
   text-align: center;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--gold);
   padding: 8px 0;
   font-weight: bold;
 }
 #quiz-resultat-tittel, #mario-resultat-tittel { color: var(--gold); }
 #quiz-resultat-tekst { color: var(--text-soft2); font-size: 16px; }
-#mario-resultat-tekst { color: var(--text-soft2); font-size: 14px; }
+#mario-resultat-tekst { color: var(--text-soft2); font-size: 15px; }
 .topp-liste {
   margin: 0 16px;
   display: flex;
@@ -786,8 +795,8 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .topp-rad:nth-child(1) { background: rgba(var(--gold-rgb),0.15); border: 1px solid rgba(var(--gold-rgb),0.3); }
 .topp-medalje { font-size: 18px; min-width: 36px; }
-.topp-navn { flex: 1; font-size: 14px; color: var(--text); }
-.topp-score { font-size: 13px; color: var(--muted); }
+.topp-navn { flex: 1; font-size: 15px; color: var(--text); }
+.topp-score { font-size: 15px; color: var(--muted); }
 
 /* Mario-spill */
 .mario-start {
@@ -798,7 +807,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .mario-instruksjon {
   color: var(--text-soft);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
   margin-bottom: 14px;
 }
@@ -846,7 +855,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   background: rgba(120,100,180,0.1);
   border-left: 3px solid var(--accent-2);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-soft);
   line-height: 1.5;
 }
@@ -888,7 +897,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .install-emoji { font-size: 48px; margin-bottom: 8px; }
 .install-tittel { color: var(--gold); font-size: 22px; margin-bottom: 8px; }
-.install-tekst { color: var(--text-soft); font-size: 14px; line-height: 1.5; margin-bottom: 16px; }
+.install-tekst { color: var(--text-soft); font-size: 15px; line-height: 1.5; margin-bottom: 16px; }
 .install-instr {
   background: rgba(255,255,255,0.04);
   border-radius: 10px;
@@ -896,11 +905,11 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   text-align: left;
   margin-bottom: 12px;
 }
-.install-instr h4 { color: var(--gold); font-size: 14px; margin-bottom: 8px; }
+.install-instr h4 { color: var(--gold); font-size: 15px; margin-bottom: 8px; }
 .install-instr ol {
   padding-left: 20px;
   color: var(--text-soft);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.7;
 }
 .install-instr li { margin-bottom: 4px; }
@@ -955,9 +964,9 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   background: linear-gradient(135deg, var(--gold), var(--gold-border));
 }
 .bv-dropdown-info { flex: 1; min-width: 0; }
-.bv-dropdown-navn { font-size: 14px; color: var(--text); }
+.bv-dropdown-navn { font-size: 15px; color: var(--text); }
 .bv-dropdown-meta {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--muted2);
   white-space: nowrap;
   overflow: hidden;
@@ -1000,7 +1009,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .bv-klikkbar:active { transform: translateY(0); }
 .bv-resultat-tittel {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -1022,7 +1031,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .bv-resultat-meta {
   display: inline-block;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-soft2);
   background: rgba(255,255,255,0.06);
   padding: 4px 10px;
@@ -1037,13 +1046,13 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border-radius: 10px;
 }
 .bv-grunner-tittel {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--gold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
 }
-.bv-grunne { font-size: 14px; color: var(--text-soft); padding: 3px 0; }
+.bv-grunne { font-size: 15px; color: var(--text-soft); padding: 3px 0; }
 .bv-samtale {
   margin: 14px 0 0;
   padding: 14px;
@@ -1051,7 +1060,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border-left: 3px solid var(--gold);
   border-radius: 8px;
   text-align: left;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text);
   line-height: 1.5;
 }
@@ -1066,7 +1075,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .bv-allianse-emoji { font-size: 36px; margin-bottom: 6px; }
 .bv-allianse-navn { font-size: 18px; color: var(--accent-2); font-weight: bold; margin-bottom: 4px; }
-.bv-allianse-beskr { font-size: 13px; color: var(--text-soft2); line-height: 1.5; margin-bottom: 12px; }
+.bv-allianse-beskr { font-size: 15px; color: var(--text-soft2); line-height: 1.5; margin-bottom: 12px; }
 .bv-allianse-medlemmer {
   display: flex;
   flex-wrap: wrap;
@@ -1081,7 +1090,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   background: rgba(255,255,255,0.06);
   padding: 4px 10px 4px 4px;
   border-radius: 18px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text);
 }
 .bv-allianse-medlem img {
@@ -1094,7 +1103,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   padding: 14px;
   background: rgba(255,255,255,0.04);
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
 }
 .bv-info-box > div { padding: 3px 0; }
@@ -1107,7 +1116,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   background: rgba(var(--gold-rgb),0.13);
   color: var(--gold);
   font: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -1128,8 +1137,8 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   margin-bottom: 8px;
 }
 .bordkart-verktøy button {
-  min-width: 42px;
-  min-height: 36px;
+  min-width: 48px;
+  min-height: 44px;
   padding: 7px 12px;
   border: 1px solid rgba(var(--gold-rgb),0.35);
   border-radius: 9px;
@@ -1267,7 +1276,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 .bordkart-hint {
   margin: 8px 4px 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.4;
   text-align: center;
 }
@@ -1288,12 +1297,12 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .bord-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(var(--gold-rgb),0.2); gap: 12px; }
 .bord-tittel { display: flex; flex-direction: column; gap: 2px; flex: 1; }
-.bord-nr-mini { font-size: 10px; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.5px; }
+.bord-nr-mini { font-size: 12px; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.5px; }
 .bord-fjell { font-size: 18px; color: var(--bord-farge, var(--gold)); font-weight: bold; }
 .bord-fjell-link { text-decoration: none; }
 .bord-fjell-link:hover .bord-fjell { text-decoration: underline; }
-.bord-fjell-meta { font-size: 11px; color: var(--muted); }
-.bord-info { font-size: 13px; color: var(--gold); padding-top: 4px; }
+.bord-fjell-meta { font-size: 13px; color: var(--muted); }
+.bord-info { font-size: 15px; color: var(--gold); padding-top: 4px; }
 .bord-gjest-jubilant {
   background: linear-gradient(90deg, rgba(var(--gold-rgb),0.18), transparent);
   border-left: 3px solid var(--gold);
@@ -1301,7 +1310,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .jubilant-tag {
   display: inline-block;
-  font-size: 10px;
+  font-size: 12px;
   background: linear-gradient(135deg, var(--gold), var(--gold-border));
   color: var(--bg);
   padding: 2px 8px;
@@ -1346,14 +1355,14 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   background: rgba(var(--gold-rgb),0.2);
   color: var(--gold);
   display: flex; align-items: center; justify-content: center;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   flex-shrink: 0;
 }
 .bord-avatar { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
-.bord-avatar.bord-init { background: linear-gradient(135deg, var(--gold), var(--gold-border)); color: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; }
-.bord-navn { flex: 1; font-size: 14px; color: var(--text); }
-.bord-tag { font-size: 10px; background: rgba(var(--accent2-rgb),0.2); color: var(--accent-2); padding: 2px 6px; border-radius: 8px; }
+.bord-avatar.bord-init { background: linear-gradient(135deg, var(--gold), var(--gold-border)); color: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; }
+.bord-navn { flex: 1; font-size: 15px; color: var(--text); }
+.bord-tag { font-size: 12px; background: rgba(var(--accent2-rgb),0.2); color: var(--accent-2); padding: 2px 6px; border-radius: 8px; }
 
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bordkart-panel {
   background: rgba(255,255,255,0.45);
@@ -1370,7 +1379,6 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 @media (max-width: 520px) {
   .bordkart-panel { margin-left: 8px; margin-right: 8px; padding: 7px; }
   .bordkart-viewport { height: min(62vh, 560px); }
-  .bordkart-hint { font-size: 11px; }
 }
 
 /* Meny */
@@ -1387,27 +1395,27 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   color: var(--gold);
   padding: 4px 10px;
   border-radius: 12px;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: bold;
   letter-spacing: 1.5px;
   margin-bottom: 8px;
 }
 .meny-ikon { font-size: 32px; margin-bottom: 4px; }
 .meny-tittel { font-size: 18px; color: var(--gold-2); margin-bottom: 8px; font-style: italic; }
-.meny-beskrivelse { font-size: 14px; color: var(--text-soft); line-height: 1.6; margin-bottom: 14px; }
+.meny-beskrivelse { font-size: 15px; color: var(--text-soft); line-height: 1.6; margin-bottom: 14px; }
 .meny-drikke {
   display: flex; gap: 10px; align-items: flex-start;
   padding: 10px;
   background: rgba(255,255,255,0.04);
   border-radius: 8px;
   margin-bottom: 6px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-soft2);
   line-height: 1.5;
 }
 .meny-drikke span:first-child { font-size: 22px; flex-shrink: 0; }
 .meny-drikke strong { color: var(--gold); }
-.meny-drikke em { color: var(--muted); font-size: 12px; }
+.meny-drikke em { color: var(--muted); font-size: 14px; }
 .meny-link {
   color: var(--gold-2);
   text-decoration: underline;
@@ -1446,7 +1454,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   margin-bottom: 8px;
 }
 .hjelp-seksjon p {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-soft);
   line-height: 1.6;
 }
@@ -1487,7 +1495,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
 }
 .nav-btn.active { color: var(--gold); background: rgba(var(--gold-rgb),0.1); }
 .nav-icon { font-size: 22px; }
-.nav-label { font-size: 12px; letter-spacing: 0.2px; font-weight: 500; }
+.nav-label { font-size: 14px; letter-spacing: 0.2px; font-weight: 500; }
 
 /* På mobil minimeres bunnmenyen ved nedscrolling, som i en native nyhetsapp. */
 @media (max-width: 600px) {
@@ -1512,7 +1520,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
     font-size: 20px;
   }
   html[data-nav="bunn"].nav-kompakt .nav > .nav-btn[data-go="hjem"] .nav-label {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
   }
 }
@@ -1539,7 +1547,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   display: flex; align-items: center; gap: 10px;
   background: none; border: none; cursor: pointer;
   padding: 11px 12px; border-radius: 8px;
-  color: var(--text); font-size: 14px; font-weight: 500;
+  color: var(--text); font-size: 15px; font-weight: 500;
   font-family: inherit; text-align: left; width: 100%;
 }
 .nav-pop-ikon { font-size: 18px; line-height: 1; }
@@ -1559,7 +1567,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 10px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
@@ -1586,7 +1594,7 @@ input:focus, textarea:focus { outline: none; border-color: rgba(var(--gold-rgb),
   border-radius: 22px;
   color: var(--gold);
   font-family: inherit;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s, transform 0.1s;
@@ -1733,6 +1741,8 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
   color: var(--surface);
 }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .info-box a { color: var(--gold-deep); }
+/* E-post/telefon i løpende tekst: litt ekstra trykkflate uten å bryte tekstflyten. */
+.info-box a, .hjelp-seksjon a { display: inline-block; padding: 5px 0; }
 
 /* Gjester */
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjester-stats {
@@ -1774,14 +1784,14 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
 }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-rel { color: var(--accent); }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-rel { color: var(--accent); }
-:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fb-link { color: #4A8AB8; }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fb-link { color: #2F6E96; }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-fb-link:hover { color: #2A6090; }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag {
   background: rgba(var(--gold-border-rgb),0.15);
   color: var(--gold-deep);
 }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag.toast {
-  background: rgba(var(--accent-rgb),0.18);
+  background: rgba(255,255,255,0.82);
   color: var(--accent);
 }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-tag.avbud {
@@ -1893,6 +1903,9 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
 }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-close:hover { background: rgba(192,64,64,0.25); color: #B04040; }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-navn { color: var(--surface); }
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-bord {
+  --bord-tekst: var(--bord-tekst-mork);
+}
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-bio { color: var(--surface-2); }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-felt { color: var(--muted3); }
 :is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-modal-felt.gjest-modal-extra {
@@ -2099,8 +2112,19 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
 }
 
 /* Diverse felles korrigeringer */
-:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-bord-tag { /* bord-emoji-pille på gjester-grid */
-  /* lar fargen settes inline fra JS — inget override her */
+/* Lesbarhet på lyse temaer: bordfargen er dekorativ og for lys som tekst,
+   så tekstvarianten mørknes til WCAG AA av lesbarFarge() i script.js. */
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .gjest-bord-tag {
+  --bord-tekst: var(--bord-tekst-mork);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bord-fjell {
+  color: var(--bord-farge-mork, var(--gold-deep));
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .bordkart-hint {
+  color: var(--muted3);
+}
+:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[data-theme="stovbla"]) .empty-state {
+  color: var(--muted3);
 }
 
 
@@ -2118,7 +2142,7 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
 .rsvp-cta-icon { font-size: 32px; }
 .rsvp-cta-tekst { flex: 1; display: flex; flex-direction: column; }
 .rsvp-cta-tekst strong { font-size: 18px; color: var(--gold-2); letter-spacing: 0.3px; font-weight: 700; }
-.rsvp-cta-tekst small { font-size: 13.5px; color: var(--text-soft2); margin-top: 3px; }
+.rsvp-cta-tekst small { font-size: 15px; color: var(--text-soft2); margin-top: 3px; }
 .rsvp-cta-pil { font-size: 24px; color: var(--gold); }
 .festvenn-cta {
   width: calc(100% - 32px);
@@ -2134,9 +2158,9 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
   min-width: 30px;
   padding: 3px 6px;
   border-radius: 999px;
-  background: #C94F63;
+  background: #BE4A5E;
   color: #fff;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.5px;
   line-height: 1;
@@ -2146,7 +2170,7 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
 
 /* Dag-merke i programmet (f.eks. mingling fredag) */
 .program-dag {
-  display: inline-block; font-size: 12px; font-weight: bold;
+  display: inline-block; font-size: 14px; font-weight: bold;
   letter-spacing: 1px; text-transform: uppercase;
   color: var(--bg); background: var(--gold);
   padding: 3px 10px; border-radius: 20px; margin-bottom: 8px;
@@ -2155,7 +2179,7 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
 /* === Stilvelger på forsiden === */
 .stilvelger { padding: 8px 16px 20px; }
 .stilvelger-tittel { font-size: 18px; color: var(--gold); margin-bottom: 4px; font-style: italic; }
-.stilvelger-sub { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+.stilvelger-sub { font-size: 15px; color: var(--muted); margin-bottom: 12px; }
 .stil-kort-rad { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .stil-kort {
   flex: 1; cursor: pointer; border-radius: 14px; padding: 12px 10px 14px;
@@ -2167,8 +2191,8 @@ html:is([data-theme="light"],[data-theme="invitasjon"],[data-theme="salvie"],[da
 .stil-kort.valgt { border-color: var(--gold); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
 .stil-prover { display: flex; justify-content: center; gap: 6px; margin-bottom: 8px; }
 .stil-prikk { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); }
-.stil-navn { font-size: 13px; font-weight: bold; color: var(--gold); }
-.stil-undertekst { font-size: 11px; color: var(--text-soft2); margin-top: 2px; }
+.stil-navn { font-size: 15px; font-weight: bold; color: var(--gold); }
+.stil-undertekst { font-size: 13px; color: var(--text-soft2); margin-top: 2px; }
 .stil-kort.valgt .stil-navn::after { content: " ✓"; color: var(--gold-2); }
 .meny-ikon-prove { font-size: 26px; line-height: 1; margin-bottom: 8px; height: 26px; }
 
@@ -2191,7 +2215,7 @@ html[data-nav="topp"] .nav::-webkit-scrollbar { height: 0; }
 html[data-nav="topp"] .nav > .nav-btn, html[data-nav="topp"] .nav > .nav-group { flex: 0 0 auto; }
 html[data-nav="topp"] .nav-btn { flex: 0 0 auto; min-width: 56px; }
 html[data-nav="topp"] .nav-icon { font-size: 20px; }
-html[data-nav="topp"] .nav-label { font-size: 11px; }
+html[data-nav="topp"] .nav-label { font-size: 13px; }
 /* Popover åpner nedover i topp-modus */
 html[data-nav="topp"] .nav-popover {
   bottom: auto; top: calc(100% + 10px);
@@ -2245,7 +2269,7 @@ html[data-nav="waffel"] .nav-btn {
   width: 100%; padding: 12px 14px;
 }
 html[data-nav="waffel"] .nav-icon { font-size: 22px; }
-html[data-nav="waffel"] .nav-label { font-size: 15px; }
+html[data-nav="waffel"] .nav-label { font-size: 16px; }
 /* I skuffen vises undersidene flatt — skjul samle-knappene og vis popover-innholdet inline */
 html[data-nav="waffel"] .nav-group { flex-direction: column; width: 100%; }
 html[data-nav="waffel"] .nav-group-btn { display: none; }
@@ -2254,7 +2278,7 @@ html[data-nav="waffel"] .nav-popover {
   background: none; border: none; box-shadow: none; padding: 0;
   min-width: 0; gap: 2px;
 }
-html[data-nav="waffel"] .nav-pop-item { padding: 12px 14px; font-size: 15px; }
+html[data-nav="waffel"] .nav-pop-item { padding: 12px 14px; font-size: 16px; }
 html[data-nav="waffel"] .nav-pop-ikon { font-size: 22px; }
 html[data-nav="waffel"] .meny-scrim {
   display: block; position: fixed; inset: 0;
@@ -2330,8 +2354,16 @@ html[data-theme="invitasjon"] body,
 [data-theme="invitasjon"] body { background: var(--krem); }
 
 [data-theme="invitasjon"] body {
-  font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+  /* Cormorant Garamond har svært lav x-høyde og tynne streker — som brødtekst
+     leses 16px omtrent som 12px, og gjestene måtte zoome. Brødteksten bruker
+     derfor Georgia, mens Cormorant beholdes på de store display-elementene. */
+  font-family: Georgia, 'Palatino Linotype', 'Times New Roman', serif;
   font-size: 16px;
+}
+[data-theme="invitasjon"] .page-title,
+[data-theme="invitasjon"] .hero-date,
+[data-theme="invitasjon"] .meny-tittel {
+  font-family: 'Cormorant Garamond', Georgia, serif;
 }
 
 /* HERO: blomsterhjørner øverst til venstre og nederst til høyre */
@@ -2359,13 +2391,14 @@ html[data-theme="invitasjon"] body,
   transform: rotate(180deg);
   opacity: 0.8;
 }
-[data-theme="invitasjon"] .hero-inner { z-index: 2; padding: 26px 20px 30px; }
+/* Ekstra toppluft så invitasjonslinjen ikke havner bak den flytende menyknappen. */
+[data-theme="invitasjon"] .hero-inner { z-index: 2; padding: 64px 20px 30px; }
 
 /* Skript-ordet «bryllup» + hjerte — kun i denne stilen */
 .inv-skript, .inv-hjerte, .inv-invitasjon { display: none; }
 [data-theme="invitasjon"] .inv-invitasjon {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 3.2px;
   text-transform: uppercase;
   color: var(--plomme);
