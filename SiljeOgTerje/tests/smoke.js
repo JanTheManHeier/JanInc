@@ -250,9 +250,9 @@ test('Alle gjester har tre gyldige bestevenner uten partnerkoblinger', async () 
     'Kolbjørn Engeseth', 'Leif Johnny Engseth', 'Marianne Widding Bruwold',
     'Maryam Amri', 'Øystein Aasland', 'Ronny Løvberg Sørensen', 'Stine Jensen',
     'Susanne Jenssen', 'Synne Gulbrandsen', 'Torkel Fredriksen', 'Trond Haug',
-    'Vetle Lauritzen',
+    'Vetle Lauritzen', 'Håvard Sørlie', 'Vibeke Grønaas Sørlie',
   ];
-  assert.equal(matches.length, 90, 'Matchmatrisen skal dekke alle synlige gjester');
+  assert.equal(matches.length, 92, 'Matchmatrisen skal dekke alle synlige gjester');
   nyeGjester.forEach(n => assert.ok(navn.has(n), `Ny gjest mangler i matchmatrisen: ${n}`));
   ['Angelica Berg Jensen', 'Else-Marie Olsen', 'Halvard Olsen'].forEach(n => {
     assert.ok(!navn.has(n), `Skjult eller erstattet profil skal ikke ligge i matrisen: ${n}`);
@@ -305,6 +305,7 @@ test('Alle gjester har tre gyldige bestevenner uten partnerkoblinger', async () 
     ['Andreas Granaas', 'Heidi Martens'],
     ['Mikal Johnsen', 'Kjerstin Johnsen'],
     ['Jan Heier Johansen', 'Kristina Garfjell Kantola'],
+    ['Håvard Sørlie', 'Vibeke Grønaas Sørlie'],
   ];
   utelukkedePar.forEach(([a, b]) => {
     const personA = matches.find(x => x.navn === a);

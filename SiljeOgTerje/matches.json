@@ -2968,5 +2968,71 @@
         "samtale_starter": "Hva er det fineste med å ha et sterkt nærmiljø rundt familien?"
       }
     ]
+  },
+  {
+    "navn": "Håvard Sørlie",
+    "allianse": "Mikrofon-kapererne",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Tore Arnesen",
+        "match_grunner": [
+          "Dere jobber begge på Kvaløya videregående skole",
+          "Skolehverdag og hytteliv gir dere to samtaler som aldri tar slutt"
+        ],
+        "samtale_starter": "Hvem av dere klarer å la være å snakke jobb lengst i kveld?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Kristin Halvorsen",
+        "match_grunner": [
+          "Begge har hverdagen sin i skolen",
+          "Dere sitter ved samme bord og har mye å utveksle om elever og prosjekter"
+        ],
+        "samtale_starter": "Hva er det beste rådet du har fått av en elev?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Kjell G Karlsen",
+        "match_grunner": [
+          "Begge har hjertet sitt på hytta",
+          "Balsfjorden og Ringvassøya gir en naturlig prat om hyttelivets gleder og gjøremål"
+        ],
+        "samtale_starter": "Hva er det siste du fikk fikset på hytta?"
+      }
+    ]
+  },
+  {
+    "navn": "Vibeke Grønaas Sørlie",
+    "allianse": "Fjellfolket",
+    "matches": [
+      {
+        "rank": 1,
+        "match_navn": "Silje Helèn",
+        "match_grunner": [
+          "Begge trener på Sats — Silje er til og med instruktør der",
+          "Dere deler gleden ved å holde tempoet oppe"
+        ],
+        "samtale_starter": "Hvilken time på Sats burde alle prøve minst én gang?"
+      },
+      {
+        "rank": 2,
+        "match_navn": "Hege Lauritzen",
+        "match_grunner": [
+          "Begge er mammaer som får treningen til å gå opp i en travel hverdag",
+          "Løping og Sats står høyt i kurs hos dere begge"
+        ],
+        "samtale_starter": "Hvordan får du plass til treningen mellom alt det andre?"
+      },
+      {
+        "rank": 3,
+        "match_navn": "Gjermund Halvorsen",
+        "match_grunner": [
+          "Begge har alltid et oppussingsprosjekt gående på hytta",
+          "Dere sitter ved samme bord og kan sammenligne notater"
+        ],
+        "samtale_starter": "Hvilket hytteprosjekt tok mye lengre tid enn planlagt?"
+      }
+    ]
   }
 ]

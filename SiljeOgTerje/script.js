@@ -2054,7 +2054,7 @@
   async function lastMatches() {
     if (bvMatches) return bvMatches;
     try {
-      const r = await fetch('matches.json?v=20260811-2', { cache: 'no-store' });
+      const r = await fetch('matches.json?v=20260821-1', { cache: 'no-store' });
       if (!r.ok) throw new Error('matches.json mangler');
       bvMatches = await r.json();
       return bvMatches;
