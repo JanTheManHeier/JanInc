@@ -2007,8 +2007,22 @@
     document.getElementById('install-instr-ios').hidden = !erIos;
     document.getElementById('install-instr-android').hidden = !erAndroid;
     document.getElementById('install-instr-other').hidden = (erIos || erAndroid);
-    // Vis etter 4 sek så brukeren rekker å orientere seg
-    setTimeout(() => { popup.hidden = false; }, 4000);
+    // Popupen dekker hele skjermen, så den må aldri dukke opp midt i noe
+    // gjesten holder på med. Vent til gjesten er i ro på forsiden.
+    const opptatt = () => {
+      if (aktivSide !== 'hjem') return true;
+      if (document.querySelector('.modal:not([hidden]), .overlay:not([hidden])')) return true;
+      const a = document.activeElement;
+      if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.tagName === 'SELECT')) return true;
+      if (document.querySelector('.bv-dropdown:not([hidden])')) return true;
+      return false;
+    };
+    const prøvVis = () => {
+      if (localStorage.getItem('siljeterje-install-dismissed') === '1') return;
+      if (opptatt()) { setTimeout(prøvVis, 3000); return; }
+      popup.hidden = false;
+    };
+    setTimeout(prøvVis, 4000);
     // Lukk-handlers
     const lukk = () => {
       popup.hidden = true;
