@@ -372,6 +372,133 @@
       font-size: 0.92rem;
     }
 
+    .alert {
+      margin-top: 18px;
+      padding: 15px 17px;
+      color: #66542f;
+      border: 1px solid #eddbb5;
+      border-radius: 15px;
+      background: #fff9eb;
+    }
+
+    .alert strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .week-plan {
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(51, 39, 129, 0.05);
+    }
+
+    .week-plan + .week-plan {
+      margin-top: 18px;
+    }
+
+    .week-plan-header {
+      padding: 18px 20px;
+      color: white;
+      background: linear-gradient(125deg, var(--primary-dark), var(--primary));
+    }
+
+    .week-plan-header h3,
+    .week-plan-header p {
+      margin-bottom: 0;
+    }
+
+    .week-plan-header p {
+      margin-top: 4px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.88rem;
+    }
+
+    .week-days {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .school-day {
+      min-width: 0;
+      padding: 17px;
+    }
+
+    .school-day + .school-day {
+      border-left: 1px solid var(--border);
+    }
+
+    .school-day h4 {
+      margin: 0 0 12px;
+      color: var(--primary-dark);
+      font-size: 0.95rem;
+    }
+
+    .school-day ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .school-day li {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .school-day li + li {
+      margin-top: 9px;
+      padding-top: 9px;
+      border-top: 1px solid #eeebf3;
+    }
+
+    .school-day time {
+      display: block;
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .highlight {
+      color: #9b3f00;
+      font-weight: 800;
+    }
+
+    .subjects {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .subject {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    .subject h3 {
+      margin-bottom: 8px;
+      color: var(--primary-dark);
+      font-size: 1rem;
+    }
+
+    .subject p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .subject p + p {
+      margin-top: 7px;
+    }
+
+    .subject strong {
+      color: var(--text);
+    }
+
     .links {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -425,8 +552,18 @@
     @media (max-width: 760px) {
       .grid,
       .schedule,
-      .links {
+      .links,
+      .subjects {
         grid-template-columns: 1fr;
+      }
+
+      .week-days {
+        grid-template-columns: 1fr;
+      }
+
+      .school-day + .school-day {
+        border-top: 1px solid var(--border);
+        border-left: 0;
       }
 
       .password-row {
@@ -476,70 +613,196 @@
       <section class="hero">
         <div class="eyebrow">Skolestart · 8. trinn</div>
         <h1>God start, Olivia!</h1>
-        <p>Alt familien trenger å huske til oppstarten ved NTG Ungdomsskole Tromsø, samlet på ett sted.</p>
+        <p>Timeplan, viktige datoer og faglig innhold for de første ordinære skoleukene ved NTG Ungdomsskole Tromsø.</p>
+        <div class="alert">
+          <strong>Foreløpig periodeplan</strong>
+          Skolen opplyser at det vil komme endringer. Sjekk Teams og fredagsmail for siste versjon.
+        </div>
       </section>
 
       <div class="section-heading">
         <div>
-          <h2>Akkurat nå</h2>
-          <p>Dette må familien få på plass torsdag 13. august.</p>
+          <h2>Viktig å merke seg</h2>
+          <p>Nøkkelpunkter fra periodeplanen for uke 35 og 36.</p>
         </div>
       </div>
 
       <section class="grid">
-        <article class="card">
-          <h3>Klargjør utstyret</h3>
-          <div class="card-meta">Avkryssingene lagres automatisk på denne enheten.</div>
+        <article class="card featured">
+          <h3>Nasjonal prøve i lesing</h3>
+          <div class="time">Torsdag 3. september · 12.40–14.10</div>
+          <div class="card-meta">I norsktimen. Uke 35 og starten av uke 36 brukes til lesestrategier og forberedelse.</div>
           <ul class="checklist">
-            <li><label><input type="checkbox" data-task="mark-bag"><span>Merk NTG-sekken tydelig med Olivia sitt navn</span></label></li>
-            <li><label><input type="checkbox" data-task="locker-lock" checked><span>Lås til garderobeskapet er kjøpt</span></label></li>
-            <li><label><input type="checkbox" data-task="ipad-case" checked><span>Mappe til iPad er kjøpt</span></label></li>
-            <li><label><input type="checkbox" data-task="document-folder"><span>Kjøp A4-strikkmappe til dokumenter og periodeplaner</span></label></li>
-            <li><label><input type="checkbox" data-task="indoor-shoes"><span>Finn eller kjøp innesko, for eksempel slippers</span></label></li>
+            <li><label><input type="checkbox" data-task="reading-test-ready"><span>Gå gjennom lesestrategier før prøven</span></label></li>
+            <li><label><input type="checkbox" data-task="reading-test-equipment"><span>Sjekk at iPad og nødvendig utstyr er klart</span></label></li>
           </ul>
         </article>
 
-        <article class="card featured">
-          <h3>Turdag fredag 14. august</h3>
-          <div class="time">09.00–ca. 13.00</div>
-          <div class="card-meta">Oppmøte på NTGU. Dagen avsluttes i Tvillingbukta i Hamna.</div>
-          <div class="forecast">
-            <strong>Yr-varsel kl. 09–13:</strong> Oppholdsvær, ca. 14–16 °C og nordavind rundt 5 m/s, med vindkast opptil 8–9 m/s. Det kan føles kjølig ved oppstart.
-          </div>
+        <article class="card">
+          <h3>IKT-kurs</h3>
+          <div class="card-meta">Tre kursøkter er lagt inn i den ordinære timeplanen.</div>
           <ul class="checklist">
-            <li><label><input type="checkbox" data-task="base-layer"><span>T-skjorte eller tynn ulltrøye innerst</span></label></li>
-            <li><label><input type="checkbox" data-task="mid-layer"><span>Tynn fleece eller genser som mellomlag</span></label></li>
-            <li><label><input type="checkbox" data-task="rainwear"><span>Vind- og vanntett jakke, selv om Yr varsler opphold</span></label></li>
-            <li><label><input type="checkbox" data-task="pants-shoes"><span>Langbukse og sko som tåler vått terreng</span></label></li>
-            <li><label><input type="checkbox" data-task="lunch"><span>God matpakke</span></label></li>
-            <li><label><input type="checkbox" data-task="drinks"><span>Kald og varm drikke</span></label></li>
-            <li><label><input type="checkbox" data-task="seat-pad"><span>Sitteunderlag</span></label></li>
-            <li><label><input type="checkbox" data-task="hat-gloves"><span>Tynn lue og hansker i sekken, som skolen ber om</span></label></li>
-            <li><label><input type="checkbox" data-task="berry-bag"><span>Liten pose til blåbær</span></label></li>
-            <li><label><input type="checkbox" data-task="pickup"><span>Avklar henting i Hamna ca. kl. 13.00</span></label></li>
+            <li><label><input type="checkbox" data-task="ict-1"><span>Tirsdag 25. august kl. 10.05–11.35: IKT-kurs 1</span></label></li>
+            <li><label><input type="checkbox" data-task="ict-3"><span>Torsdag 27. august kl. 12.40–14.10: IKT-kurs 3</span></label></li>
+            <li><label><input type="checkbox" data-task="ict-2"><span>Tirsdag 1. september kl. 12.05–13.05: IKT-kurs 2</span></label></li>
           </ul>
         </article>
       </section>
 
       <div class="section-heading">
         <div>
-          <h2>Neste uke</h2>
-          <p>Uke 34 handler om innskoling, rutiner og digitale verktøy.</p>
+          <h2>Timeplan uke 35 og 36</h2>
+          <p>Alternativene arbeidslivsfag, spansk og musikk avhenger av fag og gruppe.</p>
         </div>
       </div>
 
-      <section class="schedule">
-        <article class="day">
-          <strong>Mandag 17. august</strong>
-          <p>Teori og informasjon om trening. Olivia trenger ikke treningsklær. Ta med lås og innesko.</p>
+      <section class="week-plan">
+        <div class="week-plan-header">
+          <h3>Uke 35 · 24.–28. august</h3>
+          <p>Første ordinære periodeuke</p>
+        </div>
+        <div class="week-days">
+          <article class="school-day">
+            <h4>Mandag 24.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Basistrening 8. trinn</li>
+              <li><time>10.05–11.05</time>Naturfag</li>
+              <li><time>11.35–13.40</time>Arbeidslivsfag / spansk / musikk</li>
+              <li><time>13.45–15.15</time>KRLE</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Tirsdag 25.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Spesifikk basistrening</li>
+              <li><time>10.05–11.35</time>Matematikk + <span class="highlight">IKT-kurs 1</span></li>
+              <li><time>12.05–13.35</time>Norsk</li>
+              <li><time>13.40–14.40</time>Samfunnsfag</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Onsdag 26.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Fysak</li>
+              <li><time>10.05–11.05</time>Arbeidslivsfag / spansk</li>
+              <li><time>11.35–13.20</time>Kunst og håndverk</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Torsdag 27.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Spesifikk basistrening</li>
+              <li><time>10.05–11.05</time>Samfunnsfag</li>
+              <li><time>11.35–12.35</time>Engelsk</li>
+              <li><time>12.40–14.10</time>Norsk + <span class="highlight">IKT-kurs 3</span></li>
+              <li><time>14.15–15.15</time>Studietid</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Fredag 28.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Svømming</li>
+              <li><time>10.05–11.35</time>Matematikk</li>
+              <li><time>12.05–13.05</time>Naturfag</li>
+              <li><time>13.10–14.10</time>Engelsk</li>
+              <li><time>14.15–15.15</time>UV / studietid</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="week-plan">
+        <div class="week-plan-header">
+          <h3>Uke 36 · 31. august–4. september</h3>
+          <p>Nasjonal prøve i lesing torsdag</p>
+        </div>
+        <div class="week-days">
+          <article class="school-day">
+            <h4>Mandag 31.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Basistrening 8. trinn</li>
+              <li><time>10.05–11.05</time>Naturfag</li>
+              <li><time>11.35–13.40</time>Arbeidslivsfag / spansk / musikk</li>
+              <li><time>13.45–15.15</time>KRLE</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Tirsdag 1.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Spesifikk basistrening</li>
+              <li><time>10.05–11.35</time>Matematikk</li>
+              <li><time>12.05–13.35</time>Norsk + <span class="highlight">IKT-kurs 2 kl. 12.05–13.05</span></li>
+              <li><time>13.40–14.40</time>Samfunnsfag</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Onsdag 2.</h4>
+            <ul>
+              <li><time>08.15–10.00</time>Fysak</li>
+              <li><time>10.05–11.05</time>Arbeidslivsfag / spansk</li>
+              <li><time>11.35–13.20</time>Kunst og håndverk</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Torsdag 3.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Spesifikk basistrening</li>
+              <li><time>10.05–11.05</time>Samfunnsfag</li>
+              <li><time>11.35–12.35</time>Engelsk</li>
+              <li><time>12.40–14.10</time><span class="highlight">Nasjonal prøve i lesing</span></li>
+              <li><time>14.15–15.15</time>Studietid</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Fredag 4.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Svømming</li>
+              <li><time>10.05–11.35</time>Matematikk</li>
+              <li><time>12.05–13.05</time>Naturfag</li>
+              <li><time>13.10–14.10</time>Engelsk</li>
+              <li><time>14.15–15.15</time>UV / studietid</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <div class="section-heading">
+        <div>
+          <h2>Dette arbeider klassen med</h2>
+          <p>Faglig innhold fra periodeplanen.</p>
+        </div>
+      </div>
+
+      <section class="subjects">
+        <article class="subject">
+          <h3>Norsk</h3>
+          <p><strong>Uke 35:</strong> Verdiarbeid, lesestrategier og IKT-kurs om nettvett.</p>
+          <p><strong>Uke 36:</strong> Forberedelse og lesestrategier før nasjonal prøve i lesing.</p>
         </article>
-        <article class="day">
-          <strong>Tirsdag 18. august</strong>
-          <p>Utdeling og oppsett av iPad. Ta med iPad-mappen dersom iPaden skal være med hjem.</p>
+        <article class="subject">
+          <h3>Matematikk</h3>
+          <p><strong>Uke 35:</strong> Bli kjent med Campus og starte «hele tall», primtall og hoderegning.</p>
+          <p><strong>Uke 36:</strong> Regnerekkefølge og regnealgoritmer.</p>
         </article>
-        <article class="day">
-          <strong>Resten av uke 34</strong>
-          <p>Regler, rutiner, fag, Teams og aktiviteter. Mer detaljert periodeplan kommer fra uke 35.</p>
+        <article class="subject">
+          <h3>Engelsk</h3>
+          <p><strong>Uke 35:</strong> Muntlige aktiviteter, bli kjent og oppstart av faget.</p>
+          <p><strong>Uke 36:</strong> Grammar and text writing.</p>
+        </article>
+        <article class="subject">
+          <h3>Naturfag</h3>
+          <p><strong>Uke 35:</strong> Hypoteser, Aunivers og forsøket «Redd et egg!».</p>
+          <p><strong>Uke 36:</strong> Miniprosjekt med forskningsspørsmål, hypotese og eksperiment.</p>
+        </article>
+        <article class="subject">
+          <h3>KRLE</h3>
+          <p><strong>Uke 35:</strong> NTG-verdiene vilje, glede og respekt, samt trivselsregler.</p>
+          <p><strong>Uke 36:</strong> Fortellinger og myter fra ulike religioner.</p>
+        </article>
+        <article class="subject">
+          <h3>Samfunnsfag</h3>
+          <p><strong>Uke 35:</strong> Muntlighet og felles regler for samtaler i faget.</p>
+          <p><strong>Uke 36:</strong> Kildekritikk og vurdering av troverdige kilder.</p>
         </article>
       </section>
 
@@ -601,6 +864,10 @@
       </div>
 
       <section class="links">
+        <a class="quick-link" href="dokumenter/periodeplan-uke-35-36.pdf" target="_blank" rel="noopener">
+          <strong>Periodeplan uke 35 og 36</strong>
+          <span>Foreløpig timeplan og faglig innhold</span>
+        </a>
         <a class="quick-link" href="dokumenter/velkommen-til-ntgu.pdf" target="_blank" rel="noopener">
           <strong>Velkommen til NTGU</strong>
           <span>Oppstartsdagene, turdagen og utstyr</span>
@@ -619,7 +886,7 @@
         Denne siden bruker et enkelt passord i nettleseren. Dokumentlenkene har egne nettadresser og er ikke teknisk beskyttet av passordet. Ikke legg inn sensitive opplysninger, helseopplysninger eller andre data som krever sikker lagring.
       </div>
 
-      <footer>Værvarsel kontrollert mot Yr 13. august kl. 14.50 · Familieoversikt for Olivia</footer>
+      <footer>Sist oppdatert 21. august 2026 · Familieoversikt for Olivia</footer>
     </main>
   </div>
 
