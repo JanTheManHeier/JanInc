@@ -7,7 +7,7 @@
       const tekst = `${p.tittel || ''} ${p.sted || ''}`.toLowerCase();
       if (tekst.includes('walter')) {
         Object.assign(p, {
-          tid: '14:00', tittel: 'Aperitiff og mingling', sted: 'Walter & Leonard', ikon: '🍸',
+          tid: '15:00', tittel: 'Aperitiff og mingling', sted: 'Walter & Leonard', ikon: '🍸',
           beskrivelse: 'Dick tar imot oss i restauranten i kjelleren på Rødbanken. Her blir det litt aperitiff og forfriskninger mens brudeparet fotograferes.',
           adresse: 'Storgata 65, 9008 Tromsø',
           lat: 69.64909901495177, lng: 18.956037276009752,
@@ -74,7 +74,7 @@
     if (!harWalter) {
       const middagIdx = program.findIndex(p => /middag og fest|mottakelse på rødbanken/i.test(p.tittel || ''));
       program.splice(middagIdx >= 0 ? middagIdx : program.length, 0, {
-        tid: '14:00', tittel: 'Aperitiff og mingling', sted: 'Walter & Leonard', ikon: '🍸',
+        tid: '15:00', tittel: 'Aperitiff og mingling', sted: 'Walter & Leonard', ikon: '🍸',
         beskrivelse: 'Dick tar imot oss i restauranten i kjelleren på Rødbanken. Her blir det litt aperitiff og forfriskninger mens brudeparet fotograferes.',
         adresse: 'Storgata 65, 9008 Tromsø',
         lat: 69.64909901495177, lng: 18.956037276009752,

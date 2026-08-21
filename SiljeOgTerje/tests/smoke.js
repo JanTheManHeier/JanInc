@@ -581,7 +581,7 @@ test('iPhone-visning, program og kart er konsistente', async ({ browser, baseURL
   const cards = await page.locator('.program-kort').allInnerTexts();
   assert.ok(cards.some(text => text.includes('Minglefest') && text.includes('19:00') && text.includes('Amtmandens Datter')));
   assert.ok(cards.some(text => text.includes('Vigsel i Elverhøy kirke') && text.includes('12:00')));
-  assert.ok(cards.some(text => text.includes('Walter & Leonard') && text.includes('14:00') && text.includes('Dick')));
+  assert.ok(cards.some(text => text.includes('Walter & Leonard') && text.includes('15:00') && text.includes('Dick')));
   assert.ok(cards.some(text => text.includes('Middag og fest') && text.includes('17:00')));
   assert.equal(cards.filter(text => text.includes('17:00') && /Middag og fest|Bryllupsmiddag/.test(text)).length, 1,
     'Programmet skal bare ha ett middagspunkt kl. 17');
@@ -733,7 +733,7 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   })));
   assert.ok(adminProgram.some(p => p.tittel === 'Minglefest' && p.tid === '19:00' && p.sted === 'Amtmandens Datter'));
   assert.ok(adminProgram.some(p => p.tittel === 'Vigsel i Elverhøy kirke' && p.tid === '12:00'));
-  assert.ok(adminProgram.some(p => p.sted === 'Walter & Leonard' && p.tid === '14:00'));
+  assert.ok(adminProgram.some(p => p.sted === 'Walter & Leonard' && p.tid === '15:00'));
   assert.ok(adminProgram.some(p => p.tittel === 'Middag og fest' && p.tid === '17:00'));
   assert.equal(await page.locator('#g-detaljer').inputValue(), 'Vipps 12345678\nMerk betalingen med navn');
   await page.locator('#g-vipps').fill('99887766');
@@ -745,7 +745,7 @@ test('Admin har kartfelter, musikk-toggle og hurtig RSVP', async ({ browser, bas
   assert.equal(contentPost.body.content.gave.detaljer, 'Vipps 12345678\nMerk betalingen med navn');
   assert.equal(contentPost.body.content.innstillinger.passordbeskyttelse, false);
   assert.ok(contentPost.body.content.program.some(p => p.tittel === 'Vigsel i Elverhøy kirke' && p.tid === '12:00'));
-  assert.ok(contentPost.body.content.program.some(p => p.sted === 'Walter & Leonard' && p.tid === '14:00'));
+  assert.ok(contentPost.body.content.program.some(p => p.sted === 'Walter & Leonard' && p.tid === '15:00'));
 
   await page.getByRole('button', { name: /Vis RSVP-svar/ }).click();
   await assert.doesNotReject(() => page.locator('#rsvp-admin-gjest').waitFor({ state: 'visible' }));
