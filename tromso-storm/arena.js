@@ -10,6 +10,18 @@ const standingsBody = document.getElementById("standings-body");
 let games = [];
 let filter = "all";
 let expanded = false;
+const teamLogos = {
+    "Tromsø Storm": "assets/storm-logo.png",
+    "Ammerud": "assets/opponents/ammerud.jpg",
+    "Bærum Basket": "assets/opponents/baerum.png",
+    "Centrum Tigers": "assets/opponents/centrum.gif",
+    "Frøya": "assets/opponents/froya.png",
+    "Fyllingen Lions": "assets/opponents/fyllingen.webp",
+    "Gimle": "assets/opponents/gimle.png",
+    "Kongsberg Miners": "assets/opponents/kongsberg.png",
+    "Nidaros Jets": "assets/opponents/nidaros.jpeg",
+    "TNT Towers": "assets/opponents/tnt.png"
+};
 
 function gameDate(game) {
     return new Date(`${game.date}T${game.time}:00`);
@@ -17,6 +29,17 @@ function gameDate(game) {
 
 function isHome(game) {
     return game.home === "Tromsø Storm";
+}
+
+function teamLogo(name) {
+    return teamLogos[name] || "";
+}
+
+function teamMarkup(name) {
+    const logo = teamLogo(name);
+    const image = logo ? `<img class="team-inline-logo" src="${logo}" alt="">` : "";
+    const label = name === "Tromsø Storm" ? `<strong>${escapeHtml(name)}</strong>` : escapeHtml(name);
+    return `<span class="team-inline">${image}${label}</span>`;
 }
 
 function escapeHtml(value) {
@@ -44,7 +67,10 @@ function updateNextGame(game) {
     document.getElementById("next-time").dateTime = `${game.date}T${game.time}`;
     document.getElementById("next-home").textContent = game.home;
     document.getElementById("next-away").textContent = game.away;
-    document.getElementById("opponent-letter").textContent = (isHome(game) ? game.away : game.home).charAt(0);
+    document.getElementById("next-home-logo").src = teamLogo(game.home);
+    document.getElementById("next-home-logo").alt = `${game.home} logo`;
+    document.getElementById("next-away-logo").src = teamLogo(game.away);
+    document.getElementById("next-away-logo").alt = `${game.away} logo`;
     document.getElementById("next-venue").textContent = game.venue;
     const days = Math.max(0, Math.ceil((date - new Date()) / 86400000));
     document.getElementById("countdown").textContent = days === 0 ? "Kampdag" : `${days} dager igjen`;
@@ -56,14 +82,10 @@ function renderSchedule() {
     scheduleList.innerHTML = visible.map((game) => {
         const date = gameDate(game);
         const home = isHome(game);
-        const team = (name) => {
-            const escapedName = escapeHtml(name);
-            return name === "Tromsø Storm" ? `<strong>${escapedName}</strong>` : escapedName;
-        };
         return `
             <article class="game-row ${home ? "home" : "away"}">
                 <time datetime="${game.date}T${game.time}">${dayNames[date.getDay()]} ${date.getDate()}. ${monthNames[date.getMonth()]} · ${game.time}<small>${home ? "Hjemmekamp" : "Bortekamp"}</small></time>
-                <a class="teams" href="${game.url || "https://tromsostorm.no/kampoversikt/"}">${team(game.home)} — ${team(game.away)}</a>
+                <a class="teams" href="${game.url || "https://tromsostorm.no/kampoversikt/"}">${teamMarkup(game.home)}<span aria-hidden="true">—</span>${teamMarkup(game.away)}</a>
                 <span class="venue">${escapeHtml(game.venue)}</span>
             </article>`;
     }).join("");

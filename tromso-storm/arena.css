@@ -168,8 +168,10 @@ button { color: inherit; font: inherit; }
 .game-row.home { border-left-color: var(--cp-warning); }
 .game-row time { font-weight: 900; }
 .game-row small, .game-row .venue { display: block; color: var(--cp-text-muted); font-size: .78rem; }
-.game-row .teams { font-size: 1.05rem; }
+.game-row .teams { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; }
 .game-row .teams strong { color: var(--cp-warning); }
+.team-inline { display: inline-flex; align-items: center; gap: 8px; }
+.team-inline-logo { width: 34px; height: 34px; flex: 0 0 34px; object-fit: contain; }
 .schedule-toggle { margin-top: 20px; padding: 11px 18px; border: 1px solid var(--cp-warning); border-radius: .625rem; background: var(--cp-surface); color: var(--cp-warning); cursor: pointer; font-weight: 900; }
 .standings { background: var(--cp-bg-elevated); }
 .standings-card { overflow: hidden; border: 1px solid var(--cp-border); border-radius: 1rem; background: var(--cp-surface); }
