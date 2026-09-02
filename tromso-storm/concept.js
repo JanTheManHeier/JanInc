@@ -49,6 +49,19 @@ function escapeHtml(value) {
     return element.innerHTML;
 }
 
+function mapUrl(venue) {
+    const query = venue === "Rødtindhallen"
+        ? "Rødtindhallen, Øvre Storvollen 77, 9104 Kvaløya"
+        : venue;
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+function externalLink(url, label) {
+    return url
+        ? `<a href="${url}" rel="noopener noreferrer" target="_blank">${escapeHtml(label)}</a>`
+        : escapeHtml(label);
+}
+
 function escapeIcs(value) {
     return value.replace(/([,;])/g, "\\$1").replace(/\n/g, "\\n");
 }
@@ -94,7 +107,7 @@ function gameRow(game) {
                 ${note ? `<small>${note}</small>` : ""}
             </time>
             <a class="teams" href="${game.url || "https://tromsostorm.no/kampoversikt/"}">${teamName(game.home)} – ${teamName(game.away)}</a>
-            <div class="game-place">${escapeHtml(game.venue)}<span class="game-type">${location}</span></div>
+            <a class="game-place" href="${mapUrl(game.venue)}" rel="noopener noreferrer" target="_blank">${escapeHtml(game.venue)}<span class="game-type">${location}</span></a>
             <button class="calendar-button" type="button" data-date="${game.date}">+ Kalender</button>
         </article>`;
 }
@@ -135,7 +148,9 @@ function updateNextGame(game) {
     document.getElementById("next-time").dateTime = `${game.date}T${game.time}`;
     document.getElementById("next-home").textContent = game.home;
     document.getElementById("next-away").textContent = game.away;
-    document.getElementById("next-venue").textContent = game.venue;
+    const venueLink = document.getElementById("next-venue");
+    venueLink.textContent = game.venue;
+    venueLink.href = mapUrl(game.venue);
     const days = Math.max(0, Math.ceil((date - new Date()) / 86400000));
     document.getElementById("countdown").textContent = days === 0 ? "Kampdag" : `${days} dager igjen`;
     document.getElementById("next-calendar").onclick = () => downloadCalendar(game);
@@ -187,7 +202,7 @@ fetch("/api/storm-standings")
             .then((standings) => {
                 document.getElementById("standings-body").innerHTML = standings.map((row) => `
                     <tr class="${row.team === "Tromsø Storm" ? "highlight" : ""}">
-                        <th scope="row">${escapeHtml(row.team)}</th>
+                        <th scope="row">${row.team === "Tromsø Storm" ? escapeHtml(row.team) : externalLink(row.url, row.team)}</th>
                         <td>${row.played}</td>
                         <td>${row.wins}</td>
                         <td>${row.losses}</td>

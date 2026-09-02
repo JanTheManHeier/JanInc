@@ -48,6 +48,19 @@ function escapeHtml(value) {
     return element.innerHTML;
 }
 
+function mapUrl(venue) {
+    const query = venue === "Rødtindhallen"
+        ? "Rødtindhallen, Øvre Storvollen 77, 9104 Kvaløya"
+        : venue;
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+function externalLink(url, label) {
+    return url
+        ? `<a href="${url}" rel="noopener noreferrer" target="_blank">${escapeHtml(label)}</a>`
+        : escapeHtml(label);
+}
+
 function closeMenu() {
     navigation.classList.remove("open");
     menuButton.setAttribute("aria-expanded", "false");
@@ -71,7 +84,9 @@ function updateNextGame(game) {
     document.getElementById("next-home-logo").alt = `${game.home} logo`;
     document.getElementById("next-away-logo").src = teamLogo(game.away);
     document.getElementById("next-away-logo").alt = `${game.away} logo`;
-    document.getElementById("next-venue").textContent = game.venue;
+    const venueLink = document.getElementById("next-venue");
+    venueLink.textContent = game.venue;
+    venueLink.href = mapUrl(game.venue);
     const days = Math.max(0, Math.ceil((date - new Date()) / 86400000));
     document.getElementById("countdown").textContent = days === 0 ? "Kampdag" : `${days} dager igjen`;
 }
@@ -86,7 +101,7 @@ function renderSchedule() {
             <article class="game-row ${home ? "home" : "away"}">
                 <time datetime="${game.date}T${game.time}">${dayNames[date.getDay()]} ${date.getDate()}. ${monthNames[date.getMonth()]} · ${game.time}<small>${home ? "Hjemmekamp" : "Bortekamp"}</small></time>
                 <a class="teams" href="${game.url || "https://tromsostorm.no/kampoversikt/"}">${teamMarkup(game.home)}<span aria-hidden="true">—</span>${teamMarkup(game.away)}</a>
-                <span class="venue">${escapeHtml(game.venue)}</span>
+                <a class="venue" href="${mapUrl(game.venue)}" rel="noopener noreferrer" target="_blank">${escapeHtml(game.venue)}</a>
             </article>`;
     }).join("");
     scheduleToggle.hidden = matching.length <= 6;
@@ -216,7 +231,7 @@ fetch("/api/storm-standings")
         standingsBody.innerHTML = standings.map((row) => `
             <tr class="${row.team === "Tromsø Storm" ? "highlight" : ""}">
                 <td>${row.position}</td>
-                <th scope="row">${escapeHtml(row.team)}</th>
+                <th scope="row">${row.team === "Tromsø Storm" ? escapeHtml(row.team) : externalLink(row.url, row.team)}</th>
                 <td>${row.played}</td>
                 <td>${row.wins}</td>
                 <td>${row.losses}</td>

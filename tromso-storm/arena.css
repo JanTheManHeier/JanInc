@@ -183,6 +183,13 @@ button { color: inherit; font: inherit; }
 .standings tbody tr:last-child > * { border-bottom: 0; }
 .standings tbody tr.highlight { background: color-mix(in srgb, var(--cp-warning) 12%, transparent); }
 .standings tbody tr.highlight th { color: var(--cp-warning); }
+.standings tbody a { color: inherit; text-decoration-color: var(--cp-warning); text-underline-offset: 3px; }
+.venue-guide { background: var(--cp-surface-soft); }
+.travel-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.travel-grid article { padding: 26px; border: 1px solid var(--cp-border); border-radius: 1rem; background: var(--cp-surface); }
+.travel-grid h3 { margin: 18px 0 8px; font-size: 1.55rem; }
+.travel-grid p { min-height: 5.5em; color: var(--cp-text-muted); }
+.travel-icon { display: inline-flex; min-width: 48px; height: 38px; align-items: center; justify-content: center; padding-inline: 10px; border-radius: 999px; background: var(--cp-warning); color: #17120e; font-size: .72rem; font-weight: 950; letter-spacing: .06em; }
 .roster { background: var(--cp-bg-elevated); }
 .roster-heading > p { max-width: 520px; color: var(--cp-text-muted); font-size: 1.12rem; }
 .roster-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
@@ -301,6 +308,8 @@ footer a { color: var(--cp-text-muted); }
     .hero-sponsors img { height: 34px; }
     .section-pad { padding: 72px 20px; }
     .section-head { align-items: flex-start; flex-direction: column; }
+    .travel-grid { grid-template-columns: 1fr; }
+    .travel-grid p { min-height: 0; }
     .matchup { gap: 10px; }
     .club img { width: 90px; }
     .game-card { padding: 24px 16px; }

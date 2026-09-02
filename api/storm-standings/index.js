@@ -1,18 +1,33 @@
 const BASKETLIVE_URL = 'https://sf14-terminlister-prod-app.azurewebsites.net/ta/TournamentStandings/';
 const DEFAULT_TOURNAMENT_ID = '449378';
 const REQUEST_TIMEOUT_MS = 10000;
+const TEAM_WEBSITES = new Map([
+    ['Ammerud', 'https://www.ammerudbasket.no/'],
+    ['Bærum Basket', 'https://www.barumbasket.no/'],
+    ['Centrum Tigers', 'https://www.centrumtigers.com/'],
+    ['Frøya', 'https://froyabasket.no/'],
+    ['Gimle', 'https://www.gimle.no/'],
+    ['Fyllingen Lions', 'https://www.fyllingenlions.no/'],
+    ['Kongsberg Miners', 'https://kongsbergminers.no/'],
+    ['Nidaros Jets', 'https://nidarosjets.no/'],
+    ['TNT Towers', 'https://tntbasket.no/']
+]);
 
 function normalizeStandings(rows) {
     return (Array.isArray(rows) ? rows : [])
-        .map((row) => ({
-            position: Number(row.position),
-            team: String(row.orgName || '').trim(),
-            played: Number(row.matches || 0),
-            wins: Number(row.victories || 0),
-            losses: Number(row.losses || 0),
-            difference: Number(row.goalDifference || 0),
-            points: Number(row.totalPoints || 0)
-        }))
+        .map((row) => {
+            const team = String(row.orgName || '').trim();
+            return {
+                position: Number(row.position),
+                team,
+                url: TEAM_WEBSITES.get(team) || null,
+                played: Number(row.matches || 0),
+                wins: Number(row.victories || 0),
+                losses: Number(row.losses || 0),
+                difference: Number(row.goalDifference || 0),
+                points: Number(row.totalPoints || 0)
+            };
+        })
         .filter((row) => Number.isInteger(row.position) && row.position > 0 && row.team)
         .sort((left, right) => left.position - right.position);
 }
