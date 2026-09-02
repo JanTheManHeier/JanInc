@@ -6,6 +6,7 @@ const scheduleList = document.getElementById("schedule-list");
 const scheduleToggle = document.getElementById("schedule-toggle");
 const rosterGrid = document.getElementById("roster-grid");
 const coachingStaff = document.getElementById("coaching-staff");
+const standingsBody = document.getElementById("standings-body");
 let games = [];
 let filter = "all";
 let expanded = false;
@@ -16,6 +17,12 @@ function gameDate(game) {
 
 function isHome(game) {
     return game.home === "Tromsø Storm";
+}
+
+function escapeHtml(value) {
+    const element = document.createElement("span");
+    element.textContent = value;
+    return element.innerHTML;
 }
 
 function closeMenu() {
@@ -49,12 +56,15 @@ function renderSchedule() {
     scheduleList.innerHTML = visible.map((game) => {
         const date = gameDate(game);
         const home = isHome(game);
-        const team = (name) => name === "Tromsø Storm" ? `<strong>${name}</strong>` : name;
+        const team = (name) => {
+            const escapedName = escapeHtml(name);
+            return name === "Tromsø Storm" ? `<strong>${escapedName}</strong>` : escapedName;
+        };
         return `
             <article class="game-row ${home ? "home" : "away"}">
                 <time datetime="${game.date}T${game.time}">${dayNames[date.getDay()]} ${date.getDate()}. ${monthNames[date.getMonth()]} · ${game.time}<small>${home ? "Hjemmekamp" : "Bortekamp"}</small></time>
-                <a class="teams" href="https://tromsostorm.no/kampoversikt/">${team(game.home)} — ${team(game.away)}</a>
-                <span class="venue">${game.venue}</span>
+                <a class="teams" href="${game.url || "https://tromsostorm.no/kampoversikt/"}">${team(game.home)} — ${team(game.away)}</a>
+                <span class="venue">${escapeHtml(game.venue)}</span>
             </article>`;
     }).join("");
     scheduleToggle.hidden = matching.length <= 6;
@@ -141,13 +151,31 @@ function renderRoster(data) {
     });
 }
 
-fetch("data/kamper.json")
-    .then((response) => {
-        if (!response.ok) throw new Error("Terminlisten kunne ikke lastes");
-        return response.json();
-    })
+async function loadGames() {
+    try {
+        const response = await fetch("/api/storm-matches");
+        if (response.ok) {
+            const data = await response.json();
+            if (Array.isArray(data)) return data;
+        }
+    } catch (error) {
+        console.warn("Kunne ikke hente terminliste fra NIF", error);
+    }
+
+    const fallback = await fetch("data/kamper.json");
+    if (!fallback.ok) throw new Error("Terminlisten kunne ikke lastes");
+    return fallback.json();
+}
+
+loadGames()
     .then((data) => {
         games = data;
+        if (!games.length) {
+            document.getElementById("neste-kamp").hidden = true;
+            scheduleList.innerHTML = "<p>Ny terminliste er ikke publisert ennå.</p>";
+            scheduleToggle.hidden = true;
+            return;
+        }
         const now = new Date();
         updateNextGame(games.find((game) => gameDate(game) >= now) || games[games.length - 1]);
         renderSchedule();
@@ -155,6 +183,28 @@ fetch("data/kamper.json")
     .catch((error) => {
         scheduleList.innerHTML = `<p>${error.message}. Se kampoversikten på tromsostorm.no.</p>`;
         scheduleToggle.hidden = true;
+    });
+
+fetch("/api/storm-standings")
+    .then((response) => {
+        if (!response.ok) throw new Error("Tabellen kunne ikke lastes");
+        return response.json();
+    })
+    .then((standings) => {
+        standingsBody.innerHTML = standings.map((row) => `
+            <tr class="${row.team === "Tromsø Storm" ? "highlight" : ""}">
+                <td>${row.position}</td>
+                <th scope="row">${escapeHtml(row.team)}</th>
+                <td>${row.played}</td>
+                <td>${row.wins}</td>
+                <td>${row.losses}</td>
+                <td>${row.difference}</td>
+                <td><strong>${row.points}</strong></td>
+            </tr>
+        `).join("");
+    })
+    .catch((error) => {
+        standingsBody.innerHTML = `<tr><td colspan="7">${escapeHtml(error.message)}. <a href="https://kamper.basket.no/standings?seasonId=201069&tournamentId=449378">Se BasketLive</a>.</td></tr>`;
     });
 
 fetch("data/players.json")

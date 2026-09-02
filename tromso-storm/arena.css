@@ -171,6 +171,16 @@ button { color: inherit; font: inherit; }
 .game-row .teams { font-size: 1.05rem; }
 .game-row .teams strong { color: var(--cp-warning); }
 .schedule-toggle { margin-top: 20px; padding: 11px 18px; border: 1px solid var(--cp-warning); border-radius: .625rem; background: var(--cp-surface); color: var(--cp-warning); cursor: pointer; font-weight: 900; }
+.standings { background: var(--cp-bg-elevated); }
+.standings-card { overflow: hidden; border: 1px solid var(--cp-border); border-radius: 1rem; background: var(--cp-surface); }
+.table-scroll { overflow-x: auto; }
+.standings table { width: 100%; min-width: 620px; border-collapse: collapse; }
+.standings th, .standings td { padding: 14px 18px; border-bottom: 1px solid var(--cp-border); text-align: right; }
+.standings th:nth-child(2), .standings td:nth-child(2) { text-align: left; }
+.standings thead { color: var(--cp-text-muted); font-size: .78rem; text-transform: uppercase; }
+.standings tbody tr:last-child > * { border-bottom: 0; }
+.standings tbody tr.highlight { background: color-mix(in srgb, var(--cp-warning) 12%, transparent); }
+.standings tbody tr.highlight th { color: var(--cp-warning); }
 .roster { background: var(--cp-bg-elevated); }
 .roster-heading > p { max-width: 520px; color: var(--cp-text-muted); font-size: 1.12rem; }
 .roster-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }

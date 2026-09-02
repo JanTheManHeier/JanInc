@@ -43,6 +43,12 @@ function isHome(game) {
     return game.home === "Tromsø Storm";
 }
 
+function escapeHtml(value) {
+    const element = document.createElement("span");
+    element.textContent = value;
+    return element.innerHTML;
+}
+
 function escapeIcs(value) {
     return value.replace(/([,;])/g, "\\$1").replace(/\n/g, "\\n");
 }
@@ -76,7 +82,10 @@ function downloadCalendar(game) {
 function gameRow(game) {
     const date = localDate(game);
     const location = isHome(game) ? "Hjemme" : "Borte";
-    const teamName = (name) => name === "Tromsø Storm" ? `<strong>${name}</strong>` : name;
+    const teamName = (name) => {
+        const escapedName = escapeHtml(name);
+        return name === "Tromsø Storm" ? `<strong>${escapedName}</strong>` : escapedName;
+    };
     const note = game.tag || game.trip;
     return `
         <article class="game-row" data-location="${location.toLowerCase()}">
@@ -84,8 +93,8 @@ function gameRow(game) {
                 ${dayNames[date.getDay()]} ${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")} ${game.time}
                 ${note ? `<small>${note}</small>` : ""}
             </time>
-            <a class="teams" href="https://tromsostorm.no/kampoversikt/">${teamName(game.home)} – ${teamName(game.away)}</a>
-            <div class="game-place">${game.venue}<span class="game-type">${location}</span></div>
+            <a class="teams" href="${game.url || "https://tromsostorm.no/kampoversikt/"}">${teamName(game.home)} – ${teamName(game.away)}</a>
+            <div class="game-place">${escapeHtml(game.venue)}<span class="game-type">${location}</span></div>
             <button class="calendar-button" type="button" data-date="${game.date}">+ Kalender</button>
         </article>`;
 }
@@ -132,12 +141,30 @@ function updateNextGame(game) {
     document.getElementById("next-calendar").onclick = () => downloadCalendar(game);
 }
 
-fetch("data/kamper.json")
-    .then((response) => {
-        if (!response.ok) throw new Error("Terminlisten kunne ikke lastes");
-        return response.json();
-    })
+async function loadGames() {
+    try {
+        const response = await fetch("/api/storm-matches");
+        if (response.ok) {
+            const data = await response.json();
+            if (Array.isArray(data)) return data;
+        }
+    } catch (error) {
+        console.warn("Kunne ikke hente terminliste fra NIF", error);
+    }
+
+    const fallback = await fetch("data/kamper.json");
+    if (!fallback.ok) throw new Error("Terminlisten kunne ikke lastes");
+    return fallback.json();
+}
+
+loadGames()
     .then((games) => {
+        if (!games.length) {
+            document.getElementById("next-game").hidden = true;
+            document.getElementById("schedule-list").innerHTML = "<p>Ny terminliste er ikke publisert ennå.</p>";
+            document.getElementById("schedule-toggle").hidden = true;
+            return;
+        }
         const now = new Date();
         const next = games.find((game) => localDate(game) >= now) || games[games.length - 1];
         updateNextGame(next);
@@ -150,6 +177,26 @@ fetch("data/kamper.json")
                 const active = item === button;
                 item.classList.toggle("active", active);
                 item.setAttribute("aria-pressed", String(active));
+            });
+
+fetch("/api/storm-standings")
+            .then((response) => {
+                if (!response.ok) throw new Error("Tabellen kunne ikke lastes");
+                return response.json();
+            })
+            .then((standings) => {
+                document.getElementById("standings-body").innerHTML = standings.map((row) => `
+                    <tr class="${row.team === "Tromsø Storm" ? "highlight" : ""}">
+                        <th scope="row">${escapeHtml(row.team)}</th>
+                        <td>${row.played}</td>
+                        <td>${row.wins}</td>
+                        <td>${row.losses}</td>
+                        <td>${row.points}</td>
+                    </tr>
+                `).join("");
+            })
+            .catch((error) => {
+                document.getElementById("standings-body").innerHTML = `<tr><td colspan="5">${escapeHtml(error.message)}. <a href="https://kamper.basket.no/standings?seasonId=201069&tournamentId=449378">Se BasketLive</a>.</td></tr>`;
             });
             currentFilter = button.dataset.filter;
             scheduleExpanded = false;
