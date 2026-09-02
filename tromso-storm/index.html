@@ -3,41 +3,228 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Sammenlign tre designkonsepter for Tromsø Storms nye WordPress-nettside.">
-    <meta property="og:title" content="Tromsø Storm – tre designkonsepter">
-    <meta property="og:description" content="Arena, Pulse eller Arven – hvilken retning skal klubben velge?">
-    <meta property="og:image" content="https://janinc.no/tromso-storm/assets/new-era.png">
-    <meta name="twitter:card" content="summary_large_image">
+    <script>
+      (() => {
+        const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+        const theme =
+          param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <script>
+      if (!new URLSearchParams(window.location.search).has("clawpilotTheme")) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        --cp-bg: #f7f4ef;
+        --cp-bg-elevated: #fcfbf8;
+        --cp-surface: #ffffff;
+        --cp-surface-soft: #f5f5f5;
+        --cp-border: #dedede;
+        --cp-border-strong: #919191;
+        --cp-text: #242424;
+        --cp-text-muted: #5c5c5c;
+        --cp-text-soft: #6f6f6f;
+        --cp-accent: #b11f4b;
+        --cp-accent-hover: #9a1a41;
+        --cp-accent-soft: rgba(177, 31, 75, 0.08);
+        --cp-accent-fg: #ffffff;
+        --cp-success: #16a34a;
+        --cp-danger: #dc2626;
+        --cp-warning: #f59e0b;
+        --cp-link: #0078d4;
+        --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+        --cp-overlay: rgba(255, 255, 255, 0.8);
+        --cp-panel: rgba(255, 255, 255, 0.86);
+        --cp-panel-strong: rgba(255, 255, 255, 0.96);
+        --cp-sheen: rgba(255, 255, 255, 0.55);
+        --cp-highlight: rgba(177, 31, 75, 0.12);
+      }
+      html[data-theme="dark"] {
+        color-scheme: dark;
+        --cp-bg: #3d3b3a;
+        --cp-bg-elevated: #343231;
+        --cp-surface: #292929;
+        --cp-surface-soft: #2e2e2e;
+        --cp-border: #474747;
+        --cp-border-strong: #5f5f5f;
+        --cp-text: #dedede;
+        --cp-text-muted: #919191;
+        --cp-text-soft: #b0b0b0;
+        --cp-accent: #fd8ea1;
+        --cp-accent-hover: #fb7b91;
+        --cp-accent-soft: rgba(253, 142, 161, 0.14);
+        --cp-accent-fg: #1a1a1a;
+        --cp-success: #4ade80;
+        --cp-danger: #f87171;
+        --cp-warning: #fbbf24;
+        --cp-link: #4da6ff;
+        --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+        --cp-overlay: rgba(41, 41, 41, 0.88);
+        --cp-panel: rgba(41, 41, 41, 0.72);
+        --cp-panel-strong: rgba(41, 41, 41, 0.96);
+        --cp-sheen: rgba(255, 255, 255, 0.04);
+        --cp-highlight: rgba(253, 142, 161, 0.12);
+      }
+    </style>
+    <meta name="description" content="Tromsø Storm – nyheter, kamper, laget og billetter. Uvær fra nord.">
+    <meta property="og:title" content="Tromsø Storm | Uvær fra nord">
+    <meta property="og:description" content="Følg Tromsø Storm i BLNO. Se neste kamp, terminliste, nyheter og partnere.">
+    <meta property="og:image" content="https://janinc.no/tromso-storm/assets/hero-action-1600.webp">
+    <meta property="og:locale" content="nb_NO">
     <link rel="icon" type="image/png" href="assets/storm-mark-source.png">
-    <title>Velg design | Tromsø Storm</title>
-    <link rel="stylesheet" href="chooser.css">
+    <link rel="stylesheet" href="arena.css">
+    <title>Tromsø Storm | Uvær fra nord</title>
 </head>
 <body>
-    <main>
-        <header class="chooser-hero">
+    <a class="skip-link" href="#main">Hopp til innhold</a>
+    <header class="site-header">
+        <a class="brand" href="#top" aria-label="Tromsø Storm forside">
             <img src="assets/storm-mark.svg" width="180" height="108" alt="Tromsø Storm">
-            <span>Ny hjemmeside · designrunde 2</span>
-            <h1>Tre retninger.<br>Én Storm.</h1>
-            <p>Alle konseptene har ekte terminliste, klubbhistorie, spillerstall, partnere og mobilvisning. Forskjellen ligger nå i uttrykk, rutenett og prioritering.</p>
-        </header>
-        <section class="concept-grid" aria-label="Designkonsepter">
-            <article class="concept-card arena-card">
-                <div class="preview"><img src="assets/hero-action-900.webp" width="900" height="743" alt=""><strong>UVÆR<br>FRA NORD</strong><span>Desktop + mobil</span></div>
-                <div class="card-content"><small>Konsept 01</small><h2>Arena</h2><p>Nesten-svart marine, kant-til-kant kampfoto, skarpe flater og billetten først.</p><a href="concept.html?style=arena">Se Arena →</a></div>
-            </article>
-            <article class="concept-card pulse-card">
-                <div class="preview"><img src="assets/new-era-500.webp" width="500" height="500" alt=""><strong>STORM<br>WARNING</strong><span>Desktop + mobil</span></div>
-                <div class="card-content"><small>Konsept 02</small><h2>Pulse</h2><p>Lyst, energisk og sosialt. Oransje aksent, vertikale kort og swipebar kampfeed.</p><a href="concept.html?style=pulse">Se Pulse →</a></div>
-            </article>
-            <article class="concept-card heritage-card">
-                <div class="preview"><img src="assets/nm-1997-600.webp" width="600" height="425" alt=""><strong>SIDEN<br>1976</strong><span>Desktop + mobil</span></div>
-                <div class="card-content"><small>Konsept 03</small><h2>Arven</h2><p>Moderne klubbavis med spalter, seriffoverskrifter og historien som redaksjonell styrke.</p><a href="concept.html?style=heritage">Se Arven →</a></div>
-            </article>
+        </a>
+        <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Meny</button>
+        <nav id="site-nav" class="site-nav" aria-label="Hovedmeny">
+            <a href="#nyheter">Nyheter</a>
+            <a href="#kamper">Kamper</a>
+            <a href="#laget">Laget</a>
+            <a href="#partnere">Partnere</a>
+            <a class="nav-ticket" href="#billetter">Billetter</a>
+        </nav>
+    </header>
+
+    <main id="main">
+        <section id="top" class="hero">
+            <img class="hero-image" src="assets/hero-action-1600.webp" width="1600" height="1320" fetchpriority="high" alt="Tromsø Storm-spiller i kamp">
+            <div class="hero-panel">
+                <span class="eyebrow">BLNO 2026/27 · Tromsø</span>
+                <h1>Uværets<br>kraft.</h1>
+                <p>Mer energi. Større ambisjoner. Hele Nord-Norges basketlag er tilbake på øverste nivå.</p>
+                <div class="hero-actions">
+                    <a class="button primary" href="#neste-kamp">Neste kamp</a>
+                    <a class="button secondary" href="#nyheter">Siste nytt</a>
+                </div>
+            </div>
+            <div class="hero-tag" aria-hidden="true">#UVÆRFRANORD</div>
         </section>
-        <section class="platform-note">
-            <div><span>Anbefalt plattform</span><h2>WordPress videreføres</h2></div>
-            <p>Valgt design bygges som et moderne blokktema. Ørjan beholder arbeidsflyten han kjenner, mens artikler, bilder, klubbaviser og mer enn 400 arkivsider migreres og struktureres.</p>
+
+        <section id="neste-kamp" class="next-game section-pad">
+            <div class="section-label"><span>01</span><strong>Neste kamp</strong></div>
+            <div class="game-card">
+                <div class="game-date">
+                    <span id="next-day">FRE</span>
+                    <strong id="next-date">18. SEPTEMBER</strong>
+                    <time id="next-time" datetime="2026-09-18T19:30">19:30</time>
+                </div>
+                <div class="matchup">
+                    <div class="club"><img src="assets/storm-mark.svg" width="150" height="90" alt=""><strong id="next-home">Tromsø Storm</strong></div>
+                    <span class="versus">VS</span>
+                    <div class="club opponent"><span id="opponent-letter">F</span><strong id="next-away">Frøya</strong></div>
+                </div>
+                <div class="game-meta">
+                    <strong id="countdown">16 dager igjen</strong>
+                    <span id="next-venue">Rødtindhallen</span>
+                    <a class="button primary" href="#billetter">Kjøp billett</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="nyheter" class="news section-pad">
+            <div class="section-head">
+                <div><div class="section-label"><span>02</span><strong>Siste nytt</strong></div><h2>Fra Stormen</h2></div>
+                <a class="text-link" href="https://tromsostorm.no/">Alle nyheter →</a>
+            </div>
+            <div class="news-grid">
+                <article class="story story-lead">
+                    <img src="assets/grant-sitton-1200.webp" width="1200" height="1200" loading="lazy" alt="Grant Sitton">
+                    <div><span class="eyebrow">A-laget</span><time datetime="2026-08-10">10. august 2026</time><h3>Ny amerikaner klar for Storm</h3><p>Grant Sitton tilfører størrelse, internasjonal erfaring og et skudd som åpner banen.</p><a href="https://tromsostorm.no/2026/08/10/ny-amerikaner-klar-for-storm-2/">Les saken →</a></div>
+                </article>
+                <article class="story">
+                    <img src="assets/new-era-500.webp" width="500" height="500" loading="lazy" alt="En ny æra for Tromsø Storm">
+                    <div><span class="eyebrow">Trener</span><time datetime="2026-06-04">4. juni 2026</time><h3>Sergio vender tilbake</h3><p>Årets trener i BLNO 2022/23 leder et nytt og ambisiøst prosjekt i nord.</p><a href="https://tromsostorm.no/2026/06/04/drommesignering-for-tromso-storm/">Les saken →</a></div>
+                </article>
+                <article class="story story-history">
+                    <img src="assets/nm-1997-600.webp" width="600" height="425" loading="lazy" alt="Tromsøs norgesmestere fra 1997">
+                    <div><span class="eyebrow">Fra arkivet</span><h3>Gullet i 1997</h3><p>Historien om laget som løftet kongepokalen og skrev seg inn i norsk baskethistorie.</p><a href="https://tromsostorm.no/2017/02/24/20-ars-jubileum-for-97-laget/">Les historien →</a></div>
+                </article>
+            </div>
+        </section>
+
+        <section id="kamper" class="schedule section-pad">
+            <div class="section-head">
+                <div><div class="section-label"><span>03</span><strong>BLNO 2026/27</strong></div><h2>Kampene</h2></div>
+                <div class="filters" role="group" aria-label="Filtrer kamper">
+                    <button class="filter active" type="button" data-filter="all" aria-pressed="true">Alle</button>
+                    <button class="filter" type="button" data-filter="home" aria-pressed="false">Hjemme</button>
+                    <button class="filter" type="button" data-filter="away" aria-pressed="false">Borte</button>
+                </div>
+            </div>
+            <div id="schedule-list" class="schedule-list" aria-live="polite"></div>
+            <button id="schedule-toggle" class="schedule-toggle" type="button" aria-expanded="false">Vis alle kamper</button>
+        </section>
+
+        <section id="laget" class="team-feature">
+            <img src="assets/team-current-1200.webp" width="1200" height="603" loading="lazy" alt="Tromsø Storms lag">
+            <div>
+                <div class="section-label"><span>04</span><strong>Laget</strong></div>
+                <h2>Bygd i nord.</h2>
+                <p>Lokale profiler, unge talenter og internasjonal erfaring. En ny Storm-stall tar form foran returen til BLNO.</p>
+                <a class="button primary" href="https://tromsostorm.no/spillere-trenere/">Møt spillerne</a>
+            </div>
+        </section>
+
+        <section id="partnere" class="partners section-pad">
+            <div class="section-head partner-heading">
+                <div><div class="section-label"><span>05</span><strong>Laget bak laget</strong></div><h2>Hovedpartnere</h2></div>
+                <p>Klubbens viktigste samarbeidspartnere får størst synlighet – på banen og digitalt.</p>
+            </div>
+            <div class="main-partner-grid">
+                <a href="http://jekta.no" aria-label="Jekta Storsenter"><img src="assets/jekta.png" alt="Jekta Storsenter"></a>
+                <a href="https://snn.no" aria-label="SpareBank 1 Nord-Norge"><img src="assets/snn.png" alt="SpareBank 1 Nord-Norge"></a>
+                <a href="http://coop.no" aria-label="Coop Extra"><img src="assets/extra.png" alt="Coop Extra"></a>
+                <a href="http://www.hermesas.no" aria-label="Hermes"><img src="assets/hermes.png" alt="Hermes"></a>
+                <a href="http://bedsys.no" aria-label="Bedriftssystemer"><img src="assets/bedsys.png" alt="Bedriftssystemer"></a>
+                <a href="https://pizzabakeren.no" aria-label="Pizzabakeren"><img src="assets/sponsors/pizzabakeren.png" alt="Pizzabakeren"></a>
+            </div>
+
+            <div class="supporting-heading"><span class="eyebrow">Samarbeidspartnere</span><h3>Sammen for Storm</h3></div>
+            <div class="partner-grid">
+                <a href="https://www.bokstavhuset.no/" aria-label="Bokstavhuset"><img src="assets/sponsors/bokstavhuset.png" alt="Bokstavhuset"></a>
+                <a href="https://tromso.kraftsportssenter.no/" aria-label="KRAFT Sportssenter"><img src="assets/sponsors/kraft.png" alt="KRAFT Sportssenter"></a>
+                <a href="https://www.neumann.no/no-no/varehusoversikt/tromso" aria-label="Neumann Bygg"><img src="assets/sponsors/neumann.png" alt="Neumann Bygg"></a>
+                <a href="https://www.egon.no/" aria-label="Egon Jekta"><img src="assets/sponsors/egon.png" alt="Egon Jekta"></a>
+                <a href="https://www.nord-tre.no/konsernet-2/" aria-label="Nord-Tre Entreprenør"><img src="assets/sponsors/nord-tre.png" alt="Nord-Tre Entreprenør"></a>
+                <a href="https://mobit.no/forhandlere/mobit-stakkevollvegen/" aria-label="Mobit"><img src="assets/sponsors/mobit.png" alt="Mobit"></a>
+                <a href="https://www.bonord.no/" aria-label="Bonord"><img src="assets/sponsors/bonord.png" alt="Bonord"></a>
+                <a href="https://www.jobbogfritid.no/" aria-label="Jobb og Fritid"><img src="assets/sponsors/jobb-og-fritid.png" alt="Jobb og Fritid"></a>
+                <a href="https://www.schwenke.no/" aria-label="Schwenke"><img src="assets/sponsors/schwenke.png" alt="Schwenke"></a>
+                <a href="https://pizzabakeren.no" aria-label="Pizzabakeren"><img src="assets/sponsors/pizzabakeren.png" alt="Pizzabakeren"></a>
+                <a href="https://www.gulesider.no/f/m%C3%A5l-regnskap-as:84316039" aria-label="Mål Regnskap"><img src="assets/sponsors/mal-regnskap.png" alt="Mål Regnskap"></a>
+                <a href="https://www.dintaxi.no/" aria-label="Din Taxi"><img src="assets/sponsors/din-taxi.png" alt="Din Taxi"></a>
+                <a href="https://helseogidrett.no/" aria-label="Tromsø Helse og Idrettsklinikk"><img src="assets/sponsors/tromso-helse-idrett.png" alt="Tromsø Helse og Idrettsklinikk"></a>
+                <a href="https://www.ishavskraft.no/" aria-label="Ishavskraft"><img src="assets/sponsors/ishavskraft.png" alt="Ishavskraft"></a>
+            </div>
+            <a class="partner-cta" href="mailto:storm@tromsostorm.no?subject=Samarbeid%20med%20Tromsø%20Storm">Vil du bli partner? <strong>Ta kontakt →</strong></a>
+        </section>
+
+        <section id="billetter" class="ticket-section section-pad">
+            <div><span class="eyebrow">Hjemmekamp i Rødtindhallen</span><h2>Kjenn<br>trykket.</h2></div>
+            <div class="prices">
+                <span>Voksen <strong>110,-</strong></span>
+                <span>Student / honnør <strong>80,-</strong></span>
+                <span>Barn under 16 <strong>Gratis</strong></span>
+            </div>
+            <a class="button primary" href="https://tromsostorm.no/billettpriser/">Billettinformasjon</a>
         </section>
     </main>
+
+    <footer>
+        <img src="assets/storm-mark.svg" width="180" height="108" alt="Tromsø Storm">
+        <div><strong>#uværfranord</strong><a href="mailto:storm@tromsostorm.no">storm@tromsostorm.no</a></div>
+        <div><a href="https://www.facebook.com/TromsoStorm">Facebook</a><a href="https://www.instagram.com/tromsostorm/">Instagram</a></div>
+    </footer>
+    <script src="arena.js"></script>
 </body>
 </html>
