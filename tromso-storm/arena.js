@@ -19,7 +19,7 @@ const teamLogos = {
     "Fyllingen Lions": "assets/opponents/fyllingen.webp",
     "Gimle": "assets/opponents/gimle.png",
     "Kongsberg Miners": "assets/opponents/kongsberg.png",
-    "Nidaros Jets": "assets/opponents/nidaros.jpeg",
+    "Nidaros Jets": "assets/opponents/nidaros.png",
     "TNT Towers": "assets/opponents/tnt.png"
 };
 
