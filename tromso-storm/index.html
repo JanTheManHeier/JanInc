@@ -180,14 +180,25 @@
             <button id="schedule-toggle" class="schedule-toggle" type="button" aria-expanded="false">Vis alle kamper</button>
         </section>
 
-        <section id="laget" class="team-feature">
-            <img src="assets/team-current-1200.webp" width="1200" height="603" loading="lazy" alt="Tromsø Storms lag">
-            <div>
-                <div class="section-label"><span>04</span><strong>Laget</strong></div>
-                <h2>Bygd i nord.</h2>
-                <p>Lokale profiler, unge talenter og internasjonal erfaring. En ny Storm-stall tar form foran returen til BLNO.</p>
-                <a class="button primary" href="https://tromsostorm.no/spillere-trenere/">Møt spillerne</a>
+        <section id="laget" class="roster section-pad">
+            <div class="section-head roster-heading">
+                <div>
+                    <div class="section-label"><span>04</span><strong>Spillerstall 2026/27</strong></div>
+                    <h2>Bygd i nord.</h2>
+                </div>
+                <p>Lokale profiler, unge talenter og internasjonal erfaring. Møt laget som tar Tromsø Storm tilbake til BLNO.</p>
             </div>
+            <div id="roster-grid" class="roster-grid" aria-live="polite">
+                <p>Laster spillerstallen …</p>
+            </div>
+            <div id="coaching-staff" class="coaching-staff"></div>
+            <figure class="team-photo">
+                <picture>
+                    <source media="(max-width: 700px)" srcset="assets/team-current-700.webp">
+                    <img src="assets/team-current-1200.webp" width="1200" height="603" loading="lazy" alt="Tromsø Storms lag 2025/26">
+                </picture>
+                <figcaption>Lagbilde fra 2025/26. Nytt lagbilde publiseres når det er klart.</figcaption>
+            </figure>
         </section>
 
         <section class="why-partner section-pad">

@@ -4,6 +4,8 @@ const menuButton = document.querySelector(".menu-button");
 const navigation = document.querySelector(".site-nav");
 const scheduleList = document.getElementById("schedule-list");
 const scheduleToggle = document.getElementById("schedule-toggle");
+const rosterGrid = document.getElementById("roster-grid");
+const coachingStaff = document.getElementById("coaching-staff");
 let games = [];
 let filter = "all";
 let expanded = false;
@@ -78,6 +80,67 @@ scheduleToggle.addEventListener("click", () => {
     renderSchedule();
 });
 
+function createPlayerCard(player) {
+    const card = document.createElement("article");
+    card.className = "player-card";
+
+    const photo = document.createElement("div");
+    photo.className = "player-photo";
+    const image = document.createElement("img");
+    image.src = player.Bilde;
+    image.alt = player.Navn;
+    image.loading = "lazy";
+    image.width = 600;
+    image.height = 730;
+    const number = document.createElement("span");
+    number.className = "jersey-number";
+    number.textContent = player.Drakt_nummer;
+    photo.append(image, number);
+
+    const info = document.createElement("div");
+    info.className = "player-info";
+    const meta = document.createElement("span");
+    meta.className = "player-meta";
+    meta.textContent = `${player.Posisjon} · ${player.Hoyde} cm · født ${player.Fodt}`;
+    const name = document.createElement("h3");
+    name.textContent = player.Navn;
+    const details = document.createElement("details");
+    const summary = document.createElement("summary");
+    summary.textContent = "Om spilleren";
+    const biography = document.createElement("p");
+    biography.textContent = player.Diverse;
+    details.append(summary, biography);
+    info.append(meta, name, details);
+    card.append(photo, info);
+    return card;
+}
+
+function renderRoster(data) {
+    rosterGrid.replaceChildren(...data.players.map(createPlayerCard));
+    coachingStaff.replaceChildren();
+
+    if (!data.coaches.length) return;
+    const heading = document.createElement("h3");
+    heading.textContent = "Støtteapparat";
+    coachingStaff.append(heading);
+    data.coaches.forEach((coach) => {
+        const card = document.createElement("article");
+        card.className = "coach-card";
+        const image = document.createElement("img");
+        image.src = coach.Bilde;
+        image.alt = coach.Navn;
+        image.loading = "lazy";
+        const copy = document.createElement("div");
+        const role = document.createElement("span");
+        role.textContent = coach.Oppgave;
+        const name = document.createElement("strong");
+        name.textContent = coach.Navn;
+        copy.append(role, name);
+        card.append(image, copy);
+        coachingStaff.append(card);
+    });
+}
+
 fetch("data/kamper.json")
     .then((response) => {
         if (!response.ok) throw new Error("Terminlisten kunne ikke lastes");
@@ -92,4 +155,14 @@ fetch("data/kamper.json")
     .catch((error) => {
         scheduleList.innerHTML = `<p>${error.message}. Se kampoversikten på tromsostorm.no.</p>`;
         scheduleToggle.hidden = true;
+    });
+
+fetch("data/players.json")
+    .then((response) => {
+        if (!response.ok) throw new Error("Spillerstallen kunne ikke lastes");
+        return response.json();
+    })
+    .then(renderRoster)
+    .catch((error) => {
+        rosterGrid.innerHTML = `<p>${error.message}. Se den oppdaterte spillerstallen på <a class="text-link" href="https://tromsostorm.no/spillere-trenere/">tromsostorm.no</a>.</p>`;
     });

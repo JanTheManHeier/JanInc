@@ -1,0 +1,232 @@
+{
+  "season": "2026/27",
+  "updated": "2026-09-02",
+  "players": [
+    {
+      "ID": "150",
+      "Drakt_nummer": "0",
+      "Navn": "Grant Sitton",
+      "Bilde": "assets/players/grant-sitton.png",
+      "Posisjon": "Forward",
+      "Hoyde": "206",
+      "Fodt": "1993",
+      "Antall_aar": "0",
+      "E_post": "",
+      "Diverse": "Grant er en av klubbens to nye amerikanere. Han er fra Oregon, men har spilt både college og i sin proffkarriere mange steder. Siste kontrakt var i Saitama Broncos, Japan. Hele 206 cm, men en meget allsidig spiller og meget god skytter, også fra 3-poengslinjen. Blir spennende å se hva han kan utrette i BLNO."
+    },
+    {
+      "ID": "117",
+      "Drakt_nummer": "1",
+      "Navn": "Omar Meknas",
+      "Bilde": "assets/players/omar-meknas.jpg",
+      "Posisjon": "Point Guard",
+      "Hoyde": "180",
+      "Fodt": "2002",
+      "Antall_aar": "5",
+      "E_post": "",
+      "Diverse": "Omar er en sterk, fysisk spiller med et godt skudd. En dedikert spiller som vi tror kan utvikle seg godt med spill i årets 1. divisjon."
+    },
+    {
+      "ID": "141",
+      "Drakt_nummer": "2",
+      "Navn": "Humaidan Hamdin",
+      "Bilde": "assets/players/humaidan-hamdin.jpg",
+      "Posisjon": "Guard",
+      "Hoyde": "193",
+      "Fodt": "2005",
+      "Antall_aar": "2",
+      "E_post": "",
+      "Diverse": "Humaidan er inne i sin tredje sesong på A-laget, men har fått deler av sesongene spolert grunnet skader. Talentfull og atletisk spiller som vi håper å se mer og mer ut av."
+    },
+    {
+      "ID": "61",
+      "Drakt_nummer": "4",
+      "Navn": "Johannes Rydningen Lange",
+      "Bilde": "assets/players/johannes-rydningen-lange.jpg",
+      "Posisjon": "Point guard",
+      "Hoyde": "182",
+      "Fodt": "1998",
+      "Antall_aar": "12",
+      "E_post": "",
+      "Diverse": "Kapteinen vår, og en av veteranene, skal lede Storm-skuta i lag med Anders Solem. En veldig dyktig point guard og spiller som er veldig viktig for laget, og som begynner å bli fast inventar på landslaget også."
+    },
+    {
+      "ID": "129",
+      "Drakt_nummer": "6",
+      "Navn": "Isak Emanuel Ramirez Nilsen",
+      "Bilde": "assets/players/isak-emanuel-ramirez-nilsen.jpg",
+      "Posisjon": "Forward",
+      "Hoyde": "193",
+      "Fodt": "2005",
+      "Antall_aar": "4",
+      "E_post": "",
+      "Diverse": "Isak fikk sitt store gjennombrudd for to år siden, men fikk dessverre en lengere periode ødelagt grunnet en skade. Nå er den meget talentfulle unggutten klar til å ta enda mer ansvar, og bidra sterkt til opprykk."
+    },
+    {
+      "ID": "151",
+      "Drakt_nummer": "8",
+      "Navn": "Garrett Denbow",
+      "Bilde": "assets/players/garrett-denbow.png",
+      "Posisjon": "Guard",
+      "Hoyde": "198",
+      "Fodt": "2000",
+      "Antall_aar": "0",
+      "E_post": "",
+      "Diverse": "Garrett er siste import inn denne sesongen. Garrett gikk på Anderson University i South Carolina, og har etter det spilt for et par klubber i G League i USA. Siste klubb var Rip City Remix, som tilhører Portland Trail Blazers. En god allround spiller, men den største styrken er skyting. En som hadde over 40% treffprosent på 3-poengere både på college og i G League. Blir spennende å se hva han kan prestere i BLNO."
+    },
+    {
+      "ID": "136",
+      "Drakt_nummer": "10",
+      "Navn": "Brage Engelsen",
+      "Bilde": "assets/players/brage-engelsen.jpg",
+      "Posisjon": "Guard",
+      "Hoyde": "183",
+      "Fodt": "2005",
+      "Antall_aar": "3",
+      "E_post": "",
+      "Diverse": "Brage er en talentfull spiller med ett godt skudd. En seriøs og dedikert spiller, men som dessverre har vært en del skadet det siste året. Vi tror kan bli veldig bra med tiden. Har også storebror Trym på laget."
+    },
+    {
+      "ID": "145",
+      "Drakt_nummer": "11",
+      "Navn": "Wei Yan Song",
+      "Bilde": "assets/players/wei-yan-song.png",
+      "Posisjon": "Guard",
+      "Hoyde": "180",
+      "Fodt": "2006",
+      "Antall_aar": "1",
+      "E_post": "",
+      "Diverse": "Wei debuterte i fjor på A-laget. En teknisk og rask spiller med stort talent, og viste lovende takter i 1. divisjonen. Blir spennende å følge utviklingen hans fremover."
+    },
+    {
+      "ID": "75",
+      "Drakt_nummer": "12",
+      "Navn": "Aron Nielsen Finstad",
+      "Bilde": "assets/players/aron-nielsen-finstad.jpg",
+      "Posisjon": "Guard",
+      "Hoyde": "189",
+      "Fodt": "1998",
+      "Antall_aar": "9",
+      "E_post": "",
+      "Diverse": "Aron er en av de virkelig veteranene i laget. Kanskje lagets beste skytter, og er formidabel lagkamerat. Harstad-gutten er en av nøkkelspillerne i år igjen."
+    },
+    {
+      "ID": "119",
+      "Drakt_nummer": "17",
+      "Navn": "Trym Engelsen",
+      "Bilde": "assets/players/trym-engelsen.jpg",
+      "Posisjon": "Guard",
+      "Hoyde": "189",
+      "Fodt": "2001",
+      "Antall_aar": "5",
+      "E_post": "",
+      "Diverse": "Trym begynner å bli blant de erfarne i laget. En spiller som har tatt mange steg de siste årene, og en av de beste skytterne i laget. Har spilt både liga og 1. divisjon de siste årene, og spesielt har han vist seg som en poengplukker i 1. divisjon. Vi tror hans fine utvikling fortsetter i år."
+    },
+    {
+      "ID": "147",
+      "Drakt_nummer": "20",
+      "Navn": "Jakob Heier Kantola",
+      "Bilde": "assets/players/jakob-heier-kantola.png",
+      "Posisjon": "Guard",
+      "Hoyde": "186",
+      "Fodt": "2007",
+      "Antall_aar": "1",
+      "E_post": "",
+      "Diverse": "Jakob hadde sitt første år på A-laget i fjor, men fikk siste del av sesongen ødelagt med en ankelskade. Sønn av tidligere Storm-spiller Jan Heier Johansen. Jakob er en guard med et godt skudd. Har utviklet seg bra det siste året, og vi håper det fortsetter i år."
+    },
+    {
+      "ID": "133",
+      "Drakt_nummer": "22",
+      "Navn": "David Berntsen",
+      "Bilde": "assets/players/david-berntsen.jpg",
+      "Posisjon": "Forward",
+      "Hoyde": "202",
+      "Fodt": "2005",
+      "Antall_aar": "3",
+      "E_post": "",
+      "Diverse": "David har vært med noen år nå på A-laget. En høy og veldig talentfull unggutt som dessverre har vært litt plaget med småskader de siste årene. Viste fin utvikling i 1. divisjonen i fjor, og vi håper det fortsetter i BLNO."
+    },
+    {
+      "ID": "90",
+      "Drakt_nummer": "23",
+      "Navn": "Marcus Wynn",
+      "Bilde": "assets/players/marcus-wynn.jpg",
+      "Posisjon": "Guard",
+      "Hoyde": "190",
+      "Fodt": "1994",
+      "Antall_aar": "11",
+      "E_post": "",
+      "Diverse": "Veteranen Marcus gjør comeback etter å ha gitt seg halvveis i fjorårssesongen. En som elsker basket og som hadde lyst å hjelpe klubben tilbake til ligaen. En god, erfaren spiller som på sitt beste også er blant de beste langdistanse skytterne i norsk basketball."
+    },
+    {
+      "ID": "140",
+      "Drakt_nummer": "32",
+      "Navn": "Erlend Suhr Fandrem",
+      "Bilde": "assets/players/erlend-suhr-fandrem.jpg",
+      "Posisjon": "Forward",
+      "Hoyde": "203",
+      "Fodt": "2005",
+      "Antall_aar": "2",
+      "E_post": "",
+      "Diverse": "Erlend er den andre virkelig høye og talentfulle unggutten i stallen. Han og David er de to eneste over to meter på laget, og han og David hadde fin utvikling i 1. divisjonen i fjor."
+    },
+    {
+      "ID": "149",
+      "Drakt_nummer": "33",
+      "Navn": "Vakaris Rogaciovas",
+      "Bilde": "assets/players/vakaris-rogaciovas.jpg",
+      "Posisjon": "Guard",
+      "Hoyde": "193",
+      "Fodt": "2002",
+      "Antall_aar": "2",
+      "E_post": "",
+      "Diverse": "Vakaris gjør comeback i Storm i år etter noen år i TSI. En meget atletisk og talenfull ung spiller med stort potensiale. Blir dette året der han slår igjennom?"
+    },
+    {
+      "ID": "139",
+      "Drakt_nummer": "34",
+      "Navn": "Anders Solem",
+      "Bilde": "assets/players/anders-solem.jpg",
+      "Posisjon": "Forward",
+      "Hoyde": "195",
+      "Fodt": "1992",
+      "Antall_aar": "12",
+      "E_post": "",
+      "Diverse": "Superveteranen og rollemodellen i laget. Anders er en fantastisk person, spiller og lagkamerat, og blir viktig for å dra med seg ungguttene fremover."
+    },
+    {
+      "ID": "148",
+      "Drakt_nummer": "35",
+      "Navn": "Håkon Skog",
+      "Bilde": "assets/players/hakon-skog.png",
+      "Posisjon": "Guard",
+      "Hoyde": "188",
+      "Fodt": "2009",
+      "Antall_aar": "1",
+      "E_post": "",
+      "Diverse": "Håkon debuterte for Storm i fjor, og er fortsatt den yngste stallen. Han skal også kombinere spill med Tromsø Storm Ungdom og Storm i år også, men er læregutt som viser stor iver og innsats. Talentfull unggutt."
+    },
+    {
+      "ID": "128",
+      "Drakt_nummer": "93",
+      "Navn": "Mathias Hansen Nymo",
+      "Bilde": "assets/players/mathias-hansen-nymo.jpg",
+      "Posisjon": "Guard",
+      "Hoyde": "186",
+      "Fodt": "2004",
+      "Antall_aar": "3",
+      "E_post": "",
+      "Diverse": "Mathias er en talentfull ung spiller som har vært med noen i på Storm, men dessverre fått de siste sesongene spolert grunnet skader. Var lenge ute etter en meniskoperasjon i fjor, og måtte dessverre gjøre en ny operasjon i kneet i år. Han er fortsatt ikke tilbake for fullt, men forhåpentligvis er han på banen til siste halvdel av sesongen."
+    }
+  ],
+  "coaches": [
+    {
+      "ID": "13",
+      "Sort_ID": "0",
+      "Oppgave": "Hovedtrener",
+      "Navn": "Sergio Beleña",
+      "Bilde": "assets/players/sergio-bele-a.jpg",
+      "Diverse": ""
+    }
+  ]
+}
