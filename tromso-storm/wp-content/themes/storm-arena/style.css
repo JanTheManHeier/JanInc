@@ -1119,6 +1119,279 @@ textarea {
     color: var(--storm-accent);
 }
 
+.partner-offer {
+    display: grid;
+    gap: 64px;
+    padding: 48px 0 80px;
+}
+
+.partner-offer__intro,
+.partner-process,
+.partner-contact {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+    gap: 56px;
+    align-items: center;
+}
+
+.partner-offer__intro h2,
+.partner-process h2,
+.partner-contact h2,
+.partner-levels-heading h2 {
+    margin: 14px 0 0;
+    font-size: clamp(2.5rem, 5vw, 5.8rem);
+    font-weight: 950;
+    line-height: .9;
+    letter-spacing: -.055em;
+    text-transform: uppercase;
+}
+
+.partner-offer__intro p,
+.partner-levels-heading p,
+.partner-contact p {
+    color: var(--storm-text-muted);
+    font-size: 1.08rem;
+}
+
+.partner-offer__intro .button {
+    margin-top: 18px;
+}
+
+.partner-value-grid,
+.partner-levels {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.partner-value-grid article,
+.partner-level,
+.partner-process,
+.partner-contact {
+    border: 1px solid var(--storm-border);
+    border-radius: var(--storm-radius);
+    background: var(--storm-surface);
+}
+
+.partner-value-grid article {
+    padding: 26px;
+}
+
+.partner-value-grid article > span {
+    color: var(--storm-accent);
+    font-weight: 900;
+}
+
+.partner-value-grid h3,
+.partner-level h3 {
+    margin: 28px 0 10px;
+    font-size: 1.4rem;
+    line-height: 1.1;
+}
+
+.partner-value-grid p,
+.partner-level p,
+.partner-level li,
+.partner-process li span {
+    color: var(--storm-text-muted);
+}
+
+.partner-levels-heading {
+    margin-bottom: -40px;
+}
+
+.partner-levels {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.partner-level {
+    padding: 30px;
+}
+
+.partner-level--featured {
+    border-color: var(--storm-accent);
+    background: linear-gradient(145deg, rgba(245, 130, 43, 0.12), var(--storm-surface) 55%);
+}
+
+.partner-level ul {
+    display: grid;
+    gap: 10px;
+    padding-left: 20px;
+    margin: 24px 0 0;
+}
+
+.partner-process,
+.partner-contact {
+    padding: 40px;
+}
+
+.partner-process ol {
+    display: grid;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    counter-reset: partner-step;
+}
+
+.partner-process li {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 4px 14px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--storm-border);
+    counter-increment: partner-step;
+}
+
+.partner-process li:last-child {
+    border-bottom: 0;
+}
+
+.partner-process li::before {
+    grid-row: 1 / 3;
+    color: var(--storm-accent);
+    font-weight: 900;
+    content: "0" counter(partner-step);
+}
+
+.partner-contact {
+    border-color: var(--storm-border-strong);
+}
+
+.partner-contact .button {
+    justify-self: end;
+}
+
+.venue-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+    gap: 64px;
+    align-items: end;
+    padding-bottom: 72px;
+}
+
+.venue-address {
+    display: grid;
+    gap: 10px;
+    padding: 28px;
+    border: 1px solid var(--storm-border-strong);
+    border-radius: var(--storm-radius);
+    background: var(--storm-surface);
+}
+
+.venue-address > span {
+    color: var(--storm-accent);
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.venue-address strong {
+    font-size: 1.45rem;
+}
+
+.venue-address p,
+.venue-facts p,
+.venue-route-grid p,
+.venue-checklist p,
+.venue-contact p {
+    color: var(--storm-text-muted);
+}
+
+.venue-facts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    padding-top: 0;
+    padding-bottom: 0;
+    background: var(--storm-border);
+}
+
+.venue-facts article {
+    min-height: 220px;
+    padding: 34px;
+    background: var(--storm-bg-elevated);
+}
+
+.venue-facts article > span {
+    display: block;
+    margin-bottom: 46px;
+    color: var(--storm-accent);
+    font-weight: 900;
+}
+
+.venue-facts strong {
+    font-size: 1.35rem;
+}
+
+.venue-route-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.venue-route-grid .content-card {
+    display: flex;
+    min-height: 320px;
+    flex-direction: column;
+}
+
+.venue-route-grid h3 {
+    margin: 22px 0 10px;
+    font-size: 1.55rem;
+    line-height: 1.1;
+}
+
+.venue-route-grid .text-link {
+    margin-top: auto;
+}
+
+.venue-next-game,
+.venue-contact {
+    background: var(--storm-bg-elevated);
+}
+
+.venue-checklist {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--storm-border);
+}
+
+.venue-checklist article {
+    min-height: 190px;
+    padding: 30px;
+    border-right: 1px solid var(--storm-border);
+    border-bottom: 1px solid var(--storm-border);
+}
+
+.venue-checklist article:nth-child(even) {
+    border-right: 0;
+}
+
+.venue-checklist strong {
+    font-size: 1.3rem;
+}
+
+.venue-contact__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, .8fr);
+    gap: 56px;
+    align-items: center;
+}
+
+.venue-contact h2 {
+    margin: 14px 0;
+    font-size: clamp(3rem, 6vw, 7rem);
+    font-weight: 950;
+    line-height: .85;
+    letter-spacing: -.06em;
+    text-transform: uppercase;
+}
+
+.venue-contact .hero-actions {
+    align-items: flex-start;
+}
+
 .ticket-section {
     display: grid;
     grid-template-columns: 1.2fr .8fr auto;
@@ -1449,6 +1722,32 @@ body.admin-bar .site-header {
         grid-template-columns: 1fr;
         gap: 48px;
     }
+
+    .partner-offer__intro,
+    .partner-process,
+    .partner-contact,
+    .venue-hero,
+    .venue-contact__inner {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .partner-value-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .venue-facts,
+    .venue-route-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .partner-levels {
+        grid-template-columns: 1fr;
+    }
+
+    .partner-contact .button {
+        justify-self: start;
+    }
 }
 
 @media (max-width: 900px) {
@@ -1594,8 +1893,21 @@ body.admin-bar .site-header {
 
     .news-grid,
     .story-list,
-    .partner-grid {
+    .partner-grid,
+    .partner-value-grid,
+    .venue-facts,
+    .venue-route-grid,
+    .venue-checklist {
         grid-template-columns: 1fr;
+    }
+
+    .venue-checklist article {
+        border-right: 0;
+    }
+
+    .partner-process,
+    .partner-contact {
+        padding: 28px;
     }
 
     .story-lead {
