@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const isEnglish = window.location.pathname === '/en' || window.location.pathname.startsWith('/en/');
+    const isEnglish = document.documentElement.lang.startsWith('en');
     const labels = isEnglish
         ? {
             showNext: 'Show the next six ↑',
@@ -13,6 +13,25 @@ document.addEventListener('DOMContentLoaded', () => {
             copied: 'Kopiert',
             iosInstall: 'På iPhone: åpne Del-menyen og velg «Legg til på Hjem-skjerm».',
         };
+    const rodtindhallenMapUrl = 'https://www.google.com/maps/search/?api=1&query=69.68730591004379%2C18.791627726316968';
+
+    document.querySelectorAll('.venue, .game-meta > span').forEach((venue) => {
+        if (venue.textContent.trim() !== 'Rødtindhallen') {
+            return;
+        }
+
+        const link = document.createElement('a');
+        link.className = venue.className;
+        link.href = rodtindhallenMapUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = venue.textContent;
+        link.setAttribute('aria-label', isEnglish
+            ? 'Open Rødtindhallen in Google Maps'
+            : 'Åpne Rødtindhallen i Google Maps');
+        venue.replaceWith(link);
+    });
+
     const menuButton = document.querySelector('.menu-button');
     const navigation = document.querySelector('.site-nav');
 
