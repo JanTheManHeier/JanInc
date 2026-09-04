@@ -1,0 +1,25 @@
+{
+  "name": "Tromsø Storm",
+  "short_name": "Storm",
+  "description": "Kamper, resultater, tabell, spillere, nyheter og billetter for Tromsø Storm.",
+  "start_url": "/tromso-storm/",
+  "scope": "/tromso-storm/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "lang": "nb-NO",
+  "icons": [
+    {
+      "src": "/tromso-storm/assets/icons/storm-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tromso-storm/assets/icons/storm-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
