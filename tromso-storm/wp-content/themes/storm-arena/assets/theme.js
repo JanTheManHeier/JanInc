@@ -1,4 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const isEnglish = window.location.pathname === '/en' || window.location.pathname.startsWith('/en/');
+    const labels = isEnglish
+        ? {
+            showNext: 'Show the next six ↑',
+            showAll: (count) => `Show all ${count} games →`,
+            copied: 'Copied',
+            iosInstall: 'On iPhone: open the Share menu and choose “Add to Home Screen”.',
+        }
+        : {
+            showNext: 'Vis de seks neste ↑',
+            showAll: (count) => `Vis alle ${count} kamper →`,
+            copied: 'Kopiert',
+            iosInstall: 'På iPhone: åpne Del-menyen og velg «Legg til på Hjem-skjerm».',
+        };
     const menuButton = document.querySelector('.menu-button');
     const navigation = document.querySelector('.site-nav');
 
@@ -44,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const needsToggle = matchingRows.length > initialLimit;
                 toggle.hidden = !needsToggle;
                 if (needsToggle) {
-                    toggle.textContent = expanded ? 'Vis de seks neste ↑' : `Vis alle ${matchingRows.length} kamper →`;
+                    toggle.textContent = expanded ? labels.showNext : labels.showAll(matchingRows.length);
                     toggle.setAttribute('aria-expanded', String(expanded));
                 }
             }
@@ -72,5 +86,75 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         render();
+    });
+
+    document.querySelectorAll('[data-copy-value]').forEach((button) => {
+        button.addEventListener('click', async () => {
+            const value = button.getAttribute('data-copy-value') || '';
+            const originalLabel = button.textContent;
+
+            try {
+                await navigator.clipboard.writeText(value);
+                button.textContent = labels.copied;
+            } catch {
+                const input = document.createElement('input');
+                input.value = value;
+                input.setAttribute('readonly', '');
+                input.style.position = 'fixed';
+                input.style.opacity = '0';
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                input.remove();
+                button.textContent = labels.copied;
+            }
+
+            window.setTimeout(() => {
+                button.textContent = originalLabel;
+            }, 2200);
+        });
+    });
+
+    const config = window.stormArenaConfig || {};
+    if ('serviceWorker' in navigator && config.serviceWorkerUrl) {
+        navigator.serviceWorker.register(config.serviceWorkerUrl, {
+            scope: config.serviceWorkerScope || '/',
+        }).catch((error) => {
+            console.warn('Storm service worker could not be registered.', error);
+        });
+    }
+
+    const installButtons = document.querySelectorAll('[data-install-app]');
+    const installHelp = document.querySelector('[data-install-help]');
+    const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    let installPrompt = null;
+
+    if (!isStandalone && isIos && installHelp) {
+        installHelp.hidden = false;
+        installHelp.textContent = labels.iosInstall;
+    }
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        installPrompt = event;
+        installButtons.forEach((button) => {
+            button.hidden = false;
+        });
+    });
+
+    installButtons.forEach((button) => {
+        button.addEventListener('click', async () => {
+            if (!installPrompt) {
+                return;
+            }
+
+            await installPrompt.prompt();
+            await installPrompt.userChoice;
+            installPrompt = null;
+            installButtons.forEach((item) => {
+                item.hidden = true;
+            });
+        });
     });
 });

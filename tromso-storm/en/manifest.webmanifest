@@ -1,13 +1,13 @@
 {
   "name": "Tromsø Storm",
   "short_name": "Storm",
-  "description": "Kamper, resultater, tabell, spillere, nyheter og billetter for Tromsø Storm.",
-  "start_url": "/tromso-storm/",
+  "description": "Games, results, standings, players, news and tickets for Tromsø Storm.",
+  "start_url": "/tromso-storm/en/",
   "scope": "/tromso-storm/",
   "display": "standalone",
   "background_color": "#0c0e12",
   "theme_color": "#0c0e12",
-  "lang": "nb-NO",
+  "lang": "en",
   "icons": [
     {
       "src": "/tromso-storm/assets/icons/storm-192.png",

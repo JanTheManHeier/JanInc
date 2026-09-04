@@ -1,7 +1,21 @@
-const CACHE_NAME = 'storm-site-v1';
+const CACHE_NAME = 'storm-site-v3';
 const APP_SHELL = [
     '/tromso-storm/',
+    '/tromso-storm/besok-arenaen/',
+    '/tromso-storm/billettpriser/',
+    '/tromso-storm/sesongkort/',
+    '/tromso-storm/en/',
+    '/tromso-storm/en/besok-arenaen/',
+    '/tromso-storm/en/billettpriser/',
+    '/tromso-storm/en/sesongkort/',
+    '/tromso-storm/en/kampoversikt/',
+    '/tromso-storm/en/spillere-trenere/',
+    '/tromso-storm/en/samarbeidspartnere/',
+    '/tromso-storm/en/hovedsamarbeidspartnere/',
+    '/tromso-storm/en/ovrige-samarbeidspartnere/',
+    '/tromso-storm/en/arkiv/',
     '/tromso-storm/manifest.webmanifest',
+    '/tromso-storm/en/manifest.webmanifest',
     '/tromso-storm/wp-content/themes/storm-arena/style.css',
     '/tromso-storm/wp-content/themes/storm-arena/assets/theme.js',
     '/tromso-storm/wp-content/themes/storm-arena/assets/storm-logo.png',
@@ -43,7 +57,10 @@ self.addEventListener('fetch', (event) => {
                     return cached;
                 }
                 if (event.request.mode === 'navigate') {
-                    return caches.match('/tromso-storm/');
+                    const fallback = new URL(event.request.url).pathname.startsWith('/tromso-storm/en/')
+                        ? '/tromso-storm/en/'
+                        : '/tromso-storm/';
+                    return caches.match(fallback);
                 }
                 return Response.error();
             })

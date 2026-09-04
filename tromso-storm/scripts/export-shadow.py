@@ -5,6 +5,7 @@ import html
 import re
 import urllib.parse
 import urllib.request
+from urllib.error import HTTPError
 from pathlib import Path
 
 
@@ -16,7 +17,19 @@ DEFAULT_PAGES = (
     "/hovedsamarbeidspartnere/",
     "/ovrige-samarbeidspartnere/",
     "/billettpriser/",
+    "/sesongkort/",
+    "/besok-arenaen/",
     "/arkiv/",
+)
+
+ENGLISH_PAGES = tuple(
+    "/en/" if page == "/" else f"/en{page}"
+    for page in DEFAULT_PAGES
+)
+
+PWA_FILES = (
+    "/manifest.webmanifest",
+    "/sw.js",
 )
 
 ASSET_ATTRIBUTES = re.compile(
@@ -81,6 +94,9 @@ def rewrite_target(
         suffix += f"#{parsed.fragment}"
 
     if is_asset_path(path):
+        return public_url(path, public_prefix) + suffix
+
+    if path in PWA_FILES:
         return public_url(path, public_prefix) + suffix
 
     normalized_page = path if path.endswith("/") else f"{path}/"
@@ -177,6 +193,29 @@ def rewrite_document(
     document = ASSET_ATTRIBUTES.sub(replace_attribute, document)
     document = SRCSET_ATTRIBUTES.sub(replace_srcset, document)
     document = document.replace(source_origin, public_prefix.rstrip("/"))
+    document = document.replace(
+        source_origin.replace("/", r"\/"),
+        public_prefix.rstrip("/").replace("/", r"\/"),
+    )
+    for asset_root in ("/wp-content/", "/wp-includes/"):
+        document = document.replace(
+            f'"{asset_root}',
+            f'"{public_prefix.rstrip("/")}{asset_root}',
+        )
+        document = document.replace(
+            f"'{asset_root}",
+            f"'{public_prefix.rstrip('/')}{asset_root}",
+        )
+    document = re.sub(
+        r"""(serviceWorkerUrl["']?\s*:\s*["'])[^"']*sw\.js(["'])""",
+        rf"\g<1>{public_prefix.rstrip('/')}/sw.js\2",
+        document,
+    )
+    document = re.sub(
+        r"""(serviceWorkerScope["']?\s*:\s*["'])[^"']*(["'])""",
+        rf"\g<1>{public_prefix.rstrip('/')}/\2",
+        document,
+    )
     document = add_preview_metadata(document)
     return "\n".join(line.rstrip() for line in document.splitlines()) + "\n"
 
@@ -212,10 +251,11 @@ def export_shadow(
     public_prefix: str,
     live_origin: str,
 ) -> None:
-    mirrored_pages = set(DEFAULT_PAGES)
+    pages = DEFAULT_PAGES + ENGLISH_PAGES
+    mirrored_pages = set(pages)
     queued_assets: set[str] = set()
 
-    for page in DEFAULT_PAGES:
+    for page in pages:
         source_url = urllib.parse.urljoin(source_origin.rstrip("/") + "/", page.lstrip("/"))
         data, content_type = request_bytes(source_url)
         document = data.decode("utf-8", errors="replace")
@@ -232,6 +272,27 @@ def export_shadow(
         destination.write_text(rewritten, encoding="utf-8", newline="\n")
         print(f"page  {page} -> {destination}")
 
+    for file_path in PWA_FILES:
+        source_url = urllib.parse.urljoin(source_origin.rstrip("/") + "/", file_path.lstrip("/"))
+        try:
+            data, content_type = request_bytes(source_url)
+        except HTTPError as error:
+            if error.code == 404:
+                print(f"skip  {file_path} (not served by WordPress)")
+                continue
+            raise
+        text = data.decode("utf-8", errors="replace").replace(
+            source_origin.rstrip("/") + "/",
+            public_prefix.rstrip("/") + "/",
+        )
+        if file_path == "/manifest.webmanifest":
+            text = text.replace('"start_url":"/"', f'"start_url":"{public_prefix.rstrip("/")}/"')
+            text = text.replace('"scope":"/"', f'"scope":"{public_prefix.rstrip("/")}/"')
+        destination = output_path(output_root, file_path, content_type)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(text, encoding="utf-8", newline="\n")
+        print(f"file  {file_path} -> {destination}")
+
     mirrored_assets: set[str] = set()
     while queued_assets:
         asset_url = queued_assets.pop()
@@ -243,7 +304,7 @@ def export_shadow(
         mirror_asset(normalized, source_origin, output_root, queued_assets)
         mirrored_assets.add(normalized)
 
-    print(f"Exported {len(DEFAULT_PAGES)} pages and {len(mirrored_assets)} assets.")
+    print(f"Exported {len(pages)} pages, {len(PWA_FILES)} PWA files and {len(mirrored_assets)} assets.")
 
 
 def main() -> None:
