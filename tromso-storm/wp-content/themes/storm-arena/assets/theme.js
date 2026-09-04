@@ -1,36 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let installPrompt;
-    const installButtons = document.querySelectorAll('[data-install-app]');
-
-    window.addEventListener('beforeinstallprompt', (event) => {
-        event.preventDefault();
-        installPrompt = event;
-        installButtons.forEach((button) => {
-            button.hidden = false;
-        });
-    });
-
-    installButtons.forEach((button) => {
-        button.addEventListener('click', async () => {
-            if (!installPrompt) {
-                return;
-            }
-
-            await installPrompt.prompt();
-            installPrompt = undefined;
-            installButtons.forEach((item) => {
-                item.hidden = true;
-            });
-        });
-    });
-
-    window.addEventListener('appinstalled', () => {
-        installPrompt = undefined;
-        installButtons.forEach((button) => {
-            button.hidden = true;
-        });
-    });
-
     const menuButton = document.querySelector('.menu-button');
     const navigation = document.querySelector('.site-nav');
 
@@ -106,9 +74,3 @@ document.addEventListener('DOMContentLoaded', () => {
         render();
     });
 });
-
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/tromso-storm/sw.js', { scope: '/tromso-storm/' });
-    });
-}

@@ -3,7 +3,7 @@ Theme Name: Storm Arena
 Theme URI: https://janinc.no/tromso-storm/
 Author: Copilot
 Description: Production WordPress theme for the Tromsø Storm rebuild based on the approved dark Arena design.
-Version: 1.0.0
+Version: 1.2.0
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 8.1
@@ -186,7 +186,7 @@ textarea {
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    width: var(--storm-width);
+    width: calc(100vw - 40px);
     min-height: 88px;
     margin-inline: auto;
     padding: 8px 0;
@@ -205,6 +205,42 @@ textarea {
 
 .site-nav {
     min-width: 0;
+}
+
+.language-switcher {
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--storm-border);
+    border-radius: 999px;
+    background: var(--storm-surface);
+}
+
+.language-switcher a {
+    display: grid;
+    min-width: 34px;
+    min-height: 30px;
+    place-items: center;
+    border-radius: 999px;
+    color: var(--storm-text-muted);
+    font-size: .72rem;
+    font-weight: 900;
+}
+
+.language-switcher a[aria-current="page"] {
+    background: var(--storm-accent);
+    color: var(--storm-accent-fg);
+}
+
+.translation-notice {
+    position: relative;
+    z-index: 100;
+    padding: 10px 20px;
+    background: var(--storm-accent);
+    color: var(--storm-accent-fg);
+    text-align: center;
+    font-weight: 800;
 }
 
 .site-nav__list {
@@ -309,6 +345,13 @@ textarea {
     overflow-wrap: anywhere;
 }
 
+.hero h1 {
+    max-width: 7ch;
+    font-size: clamp(3.4rem, 7vw, 7.4rem);
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
 .hero-panel p,
 .page-hero p,
 .partner-heading p,
@@ -379,6 +422,7 @@ textarea {
     display: grid;
     grid-template-columns: 1.1fr repeat(6, minmax(0, 1fr));
     min-height: 112px;
+    padding-inline: max(7vw, 28px);
     border-top: 1px solid var(--storm-border);
     background: rgba(9, 12, 18, 0.92);
 }
@@ -390,6 +434,14 @@ textarea {
     min-width: 0;
     padding: 18px;
     border-right: 1px solid var(--storm-border);
+}
+
+.hero-sponsors > a {
+    margin: 14px 8px;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: .5rem;
+    background: #f5f5f3;
 }
 
 .hero-sponsors > strong {
@@ -837,6 +889,12 @@ textarea {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
+}
+
+.roster-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 28px;
 }
 
 .player-card {
@@ -1624,15 +1682,15 @@ textarea {
 
 .site-footer__inner {
     display: grid;
-    grid-template-columns: 1fr auto auto;
-    gap: 48px;
-    align-items: center;
+    grid-template-columns: minmax(360px, .9fr) minmax(0, 1.1fr);
+    gap: 32px 56px;
+    align-items: start;
     padding: 42px 0;
 }
 
 .site-footer__brand {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
 }
 
@@ -1646,6 +1704,265 @@ textarea {
     color: var(--storm-text-muted);
 }
 
+.site-footer__brand img {
+    width: 112px;
+    height: auto;
+}
+
+.site-footer__brand span {
+    font-size: .9rem;
+}
+
+.club-overview {
+    margin-bottom: 72px;
+}
+
+.club-links {
+    display: grid;
+    align-content: start;
+    gap: 0;
+}
+
+.club-links h3 {
+    margin-bottom: 12px;
+}
+
+.club-links a {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--storm-border);
+    color: var(--storm-text-soft);
+    font-weight: 800;
+}
+
+.club-links a:last-child {
+    border-bottom: 0;
+}
+
+.club-links span {
+    color: var(--storm-accent);
+}
+
+.archive-heading {
+    margin-top: 0;
+}
+
+.social-section {
+    background: var(--storm-bg);
+}
+
+.community-section {
+    background: var(--storm-surface);
+}
+
+.community-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(420px, .95fr);
+    gap: clamp(36px, 6vw, 88px);
+    align-items: start;
+}
+
+.community-copy > h2 {
+    max-width: 760px;
+    margin: 20px 0 24px;
+    font-size: clamp(3rem, 6vw, 6.8rem);
+    line-height: .88;
+    letter-spacing: -.06em;
+    text-transform: uppercase;
+}
+
+.community-lead {
+    max-width: 760px;
+    color: var(--storm-text-soft);
+    font-size: 1.15rem;
+}
+
+.community-impact {
+    display: grid;
+    gap: 0;
+    margin-top: 36px;
+    border-top: 1px solid var(--storm-border);
+}
+
+.community-impact article {
+    display: grid;
+    grid-template-columns: 44px minmax(150px, .8fr) minmax(0, 1.4fr);
+    gap: 18px;
+    align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--storm-border);
+}
+
+.community-impact article > strong {
+    color: var(--storm-accent);
+}
+
+.community-impact h3,
+.community-impact p {
+    margin: 0;
+}
+
+.community-impact p {
+    color: var(--storm-text-muted);
+}
+
+.community-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.community-media {
+    display: grid;
+    gap: 16px;
+}
+
+.community-photo {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--storm-border);
+    border-radius: var(--storm-radius);
+    background: var(--storm-bg);
+}
+
+.community-photo img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.community-photo figcaption {
+    padding: 16px 18px 18px;
+    color: var(--storm-text-muted);
+    font-size: .86rem;
+}
+
+.community-video {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px;
+    border: 1px solid var(--storm-border);
+    border-radius: var(--storm-radius);
+    background: var(--storm-bg-elevated);
+}
+
+.community-video__play {
+    display: grid;
+    width: 52px;
+    height: 52px;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--storm-accent);
+    color: var(--storm-accent-fg);
+}
+
+.community-video > span:last-child {
+    display: grid;
+    color: var(--storm-text-muted);
+}
+
+.community-video strong {
+    color: var(--storm-text);
+    font-size: 1.1rem;
+}
+
+.community-partner {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid var(--storm-border);
+    border-radius: var(--storm-radius);
+    background: #f5f5f3;
+    color: #242424;
+}
+
+.community-partner img {
+    width: 100%;
+    max-height: 54px;
+    object-fit: contain;
+}
+
+.community-partner p {
+    margin: 0;
+    font-size: .9rem;
+}
+
+.social-heading p {
+    max-width: 560px;
+}
+
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.social-card {
+    position: relative;
+    display: grid;
+    min-height: 480px;
+    align-content: end;
+    overflow: hidden;
+    padding: 34px;
+    border: 1px solid var(--storm-border);
+    border-radius: var(--storm-radius);
+    isolation: isolate;
+}
+
+.social-card::after {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(12, 14, 18, 0.05) 20%, rgba(12, 14, 18, 0.96) 88%);
+    content: "";
+}
+
+.social-card img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .25s ease;
+}
+
+.social-card:hover img {
+    transform: scale(1.025);
+}
+
+.social-card__platform {
+    color: var(--storm-accent);
+    font-size: .76rem;
+    font-weight: 900;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+.social-card strong {
+    margin: 6px 0;
+    font-size: clamp(1.8rem, 4vw, 3.4rem);
+    line-height: 1;
+}
+
+.social-card > span:last-child {
+    color: var(--storm-text-soft);
+    font-weight: 800;
+}
+
+.social-privacy {
+    margin: 18px 0 0;
+    color: var(--storm-text-muted);
+    font-size: .86rem;
+}
+
 .site-footer__meta,
 .site-footer__nav .site-nav__list {
     gap: 14px;
@@ -1654,6 +1971,14 @@ textarea {
 .site-footer__meta {
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
+    padding-top: 8px;
+}
+
+.site-footer__nav {
+    grid-column: 1 / -1;
+    padding-top: 24px;
+    border-top: 1px solid var(--storm-border);
 }
 
 .site-footer__nav .nav-ticket {
@@ -1670,6 +1995,40 @@ body.admin-bar .site-header {
 }
 
 @media (max-width: 1150px) {
+    .menu-button {
+        display: block;
+        order: 3;
+    }
+
+    .language-switcher {
+        order: 2;
+        margin-left: auto;
+    }
+
+    .site-nav {
+        position: absolute;
+        top: 88px;
+        right: 0;
+        left: 0;
+        display: none;
+        padding: 18px 20px 26px;
+        border-bottom: 1px solid var(--storm-border);
+        background: var(--storm-surface-strong);
+    }
+
+    .site-nav.open {
+        display: block;
+    }
+
+    .site-nav__list {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .site-nav__list a {
+        padding: 10px 0;
+    }
+
     .hero-image {
         left: 30%;
         width: 70%;
@@ -1695,6 +2054,7 @@ body.admin-bar .site-header {
 
     .hero-sponsors {
         grid-template-columns: repeat(6, 1fr);
+        padding-inline: 20px;
     }
 
     .hero-sponsors > strong {
@@ -1726,6 +2086,7 @@ body.admin-bar .site-header {
     .partner-offer__intro,
     .partner-process,
     .partner-contact,
+    .community-layout,
     .venue-hero,
     .venue-contact__inner {
         grid-template-columns: 1fr;
@@ -1755,6 +2116,10 @@ body.admin-bar .site-header {
         gap: 16px;
     }
 
+    .language-switcher {
+        margin-left: auto;
+    }
+
     .section-head {
         flex-direction: column;
         align-items: flex-start;
@@ -1778,6 +2143,7 @@ body.admin-bar .site-header {
     }
 
     .content-grid,
+    .social-grid,
     .site-footer__widgets,
     .site-footer__inner {
         grid-template-columns: 1fr;
@@ -1801,6 +2167,11 @@ body.admin-bar .site-header {
 
     .menu-button {
         display: block;
+        order: 3;
+    }
+
+    .language-switcher {
+        order: 2;
     }
 
     .site-nav {
@@ -1828,7 +2199,7 @@ body.admin-bar .site-header {
     }
 
     .hero {
-        min-height: 760px;
+        min-height: 900px;
         padding-bottom: 104px;
     }
 
@@ -1872,10 +2243,12 @@ body.admin-bar .site-header {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         grid-template-rows: repeat(2, 1fr);
         min-height: 104px;
+        padding-inline: 0;
     }
 
     .hero-sponsors a {
-        padding: 8px 14px;
+        margin: 6px;
+        padding: 8px 12px;
         border-bottom: 1px solid var(--storm-border);
     }
 
@@ -1899,6 +2272,19 @@ body.admin-bar .site-header {
     .venue-route-grid,
     .venue-checklist {
         grid-template-columns: 1fr;
+    }
+
+    .social-card {
+        min-height: 380px;
+        padding: 24px;
+    }
+
+    .community-impact article {
+        grid-template-columns: 36px 1fr;
+    }
+
+    .community-impact p {
+        grid-column: 2;
     }
 
     .venue-checklist article {
