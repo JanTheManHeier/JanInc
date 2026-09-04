@@ -27,9 +27,11 @@ ENGLISH_PAGES = tuple(
     for page in DEFAULT_PAGES
 )
 
-PWA_FILES = (
+PUBLIC_FILES = (
     "/manifest.webmanifest",
     "/sw.js",
+    "/storm-kamper.ics",
+    "/en/storm-games.ics",
 )
 
 ASSET_ATTRIBUTES = re.compile(
@@ -96,7 +98,7 @@ def rewrite_target(
     if is_asset_path(path):
         return public_url(path, public_prefix) + suffix
 
-    if path in PWA_FILES:
+    if path in PUBLIC_FILES:
         return public_url(path, public_prefix) + suffix
 
     normalized_page = path if path.endswith("/") else f"{path}/"
@@ -164,6 +166,13 @@ def rewrite_document(
     mirrored_pages: set[str],
     live_origin: str,
 ) -> str:
+    document = re.sub(
+        r"""<link\b[^>]*(?:application/(?:json|xml)\+oembed|wp-json/oembed)[^>]*>\s*""",
+        "",
+        document,
+        flags=re.IGNORECASE,
+    )
+
     def replace_attribute(match: re.Match[str]) -> str:
         rewritten = rewrite_target(
             match.group("url"),
@@ -272,7 +281,7 @@ def export_shadow(
         destination.write_text(rewritten, encoding="utf-8", newline="\n")
         print(f"page  {page} -> {destination}")
 
-    for file_path in PWA_FILES:
+    for file_path in PUBLIC_FILES:
         source_url = urllib.parse.urljoin(source_origin.rstrip("/") + "/", file_path.lstrip("/"))
         try:
             data, content_type = request_bytes(source_url)
@@ -304,7 +313,7 @@ def export_shadow(
         mirror_asset(normalized, source_origin, output_root, queued_assets)
         mirrored_assets.add(normalized)
 
-    print(f"Exported {len(pages)} pages, {len(PWA_FILES)} PWA files and {len(mirrored_assets)} assets.")
+    print(f"Exported {len(pages)} pages, {len(PUBLIC_FILES)} public files and {len(mirrored_assets)} assets.")
 
 
 def main() -> None:
