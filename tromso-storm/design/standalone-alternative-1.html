@@ -1,0 +1,2516 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex,nofollow,noarchive">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Tromsø Storm Basketball | Tactical Playbook Command</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Chakra+Petch:wght@500;600;700&family=Permanent+Marker&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #0C0E12;
+            --bg-elevated: #11151C;
+            --surface-1: #171C24;
+            --surface-2: #1D2430;
+            --accent-orange: #F5822B;
+            --accent-dark-orange: #CB6417;
+            --accent-ice: #76BBFF;
+            --accent-cyan: #31CDCF;
+            --text-main: #EDF1F7;
+            --text-muted: #AAB4C4;
+            --border-court: rgba(118, 187, 255, 0.22);
+            --border-storm: rgba(245, 130, 43, 0.4);
+            --court-line-white: rgba(237, 241, 247, 0.35);
+            --font-display: 'Barlow Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Chakra Petch', monospace;
+            --font-chalk: 'Permanent Marker', cursive, sans-serif;
+            --font-body: 'Inter', -apple-system, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.5;
+            background-image:
+                radial-gradient(circle at 80% 10%, rgba(118, 187, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 20% 60%, rgba(245, 130, 43, 0.06) 0%, transparent 45%),
+                linear-gradient(rgba(12, 14, 18, 0.94), rgba(12, 14, 18, 0.94)),
+                repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(23, 28, 36, 0.45) 40px, rgba(23, 28, 36, 0.45) 80px);
+        }
+
+        /* Tactical Court Floor Pattern Overlay */
+        .court-grid-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.15;
+            background-image:
+                linear-gradient(90deg, var(--border-court) 1px, transparent 1px),
+                linear-gradient(0deg, var(--border-court) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Top Match Alert Bar */
+        .match-ticker-bar {
+            position: relative;
+            z-index: 100;
+            background: linear-gradient(90deg, #11151C 0%, #171C24 50%, #11151C 100%);
+            border-bottom: 1px solid var(--border-storm);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ticker-live-tag {
+            background: var(--accent-orange);
+            color: #0C0E12;
+            padding: 2px 8px;
+            font-weight: 700;
+            font-size: 0.72rem;
+            border-radius: 2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ticker-live-tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #fff;
+            animation: pulse-dot 1.2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.7); }
+        }
+
+        .ticker-info {
+            color: var(--text-muted);
+        }
+        .ticker-info strong {
+            color: var(--text-main);
+        }
+
+        .ticker-action-link {
+            color: var(--accent-orange);
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
+        }
+        .ticker-action-link:hover {
+            color: #fff;
+        }
+
+        /* Tactical Header */
+        header.tactical-nav {
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            background: rgba(12, 14, 18, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--border-court);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+        }
+
+        .brand-logo-wrap {
+            position: relative;
+            width: 52px;
+            height: 52px;
+            background: var(--surface-1);
+            border: 2px solid var(--accent-orange);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(245, 130, 43, 0.25);
+        }
+
+        .brand-logo-wrap img {
+            width: 90%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: #fff;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .brand-sub {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--accent-ice);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            position: relative;
+            padding: 6px 0;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-orange);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--accent-orange);
+            transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .btn-ticket-hero {
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-dark-orange) 100%);
+            color: #0C0E12;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 10px 22px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px rgba(245, 130, 43, 0.35);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .btn-ticket-hero:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 130, 43, 0.55);
+        }
+
+        /* Main Container Layout */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        .content-wrap {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* HERO SECTION: The Tactical Storm Court */
+        .hero-tactical {
+            position: relative;
+            padding: 60px 0 80px 0;
+            overflow: hidden;
+            border-bottom: 2px solid var(--border-court);
+        }
+
+        /* SVG Basketball Court Lines Backdrop */
+        .court-lines-svg-bg {
+            position: absolute;
+            top: 50%;
+            right: -8%;
+            transform: translateY(-50%) skewX(-12deg);
+            width: 780px;
+            height: 600px;
+            opacity: 0.28;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Diagonal Storm Shear Cut */
+        .storm-shear-stripe {
+            position: absolute;
+            top: -20%;
+            right: 28%;
+            width: 140px;
+            height: 140%;
+            background: linear-gradient(180deg, rgba(245, 130, 43, 0.18) 0%, rgba(203, 100, 23, 0.02) 100%);
+            transform: rotate(-35deg);
+            pointer-events: none;
+            z-index: 1;
+            border-left: 2px dashed rgba(245, 130, 43, 0.35);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 48px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-left {
+            position: relative;
+        }
+
+        .coordinates-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--accent-ice);
+            background: rgba(118, 187, 255, 0.1);
+            border: 1px solid var(--border-court);
+            padding: 5px 12px;
+            border-radius: 4px;
+            margin-bottom: 18px;
+            letter-spacing: 0.12em;
+        }
+
+        .coordinates-badge svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--accent-ice);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3.2rem, 6.2vw, 5.8rem);
+            font-weight: 900;
+            line-height: 0.95;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: 22px;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-title .title-storm {
+            color: var(--accent-orange);
+            display: inline-block;
+            position: relative;
+        }
+
+        .hero-title .title-storm::after {
+            content: '69° N';
+            position: absolute;
+            top: -12px;
+            right: -55px;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent-ice);
+            background: var(--surface-2);
+            border: 1px solid var(--border-court);
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        .hero-lead {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 580px;
+            margin-bottom: 34px;
+            line-height: 1.6;
+        }
+
+        .hero-lead strong {
+            color: var(--text-main);
+        }
+
+        /* Playbook Tactical Overlay Box */
+        .playbook-interactive-box {
+            background: rgba(23, 28, 36, 0.88);
+            border: 1px solid var(--border-court);
+            border-left: 4px solid var(--accent-orange);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 34px;
+            backdrop-filter: blur(8px);
+            position: relative;
+        }
+
+        .playbook-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .playbook-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-ice);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chalk-note {
+            font-family: var(--font-chalk);
+            font-size: 0.95rem;
+            color: #fff;
+            transform: rotate(-2deg);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+        }
+
+        .playbook-schemes {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .scheme-btn {
+            background: var(--surface-2);
+            color: var(--text-muted);
+            border: 1px solid var(--border-court);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .scheme-btn.active, .scheme-btn:hover {
+            background: var(--accent-orange);
+            color: #0C0E12;
+            font-weight: 700;
+            border-color: var(--accent-orange);
+        }
+
+        .playbook-court-mini {
+            width: 100%;
+            height: 120px;
+            background: #11151C;
+            border: 1px solid rgba(118, 187, 255, 0.15);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .playbook-court-mini svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-ctas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: var(--accent-orange);
+            color: #0C0E12;
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 14px 32px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 24px rgba(245, 130, 43, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(245, 130, 43, 0.5);
+            background: #ff8e38;
+        }
+
+        .btn-secondary {
+            background: var(--surface-1);
+            color: var(--text-main);
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 14px 26px;
+            border-radius: 4px;
+            text-decoration: none;
+            border: 1px solid var(--border-court);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-2);
+            border-color: var(--accent-ice);
+            color: #fff;
+        }
+
+        /* Hero Right: 3D Art Showcase & Match Command */
+        .hero-art-showcase-3d {
+            perspective: 1000px;
+            margin-bottom: 24px;
+        }
+
+        .art-card-inner {
+            background: var(--surface-1);
+            border: 2px solid var(--border-court);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(118, 187, 255, 0.15);
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        .hero-art-showcase-3d:hover .art-card-inner {
+            transform: translateY(-4px) rotateX(2deg) rotateY(-2deg);
+            border-color: var(--accent-orange);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(245, 130, 43, 0.35);
+        }
+
+        .art-tag-strip {
+            background: var(--surface-2);
+            padding: 8px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            border-bottom: 1px solid var(--border-court);
+        }
+
+        .art-badge {
+            color: var(--accent-orange);
+            font-weight: 700;
+        }
+
+        .art-status {
+            color: var(--accent-ice);
+        }
+
+        .art-image-wrapper {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+            background: #080A0E;
+        }
+
+        .art-img-hero {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 35%;
+            transition: transform 0.5s ease;
+        }
+
+        .hero-art-showcase-3d:hover .art-img-hero {
+            transform: scale(1.05);
+        }
+
+        .art-overlay-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(0deg, var(--surface-1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .art-tactical-hotspots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .hotspot {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hotspot-ping {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-orange);
+            box-shadow: 0 0 10px var(--accent-orange);
+            animation: pulse-dot 1.4s infinite;
+        }
+
+        .hotspot-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            background: rgba(12, 14, 18, 0.85);
+            border: 1px solid var(--border-court);
+            padding: 2px 6px;
+            border-radius: 2px;
+            color: #fff;
+            letter-spacing: 0.05em;
+        }
+
+        /* Hero Right: Match Command Card */
+        .match-command-card {
+            background: var(--surface-1);
+            border: 2px solid var(--border-court);
+            border-top: 4px solid var(--accent-orange);
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header-bar {
+            background: var(--surface-2);
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-court);
+        }
+
+        .card-header-title {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-header-arena {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .matchup-visual {
+            padding: 32px 24px 24px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+            position: relative;
+        }
+
+        .team-pod {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .team-crest-box {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            background: var(--bg-base);
+            border: 2px solid var(--border-court);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .team-pod.home .team-crest-box {
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 25px rgba(245, 130, 43, 0.25);
+        }
+
+        .team-crest-box img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .team-name-label {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .team-status-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--accent-ice);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .match-vs-divider {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .vs-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--surface-2);
+            border: 1px solid var(--accent-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--accent-orange);
+        }
+
+        .match-date-badge {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Digital Countdown Timer Box */
+        .countdown-digital-box {
+            margin: 0 20px 20px;
+            background: #0C0E12;
+            border: 1px solid var(--border-court);
+            border-radius: 6px;
+            padding: 16px 20px;
+        }
+
+        .countdown-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-ice);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .countdown-units {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+
+        .timer-unit-item {
+            background: var(--surface-1);
+            padding: 8px 4px;
+            border-radius: 4px;
+            border-bottom: 2px solid var(--accent-orange);
+        }
+
+        .timer-num {
+            font-family: var(--font-mono);
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            display: block;
+        }
+
+        .timer-unit-name {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .card-action-footer {
+            padding: 0 20px 20px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+        }
+
+        .btn-card-ticket {
+            background: var(--accent-orange);
+            color: #0C0E12;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 12px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .btn-card-ticket:hover {
+            background: #ff8e38;
+        }
+
+        .btn-card-cal {
+            background: var(--surface-2);
+            color: var(--text-main);
+            border: 1px solid var(--border-court);
+            border-radius: 4px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-card-cal:hover {
+            border-color: var(--accent-ice);
+            color: #fff;
+        }
+
+        /* SECTION: SCOREBOARD & LATEST RESULT */
+        .section-scoreboard {
+            padding: 70px 0;
+            border-bottom: 2px solid var(--border-court);
+            background:
+                linear-gradient(180deg, rgba(12, 14, 18, 0.9) 0%, rgba(17, 21, 28, 0.95) 100%),
+                url('../assets/hero-action-1600.webp') center/cover no-repeat;
+            position: relative;
+        }
+
+        .section-header-tactical {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 36px;
+            border-bottom: 2px solid var(--border-court);
+            padding-bottom: 16px;
+            position: relative;
+        }
+
+        .section-header-tactical::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 140px;
+            height: 2px;
+            background: var(--accent-orange);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2.6rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            line-height: 1;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent-ice);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+
+        .scoreboard-console {
+            background: #090B0E;
+            border: 2px solid #2B3340;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: grid;
+            grid-template-columns: 1.4fr 0.8fr;
+            gap: 36px;
+            align-items: center;
+        }
+
+        .scoreboard-led-display {
+            background: #07080B;
+            border: 2px solid #1A202A;
+            border-radius: 6px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .scoreboard-tag {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .scoreboard-main-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .score-team-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .score-team-name {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .score-digits {
+            font-family: var(--font-mono);
+            font-size: 4.8rem;
+            font-weight: 700;
+            line-height: 0.9;
+            color: var(--accent-orange);
+            text-shadow: 0 0 25px rgba(245, 130, 43, 0.45);
+        }
+
+        .score-digits.opponent {
+            color: #AAB4C4;
+            text-shadow: none;
+        }
+
+        .score-final-badge {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 900;
+            background: var(--surface-2);
+            color: var(--accent-ice);
+            padding: 6px 14px;
+            border-radius: 4px;
+            border: 1px solid var(--border-court);
+        }
+
+        .quarters-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .quarters-table th {
+            color: var(--text-muted);
+            padding: 6px;
+            border-bottom: 1px solid #1D2430;
+            font-weight: 500;
+        }
+
+        .quarters-table td {
+            padding: 8px 6px;
+            color: #fff;
+            border-bottom: 1px solid #141820;
+        }
+
+        .quarters-table td.team-cell {
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .quarters-table td.total-cell {
+            color: var(--accent-orange);
+            font-weight: 700;
+        }
+
+        .scoreboard-mvp-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-court);
+            border-radius: 6px;
+            padding: 24px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .mvp-photo-wrap {
+            width: 110px;
+            height: 140px;
+            background: #11151C;
+            border: 2px solid var(--accent-orange);
+            border-radius: 4px;
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .mvp-photo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mvp-badge {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            background: var(--accent-orange);
+            color: #0C0E12;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+
+        .mvp-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .mvp-tag {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--accent-ice);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .mvp-name {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .mvp-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .mvp-stat-box {
+            background: var(--surface-2);
+            padding: 6px 8px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .mvp-stat-val {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            line-height: 1;
+        }
+
+        .mvp-stat-lbl {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* SECTION: FIXTURES CALENDAR */
+        .section-fixtures {
+            padding: 70px 0;
+            border-bottom: 2px solid var(--border-court);
+        }
+
+        .fixtures-filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .filter-btn {
+            background: var(--surface-1);
+            color: var(--text-muted);
+            border: 1px solid var(--border-court);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            padding: 8px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent-orange);
+            color: #0C0E12;
+            font-weight: 700;
+            border-color: var(--accent-orange);
+        }
+
+        .fixtures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .fixture-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-court);
+            border-radius: 6px;
+            padding: 20px;
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s;
+            overflow: hidden;
+        }
+
+        .fixture-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--border-court);
+        }
+
+        .fixture-card.home::before {
+            background: var(--accent-orange);
+        }
+
+        .fixture-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(118, 187, 255, 0.45);
+        }
+
+        .fixture-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .fixture-court-type {
+            font-weight: 700;
+            color: var(--accent-ice);
+            text-transform: uppercase;
+        }
+
+        .fixture-card.home .fixture-court-type {
+            color: var(--accent-orange);
+        }
+
+        .fixture-matchup {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .fixture-teams {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .fixture-team-name {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fixture-team-name.highlight {
+            color: var(--accent-orange);
+        }
+
+        .fixture-opponent-logo {
+            width: 42px;
+            height: 42px;
+            background: var(--surface-2);
+            border-radius: 50%;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-court);
+        }
+
+        .fixture-opponent-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .fixture-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid rgba(118, 187, 255, 0.1);
+            font-size: 0.85rem;
+        }
+
+        .fixture-venue {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .fixture-link {
+            color: var(--accent-orange);
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        /* SECTION: PLAYER HIGHLIGHTS & ROSTER */
+        .section-roster {
+            padding: 70px 0;
+            border-bottom: 2px solid var(--border-court);
+            background: #0E1218;
+        }
+
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .player-dossier-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-court);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+        }
+
+        .player-dossier-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-orange);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .player-photo-canvas {
+            height: 320px;
+            background: linear-gradient(180deg, #1A222D 0%, #11151C 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .player-photo-canvas::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 50% 30%, rgba(118, 187, 255, 0.18) 0%, transparent 65%);
+        }
+
+        .player-photo-canvas img {
+            max-width: 95%;
+            height: 90%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+            filter: contrast(1.05) saturate(1.1);
+        }
+
+        .player-number-watermark {
+            position: absolute;
+            top: -15px;
+            right: 5px;
+            font-family: var(--font-display);
+            font-size: 7.5rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.05);
+            line-height: 1;
+            z-index: 1;
+            user-select: none;
+        }
+
+        .player-position-pill {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(12, 14, 18, 0.85);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--border-court);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent-ice);
+            padding: 4px 10px;
+            border-radius: 3px;
+            z-index: 3;
+            text-transform: uppercase;
+        }
+
+        .player-card-body {
+            padding: 20px;
+            border-top: 2px solid var(--border-court);
+            background: var(--surface-1);
+        }
+
+        .player-card-name {
+            font-family: var(--font-display);
+            font-size: 1.65rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .player-dossier-specs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(118, 187, 255, 0.12);
+            text-align: center;
+        }
+
+        .spec-box {
+            background: var(--surface-2);
+            padding: 6px 4px;
+            border-radius: 3px;
+        }
+
+        .spec-val {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: block;
+        }
+
+        .spec-lbl {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* SECTION: STANDINGS PREVIEW */
+        .section-standings {
+            padding: 70px 0;
+            border-bottom: 2px solid var(--border-court);
+        }
+
+        .standings-grid-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 0.8fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .standings-table-container {
+            background: var(--surface-1);
+            border: 1px solid var(--border-court);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .standings-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+        }
+
+        .standings-table th {
+            background: var(--surface-2);
+            color: var(--text-muted);
+            padding: 12px 14px;
+            font-weight: 600;
+            text-align: center;
+            border-bottom: 2px solid var(--border-court);
+        }
+
+        .standings-table th:first-child,
+        .standings-table td:first-child {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .standings-table td {
+            padding: 12px 14px;
+            text-align: center;
+            border-bottom: 1px solid rgba(118, 187, 255, 0.08);
+            color: var(--text-main);
+        }
+
+        .standings-table tr.highlight-storm {
+            background: rgba(245, 130, 43, 0.12);
+            font-weight: 700;
+        }
+
+        .standings-table tr.highlight-storm td {
+            color: #fff;
+            border-color: rgba(245, 130, 43, 0.3);
+        }
+
+        .standings-table tr.highlight-storm td:first-child {
+            border-left: 4px solid var(--accent-orange);
+            color: var(--accent-orange);
+        }
+
+        .rank-circle {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            line-height: 22px;
+            border-radius: 50%;
+            background: var(--surface-2);
+            font-size: 0.75rem;
+            margin-right: 8px;
+            text-align: center;
+        }
+
+        .highlight-storm .rank-circle {
+            background: var(--accent-orange);
+            color: #0C0E12;
+            font-weight: 900;
+        }
+
+        .standings-side-intel {
+            background: var(--surface-1);
+            border: 1px solid var(--border-court);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .intel-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent-orange);
+            margin-bottom: 12px;
+        }
+
+        .intel-p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .form-guide-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .form-pill {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .form-pill.win {
+            background: #27AE60;
+            color: #fff;
+        }
+        .form-pill.loss {
+            background: #E74C3C;
+            color: #fff;
+        }
+
+        /* FOOTER */
+        footer.tactical-footer {
+            background: #080A0D;
+            border-top: 3px solid var(--accent-orange);
+            padding: 60px 0 30px;
+            position: relative;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h4 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .footer-col h5 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent-orange);
+            margin-bottom: 14px;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent-ice);
+        }
+
+        .footer-bottom-bar {
+            border-top: 1px solid rgba(118, 187, 255, 0.1);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .hero-grid,
+            .scoreboard-console,
+            .standings-grid-layout,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .matchup-visual {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .countdown-units {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .scoreboard-main-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .score-digits {
+                font-size: 3.5rem;
+            }
+            .hero-title {
+                font-size: 2.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="storm-floor" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; opacity: 0.65;"></canvas>
+    <div class="court-grid-backdrop"></div>
+
+    <!-- Match Ticker Top Bar -->
+    <div class="match-ticker-bar">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <span class="ticker-live-tag">NESTE HJEMMEKAMP</span>
+            <span class="ticker-live-tag" style="background: var(--accent-ice); color: #0C0E12; font-weight: 800;">⚡ WEBGL COURT V2.1</span>
+            <span class="ticker-info">Tromsø Storm vs <strong>Frøya</strong> · Rødtindhallen · 18. sep kl. 19:30</span>
+        </div>
+        <div>
+            <a href="#billetter" class="ticker-action-link">Sikre billett nå &rarr;</a>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="tactical-nav">
+        <div class="nav-container">
+            <a href="#" class="brand-block">
+                <div class="brand-logo-wrap">
+                    <img src="../assets/storm-logo.png" alt="Tromsø Storm Logo" onerror="this.src='../assets/icons/storm-192.png'">
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">Tromsø Storm</span>
+                    <span class="brand-sub">BLNO · 69° 40' N · UVÆR FRA NORD</span>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#hero" class="active">Kommando</a></li>
+                    <li><a href="#kamper">Kamper</a></li>
+                    <li><a href="#resultat">Resultater</a></li>
+                    <li><a href="#spillere">Spillerstall</a></li>
+                    <li><a href="#tabell">Tabell</a></li>
+                    <li><a href="#playbook">Playbook</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="#billetter" class="btn-ticket-hero">Billetter</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION: Tactical Storm Court -->
+        <section id="hero" class="hero-tactical">
+            <!-- Background Court Visual Elements -->
+            <svg class="court-lines-svg-bg" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Half court representation -->
+                <rect x="10" y="10" width="480" height="380" stroke="rgba(118, 187, 255, 0.4)" stroke-width="2"/>
+                <!-- 3-point line arc -->
+                <path d="M 40,10 L 40,80 A 180 180 0 0 0 400,80 L 400,10" stroke="rgba(245, 130, 43, 0.45)" stroke-width="3" stroke-dasharray="6 4"/>
+                <!-- Free throw key -->
+                <rect x="180" y="10" width="140" height="190" stroke="rgba(118, 187, 255, 0.5)" stroke-width="2"/>
+                <!-- Free throw circle -->
+                <circle cx="250" cy="200" r="70" stroke="rgba(118, 187, 255, 0.5)" stroke-width="2"/>
+                <circle cx="250" cy="200" r="70" stroke="rgba(245, 130, 43, 0.3)" stroke-width="2" stroke-dasharray="4 4"/>
+                <!-- Basket & backboard -->
+                <line x1="220" y1="35" x2="280" y2="35" stroke="#fff" stroke-width="4"/>
+                <circle cx="250" cy="50" r="14" stroke="#F5822B" stroke-width="3"/>
+            </svg>
+
+            <div class="storm-shear-stripe"></div>
+
+            <div class="content-wrap">
+                <div class="hero-grid">
+                    <!-- Left: Tactical Headline & Playbook -->
+                    <div class="hero-left">
+                        <div class="coordinates-badge">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            <span>ARCTIC LATITUDE 69.6492° N · TROMSØHALLEN</span>
+                        </div>
+
+                        <h1 class="hero-title">
+                            STORMEN<br>
+                            <span class="title-storm">RAMMER NORDEN</span>
+                        </h1>
+
+                        <p class="hero-lead">
+                            Velkommen til Ishavsbyens basketballstolthet. Tromsø Storm er klar for <strong>BLNO-sesongen 2026/27</strong> med ubarmhjertig tempo, knallhard taktikk og Norges mest fryktinngytende hjemmebane.
+                        </p>
+
+                        <!-- Playbook Interactive Component -->
+                        <div class="playbook-interactive-box" id="playbook">
+                            <div class="playbook-header">
+                                <span class="playbook-tag">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--accent-orange)"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                    COACH'S TACTICAL BOARD
+                                </span>
+                                <span class="chalk-note" id="chalkNoteText">"DEFEND THE NORTH // PROTECT THE PAINT"</span>
+                            </div>
+
+                            <div class="playbook-schemes">
+                                <button class="scheme-btn active" onclick="switchPlay('5out', this)">5-Out Arctic Motion</button>
+                                <button class="scheme-btn" onclick="switchPlay('trap', this)">Tromsø Ice Trap</button>
+                                <button class="scheme-btn" onclick="switchPlay('pick', this)">Sitton Pick & Pop</button>
+                            </div>
+
+                            <div class="playbook-court-mini">
+                                <svg id="tacticalSvg" viewBox="0 0 400 120" fill="none">
+                                    <!-- Mini court geometry -->
+                                    <line x1="200" y1="0" x2="200" y2="120" stroke="rgba(118, 187, 255, 0.2)" stroke-width="1"/>
+                                    <path d="M 120,0 A 90 90 0 0 0 280,0" stroke="rgba(245, 130, 43, 0.3)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                                    <rect x="165" y="0" width="70" height="55" stroke="rgba(118, 187, 255, 0.25)" stroke-width="1"/>
+
+                                    <!-- Dynamic Play Elements (drawn by JS) -->
+                                    <g id="playbookGraphics">
+                                        <!-- Player ① Point Guard Lange -->
+                                        <circle cx="200" cy="85" r="9" fill="#F5822B"/>
+                                        <text x="200" y="89" fill="#0C0E12" font-family="'Chakra Petch'" font-size="10" font-weight="bold" text-anchor="middle">4</text>
+                                        <!-- Passing vector arrow -->
+                                        <path d="M 190,80 Q 140,65 95,45" stroke="#76BBFF" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#arrowhead)"/>
+                                        <!-- Player ⓪ Forward Sitton Wing -->
+                                        <circle cx="90" cy="40" r="9" fill="#1D2430" stroke="#76BBFF" stroke-width="2"/>
+                                        <text x="90" y="44" fill="#fff" font-family="'Chakra Petch'" font-size="10" font-weight="bold" text-anchor="middle">0</text>
+                                        <!-- Cut into paint -->
+                                        <path d="M 95,40 Q 150,30 195,15" stroke="#F5822B" stroke-width="2" marker-end="url(#arrowhead-orange)"/>
+                                    </g>
+                                    <defs>
+                                        <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                                            <polygon points="0 0, 6 3, 0 6" fill="#76BBFF" />
+                                        </marker>
+                                        <marker id="arrowhead-orange" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                                            <polygon points="0 0, 6 3, 0 6" fill="#F5822B" />
+                                        </marker>
+                                    </defs>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="hero-ctas">
+                            <a href="#billetter" class="btn-primary">
+                                <span>Kjøp Sesongkort</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                            </a>
+                            <a href="#kamper" class="btn-secondary">Terminliste 26/27</a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Match Command Center Card -->
+                    <div class="hero-right">
+                        <!-- 3D Perspective Hero Art Card (GPT Generated Arctic Dunk) -->
+                        <div class="hero-art-showcase-3d">
+                            <div class="art-card-inner">
+                                <div class="art-tag-strip">
+                                    <span class="art-badge">69° N · ARKTISK DUNK</span>
+                                    <span class="art-status">POLAR FORCE VECTOR</span>
+                                </div>
+                                <div class="art-image-wrapper">
+                                    <img src="../assets/hero-arctic-dunk.svg" alt="Arctic Basketball Slam Dunk above Tromsø" class="art-img-hero">
+                                    <div class="art-overlay-gradient"></div>
+                                    <div class="art-tactical-hotspots">
+                                        <div class="hotspot" style="top: 25%; left: 62%;">
+                                            <span class="hotspot-ping"></span>
+                                            <span class="hotspot-label">ELEVATION 206 CM</span>
+                                        </div>
+                                        <div class="hotspot" style="bottom: 22%; left: 18%;">
+                                            <span class="hotspot-ping"></span>
+                                            <span class="hotspot-label">TROMSØ PEAKS</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="match-command-card">
+                            <div class="card-header-bar">
+                                <span class="card-header-title">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    KAMP-KOMMANDO
+                                </span>
+                                <span class="card-header-arena">RØDTINDHALLEN</span>
+                            </div>
+
+                            <div class="matchup-visual">
+                                <div class="team-pod home">
+                                    <div class="team-crest-box">
+                                        <img src="../assets/storm-logo.png" alt="Tromsø Storm">
+                                    </div>
+                                    <span class="team-name-label">Storm</span>
+                                    <span class="team-status-label">Hjemme</span>
+                                </div>
+
+                                <div class="match-vs-divider">
+                                    <div class="vs-circle">VS</div>
+                                    <span class="match-date-badge">18. SEP · 19:30</span>
+                                </div>
+
+                                <div class="team-pod">
+                                    <div class="team-crest-box">
+                                        <img src="../assets/opponents/froya.png" alt="Frøya Basket" onerror="this.src='../assets/storm-logo.png'">
+                                    </div>
+                                    <span class="team-name-label">Frøya</span>
+                                    <span class="team-status-label">Borte</span>
+                                </div>
+                            </div>
+
+                            <!-- Digital Countdown Clock -->
+                            <div class="countdown-digital-box">
+                                <div class="countdown-label">AVKAST OM NØYAKTIG:</div>
+                                <div class="countdown-units">
+                                    <div class="timer-unit-item">
+                                        <span class="timer-num" id="cdDays">13</span>
+                                        <span class="timer-unit-name">Dager</span>
+                                    </div>
+                                    <div class="timer-unit-item">
+                                        <span class="timer-num" id="cdHours">03</span>
+                                        <span class="timer-unit-name">Timer</span>
+                                    </div>
+                                    <div class="timer-unit-item">
+                                        <span class="timer-num" id="cdMins">49</span>
+                                        <span class="timer-unit-name">Min</span>
+                                    </div>
+                                    <div class="timer-unit-item">
+                                        <span class="timer-num" id="cdSecs">22</span>
+                                        <span class="timer-unit-name">Sek</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-action-footer">
+                                <a href="#billetter" class="btn-card-ticket" id="billetter">Kjøp Billett (Felt A/B/C)</a>
+                                <a href="../storm-kamper.ics" class="btn-card-cal" title="Legg til i kalender">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: SCOREBOARD / LATEST RESULT -->
+        <section id="resultat" class="section-scoreboard">
+            <div class="content-wrap">
+                <div class="section-header-tactical">
+                    <div>
+                        <h2 class="section-title">Siste Serieresultat</h2>
+                        <p class="section-subtitle">BLNO GRUNNSERIE · RØDTINDHALLEN · SLUTT</p>
+                    </div>
+                    <span class="chalk-note">#DEFENDTHENORTH</span>
+                </div>
+
+                <div class="scoreboard-console">
+                    <!-- LED Score Display -->
+                    <div class="scoreboard-led-display">
+                        <div class="scoreboard-tag">
+                            <span>SERIEKAMP · FULL TID</span>
+                            <span style="color: #27AE60;">OFFISIELT RESULTAT</span>
+                        </div>
+
+                        <div class="scoreboard-main-row">
+                            <div class="score-team-block">
+                                <span class="score-team-name">Tromsø Storm</span>
+                                <span class="score-digits">92</span>
+                            </div>
+
+                            <div class="score-final-badge">FT</div>
+
+                            <div class="score-team-block">
+                                <span class="score-team-name">Kongsberg</span>
+                                <span class="score-digits opponent">84</span>
+                            </div>
+                        </div>
+
+                        <!-- Quarters breakdown -->
+                        <table class="quarters-table">
+                            <thead>
+                                <tr>
+                                    <th>Lag</th>
+                                    <th>Q1</th>
+                                    <th>Q2</th>
+                                    <th>Q3</th>
+                                    <th>Q4</th>
+                                    <th>TOT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="team-cell">Tromsø Storm</td>
+                                    <td>24</td>
+                                    <td>21</td>
+                                    <td>25</td>
+                                    <td>22</td>
+                                    <td class="total-cell">92</td>
+                                </tr>
+                                <tr>
+                                    <td class="team-cell">Kongsberg Miners</td>
+                                    <td>20</td>
+                                    <td>18</td>
+                                    <td>24</td>
+                                    <td>22</td>
+                                    <td class="total-cell">84</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- MVP Spotlight Card -->
+                    <div class="scoreboard-mvp-card">
+                        <div class="mvp-photo-wrap">
+                            <img src="../assets/players/grant-sitton.png" alt="Grant Sitton" onerror="this.src='../assets/players/johannes-rydningen-lange.jpg'">
+                            <span class="mvp-badge">KAMPENS MVP</span>
+                        </div>
+                        <div class="mvp-info">
+                            <span class="mvp-tag">#0 · FORWARD · 206 CM</span>
+                            <h3 class="mvp-name">Grant Sitton</h3>
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">Dominerte i 4. periode med 3 avgjørende trepoengere og 11 returer.</p>
+
+                            <div class="mvp-stats-grid">
+                                <div class="mvp-stat-box">
+                                    <span class="mvp-stat-val">28</span>
+                                    <span class="mvp-stat-lbl">Poeng</span>
+                                </div>
+                                <div class="mvp-stat-box">
+                                    <span class="mvp-stat-val">11</span>
+                                    <span class="mvp-stat-lbl">Returer</span>
+                                </div>
+                                <div class="mvp-stat-box">
+                                    <span class="mvp-stat-val">5/7</span>
+                                    <span class="mvp-stat-lbl">3-Pts</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: FIXTURES -->
+        <section id="kamper" class="section-fixtures">
+            <div class="content-wrap">
+                <div class="section-header-tactical">
+                    <div>
+                        <h2 class="section-title">Kommende Kamper</h2>
+                        <p class="section-subtitle">BLNO TERMINLISTE 2026/27</p>
+                    </div>
+
+                    <div class="fixtures-filter-bar">
+                        <button class="filter-btn active" onclick="filterFixtures('all', this)">Alle Kamper</button>
+                        <button class="filter-btn" onclick="filterFixtures('home', this)">Hjemmekamper</button>
+                        <button class="filter-btn" onclick="filterFixtures('away', this)">Bortekamper</button>
+                    </div>
+                </div>
+
+                <div class="fixtures-grid" id="fixturesGrid">
+                    <!-- Card 1 -->
+                    <div class="fixture-card home" data-type="home">
+                        <div class="fixture-meta">
+                            <span>FREDAG 18. SEP · 19:30</span>
+                            <span class="fixture-court-type">Hjemme · Rødtindhallen</span>
+                        </div>
+                        <div class="fixture-matchup">
+                            <div class="fixture-teams">
+                                <span class="fixture-team-name highlight">Tromsø Storm</span>
+                                <span class="fixture-team-name">Frøya Basket</span>
+                            </div>
+                            <div class="fixture-opponent-logo">
+                                <img src="../assets/opponents/froya.png" alt="Frøya">
+                            </div>
+                        </div>
+                        <div class="fixture-footer">
+                            <span class="fixture-venue">Sesongåpning</span>
+                            <a href="#billetter" class="fixture-link">Kjøp Billett &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="fixture-card away" data-type="away">
+                        <div class="fixture-meta">
+                            <span>LØRDAG 26. SEP · 15:00</span>
+                            <span class="fixture-court-type">Borte · Fyllingsdalen</span>
+                        </div>
+                        <div class="fixture-matchup">
+                            <div class="fixture-teams">
+                                <span class="fixture-team-name">Fyllingen Lions</span>
+                                <span class="fixture-team-name highlight">Tromsø Storm</span>
+                            </div>
+                            <div class="fixture-opponent-logo">
+                                <img src="../assets/opponents/fyllingen.webp" alt="Fyllingen" onerror="this.src='../assets/storm-logo.png'">
+                            </div>
+                        </div>
+                        <div class="fixture-footer">
+                            <span class="fixture-venue">Bergen</span>
+                            <span class="fixture-link">TV 2 Play</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="fixture-card away" data-type="away">
+                        <div class="fixture-meta">
+                            <span>SØNDAG 27. SEP · 15:00</span>
+                            <span class="fixture-court-type">Borte · Gimlehallen</span>
+                        </div>
+                        <div class="fixture-matchup">
+                            <div class="fixture-teams">
+                                <span class="fixture-team-name">Gimle</span>
+                                <span class="fixture-team-name highlight">Tromsø Storm</span>
+                            </div>
+                            <div class="fixture-opponent-logo">
+                                <img src="../assets/opponents/gimle.png" alt="Gimle">
+                            </div>
+                        </div>
+                        <div class="fixture-footer">
+                            <span class="fixture-venue">Bergen</span>
+                            <span class="fixture-link">TV 2 Play</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="fixture-card home" data-type="home">
+                        <div class="fixture-meta">
+                            <span>LØRDAG 03. OKT · 15:00</span>
+                            <span class="fixture-court-type">Hjemme · Rødtindhallen</span>
+                        </div>
+                        <div class="fixture-matchup">
+                            <div class="fixture-teams">
+                                <span class="fixture-team-name highlight">Tromsø Storm</span>
+                                <span class="fixture-team-name">Bærum Basket</span>
+                            </div>
+                            <div class="fixture-opponent-logo">
+                                <img src="../assets/opponents/baerum.png" alt="Bærum">
+                            </div>
+                        </div>
+                        <div class="fixture-footer">
+                            <span class="fixture-venue">Rødtindhallen</span>
+                            <a href="#billetter" class="fixture-link">Kjøp Billett &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="fixture-card away" data-type="away">
+                        <div class="fixture-meta">
+                            <span>LØRDAG 10. OKT · 17:00</span>
+                            <span class="fixture-court-type">Borte · Vulkanhallen</span>
+                        </div>
+                        <div class="fixture-matchup">
+                            <div class="fixture-teams">
+                                <span class="fixture-team-name">Centrum Tigers</span>
+                                <span class="fixture-team-name highlight">Tromsø Storm</span>
+                            </div>
+                            <div class="fixture-opponent-logo">
+                                <img src="../assets/opponents/centrum.gif" alt="Centrum">
+                            </div>
+                        </div>
+                        <div class="fixture-footer">
+                            <span class="fixture-venue">Oslo</span>
+                            <span class="fixture-link">TV 2 Play</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="fixture-card home" data-type="home">
+                        <div class="fixture-meta">
+                            <span>LØRDAG 17. OKT · 15:00</span>
+                            <span class="fixture-court-type">Hjemme · Rødtindhallen</span>
+                        </div>
+                        <div class="fixture-matchup">
+                            <div class="fixture-teams">
+                                <span class="fixture-team-name highlight">Tromsø Storm</span>
+                                <span class="fixture-team-name">TNT Towers</span>
+                            </div>
+                            <div class="fixture-opponent-logo">
+                                <img src="../assets/opponents/tnt.png" alt="TNT">
+                            </div>
+                        </div>
+                        <div class="fixture-footer">
+                            <span class="fixture-venue">Rødtindhallen</span>
+                            <a href="#billetter" class="fixture-link">Kjøp Billett &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: ROSTER HIGHLIGHTS -->
+        <section id="spillere" class="section-roster">
+            <div class="content-wrap">
+                <div class="section-header-tactical">
+                    <div>
+                        <h2 class="section-title">Spillerstall</h2>
+                        <p class="section-subtitle">PROFILER & TAKTISKE ROLLEBESKRIVELSER 2026/27</p>
+                    </div>
+                    <span class="chalk-note">"HEAVY ARCTIC PACE"</span>
+                </div>
+
+                <div class="roster-grid">
+                    <!-- Player 1: Grant Sitton -->
+                    <div class="player-dossier-card">
+                        <div class="player-photo-canvas">
+                            <span class="player-number-watermark">0</span>
+                            <img src="../assets/players/grant-sitton.png" alt="Grant Sitton">
+                            <span class="player-position-pill">FORWARD · #0</span>
+                        </div>
+                        <div class="player-card-body">
+                            <h3 class="player-card-name">Grant Sitton</h3>
+                            <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+                                Allsidig 206 cm forward med dødelig trepoengsskytterrekkevidde. Erfaring fra college og proff i Japan.
+                            </p>
+                            <div class="player-dossier-specs">
+                                <div class="spec-box">
+                                    <span class="spec-val">206 cm</span>
+                                    <span class="spec-lbl">Høyde</span>
+                                </div>
+                                <div class="spec-box">
+                                    <span class="spec-val">1993</span>
+                                    <span class="spec-lbl">Født</span>
+                                </div>
+                                <div class="spec-box">
+                                    <span class="spec-val">USA</span>
+                                    <span class="spec-lbl">Orig</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player 2: Johannes Rydningen Lange -->
+                    <div class="player-dossier-card">
+                        <div class="player-photo-canvas">
+                            <span class="player-number-watermark">4</span>
+                            <img src="../assets/players/johannes-rydningen-lange.jpg" alt="Johannes Rydningen Lange">
+                            <span class="player-position-pill">POINT GUARD · #4</span>
+                        </div>
+                        <div class="player-card-body">
+                            <h3 class="player-card-name">Johannes Lange</h3>
+                            <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+                                Lagets kaptein og general. 12 sesonger i klubben, eksepsjonelt overblikk, presise pasninger og forsvarsintensitet.
+                            </p>
+                            <div class="player-dossier-specs">
+                                <div class="spec-box">
+                                    <span class="spec-val">182 cm</span>
+                                    <span class="spec-lbl">Høyde</span>
+                                </div>
+                                <div class="spec-box">
+                                    <span class="spec-val">1998</span>
+                                    <span class="spec-lbl">Født</span>
+                                </div>
+                                <div class="spec-box">
+                                    <span class="spec-val">12 år</span>
+                                    <span class="spec-lbl">I Storm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player 3: Garrett Denbow -->
+                    <div class="player-dossier-card">
+                        <div class="player-photo-canvas">
+                            <span class="player-number-watermark">5</span>
+                            <img src="../assets/players/garrett-denbow.png" alt="Garrett Denbow" onerror="this.src='../assets/players/anders-solem.jpg'">
+                            <span class="player-position-pill">GUARD · #5</span>
+                        </div>
+                        <div class="player-card-body">
+                            <h3 class="player-card-name">Garrett Denbow</h3>
+                            <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+                                Eksplosiv skytter og kontringsspiller. Tilfører fart og trussel fra perimeterspillet til Tromsø Storm.
+                            </p>
+                            <div class="player-dossier-specs">
+                                <div class="spec-box">
+                                    <span class="spec-val">196 cm</span>
+                                    <span class="spec-lbl">Høyde</span>
+                                </div>
+                                <div class="spec-box">
+                                    <span class="spec-val">2000</span>
+                                    <span class="spec-lbl">Født</span>
+                                </div>
+                                <div class="spec-box">
+                                    <span class="spec-val">USA</span>
+                                    <span class="spec-lbl">Orig</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player 4: Anders Solem -->
+                    <div class="player-dossier-card">
+                        <div class="player-photo-canvas">
+                            <span class="player-number-watermark">11</span>
+                            <img src="../assets/players/anders-solem.jpg" alt="Anders Solem">
+                            <span class="player-position-pill">FORWARD · #11</span>
+                        </div>
+                        <div class="player-card-body">
+                            <h3 class="player-card-name">Anders Solem</h3>
+                            <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+                                Nøkkelbrikke i returspillet og det fysiske forsvaret under kurven. Lokal kriger med enorm arbeidsmoral.
+                            </p>
+                            <div class="player-dossier-specs">
+                                <div class="spec-box">
+                                    <span class="spec-val">202 cm</span>
+                                    <span class="spec-lbl">Høyde</span>
+                                </div>
+                                <div class="spec-box">
+                                    <span class="spec-val">1997</span>
+                                    <span class="spec-lbl">Født</span>
+                                </div>
+                                <div class="spec-box">
+                                    <span class="spec-val">NOR</span>
+                                    <span class="spec-lbl">Orig</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: STANDINGS -->
+        <section id="tabell" class="section-standings">
+            <div class="content-wrap">
+                <div class="section-header-tactical">
+                    <div>
+                        <h2 class="section-title">BLNO Tabell</h2>
+                        <p class="section-subtitle">GRUNNSERIE STILLING · TOPP 8 TIL SLUTTSPILL</p>
+                    </div>
+                    <span class="chalk-note">PLAYOFF RACE</span>
+                </div>
+
+                <div class="standings-grid-layout">
+                    <!-- Table -->
+                    <div class="standings-table-container">
+                        <table class="standings-table">
+                            <thead>
+                                <tr>
+                                    <th>Lag</th>
+                                    <th>K</th>
+                                    <th>S</th>
+                                    <th>T</th>
+                                    <th>+/-</th>
+                                    <th>P</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight-storm">
+                                    <td><span class="rank-circle">1</span> Tromsø Storm</td>
+                                    <td>21</td>
+                                    <td>18</td>
+                                    <td>3</td>
+                                    <td>+272</td>
+                                    <td><strong>36</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-circle">2</span> Kongsberg Miners</td>
+                                    <td>21</td>
+                                    <td>16</td>
+                                    <td>5</td>
+                                    <td>+184</td>
+                                    <td><strong>32</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-circle">3</span> Fyllingen Lions</td>
+                                    <td>21</td>
+                                    <td>15</td>
+                                    <td>6</td>
+                                    <td>+169</td>
+                                    <td><strong>30</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-circle">4</span> Bærum Basket</td>
+                                    <td>21</td>
+                                    <td>12</td>
+                                    <td>9</td>
+                                    <td>+147</td>
+                                    <td><strong>24</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-circle">5</span> Gimle</td>
+                                    <td>21</td>
+                                    <td>11</td>
+                                    <td>10</td>
+                                    <td>-18</td>
+                                    <td><strong>22</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-circle">6</span> Centrum Tigers</td>
+                                    <td>21</td>
+                                    <td>10</td>
+                                    <td>11</td>
+                                    <td>+28</td>
+                                    <td><strong>20</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-circle">7</span> Frøya Basket</td>
+                                    <td>21</td>
+                                    <td>9</td>
+                                    <td>12</td>
+                                    <td>-84</td>
+                                    <td><strong>18</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-circle">8</span> Ammerud</td>
+                                    <td>21</td>
+                                    <td>8</td>
+                                    <td>13</td>
+                                    <td>-92</td>
+                                    <td><strong>16</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Side Intel -->
+                    <div class="standings-side-intel">
+                        <h4 class="intel-title">Tromsø i Førersetet</h4>
+                        <p class="intel-p">
+                            Tromsø Storm leder an i BLNO etter en forrykende seiersrekke på hjemmebane i Rødtindhallen. Laget har seriens beste forsvarsstatistikk og tillater færrest poeng i snitt per kamp.
+                        </p>
+
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-ice); margin-bottom: 8px;">
+                            FORM (5 SISTE KAMPER):
+                        </div>
+                        <div class="form-guide-row">
+                            <span class="form-pill win">S</span>
+                            <span class="form-pill win">S</span>
+                            <span class="form-pill win">S</span>
+                            <span class="form-pill loss">T</span>
+                            <span class="form-pill win">S</span>
+                            <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); margin-left: 6px;">4-1</span>
+                        </div>
+
+                        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(118,187,255,0.15);">
+                            <a href="#billetter" class="btn-card-ticket" style="display: block;">Følg Storm mot Tittelen</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Tactical Footer -->
+    <footer class="tactical-footer">
+        <div class="content-wrap">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>Tromsø Storm</h4>
+                    <p>
+                        Norges nordligste elitelag i basketball. Stiftet med hjerte, kjemper med arktisk stormstyrke. Hjemmebane: Rødtindhallen, Tromsø.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Navigasjon</h5>
+                    <ul>
+                        <li><a href="#hero">Forside & Kommando</a></li>
+                        <li><a href="#kamper">Terminliste</a></li>
+                        <li><a href="#resultat">Resultater</a></li>
+                        <li><a href="#spillere">Spillere & Trenere</a></li>
+                        <li><a href="#tabell">BLNO Tabell</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Arena & Billetter</h5>
+                    <ul>
+                        <li><a href="#billetter">Kjøp Enkeltbillett</a></li>
+                        <li><a href="#billetter">Sesongkort 26/27</a></li>
+                        <li><a href="#">Besøk Rødtindhallen</a></li>
+                        <li><a href="#">VIP & Næringsliv</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Samarbeidspartnere</h5>
+                    <ul>
+                        <li><a href="#">SpareBank 1 Nord-Norge</a></li>
+                        <li><a href="#">Extra</a></li>
+                        <li><a href="#">Bedsys</a></li>
+                        <li><a href="#">Hermes AS</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom-bar">
+                <span>&copy; 2026 Tromsø Storm Basketball. Org.nr. 886 210 752.</span>
+                <span>LAT: 69° 39' 07" N · LONG: 18° 57' 12" E</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JS for Countdown, Playbook, and Filter -->
+    <script>
+        // Live Countdown Clock to Match Date
+        const matchTarget = new Date();
+        matchTarget.setDate(matchTarget.getDate() + 13);
+        matchTarget.setHours(19, 30, 0, 0);
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = matchTarget - now;
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+
+                document.getElementById('cdDays').textContent = String(days).padStart(2, '0');
+                document.getElementById('cdHours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('cdMins').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('cdSecs').textContent = String(seconds).padStart(2, '0');
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Playbook Scheme Switcher
+        const plays = {
+            '5out': {
+                note: '"DEFEND THE NORTH // SPREAD THE FLOOR"',
+                svg: `
+                    <!-- 5-Out Arctic Motion -->
+                    <circle cx="200" cy="85" r="9" fill="#F5822B"/>
+                    <text x="200" y="89" fill="#0C0E12" font-family="'Chakra Petch'" font-size="10" font-weight="bold" text-anchor="middle">4</text>
+                    <path d="M 190,80 Q 140,65 95,45" stroke="#76BBFF" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#arrowhead)"/>
+                    <circle cx="90" cy="40" r="9" fill="#1D2430" stroke="#76BBFF" stroke-width="2"/>
+                    <text x="90" y="44" fill="#fff" font-family="'Chakra Petch'" font-size="10" font-weight="bold" text-anchor="middle">0</text>
+                    <path d="M 95,40 Q 150,30 195,15" stroke="#F5822B" stroke-width="2" marker-end="url(#arrowhead-orange)"/>
+                    <circle cx="310" cy="40" r="9" fill="#1D2430" stroke="#76BBFF" stroke-width="2"/>
+                    <text x="310" y="44" fill="#fff" font-family="'Chakra Petch'" font-size="10" font-weight="bold" text-anchor="middle">5</text>
+                `
+            },
+            'trap': {
+                note: '"ICE THE PICK // FORCE BASELINE TURNOVER"',
+                svg: `
+                    <!-- Ice Trap -->
+                    <circle cx="150" cy="65" r="9" fill="#F5822B"/>
+                    <text x="150" y="69" fill="#0C0E12" font-family="'Chakra Petch'" font-size="10" font-weight="bold" text-anchor="middle">4</text>
+                    <circle cx="170" cy="60" r="9" fill="#F5822B"/>
+                    <text x="170" y="64" fill="#0C0E12" font-family="'Chakra Petch'" font-size="10" font-weight="bold" text-anchor="middle">11</text>
+                    <circle cx="160" cy="78" r="8" fill="#E74C3C"/>
+                    <text x="160" y="82" fill="#fff" font-family="'Chakra Petch'" font-size="8" font-weight="bold" text-anchor="middle">X</text>
+                    <path d="M 155,75 L 120,105" stroke="#76BBFF" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrowhead)"/>
+                `
+            },
+            'pick': {
+                note: '"HIGH PICK & POP // SITTON TOP OF KEY 3"',
+                svg: `
+                    <!-- Sitton Pick & Pop -->
+                    <circle cx="200" cy="85" r="9" fill="#F5822B"/>
+                    <text x="200" y="89" fill="#0C0E12" font-family="'Chakra Petch'" font-size="10" font-weight="bold" text-anchor="middle">4</text>
+                    <line x1="210" y1="80" x2="225" y2="80" stroke="#F5822B" stroke-width="4"/>
+                    <path d="M 200,85 Q 240,70 250,45" stroke="#F5822B" stroke-width="2" marker-end="url(#arrowhead-orange)"/>
+                    <circle cx="160" cy="80" r="9" fill="#1D2430" stroke="#76BBFF" stroke-width="2"/>
+                    <text x="160" y="84" fill="#fff" font-family="'Chakra Petch'" font-size="10" font-weight="bold" text-anchor="middle">0</text>
+                    <path d="M 160,80 Q 180,60 200,45" stroke="#76BBFF" stroke-width="2" stroke-dasharray="3 2" marker-end="url(#arrowhead)"/>
+                `
+            }
+        };
+
+        function switchPlay(key, btn) {
+            document.querySelectorAll('.scheme-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const data = plays[key];
+            document.getElementById('chalkNoteText').textContent = data.note;
+            document.getElementById('playbookGraphics').innerHTML = data.svg;
+        }
+
+        // Fixtures Filter
+        function filterFixtures(type, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const cards = document.querySelectorAll('.fixture-card');
+            cards.forEach(card => {
+                if (type === 'all' || card.dataset.type === type) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+    <script src="../assets/tactical-storm-floor.js"></script>
+    <script>
+        if (window.TacticalStormFloor) {
+            TacticalStormFloor.mount('#storm-floor');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex,nofollow,noarchive">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Tromsø Storm | Design Language Comparison (Side by Side)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Chakra+Petch:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-shell: #080A0D;
+            --surface-bar: #11151C;
+            --border-bar: #232C3A;
+            --storm-orange: #F5822B;
+            --aurora-ice: #76BBFF;
+            --aurora-cyan: #31CDCF;
+            --text-light: #EDF1F7;
+            --text-dim: #8F9CAE;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            background-color: var(--bg-shell);
+            color: var(--text-light);
+            font-family: 'Inter', -apple-system, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Command Toolbar */
+        header.toolbar {
+            background: var(--surface-bar);
+            border-bottom: 2px solid var(--border-bar);
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 50;
+            gap: 16px;
+        }
+
+        .brand-zone {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-badge {
+            background: var(--storm-orange);
+            color: #0C0E12;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+        }
+
+        .brand-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .controls-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-group {
+            display: inline-flex;
+            background: #0C0E12;
+            padding: 3px;
+            border-radius: 6px;
+            border: 1px solid var(--border-bar);
+        }
+
+        .tool-btn {
+            background: transparent;
+            color: var(--text-dim);
+            border: none;
+            padding: 6px 14px;
+            font-family: 'Chakra Petch', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .tool-btn:hover {
+            color: #fff;
+        }
+
+        .tool-btn.active {
+            background: var(--storm-orange);
+            color: #0C0E12;
+        }
+
+        .sync-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Chakra Petch', monospace;
+            font-size: 0.78rem;
+            color: var(--aurora-ice);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .sync-label input {
+            cursor: pointer;
+            accent-color: var(--storm-orange);
+        }
+
+        .external-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-link-out {
+            color: var(--aurora-ice);
+            text-decoration: none;
+            font-family: 'Chakra Petch', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid var(--border-bar);
+            background: #0C0E12;
+            padding: 6px 12px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-link-out:hover {
+            border-color: var(--aurora-cyan);
+            color: #fff;
+        }
+
+        /* Concept Info Header Strip */
+        .info-strip {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #0C0E12;
+            border-bottom: 1px solid var(--border-bar);
+            flex-shrink: 0;
+            font-size: 0.82rem;
+        }
+
+        .concept-col-info {
+            padding: 8px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .concept-col-info:first-child {
+            border-right: 1px solid var(--border-bar);
+        }
+
+        .concept-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-alt1 {
+            color: var(--storm-orange);
+        }
+
+        .badge-alt2 {
+            color: var(--aurora-cyan);
+        }
+
+        .concept-meta {
+            font-family: 'Chakra Petch', monospace;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+
+        /* Dual Iframe Viewport Container */
+        .viewer-stage {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 100%;
+            overflow: hidden;
+            background: #050608;
+            transition: all 0.3s ease;
+        }
+
+        .frame-wrapper {
+            position: relative;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            background: #050608;
+        }
+
+        .frame-wrapper:first-child {
+            border-right: 2px solid var(--border-bar);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #0C0E12;
+            transition: width 0.3s ease;
+        }
+
+        /* Device Mode Constraints */
+        .viewer-stage.device-tablet iframe {
+            width: 768px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            border-left: 1px solid var(--border-bar);
+            border-right: 1px solid var(--border-bar);
+        }
+
+        .viewer-stage.device-mobile iframe {
+            width: 390px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            border-left: 1px solid var(--border-bar);
+            border-right: 1px solid var(--border-bar);
+        }
+
+        /* View Mode Overrides */
+        .viewer-stage.mode-alt1-only {
+            grid-template-columns: 1fr;
+        }
+        .viewer-stage.mode-alt1-only #wrap1 {
+            border-right: none;
+        }
+        .viewer-stage.mode-alt1-only #wrap2 {
+            display: none !important;
+        }
+
+        .viewer-stage.mode-alt2-only {
+            grid-template-columns: 1fr;
+        }
+        .viewer-stage.mode-alt2-only #wrap1 {
+            display: none !important;
+        }
+        .viewer-stage.mode-alt2-only #wrap2 {
+            border-right: none;
+        }
+
+        @media (max-width: 900px) {
+            .viewer-stage {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+                overflow-y: auto;
+            }
+            .frame-wrapper:first-child {
+                border-right: none;
+                border-bottom: 2px solid var(--border-bar);
+            }
+            .info-strip {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Toolbar -->
+    <header class="toolbar">
+        <div class="brand-zone">
+            <span class="brand-badge">POC</span>
+            <span class="brand-title">Tromsø Storm // Aurora Storm Court</span>
+        </div>
+
+        <div class="controls-group">
+            <!-- View Mode Switcher -->
+            <div class="btn-group">
+                <button class="tool-btn active" id="btnModeBoth" onclick="setViewMode('both')">50 / 50 Sammenligning</button>
+                <button class="tool-btn" id="btnModeAlt1" onclick="setViewMode('alt1')">Kun Alt 1 (Playbook)</button>
+                <button class="tool-btn" id="btnModeAlt2" onclick="setViewMode('alt2')">Kun Alt 2 (Vortex)</button>
+            </div>
+
+            <!-- Device Size Switcher -->
+            <div class="btn-group">
+                <button class="tool-btn active" id="btnDevDesktop" onclick="setDevice('desktop')">Desktop</button>
+                <button class="tool-btn" id="btnDevTablet" onclick="setDevice('tablet')">Tablet (768px)</button>
+                <button class="tool-btn" id="btnDevMobile" onclick="setDevice('mobile')">Mobile (390px)</button>
+            </div>
+
+            <!-- Synchronized Scrolling -->
+            <label class="sync-label">
+                <input type="checkbox" id="syncScroll" checked>
+                <span>Synkron Rulling</span>
+            </label>
+        </div>
+
+        <div class="external-links">
+            <a href="standalone-alternative-1.html" target="_blank" class="btn-link-out" id="linkAlt1" title="Åpne Alt 1 direkte i ny fane (med cache-busting)">
+                <span>Alt 1 Ny Fane</span> ↗
+            </a>
+            <a href="standalone-alternative-2.html" target="_blank" class="btn-link-out" id="linkAlt2" title="Åpne Alt 2 direkte i ny fane (med cache-busting)">
+                <span>Alt 2 Ny Fane</span> ↗
+            </a>
+        </div>
+    </header>
+
+    <!-- Sub Header Concept Legend -->
+    <div class="info-strip" id="infoStrip">
+        <div class="concept-col-info" id="infoCol1">
+            <div class="concept-title badge-alt1">
+                <span>01 · TACTICAL PLAYBOOK COMMAND</span>
+            </div>
+            <div class="concept-meta">
+                Hardwood · Taktikk-tavle · 69° Skjærlinjer · LED Scoreboard · WebGL Court
+            </div>
+        </div>
+
+        <div class="concept-col-info" id="infoCol2">
+            <div class="concept-title badge-alt2">
+                <span>02 · THE AURORA VORTEX & POLAR SEAM</span>
+            </div>
+            <div class="concept-meta">
+                Basketballsømmer · Arktisk Nordlys · Frosted Glass · Polarradar · 3D Roterende Ball
+            </div>
+        </div>
+    </div>
+
+    <!-- Dual Viewport Stage -->
+    <div class="viewer-stage" id="viewerStage">
+        <div class="frame-wrapper" id="wrap1">
+            <iframe id="frame1" src="standalone-alternative-1.html" title="Tromsø Storm - Alternativ 1"></iframe>
+        </div>
+        <div class="frame-wrapper" id="wrap2">
+            <iframe id="frame2" src="standalone-alternative-2.html" title="Tromsø Storm - Alternativ 2"></iframe>
+        </div>
+    </div>
+
+    <!-- Synchronized Scrolling & Controller Script -->
+    <script>
+        const viewerStage = document.getElementById('viewerStage');
+        const frame1 = document.getElementById('frame1');
+        const frame2 = document.getElementById('frame2');
+        const syncCheckbox = document.getElementById('syncScroll');
+        const infoStrip = document.getElementById('infoStrip');
+        const infoCol1 = document.getElementById('infoCol1');
+        const infoCol2 = document.getElementById('infoCol2');
+
+        let isSyncing1 = false;
+        let isSyncing2 = false;
+
+        // Cache Buster for fresh content
+        function updateTabLinks() {
+            const t = Date.now();
+            const link1 = document.getElementById('linkAlt1');
+            const link2 = document.getElementById('linkAlt2');
+            if (link1) link1.href = `standalone-alternative-1.html?v=${t}`;
+            if (link2) link2.href = `standalone-alternative-2.html?v=${t}`;
+        }
+        updateTabLinks();
+        document.getElementById('linkAlt1').addEventListener('mousedown', updateTabLinks);
+        document.getElementById('linkAlt2').addEventListener('mousedown', updateTabLinks);
+
+        function setViewMode(mode) {
+            document.getElementById('btnModeBoth').classList.remove('active');
+            document.getElementById('btnModeAlt1').classList.remove('active');
+            document.getElementById('btnModeAlt2').classList.remove('active');
+
+            viewerStage.classList.remove('mode-alt1-only', 'mode-alt2-only');
+
+            if (mode === 'both') {
+                document.getElementById('btnModeBoth').classList.add('active');
+                infoStrip.style.display = 'grid';
+                infoStrip.style.gridTemplateColumns = '1fr 1fr';
+                if (infoCol1) infoCol1.style.display = 'flex';
+                if (infoCol2) infoCol2.style.display = 'flex';
+            } else if (mode === 'alt1') {
+                document.getElementById('btnModeAlt1').classList.add('active');
+                viewerStage.classList.add('mode-alt1-only');
+                infoStrip.style.display = 'grid';
+                infoStrip.style.gridTemplateColumns = '1fr';
+                if (infoCol1) infoCol1.style.display = 'flex';
+                if (infoCol2) infoCol2.style.display = 'none';
+            } else if (mode === 'alt2') {
+                document.getElementById('btnModeAlt2').classList.add('active');
+                viewerStage.classList.add('mode-alt2-only');
+                infoStrip.style.display = 'grid';
+                infoStrip.style.gridTemplateColumns = '1fr';
+                if (infoCol1) infoCol1.style.display = 'none';
+                if (infoCol2) infoCol2.style.display = 'flex';
+            }
+        }
+
+        function setDevice(device) {
+            document.getElementById('btnDevDesktop').classList.remove('active');
+            document.getElementById('btnDevTablet').classList.remove('active');
+            document.getElementById('btnDevMobile').classList.remove('active');
+
+            viewerStage.classList.remove('device-tablet', 'device-mobile');
+
+            if (device === 'desktop') {
+                document.getElementById('btnDevDesktop').classList.add('active');
+            } else if (device === 'tablet') {
+                document.getElementById('btnDevTablet').classList.add('active');
+                viewerStage.classList.add('device-tablet');
+            } else if (device === 'mobile') {
+                document.getElementById('btnDevMobile').classList.add('active');
+                viewerStage.classList.add('device-mobile');
+            }
+        }
+
+        // Cross-iframe scroll listener
+        window.addEventListener('load', () => {
+            try {
+                const doc1 = frame1.contentWindow;
+                const doc2 = frame2.contentWindow;
+
+                if (doc1 && doc2) {
+                    doc1.addEventListener('scroll', () => {
+                        if (!syncCheckbox.checked || isSyncing1) return;
+                        isSyncing2 = true;
+                        doc2.scrollTo(0, doc1.scrollY);
+                        setTimeout(() => { isSyncing2 = false; }, 50);
+                    });
+
+                    doc2.addEventListener('scroll', () => {
+                        if (!syncCheckbox.checked || isSyncing2) return;
+                        isSyncing1 = true;
+                        doc1.scrollTo(0, doc2.scrollY);
+                        setTimeout(() => { isSyncing1 = false; }, 50);
+                    });
+                }
+            } catch (e) {
+                console.log('Cross-origin frame scroll sync notice:', e);
+            }
+        });
+    </script>
+</body>
+</html>

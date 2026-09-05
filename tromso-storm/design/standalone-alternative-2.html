@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex,nofollow,noarchive">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Tromsø Storm Basketball | The Aurora Vortex</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0C0E12;
+            --bg-elevated: #11151C;
+            --surface-glass: rgba(23, 28, 36, 0.78);
+            --surface-glass-solid: #171C24;
+            --surface-glass-border: rgba(118, 187, 255, 0.22);
+            --surface-glass-hover: rgba(29, 36, 48, 0.88);
+
+            --storm-orange: #F5822B;
+            --storm-dark-orange: #CB6417;
+            --aurora-ice: #76BBFF;
+            --aurora-cyan: #31CDCF;
+            --aurora-violet: #9B51E0;
+            --text-pure: #EDF1F7;
+            --text-dim: #AAB4C4;
+
+            --font-head: 'Oswald', -apple-system, sans-serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --font-tech: 'Space Grotesk', monospace;
+
+            --seam-curve: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-pure);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: background 0.5s ease;
+        }
+
+        /* Ambient Aurora Shimmer Backdrop */
+        .aurora-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .aurora-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.38;
+            animation: aurora-drift 18s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: 20%;
+            width: 650px;
+            height: 480px;
+            background: radial-gradient(circle, rgba(118, 187, 255, 0.45) 0%, rgba(49, 205, 207, 0.15) 60%, transparent 80%);
+            animation-duration: 22s;
+        }
+
+        .blob-2 {
+            top: 35%;
+            right: -10%;
+            width: 580px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(245, 130, 43, 0.35) 0%, rgba(203, 100, 23, 0.1) 60%, transparent 80%);
+            animation-duration: 18s;
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            bottom: 5%;
+            left: 10%;
+            width: 700px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(49, 205, 207, 0.25) 0%, rgba(155, 81, 224, 0.18) 60%, transparent 80%);
+            animation-duration: 25s;
+            animation-delay: -10s;
+        }
+
+        @keyframes aurora-drift {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(40px, 30px) scale(1.15) rotate(10deg); }
+            100% { transform: translate(-30px, 50px) scale(0.92) rotate(-8deg); }
+        }
+
+        /* Storm Surge High-Intensity Mode Modifier */
+        body.mode-storm-surge .blob-1 {
+            background: radial-gradient(circle, rgba(245, 130, 43, 0.6) 0%, rgba(203, 100, 23, 0.2) 60%, transparent 80%);
+        }
+        body.mode-storm-surge .blob-2 {
+            background: radial-gradient(circle, rgba(118, 187, 255, 0.5) 0%, transparent 70%);
+        }
+
+        /* Basketball Seam Vector Divider System */
+        .seam-divider-wrap {
+            position: relative;
+            width: 100%;
+            height: 90px;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .seam-divider-wrap svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Floating Pill Header Navigation */
+        header.aurora-header {
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            width: calc(100% - 40px);
+            max-width: 1320px;
+            margin: 0 auto;
+        }
+
+        .glass-nav-pill {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 999px;
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-brand-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .brand-orb-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-deep);
+            border: 2px solid var(--storm-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 0 16px rgba(245, 130, 43, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .brand-orb-logo img {
+            width: 82%;
+            height: 82%;
+            object-fit: contain;
+        }
+
+        .brand-titles {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-family: var(--font-head);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .brand-latitude {
+            font-family: var(--font-tech);
+            font-size: 0.68rem;
+            color: var(--aurora-cyan);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .nav-menu-links {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-menu-links a {
+            color: var(--text-pure);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-menu-links a:hover,
+        .nav-menu-links a.active {
+            color: var(--storm-orange);
+        }
+
+        .nav-menu-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--storm-orange);
+            box-shadow: 0 0 8px var(--storm-orange);
+        }
+
+        .nav-actions-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Aurora Atmosphere Switcher Toggle */
+        .btn-atmosphere-toggle {
+            background: rgba(12, 14, 18, 0.65);
+            border: 1px solid var(--surface-glass-border);
+            color: var(--aurora-cyan);
+            font-family: var(--font-tech);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.25s;
+        }
+
+        .btn-atmosphere-toggle:hover {
+            border-color: var(--aurora-ice);
+            color: #fff;
+            box-shadow: 0 0 12px rgba(118, 187, 255, 0.3);
+        }
+
+        .btn-ticket-pill {
+            background: linear-gradient(135deg, var(--storm-orange) 0%, var(--storm-dark-orange) 100%);
+            color: #0C0E12;
+            font-family: var(--font-head);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 8px 22px;
+            border-radius: 999px;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(245, 130, 43, 0.45);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-ticket-pill:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 28px rgba(245, 130, 43, 0.7);
+        }
+
+        /* Container helper */
+        .vortex-container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* HERO SECTION: The Aurora Vortex */
+        .hero-vortex {
+            padding: 70px 0 80px;
+            position: relative;
+        }
+
+        .hero-vortex-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-vortex-content {
+            position: relative;
+        }
+
+        .polar-tagline-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(118, 187, 255, 0.12);
+            border: 1px solid rgba(118, 187, 255, 0.35);
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-family: var(--font-tech);
+            font-size: 0.78rem;
+            color: var(--aurora-ice);
+            letter-spacing: 0.12em;
+            margin-bottom: 24px;
+        }
+
+        .polar-tagline-chip .pulse-ring {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--storm-orange);
+            box-shadow: 0 0 10px var(--storm-orange);
+            animation: pulse-ring 1.5s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.5; }
+            100% { transform: scale(0.9); opacity: 1; }
+        }
+
+        .hero-vortex-headline {
+            font-family: var(--font-head);
+            font-size: clamp(3.4rem, 6.5vw, 6.2rem);
+            font-weight: 700;
+            line-height: 0.96;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: 24px;
+        }
+
+        .hero-vortex-headline span.gradient-aurora {
+            background: linear-gradient(135deg, #fff 10%, var(--aurora-ice) 50%, var(--aurora-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-vortex-headline span.gradient-storm {
+            background: linear-gradient(135deg, var(--storm-orange) 0%, #FFA861 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .hero-vortex-desc {
+            font-size: 1.12rem;
+            color: var(--text-dim);
+            max-width: 560px;
+            margin-bottom: 36px;
+            line-height: 1.7;
+        }
+
+        .hero-vortex-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn-aurora-main {
+            background: linear-gradient(135deg, var(--storm-orange) 0%, #D46914 100%);
+            color: #0C0E12;
+            font-family: var(--font-head);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 14px 34px;
+            border-radius: 999px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 30px rgba(245, 130, 43, 0.45);
+            transition: all 0.25s;
+        }
+
+        .btn-aurora-main:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(245, 130, 43, 0.65);
+        }
+
+        .btn-aurora-ghost {
+            background: var(--surface-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--surface-glass-border);
+            color: #fff;
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 14px 28px;
+            border-radius: 999px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-aurora-ghost:hover {
+            border-color: var(--aurora-ice);
+            background: var(--surface-glass-hover);
+        }
+
+        /* Polar Radar Next Match Center */
+        .polar-radar-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 28px;
+            padding: 32px;
+            position: relative;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        /* Basketball Seam Glow Arc in Card */
+        .seam-arc-decoration {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 2px dashed rgba(245, 130, 43, 0.25);
+            pointer-events: none;
+        }
+
+        .radar-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .radar-badge {
+            font-family: var(--font-tech);
+            font-size: 0.72rem;
+            color: var(--aurora-cyan);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .radar-arena {
+            font-family: var(--font-tech);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        /* Radar Dial Wheel */
+        .radar-dial-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .radar-dial-circle {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            border: 2px solid rgba(118, 187, 255, 0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(17, 21, 28, 0.85) 0%, rgba(12, 14, 18, 0.95) 100%);
+            box-shadow: 0 0 35px rgba(49, 205, 207, 0.12);
+        }
+
+        .radar-dial-circle::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            border-radius: 50%;
+            border: 1px dashed rgba(245, 130, 43, 0.35);
+        }
+
+        /* Rotating radar sweep ray */
+        .radar-sweep-ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 75px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(245, 130, 43, 0.8), transparent);
+            transform-origin: 0 0;
+            animation: radar-spin 4s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes radar-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .dial-time-digits {
+            font-family: var(--font-head);
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            position: relative;
+            z-index: 2;
+        }
+
+        .dial-time-sub {
+            font-family: var(--font-tech);
+            font-size: 0.68rem;
+            color: var(--storm-orange);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-top: 4px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .radar-matchup-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .radar-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radar-team-logo {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: #11151C;
+            border: 2px solid var(--surface-glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        }
+
+        .radar-team.storm .radar-team-logo {
+            border-color: var(--storm-orange);
+            box-shadow: 0 0 20px rgba(245, 130, 43, 0.35);
+        }
+
+        .radar-team-logo img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .radar-team-title {
+            font-family: var(--font-head);
+            font-size: 1.35rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .radar-vs-symbol {
+            font-family: var(--font-head);
+            font-size: 1.1rem;
+            color: var(--storm-orange);
+            font-weight: 700;
+        }
+
+        .btn-reserve-seat {
+            background: var(--storm-orange);
+            color: #0C0E12;
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 14px;
+            border-radius: 14px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(245, 130, 43, 0.35);
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-reserve-seat:hover {
+            background: #ff8e38;
+            transform: translateY(-2px);
+        }
+
+        /* SECTION: CINEMATIC LATEST RESULT */
+        .section-vortex-result {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-header-curved {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+        }
+
+        .curved-title {
+            font-family: var(--font-head);
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .curved-subtitle {
+            font-family: var(--font-tech);
+            font-size: 0.82rem;
+            color: var(--aurora-cyan);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+
+        .result-cinematic-card {
+            background:
+                linear-gradient(135deg, rgba(23, 28, 36, 0.88) 0%, rgba(17, 21, 28, 0.94) 100%),
+                url('../assets/hero-action-1600.webp') center/cover no-repeat;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 28px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1.3fr 0.9fr;
+            gap: 40px;
+            align-items: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-cinematic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--storm-orange), var(--aurora-ice), var(--aurora-cyan));
+        }
+
+        .score-cinematic-board {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .score-match-meta {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-tech);
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .big-score-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 24px;
+            text-align: center;
+        }
+
+        .big-team-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .big-team-name {
+            font-family: var(--font-head);
+            font-size: 1.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .big-score-num {
+            font-family: var(--font-head);
+            font-size: 5.5rem;
+            font-weight: 700;
+            line-height: 0.9;
+            color: var(--storm-orange);
+            text-shadow: 0 0 30px rgba(245, 130, 43, 0.4);
+        }
+
+        .big-score-num.opponent {
+            color: var(--text-dim);
+            text-shadow: none;
+        }
+
+        .score-dash-badge {
+            font-family: var(--font-tech);
+            font-size: 1rem;
+            background: var(--bg-deep);
+            color: var(--aurora-cyan);
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid var(--surface-glass-border);
+        }
+
+        /* Scoring Momentum Pulse Flow */
+        .scoring-flow-bar {
+            background: rgba(12, 14, 18, 0.6);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-tech);
+            font-size: 0.82rem;
+        }
+
+        .flow-quarter-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .step-label {
+            color: var(--text-dim);
+            font-size: 0.7rem;
+        }
+
+        .step-score {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .step-score.storm-won {
+            color: var(--storm-orange);
+        }
+
+        /* Result Spotlight Player */
+        .spotlight-player-wrap {
+            background: rgba(17, 21, 28, 0.7);
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spotlight-player-wrap::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(118, 187, 255, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .spotlight-photo-orb {
+            width: 100px;
+            height: 125px;
+            border-radius: 14px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #11151C;
+            border: 2px solid var(--storm-orange);
+            position: relative;
+        }
+
+        .spotlight-photo-orb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .spotlight-details {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .spotlight-role {
+            font-family: var(--font-tech);
+            font-size: 0.72rem;
+            color: var(--aurora-cyan);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .spotlight-name {
+            font-family: var(--font-head);
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .spotlight-stat-chips {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .stat-chip {
+            background: var(--bg-deep);
+            border: 1px solid var(--surface-glass-border);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-family: var(--font-tech);
+            font-size: 0.78rem;
+        }
+
+        .stat-chip strong {
+            color: var(--storm-orange);
+        }
+
+        /* SECTION: AURORA TIMELINE / FIXTURES */
+        .section-vortex-fixtures {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .fixtures-carousel {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 24px;
+        }
+
+        .vortex-fixture-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            transition: all 0.3s var(--seam-curve);
+            overflow: hidden;
+        }
+
+        .vortex-fixture-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: var(--storm-orange);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 130, 43, 0.15);
+        }
+
+        .card-polar-weather {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-tech);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-bottom: 18px;
+        }
+
+        .weather-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(118, 187, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 999px;
+            color: var(--aurora-ice);
+        }
+
+        .vortex-match-title {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .vortex-match-title span.storm-accent {
+            color: var(--storm-orange);
+        }
+
+        .vortex-match-arena {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+
+        .vortex-card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 1px solid rgba(118, 187, 255, 0.12);
+        }
+
+        .vortex-ticket-link {
+            font-family: var(--font-head);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--storm-orange);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+
+        .vortex-ticket-link:hover {
+            color: #fff;
+        }
+
+        /* SECTION: 3D POLAR STARS ROSTER */
+        .section-vortex-roster {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .stars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 28px;
+        }
+
+        .star-tilt-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.4s var(--seam-curve), box-shadow 0.4s var(--seam-curve);
+        }
+
+        .star-tilt-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 25px rgba(118, 187, 255, 0.25);
+            border-color: var(--aurora-ice);
+        }
+
+        .star-photo-container {
+            height: 330px;
+            position: relative;
+            background: radial-gradient(circle at 50% 60%, rgba(118, 187, 255, 0.18) 0%, #11151C 75%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .star-photo-container img {
+            max-width: 95%;
+            height: 90%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.4s var(--seam-curve);
+        }
+
+        .star-tilt-card:hover .star-photo-container img {
+            transform: scale(1.05);
+        }
+
+        .star-glow-halo {
+            position: absolute;
+            bottom: -20px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245, 130, 43, 0.4) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .star-number-bubble {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(12, 14, 18, 0.85);
+            border: 1px solid var(--storm-orange);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-head);
+            font-size: 1.4rem;
+            font-weight: 700;
+            z-index: 3;
+            box-shadow: 0 0 12px rgba(245, 130, 43, 0.35);
+        }
+
+        .star-body {
+            padding: 24px;
+        }
+
+        .star-position {
+            font-family: var(--font-tech);
+            font-size: 0.72rem;
+            color: var(--aurora-cyan);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .star-name {
+            font-family: var(--font-head);
+            font-size: 1.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .star-bio {
+            font-size: 0.86rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .star-specs-line {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
+            padding-top: 12px;
+            border-top: 1px solid rgba(118, 187, 255, 0.12);
+        }
+
+        .star-specs-line span strong {
+            color: #fff;
+        }
+
+        /* SECTION: STANDINGS & POLAR FORTRESS */
+        .section-vortex-standings {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .vortex-standings-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 0.85fr;
+            gap: 36px;
+            align-items: start;
+        }
+
+        .vortex-table-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        .vortex-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-tech);
+            font-size: 0.88rem;
+        }
+
+        .vortex-table th {
+            text-align: center;
+            padding: 12px;
+            color: var(--text-dim);
+            font-weight: 600;
+            border-bottom: 2px solid var(--surface-glass-border);
+        }
+
+        .vortex-table th:first-child,
+        .vortex-table td:first-child {
+            text-align: left;
+            padding-left: 12px;
+        }
+
+        .vortex-table td {
+            padding: 14px 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(118, 187, 255, 0.08);
+        }
+
+        .vortex-table tr.storm-row {
+            background: rgba(245, 130, 43, 0.14);
+            border-radius: 12px;
+        }
+
+        .vortex-table tr.storm-row td {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .vortex-table tr.storm-row td:first-child {
+            color: var(--storm-orange);
+            font-family: var(--font-head);
+            font-size: 1.25rem;
+            letter-spacing: 0.03em;
+        }
+
+        .fortress-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 24px;
+            padding: 32px;
+            position: relative;
+        }
+
+        .fortress-header-title {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            color: var(--storm-orange);
+        }
+
+        .fortress-desc {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .fortress-perks {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .perk-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .perk-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(118, 187, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--aurora-cyan);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .perk-content h6 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .perk-content p {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+        }
+
+        /* FOOTER */
+        footer.aurora-footer {
+            background: #090B0E;
+            padding: 80px 0 30px;
+            border-top: 1px solid var(--surface-glass-border);
+            position: relative;
+        }
+
+        .footer-aurora-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--aurora-ice), var(--storm-orange), transparent);
+        }
+
+        .footer-cols-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand-title {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .footer-brand-p {
+            font-size: 0.92rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        .footer-nav-col h5 {
+            font-family: var(--font-head);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--storm-orange);
+            margin-bottom: 16px;
+        }
+
+        .footer-nav-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-nav-col a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-nav-col a:hover {
+            color: var(--aurora-ice);
+        }
+
+        .footer-bottom-copy {
+            border-top: 1px solid rgba(118, 187, 255, 0.1);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-tech);
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .hero-vortex-grid,
+            .result-cinematic-card,
+            .vortex-standings-grid,
+            .footer-cols-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-menu-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .radar-matchup-row {
+                grid-template-columns: 1fr;
+            }
+            .big-score-row {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            .big-score-num {
+                font-size: 4rem;
+            }
+            .hero-vortex-headline {
+                font-size: 3rem;
+            }
+            .glass-nav-pill {
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="aurora" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; opacity: 0.85;"></canvas>
+
+    <!-- Ambient Aurora Gradient Backdrop -->
+    <div class="aurora-backdrop">
+        <div class="aurora-blob blob-1"></div>
+        <div class="aurora-blob blob-2"></div>
+        <div class="aurora-blob blob-3"></div>
+    </div>
+
+    <!-- Floating Pill Header -->
+    <header class="aurora-header">
+        <div class="glass-nav-pill">
+            <a href="#" class="nav-brand-group">
+                <div class="brand-orb-logo">
+                    <img src="../assets/storm-logo.png" alt="Tromsø Storm" onerror="this.src='../assets/icons/storm-192.png'">
+                </div>
+                <div class="brand-titles">
+                    <span class="brand-name">Tromsø Storm</span>
+                    <span class="brand-latitude">69°N · POLAR COURT</span>
+                </div>
+            </a>
+
+            <ul class="nav-menu-links">
+                <li><a href="#hero" class="active">Vortex</a></li>
+                <li><a href="#resultat">Resultat</a></li>
+                <li><a href="#kamper">Kamper</a></li>
+                <li><a href="#spillere">Spillere</a></li>
+                <li><a href="#tabell">Tabell</a></li>
+            </ul>
+
+            <div class="nav-actions-right">
+                <button class="btn-atmosphere-toggle" id="atmoToggle" title="Endre atmosfære">
+                    <span id="atmoIcon">✨</span>
+                    <span id="atmoLabel">Nordlys</span>
+                </button>
+                <a href="#billetter" class="btn-ticket-pill">Billetter</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION: The Aurora Vortex -->
+        <section id="hero" class="hero-vortex">
+            <div class="vortex-container">
+                <div class="hero-vortex-grid">
+                    <!-- Left: Kinetic Typography & Copy -->
+                    <div class="hero-vortex-content">
+                        <div class="polar-tagline-chip">
+                            <span class="pulse-ring"></span>
+                            <span>ARKTISK BASKETBALL PÅ 69° NORD</span>
+                            <span style="background: rgba(49, 205, 207, 0.2); color: var(--aurora-cyan); padding: 2px 8px; border-radius: 999px; margin-left: 6px; font-weight: 700; font-size: 0.72rem; border: 1px solid var(--aurora-cyan);">⚡ AURORA 3D V2.1</span>
+                        </div>
+
+                        <h1 class="hero-vortex-headline">
+                            <span class="gradient-aurora">VÆRET STYRER</span><br>
+                            DU IKKE.<br>
+                            <span class="gradient-storm">KAMPEN VINNER VI.</span>
+                        </h1>
+
+                        <p class="hero-vortex-desc">
+                            Møt Tromsø Storm i den nye sesongen 2026/27. Raskere, hardere og mer sammensveiset enn noensinne under det arktiske polarlyset i Rødtindhallen.
+                        </p>
+
+                        <div class="hero-vortex-actions">
+                            <a href="#billetter" class="btn-aurora-main">
+                                <span>Sikre Sesongkort</span>
+                                &rarr;
+                            </a>
+                            <a href="#kamper" class="btn-aurora-ghost">
+                                <span>Terminliste</span>
+                            </a>
+                        </div>
+
+                        <!-- 3D Perspective Art Showcase Strip -->
+                        <div class="vortex-hero-art-strip" style="margin-top: 32px; display: flex; align-items: center; gap: 16px; background: rgba(23, 28, 36, 0.65); border: 1px solid var(--surface-glass-border); border-radius: 18px; padding: 14px 20px; backdrop-filter: blur(14px); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                            <img src="../assets/storm-vortex-art.svg" alt="Tromsø Storm Polar Crest" style="width: 72px; height: 72px; border-radius: 50%; box-shadow: 0 0 24px rgba(245, 130, 43, 0.5); flex-shrink: 0; border: 2px solid var(--storm-orange);">
+                            <div>
+                                <div style="font-family: var(--font-head); font-size: 1.15rem; color: var(--storm-orange); text-transform: uppercase; letter-spacing: 0.05em;">POLAR CREST & VORTEX EMBLEM</div>
+                                <div style="font-size: 0.82rem; color: var(--text-dim); line-height: 1.4;">Basketballsømmer & arktisk stormfront sammensmeltet under polarlyset på 69° Nord</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Polar Radar Countdown Card -->
+                    <div class="hero-vortex-right">
+                        <div class="polar-radar-card">
+                            <div class="seam-arc-decoration"></div>
+
+                            <div class="radar-top-row">
+                                <span class="radar-badge">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--aurora-cyan)"><circle cx="12" cy="12" r="10"/></svg>
+                                    NESTE HJEMMEKAMP
+                                </span>
+                                <span class="radar-arena">RØDTINDHALLEN</span>
+                            </div>
+
+                            <!-- Circular Radar Dial with 3D Interactive Rotating Basketball -->
+                            <div class="radar-dial-center">
+                                <div class="radar-dial-circle">
+                                    <canvas id="ball3d" width="160" height="160" style="position: absolute; border-radius: 50%; opacity: 0.95; cursor: grab; z-index: 2;"></canvas>
+                                    <div class="radar-sweep-ray"></div>
+                                    <span class="dial-time-digits" id="dialDaysLeft" style="position: relative; z-index: 3; text-shadow: 0 2px 10px rgba(0,0,0,0.9); pointer-events: none;">13</span>
+                                    <span class="dial-time-sub" style="position: relative; z-index: 3; background: rgba(12,14,18,0.75); padding: 2px 10px; border-radius: 999px; border: 1px solid rgba(245,130,43,0.3); pointer-events: none;">Dager Igjen</span>
+                                </div>
+                            </div>
+                            <div style="font-family: var(--font-tech); font-size: 0.72rem; color: var(--aurora-cyan); text-align: center; margin-top: 10px; opacity: 0.9; letter-spacing: 0.05em;">↻ INTERAKTIV 3D BALL · DRA FOR Å ROTERE</div>
+
+                            <div class="radar-matchup-row">
+                                <div class="radar-team storm">
+                                    <div class="radar-team-logo">
+                                        <img src="../assets/storm-logo.png" alt="Tromsø Storm">
+                                    </div>
+                                    <span class="radar-team-title">Storm</span>
+                                </div>
+
+                                <div class="radar-vs-symbol">VS</div>
+
+                                <div class="radar-team">
+                                    <div class="radar-team-logo">
+                                        <img src="../assets/opponents/froya.png" alt="Frøya Basket" onerror="this.src='../assets/storm-logo.png'">
+                                    </div>
+                                    <span class="radar-team-title">Frøya</span>
+                                </div>
+                            </div>
+
+                            <p style="text-align: center; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;">
+                                Fredag 18. september · Kl. 19:30 · Sesongåpning
+                            </p>
+
+                            <a href="#billetter" class="btn-reserve-seat" id="billetter">Kjøp Kampbillett Nå</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curved Seam Transition -->
+        <div class="seam-divider-wrap">
+            <svg viewBox="0 0 1440 90" fill="none" preserveAspectRatio="none">
+                <path d="M0,0 C480,90 960,90 1440,0 L1440,90 L0,90 Z" fill="rgba(17, 21, 28, 0.7)"/>
+            </svg>
+        </div>
+
+        <!-- SECTION: CINEMATIC LATEST RESULT -->
+        <section id="resultat" class="section-vortex-result" style="background: rgba(17, 21, 28, 0.7);">
+            <div class="vortex-container">
+                <div class="section-header-curved">
+                    <div>
+                        <h2 class="curved-title">Siste Kampresultat</h2>
+                        <p class="curved-subtitle">BLNO GRUNNSERIE · RØDTINDHALLEN</p>
+                    </div>
+                    <span style="font-family: var(--font-tech); font-size: 0.82rem; color: var(--storm-orange);">FULL TID · SEIER</span>
+                </div>
+
+                <div class="result-cinematic-card">
+                    <div class="score-cinematic-board">
+                        <div class="score-match-meta">
+                            <span>SISTE HJEMMEDUELL</span>
+                            <span>OFFISIELT KAMPBOK</span>
+                        </div>
+
+                        <div class="big-score-row">
+                            <div class="big-team-cell">
+                                <span class="big-team-name">Tromsø Storm</span>
+                                <span class="big-score-num">92</span>
+                            </div>
+
+                            <div class="score-dash-badge">SLUTT</div>
+
+                            <div class="big-team-cell">
+                                <span class="big-team-name">Kongsberg</span>
+                                <span class="big-score-num opponent">84</span>
+                            </div>
+                        </div>
+
+                        <!-- Quarters Flow Bar -->
+                        <div class="scoring-flow-bar">
+                            <div class="flow-quarter-step">
+                                <span class="step-label">1. KV</span>
+                                <span class="step-score storm-won">24 - 20</span>
+                            </div>
+                            <div class="flow-quarter-step">
+                                <span class="step-label">2. KV</span>
+                                <span class="step-score storm-won">21 - 18</span>
+                            </div>
+                            <div class="flow-quarter-step">
+                                <span class="step-label">3. KV</span>
+                                <span class="step-score">25 - 24</span>
+                            </div>
+                            <div class="flow-quarter-step">
+                                <span class="step-label">4. KV</span>
+                                <span class="step-score">22 - 22</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spotlight MVP Player -->
+                    <div class="spotlight-player-wrap">
+                        <div class="spotlight-photo-orb">
+                            <img src="../assets/players/grant-sitton.png" alt="Grant Sitton" onerror="this.src='../assets/players/johannes-rydningen-lange.jpg'">
+                        </div>
+                        <div class="spotlight-details">
+                            <span class="spotlight-role">KAMPENS PROFIL · #0</span>
+                            <h3 class="spotlight-name">Grant Sitton</h3>
+                            <p style="font-size: 0.82rem; color: var(--text-dim);">Amerikaneren storspilte med 5 trepoengere og dominerte returrommet.</p>
+                            <div class="spotlight-stat-chips">
+                                <span class="stat-chip"><strong>28</strong> PTS</span>
+                                <span class="stat-chip"><strong>11</strong> REB</span>
+                                <span class="stat-chip"><strong>4</strong> AST</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curved Seam Transition -->
+        <div class="seam-divider-wrap">
+            <svg viewBox="0 0 1440 90" fill="none" preserveAspectRatio="none">
+                <path d="M0,90 C480,0 960,0 1440,90 L1440,0 L0,0 Z" fill="rgba(17, 21, 28, 0.7)"/>
+            </svg>
+        </div>
+
+        <!-- SECTION: VORTEX FIXTURES CAROUSEL -->
+        <section id="kamper" class="section-vortex-fixtures">
+            <div class="vortex-container">
+                <div class="section-header-curved">
+                    <div>
+                        <h2 class="curved-title">Neste Kamper</h2>
+                        <p class="curved-subtitle">TERMINLISTE HØST 2026</p>
+                    </div>
+                </div>
+
+                <div class="fixtures-carousel">
+                    <!-- Match 1 -->
+                    <div class="vortex-fixture-card">
+                        <div class="card-polar-weather">
+                            <span class="weather-chip">❄️ Nordlys varslet · -2°C</span>
+                            <span>HJEMME</span>
+                        </div>
+                        <h3 class="vortex-match-title">
+                            <span class="storm-accent">Storm</span> vs Frøya
+                        </h3>
+                        <p class="vortex-match-arena">Fredag 18. sep · Kl. 19:30 · Rødtindhallen</p>
+                        <div class="vortex-card-bottom">
+                            <span style="font-size: 0.85rem; color: var(--aurora-cyan);">Sesongpremiere</span>
+                            <a href="#billetter" class="vortex-ticket-link">Billetter &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Match 2 -->
+                    <div class="vortex-fixture-card">
+                        <div class="card-polar-weather">
+                            <span>✈️ 1 180 km reise</span>
+                            <span>BORTE</span>
+                        </div>
+                        <h3 class="vortex-match-title">
+                            Fyllingen vs <span class="storm-accent">Storm</span>
+                        </h3>
+                        <p class="vortex-match-arena">Lørdag 26. sep · Kl. 15:00 · Bergen</p>
+                        <div class="vortex-card-bottom">
+                            <span style="font-size: 0.85rem; color: var(--text-dim);">Fyllingsdalen Hall</span>
+                            <span class="vortex-ticket-link" style="color: var(--aurora-ice);">TV 2 Play</span>
+                        </div>
+                    </div>
+
+                    <!-- Match 3 -->
+                    <div class="vortex-fixture-card">
+                        <div class="card-polar-weather">
+                            <span>Bergen Dobbelt-helg</span>
+                            <span>BORTE</span>
+                        </div>
+                        <h3 class="vortex-match-title">
+                            Gimle vs <span class="storm-accent">Storm</span>
+                        </h3>
+                        <p class="vortex-match-arena">Søndag 27. sep · Kl. 15:00 · Gimlehallen</p>
+                        <div class="vortex-card-bottom">
+                            <span style="font-size: 0.85rem; color: var(--text-dim);">Bergen</span>
+                            <span class="vortex-ticket-link" style="color: var(--aurora-ice);">TV 2 Play</span>
+                        </div>
+                    </div>
+
+                    <!-- Match 4 -->
+                    <div class="vortex-fixture-card">
+                        <div class="card-polar-weather">
+                            <span class="weather-chip">🌪️ Stormvarsel i hallen</span>
+                            <span>HJEMME</span>
+                        </div>
+                        <h3 class="vortex-match-title">
+                            <span class="storm-accent">Storm</span> vs Bærum
+                        </h3>
+                        <p class="vortex-match-arena">Lørdag 03. okt · Kl. 15:00 · Rødtindhallen</p>
+                        <div class="vortex-card-bottom">
+                            <span style="font-size: 0.85rem; color: var(--aurora-cyan);">Toppkamp</span>
+                            <a href="#billetter" class="vortex-ticket-link">Billetter &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: 3D POLAR STARS ROSTER -->
+        <section id="spillere" class="section-vortex-roster" style="background: rgba(17, 21, 28, 0.4);">
+            <div class="vortex-container">
+                <div class="section-header-curved">
+                    <div>
+                        <h2 class="curved-title">Polar Stars</h2>
+                        <p class="curved-subtitle">SPILLERSTALLEN 2026/27</p>
+                    </div>
+                </div>
+
+                <div class="stars-grid">
+                    <!-- Player 1 -->
+                    <div class="star-tilt-card">
+                        <div class="star-photo-container">
+                            <div class="star-glow-halo"></div>
+                            <span class="star-number-bubble">0</span>
+                            <img src="../assets/players/grant-sitton.png" alt="Grant Sitton">
+                        </div>
+                        <div class="star-body">
+                            <span class="star-position">Forward · 206 cm</span>
+                            <h3 class="star-name">Grant Sitton</h3>
+                            <p class="star-bio">
+                                Ny signering fra USA og Saitama Broncos. Enorm rekkevidde og silkeskudd fra distanse.
+                            </p>
+                            <div class="star-specs-line">
+                                <span>Orig: <strong>USA</strong></span>
+                                <span>Årgang: <strong>1993</strong></span>
+                                <span>Rolle: <strong>Sharpshooter</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player 2 -->
+                    <div class="star-tilt-card">
+                        <div class="star-photo-container">
+                            <div class="star-glow-halo" style="background: radial-gradient(circle, rgba(118, 187, 255, 0.4) 0%, transparent 70%);"></div>
+                            <span class="star-number-bubble">4</span>
+                            <img src="../assets/players/johannes-rydningen-lange.jpg" alt="Johannes Lange">
+                        </div>
+                        <div class="star-body">
+                            <span class="star-position">Point Guard · 182 cm</span>
+                            <h3 class="star-name">Johannes Lange</h3>
+                            <p class="star-bio">
+                                Storms ubestridte feltgeneral og kaptein. Leder laget med hjertet og arktisk råskap.
+                            </p>
+                            <div class="star-specs-line">
+                                <span>Orig: <strong>Tromsø</strong></span>
+                                <span>Årgang: <strong>1998</strong></span>
+                                <span>Klubbår: <strong>12 år</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player 3 -->
+                    <div class="star-tilt-card">
+                        <div class="star-photo-container">
+                            <div class="star-glow-halo"></div>
+                            <span class="star-number-bubble">5</span>
+                            <img src="../assets/players/garrett-denbow.png" alt="Garrett Denbow" onerror="this.src='../assets/players/anders-solem.jpg'">
+                        </div>
+                        <div class="star-body">
+                            <span class="star-position">Guard · 196 cm</span>
+                            <h3 class="star-name">Garrett Denbow</h3>
+                            <p class="star-bio">
+                                Hurtig og atletisk amerikaner som tilfører eksplosiv scoring og perimeterforsvar.
+                            </p>
+                            <div class="star-specs-line">
+                                <span>Orig: <strong>USA</strong></span>
+                                <span>Årgang: <strong>2000</strong></span>
+                                <span>Rolle: <strong>Speed & Drive</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player 4 -->
+                    <div class="star-tilt-card">
+                        <div class="star-photo-container">
+                            <div class="star-glow-halo" style="background: radial-gradient(circle, rgba(49, 205, 207, 0.4) 0%, transparent 70%);"></div>
+                            <span class="star-number-bubble">11</span>
+                            <img src="../assets/players/anders-solem.jpg" alt="Anders Solem">
+                        </div>
+                        <div class="star-body">
+                            <span class="star-position">Forward · 202 cm</span>
+                            <h3 class="star-name">Anders Solem</h3>
+                            <p class="star-bio">
+                                Tromsø-kjempen under kurven. Uslåelig på returer, tøff i kroppen og lagets ryggrad.
+                            </p>
+                            <div class="star-specs-line">
+                                <span>Orig: <strong>Tromsø</strong></span>
+                                <span>Årgang: <strong>1997</strong></span>
+                                <span>Rolle: <strong>Enforcer</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: STANDINGS & POLAR FORTRESS -->
+        <section id="tabell" class="section-vortex-standings">
+            <div class="vortex-container">
+                <div class="section-header-curved">
+                    <div>
+                        <h2 class="curved-title">BLNO Tabell & Arena</h2>
+                        <p class="curved-subtitle">KAMPEN OM SLUTTSPILLPLASSENE</p>
+                    </div>
+                </div>
+
+                <div class="vortex-standings-grid">
+                    <!-- Glass Table -->
+                    <div class="vortex-table-card">
+                        <table class="vortex-table">
+                            <thead>
+                                <tr>
+                                    <th>Klubb</th>
+                                    <th>K</th>
+                                    <th>S</th>
+                                    <th>T</th>
+                                    <th>+/-</th>
+                                    <th>P</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="storm-row">
+                                    <td>1. Tromsø Storm</td>
+                                    <td>21</td>
+                                    <td>18</td>
+                                    <td>3</td>
+                                    <td>+272</td>
+                                    <td>36</td>
+                                </tr>
+                                <tr>
+                                    <td>2. Kongsberg Miners</td>
+                                    <td>21</td>
+                                    <td>16</td>
+                                    <td>5</td>
+                                    <td>+184</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>3. Fyllingen Lions</td>
+                                    <td>21</td>
+                                    <td>15</td>
+                                    <td>6</td>
+                                    <td>+169</td>
+                                    <td>30</td>
+                                </tr>
+                                <tr>
+                                    <td>4. Bærum Basket</td>
+                                    <td>21</td>
+                                    <td>12</td>
+                                    <td>9</td>
+                                    <td>+147</td>
+                                    <td>24</td>
+                                </tr>
+                                <tr>
+                                    <td>5. Gimle</td>
+                                    <td>21</td>
+                                    <td>11</td>
+                                    <td>10</td>
+                                    <td>-18</td>
+                                    <td>22</td>
+                                </tr>
+                                <tr>
+                                    <td>6. Centrum Tigers</td>
+                                    <td>21</td>
+                                    <td>10</td>
+                                    <td>11</td>
+                                    <td>+28</td>
+                                    <td>20</td>
+                                </tr>
+                                <tr>
+                                    <td>7. Frøya Basket</td>
+                                    <td>21</td>
+                                    <td>9</td>
+                                    <td>12</td>
+                                    <td>-84</td>
+                                    <td>18</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Fortress Rødtindhallen Card -->
+                    <div class="fortress-card">
+                        <h4 class="fortress-header-title">Ishavsfestningen</h4>
+                        <p class="fortress-desc">
+                            Rødtindhallen på Kvaløya er en av Norges mest beryktede bortebaner. Med arktisk supportertrykk og et vanvittig hjemmepublikum skaper vi en ekte storm.
+                        </p>
+
+                        <div class="fortress-perks">
+                            <div class="perk-item">
+                                <div class="perk-icon">🚌</div>
+                                <div class="perk-content">
+                                    <h6>Supporterbuss fra Sentrum</h6>
+                                    <p>Gratis transport for alle med gyldig kampbillett.</p>
+                                </div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">☕</div>
+                                <div class="perk-content">
+                                    <h6>Varm Storm-Kiosk & Merch</h6>
+                                    <p>Kaffe, ferske vafler og offisielle Storm-drakter.</p>
+                                </div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">🎟️</div>
+                                <div class="perk-content">
+                                    <h6>Digitale Billetter</h6>
+                                    <p>Skann rett fra mobilen ved inngang A og B.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="#billetter" class="btn-aurora-main" style="width: 100%; text-align: center; justify-content: center;">
+                            Kjøp Billett til Rødtindhallen
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="aurora-footer">
+        <div class="footer-aurora-glow"></div>
+        <div class="vortex-container">
+            <div class="footer-cols-grid">
+                <div>
+                    <h4 class="footer-brand-title">Tromsø Storm</h4>
+                    <p class="footer-brand-p">
+                        BLNO Basketball på toppen av verden. Uvær fra nord siden 1980-tallet. Stolthet, samhold og rå kraft i mørketiden og under midnattssola.
+                    </p>
+                </div>
+
+                <div class="footer-nav-col">
+                    <h5>Hurtiglenker</h5>
+                    <ul>
+                        <li><a href="#hero">Vortex Forside</a></li>
+                        <li><a href="#kamper">Terminliste 26/27</a></li>
+                        <li><a href="#resultat">Siste Kampresultat</a></li>
+                        <li><a href="#spillere">Spillere & Trenere</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-nav-col">
+                    <h5>Opplev Kampen</h5>
+                    <ul>
+                        <li><a href="#billetter">Billetter & Priser</a></li>
+                        <li><a href="#billetter">Sesongkort</a></li>
+                        <li><a href="#">Besøk Rødtindhallen</a></li>
+                        <li><a href="#">Arrangementsregler</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-nav-col">
+                    <h5>Hovedpartnere</h5>
+                    <ul>
+                        <li><a href="#">SpareBank 1 Nord-Norge</a></li>
+                        <li><a href="#">Extra</a></li>
+                        <li><a href="#">Jekta Storsenter</a></li>
+                        <li><a href="#">Hermes</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom-copy">
+                <span>&copy; 2026 Tromsø Storm Basketball · Org.nr. 886 210 752</span>
+                <span>69.6492° N, 18.9553° E · TROMSØ</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Atmosphere Switcher and Countdown -->
+    <script>
+        // Atmosphere Switcher
+        const atmoBtn = document.getElementById('atmoToggle');
+        const atmoIcon = document.getElementById('atmoIcon');
+        const atmoLabel = document.getElementById('atmoLabel');
+        let isStormSurge = false;
+
+        atmoBtn.addEventListener('click', () => {
+            isStormSurge = !isStormSurge;
+            if (isStormSurge) {
+                document.body.classList.add('mode-storm-surge');
+                atmoIcon.textContent = '⚡';
+                atmoLabel.textContent = 'Storm Surge';
+            } else {
+                document.body.classList.remove('mode-storm-surge');
+                atmoIcon.textContent = '✨';
+                atmoLabel.textContent = 'Nordlys';
+            }
+        });
+
+        // Countdown calculation for radar dial
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 13);
+        targetDate.setHours(19, 30, 0, 0);
+
+        function updateRadarCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('dialDaysLeft').textContent = String(days);
+            }
+        }
+        updateRadarCountdown();
+
+        // 3D Rotating Basketball Canvas Renderer with Interactive Drag & Momentum
+        (function() {
+            const canvas = document.getElementById('ball3d');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const radius = width * 0.45;
+            const cx = width / 2;
+            const cy = height / 2;
+            let angleY = 0;
+            let angleX = 0.25;
+            let isDragging = false;
+            let lastX = 0;
+            let dragVelocity = 0;
+
+            // Interactive Drag Controls
+            canvas.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                lastX = e.clientX;
+                dragVelocity = 0;
+                canvas.style.cursor = 'grabbing';
+            });
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const dx = e.clientX - lastX;
+                dragVelocity = dx * 0.025;
+                angleY += dragVelocity;
+                lastX = e.clientX;
+            });
+            window.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    canvas.style.cursor = 'grab';
+                }
+            });
+
+            // Touch Support for Mobile / Tablet
+            canvas.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 0) {
+                    isDragging = true;
+                    lastX = e.touches[0].clientX;
+                    dragVelocity = 0;
+                }
+            }, { passive: true });
+            window.addEventListener('touchmove', (e) => {
+                if (!isDragging || e.touches.length === 0) return;
+                const dx = e.touches[0].clientX - lastX;
+                dragVelocity = dx * 0.025;
+                angleY += dragVelocity;
+                lastX = e.touches[0].clientX;
+            }, { passive: true });
+            window.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+
+            function renderBall() {
+                ctx.clearRect(0, 0, width, height);
+
+                // Spin physics: auto-rotation or decay momentum
+                if (isDragging) {
+                    // dragged manually
+                } else if (Math.abs(dragVelocity) > 0.001) {
+                    angleY += dragVelocity;
+                    dragVelocity *= 0.94; // damping
+                } else {
+                    angleY += 0.016; // constant gentle drift
+                }
+
+                // Shaded sphere base
+                const grad = ctx.createRadialGradient(cx - radius * 0.35, cy - radius * 0.38, radius * 0.08, cx, cy, radius);
+                grad.addColorStop(0, '#FFA861');
+                grad.addColorStop(0.5, '#F5822B');
+                grad.addColorStop(0.85, '#CB6417');
+                grad.addColorStop(1, '#4A1C03');
+
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+                ctx.fillStyle = grad;
+                ctx.fill();
+
+                // 3D Curved Seams
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+                ctx.clip();
+
+                ctx.strokeStyle = '#11151C';
+                ctx.lineWidth = 3.5;
+                ctx.lineCap = 'round';
+
+                // Vertical meridian seam (rotates with angleY)
+                ctx.beginPath();
+                const rotCos = Math.cos(angleY);
+                const rotSin = Math.sin(angleY);
+                ctx.ellipse(cx, cy, Math.max(2, Math.abs(radius * rotCos)), radius, 0, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Horizontal equator seam
+                ctx.beginPath();
+                ctx.ellipse(cx, cy, radius, Math.max(2, radius * 0.28), 0, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Curved side seams
+                ctx.beginPath();
+                const offset = radius * 0.5 * rotSin;
+                ctx.arc(cx + offset, cy, radius * 0.82, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(cx - offset, cy, radius * 0.82, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Specular glint
+                const glint = ctx.createRadialGradient(cx - radius * 0.32, cy - radius * 0.35, 0, cx - radius * 0.32, cy - radius * 0.35, radius * 0.45);
+                glint.addColorStop(0, 'rgba(255, 255, 255, 0.65)');
+                glint.addColorStop(0.4, 'rgba(255, 255, 255, 0.15)');
+                glint.addColorStop(1, 'transparent');
+                ctx.fillStyle = glint;
+                ctx.fill();
+
+                ctx.restore();
+
+                // Outer glow rim
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(245, 130, 43, 0.55)';
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+
+                requestAnimationFrame(renderBall);
+            }
+            renderBall();
+        })();
+    </script>
+    <script src="../assets/aurora-basketball-shader.js"></script>
+    <script>
+        if (window.AuroraBasketball) {
+            AuroraBasketball.mount('#aurora', { intensity: 1.15 });
+        }
+    </script>
+</body>
+</html>

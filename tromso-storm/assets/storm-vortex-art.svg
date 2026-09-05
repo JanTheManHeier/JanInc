@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
+  <title id="title">The Polar Storm Crest</title>
+  <desc id="desc">An angular basketball fortress emblem wrapped in polar wind, aurora energy, ice crystals and storm shears.</desc>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="62%">
+      <stop stop-color="#1D2430"/>
+      <stop offset=".55" stop-color="#11151C"/>
+      <stop offset="1" stop-color="#080A0E"/>
+    </radialGradient>
+    <radialGradient id="core" cx="34%" cy="28%" r="80%">
+      <stop stop-color="#FFB36C"/>
+      <stop offset=".42" stop-color="#F5822B"/>
+      <stop offset="1" stop-color="#A3460C"/>
+    </radialGradient>
+    <linearGradient id="ice" x1=".1" y1=".1" x2=".9" y2=".9">
+      <stop stop-color="#EDF1F7"/>
+      <stop offset=".35" stop-color="#76BBFF"/>
+      <stop offset=".72" stop-color="#31CDCF"/>
+      <stop offset="1" stop-color="#267E9B"/>
+    </linearGradient>
+    <linearGradient id="aurora" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#31CDCF"/>
+      <stop offset=".48" stop-color="#76BBFF"/>
+      <stop offset="1" stop-color="#9B51E0"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#46566B"/>
+      <stop offset=".4" stop-color="#1D2430"/>
+      <stop offset="1" stop-color="#080A0E"/>
+    </linearGradient>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="orangeGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feFlood flood-color="#F5822B" result="c"/>
+      <feComposite in="c" in2="b" operator="in" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="depth" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#000" flood-opacity=".85"/>
+    </filter>
+    <clipPath id="crestClip"><path d="M450 84 727 193l65 284c18 139-113 259-342 343-229-84-360-204-342-343l65-284Z"/></clipPath>
+    <clipPath id="ballClip"><circle cx="450" cy="427" r="183"/></clipPath>
+  </defs>
+
+  <rect width="900" height="900" fill="#0C0E12"/>
+  <circle cx="450" cy="445" r="384" fill="url(#bg)" stroke="#242D39" stroke-width="2"/>
+  <g opacity=".15" fill="none" stroke="#76BBFF">
+    <circle cx="450" cy="445" r="350"/><circle cx="450" cy="445" r="322"/>
+    <path d="M450 65v760M70 445h760M181 176l538 538M719 176 181 714"/>
+  </g>
+
+  <!-- Outer storm shears -->
+  <g fill="url(#steel)" stroke="#354355" stroke-width="3" filter="url(#depth)">
+    <path d="M79 354 244 264 147 380l111-15-178 92 66-68Z"/>
+    <path d="M821 354 656 264l97 116-111-15 178 92-66-68Z"/>
+    <path d="M133 586l155 18-131 45 93 43-178-24 80-32Z"/>
+    <path d="M767 586l-155 18 131 45-93 43 178-24-80-32Z"/>
+    <path d="M246 125l78 127-16-137 63 86-49-168-22 91Z"/>
+    <path d="M654 125l-78 127 16-137-63 86 49-168 22 91Z"/>
+  </g>
+  <g fill="#76BBFF" opacity=".55" filter="url(#glow)">
+    <path d="M79 354l165-90-130 103Z"/><path d="M821 354l-165-90 130 103Z"/>
+    <path d="M133 586l155 18-164 11Z"/><path d="M767 586l-155 18 164 11Z"/>
+  </g>
+
+  <!-- Crest fortress -->
+  <path d="M450 73 741 187l69 286c22 153-109 281-360 371C199 754 68 626 90 473l69-286Z" fill="#06080B" stroke="#F5822B" stroke-width="8" filter="url(#orangeGlow)"/>
+  <path d="M450 93 720 199l63 278c17 134-107 249-333 333-226-84-350-199-333-333l63-278Z" fill="url(#bg)" stroke="#3D4A5D" stroke-width="4"/>
+
+  <!-- Aurora vortex ribbons behind the core -->
+  <g clip-path="url(#crestClip)" fill="none" stroke-linecap="round" filter="url(#glow)">
+    <path d="M51 460c112-188 246-264 418-220s270 151 387 58" stroke="#31CDCF" stroke-width="22" opacity=".42"/>
+    <path d="M35 574c171 40 248-7 313-125s203-192 441-89" stroke="#76BBFF" stroke-width="14" opacity=".42"/>
+    <path d="M112 692c119-163 242-197 367-137s218 84 325-11" stroke="#9B51E0" stroke-width="20" opacity=".34"/>
+    <path d="M73 320c182 96 287 67 379-22s211-96 353 7" stroke="#F5822B" stroke-width="9" opacity=".28"/>
+  </g>
+
+  <!-- Angular polar crown -->
+  <path d="M223 295 301 171l48 84 101-139 101 139 48-84 78 124-45 68H268Z" fill="url(#steel)" stroke="#76BBFF" stroke-width="5"/>
+  <path d="M278 297l34-54 39 61 99-137 99 137 39-61 34 54-20 28H298Z" fill="#11151C"/>
+  <path d="M450 167v156M351 255l45 68M549 255l-45 68" fill="none" stroke="url(#ice)" stroke-width="7" filter="url(#glow)"/>
+
+  <!-- Basketball storm core -->
+  <circle cx="450" cy="427" r="205" fill="#F5822B" opacity=".14" filter="url(#orangeGlow)"/>
+  <circle cx="450" cy="427" r="183" fill="url(#core)" stroke="#FFAE64" stroke-width="6" filter="url(#depth)"/>
+  <g clip-path="url(#ballClip)" fill="none" stroke="#572306" stroke-width="13">
+    <path d="M267 397c119 4 233 55 325 154"/>
+    <path d="M309 299c92 70 133 156 123 311"/>
+    <path d="M564 276c-92 76-137 168-121 334"/>
+    <path d="M281 485c91-59 197-73 337-42"/>
+  </g>
+  <g clip-path="url(#ballClip)" fill="none" stroke="#FFB778" stroke-width="3" opacity=".55">
+    <path d="M275 390c120 6 237 58 328 158"/>
+    <path d="M557 269c-94 76-142 171-125 341"/>
+  </g>
+
+  <!-- Vortex eye cut -->
+  <path d="M334 443c45-81 142-118 225-72-28 2-57 17-75 39 52-15 105 3 135 47-55-27-112-14-147 26 19-2 43 7 57 22-82 8-157-12-195-62Z" fill="#0C0E12"/>
+  <path d="M354 438c50-56 123-78 187-53-43 8-78 32-96 65 43-16 91-10 128 16-57-10-109 9-139 48 3-22-5-45-23-61-18-16-38-20-57-15Z" fill="url(#aurora)" opacity=".9" filter="url(#glow)"/>
+  <path d="M393 440c30-31 76-42 115-27-32 8-56 29-66 56 26-12 57-10 81 4-34 0-64 15-82 41 1-21-16-50-48-74Z" fill="#EDF1F7" opacity=".9"/>
+
+  <!-- Snow crystal anchors -->
+  <g fill="none" stroke="url(#ice)" stroke-width="7" stroke-linecap="round" filter="url(#glow)">
+    <g transform="translate(224 514)">
+      <path d="M0-53V53M-46-27l92 54M-46 27l92-54"/>
+      <path d="m0-53-12 16M0-53l12 16M46 27l-20-2M46 27l-8-18M-46 27l20-2M-46 27l8-18"/>
+    </g>
+    <g transform="translate(676 514)">
+      <path d="M0-53V53M-46-27l92 54M-46 27l92-54"/>
+      <path d="m0-53-12 16M0-53l12 16M46 27l-20-2M46 27l-8-18M-46 27l20-2M-46 27l8-18"/>
+    </g>
+  </g>
+
+  <!-- Lower fortress blades -->
+  <path d="M198 609l112 18 140 144 140-144 112-18-57 112-195 93-195-93Z" fill="#11151C" stroke="#F5822B" stroke-width="6"/>
+  <path d="M245 637l75 12 130 122 130-122 75-12-33 58-172 82-172-82Z" fill="url(#steel)"/>
+  <path d="M450 771V646m0 0-54 70m54-70 54 70" fill="none" stroke="#76BBFF" stroke-width="5" opacity=".7"/>
+
+  <!-- Wind speed ticks -->
+  <g stroke="#EDF1F7" stroke-width="5" opacity=".55">
+    <path d="M129 438h52M139 413h29M719 438h52M732 413h29"/>
+    <path d="M187 700l39-30M713 700l-39-30"/>
+  </g>
+  <g font-family="Arial Black, sans-serif" text-anchor="middle">
+    <text x="450" y="585" fill="#EDF1F7" font-size="42" letter-spacing="10">POLAR STORM</text>
+    <text x="450" y="620" fill="#F5822B" font-size="18" letter-spacing="8">TROMSØ • 69° NORTH</text>
+  </g>
+</svg>

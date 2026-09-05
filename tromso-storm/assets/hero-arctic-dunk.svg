@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Arctic basketball slam dunk above Tromsø</title>
+  <desc id="desc">A silhouetted player erupts through a mountain peak toward a glowing hoop beneath aurora curtains, stars, lightning, tactical vectors and basketball seam arcs.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.84" y2="1">
+      <stop offset="0" stop-color="#05070B"/>
+      <stop offset="0.46" stop-color="#0C0E12"/>
+      <stop offset="1" stop-color="#111D2C"/>
+    </linearGradient>
+    <radialGradient id="stormEye" cx="64%" cy="34%" r="55%">
+      <stop offset="0" stop-color="#76BBFF" stop-opacity=".2"/>
+      <stop offset=".34" stop-color="#9B51E0" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#0C0E12" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="auroraCyan" x1="0" y1="0" x2="1" y2=".3">
+      <stop offset="0" stop-color="#31CDCF" stop-opacity="0"/>
+      <stop offset=".25" stop-color="#31CDCF" stop-opacity=".72"/>
+      <stop offset=".58" stop-color="#76BBFF" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#31CDCF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="auroraViolet" x1="0" y1=".2" x2="1" y2=".8">
+      <stop offset="0" stop-color="#9B51E0" stop-opacity="0"/>
+      <stop offset=".43" stop-color="#9B51E0" stop-opacity=".64"/>
+      <stop offset=".72" stop-color="#31CDCF" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#9B51E0" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="mountain" x1=".48" y1="0" x2=".5" y2="1">
+      <stop offset="0" stop-color="#2B3544"/>
+      <stop offset=".42" stop-color="#171C24"/>
+      <stop offset="1" stop-color="#080A0E"/>
+    </linearGradient>
+    <linearGradient id="iceFace" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#76BBFF" stop-opacity=".7"/>
+      <stop offset=".5" stop-color="#EDF1F7" stop-opacity=".1"/>
+      <stop offset="1" stop-color="#31CDCF" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="ball" cx="35%" cy="28%" r="75%">
+      <stop offset="0" stop-color="#FFB56E"/>
+      <stop offset=".42" stop-color="#F5822B"/>
+      <stop offset="1" stop-color="#9B450E"/>
+    </radialGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#CB6417"/>
+      <stop offset=".48" stop-color="#FFAA5C"/>
+      <stop offset="1" stop-color="#F5822B"/>
+    </linearGradient>
+    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="14" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hardGlow" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur stdDeviation="4" result="b1"/>
+      <feGaussianBlur stdDeviation="12" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="orangeGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feFlood flood-color="#F5822B" flood-opacity=".8" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#000" flood-opacity=".8"/>
+    </filter>
+    <pattern id="grain" width="120" height="120" patternUnits="userSpaceOnUse">
+      <circle cx="14" cy="18" r=".8" fill="#EDF1F7" opacity=".12"/>
+      <circle cx="72" cy="42" r=".55" fill="#76BBFF" opacity=".14"/>
+      <circle cx="103" cy="91" r=".7" fill="#EDF1F7" opacity=".09"/>
+      <circle cx="39" cy="109" r=".45" fill="#31CDCF" opacity=".12"/>
+    </pattern>
+    <clipPath id="ballClip"><circle cx="811" cy="214" r="43"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#sky)"/>
+  <rect width="1200" height="900" fill="url(#stormEye)"/>
+  <rect width="1200" height="900" fill="url(#grain)"/>
+
+  <!-- Arctic coordinate grid -->
+  <g fill="none" stroke="#76BBFF" stroke-width="1" opacity=".09">
+    <path d="M-80 710Q600 370 1280 710"/>
+    <path d="M-45 766Q600 425 1245 766"/>
+    <path d="M18 824Q600 500 1182 824"/>
+    <path d="M600 900V393M430 900L534 410M770 900L666 410M235 900L466 432M965 900L734 432"/>
+  </g>
+
+  <!-- Aurora curtains -->
+  <g filter="url(#softGlow)">
+    <path d="M-90 101C101 5 201 184 370 106S676 13 849 105s258 69 431-12C1094 199 975 234 833 187S581 106 399 200 89 242-90 327Z" fill="url(#auroraCyan)" opacity=".76"/>
+    <path d="M-80 36C114 202 284 24 435 125s245 142 382 33 252-118 463 20v177c-188-128-299 28-433 27s-245-186-421-100S96 370-80 249Z" fill="url(#auroraViolet)" opacity=".58"/>
+    <path d="M32 0c164 113 199 67 312 111s149 162 289 87 261-169 502-71" fill="none" stroke="#31CDCF" stroke-width="8" opacity=".28"/>
+    <path d="M108 0c114 150 229 46 342 139s193 79 290 2 220-87 369 20" fill="none" stroke="#9B51E0" stroke-width="5" opacity=".2"/>
+  </g>
+
+  <!-- Stars and atmospheric sparks -->
+  <g fill="#EDF1F7">
+    <circle cx="91" cy="123" r="2"/><circle cx="157" cy="264" r="1.4" opacity=".65"/>
+    <circle cx="259" cy="76" r="1.8"/><circle cx="340" cy="225" r="1.2" opacity=".7"/>
+    <circle cx="461" cy="61" r="2.4"/><circle cx="535" cy="155" r="1.3"/>
+    <circle cx="675" cy="74" r="1.5"/><circle cx="744" cy="136" r="2.1"/>
+    <circle cx="927" cy="69" r="1.8"/><circle cx="1044" cy="172" r="2.3"/>
+    <circle cx="1130" cy="93" r="1.2"/><circle cx="1115" cy="306" r="1.5"/>
+  </g>
+  <g fill="#76BBFF" filter="url(#hardGlow)">
+    <path d="M191 173h20M201 163v20" stroke="#76BBFF" stroke-width="2"/>
+    <path d="M969 231h16M977 223v16" stroke="#76BBFF" stroke-width="1.5"/>
+    <circle cx="635" cy="260" r="2.6"/><circle cx="1075" cy="387" r="2"/>
+  </g>
+
+  <!-- Storm lightning -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#hardGlow)">
+    <path d="M1091 67l-56 100 36-11-76 123 30-84-42 13 65-141" stroke="#76BBFF" stroke-width="5"/>
+    <path d="M118 262l48 61-28 5 59 76-31-58 31-5-57-79" stroke="#31CDCF" stroke-width="3" opacity=".8"/>
+    <path d="M936 322l-23 46 18-6-29 54" stroke="#9B51E0" stroke-width="2" opacity=".8"/>
+  </g>
+
+  <!-- Tactical chalk vectors -->
+  <g fill="none" stroke="#EDF1F7" stroke-linecap="round" opacity=".32">
+    <path d="M83 535c63-82 131-108 214-93" stroke-width="3" stroke-dasharray="9 13"/>
+    <path d="M281 431l18 11-20 8" stroke-width="3"/>
+    <circle cx="109" cy="533" r="12" stroke-width="2"/><path d="M100 524l18 18m0-18l-18 18" stroke-width="2"/>
+    <path d="M964 509c73 15 118 56 137 119" stroke-width="3" stroke-dasharray="7 12"/>
+    <path d="M1092 607l10 23-23-7" stroke-width="3"/>
+    <path d="M330 340l14-14m-14 0l14 14M1054 448l14-14m-14 0l14 14" stroke-width="2"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="3" fill="#76BBFF" opacity=".55">
+    <text x="78" y="491">69°N / ATTACK VECTOR</text>
+    <text x="949" y="481">STORM PRESS 01</text>
+  </g>
+
+  <!-- Basketball orbital seams -->
+  <g fill="none" stroke="#F5822B" opacity=".22" filter="url(#orangeGlow)">
+    <path d="M-47 609C271 356 835 344 1243 589" stroke-width="3"/>
+    <path d="M58 742C380 481 872 466 1150 716" stroke-width="2"/>
+    <path d="M232 876C453 567 764 549 1000 871" stroke-width="2" stroke-dasharray="12 18"/>
+  </g>
+
+  <!-- Tromsø mountain fortress -->
+  <path d="M-30 900V777l103-64 85 15 90-86 70 24 83-122 67 30 125-210 71 91 40-36 83 131 72-45 97 133 58-19 90 105 126 66v110Z" fill="#080A0E" opacity=".55"/>
+  <path d="M-30 900V815l128-91 88 29 90-81 65 23 77-116 72 28 114-202 73 94 39-37 88 145 71-42 91 124 74-17 75 87 115 58v83Z" fill="url(#mountain)" filter="url(#shadow)"/>
+  <path d="M584 405l-38 136 44-29 20 106 47-119Z" fill="#EDF1F7" opacity=".75"/>
+  <path d="M584 405l-94 202 82-57-38 182 108-189 15-44Z" fill="url(#iceFace)" opacity=".65"/>
+  <path d="M418 579l-77 116 68-25-21 105 89-168Z" fill="#76BBFF" opacity=".18"/>
+  <path d="M804 607l-88-145 31 139 38-19 53 111Z" fill="#9B51E0" opacity=".12"/>
+  <g fill="none" stroke="#76BBFF" stroke-width="2" opacity=".22">
+    <path d="M98 724l46 93 42-64 71 127M341 695l48 80 81-168 55 293M657 499l38 167 90-84 77 318M936 689l44 92 60-29 65 148"/>
+  </g>
+
+  <!-- Impact eruption -->
+  <g filter="url(#hardGlow)">
+    <path d="M572 608l-57 138 82-99 7 165 35-167 54 111-25-151Z" fill="#31CDCF" opacity=".2"/>
+    <path d="M591 604l-27 83 41-49 5 101 20-101 31 58-15-96Z" fill="#EDF1F7" opacity=".36"/>
+  </g>
+  <g fill="#76BBFF" opacity=".75">
+    <path d="M509 590l9 27-22 13 32 1-2 34 19-31 25 18-14-36 22-24-34 12Z"/>
+    <path d="M681 587l-5 24 21 10-27 4 5 29-19-24-19 17 8-31-21-19 29 8Z"/>
+  </g>
+
+  <!-- Player silhouette, airborne -->
+  <g fill="#07090D" stroke="#202A37" stroke-width="3" stroke-linejoin="round" filter="url(#shadow)">
+    <circle cx="666" cy="314" r="39"/>
+    <path d="M636 347c-30 24-48 63-48 109l8 91 53 43 39-34-27-55 18-104 66-61-17-30-86 52Z"/>
+    <!-- Dunking arm -->
+    <path d="M682 369l51-47 43-88 31 10-26 105-72 86Z"/>
+    <!-- Balance arm -->
+    <path d="M609 388l-62 58-63 17-8-27 57-31 61-78Z"/>
+    <!-- Rear leg -->
+    <path d="M612 532l-25 93-92 93 21 29 122-90 39-102Z"/>
+    <!-- Driving leg -->
+    <path d="M658 532l43 81 94 39-9 38-124-26-77-90Z"/>
+  </g>
+  <!-- Ice rim light on player -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M641 280c-17 7-27 22-29 39M639 351c-28 27-39 65-36 104M604 544l-9 62-88 111" stroke="#76BBFF" stroke-width="6" opacity=".85" filter="url(#hardGlow)"/>
+    <path d="M685 370l53-45 40-87" stroke="#F5822B" stroke-width="5" opacity=".9" filter="url(#orangeGlow)"/>
+    <path d="M666 536l42 68 82 36" stroke="#9B51E0" stroke-width="4" opacity=".65" filter="url(#hardGlow)"/>
+  </g>
+  <path d="M633 382c17-12 42-16 62-4l-20 93-75-17c2-34 11-57 33-72Z" fill="#11151C"/>
+  <path d="M636 385l23 12 25-11-10 75-63-14c2-25 8-47 25-62Z" fill="#1D2430"/>
+  <text x="634" y="440" transform="rotate(11 634 440)" fill="#F5822B" font-family="Arial Black, sans-serif" font-size="34" font-weight="900">69</text>
+
+  <!-- Ball -->
+  <circle cx="811" cy="214" r="49" fill="#F5822B" opacity=".22" filter="url(#orangeGlow)"/>
+  <circle cx="811" cy="214" r="43" fill="url(#ball)" stroke="#FFB56E" stroke-width="2"/>
+  <g clip-path="url(#ballClip)" fill="none" stroke="#552208" stroke-width="4">
+    <path d="M768 201c34 9 60 32 76 63M779 175c20 24 30 51 26 82M844 174c-36 17-58 42-70 75M768 218c28-9 54-10 85-2"/>
+  </g>
+  <path d="M780 238c14 12 28 18 45 18" fill="none" stroke="#FFCA96" stroke-width="2" opacity=".5"/>
+
+  <!-- Hoop and backboard -->
+  <g filter="url(#shadow)">
+    <path d="M827 135h226v153H827Z" fill="#EDF1F7" fill-opacity=".045" stroke="#76BBFF" stroke-width="5"/>
+    <path d="M877 176h108v69H877Z" fill="none" stroke="#EDF1F7" stroke-width="4" opacity=".72"/>
+    <path d="M1053 142l62-34v245" fill="none" stroke="#323E4F" stroke-width="16"/>
+    <path d="M817 260c46 14 100 14 154 0" fill="none" stroke="url(#rim)" stroke-width="11" stroke-linecap="round" filter="url(#orangeGlow)"/>
+    <path d="M823 265l17 93m23-88 9 103m22-102 9 102m22-103 9 88M840 358l32 15 31 0 31-15M836 323l34 17 34 0 34-17" fill="none" stroke="#EDF1F7" stroke-width="2.5" opacity=".72"/>
+  </g>
+
+  <!-- Foreground shards and title marks -->
+  <g fill="#EDF1F7">
+    <path d="M457 651l-15 67 28-40Z" opacity=".5"/><path d="M719 637l24 78-4-72Z" opacity=".4"/>
+    <path d="M384 708l-7 41 17-30Z" opacity=".28"/><path d="M814 719l26 52-10-58Z" opacity=".3"/>
+  </g>
+  <g transform="translate(72 760)">
+    <path d="M0 0h7v71H0z" fill="#F5822B"/>
+    <text x="25" y="27" fill="#EDF1F7" font-family="Arial Black, sans-serif" font-size="31" font-weight="900" letter-spacing="5">AURORA STORM COURT</text>
+    <text x="26" y="57" fill="#76BBFF" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="7">TROMSØ • 69°N • BLNO</text>
+  </g>
+</svg>
