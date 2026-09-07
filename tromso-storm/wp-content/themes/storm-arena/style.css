@@ -1403,11 +1403,60 @@ textarea {
 }
 
 .venue-address p,
+.venue-gallery .section-head p,
 .venue-facts p,
 .venue-route-grid p,
 .venue-checklist p,
 .venue-contact p {
     color: var(--storm-text-muted);
+}
+
+.venue-gallery {
+    padding-bottom: 72px;
+}
+
+.venue-gallery__grid {
+    display: grid;
+    grid-template-columns: minmax(280px, .8fr) repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.venue-gallery figure {
+    position: relative;
+    min-height: 240px;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--storm-border-strong);
+    border-radius: var(--storm-radius);
+    background: var(--storm-bg-elevated);
+}
+
+.venue-gallery__feature {
+    grid-row: span 2;
+}
+
+.venue-gallery img {
+    width: 100%;
+    height: 100%;
+    min-height: 240px;
+    object-fit: cover;
+    transition: transform .35s ease;
+}
+
+.venue-gallery figure:hover img {
+    transform: scale(1.025);
+}
+
+.venue-gallery figcaption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 40px 18px 16px;
+    background: linear-gradient(transparent, rgba(5, 7, 10, .92));
+    color: var(--storm-white);
+    font-size: .88rem;
+    font-weight: 700;
 }
 
 .venue-facts {
@@ -2266,8 +2315,15 @@ body.admin-bar .site-header {
     }
 
     .venue-facts,
-    .venue-route-grid {
+    .venue-route-grid,
+    .venue-gallery__grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .venue-gallery__feature {
+        grid-column: span 2;
+        grid-row: auto;
+        aspect-ratio: 16 / 9;
     }
 
     .partner-levels {
@@ -2456,8 +2512,14 @@ body.admin-bar .site-header {
     .partner-value-grid,
     .venue-facts,
     .venue-route-grid,
-    .venue-checklist {
+    .venue-checklist,
+    .venue-gallery__grid {
         grid-template-columns: 1fr;
+    }
+
+    .venue-gallery__feature {
+        grid-column: auto;
+        aspect-ratio: 4 / 3;
     }
 
     .social-card {
