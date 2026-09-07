@@ -206,6 +206,14 @@ def rewrite_document(
         source_origin.replace("/", r"\/"),
         public_prefix.rstrip("/").replace("/", r"\/"),
     )
+    document = document.replace(
+        '"/en/#',
+        f'"{public_prefix.rstrip("/")}/en/#',
+    )
+    document = document.replace(
+        "'/en/#",
+        f"'{public_prefix.rstrip('/')}/en/#",
+    )
     for asset_root in ("/wp-content/", "/wp-includes/"):
         document = document.replace(
             f'"{asset_root}',

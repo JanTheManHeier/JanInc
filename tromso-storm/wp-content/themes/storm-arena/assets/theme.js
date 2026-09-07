@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const isEnglish = document.documentElement.lang.startsWith('en');
+    const isEnglish = window.location.pathname === '/en' || window.location.pathname.startsWith('/en/');
     const labels = isEnglish
         ? {
             showNext: 'Show the next six ↑',
@@ -13,27 +13,18 @@ document.addEventListener('DOMContentLoaded', () => {
             copied: 'Kopiert',
             iosInstall: 'På iPhone: åpne Del-menyen og velg «Legg til på Hjem-skjerm».',
         };
-    const rodtindhallenMapUrl = 'https://www.google.com/maps/search/?api=1&query=69.68730591004379%2C18.791627726316968';
-
-    document.querySelectorAll('.venue, .game-meta > span').forEach((venue) => {
-        if (venue.textContent.trim() !== 'Rødtindhallen') {
-            return;
-        }
-
-        const link = document.createElement('a');
-        link.className = venue.className;
-        link.href = rodtindhallenMapUrl;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.textContent = venue.textContent;
-        link.setAttribute('aria-label', isEnglish
-            ? 'Open Rødtindhallen in Google Maps'
-            : 'Åpne Rødtindhallen i Google Maps');
-        venue.replaceWith(link);
-    });
-
     const menuButton = document.querySelector('.menu-button');
     const navigation = document.querySelector('.site-nav');
+    const focusSection = (target) => {
+        if (target instanceof HTMLElement) {
+            if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+            target.focus({ preventScroll: true });
+        }
+    };
+
+    document.querySelector('.skip-link')?.addEventListener('click', () => {
+        focusSection(document.getElementById('main-content'));
+    });
 
     if (menuButton && navigation) {
         const closeMenu = () => {
@@ -44,11 +35,33 @@ document.addEventListener('DOMContentLoaded', () => {
         menuButton.addEventListener('click', () => {
             const open = navigation.classList.toggle('open');
             menuButton.setAttribute('aria-expanded', String(open));
+            if (open) {
+                navigation.querySelector('a')?.focus();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && navigation.classList.contains('open')) {
+                closeMenu();
+                menuButton.focus();
+            }
+        });
+
+        document.addEventListener('focusin', (event) => {
+            if (navigation.classList.contains('open') && event.target !== menuButton && !navigation.contains(event.target)) {
+                closeMenu();
+            }
         });
 
         navigation.addEventListener('click', (event) => {
-            if (event.target instanceof HTMLElement && event.target.closest('a')) {
+            const link = event.target instanceof Element ? event.target.closest('a') : null;
+            if (link instanceof HTMLAnchorElement) {
                 closeMenu();
+                const url = new URL(link.href);
+                const target = url.origin === location.origin && url.pathname === location.pathname && url.hash
+                    ? document.getElementById(decodeURIComponent(url.hash.slice(1)))
+                    : null;
+                focusSection(target);
             }
         });
     }
