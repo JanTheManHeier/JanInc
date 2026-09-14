@@ -284,10 +284,33 @@
       font-size: 1.1rem;
     }
 
+    .card p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
     .card-meta {
       margin-bottom: 16px;
       color: var(--muted);
       font-size: 0.87rem;
+    }
+
+    .info-list {
+      margin: 14px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .info-list li {
+      line-height: 1.45;
+    }
+
+    .info-list li + li {
+      margin-top: 7px;
     }
 
     .time {
@@ -611,12 +634,12 @@
 
     <main>
       <section class="hero">
-        <div class="eyebrow">Uke 37 · 7.–11. september</div>
-        <h1>Ny skoleuke, Olivia!</h1>
-        <p>Timeplan, nasjonale prøver, studietid og faglig innhold ved NTG Ungdomsskole Tromsø.</p>
+        <div class="eyebrow">Uke 38–39 · 14.–25. september</div>
+        <h1>To nye skoleuker, Olivia!</h1>
+        <p>Timeplan, MOT-økt, framføring, studietid og faglig innhold ved NTG Ungdomsskole Tromsø.</p>
         <div class="alert">
-          <strong>Nasjonale prøver denne uka</strong>
-          Matematikk tirsdag 8. september og engelsk fredag 11. september. Ved fravær gjennomføres prøven på et senere tidspunkt.
+          <strong>Viktig i uke 38</strong>
+          Framføring av rytmekomposisjon i musikk mandag 14. september og første MOT-økt for 8. trinn tirsdag 15. september.
         </div>
       </section>
 
@@ -629,62 +652,111 @@
 
       <section class="grid">
         <article class="card featured">
-          <h3>Nasjonale prøver</h3>
-          <div class="time">Tirsdag 8. og fredag 11. september</div>
-          <div class="card-meta">Matematikk tirsdag og engelsk fredag. Prøvene tas igjen senere dersom Olivia er borte på prøvedagen.</div>
+          <h3>Musikk og naturfag</h3>
+          <div class="time">Uke 38</div>
+          <div class="card-meta">Rytmekomposisjonen skal framføres, og miniprosjektet i naturfag skal gjennomføres og presenteres.</div>
           <ul class="checklist">
-            <li><label><input type="checkbox" data-task="week37-math-test"><span>Forberede nasjonal prøve i matematikk</span></label></li>
-            <li><label><input type="checkbox" data-task="week37-english-test"><span>Forberede nasjonal prøve i engelsk</span></label></li>
-            <li><label><input type="checkbox" data-task="week37-equipment"><span>Sjekke at iPad og nødvendig utstyr er klart</span></label></li>
+            <li><label><input type="checkbox" data-task="week38-music-performance"><span>Forberede framføring av rytmekomposisjon mandag 14. september</span></label></li>
+            <li><label><input type="checkbox" data-task="week38-music-reflection"><span>Skrive egenvurdering i OneNote i løpet av uka</span></label></li>
+            <li><label><input type="checkbox" data-task="week38-science-project"><span>Forberede og gjennomføre naturfaglig miniprosjekt</span></label></li>
+            <li><label><input type="checkbox" data-task="week38-science-presentation"><span>Forberede presentasjon av miniprosjektet fredag</span></label></li>
           </ul>
         </article>
 
         <article class="card">
           <h3>Idrettsfravær</h3>
-          <div class="card-meta">Godkjenning må søkes hos kontaktlærer på e-post før fraværet.</div>
+          <div class="card-meta">Organiserte idrettsaktiviteter knyttet til Olivias langsiktige satsing kan gi grunnlag for idrettsfravær.</div>
           <ul class="checklist">
-            <li><label><input type="checkbox" data-task="sports-absence-email"><span>Send søknad til kontaktlærer på e-post i forkant</span></label></li>
+            <li><label><input type="checkbox" data-task="sports-absence-email"><span>Søk kontaktlærer ved inntil tre sammenhengende dager</span></label></li>
+            <li><label><input type="checkbox" data-task="sports-absence-leader"><span>Søk sportslig leder ved mer enn tre sammenhengende dager</span></label></li>
             <li><label><input type="checkbox" data-task="sports-absence-confirmation"><span>Vent på godkjenning fra skolen</span></label></li>
           </ul>
           <div class="alert">
-            Fraværet kan ikke registreres av foresatte som idrettsfravær eller bare merkes med at det skal være idrettsfravær.
+            Alle søknader vurderes individuelt ut fra faglig situasjon, vurderinger, totalt fravær og aktivitetens nivå.
           </div>
         </article>
       </section>
 
       <div class="section-heading">
         <div>
-          <h2>Timeplan uke 37</h2>
+          <h2>Retningslinjer for idrettsfravær</h2>
+          <p>Ny informasjon fra NTG Ungdomsskole Tromsø.</p>
+        </div>
+      </div>
+
+      <section class="grid">
+        <article class="card">
+          <h3>Aktiviteter som normalt kan godkjennes</h3>
+          <p>Aktiviteten må være organisert og inngå i elevens målrettede idrettssatsing.</p>
+          <ul class="info-list">
+            <li>Landslagssamlinger og landskamper</li>
+            <li>Internasjonale konkurranser og mesterskap</li>
+            <li>Kretslags-, regionlags- og uttakssamlinger i regi av særforbund</li>
+            <li>Treningsleirer og samlinger i regi av klubb, krets, region eller forbund</li>
+            <li>Turneringer og konkurranser der eleven representerer klubb, krets, region eller forbund</li>
+            <li>Andre organiserte utviklingsaktiviteter som inngår i den langsiktige idrettssatsingen</li>
+          </ul>
+        </article>
+
+        <article class="card featured">
+          <h3>Restitusjon mandag morgen</h3>
+          <p>Det kan søkes om å bruke mandag morgen til søvn og restitusjon etter en helg med samlinger, flere konkurranser eller kamper og betydelig reisebelastning.</p>
+          <div class="alert">
+            Ordningen gjelder ikke belastning fra ordinære ukedager, som sen trening eller kamp. Da forventes vanlig skoleoppmøte.
+          </div>
+          <p>Ved høy belastning over tid bør Olivia og foresatte ha dialog med kontaktlærer og trenere. Treningsbelastningen må føres samvittighetsfullt i treningsdagboken, slik at skoleøktene kan tilpasses ved behov.</p>
+        </article>
+
+        <article class="card">
+          <h3>Slik søker dere</h3>
+          <ul class="info-list">
+            <li><strong>Inntil tre sammenhengende dager:</strong> søknad til kontaktlærer.</li>
+            <li><strong>Over tre sammenhengende dager:</strong> søknad til sportslig leder.</li>
+            <li>Ved lengre fravær kan Olivia få studieplan eller tilpassede læringsoppgaver.</li>
+            <li>Kontakt skolen før søknaden sendes dersom det er uklart om aktiviteten omfattes.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Skolens helhetsvurdering</h3>
+          <p>Innvilgelse er ikke automatisk. Skolen vurderer Olivias faglige utvikling, gjennomføring av vurderingssituasjoner, totale fravær og aktivitetens nivå.</p>
+          <p>Målet er å sikre både forsvarlig opplæring og en bærekraftig idrettsutvikling, med helse foran prestasjon.</p>
+        </article>
+      </section>
+
+      <div class="section-heading">
+        <div>
+          <h2>Timeplan uke 38 og 39</h2>
           <p>Alternativene arbeidslivsfag, spansk og musikk avhenger av fag og gruppe.</p>
         </div>
       </div>
 
       <section class="week-plan">
         <div class="week-plan-header">
-          <h3>Uke 37 · 7.–11. september</h3>
-          <p>Nasjonale prøver i matematikk og engelsk</p>
+          <h3>Uke 38 · 14.–18. september</h3>
+          <p>Første MOT-økt og framføring i musikk</p>
         </div>
         <div class="week-days">
           <article class="school-day">
-            <h4>Mandag 7.</h4>
+            <h4>Mandag 14.</h4>
             <ul>
               <li><time>08.30–10.00</time>Basistrening 8. trinn</li>
-              <li><time>10.05–11.05</time>Informasjon fra helsesykepleier</li>
+              <li><time>10.05–11.05</time>Naturfag</li>
               <li><time>11.35–13.40</time>Arbeidslivsfag / spansk / musikk</li>
               <li><time>13.45–15.15</time>KRLE</li>
             </ul>
           </article>
           <article class="school-day">
-            <h4>Tirsdag 8.</h4>
+            <h4>Tirsdag 15.</h4>
             <ul>
               <li><time>08.30–10.00</time>Spesifikk basistrening</li>
-              <li><time>10.05–11.35</time><span class="highlight">Nasjonal prøve i matematikk</span> + IKT-kurs 1</li>
-              <li><time>12.05–13.35</time>Norsk</li>
-              <li><time>13.40–14.40</time>Samfunnsfag</li>
+              <li><time>10.05–11.35</time>Matematikk</li>
+              <li><time>12.05–13.35</time><span class="highlight">Første MOT-økt</span></li>
+              <li><time>13.40–14.40</time>Fortsettelse MOT-økt / samfunnsfag</li>
             </ul>
           </article>
           <article class="school-day">
-            <h4>Onsdag 9.</h4>
+            <h4>Onsdag 16.</h4>
             <ul>
               <li><time>08.30–10.00</time>Fysak</li>
               <li><time>10.05–11.05</time>Arbeidslivsfag / spansk</li>
@@ -692,22 +764,77 @@
             </ul>
           </article>
           <article class="school-day">
-            <h4>Torsdag 10.</h4>
+            <h4>Torsdag 17.</h4>
             <ul>
               <li><time>08.30–10.00</time>Spesifikk basistrening</li>
               <li><time>10.05–11.05</time>Samfunnsfag</li>
               <li><time>11.35–12.35</time>Engelsk</li>
-              <li><time>12.40–14.10</time>Norsk + <span class="highlight">IKT-kurs 3</span></li>
+              <li><time>12.40–14.10</time>Norsk</li>
               <li><time>14.15–15.15</time>Studietid</li>
             </ul>
           </article>
           <article class="school-day">
-            <h4>Fredag 11.</h4>
+            <h4>Fredag 18.</h4>
             <ul>
               <li><time>08.30–10.00</time>Svømming</li>
               <li><time>10.05–11.35</time>Matematikk</li>
               <li><time>12.05–13.05</time>Naturfag</li>
-              <li><time>13.10–14.10</time><span class="highlight">Nasjonal prøve i engelsk</span></li>
+              <li><time>13.10–14.10</time>Engelsk</li>
+              <li><time>14.15–15.15</time>UV / studietid</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="week-plan">
+        <div class="week-plan-header">
+          <h3>Uke 39 · 21.–25. september</h3>
+          <p>Ordinær timeplan uten oppførte prøver eller innleveringer</p>
+        </div>
+        <div class="week-days">
+          <article class="school-day">
+            <h4>Mandag 21.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Basistrening 8. trinn</li>
+              <li><time>10.05–11.05</time>Naturfag</li>
+              <li><time>11.35–13.40</time>Arbeidslivsfag / spansk / musikk</li>
+              <li><time>13.45–15.15</time>KRLE</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Tirsdag 22.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Spesifikk basistrening</li>
+              <li><time>10.05–11.35</time>Matematikk</li>
+              <li><time>12.05–13.35</time>Norsk</li>
+              <li><time>13.40–14.40</time>Samfunnsfag</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Onsdag 23.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Fysak</li>
+              <li><time>10.05–11.05</time>Arbeidslivsfag / spansk</li>
+              <li><time>11.35–13.20</time>Kunst og håndverk</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Torsdag 24.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Spesifikk basistrening</li>
+              <li><time>10.05–11.05</time>Samfunnsfag</li>
+              <li><time>11.35–12.35</time>Engelsk</li>
+              <li><time>12.40–14.10</time>Norsk</li>
+              <li><time>14.15–15.15</time>Studietid</li>
+            </ul>
+          </article>
+          <article class="school-day">
+            <h4>Fredag 25.</h4>
+            <ul>
+              <li><time>08.30–10.00</time>Svømming</li>
+              <li><time>10.05–11.35</time>Matematikk</li>
+              <li><time>12.05–13.05</time>Naturfag</li>
+              <li><time>13.10–14.10</time>Engelsk</li>
               <li><time>14.15–15.15</time>UV / studietid</li>
             </ul>
           </article>
@@ -717,7 +844,7 @@
       <div class="section-heading">
         <div>
           <h2>Dette arbeider klassen med</h2>
-          <p>Faglig innhold fra ukeplanen for uke 37.</p>
+          <p>Faglig innhold fra ukeplanen for uke 38 og 39.</p>
         </div>
       </div>
 
@@ -725,36 +852,43 @@
         <article class="subject">
           <h3>Norsk</h3>
           <p><strong>Tema:</strong> Les kritisk!</p>
-          <p>Tirsdag: Hvordan bli en kritisk leser, hvor nyheter kommer fra og påstander om kildekritikk. Torsdag: IKT-kurs.</p>
+          <p><strong>Uke 38:</strong> Fagartikler og falske nyheter. Oppstart av argumenterende tekst.</p>
         </article>
         <article class="subject">
           <h3>Matematikk</h3>
-          <p><strong>Tema:</strong> Repetisjon og nasjonale prøver.</p>
-          <p>Tirsdag: Nasjonal prøve. Fredag: Repetisjon av stoff fra barneskolen.</p>
+          <p><strong>Tema:</strong> Hele tall.</p>
+          <p><strong>Uke 38:</strong> Hoderegning og regnerekkefølge.</p>
+          <p><strong>Uke 39:</strong> Regnealgoritmer og faktorisering.</p>
         </article>
         <article class="subject">
           <h3>Engelsk</h3>
-          <p><strong>Tema:</strong> First weeks of school.</p>
-          <p>Torsdag: Gjennomgang av prøveform og oppgaveeksempler. Fredag: Nasjonal prøve i engelsk.</p>
+          <p><strong>Tema:</strong> My Sport.</p>
+          <p><strong>Uke 38:</strong> Introduksjon, kriterier og eksempelvideoer.</p>
+          <p><strong>Uke 39:</strong> Fortsette arbeidet med «My Sport».</p>
         </article>
         <article class="subject">
           <h3>Naturfag</h3>
-          <p><strong>Tema:</strong> Vitenskap.</p>
-          <p>Mandag: Informasjon fra helsesykepleier. Fredag: Miniprosjekt – gjennomføre planlagt eksperiment.</p>
+          <p><strong>Tema:</strong> Vitenskap og celler.</p>
+          <p><strong>Uke 38:</strong> Gjennomføre planlagt eksperiment mandag og presentere fredag.</p>
+          <p><strong>Uke 39:</strong> Presentasjon og oppstart av temaet celler mandag. Fortsette med celler fredag.</p>
         </article>
         <article class="subject">
           <h3>KRLE</h3>
           <p><strong>Tema:</strong> I begynnelsen var fortellingen.</p>
-          <p>Fortellinger og myter fra ulike religioner og kulturer, samt bruk av OneNote og Aunivers.</p>
+          <p><strong>Uke 38:</strong> Fortellinger og myter fra ulike religioner og kulturer.</p>
+          <p><strong>Uke 39:</strong> Lage tegneserie eller bildefortelling om en myte.</p>
         </article>
         <article class="subject">
           <h3>Samfunnsfag</h3>
-          <p><strong>Tema:</strong> Kildekritikk og nytt tema «Samfunn».</p>
-          <p>Tirsdag: Case om falske nyheter og faktasjekk. Torsdag: Hva er et samfunn? Lage tankekart.</p>
+          <p><strong>Tema:</strong> Samfunn.</p>
+          <p><strong>Uke 38:</strong> Levedyktige samfunn, seks samfunnsprosesser og arbeid i ekspertgrupper.</p>
+          <p><strong>Uke 39:</strong> Medborgerskap, statsborgerskap og utenforskap.</p>
         </article>
         <article class="subject">
           <h3>Arbeid til studietid</h3>
-          <p><strong>Matematikk:</strong> Se forelesningene som er tildelt i Campus.</p>
+          <p><strong>Matematikk uke 38 og 39:</strong> Se videoforelesningene som er tildelt i Campus før timene.</p>
+          <p><strong>Naturfag uke 38:</strong> Gjør nødvendige forberedelser til presentasjonen av miniprosjektet.</p>
+          <p><strong>Musikk:</strong> Skriv egenvurdering av rytmeoppgaven i OneNote under «egenvurdering».</p>
         </article>
       </section>
 
@@ -783,7 +917,8 @@
             <li><label><input type="checkbox" data-task="friday-routine"><span>Sett av tid fredag til fredagsmail og periodeplan</span></label></li>
             <li><label><input type="checkbox" data-task="sunday-routine"><span>Gå gjennom neste uke sammen med Olivia søndag kveld</span></label></li>
             <li><label><input type="checkbox" data-task="absence-routine"><span>Bruk IST til vanlig fravær og jevnlig kontroll av merknader</span></label></li>
-            <li><label><input type="checkbox" data-task="sports-absence-routine"><span>Søk kontaktlærer på e-post om idrettsfravær før fraværet</span></label></li>
+            <li><label><input type="checkbox" data-task="sports-absence-routine"><span>Søk riktig mottaker om idrettsfravær før fraværet: kontaktlærer inntil tre dager, sportslig leder over tre dager</span></label></li>
+            <li><label><input type="checkbox" data-task="training-diary-routine"><span>Før treningsbelastningen samvittighetsfullt i treningsdagboken</span></label></li>
           </ul>
         </article>
       </section>
@@ -821,9 +956,13 @@
       </div>
 
       <section class="links">
+        <a class="quick-link" href="dokumenter/periodeplan-uke-38-39.pdf" target="_blank" rel="noopener">
+          <strong>Periodeplan uke 38 og 39</strong>
+          <span>Timeplan, MOT-økt, framføring, faglig innhold og studietid</span>
+        </a>
         <a class="quick-link" href="dokumenter/periodeplan-uke-37.pdf" target="_blank" rel="noopener">
           <strong>Ukeplan uke 37</strong>
-          <span>Timeplan, prøver, faglig innhold og studietid</span>
+          <span>Tidligere timeplan, prøver, faglig innhold og studietid</span>
         </a>
         <a class="quick-link" href="dokumenter/periodeplan-uke-35-36.pdf" target="_blank" rel="noopener">
           <strong>Periodeplan uke 35 og 36</strong>
@@ -847,7 +986,7 @@
         Denne siden bruker et enkelt passord i nettleseren. Dokumentlenkene har egne nettadresser og er ikke teknisk beskyttet av passordet. Ikke legg inn sensitive opplysninger, helseopplysninger eller andre data som krever sikker lagring.
       </div>
 
-      <footer>Sist oppdatert 4. september 2026 · Familieoversikt for Olivia</footer>
+      <footer>Sist oppdatert 11. september 2026 · Familieoversikt for Olivia</footer>
     </main>
   </div>
 
