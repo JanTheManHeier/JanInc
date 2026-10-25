@@ -1,0 +1,29 @@
+<?php get_header(); ?>
+<main id="main-content" class="site-main site-shell">
+    <section class="page-hero">
+        <span class="eyebrow">Arkiv</span>
+        <h1><?php bloginfo('name'); ?></h1>
+        <p><?php bloginfo('description'); ?></p>
+    </section>
+    <section class="content-section">
+        <?php if (have_posts()) : ?>
+            <div class="story-list">
+                <?php $story_index = 0; ?>
+                <?php while (have_posts()) : the_post(); ?>
+                    <article class="story story--list">
+                        <?php storm_arena_render_post_image(get_the_ID(), $story_index, 'story__thumb'); ?>
+                        <div>
+                            <time datetime="<?php echo esc_attr(get_the_date(DATE_ATOM)); ?>"><?php echo esc_html(get_the_date('j. F Y')); ?></time>
+                            <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                            <p><?php echo esc_html(wp_trim_words(wp_strip_all_tags(get_the_excerpt() ?: get_the_content(null, false)), 32)); ?></p>
+                        </div>
+                    </article>
+                    <?php $story_index++; ?>
+                <?php endwhile; ?>
+            </div>
+        <?php else : ?>
+            <?php storm_arena_render_empty_state('Fant ikke innhold.', 'Prøv søket eller gå tilbake til forsiden.'); ?>
+        <?php endif; ?>
+    </section>
+</main>
+<?php get_footer(); ?>

@@ -1,0 +1,43 @@
+[
+  {
+    "matchId": 990001,
+    "matchDate": "2026-10-10T00:00:00",
+    "matchStartTime": 1800,
+    "matchEndTime": 2000,
+    "activityAreaName": "Rødtindhallen",
+    "hometeam": "Tromsø Storm - MEN 1",
+    "awayteam": "Ammerud BLNO - MEN 1",
+    "tournamentName": "BLNO Menn",
+    "statusType": "Scheduled",
+    "matchResult": null
+  },
+  {
+    "matchId": 990002,
+    "matchDate": "2026-10-17T00:00:00",
+    "matchStartTime": "1530",
+    "matchEndTime": "1730",
+    "activityAreaName": "Oppsal Arena",
+    "hometeam": "Oppsal Basket - MEN 1",
+    "awayteam": "Tromsø Storm - MEN 1",
+    "tournamentName": "BLNO Menn",
+    "statusType": "Finished",
+    "matchResult": "78-82"
+  },
+  {
+    "matchId": 990002,
+    "matchDate": "2026-10-17T00:00:00",
+    "matchStartTime": "1530",
+    "activityAreaName": "Oppsal Arena",
+    "hometeam": "Oppsal Basket - MEN 1",
+    "awayteam": "Tromsø Storm - MEN 1",
+    "statusType": "Finished",
+    "matchResult": "78-82"
+  },
+  {
+    "matchId": 0,
+    "matchDate": "invalid",
+    "matchStartTime": "9999",
+    "hometeam": "",
+    "awayteam": ""
+  }
+]

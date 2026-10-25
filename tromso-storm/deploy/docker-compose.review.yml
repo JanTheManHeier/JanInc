@@ -1,0 +1,58 @@
+services:
+  traefik:
+    profiles:
+      - review
+    ports:
+      - 80:80
+      - 443:443
+    secrets:
+      - review_users
+
+  wordpress:
+    environment:
+      SITE_URL: https://${REVIEW_HOST:?Set REVIEW_HOST to the approved test hostname}
+      WORDPRESS_CONFIG_EXTRA: &review-wordpress-config |
+        define('WP_HOME', getenv('SITE_URL'));
+        define('WP_SITEURL', getenv('SITE_URL'));
+        define('WP_ENVIRONMENT_TYPE', 'staging');
+        define('DISALLOW_FILE_EDIT', true);
+        define('DISABLE_WP_CRON', true);
+        define('FORCE_SSL_ADMIN', true);
+        if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && $$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+            $$_SERVER['HTTPS'] = 'on';
+        }
+
+  wpcli:
+    environment:
+      SITE_URL: https://${REVIEW_HOST:?Set REVIEW_HOST to the approved test hostname}
+      WORDPRESS_CONFIG_EXTRA: *review-wordpress-config
+
+  wordpress-cron:
+    environment:
+      SITE_URL: https://${REVIEW_HOST:?Set REVIEW_HOST to the approved test hostname}
+      WORDPRESS_CONFIG_EXTRA: *review-wordpress-config
+
+  staging-proxy:
+    volumes:
+      - ./staging/nginx-review.conf:/etc/nginx/conf.d/default.conf:ro
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=${TRAEFIK_NETWORK}
+      - traefik.http.services.storm-review.loadbalancer.server.port=80
+      - traefik.http.routers.storm-review.rule=Host(`${REVIEW_HOST:?Set REVIEW_HOST to the approved test hostname}`)
+      - traefik.http.routers.storm-review.service=storm-review
+      - traefik.http.routers.storm-review.entrypoints=websecure
+      - traefik.http.routers.storm-review.tls=true
+      - traefik.http.routers.storm-review.tls.certresolver=${TRAEFIK_CERT_RESOLVER}
+      - traefik.http.routers.storm-review.middlewares=storm-review-headers,storm-review-auth
+      - traefik.http.middlewares.storm-review-auth.basicauth.usersfile=/run/secrets/review_users
+      - traefik.http.middlewares.storm-review-auth.basicauth.realm=Storm testside
+      - traefik.http.middlewares.storm-review-auth.basicauth.removeheader=true
+      - traefik.http.middlewares.storm-review-headers.headers.contenttypenosniff=true
+      - traefik.http.middlewares.storm-review-headers.headers.referrerpolicy=strict-origin-when-cross-origin
+      - traefik.http.middlewares.storm-review-headers.headers.customresponseheaders.X-Robots-Tag=noindex, nofollow, noarchive
+      - traefik.http.middlewares.storm-review-headers.headers.customresponseheaders.Cache-Control=private, no-store
+
+secrets:
+  review_users:
+    file: ./private/secrets/review_users

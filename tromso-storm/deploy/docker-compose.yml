@@ -1,0 +1,250 @@
+name: tromsostorm
+
+services:
+  traefik:
+    image: ${TRAEFIK_IMAGE}
+    restart: unless-stopped
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.${TRAEFIK_CERT_RESOLVER}.acme.email=${LETSENCRYPT_EMAIL}
+      - --certificatesresolvers.${TRAEFIK_CERT_RESOLVER}.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.${TRAEFIK_CERT_RESOLVER}.acme.httpchallenge=true
+      - --certificatesresolvers.${TRAEFIK_CERT_RESOLVER}.acme.httpchallenge.entrypoint=web
+      - --accesslog=true
+      - --log.level=INFO
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_certs:/letsencrypt
+    networks:
+      - web
+
+  db:
+    image: ${MARIADB_IMAGE}
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD_FILE: /run/secrets/db_password
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    secrets:
+      - db_password
+      - db_root_password
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./private/import:/docker-entrypoint-initdb.d:ro
+    networks:
+      - internal
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - mariadb-admin ping -h 127.0.0.1 -uroot -p"$$(cat /run/secrets/db_root_password)" --silent
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 45s
+
+  wordpress:
+    image: ${WORDPRESS_IMAGE}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
+      SITE_URL: ${SITE_URL}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      STORM_TRANSLATION_MODEL: ${STORM_TRANSLATION_MODEL:-gpt-5-mini}
+      NIF_CLIENT_ID: ${NIF_CLIENT_ID:-}
+      NIF_CLIENT_SECRET: ${NIF_CLIENT_SECRET:-}
+      NIF_ORG_ID: ${NIF_ORG_ID:-220005}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', getenv('SITE_URL'));
+        define('WP_SITEURL', getenv('SITE_URL'));
+        define('DISALLOW_FILE_EDIT', true);
+        define('FORCE_SSL_ADMIN', true);
+        if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && $$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+            $$_SERVER['HTTPS'] = 'on';
+        }
+    secrets:
+      - db_password
+    volumes:
+      - wordpress_core:/var/www/html
+      - ./private/wp-content:/var/www/html/wp-content
+      - ../wp-plugins/storm-core:/var/www/html/wp-content/plugins/storm-core:ro
+      - ../wp-theme/storm-arena:/var/www/html/wp-content/themes/storm-arena:ro
+      - ./scripts:/bootstrap:ro
+    networks:
+      - internal
+      - web
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail --silent --show-error http://127.0.0.1/wp-login.php >/dev/null
+      interval: 30s
+      timeout: 10s
+      retries: 6
+      start_period: 90s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=${TRAEFIK_NETWORK}
+      - traefik.http.services.tromsostorm.loadbalancer.server.port=80
+      - traefik.http.routers.tromsostorm.rule=Host(`${SITE_HOST}`)
+      - traefik.http.routers.tromsostorm.entrypoints=websecure
+      - traefik.http.routers.tromsostorm.tls=true
+      - traefik.http.routers.tromsostorm.tls.certresolver=${TRAEFIK_CERT_RESOLVER}
+      - traefik.http.routers.tromsostorm.middlewares=storm-security
+      - traefik.http.middlewares.storm-security.headers.stsseconds=31536000
+      - traefik.http.middlewares.storm-security.headers.stsincludesubdomains=true
+      - traefik.http.middlewares.storm-security.headers.contenttypenosniff=true
+      - traefik.http.middlewares.storm-security.headers.referrerpolicy=strict-origin-when-cross-origin
+      - traefik.http.routers.tromsostorm-www.rule=Host(`www.${SITE_HOST}`)
+      - traefik.http.routers.tromsostorm-www.entrypoints=websecure
+      - traefik.http.routers.tromsostorm-www.tls=true
+      - traefik.http.routers.tromsostorm-www.tls.certresolver=${TRAEFIK_CERT_RESOLVER}
+      - traefik.http.routers.tromsostorm-www.middlewares=storm-www-redirect
+      - traefik.http.middlewares.storm-www-redirect.redirectregex.regex=^https://www\.(.+)
+      - traefik.http.middlewares.storm-www-redirect.redirectregex.replacement=https://$${1}
+      - traefik.http.middlewares.storm-www-redirect.redirectregex.permanent=true
+      - traefik.http.routers.storm-historical-image.rule=Host(`${SITE_HOST}`) && Path(`/Storm-lagbilde-2008.gif`)
+      - traefik.http.routers.storm-historical-image.entrypoints=websecure
+      - traefik.http.routers.storm-historical-image.tls=true
+      - traefik.http.routers.storm-historical-image.tls.certresolver=${TRAEFIK_CERT_RESOLVER}
+      - traefik.http.routers.storm-historical-image.priority=100
+      - traefik.http.routers.storm-historical-image.middlewares=storm-historical-image-redirect
+      - traefik.http.middlewares.storm-historical-image-redirect.redirectregex.regex=^https://[^/]+/Storm-lagbilde-2008\.gif$
+      - traefik.http.middlewares.storm-historical-image-redirect.redirectregex.replacement=https://${SITE_HOST}/wp-content/uploads/2010/08/Storm-lagbilde-2008.gif
+      - traefik.http.middlewares.storm-historical-image-redirect.redirectregex.permanent=true
+
+  wpcli:
+    image: ${WORDPRESS_CLI_IMAGE}
+    profiles:
+      - tools
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
+      SITE_URL: ${SITE_URL}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      STORM_TRANSLATION_MODEL: ${STORM_TRANSLATION_MODEL:-gpt-5-mini}
+      NIF_CLIENT_ID: ${NIF_CLIENT_ID:-}
+      NIF_CLIENT_SECRET: ${NIF_CLIENT_SECRET:-}
+      NIF_ORG_ID: ${NIF_ORG_ID:-220005}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', getenv('SITE_URL'));
+        define('WP_SITEURL', getenv('SITE_URL'));
+    secrets:
+      - db_password
+    volumes:
+      - wordpress_core:/var/www/html
+      - ./private/wp-content:/var/www/html/wp-content
+      - ../wp-plugins/storm-core:/var/www/html/wp-content/plugins/storm-core:ro
+      - ../wp-theme/storm-arena:/var/www/html/wp-content/themes/storm-arena:ro
+      - ./scripts:/bootstrap:ro
+    networks:
+      - internal
+      - web
+    user: "33:33"
+
+  wordpress-cron:
+    extends:
+      service: wpcli
+    profiles:
+      - production
+    restart: unless-stopped
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    entrypoint:
+      - /bin/sh
+    command:
+      - -c
+      - while true; do wp --path=/var/www/html eval-file /bootstrap/run-editorial-cron.php --quiet || exit $$?; sleep 60; done
+
+  legacy-static:
+    image: ${NGINX_IMAGE}
+    restart: unless-stopped
+    volumes:
+      - ./legacy-static/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./private/storm-legacy:/usr/share/nginx/html/Storm:ro
+    networks:
+      - web
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget --quiet --spider http://127.0.0.1/healthz
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=${TRAEFIK_NETWORK}
+      - traefik.http.services.storm-legacy.loadbalancer.server.port=80
+      - traefik.http.routers.storm-legacy.rule=Host(`${SITE_HOST}`) && PathPrefix(`/Storm/`)
+      - traefik.http.routers.storm-legacy.entrypoints=websecure
+      - traefik.http.routers.storm-legacy.tls=true
+      - traefik.http.routers.storm-legacy.tls.certresolver=${TRAEFIK_CERT_RESOLVER}
+      - traefik.http.routers.storm-legacy.priority=90
+      - traefik.http.routers.storm-legacy.middlewares=storm-security
+
+  backup:
+    build: ./backup
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      BACKUP_INTERVAL_SECONDS: ${BACKUP_INTERVAL_SECONDS}
+      BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS}
+      RCLONE_REMOTE: ${RCLONE_REMOTE}
+      RCLONE_PATH: ${RCLONE_PATH}
+    secrets:
+      - db_password
+    volumes:
+      - ./private/wp-content:/source/wp-content:ro
+      - ../wp-plugins/storm-core:/source/wp-content/plugins/storm-core:ro
+      - ../wp-theme/storm-arena:/source/wp-content/themes/storm-arena:ro
+      - ./private/storm-legacy:/source/storm-legacy:ro
+      - ./private/rclone:/config/rclone
+      - ./backups:/backups
+    networks:
+      - internal
+      - backup-egress
+
+networks:
+  internal:
+    internal: true
+  backup-egress:
+    internal: false
+  web:
+    name: ${TRAEFIK_NETWORK}
+
+volumes:
+  db_data:
+  wordpress_core:
+  traefik_certs:
+
+secrets:
+  db_password:
+    file: ./private/secrets/db_password
+  db_root_password:
+    file: ./private/secrets/db_root_password

@@ -1,0 +1,94 @@
+name: tromsostorm-staging
+
+services:
+  traefik:
+    profiles:
+      - production
+    ports: !reset []
+
+  wordpress:
+    environment:
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', getenv('SITE_URL'));
+        define('WP_SITEURL', getenv('SITE_URL'));
+        define('WP_ENVIRONMENT_TYPE', 'staging');
+        define('DISALLOW_FILE_EDIT', true);
+        define('DISABLE_WP_CRON', true);
+        define('FORCE_SSL_ADMIN', false);
+      OPENAI_API_KEY: ""
+      NIF_CLIENT_ID: ""
+      NIF_CLIENT_SECRET: ""
+    labels: !reset []
+    volumes:
+      - ./staging/storm-staging-safety.php:/var/www/html/wp-content/mu-plugins/storm-staging-safety.php:ro
+      - ./staging/php.ini:/usr/local/etc/php/conf.d/storm-staging.ini:ro
+      - ./staging/health.php:/var/www/html/storm-staging-health.php:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail --silent --show-error http://127.0.0.1/storm-staging-health.php >/dev/null
+
+  wpcli:
+    environment:
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', getenv('SITE_URL'));
+        define('WP_SITEURL', getenv('SITE_URL'));
+        define('WP_ENVIRONMENT_TYPE', 'staging');
+        define('DISALLOW_FILE_EDIT', true);
+        define('DISABLE_WP_CRON', true);
+        define('FORCE_SSL_ADMIN', false);
+      OPENAI_API_KEY: ""
+      NIF_CLIENT_ID: ""
+      NIF_CLIENT_SECRET: ""
+    volumes:
+      - ./staging/storm-staging-safety.php:/var/www/html/wp-content/mu-plugins/storm-staging-safety.php:ro
+      - ./staging/php.ini:/usr/local/etc/php/conf.d/storm-staging.ini:ro
+
+  wordpress-cron:
+    profiles: !reset []
+    environment:
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', getenv('SITE_URL'));
+        define('WP_SITEURL', getenv('SITE_URL'));
+        define('WP_ENVIRONMENT_TYPE', 'staging');
+        define('DISALLOW_FILE_EDIT', true);
+        define('DISABLE_WP_CRON', true);
+        define('FORCE_SSL_ADMIN', false);
+      OPENAI_API_KEY: ""
+      NIF_CLIENT_ID: ""
+      NIF_CLIENT_SECRET: ""
+    volumes:
+      - ./staging/storm-staging-safety.php:/var/www/html/wp-content/mu-plugins/storm-staging-safety.php:ro
+      - ./staging/php.ini:/usr/local/etc/php/conf.d/storm-staging.ini:ro
+
+  legacy-static:
+    labels: !reset []
+
+  backup:
+    profiles:
+      - backup
+    volumes:
+      - ./staging/storm-staging-safety.php:/source/wp-content/mu-plugins/storm-staging-safety.php:ro
+
+  staging-proxy:
+    image: ${NGINX_IMAGE}
+    restart: unless-stopped
+    depends_on:
+      wordpress:
+        condition: service_healthy
+      legacy-static:
+        condition: service_healthy
+    ports:
+      - 127.0.0.1:8090:80
+    volumes:
+      - ./staging/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - web
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget --quiet --spider http://127.0.0.1/healthz
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

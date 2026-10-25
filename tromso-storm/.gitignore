@@ -1,0 +1,4 @@
+deploy/.env
+deploy/private/
+deploy/backups/
+
