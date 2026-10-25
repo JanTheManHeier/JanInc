@@ -9,14 +9,6 @@
       }
     },
     {
-      "route": "/storm/",
-      "redirect": "https://storm.janinc.no/",
-      "statusCode": 302,
-      "headers": {
-        "Cache-Control": "no-store"
-      }
-    },
-    {
       "route": "/api/*",
       "allowedRoles": ["anonymous"]
     },
