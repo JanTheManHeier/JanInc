@@ -23,11 +23,11 @@ prioriteringer; eksterne avhengigheter kan hindre ferdigstilling samme dag.
 
 ### Prioritert gjennomføring
 
-1. [ ] **Sikre kildekoden.** Gå gjennom endrede og usporte Storm-filer,
+1. [x] **Sikre kildekoden.** Gå gjennom endrede og usporte Storm-filer,
        kontroller at overleveringsdata og hemmeligheter holdes utenfor Git,
        og lagre kildekode/dokumentasjon i avtalt repo. Ikke ta med andre
        prosjekters lokale endringer.
-2. [ ] **Gjør testsiden delbar for Ørjan via `janinc.no/storm/`.**
+2. [x] **Gjør testsiden delbar for Ørjan via `janinc.no/storm/`.**
        Avklar DNS-tilgang, testnavn og hvem som skal ha tilgang.
        Foreslått mål er `storm.janinc.no` på BedSys, med HTTPS og
        tilgangskontroll på selve testmålet, inkludert medier og API-er.
@@ -41,7 +41,7 @@ prioriteringer; eksterne avhengigheter kan hindre ferdigstilling samme dag.
        og håndbok når tilgangen er verifisert. La Ørjan kontrollere design,
        mobilvisning og redaktørflyt med håndbokens akseptansetest.
        Avhenger av punkt 2 og Ørjans tilgjengelighet.
-4. [ ] **Rett faneikonet.** Fullfør punkt 1 nedenfor i WordPress-kilden,
+4. [x] **Rett faneikonet teknisk.** Fullfør punkt 1 nedenfor i WordPress-kilden,
        kontroller proporsjoner og cache i Edge, og eksporter skyggekopien
        etter verifisering.
 5. [ ] **Oppdater og avklar innhold.** Kontroller og oppdater resultatet fra
@@ -61,16 +61,61 @@ tilgangssperrer og backup. Oppdater status her med faktisk utførte kontroller.
 DNS-/HTTPS-oppsett for testnavnet krever avklart tilgang og godkjenning;
 en videresending til den lokale SSH-adressen fungerer ikke for arbeidsgruppen.
 
+### Utført 25. oktober
+
+- [x] WordPress-tema, Storm Core, driftsverktøy og håndbok er committet og pushet.
+      Private overleveringer, passord, nøkler og nettleserøkter er ekskludert.
+      Azure-publiseringen holder PHP-kilden utenfor den statiske nettsiden.
+- [x] Kun testnavnet `storm.janinc.no` er lagt til i DNS. HTTPS med gyldig
+      sertifikat og personlige tilgangspassord er aktivert på BedSys.
+      Produksjonsdomenet `tromsostorm.no` og dets DNS er ikke endret.
+- [x] Både `janinc.no/storm` og `janinc.no/storm/` gir 302 til
+      `https://storm.janinc.no/`, med `Cache-Control: no-store`.
+      Azure-kjøring `40203640440` er fullført. En tidligere konfigurasjonsfeil
+      med dupliserte skråstrek-normaliserte ruter er rettet.
+- [x] Personlig WordPress-konto `orjan` har rollen Redaktør, ikke administrator.
+      Tilgangsinstruksene ligger lokalt i `deploy\private\ORJAN-TESTTILGANG.txt`.
+      Del bare denne filen med Ørjan, ikke filen med begge brukernes tilgang.
+      Ingen melding eller passord er sendt på vegne av brukeren.
+- [x] 61 isolerte WordPress-assertsjoner og 15 review-Compose-kontroller bestått.
+      Åtte kontroller i ekte Edge verifiserer adgangssperrer også på medier,
+      arkiv, API og admin, HTTPS-innlogging, redaktørhåndbok, ikon på norsk/
+      engelsk og mobil uten horisontal overflyt ved 390 piksler.
+      E-post, indeksering og ikke-godkjente planlagte jobber er fortsatt sperret.
+- [x] Nidaros–Storm 24. oktober er avsluttet med 86–112, manuelt overstyrt
+      mot senere automatisk overskriving. Neste kamp er Fyllingen hjemme
+      8. november kl. 15.00. Reserveterminlistens TNT-dato er rettet til 18. oktober.
+- [x] Eksterne krypterte backuper før/etter HTTPS- og kontoendringen,
+      `20261025T141932Z` og `20261025T143520Z`, er lastet ned og gjenopprettet
+      isolert. Alle 128 tabellers radantall og motorer stemmer; alle 34
+      WordPress-tabeller er InnoDB. Tilbakeføringskode og konfigurasjon er bevart.
+- [x] Sluttbackup etter engelsk ikonretting, `20261025T144624Z`, er fullført
+      kl. 14:49:20 UTC og hentet fra ekstern lagring. Ny isolert gjenoppretting
+      bekrefter alle 128 tabellantall/motorer; 173 tema-/pluginfiler er identiske
+      med aktiv kilde. Daglig backup og avgrenset cron kjører videre.
+- [x] Den oppfriskede statiske skyggekopien omfatter 20 sider med kontrollert
+      `noindex`, ikon og lokale ressursreferanser. Ingen administratorflate,
+      passord eller gamle localhost-adresser er med i disse sidene.
+      Den gamle SSH-tunnelen er stoppet; HTTPS-løsningen trenger den ikke.
+- [ ] Send tilgangsfilen sikkert og la Ørjan teste fra egen PC.
+      Offentlig og autoritativ DNS svarer riktig; administrator-PC-ens vanlige
+      DNS-oppslag hadde fortsatt negativ cache under kontrollen. Edge-testen
+      brukte en avgrenset vertsoppslagsoverstyring, ikke svekket TLS-kontroll.
+- [ ] Innhent fersk overlevering, partner-/bilderettigheter og godkjente
+      integrasjonstilganger. NIF- og oversettelsesnøkler er fortsatt tomme;
+      ingen NIF-oppdateringsjobb er aktivert, og SMTP er fortsatt sperret.
+
 ## 1. Rett proporsjonene på faneikonet i Edge
 
-Status: årsak undersøkt; ikonreferansen er ikke endret.
+Status: rettet i aktiv WordPress og eksportert skyggekopi 25. oktober.
+Manuell vurdering av den synlige Edge-fanen gjenstår hos brukerne.
 
-- [ ] Undersøk hvilket favicon Edge faktisk bruker i testinstallasjonen.
-- [ ] Rett ikonressursen eller ikonreferansen slik at logoens proporsjoner bevares.
+- [x] Undersøk hvilket favicon Edge faktisk bruker i testinstallasjonen.
+- [x] Rett ikonressursen eller ikonreferansen slik at logoens proporsjoner bevares.
       Bruk en kvadratisk ikonflate med nødvendig luft, ikke strekk selve logoen.
 - [ ] Kontroller resultatet i en egen Edge-fane ved vanlig fanestørrelse og etter
       oppfrisking av favicon-cachen.
-- [ ] Kontroller at den statiske skyggekopien fortsatt bruker riktig ikon når den
+- [x] Kontroller at den statiske skyggekopien fortsatt bruker riktig ikon når den
       eksporteres på nytt.
 
 Kontrollert 24. oktober: produksjonssiden bruker
@@ -80,7 +125,11 @@ Den nye WordPress-testsiden bruker derimot `assets/storm-mark.svg`, med
 ikonressurser, ikke bare ulik visning av samme fil. Den brede SVG-utgaven gir
 et flatere og mindre gjenkjennelig faneikon. Vurder å gjenbruke det eksisterende
 faneikonet separat fra logoene som brukes inne på nettsiden.
-Det er ikke gjort noen retting ennå.
+Den opprinnelige ICO-filen er nå lagt separat i
+`assets/icons/storm-favicon.ico`; begge PHP-headerne og de ti engelske
+HTML-malene bruker denne. SVG-kunst inne på sidene er ikke endret.
+Ekte Edge bekrefter ICO-type, 80 x 80 og riktige referanser i begge design
+og på engelsk underside. Alle 20 eksporterte sider har riktig ikon og `noindex`.
 Skjermbildet er lagret i `docs\edge-favicon-2026-10-24.png`.
 
 Ferdig når Edge viser en gjenkjennelig logo uten forvrengte proporsjoner.
@@ -130,8 +179,9 @@ stemte, og gjenopprettet WordPress virket med e-post og indeksering blokkert.
 Den daglige backupens første kjøring ble også fullført kl. 07:48:31 UTC.
 Den private testadressen ble deretter byttet til september-instansen kl.
 07:48:53 UTC (09:48:53 norsk tid). Den samme SSH-tunnelen og
-`http://127.0.0.1:18090` brukes fortsatt, og administratorinnlogging er kontrollert
-med uendret testpassord. Produksjonssiden og DNS er ikke endret.
+`http://127.0.0.1:18090` ble brukt ved denne kontrollen, og administratorinnlogging
+ble kontrollert med uendret testpassord. Fra 25. oktober er den kanoniske
+testadressen `https://storm.janinc.no/`; produksjonssiden og dens DNS er ikke endret.
 
 Aktivt serverprosjekt: `/home/janheier/tromsostorm-staging-sep23`.
 Tidligere prosjekt: `/home/janheier/tromsostorm-staging`.
@@ -191,6 +241,8 @@ Ferdig når lange arenanavn er lesbare i Neste kamp på relevante skjermbredder.
 ## 4. Verifiser og aktiver automatisk oppdatering av neste kamp
 
 Status: eksisterende integrasjon funnet; tilgang og drift må avklares.
+Kontrollert 25. oktober: NIF-innstillinger er tomme, ingen synkjobb er planlagt
+og ingen NIF-cache er fylt. Kamprettingene er manuelle, ikke automatisk synk.
 
 Det finnes allerede en [NIF-integrasjon i WordPress-pluginen](wp-plugins/storm-core/includes/class-storm-core-nif.php#L9-L42)
 og et endepunkt i `api\storm-matches\index.js` for den statiske løsningen.
@@ -219,29 +271,28 @@ uten manuell redigering, med dokumentert oppdateringsjobb og reservehåndtering.
 
 ## 5. Gjør den nye WordPress-testsiden delbar med arbeidsgruppen
 
-Status: løsning skal avklares og settes opp; ingen ny offentlig tilgang åpnet.
+Status: teknisk ferdig 25. oktober; Ørjans egen brukerakseptanse gjenstår.
 
 Målet er å dele WordPress-installasjonen på BedSys, ikke en lenke til
-`127.0.0.1` eller bare den statiske designkopien. Nåværende testtilgang er
-begrenset til SSH-tunnelen på administratorens PC.
+`127.0.0.1` eller bare den statiske designkopien. Testtilgangen går nå over
+beskyttet HTTPS uten krav om SSH-tunnel.
 
-Foreslått løsning: en egen HTTPS-testadresse på BedSys, for eksempel
-`ny.tromsostorm.no`, med tilgangskontroll for gruppen. `janinc.no/storm/` kan
-deretter være en enkel delelenke som videresender til denne testadressen.
+Valgt løsning: `https://storm.janinc.no/` på BedSys med tilgangskontroll for
+gruppen. `janinc.no/storm/` videresender til denne testadressen.
 En videresending endrer adressen i nettleseren; den gjør ikke Azure-siden til
 en transparent WordPress-proxy.
 
-- [ ] Avklar testnavn, DNS-ansvar og hvem som skal få tilgang. Alternativt kan
+- [x] Avklar testnavn, DNS-ansvar og hvem som skal få tilgang. Alternativt kan
       et eget underdomene på `janinc.no` brukes hvis DNS-tilgangen er tilgjengelig.
-- [ ] Sett opp HTTPS og tilgangskontroll på selve BedSys-testadressen før
+- [x] Sett opp HTTPS og tilgangskontroll på selve BedSys-testadressen før
       WordPress blir tilgjengelig utenfor SSH-tunnelen.
-- [ ] Beskytt også bilder, API-er og andre direkte adresser på testmålet;
+- [x] Beskytt også bilder, API-er og andre direkte adresser på testmålet;
       innlogging kun på en JanInc-delelenke beskytter ikke målserveren.
-- [ ] Behold e-postsperre og `noindex`, og bruk separate testkontoer. Ikke del
+- [x] Behold e-postsperre og `noindex`, og bruk separate testkontoer. Ikke del
       administratorpassordet eller SSH-nøkler med hele gruppen.
-- [ ] Tilpass WordPress-adresse, interne lenker og proxy-ruting til testnavnet;
+- [x] Tilpass WordPress-adresse, interne lenker og proxy-ruting til testnavnet;
       ikke flytt nettstedet til en undermappe bare for å få en kort delelenke.
-- [ ] Opprett eventuelt `janinc.no/storm/` som videresending når testmålet virker.
+- [x] Opprett `janinc.no/storm/` som videresending når testmålet virker.
 - [ ] Test fra en annen PC eller mobil uten SSH-tunnel: tilgang nektes uten
       godkjenning og fungerer for gruppen etter innlogging.
 
@@ -305,11 +356,12 @@ Dette er teknisk verifikasjon, ikke Ørjans brukerakseptanse.
       Intervall er 24 timer og ekstern oppbevaring 35 dager.
       Sluttkvittering: `EDITORIAL-OPERATIONS-VERIFIED.json` på serveren,
       kontrollert kl. 10:02:08 UTC. Isolerte testtjenester er stoppet.
-- [ ] Gi Ørjan personlig konto og faktisk tilgang fra egen PC.
+- [x] Opprett Ørjans personlige redaktørkonto og verifiser innlogging/håndbok.
+- [ ] Bekreft faktisk tilgang fra Ørjans egen PC etter sikker deling av tilgang.
 - [ ] La Ørjan gjennomføre håndbokens akseptansetest, særlig sesongskiftet.
 
-NIF-tilgang, SMTP, godkjent engelsk oversettelsesflyt, delt testadresse og
-produksjonssetting krever egne avklaringer. Sponsorbilletter med QR, butikk
+NIF-tilgang, SMTP, godkjent engelsk oversettelsesflyt og produksjonssetting
+krever egne avklaringer. Delt testadresse er etablert. Sponsorbilletter med QR, butikk
 og hallens resultattavle er ikke del av denne leveransen.
 
 ## 7. Oppdater innhold etter september-snapshotet
@@ -332,7 +384,8 @@ sammendragsutkast, ikke full artikkelimport. Dagens produksjon og DNS er uendret
       og fire personer i trener-/støtteapparatet.
 - [x] Oppdater sju manglende sluttresultater fra 26. september til
       23. oktober mot klubbens terminliste. Åtte kamper er nå ferdigspilt.
-      Kampen 24. oktober kl. 15.00 er fortsatt oppsatt, ikke ferdigspilt.
+      Kampen 24. oktober er senere oppdatert til 86–112 og ferdigspilt
+      25. oktober. Det er nå ni ferdigspilte kamper i det normaliserte datasettet.
 - [x] Kontroller dagens partneroversikter, treningstider og billettside.
       De fire treningstidene stemmer; ingen priser eller avtaler er endret.
 - [x] Klargjør åtte nyheter fra 25. september–19. oktober som egne, korte

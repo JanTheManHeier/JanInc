@@ -4,7 +4,7 @@ WordPress-tema, statisk designforhåndsvisning og produksjonsgrunnlag for en ny,
 mobiltilpasset Tromsø Storm-side.
 
 `wp-theme/storm-arena/` er kildekoden til WordPress-designet. Rotens `index.html`,
-undersidene og `wp-content/` er en generert, statisk skyggekopi av den lokale
+undersidene og `wp-content/` er en generert, statisk skyggekopi av
 WordPress-instansen. Skyggekopien publiseres på:
 
 `https://janinc.no/tromso-storm/`
@@ -102,9 +102,16 @@ Etter aktivering leser temaet det publiserte Storm-innholdet; tomme datasett
 erstattes ikke med gamle kamper eller demonstrasjonsdata. Sesongens tabell må ha
 sin egen verifiserte turnerings-ID. Se pluginens README og `deploy/README.md`.
 
-Ørjans personlige konto og tilgang fra hans PC må avklares før brukertesten.
-NIF-klient, SMTP, offentlig deling og produksjonsgodkjenning er separate porter;
-håndboken innebærer ikke at de allerede er på plass.
+Den faktiske WordPress-testsiden er tilgjengelig på `https://storm.janinc.no/`;
+`https://janinc.no/storm/` videresender dit. HTTPS og personlige tilgangspassord
+beskytter alle adresser, også medier, arkiv, API-er og administrasjon.
+E-post og indeksering er fortsatt sperret. Dagens produksjonsdomene er uendret.
+
+Ørjans personlige redaktørkonto er opprettet og innlogging/håndbok er verifisert
+i Edge. Del tilgangsfilen `deploy\private\ORJAN-TESTTILGANG.txt` sikkert;
+passord, nøkler og samlefilen med begge kontoene skal ikke deles i Git eller chat.
+Tilgang fra Ørjans egen PC og håndbokens brukerakseptanse gjenstår.
+NIF-klient, SMTP, oversettelsesflyt og produksjonsgodkjenning er separate porter.
 
 Dagens WordPress har over 2 100 artikler og 1 200 mediefiler tilbake til 2001. Prototypen viser hvordan dette kan løftes frem som et redaksjonelt klubbarkiv, inkludert eldre StormVarsel-PDF-er.
 

@@ -2027,6 +2027,11 @@ body.storm-new-design {
     object-position: top;
 }
 
+.coach-photo-orb .media-placeholder {
+    padding: 0;
+    font-size: 1.75rem;
+}
+
 .coach-meta-tag {
     font-family: var(--font-tech);
     font-size: 0.72rem;

@@ -371,6 +371,14 @@ public certificate is required for this private staging mode.
 
 ### Password-protected group review
 
+Verified October 25, 2026: `https://storm.janinc.no/` runs this configuration
+in project `tromsostorm-staging-sep23`. Both `https://janinc.no/storm` and
+`https://janinc.no/storm/` return a temporary, non-cacheable redirect there.
+Only the test subdomain's DNS was added; the production domain is unchanged.
+Personal Editor access and eight real Edge checks passed, including unauthorized
+media/API/archive access, secure login, handbook, mobile layout and English favicon.
+This is technical verification, not the editor's own acceptance test.
+
 `docker-compose.review.yml` is an opt-in third overlay for the real WordPress
 test site. It keeps staging's blocked mail, `noindex`, blank provider keys and
 scoped scheduler, but adds a host-specific HTTPS route through Traefik. Basic
