@@ -14,6 +14,22 @@ All registered metadata is typed, sanitized and exposed through WordPress REST A
 Draft and private content remains protected by WordPress permissions. The plugin deliberately
 does not read legacy `Storm_*` tables; migration into this model is handled separately.
 
+## Bulk content reads
+
+Season relations load their published sponsor/person profiles and metadata in
+batches, including thumbnail caches. Game lists likewise load post objects with
+metadata rather than resolving every ID separately. The existing public methods,
+REST responses and editorial storage remain unchanged; there is no additional
+database, persistent result cache or dual-write model.
+
+An isolated full-homepage profile reduced median SQL calls from 613 to 108.
+All seven public API payload hashes and domain output hashes remained identical.
+The editorial integration suite checks cold-cache query growth and immediate
+visibility after metadata/status changes as well as existing season rollback.
+These results do not justify introducing custom domain tables: evaluate those
+only against a remaining measured bottleneck and their migration/synchronization
+cost, not the former N+1 query count.
+
 Purpose-built editor fields provide:
 
 - relation selectors instead of numeric WordPress IDs;

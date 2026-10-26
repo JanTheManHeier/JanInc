@@ -117,6 +117,85 @@ try {
     $check(is_wp_error(Storm_Core_Seasons::activate($season)), 'Activation must not publish private profiles.');
     wp_update_post(array('ID' => $sponsor, 'post_status' => 'publish'));
 
+    $batch_season = $insert('storm_season', array('storm_is_active' => false), 'publish', 'Batch loading test season');
+    $empty_season = $insert('storm_season', array('storm_is_active' => false), 'publish', 'Empty batch test season');
+    $check(Storm_Core_Content::sponsors($empty_season) === array()
+        && Storm_Core_Content::roster('player', $empty_season) === array()
+        && storm_arena_get_core_schedule_entries('Tromsø Storm', $empty_season) === array(),
+        'Empty related ID lists must never load unrelated published content.');
+    $batch_counts = array();
+    $batch_sponsors = array();
+    $batch_players = array();
+    for ($i = 1; $i <= 20; $i++) {
+        $batch_sponsors[] = $insert('storm_sponsor', array('_storm_legacy_image' => 'https://example.com/logo.png'), 'publish', 'Batch sponsor ' . $i);
+        $insert('storm_sponsor_deal', array(
+            'storm_season_id' => $batch_season, 'storm_sponsor_id' => $batch_sponsors[$i - 1],
+            'storm_level' => 'partner', 'storm_is_active' => true, 'storm_sort_order' => $i,
+        ));
+        $batch_players[] = $insert('storm_player', array(), 'publish', 'Batch player ' . $i);
+        $insert('storm_roster_entry', array(
+            'storm_season_id' => $batch_season, 'storm_person_id' => $batch_players[$i - 1],
+            'storm_person_type' => 'player', 'storm_is_active' => true,
+        ));
+        $insert('storm_game', array(
+            'storm_season_id' => $batch_season, 'storm_starts_at' => sprintf('2090-10-%02dT18:00:00+02:00', $i),
+            'storm_home_team' => 'Tromsø Storm', 'storm_away_team' => 'Batch opponent ' . $i,
+            'storm_game_status' => 'scheduled',
+        ));
+        if (!in_array($i, array(2, 20), true)) {
+            continue;
+        }
+        foreach (array(
+            'sponsors' => static fn() => Storm_Core_Content::sponsors($batch_season),
+            'players' => static fn() => Storm_Core_Content::roster('player', $batch_season),
+            'games' => static fn() => storm_arena_get_core_schedule_entries('Tromsø Storm', $batch_season),
+        ) as $domain => $reader) {
+            wp_cache_flush();
+            $before = get_num_queries();
+            $rows = $reader();
+            $batch_counts[$domain][$i] = get_num_queries() - $before;
+            $check(count($rows) === $i, 'Batch loading must preserve all ' . $domain . ' records.');
+        }
+    }
+    foreach ($batch_counts as $domain => $counts) {
+        $check($counts[20] <= $counts[2] + 3,
+            'Cold-cache ' . $domain . ' query count must not grow per related record.');
+    }
+    $batch_rows = Storm_Core_Content::sponsors($batch_season);
+    $check($batch_rows[0]['id'] === $batch_sponsors[19]
+        && $batch_rows[0]['logo_url'] === 'https://example.com/logo.png',
+        'Bulk sponsor loading must preserve sort order and legacy image fallback.');
+    update_post_meta($batch_sponsors[19], '_storm_legacy_image', 'https://example.com/updated-logo.png');
+    $check(Storm_Core_Content::sponsors($batch_season)[0]['logo_url'] === 'https://example.com/updated-logo.png',
+        'An updated image reference must be visible immediately after a prior bulk read.');
+    foreach (array(0, PHP_INT_MAX, $batch_players[0]) as $invalid_sponsor) {
+        $insert('storm_sponsor_deal', array(
+            'storm_season_id' => $batch_season, 'storm_sponsor_id' => $invalid_sponsor,
+            'storm_level' => 'partner', 'storm_is_active' => true,
+        ));
+    }
+    foreach (array(0, PHP_INT_MAX, $batch_sponsors[0]) as $invalid_person) {
+        $insert('storm_roster_entry', array(
+            'storm_season_id' => $batch_season, 'storm_person_id' => $invalid_person,
+            'storm_person_type' => 'player', 'storm_is_active' => true,
+        ));
+    }
+    $check(count(Storm_Core_Content::sponsors($batch_season)) === 20
+        && count(Storm_Core_Content::roster('player', $batch_season)) === 20,
+        'Missing and wrong-type profiles must not appear through a relation.');
+    wp_update_post(array('ID' => $batch_players[0], 'post_status' => 'private'));
+    $check(count(Storm_Core_Content::roster('player', $batch_season)) === 19,
+        'A newly private player must disappear immediately after a prior bulk read.');
+    wp_update_post(array('ID' => $batch_players[0], 'post_status' => 'publish', 'post_title' => 'Changed batch player'));
+    $check(in_array('Changed batch player', array_column(Storm_Core_Content::roster('player', $batch_season), 'name'), true),
+        'Republished and renamed players must appear without stale result caching.');
+    wp_update_post(array('ID' => $batch_sponsors[0], 'post_status' => 'draft'));
+    $check(count(Storm_Core_Content::sponsors($batch_season)) === 19,
+        'A newly drafted sponsor must disappear immediately after a prior bulk read.');
+    wp_delete_post($batch_sponsors[1], true);
+    $check(count(Storm_Core_Content::sponsors($batch_season)) === 18,
+        'Deleted sponsor profiles must not remain in published relation results.');
+
     $next = Storm_Core_Seasons::prepare($season, 2091, array('storm_roster_entry', 'storm_sponsor_deal', 'storm_training'));
     $check(is_int($next), 'Copying a season must succeed.');
     $created[] = $next;

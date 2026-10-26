@@ -105,6 +105,40 @@ en videresending til den lokale SSH-adressen fungerer ikke for arbeidsgruppen.
       integrasjonstilganger. NIF- og oversettelsesnøkler er fortsatt tomme;
       ingen NIF-oppdateringsjobb er aktivert, og SMTP er fortsatt sperret.
 
+## Datatilgang: færre databaseoppslag
+
+Implementeringsplanen er godkjent. Endringen beholder WordPress som autoritativ
+lagring; egne tabeller er vurdert, men den målte flaskehalsen løses med samlede
+oppslag uten ny databasestruktur eller endring av redaktørflyt/API.
+
+- [x] Kartlagt N+1-oppslag for sponsorprofiler, spiller-/trenerprofiler og kamper.
+- [x] Samlet innlasting av relaterte publiserte poster, metadata og bilde-cache.
+- [x] Kampoversikten henter komplette postobjekter med prefetchet metadata.
+- [x] Isolert forsideprofil: median 613 til 108 SQL-kall, SQL-tid 76,55 til
+      33,07 ms og total instrumentert rendering 397 til 343 ms.
+      Median toppminne endret fra 54,5 til 56,5 MB.
+- [x] Uendrede innholdshash-er for domeneleserne og alle sju offentlige API-er.
+      Ingen nye tabeller, transients, eksterne cachetjenester eller dobbeltskriving.
+- [x] 78 isolerte integrasjonskontroller består. Ny test av spørringsvekst feiler
+      med originalkoden og består med optimaliseringen. Tester omfatter også
+      bilder, slettede/private/feiltypede profiler og umiddelbar gjenlesing.
+- [x] Rullet ut på beskyttet BedSys-staging etter ekstern backup
+      `20261026T224544Z`, hentet tilbake og gjenopprettet med alle 128 tabeller
+      kontrollert. Tidligere kode er bevart for tilbakeføring.
+- [x] Aktiv forside: median 621 til 112 SQL-kall, SQL-tid 80,95 til 33,05 ms
+      og instrumentert rendering 400 til 344 ms. Toppminne er uendret 54,5 MB.
+      Tre kjøringer før/etter; innholdshash-er og alle sju API-er er uendret.
+- [x] Åtte Edge-kontroller består etter utrulling: adgangssperrer, innhold,
+      ikon, mobil, redaktørinnlogging og håndbok. Cron kjører, isolerte
+      testtjenester er stoppet. Produksjon og DNS er ikke endret.
+- [x] Ekstern sluttbackup `20261026T225133Z` er hentet tilbake og gjenopprettet
+      isolert. Alle 128 tabellers radantall/motorer stemmer; 173 aktive
+      tema-/pluginfiler er identiske med backupen.
+
+Antall og tider gjelder sammenlignbare profilerte kjøringer, ikke et løfte om
+alle sidevisninger eller nettverkstider. Optimaliseringen endrer ikke
+publiseringsvern, tom-sesong-regler, sponsorhistorikk eller importoverstyringer.
+
 ## 1. Rett proporsjonene på faneikonet i Edge
 
 Status: rettet i aktiv WordPress og eksportert skyggekopi 25. oktober.

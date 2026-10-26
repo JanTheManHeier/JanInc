@@ -438,12 +438,11 @@ function storm_arena_get_core_schedule_entries(string $club_name = 'Tromsø Stor
         return array();
     }
 
-    $game_ids = get_posts(
+    $games = get_posts(
         array(
             'post_type'      => 'storm_game',
             'post_status'    => 'publish',
             'posts_per_page' => -1,
-            'fields'         => 'ids',
             'meta_key'       => 'storm_starts_at',
             'orderby'        => 'meta_value',
             'order'          => 'ASC',
@@ -458,7 +457,8 @@ function storm_arena_get_core_schedule_entries(string $club_name = 'Tromsø Stor
     );
 
     $matches = array();
-    foreach ($game_ids as $game_id) {
+    foreach ($games as $game) {
+        $game_id = $game->ID;
         if (get_post_meta((int) $game_id, 'storm_hidden', true)) {
             continue;
         }

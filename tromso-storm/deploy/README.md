@@ -379,6 +379,19 @@ Personal Editor access and eight real Edge checks passed, including unauthorized
 media/API/archive access, secure login, handbook, mobile layout and English favicon.
 This is technical verification, not the editor's own acceptance test.
 
+The bulk-read optimization was deployed after external snapshot `20261026T224544Z`
+was downloaded and restored with all 128 table counts/engines matching. Active
+frontend profiles now use 112 median SQL calls instead of 621; SQL time fell
+from 80.95 to 33.05 ms and instrumented rendering from 400 to 344 ms. Three
+separate executions were measured on each version. Domain and all seven public
+API output hashes remained unchanged; 78 isolated editorial assertions and eight
+real Edge checks passed. There is no storage-schema, API or editor-flow change.
+Previous code is retained privately under `private/data-model-rollback/source.tar.gz`.
+Final external snapshot `20261026T225133Z` was also downloaded and restored:
+all 128 table counts/engines matched and 173 active theme/plugin files matched
+the content archive. Isolated test services are stopped; the active scoped
+scheduler and recurring backup remain running.
+
 `docker-compose.review.yml` is an opt-in third overlay for the real WordPress
 test site. It keeps staging's blocked mail, `noindex`, blank provider keys and
 scoped scheduler, but adds a host-specific HTTPS route through Traefik. Basic

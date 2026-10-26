@@ -49,12 +49,39 @@ final class Storm_Core_Content
         return ($from === '' || $from <= $today) && ($to === '' || $to >= $today);
     }
 
+    private static function related_posts(array $records, string $relation, array $types): array
+    {
+        $ids = array();
+        foreach ($records as $record) {
+            $id = (int) get_post_meta($record->ID, $relation, true);
+            if ($id > 0) {
+                $ids[] = $id;
+            }
+        }
+        if (!$ids) {
+            return array();
+        }
+        $query = new WP_Query(array(
+            'post_type' => $types, 'post_status' => 'publish',
+            'post__in' => array_values(array_unique($ids)), 'posts_per_page' => -1,
+            'no_found_rows' => true, 'ignore_sticky_posts' => true, 'suppress_filters' => true,
+        ));
+        update_post_thumbnail_cache($query);
+        $posts = array();
+        foreach ($query->posts as $post) {
+            $posts[$post->ID] = $post;
+        }
+        return $posts;
+    }
+
     public static function roster(string $kind, int $season = 0): array
     {
         $rows = array();
-        foreach (self::records('storm_roster_entry', $season) as $entry) {
+        $entries = self::records('storm_roster_entry', $season);
+        $people = self::related_posts($entries, 'storm_person_id', array($kind === 'player' ? 'storm_player' : 'storm_staff'));
+        foreach ($entries as $entry) {
             $id = $entry->ID;
-            $person = get_post((int) get_post_meta($id, 'storm_person_id', true));
+            $person = $people[(int) get_post_meta($id, 'storm_person_id', true)] ?? null;
             if (!$person || $person->post_status !== 'publish'
                 || $person->post_type !== ($kind === 'player' ? 'storm_player' : 'storm_staff')
                 || !get_post_meta($id, 'storm_is_active', true)) {
@@ -88,9 +115,11 @@ final class Storm_Core_Content
         $rows = array();
         $historical = $season && $season !== self::active_season();
         $levels = array('main' => 'Hovedsamarbeidspartnere', 'partner' => 'Samarbeidspartnere', 'supporter' => 'Ovrige', 'member' => 'Støttemedlem');
-        foreach (self::records('storm_sponsor_deal', $season) as $deal) {
+        $deals = self::records('storm_sponsor_deal', $season);
+        $sponsors = self::related_posts($deals, 'storm_sponsor_id', array('storm_sponsor'));
+        foreach ($deals as $deal) {
             $id = $deal->ID;
-            $sponsor = get_post((int) get_post_meta($id, 'storm_sponsor_id', true));
+            $sponsor = $sponsors[(int) get_post_meta($id, 'storm_sponsor_id', true)] ?? null;
             if (!$sponsor || $sponsor->post_type !== 'storm_sponsor' || $sponsor->post_status !== 'publish'
                 || (!$historical && (!get_post_meta($id, 'storm_is_active', true) || !self::within_dates($id)))) {
                 continue;
